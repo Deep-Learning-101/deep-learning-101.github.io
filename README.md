@@ -1,24 +1,18 @@
-# <p align="center">Deep Learning 101</p>
+# Deep Learning 101
 
-## <p align="center">The top private AI Meetup in Taiwan, launched in 2016</p>
+## The top private AI Meetup in Taiwan, launched on 2016
 
-<p align="center">
-  <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG" width="50%" />
-</p>
+![Deep Learning 101](https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true)
 
-<p align="center">
-  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團</a>  
-  <br>http://DeepLearning101.TWMAN.ORG  
-  <br>https://huggingface.co/DeepLearning101  
-  <br>https://www.youtube.com/@DeepLearning101
-</p>
+[台灣人工智慧社團](https://www.facebook.com/groups/525579498272187/)  
+[網站連結](http://DeepLearning101.TWMAN.ORG)  
+[Hugging Face](https://huggingface.co/DeepLearning101)  
+[YouTube](https://www.youtube.com/@DeepLearning101)
 
 ---
 
-<details open>
-<summary><strong>手把手帶你一起踩 AI 坑：</strong>  
-🔗 https://blog.twman.org/p/deeplearning101.html
-🔗 https://www.twman.org/AI</summary>
+### 手把手帶你一起踩 AI 坑：
+[🔗 https://blog.twman.org/p/deeplearning101.html](https://blog.twman.org/p/deeplearning101.html) ｜ [https://www.twman.org/AI](https://www.twman.org/AI)
 
 - **[避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://blog.twman.org/2025/03/AIAgent.html)**  
   淺顯介紹生成式人工智慧的核心概念，強調硬體與數據的重要性。介紹 LLM、Prompt、RAG、Function Calling、Agentic 等。
@@ -53,29 +47,19 @@
 - **[手把手學深度學習安裝環境](https://blog.twman.org/2020/05/DeepLearning.html)**  
   Ubuntu + CUDA + Docker 的完整建置教學。
 
-</details>
-
-## Speech Processing（語音處理）
-
-🔗 https://github.com/Deep-Learning-101/Speech-Processing-Paper  
-🔍 **[針對訪談或對話進行分析與識別](https://www.twman.org/AI/ASR)**
-
 ---
 
-## Natural Language Processing（自然語言處理）
+### Speech Processing (語音處理)
+[GitHub](https://github.com/Deep-Learning-101/Speech-Processing-Paper)  
+**[針對訪談或對話進行分析與識別](https://www.twman.org/AI/ASR)**
 
-🔗 https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper  
-🔍 **[針對文檔進行分析與擷取](https://www.twman.org/AI/NLP)**
+### Natural Language Processing, NLP (自然語言處理)
+[GitHub](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper)  
+**[針對文檔進行分析與擷取](https://www.twman.org/AI/NLP)**
 
----
+### 大語言模型 (Large Language Model)
+[GitHub](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper#llm)
 
-## Large Language Models（大語言模型）
-
-🔗 https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper#llm
-
----
-
-## Computer Vision（電腦視覺）
-
-🔗 https://github.com/Deep-Learning-101/Computer-Vision-Paper  
-🔍 **[針對物件或場景影像進行分析與偵測](https://www.twman.org/AI/CV)**
+### Computer Vision (電腦視覺)
+[GitHub](https://github.com/Deep-Learning-101/Computer-Vision-Paper)  
+**[針對物件或場景影像進行分析與偵測](https://www.twman.org/AI/CV)**  
