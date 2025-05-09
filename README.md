@@ -17,7 +17,8 @@
 
 <details open>
 <summary><strong>手把手帶你一起踩 AI 坑：</strong>  
-🔗 [https://blog.twman.org/p/deeplearning101.html](https://blog.twman.org/p/deeplearning101.html) ｜ [https://www.twman.org/AI](https://www.twman.org/AI)</summary>
+🔗 https://blog.twman.org/p/deeplearning101.html
+🔗 https://www.twman.org/AI</summary>
 
 - **[避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://blog.twman.org/2025/03/AIAgent.html)**  
   淺顯介紹生成式人工智慧的核心概念，強調硬體與數據的重要性。介紹 LLM、Prompt、RAG、Function Calling、Agentic 等。
@@ -53,7 +54,6 @@
   Ubuntu + CUDA + Docker 的完整建置教學。
 
 </details>
----
 
 ## Speech Processing（語音處理）
 
