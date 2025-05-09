@@ -15,7 +15,7 @@
 [🔗 https://blog.twman.org/p/deeplearning101.html](https://blog.twman.org/p/deeplearning101.html) ｜ [https://www.twman.org/AI](https://www.twman.org/AI)
 
 - **[避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案 (那些 AI Agent 實戰踩過的坑)](https://blog.twman.org/2025/03/AIAgent.html)**  
-  探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。。
+  探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。
   - 多種 AI 代理人工具應用與體驗，並指出部分工具在穩定性和安裝過程中存在挑戰。
   - 包括 Cline、MCP、OpenManus、MetaGPT、LangManus、OWL、UI-TARS、autoMate 和 OmniParser。
     
