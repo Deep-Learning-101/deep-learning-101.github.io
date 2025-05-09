@@ -15,12 +15,12 @@
 [🔗 https://blog.twman.org/p/deeplearning101.html](https://blog.twman.org/p/deeplearning101.html) ｜ [https://www.twman.org/AI](https://www.twman.org/AI)
 
 - **[避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案 (那些 AI Agent 實戰踩過的坑)](https://blog.twman.org/2025/03/AIAgent.html)**  
-  探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。
+  [探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。](https://deep-learning-101.github.io/agent)
   - 多種 AI 代理人工具應用與體驗，並指出部分工具在穩定性和安裝過程中存在挑戰。
   - 包括 Cline、MCP、OpenManus、MetaGPT、LangManus、OWL、UI-TARS、autoMate 和 OmniParser。
     
 - **[白話文手把手帶你科普 GenAI](https://blog.twman.org/2024/08/LLM.html)**  
-  淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。
+  [淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。](https://deep-learning-101.github.io/GenAI)
   - 介紹生成式人工智慧（GenAI）的核心概念，包括大型語言模型（LLM）、提示詞設計（Prompt）、檢索增強生成（RAG）、微調（Fine-Tuning）、功能調用（Function Calling）、工作流程（Workflow）、代理人（Agentic）和多模態（Multimodal）等。
   - 分享這些技術在實際應用中的經驗，並強調了硬體資源和數據在開發過程中的重要性。
 
