@@ -92,7 +92,7 @@ Deep Learning 101 Meetup 歷年活動
 | 19  | Towards Principled Methods for Training Generative Adversarial Networks | [2018/05/11](https://www.youtube.com/watch?v=7_lyjNljMf0) | 👤 Mark Chang |
 | 18  | Deep Generative Models @ [Deep Learning Book Chapter 20](https://deep-learning-101.github.io/GeminiAbstract/PDF20) | [2018/04/13](https://www.youtube.com/watch?v=oiDYD1qibBQ) | - |
 | 17  | Approximate Inference @ [Deep Learning Book Chapter 19](https://deep-learning-101.github.io/GeminiAbstract/PDF19) | [2018/03/16](https://www.youtube.com/watch?v=YeCDY_wsojA) | - |
-| 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/Ch18) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/GeminiAbstract/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | 👤 何宗諭 (Jiero) |
+| 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/html/CH18.html) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/GeminiAbstract/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | 👤 何宗諭 (Jiero) |
 | 14  | Monte Carlo Methods @ [Deep Learning Book Chapter 17](https://deep-learning-101.github.io/GeminiAbstract/PDF17) | [2017/12/15](https://www.youtube.com/watch?v=qef-XTUpDvE) | 👤 Ian Wang |
 | 12  | Structured Probabilistic Models @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | [2017/10/27](https://www.youtube.com/watch?v=n0rBS3sAqI0) | - |
 | 11  | Autoencoders @ [Deep Learning Book Chapter 14](https://deep-learning-101.github.io/GeminiAbstract/PDF14) | [2017/09/08](https://www.youtube.com/watch?v=5mrJmzzpPBs) | 👤 Nat Lee |
