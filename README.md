@@ -1,19 +1,20 @@
+<div align="center">
 
-<p align="center">
-  <strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>
-</p>
-<p align="center">
-  <strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong>
-</p>  
-<p align="center">
-  <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
-</p>
-<p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> | 
-  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> | 
-  <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> | 
-  <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
-</p>
+# Deep Learning 101
+
+## The top private AI Meetup in Taiwan, launched on 2016/11 @ 83F, Taipei 101
+## 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+
+<img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+
+<br>
+
+[YouTube](https://www.youtube.com/@DeepLearning101) | 
+[台灣人工智慧社團 FB](https://www.facebook.com/groups/525579498272187/) | 
+[台灣人工智慧社團 網站](http://DeepLearning101.TWMAN.ORG) | 
+[Hugging Face](https://huggingface.co/DeepLearning101)
+
+</div>
 
 ---
 
@@ -88,14 +89,18 @@ Deep Learning 101 Meetup 歷年活動
 | 21  | Dynamic Routing Between Capsules | 2018/07/06 | 👤 Jiero Ho |
 | 20  | VAE: A generative model for 2D anime character faces | 2018/06/08 | 👤 Nat, Boris, Alice, Ian |
 | 19  | Towards Principled Methods for Training Generative Adversarial Networks | 2018/05/11 | 👤 Mark Chang |
-| 18  | Deep Generative Models @ Deep Learning Book Chapter 20 | 2018/04/13 | - |
-| 17  | Approximate Inference @ Deep Learning Book Chapter 19 | 2018/03/16 | - |
-| 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/Ch18) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | 👤 何宗諭 (Jiero) |
-| 14  | Deep Learning Book Chapter 17 | 2017/12/15 | 👤 Ian Wang |
-| 12  | Structured Probabilistic Models @ Deep Learning Book Chapter 16 | 2017/10/27 | - |
-| 11  | Autoencoders @ Deep Learning Book Chapter 14 | 2017/09/08 | 👤 Nat Lee |
-| 10  | Linear Factor Models @ Deep Learning Book Chapter 13 | 2017/08/11 | - |
-| 09  | Representation Learning @ Deep Learning Book Chapter 15 | 2017/07/07 | - |
-| 07  | Recurrent and Recursive Nets @ Deep Learning Book Chapter 10 | 2017/05/05 | - |
-| 06  | Convolutional Networks @ Deep Learning Book Chapter 9 | 2017/04/14 | - |
-| 05  | Optimization for Training Deep Models @ Deep Learning Book Chapter 8 | 2017/03/10 | - |
+| 18  | Deep Generative Models @ [Deep Learning Book Chapter 20](https://deep-learning-101.github.io/GeminiAbstract/PDF20) | 2018/04/13 | - |
+| 17  | Approximate Inference @ [Deep Learning Book Chapter 19](https://deep-learning-101.github.io/GeminiAbstract/PDF19) | 2018/03/16 | - |
+| 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/Ch18) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/GeminiAbstract/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | 👤 何宗諭 (Jiero) |
+| 14  | Monte Carlo Methods @ [Deep Learning Book Chapter 17](https://deep-learning-101.github.io/GeminiAbstract/PDF17) | 2017/12/15 | 👤 Ian Wang |
+| 12  | Structured Probabilistic Models @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | 2017/10/27 | - |
+| 11  | Autoencoders @ [Deep Learning Book Chapter 14](https://deep-learning-101.github.io/GeminiAbstract/PDF14) | 2017/09/08 | 👤 Nat Lee |
+| 10  | Linear Factor Models @ [Deep Learning Book Chapter 13](https://deep-learning-101.github.io/GeminiAbstract/PDF13) | 2017/08/11 | - |
+| 09  | Representation Learning @ [Deep Learning Book Chapter 15](https://deep-learning-101.github.io/GeminiAbstract/PDF15) | 2017/07/07 | - |
+| --  | Applications @ [Deep Learning Book Chapter 12](https://deep-learning-101.github.io/GeminiAbstract/PDF12) | - | - |
+| --  | Practical Methodology @ [Deep Learning Book Chapter 11](https://deep-learning-101.github.io/GeminiAbstract/PDF11) | - | - |
+| 07  | Recurrent and Recursive Nets @ [Deep Learning Book Chapter 10](https://deep-learning-101.github.io/GeminiAbstract/PDF10) | 2017/05/05 | - |
+| 06  | Convolutional Networks @ [Deep Learning Book Chapter 9](https://deep-learning-101.github.io/GeminiAbstract/PDF9) | 2017/04/14 | - |
+| 05  | Optimization for Training Deep Models @ [Deep Learning Book Chapter 8](https://deep-learning-101.github.io/GeminiAbstract/PDF8) | 2017/03/10 | - |
+| 04  | Regularization for Deep Learning @ [Deep Learning Book Chapter 7](https://deep-learning-101.github.io/GeminiAbstract/PDF7) | - | - |
+| 03  | Deep Feedforward Networks @ [Deep Learning Book Chapter 6](https://deep-learning-101.github.io/GeminiAbstract/PDF6) | - | - |
