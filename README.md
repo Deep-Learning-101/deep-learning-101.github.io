@@ -13,6 +13,9 @@
   <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> | 
   <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
 </p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
 ---
 
