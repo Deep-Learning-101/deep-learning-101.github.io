@@ -1,0 +1,594 @@
+這是前半段
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神經網路裡的黑執事 - Deep Learning 101 Highlights</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@10/dist/framer-motion.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #111827; /* Tailwind gray-900 */
+            color: #D1D5DB; /* Tailwind gray-300 */
+            overflow-x: hidden;
+        }
+        .bento-card {
+            background-color: #1F2937; /* Tailwind gray-800 */
+            border-radius: 1.5rem; /* Tailwind rounded-xl is 0.75rem, let's make it more rounded */
+            padding: 1.5rem; /* Tailwind p-6 */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+            position: relative;
+            overflow: hidden;
+        }
+        .bento-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .highlight-cyan {
+            background: linear-gradient(135deg, rgba(6, 182, 212, 0.3) 0%, rgba(6, 182, 212, 0.05) 100%);
+            border: 1px solid rgba(6, 182, 212, 0.4);
+        }
+        .highlight-lime {
+            background: linear-gradient(135deg, rgba(132, 204, 22, 0.3) 0%, rgba(132, 204, 22, 0.05) 100%);
+            border: 1px solid rgba(132, 204, 22, 0.4);
+        }
+        .highlight-purple {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0.05) 100%);
+            border: 1px solid rgba(139, 92, 246, 0.4);
+        }
+        .ultra-large-font {
+            font-size: clamp(3rem, 10vw, 6rem); /* Responsive font size */
+            line-height: 1;
+        }
+        .line-art-svg {
+            stroke: currentColor;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        .bar-chart-bar {
+            background-color: #37BCF8; /* A soft blue */
+            margin: 0 2px;
+            border-radius: 2px;
+            transition: height 0.5s ease-in-out;
+        }
+        .bar-chart-bar.dim {
+            background-color: #4B5563; /* gray-600 */
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-8">
+        <header class="text-center mb-12">
+            <motion.h1 
+                class="text-5xl sm:text-6xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-lime-400 mb-4"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}>
+                神經網路裡的<span class="text-purple-400">黑執事</span>
+            </motion.h1>
+            <motion.p 
+                class="text-xl text-gray-400"
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}>
+                Deep Learning 101 Highlights - August 21, 2020
+            </motion.p>
+        </header>
+
+        <main class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-7xl">
+            
+            <!-- DataCon.TW 2020 Card -->
+            <motion.div class="bento-card highlight-cyan sm:col-span-2 lg:col-span-2 lg:row-span-2 flex flex-col justify-between"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                <div>
+                    <h2 class="text-4xl font-bold text-cyan-300 mb-2">DataCon.TW 2020</h2>
+                    <p class="text-xl text-gray-300 mb-1">September 10, ONLINE</p>
+                    <p class="text-sm text-gray-400 mb-4">台灣人工智慧社群主辦 (Taiwan AI Community)</p>
+                    <div id="countdown" class="text-5xl font-mono text-lime-300 my-6 text-center">
+                        <span id="days">19</span>D 
+                        <span id="hours">04</span>H 
+                        <span id="minutes">11</span>M 
+                        <span id="seconds">00</span>S
+                    </div>
+                </div>
+                <a href="http://DeepLearning101.TWMAN.ORG" target="_blank" rel="noopener noreferrer" class="mt-4 text-blue-400 hover:text-blue-300 transition-colors duration-300 self-start text-lg">
+                    <i class="fas fa-link mr-2"></i>DeepLearning101.TWMAN.ORG
+                </a>
+            </motion.div>
+
+            <!-- NCHC Project Card -->
+            <motion.div class="bento-card highlight-lime lg:col-span-2"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                <div class="flex items-center mb-3">
+                    <img src="https://www.nchc.org.tw/images/NCHC_logo_L.svg" alt="NCHC Logo" class="h-10 mr-4 bg-white p-1 rounded">
+                    <h2 class="text-3xl font-semibold text-lime-300">守護臺灣 科技抗疫</h2>
+                </div>
+                <p class="text-gray-400 text-sm mb-2">NCHC (National Center for High-performance Computing)</p>
+                <p class="text-lg text-gray-200 italic">「你有鍵盤 我有算力 防疫開發動起來」</p>
+                <p class="mt-2 text-sm text-gray-400">Leveraging HPC for COVID-19 research and solutions.</p>
+            </motion.div>
+
+            <!-- Labeling is Key Card -->
+            <motion.div class="bento-card highlight-purple flex flex-col items-center justify-center text-center"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                <i class="fas fa-tags text-5xl text-purple-400 mb-4"></i>
+                <h2 class="text-4xl font-bold text-purple-300">標註為本</h2>
+                <p class="text-md text-gray-400 mt-2">All things are start from the "labeling"</p>
+            </motion.div>
+
+            <!-- Dark Knowledge Card -->
+            <motion.div class="bento-card highlight-cyan flex flex-col items-center justify-center text-center"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                <i class="fas fa-user-secret text-5xl text-cyan-400 mb-4"></i>
+                <h2 class="text-4xl font-bold text-cyan-300">暗知識</h2>
+                <p class="text-md text-gray-400 mt-2">Dark Knowledge in Neural Networks</p>
+                <p class="text-xs text-gray-500 mt-1">The subtle, non-target probabilities hold valuable information.</p>
+            </motion.div>
+            
+            <!-- AI Q&A Demo Card -->
+            <motion.div class="bento-card highlight-lime sm:col-span-2 lg:col-span-2"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                <h2 class="text-3xl font-semibold text-lime-300 mb-3">AI閱讀理解 Demo</h2>
+                <p class="text-sm text-gray-400 mb-3">ASR + Reading Comprehension on Kobe Bryant text</p>
+                <div class="space-y-2 text-gray-200">
+                    <p><strong class.text-lime-200">Q:</strong> NBA歷史最年輕30000分先生? <strong class="text-lime-200">A:</strong> 科比</p>
+                    <p><strong class="text-lime-200">Q:</strong> 奧斯卡最佳動畫短片獎? <strong class="text-lime-200">A:</strong> 親愛的籃球</p>
+                </div>
+                 <div class="mt-4 flex justify-center">
+                    <svg class="w-16 h-16 text-lime-400 line-art-svg" viewBox="0 0 24 24">
+                        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                        <circle cx="12" cy="12" r="2"></circle> <circle cx="16" cy="12" r="1"></circle> <circle cx="8" cy="12" r="1"></circle>
+                    </svg>
+                </div>
+            </motion.div>
+
+            <!-- Label Smoothing Card -->
+            <motion.div class="bento-card highlight-purple"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                <h2 class="text-2xl font-semibold text-purple-300 mb-2">標籤平滑</h2>
+                <p class="text-sm text-gray-400 mb-3">Label Smoothing</p>
+                <p class="text-xs text-gray-300 mb-2">Purpose: Overcome overconfidence & overfitting.</p>
+                <div class="flex justify-around items-end h-20 mt-2">
+                    <div class="text-center text-xs text-gray-400">
+                        <div class="flex items-end h-12">
+                            <div class="bar-chart-bar dim" style="width:10px; height: 10%;"></div>
+                            <div class="bar-chart-bar" style="width:10px; height: 80%;"></div>
+                            <div class="bar-chart-bar dim" style="width:10px; height: 10%;"></div>
+                            <div class="bar-chart-bar dim" style="width:10px; height: 10%;"></div>
+                        </div>
+                        Original
+                    </div>
+                    <i class="fas fa-arrow-right text-purple-400 self-center"></i>
+                    <div class="text-center text-xs text-gray-400">
+                        <div class="flex items-end h-12">
+                            <div class="bar-chart-bar" style="width:10px; height: 15%;"></div>
+                            <div class="bar-chart-bar" style="width:10px; height: 70%;"></div>
+                            <div class="bar-chart-bar" style="width:10px; height: 15%;"></div>
+                            <div class="bar-chart-bar" style="width:10px; height: 15%;"></div>
+                        </div>
+融资后估值=融资前估值+融资金额
+                        Smoothing
+                    </div>
+                </div>
+                 <p class="text-xs text-gray-500 mt-2">Distributes probability to non-target classes.</p>
+            </motion.div>
+
+            <!-- Augmentation Techniques Card -->
+            <motion.div class="bento-card highlight-cyan lg:col-span-2"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                <h2 class="text-3xl font-semibold text-cyan-300 mb-3">數據增強技巧</h2>
+                <p class="text-sm text-gray-400 mb-4">Data Augmentation Techniques</p>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <h3 class="font-medium text-cyan-200">Mixup</h3>
+                        <p class="text-xs text-gray-300">Linear interpolation of images & labels.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-cyan-200">Manifold Mixup</h3>
+                        <p class="text-xs text-gray-300">Mixup at intermediate feature layers.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-cyan-200">CutMix</h3>
+                        <p class="text-xs text-gray-300">Patch-based mixing of images & labels.</p>
+                    </div>
+                    <div>
+                        <h3 class="font-medium text-cyan-200">AugMix</h3>
+                        <p class="text-xs text-gray-300">Chained augmentations, JS divergence.</p>
+                    </div>
+                </div>
+            </motion.div>
+
+            <!-- Semi-Supervised Learning Card -->
+            <motion.div class="bento-card highlight-lime lg:col-span-2"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+                viewport={{ once: true, amount: 0.3 }}>
+                 <h2 class="text-3xl font-semibold text-lime-300 mb-3">半監督學習</h2>
+                 <p class="text-sm text-gray-400 mb-4">Semi-Supervised Learning with Unlabeled Data</p>
+                 <div class="space-y-2 text-sm">
+                    <p><strong class="text-lime-200">UDA (Unsupervised Data Augmentation):</strong> Uses consistency loss on augmented unlabeled data.</p>
+                    <p><strong class="text-lime-200">FixMatch:</strong> Pseudo-labeling with weak/strong augmentation consistency.</p>
+                    <p><strong class="text-lime-200">MixMatch:</strong> Averages predictions, sharpens distribution.</p>
+                 </div>
+                 <div class="mt-4 flex justify-center">
+                     <svg class="w-16 h-16 text-lime-400 line-art-svg" viewBox="0 0 24 24">
+                         <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                         <path d="M2 17l10 5 10-5"></path>
+                         <path d="M2 12l10 5 10-5"></path>
+                     </svg>
+                 </div>
+            </motion.div>
+        </main>
+
+        <footer class="text-center mt-12 text-gray-500 text-xs">
+            <p>© 2024 Interpretation of DeepLearning101. Inspired by the presentation on August 21, 2020.</p>
+        </footer>
+    </div>
+
+<script>
+    const { motion, useReducedMotion } = framerMotion; // Destructure from global Framer Motion
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Countdown Timer for DataCon.TW 2020
+        const countdownElement = document.getElementById('countdown');
+        const daysEl = document.getElementById('days');
+        const hoursEl = document.getElementById('hours');
+        const minutesEl = document.getElementById('minutes');
+        const secondsEl = document.getElementById('seconds');
+
+        // The video was recorded on 2020/08/21. DataCon is on 2020/09/10.
+        // Let's set the countdown to the time of recording.
+        // Difference: 19 days and some hours.
+        // The video shows 19 days, 04 hours, 11 minutes, 28 seconds initially.
+        
+        // For demonstration, let's set a fixed starting point based on the video
+        // To make it dynamic *from now*, you'd use a future date.
+        // But to replicate the video's state, we'll work backwards or set a fixed visual.
+        // Given the complexity of perfectly replicating, we'll just animate it simply.
+        
+        let d = 19, h = 4, m = 11, s = 28;
+
+        function updateSimpleCountdown() {
+            s--;
+            if (s < 0) { s = 59; m--; }
+            if (m < 0) { m = 59; h--; }
+            if (h < 0) { h = 23; d--; }
+            if (d < 0) { d = 0; h=0; m=0; s=0; clearInterval(countdownInterval); }
+
+            if(daysEl) daysEl.textContent = String(d).padStart(2, '0');
+            if(hoursEl) hoursEl.textContent = String(h).padStart(2, '0');
+            if(minutesEl) minutesEl.textContent = String(m).padStart(2, '0');
+            if(secondsEl) secondsEl.textContent = String(s).padStart(2, '0');
+        }
+        
+        if (countdownElement) {
+           const countdownInterval = setInterval(updateSimpleCountdown, 1000);
+           updateSimpleCountdown(); // Initial call
+        }
+
+        // Framer Motion for all cards (example, can be more specific)
+        // This is illustrative; the actual animation is defined in the HTML attributes.
+        // You generally don't need to do this in JS if using whileInView.
+        const cards = document.querySelectorAll('.bento-card');
+        cards.forEach((card, index) => {
+            // The animation is already set declaratively in the HTML.
+            // If you wanted to control it via JS:
+            // motion(card, { /* animation props */ });
+        });
+    });
+</script>
+</body>
+</html>這是後半段
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AugMix 與 Contrastive Learning 深度解析</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.umd.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f0f2f5; /*柔和背景色*/
+            color: #333;
+            overflow-x: hidden;
+        }
+ древнерусский язык
+        .bento-grid {
+            display: grid;
+            gap: 1.5rem; /* 24px */
+            padding: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .bento-item {
+            background-color: rgba(255, 255, 255, 0.9); /* 柔和白色背景，帶一點透明 */
+            border-radius: 24px;
+            padding: 2rem; /* 32px */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(200, 200, 200, 0.3);
+        }
+
+        .highlight-gradient-blue {
+            background: linear-gradient(45deg, rgba(59, 130, 246, 0.3), rgba(59, 130, 246, 0.05));
+        }
+
+        .highlight-gradient-green {
+            background: linear-gradient(45deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.05));
+        }
+        
+        .highlight-gradient-purple {
+            background: linear-gradient(45deg, rgba(139, 92, 246, 0.3), rgba(139, 92, 246, 0.05));
+        }
+
+        .text-super-large {
+            font-size: 6rem; /* 96px */
+            line-height: 1;
+            font-weight: 800;
+            color: #2563eb; /* 亮藍色 */
+        }
+        
+        .text-chinese-title {
+            font-size: 2.5rem; /* 40px */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1e3a8a; /* 深藍色 */
+        }
+        
+        .text-english-small {
+            font-size: 0.875rem; /* 14px */
+            color: #6b7280; /* 灰色 */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .icon-bg {
+            position: absolute;
+            font-size: 10rem;
+            opacity: 0.05;
+            right: -20px;
+            bottom: -20px;
+            color: #93c5fd; /* 淡藍色 */
+            z-index: 0;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* 簡潔勾線圖形化元素 */
+        .line-art-arrow {
+            stroke: #60a5fa; /* 藍色 */
+            stroke-width: 2;
+            fill: none;
+        }
+        .line-art-circle {
+            stroke: #34d399; /* 綠色 */
+            stroke-width: 2;
+            fill: rgba(52, 211, 153, 0.1);
+        }
+        .line-art-rect {
+            stroke: #a78bfa; /* 紫色 */
+            stroke-width: 2;
+            fill: rgba(167, 139, 250, 0.1);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="bento-grid" id="mainGrid">
+        <!-- Header -->
+        <motion.div class="bento-item col-span-full text-center"
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}>
+            <h1 class="text-5xl font-extrabold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">AugMix 與 Contrastive Learning</h1>
+            <p class="text-xl text-gray-600">深度學習中的數據增強與表示學習技術</p>
+            <p class="text-sm text-gray-500 mt-1">Deep Learning 101 - TWMAN.ORG</p>
+        </motion.div>
+
+        <!-- AugMix Overview -->
+        <motion.div class="bento-item md:col-span-2 lg:col-span-3 row-span-2 highlight-gradient-blue"
+            initial={{ opacity: 0, scale: 0.9 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}>
+            <div class="content-z">
+                <h2 class="text-chinese-title">AugMix: <span class="text-english-small">A Simple Data Processing Method to Improve Robustness and Uncertainty</span></h2>
+                <p class="text-lg text-gray-700 mb-4">AugMix 是一種數據增強技術，旨在提升模型的穩健性 (Robustness) 和對不確定性 (Uncertainty) 的處理能力。</p>
+                <div class="mt-6 space-y-3">
+                    <div class="flex items-center">
+                        <i class="fas fa-cogs fa-fw mr-3 text-blue-500 text-xl"></i>
+                        <p>核心思想：將多種簡單的增強操作隨機鏈接，再與原始圖像混合。</p>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-layer-group fa-fw mr-3 text-blue-500 text-xl"></i>
+                        <p>通過 Jensen-Shannon Divergence Loss 保持原始圖像與增強圖像預測的一致性。</p>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-chart-line fa-fw mr-3 text-blue-500 text-xl"></i>
+                        <p>目標：使模型在面對各種數據擾動時，仍能做出一致且準確的預測。</p>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 border border-blue-200 rounded-lg bg-white/50">
+                    <h3 class="text-xl font-semibold text-blue-700 mb-2">AugMix 流程簡介</h3>
+                    <ol class="list-decimal list-inside space-y-1 text-gray-800">
+                        <li>對原始圖像進行多次（例如3次）不同的基礎增強操作 (Augmentation Operations)。</li>
+                        <li>將這些增強後的圖像通過隨機權重 (w1, w2, w3, 總和為1) 進行凸組合 (Convex Combination)。</li>
+                        <li>將組合後的圖像再與原始圖像以特定權重 (w'2) 混合，產生一個 AugMix 圖像。</li>
+                        <li>重複此過程 N 次，得到 N 個不同的 AugMix 圖像。</li>
+                        <li>將原始圖像和這 N 個 AugMix 圖像輸入模型，計算其預測的平均值。</li>
+                        <li>Loss Function 包含 JS Divergence (確保預測一致性) 和標準分類 Loss。</li>
+                    </ol>
+                </div>
+            </div>
+            <i class="fas fa-brain icon-bg"></i>
+        </motion.div>
+
+        <!-- Why AugMix? -->
+        <motion.div class="bento-item md:col-span-1 lg:col-span-1 row-span-1 flex flex-col justify-center items-center text-center"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}>
+            <div class="content-z">
+                <i class="fas fa-shield-alt text-6xl text-green-500 mb-4"></i>
+                <h2 class="text-chinese-title text-green-700">提升穩健性</h2>
+                <p class="text-english-small">Improved Robustness</p>
+                <p class="text-gray-700 mt-2">有效應對數據漂移和損壞 (Data Corruption)。</p>
+            </div>
+        </motion.div>
+
+        <!-- Overparameterization -->
+        <motion.div class="bento-item md:col-span-2 lg:col-span-2 row-span-1 highlight-gradient-green"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}>
+            <div class="content-z">
+                <h2 class="text-chinese-title">過度參數化 <span class="text-english-small">Overparameterization</span></h2>
+                <p class="text-gray-700 mb-2">現代深度學習模型通常具有遠超訓練數據量的參數。</p>
+                <ul class="list-disc list-inside space-y-1 text-gray-800">
+                    <li>傳統觀點 (Classical Regime): 模型複雜度增加到一定程度後，測試風險上升 (Overfitting)。</li>
+                    <li>現代觀點 (Modern Interpolating Regime): 當模型極度過度參數化時，測試風險可能再次下降，出現 "Double Descent" 現象。</li>
+                    <li>L1/L2 Regularization 在經典情境有效，但在過度參數化模型中可能不是最佳解。</li>
+                    <li>數據增強 (如 AugMix) 和使用未標註數據可視為一種對抗過度參數化的 Regularization 方法。</li>
+                </ul>
+            </div>
+             <i class="fas fa-sliders-h icon-bg"></i>
+        </motion.div>
+
+        <!-- Self-supervised Learning -->
+        <motion.div class="bento-item md:col-span-2 lg:col-span-2 row-span-2 highlight-gradient-purple"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}>
+            <div class="content-z">
+                <h2 class="text-chinese-title">自監督學習概念 <span class="text-english-small">Self-supervised Concept</span></h2>
+                <p class="text-gray-700 mb-4">核心思想：利用數據自身的信息來創建監督信號，從而學習有用的表示 (Representation)。</p>
+                <div class="mb-4 p-3 border border-purple-200 rounded-lg bg-white/50">
+                    <h3 class="text-xl font-semibold text-purple-700 mb-1">Π Model (Pi Model)</h3>
+                    <p class="text-gray-800">對同一輸入應用兩種不同的隨機增強 (或 Dropout)，通過同一網絡得到兩個預測，並要求這兩個預測盡可能一致。</p>
+                </div>
+                <div class="p-3 border border-purple-200 rounded-lg bg-white/50">
+                    <h3 class="text-xl font-semibold text-purple-700 mb-1">Temporal Ensembling</h3>
+                    <p class="text-gray-800">將過去多個 Epoch 的模型預測的指數移動平均 (Exponential Moving Average) 作為 "Teacher" 的輸出，當前 Epoch 的模型輸出作為 "Student"，要求兩者一致。目標是產生更穩定的監督信號。</p>
+                </div>
+                <p class="mt-4 text-lg text-purple-800 font-semibold">關鍵：一致性正則化 (Consistency Regularization)</p>
+            </div>
+            <i class="fas fa-atom icon-bg"></i>
+        </motion.div>
+
+        <!-- Contrastive Learning -->
+        <motion.div class="bento-item md:col-span-2 lg:col-span-2 row-span-2"
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}>
+            <div class="content-z">
+                <h2 class="text-chinese-title">對比學習 <span class="text-english-small">Contrastive Learning</span></h2>
+                <p class="text-gray-700 mb-4">目標：學習一個表示空間，使得相似的樣本在該空間中距離相近，不相似的樣本距離遙遠。</p>
+                <div class="mb-4 p-3 border border-gray-300 rounded-lg bg-white/50">
+                    <h3 class="text-xl font-semibold text-gray-700 mb-1">核心原則</h3>
+                    <p class="text-gray-800">"We need to tell the neural network that 'these are the same thing'." 即，同一物體的不同視角 (Augmentations) 應該被映射到表示空間中的相近位置。</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <h4 class="text-lg font-medium text-gray-800">SimCLR</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>對同一圖像產生兩個增強視圖 (Positive Pair)。</li>
+                            <li>Batch內其他圖像的增強視圖視為 Negative Pairs。</li>
+                            <li>目標：拉近 Positive Pair 的表示，推遠 Negative Pairs 的表示。</li>
+                            <li>使用 Projection Head 和 Cosine Similarity。</li>
+                            <li>Tips: 大 Batch Size (e.g., 4096, 8192) 效果好，常配合 LARS 優化器。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-medium text-gray-800">MOCO (Momentum Contrast)</h4>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li>使用 Momentum Encoder 提供更穩定的 Negative Keys。</li>
+                            <li>Momentum Encoder 的權重是 Query Encoder 的指數移動平均。</li>
+                            <li>避免了對極大 Batch Size 的依賴。</li>
+                            <li>InfoNCE Loss。</li>
+                            <li>Tips: BN 可能洩漏信息，需謹慎使用或配合 Shuffling。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <i class="fas fa-adjust icon-bg"></i>
+        </motion.div>
+
+        <!-- OOD Detection -->
+        <motion.div class="bento-item md:col-span-full lg:col-span-4 row-span-1"
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5 }}>
+            <div class="content-z">
+                <h2 class="text-chinese-title">對比學習提升 OOD 檢測 <span class="text-english-small">Contrastive Learning Improve OOD Detection</span></h2>
+                <p class="text-gray-700 mb-3">Out-of-Distribution (OOD) Detection 指的是識別出與訓練數據分佈不同的樣本。</p>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <div class="flex-1">
+                        <p class="text-gray-800">通過 Contrastive Learning，模型學習到的 In-Distribution 數據表示會更緊湊。</p>
+                        <p class="text-gray-800 mt-1">這使得 OOD 樣本在表示空間中更容易被區分出來，因為它們的 Log Probability 通常較低。</p>
+                        <p class="text-gray-800 mt-1">AUROC (Area Under ROC Curve) 指標從 0.67 提升到 1.00，顯示了顯著的改進。</p>
+                    </div>
+                    <div class="flex-1">
+                        <h3 class="text-lg font-semibold text-gray-800">檢測方法:</h3>
+                        <ul class="list-disc list-inside text-sm text-gray-700">
+                            <li><strong>Density Estimation:</strong> 估計樣本的概率密度。</li>
+                            <li><strong>Confusion Log Probability (CLP):</strong> 類似於 SimCLR 的思路，利用模型對不同類別的預測混淆程度。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+             <i class="fas fa-search-location icon-bg"></i>
+        </motion.div>
+
+    </div>
+
+    <script>
+        const { motion, useScroll, useTransform } = Motion;
+
+        document.querySelectorAll('.bento-item').forEach(item => {
+            // Simple fade-in and slide-up for each item
+            // This is a basic example; more complex effects can be achieved
+            // by using useScroll and useTransform for parallax or other scroll-linked animations
+        });
+    </script>
+</body>
+</html>
+請把兩個內容合併整理
