@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 18: Confronting the Partition Function</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.js"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans TC', sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #1a1d21; /* Softer dark background */
+            color: #e0e0e0; /* Light gray for text */
+            overflow-x: hidden;
+        }
+        .bento-card {
+            background-color: #2c3035; /* Slightly lighter card background */
+            border-radius: 1.5rem; /* Softer rounded corners */
+            padding: 2rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            border: 1px solid #3a3f44; /* Subtle border */
+        }
+        .chinese-title {
+            font-weight: 700; /* Bold */
+        }
+        .english-subtitle {
+            font-size: 0.875rem; /* Smaller for English */
+            color: #a0a0a0; /* Muted color for English */
+            margin-top: 0.25rem;
+        }
+        .highlight-gradient-blue {
+            background: linear-gradient(90deg, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0) 100%);
+        }
+        .highlight-gradient-teal {
+            background: linear-gradient(90deg, rgba(20, 184, 166, 0.3) 0%, rgba(20, 184, 166, 0) 100%);
+        }
+        .icon-style {
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+            color: #3b82f6; /* Blue accent for icons */
+        }
+        .equation {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: #374151;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+            color: #d1d5db;
+        }
+        /* Basic line art for graph placeholder */
+        .graph-placeholder {
+            width: 100%;
+            height: 150px;
+            border: 2px dashed #4b5563;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+            font-size: 0.875rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+        }
+        .text-accent {
+            color: #3b82f6; /* Blue accent */
+        }
+        .text-accent-teal {
+            color: #14b8a6; /* Teal accent */
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="container mx-auto px-4 py-12">
+        <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            class="text-center mb-16"
+        >
+            <h1 class="text-6xl md:text-8xl chinese-title">配分函數 <span class="text-accent">攻克</span></h1>
+            <p class="english-subtitle text-2xl">Chapter 18: Confronting the Partition Function</p>
+            <p class="text-lg mt-2 text-gray-400">Presented by Jarrod Ho (Jiero), 2018.01.12</p>
+        </motion.div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            
+            <motion.div
+                class="bento-card md:col-span-2"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+            >
+                <h2 class="text-4xl chinese-title"><i class="fas fa-project-diagram icon-style"></i>核心挑戰 <span class="text-accent">The Core Challenge</span></h2>
+                <p class="mt-4 text-lg">本章節延續第16、17章，深入探討機率模型中的核心難題：配分函數 (Partition Function)。</p>
+                <p class="mt-2">Our goal is to find parameters <span class="equation text-accent-teal">θ</span> for a probability model.</p>
+                <div class="equation text-2xl">
+                    <span class="text-green-400">p(x; θ)</span> = <frac class="text-yellow-400">1</frac><span class="text-yellow-400">Z(θ)</span> * <span class="text-purple-400">p̃(x; θ)</span>
+                </div>
+                <ul class="list-disc list-inside mt-4 space-y-1 text-gray-300">
+                    <li><span class="text-purple-400 font-semibold">p̃(x; θ)</span>: 未歸一化機率分佈 (Unnormalized probability distribution)。</li>
+                    <li><span class="text-yellow-400 font-semibold">Z(θ)</span>: 配分函數 (Partition Function) 或歸一化常數。</li>
+                    <li>目標是使 <span class="text-green-400 font-semibold">p(x; θ)</span> 成為有效的機率分佈 (Valid probability distribution)。</li>
+                </ul>
+            </motion.div>
+
+            <motion.div
+                class="bento-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+            >
+                <h2 class="text-3xl chinese-title"><i class="fas fa-infinity icon-style"></i>為何棘手 <span class="text-accent">Why Intractable?</span></h2>
+                <p class="mt-4">計算 <span class="text-yellow-400 font-semibold">Z(θ)</span> 非常困難，尤其是對於無向機率模型 (Undirected Models)。</p>
+                <div class="mt-4 space-y-2">
+                    <p class="text-sm">離散變數 Discrete Variables:</p>
+                    <div class="equation text-lg">Z(θ) = Σ<sub>x</sub> p̃(x; θ)</div>
+                    <p class="text-sm">連續變數 Continuous Variables:</p>
+                    <div class="equation text-lg">Z(θ) = ∫ p̃(x; θ) dx</div>
+                </div>
+                <p class="mt-4 text-gray-400">This sum or integral is often computationally infeasible.</p>
+            </motion.div>
+
+            <motion.div
+                class="bento-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+            >
+                <h2 class="text-3xl chinese-title"><i class="fas fa-network-wired icon-style"></i>模型類型 <span class="text-accent">Model Types (Ch.16)</span></h2>
+                <p class
+="mt-4 text-gray-300">回顧第16章：</p>
+                <h3 class="text-xl mt-3 font-semibold text-accent-teal">有向模型 <span class="english-subtitle">Directed Model</span></h3>
+                <p class="text-sm">使用條件機率，通常已歸一化。</p>
+                <div class="equation text-sm">p(t<sub>0</sub>,t<sub>1</sub>,t<sub>2</sub>)=p(t<sub>0</sub>)p(t<sub>1</sub>|t<sub>0</sub>)p(t<sub>2</sub>|t<sub>1</sub>)</div>
+                
+                <h3 class="text-xl mt-3 font-semibold text-accent-teal">無向模型 <span class="english-subtitle">Undirected Model</span></h3>
+                <p class="text-sm">使用勢函數 (Potential Functions)，需要除以 Z(θ) 來歸一化。</p>
+                <div class="equation text-sm">p(a,b,c) = φ<sub>a,b</sub>(a,b)φ<sub>b,c</sub>(b,c)</div>
+            </motion.div>
+
+            <motion.div
+                class="bento-card md:col-span-2"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+            >
+                <h2 class="text-4xl chinese-title"><i class="fas fa-wave-square icon-style"></i>對數概似梯度 <span class="text-accent">Log-Likelihood Gradient</span></h2>
+                <p class="mt-4">由於 <span class="text-yellow-400 font-semibold">Z(θ)</span> 難以處理，梯度下降變得複雜。使用對數概似：</p>
+                <div class="equation text-xl mt-2">
+                    ∇<sub>θ</sub> log p(x; θ) = <span class="text-green-400">∇<sub>θ</sub> log p̃(x; θ)</span> - <span class="text-red-400">∇<sub>θ</sub> log Z(θ)</span>
+                </div>
+                <div class="flex justify-around mt-4 text-sm">
+                    <p class="text-green-400">正向階段 Positive Phase (易)</p>
+                    <p class="text-red-400">負向階段 Negative Phase (難)</p>
+                </div>
+                <div class="graph-placeholder">
+                    Conceptual Graph: P_model(x) (blue) tries to match P_data(x) (green).
+                    <svg width="100" height="50" viewBox="0 0 100 50" class="absolute opacity-20">
+                        <path d="M10,40 Q25,10 40,40 T70,40" stroke="#34d399" stroke-width="2" fill="none"/>
+                        <path d="M20,40 Q35,5 50,40 T80,40" stroke="#60a5fa" stroke-width="2" fill="none" stroke-dasharray="3,3"/>
+                    </svg>
+                </div>
+                <p class="mt-2 text-center text-gray-400">目標：使模型分佈 (藍線) 逼近數據分佈 (綠線)。</p>
+            </motion.div>
+
+            <motion.div
+                class="bento-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+            >
+                <h3 class="text-2xl chinese-title"><i class="fas fa-dice icon-style"></i>Naive MCMC <span class="text-accent-teal">算法</span></h3>
+                <p class="english-subtitle">Algorithm 18.1</p>
+                <ul class="mt-3 list-disc list-inside space-y-1 text-gray-300">
+                    <li>核心：隨機抽樣 (Random Sampling)。</li>
+                    <li>優點：理想情況下能得到正確機率。</li>
+                    <li>缺點：馬可夫鏈預燒期 (burn-in) 長，從隨機初始點抽樣效率低。</li>
+                </ul>
+            </motion.div>
+
+            <motion.div
+                class="bento-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+            >
+                <h3 class="text-2xl chinese-title"><i class="fas fa-exchange-alt icon-style"></i>對比散度 (CD) <span class="text-accent-teal">算法</span></h3>
+                <p class_english-subtitle">Contrastive Divergence (Algorithm 18.2)</p>
+                <ul class="mt-3 list-disc list-inside space-y-1 text-gray-300">
+                    <li>核心：從接近數據分佈的樣本開始，進行 k 次 Gibbs 抽樣 (k Gibbs steps)。</li>
+                    <li>優點：對淺層模型 (如 RBM) 有效，通常可利用。</li>
+                    <li>缺點：難解深層模型；偽模式 (spurious mode) 難收斂。</li>
+                </ul>
+            </motion.div>
+
+            <motion.div
+                class="bento-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.7 }}
+            >
+                <h3 class="text-2xl chinese-title"><i class="fas fa-cogs icon-style"></i>隨機最大概似 (SML/PCD) <span class="text-accent-teal">算法</span></h3>
+                <p class="english-subtitle">Stochastic Maximum Likelihood / Persistent CD (Algorithm 18.3)</p>
+                <ul class="mt-3 list-disc list-inside space-y-1 text-gray-300">
+                    <li>核心：保留前一次馬可夫鏈的狀態 (Keep previous Markov Chain state)。</li>
+                    <li>優點：馬可夫鏈在學習過程中持續更新，對偽模式處理優於CD。</li>
+                    <li>缺點：若梯度率過高或馬可夫鏈狀態數過少，可能不準確。</li>
+                </ul>
+            </motion.div>
+            
+            <motion.div
+                class="bento-card md:col-span-3"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: 0.8 }}
+            >
+                <h2 class="text-3xl chinese-title"><i class="fas fa-ellipsis-h icon-style"></i>其他方法 <span class="text-accent">Other Approaches</span></h2>
+                <p class="mt-4 text-gray-300">除了上述主要算法，書中還提及了其他處理配分函數的策略：</p>
+                <ul class="mt-3 grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-2 text-gray-300">
+                    <li><i class="fas fa-stream text-accent-teal mr-1"></i>偽概似 Pseudolikelihood</li>
+                    <li><i class="fas fa-balance-scale text-accent-teal mr-1"></i>分數匹配 Score Matching</li>
+                    <li><i class="fas fa-percentage text-accent-teal mr-1"></i>比例匹配 Ratio Matching</li>
+                    <li><i class="fas fa-volume-up text-accent-teal mr-1"></i>噪聲對比 Noise-Contrastive</li>
+                    <li><i class="fas fa-calculator text-accent-teal mr-1"></i>估計配分函數 Estimating the Partition Function</li>
+                    <li><i class="fas fa-fire text-accent-teal mr-1"></i>退火重要性抽樣 Annealed Importance Sampling</li>
+                    <li><i class="fas fa-link text-accent-teal mr-1"></i>橋式抽樣 Bridge Sampling</li>
+                </ul>
+                 <p class="mt-4 text-sm text-gray-500">These represent alternative strategies for approximating or circumventing the direct computation of Z(θ).</p>
+            </motion.div>
+
+        </div>
+
+        <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 1, delay: 0.9 }}
+            class="mt-16 bento-card"
+        >
+            <h2 class="text-4xl chinese-title text-center"><i class="fas fa-clipboard-list icon-style"></i>總結 <span class="text-accent">Summary</span></h2>
+            <ul class="list-disc list-inside mt-6 space-y-3 text-lg text-gray-300">
+                <li>配分函數的重要性：The importance of partition function <span class="equation">p(x; θ) = (1/Z(θ)) * p̃(x; θ)</span>。</li>
+                <li>直接積分/求和配分函數通常不可行 (Can't integral partition function)。</li>
+                <li>直接微分歸一化機率函數也難 (Can't derive normalization probability function)。</li>
+                <li>對数概似最大化 (Log-likelihood Maximum) 分為：
+                    <ul class="ml-6 list-circle list-inside space-y-1 text-base">
+                        <li class="text-green-400">正向階段 (Positive phase)</li>
+                        <li class="text-red-400">負向階段 (Negative phase)</li>
+                    </ul>
+                </li>
+                <li>介紹的算法 (Algorithms):
+                    <ul class="ml-6 list-circle list-inside space-y-1 text-base">
+                        <li>MCMC: 計算上不可行 (infeasible computation) 因耗時。</li>
+                        <li>Contrastive Divergence (CD): 適用於淺層模型 (suitable for shallow model like RBM)。</li>
+                        <li>Stochastic Maximum Likelihood (SML): 適用於淺層及更深層模型 (suitable for shallow model and deeper model)。</li>
+                    </ul>
+                </li>
+            </ul>
+        </motion.div>
+    </div>
+
+<script>
+    // Simple Framer Motion setup for each card
+    // Could be more elaborate if needed
+    // This script assumes Framer Motion is loaded via CDN and available as `motion`
+</script>
+</body>
+</html>
