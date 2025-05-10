@@ -1,20 +1,18 @@
-<div align="center">
-
-# Deep Learning 101
-
-## The top private AI Meetup in Taiwan, launched on 2016/11 @ 83F, Taipei 101
-## 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
-
-<img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
-
-<br>
-
-[YouTube](https://www.youtube.com/@DeepLearning101) | 
-[台灣人工智慧社團 FB](https://www.facebook.com/groups/525579498272187/) | 
-[台灣人工智慧社團 網站](http://DeepLearning101.TWMAN.ORG) | 
-[Hugging Face](https://huggingface.co/DeepLearning101)
-
-</div>
+<p align="center">
+  <strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+</p>
+<p align="center">
+  <strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong>
+</p>  
+<p align="center">
+  <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> | 
+  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> | 
+  <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> | 
+  <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
+</p>
 
 ---
 
