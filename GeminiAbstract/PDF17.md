@@ -4,7 +4,7 @@
 
 Monte Carlo Methods
 
-https://www.youtube.com/watch?v=qef-XTUpDvE
+[https://www.youtube.com/watch?v=qef-XTUpDvE](https://www.youtube.com/watch?v=qef-XTUpDvE)
 
 **重點摘要:**
 隨機算法可以粗略地分為兩類：Las Vegas 算法和蒙特卡羅算法。Las Vegas 算法總是精確地返回一個正確答案（或者返回算法失敗了），但計算資源（一般指內存或運行時間）會有波動。蒙特卡羅算法則相反，它返回的答案具有隨機大小的錯誤，但花費更多的計算資源可以減少這種錯誤。在任意固定的計算資源下，蒙特卡羅算法可以得到一個近似解。對於機器學習中的許多問題來說，精確答案很難得到，確定性算法或 Las Vegas 算法難以解決。因此，確定性的近似算法或蒙特卡羅近似方法成為常用選擇。本章主要關注蒙特卡羅方法。

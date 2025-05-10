@@ -4,7 +4,7 @@
 
 Practical Methodology
 
-https://www.youtube.com/live/gjca8HvfyLM?si=k5Iz-aT6AyLHCuP8
+[https://www.youtube.com/live/gjca8HvfyLM?si=k5Iz-aT6AyLHCuP8](https://www.youtube.com/live/gjca8HvfyLM?si=k5Iz-aT6AyLHCuP8)
 
 **重點摘要:**
 要成功地使用深度學習技術，僅僅知道有哪些算法和解釋它們為何有效的原因是不夠的。一個優秀的機器學習實踐者還需要知道如何針對具體應用挑選一個合適的算法以及如何監控，並根據反饋改進機器學習系統。在機器學習系統的日常開發中，實踐者需要決定是否收集更多數據、增加或減少模型容量、添加或刪除正則化項、改進模型的優化、改進模型的近似推斷或調試模型的軟件實現。這些操作都需要大量時間，因此確定正確做法至關重要。

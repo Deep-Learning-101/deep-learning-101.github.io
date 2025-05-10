@@ -4,7 +4,7 @@
 
 Confronting the Partition Function
 
-https://www.youtube.com/watch?v=yw1JDopTuwo
+[https://www.youtube.com/watch?v=yw1JDopTuwo](https://www.youtube.com/watch?v=yw1JDopTuwo)
 
 **重點摘要:**
 許多機率模型（尤其是無向圖模型）由一個未歸一化的機率分佈 `p̃(x;θ)` 定義。為了獲得一個有效的機率分佈 `p(x;θ)`，必須將 `p̃(x;θ)` 除以一個歸一化常數，即配分函數 `Z(θ)` (公式 18.1)。配分函數是未歸一化機率在所有狀態上的積分（對於連續變量）或求和（對於離散變量）(公式 18.2, 18.3)。對於許多有趣的深度學習模型而言，這個積分或求和難以計算。雖然有些模型設計成具有易於處理的歸一化常數或避免直接計算 `p(x)`，但其他模型則必須直接面對這個挑戰。本章旨在介紹用於訓練和評估那些具有難以處理的配分函數的模型的技術。

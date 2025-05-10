@@ -4,7 +4,7 @@
 
 Optimization for Training Deep Models
 
-https://www.youtube.com/watch?v=DeXH5IMHfcs
+[https://www.youtube.com/watch?v=DeXH5IMHfcs](https://www.youtube.com/watch?v=DeXH5IMHfcs)
 
 **重點摘要:**
 深度學習算法在許多情況下都涉及到優化。模型中的進行推斷（如PCA）涉及到求解優化問題。我們經常使用解析優化去證明或設計算法。在深度學習涉及到的諸多優化問題中，最難的是神經網路訓練。即使是用幾百台機器投入幾天到幾個月來解決單個神經網路訓練問題，也是很常見的。因為這其中的優化問題很重要，代價也很高，因此研究者們開發了一組專門為此設計的優化技術。本章會介紹神經網路訓練中的這些優化技術。

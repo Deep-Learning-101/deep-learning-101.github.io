@@ -4,7 +4,7 @@
 
 Linear Factor Models
 
-https://www.youtube.com/watch?v=zVENYs30Ny4&
+[https://www.youtube.com/watch?v=zVENYs30Ny4&](https://www.youtube.com/watch?v=zVENYs30Ny4&)
 
 **重點摘要:**
 許多深度學習的研究都涉及將輸入構建為機率模型 `p_model(x)`。原則上，給定任何其他變量的情況下，這樣的模型可以使用機率推斷來預測環境中的任何變量。許多這樣的模型還具有潛變量 `h`，其中 `p_model(x) = E_h p_model(x|h)`。這些潛變量提供了表示數據的另一種方式。我們在深度前饋網路和循環網路中已經發現，基於潛變量的分布式表示繼承了表示學習的所有優點。

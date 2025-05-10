@@ -4,7 +4,7 @@
 
 Recurrent and Recursive Nets
 
-https://www.youtube.com/watch?v=p6xzPqRd46w
+[https://www.youtube.com/watch?v=p6xzPqRd46w](https://www.youtube.com/watch?v=p6xzPqRd46w)
 
 **重點摘要:**
 循環神經網路 (Recurrent Neural Network, RNN) 是一類用於處理序列數據的神經網路。就像卷積網路是專門用於處理網格化數據（如圖像）的神經網路一樣，循環神經網路專門用於處理序列 `x^(1), ..., x^(τ)`。正如同卷積網路可以很容易地擴展到具有很大寬度和高度的圖像，以及處理大小可變的圖像，循環網路可以擴展到更長的序列（比起不基於序列的特化網路長得多）。大多數循環網路也能處理可變長度的序列。

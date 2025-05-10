@@ -4,7 +4,7 @@
 
 Autoencoders
 
-https://www.youtube.com/watch?v=5mrJmzzpPBs
+[https://www.youtube.com/watch?v=5mrJmzzpPBs](https://www.youtube.com/watch?v=5mrJmzzpPBs)
 
 **重點摘要:**
 自編碼器 (autoencoder) 是一種神經網路，經過訓練後嘗試將輸入複製到輸出。內部有一個隱藏層 `h`，可以產生編碼 (code) 來表示輸入。這個網路可以看作由兩部分組成：一個由函數 `h = f(x)` 表示的編碼器和一個生成重構的解碼器 `r = g(h)`。如果一個自編碼器只是簡單地學會將處設置為 `g(f(x)) = x`，那麼這個自編碼器就沒有什麼特別的用處。相反，自編碼器通常被設計成不能完美複製輸入，而是只能近似地複製，並且只對那些與訓練數據相似的輸入複製得很好。這種約束迫使其優先複製輸入的哪些部分，因此往往能學習到數據的有用特性。

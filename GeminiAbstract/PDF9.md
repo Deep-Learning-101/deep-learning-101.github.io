@@ -4,7 +4,7 @@
 
 Convolutional Networks
 
-https://www.youtube.com/watch?v=51cO6Kv37p4
+[https://www.youtube.com/watch?v=51cO6Kv37p4](https://www.youtube.com/watch?v=51cO6Kv37p4)
 
 **重點摘要:**
 卷積神經網路 (Convolutional Neural Network, CNN)，有時也叫做卷積網路 (convolutional network)，是一類專門用來處理具有類似網格結構的數據的神經網路。例如，時間序列數據（可以認為是在時間軸上規律採樣形成的一維網格）和圖像數據（可以看作是二維的像素網格）。卷積網路在諸多應用領域都表現優異。「卷積神經網路」一詞表明該網路使用了**卷積 (convolution)** 這種數學運算。卷積是一種特殊的線性運算。卷積網路是指那些至少在網路的一層中使用卷積運算來替代一般矩陣乘法運算的神經網路。

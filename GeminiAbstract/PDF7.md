@@ -4,7 +4,7 @@
 
 Regularization for Deep Learning
 
-https://www.youtube.com/live/gSymqOhKW8o?si=7QMqjNdMOeFTcJrS
+[https://www.youtube.com/live/gSymqOhKW8o?si=7QMqjNdMOeFTcJrS](https://www.youtube.com/live/gSymqOhKW8o?si=7QMqjNdMOeFTcJrS)
 
 **重點摘要:**
 機器學習中的一個核心問題是設計不僅在訓練數據上表現好，並且能 在新輸入上泛化好的算法。在機器學習中，許多策略顯式地被設計為減少測試誤差（可能會以增大訓練誤差為代價）。這些策略被統稱為**正則化 (regularization)**。我們將在后文看到，深度學習工作者可以使用許多不同形式的正則化策略。事實上，開發更有效的正則化策略已成為本領域的主要研究工作之一。

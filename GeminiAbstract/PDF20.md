@@ -4,7 +4,7 @@
 
 Deep Generative Models
 
-https://www.youtube.com/watch?v=oiDYD1qibBQ
+[https://www.youtube.com/watch?v=oiDYD1qibBQ](https://www.youtube.com/watch?v=oiDYD1qibBQ)
 
 **重點摘要:**
 本章旨在介紹多種具體的深度生成模型，這些模型利用前面章節（十六至十九章）討論的技術進行構建和訓練。所有這些模型的核心目標是表示多個變量的機率分佈。部分模型允許顯式計算機率分佈函數，而另一些模型則不支持直接評估，但允許從分佈中採樣等隱式操作。某些模型使用圖模型語言進行結構化描述，而其他模型雖然也代表機率分佈，但無法簡單地從因子角度描述。

@@ -4,7 +4,7 @@
 
 Representation Learning
 
-https://www.youtube.com/watch?v=MA52s5dQaGY
+[https://www.youtube.com/watch?v=MA52s5dQaGY](https://www.youtube.com/watch?v=MA52s5dQaGY)
 
 **重點摘要:**
 本章首先討論表示學習是什麼意思，以及表示的概念如何有助於深度框架的設計。接著探討學習算法如何在不同任務中共享統計信息，包括使用無監督任務中的信息來完成監督任務。共享表示有助於處理多模式或多領域，或是將已學到的知識遷移到樣本很少或沒有，但任務表示依然存在的任務上。最後，探討表示學習成功的原​​因，從分佈式表示 (Hinton et al., 1986) 和深度表示的理論優勢，以及生成過程潛在假設的更一般概念，特別是觀測數據的基本成因。

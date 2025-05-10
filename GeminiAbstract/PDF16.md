@@ -4,7 +4,7 @@
 
 Structured Probabilistic Models
 
-https://www.youtube.com/watch?v=n0rBS3sAqI0
+[https://www.youtube.com/watch?v=n0rBS3sAqI0](https://www.youtube.com/watch?v=n0rBS3sAqI0)
 
 **重點摘要:**
 深度學習為研究者提供了許多建模方式，用於設計和描述算法。其中一種形式是基於**結構化機率模型 (structured probabilistic model)** 的思想。本章旨在理解如何使用圖模型作為描述機率模型中許多變數之間依賴關係的語言，以及如何將這些思想應用於深度學習。
