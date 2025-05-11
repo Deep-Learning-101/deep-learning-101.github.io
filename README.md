@@ -63,7 +63,7 @@ Deep Learning 101 Meetup 歷年活動
 |-----|------|------|------|
 | 49  | On the Relationship among Convolution Attention and GNN | [2022/05/06](https://www.youtube.com/watch?v=2hpkTRrINgc) | 👤 杜岳華 |
 | 48  | Model-Based Reinforcement Learning | [2021/07/16](https://www.youtube.com/watch?v=uKJFypVGJdo) | 👤 翁崇恒 |
-| 47  | 深度學習也可以學傅立葉轉換 | [2020/12/04](https://www.youtube.com/watch?v=1IVMJmVr2Pw) | 👤 杜岳華 |
+| 47  | [深度學習也可以學傅立葉轉換](https://deep-learning-101.github.io/html/No47.html) | [2020/12/04](https://www.youtube.com/watch?v=1IVMJmVr2Pw) | 👤 杜岳華 |
 | 45  | Modeling the Dynamics of SGD by Stochastic Differential Equation | [2020/09/11](https://www.youtube.com/watch?v=Vs9YQw5RO-w) | 👤 Mark Chang |
 | 44  | [神經網路的黑執事](https://deep-learning-101.github.io/html/No44.html) | [2020/08/21](https://www.youtube.com/watch?v=gMaQTqZUW58) | 👤 Mark Liou |
 | 43  | 幾何深度學習是在幾何什麼的？ | [2020/07/24](https://www.youtube.com/watch?v=fatrgy2lo0k) | 👤 杜岳華 |
