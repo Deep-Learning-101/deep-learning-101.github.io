@@ -1,6 +1,10 @@
 # [避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://blog.twman.org/2025/03/AIAgent.html)
 _那些 AI Agent 實戰踩過的坑_
 
+**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
+**日期**：2025年03月15日  
+**原文網址**：[https://blog.twman.org/2025/03/AIAgent.html](https://blog.twman.org/2025/03/AIAgent.html)
+
 ## 前言
 
 AI Agent 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 AI Agent 真正落地的障礙。
