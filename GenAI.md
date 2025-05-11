@@ -2,6 +2,10 @@
 
 淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。
 
+**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
+**日期**：2024年10月10日  
+**原文網址**：[https://blog.twman.org/2024/08/LLM.html](https://blog.twman.org/2024/08/LLM.html)
+
 ---
 
 ## 🌟 生成式人工智慧（GenAI）是什麼？
