@@ -25,23 +25,23 @@
 
 - **[白話文手把手帶你科普 GenAI](https://blog.twman.org/2024/08/LLM.html)**：[淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。](https://deep-learning-101.github.io/GenAI)
 
-- **[大型語言模型直接就打完收工？](https://blog.twman.org/2024/09/LLM.html)**：回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。
+- **[大型語言模型直接就打完收工？](https://blog.twman.org/2024/09/LLM.html)**：[回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性](https://deep-learning-101.github.io/1010LLM)。
 
-- **[檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧](https://blog.twman.org/2024/07/RAG.html)**：探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。
+- **[檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧](https://blog.twman.org/2024/07/RAG.html)**：[探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議](https://deep-learning-101.github.io/RAG)。
 
-- **[大型語言模型 (LLM) 入門完整指南：原理、應用與未來](https://blog.twman.org/2024/02/LLM.html)**：探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。
+- **[大型語言模型 (LLM) 入門完整指南：原理、應用與未來](https://blog.twman.org/2024/02/LLM.html)**：[探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性](https://deep-learning-101.github.io/0204LLM)。
 
-- **[什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)](https://blog.twman.org/2023/04/GPT.html)**：探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。
+- **[什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)](https://blog.twman.org/2023/04/GPT.html)**：[探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用](https://deep-learning-101.github.io/GPU)。
 
-- **[Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)](https://blog.twman.org/2024/11/diffusion.html)**：深入探討影像生成與分割技術的應用，強調硬體資源的重要性。
+- **[Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)](https://blog.twman.org/2024/11/diffusion.html)**：[深入探討影像生成與分割技術的應用，強調硬體資源的重要性](https://deep-learning-101.github.io/diffusion)。
 
-- **[ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策](https://blog.twman.org/2024/02/asr-tts.html)**：探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性。
+- **[ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策](https://blog.twman.org/2024/02/asr-tts.html)**：[探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性](https://deep-learning-101.github.io/asr-tts)。
 
-- **[那些 NLP 踩的坑](https://blog.twman.org/2021/04/NLP.html)**：分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響。
+- **[那些 NLP 踩的坑](https://blog.twman.org/2021/04/NLP.html)**：[分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響](https://deep-learning-101.github.io/nlp)。
 
-- **[那些語音處理踩的坑](https://blog.twman.org/2021/04/ASR.html)**：分享語音處理領域的實務經驗，強調資料品質對模型效果的影響。
+- **[那些語音處理踩的坑](https://blog.twman.org/2021/04/ASR.html)**：[分享語音處理領域的實務經驗，強調資料品質對模型效果的影響](https://deep-learning-101.github.io/speech)。
 
-- **[手把手學深度學習安裝環境](https://blog.twman.org/2020/05/DeepLearning.html)**：詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗。
+- **[手把手學深度學習安裝環境](https://blog.twman.org/2020/05/DeepLearning.html)**：[詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗](https://deep-learning-101.github.io/101)。
 
 ---
 
