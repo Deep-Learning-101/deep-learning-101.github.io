@@ -18,7 +18,10 @@
 </p>
 
 ---
+<details close> 
 
+<summary>手把手帶你一起踩 AI 坑</summary>
+  
 ### [手把手帶你一起踩 AI 坑](https://blog.twman.org/p/deeplearning101.html)：https://www.twman.org/AI
 
 - **[避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://blog.twman.org/2025/03/AIAgent.html)**：  [探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。](https://deep-learning-101.github.io/agent)
@@ -43,15 +46,35 @@
 
 - **[手把手學深度學習安裝環境](https://blog.twman.org/2020/05/DeepLearning.html)**：[詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗](https://deep-learning-101.github.io/101)。
 
+</details>
+
 ---
 
-### [Speech Processing (語音處理)](https://github.com/Deep-Learning-101/Speech-Processing-Paper)：**[針對訪談或對話進行分析與識別](https://www.twman.org/AI/ASR)**
-
-### [Natural Language Processing, NLP (自然語言處理)](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper)：**[針對文檔進行分析與擷取](https://www.twman.org/AI/NLP)**
+<details close> 
+<summary>大語言模型 (Large Language Model)</summary>
 
 ### [大語言模型 (Large Language Model)](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper#llm)
 
+</details>
+
+<details close> 
+<summary>Speech Processing (語音處理)</summary>
+
+### [Speech Processing (語音處理)](https://github.com/Deep-Learning-101/Speech-Processing-Paper)：**[針對訪談或對話進行分析與識別](https://www.twman.org/AI/ASR)**
+
+</details>
+<details close> 
+<summary>Natural Language Processing, NLP (自然語言處理)</summary>
+
+### [Natural Language Processing, NLP (自然語言處理)](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper)：**[針對文檔進行分析與擷取](https://www.twman.org/AI/NLP)**
+
+</details>
+<details close> 
+<summary>Computer Vision (電腦視覺)</summary>
+
 ### [Computer Vision (電腦視覺)](https://github.com/Deep-Learning-101/Computer-Vision-Paper)：**[針對物件或場景影像進行分析與偵測](https://www.twman.org/AI/CV)**  
+
+</details>
 
 ---
 
