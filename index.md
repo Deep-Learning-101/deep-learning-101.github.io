@@ -23,61 +23,91 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 </p>
 
 ---
-<details close> 
 
+<details>
 <summary>手把手帶你一起踩 AI 坑</summary>
-  
-### [手把手帶你一起踩 AI 坑](https://blog.twman.org/p/deeplearning101.html)：https://www.twman.org/AI
 
-- **[避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://blog.twman.org/2025/03/AIAgent.html)**：  [探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。](https://deep-learning-101.github.io/agent)
+<h3><a href="https://blog.twman.org/p/deeplearning101.html">手把手帶你一起踩 AI 坑</a>：https://www.twman.org/AI</h3>
 
-- **[白話文手把手帶你科普 GenAI](https://blog.twman.org/2024/08/LLM.html)**：[淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。](https://deep-learning-101.github.io/GenAI)
-
-- **[大型語言模型直接就打完收工？](https://blog.twman.org/2024/09/LLM.html)**：[回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性](https://deep-learning-101.github.io/1010LLM)。
-
-- **[檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧](https://blog.twman.org/2024/07/RAG.html)**：[探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議](https://deep-learning-101.github.io/RAG)。
-
-- **[大型語言模型 (LLM) 入門完整指南：原理、應用與未來](https://blog.twman.org/2024/02/LLM.html)**：[探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性](https://deep-learning-101.github.io/0204LLM)。
-
-- **[什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)](https://blog.twman.org/2023/04/GPT.html)**：[探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用](https://deep-learning-101.github.io/GPU)。
-
-- **[Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)](https://blog.twman.org/2024/11/diffusion.html)**：[深入探討影像生成與分割技術的應用，強調硬體資源的重要性](https://deep-learning-101.github.io/diffusion)。
-
-- **[ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策](https://blog.twman.org/2024/02/asr-tts.html)**：[探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性](https://deep-learning-101.github.io/asr-tts)。
-
-- **[那些 NLP 踩的坑](https://blog.twman.org/2021/04/NLP.html)**：[分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響](https://deep-learning-101.github.io/nlp)。
-
-- **[那些語音處理踩的坑](https://blog.twman.org/2021/04/ASR.html)**：[分享語音處理領域的實務經驗，強調資料品質對模型效果的影響](https://deep-learning-101.github.io/speech)。
-
-- **[手把手學深度學習安裝環境](https://blog.twman.org/2020/05/DeepLearning.html)**：[詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗](https://deep-learning-101.github.io/101)。
+<ul>
+  <li>
+    <b><a href="https://blog.twman.org/2025/03/AIAgent.html">避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案</a></b><br>
+    <a href="https://deep-learning-101.github.io/agent">探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/08/LLM.html">白話文手把手帶你科普 GenAI</a></b><br>
+    <a href="https://deep-learning-101.github.io/GenAI">淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/09/LLM.html">大型語言模型直接就打完收工？</a></b><br>
+    <a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/07/RAG.html">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b><br>
+    <a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/02/LLM.html">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b><br>
+    <a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2023/04/GPT.html">什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)</a></b><br>
+    <a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/11/diffusion.html">Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)</a></b><br>
+    <a href="https://deep-learning-101.github.io/diffusion">深入探討影像生成與分割技術的應用，強調硬體資源的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/02/asr-tts.html">ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策</a></b><br>
+    <a href="https://deep-learning-101.github.io/asr-tts">探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2021/04/NLP.html">那些 NLP 踩的坑</a></b><br>
+    <a href="https://deep-learning-101.github.io/nlp">分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2021/04/ASR.html">那些語音處理踩的坑</a></b><br>
+    <a href="https://deep-learning-101.github.io/speech">分享語音處理領域的實務經驗，強調資料品質對模型效果的影響。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2020/05/DeepLearning.html">手把手學深度學習安裝環境</a></b><br>
+    <a href="https://deep-learning-101.github.io/101">詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗。</a>
+  </li>
+</ul>
 
 </details>
 
 ---
 
-<details close> 
+<details>
 <summary>大語言模型 (Large Language Model)</summary>
 
-### [大語言模型 (Large Language Model)](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper#llm)
+<h3><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper#llm">大語言模型 (Large Language Model)</a></h3>
 
 </details>
 
-<details close> 
+<details>
 <summary>Speech Processing (語音處理)</summary>
 
-### [Speech Processing (語音處理)](https://github.com/Deep-Learning-101/Speech-Processing-Paper)：**[針對訪談或對話進行分析與識別](https://www.twman.org/AI/ASR)**
+<h3><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing (語音處理)</a>：</h3>
+<p><b><a href="https://www.twman.org/AI/ASR">針對訪談或對話進行分析與識別</a></b></p>
 
 </details>
-<details close> 
+
+<details>
 <summary>Natural Language Processing, NLP (自然語言處理)</summary>
 
-### [Natural Language Processing, NLP (自然語言處理)](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper)：**[針對文檔進行分析與擷取](https://www.twman.org/AI/NLP)**
+<h3><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP (自然語言處理)</a>：</h3>
+<p><b><a href="https://www.twman.org/AI/NLP">針對文檔進行分析與擷取</a></b></p>
 
 </details>
-<details close> 
+
+<details>
 <summary>Computer Vision (電腦視覺)</summary>
 
-### [Computer Vision (電腦視覺)](https://github.com/Deep-Learning-101/Computer-Vision-Paper)：**[針對物件或場景影像進行分析與偵測](https://www.twman.org/AI/CV)**  
+<h3><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision (電腦視覺)</a>：</h3>
+<p><b><a href="https://www.twman.org/AI/CV">針對物件或場景影像進行分析與偵測</a></b></p>
 
 </details>
 
