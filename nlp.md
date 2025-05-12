@@ -1,4 +1,4 @@
-# 那些自然語言處理 (Natural Language Processing, NLP) 踩的坑
+# [那些自然語言處理 (Natural Language Processing, NLP) 踩的坑](https://deep-learning-101.github.io/)
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
 **日期**：2021年4月17日  
