@@ -1,4 +1,4 @@
-# 解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算
+# [解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算](https://deep-learning-101.github.io/)
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
 **日期**：2023年4月12日  
