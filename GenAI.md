@@ -1,4 +1,4 @@
-# [白話文手把手帶你科普 GenAI](https://blog.twman.org/2024/08/LLM.html)
+# [白話文手把手帶你科普 GenAI](https://deep-learning-101.github.io/)
 
 淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。
 
