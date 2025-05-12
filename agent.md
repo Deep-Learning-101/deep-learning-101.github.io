@@ -1,4 +1,4 @@
-# [避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://blog.twman.org/2025/03/AIAgent.html)
+# [避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://deep-learning-101.github.io/)
 _那些 AI Agent 實戰踩過的坑_
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
