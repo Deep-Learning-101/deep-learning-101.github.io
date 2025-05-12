@@ -90,24 +90,21 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 <details>
 <summary>Speech Processing (語音處理)</summary>
 
-<h3><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing (語音處理)</a>：</h3>
-<p><b><a href="https://www.twman.org/AI/ASR">針對訪談或對話進行分析與識別</a></b></p>
+<h3><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing (語音處理)</a>：</h3><p><b><a href="https://www.twman.org/AI/ASR">針對訪談或對話進行分析與識別</a></b></p>
 
 </details>
 
 <details>
 <summary>Natural Language Processing, NLP (自然語言處理)</summary>
 
-<h3><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP (自然語言處理)</a>：</h3>
-<p><b><a href="https://www.twman.org/AI/NLP">針對文檔進行分析與擷取</a></b></p>
+<h3><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP (自然語言處理)</a>：</h3><p><b><a href="https://www.twman.org/AI/NLP">針對文檔進行分析與擷取</a></b></p>
 
 </details>
 
 <details>
 <summary>Computer Vision (電腦視覺)</summary>
 
-<h3><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision (電腦視覺)</a>：</h3>
-<p><b><a href="https://www.twman.org/AI/CV">針對物件或場景影像進行分析與偵測</a></b></p>
+<h3><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision (電腦視覺)</a>：</h3><p><b><a href="https://www.twman.org/AI/CV">針對物件或場景影像進行分析與偵測</a></b></p>
 
 </details>
 
