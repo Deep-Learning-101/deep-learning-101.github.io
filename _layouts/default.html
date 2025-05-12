@@ -3,7 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <title>{{ page.title }}</title>
-  <!-- GA4 -->
+
+  <!-- GitHub markdown-style CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+
+  <style>
+    body {
+      padding: 2rem;
+      background-color: #fff;
+      font-family: system-ui;
+    }
+
+    .markdown-body {
+      max-width: 960px;
+      margin: auto;
+    }
+  </style>
+
+  <!-- Google Analytics GA4 -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHE1PH854B"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,6 +30,8 @@
   </script>
 </head>
 <body>
-  {{ content }}
+  <article class="markdown-body">
+    {{ content }}
+  </article>
 </body>
 </html>
