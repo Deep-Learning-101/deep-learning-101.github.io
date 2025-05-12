@@ -1,4 +1,4 @@
-# Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)；ComfyUI + Multimodal + Stable Diffusion + FLUX
+# [Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)；ComfyUI + Multimodal + Stable Diffusion + FLUX](https://deep-learning-101.github.io/)
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
 **日期**：2024年11月1日  
