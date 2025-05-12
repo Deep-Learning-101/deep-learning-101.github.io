@@ -1,4 +1,4 @@
-# 那些語音處理 (Speech Processing) 踩的坑
+# [那些語音處理 (Speech Processing) 踩的坑](https://deep-learning-101.github.io/)
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2021年4月26日  
