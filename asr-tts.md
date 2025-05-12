@@ -1,4 +1,4 @@
-# ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策；那些ASR和TTS可能會踩的坑
+# [ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策；那些ASR和TTS可能會踩的坑](https://deep-learning-101.github.io/)
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
 **日期**：2024年2月25日  
