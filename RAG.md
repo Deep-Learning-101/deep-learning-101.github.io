@@ -1,4 +1,4 @@
-# 檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧
+# [檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://deep-learning-101.github.io/)
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2024年7月7日  
