@@ -8,9 +8,10 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 </p>
 <p align="center">
   <strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong>
-</p>  
 <p align="center">
-  <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
 </p>
 <p align="center">
   <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> | 
