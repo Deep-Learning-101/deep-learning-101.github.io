@@ -8,12 +8,12 @@
     <script src="https://cdn.tailwindcss.com/3.4.3"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script type="importmap">
-      {
-        "imports": {
-          "framer-motion": "https://esm.sh/framer-motion@11.2.10"
+        {
+          "imports": {
+            "framer-motion": "https://esm.sh/framer-motion@11.2.10"
+          }
         }
-      }
-    </script>
+      </script>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
@@ -501,4 +501,209 @@
             <p class="text-content-bold">UMAP 使用二元交叉熵 (Binary Cross-Entropy) 作為損失函數：</p>
             <p class="text-content-eng">UMAP uses Binary Cross-Entropy as its loss function:</p>
             <div class="formula">H(p, q) = - Σ<sub>i</sub> ( p<sub>i</sub> log q<sub>i</sub> + (1 - p<sub>i</sub>) log(1 - q<sub>i</sub>) )</div>
-            <p class="mt-2 text
+            <p class="mt-2 text-content-bold">此損失函數與 KL 散度 (KL Divergence) 相關：</p>
+            <p class="text-content-eng">This loss function is related to KL Divergence:</p>
+            <div class="formula">H(p, q) = H(p) + D<sub>KL</sub>(p || q)</div>
+            <p class="mt-2 english-text">由於 <code>H(p)</code> (原始空間機率分佈的熵) 是固定的，最小化交叉熵等同於最小化 KL 散度。優化方法為梯度下降 (Gradient Descent)。</p>
+        </section>
+
+        <section class="bento-item highlight-green" id="initialization" data-custom="23">
+            <h2 class="text-section-title"><i class="fas fa-cogs icon-style"></i><strong>UMAP: 初始化策略</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">UMAP 的初始化對於結果的全局結構保留和收斂速度至關重要。</p>
+            <p class="text-content-eng">UMAP's initialization is crucial for preserving global structure and for convergence speed.</p>
+            <p class="mt-4 text-content-bold">它使用正規化拉普拉斯矩陣 (Normalized Laplacian) 的特徵向量 (Eigenvectors) 進行初始化：</p>
+            <p class="text-content-eng">It uses eigenvectors of the Normalized Laplacian for initialization:</p>
+            <div class="formula">Lu = λu</div>
+            <p class="mt-2 english-text">這種基於譜方法 (spectral method) 的初始化有助於更快收斂，並更好地保留數據的全局拓撲結構，相比 t-SNE 常用的隨機初始化 (random initialization) 更具優勢。</p>
+        </section>
+        
+        <section class="bento-item lg-col-span-3" id="comparison-table-file2" data-custom="24">
+            <h2 class="text-section-title"><i class="fas fa-table icon-style"></i><strong>T-SNE 與 UMAP 詳細比較</strong> <span class="english-small">(File 2 Table)</span></h2>
+            <p class="text-content-eng">Detailed comparison of T-SNE and UMAP models.</p>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>特性 (Feature)</th>
+                            <th>T-SNE</th>
+                            <th>UMAP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>原始空間距離度量 (Distance metric in original space)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                        </tr>
+                        <tr>
+                            <td>衡量數據點間權重方式 (How to measure weight between data points)</td>
+                            <td>機率 (Probability)</td>
+                            <td>機率 (Probability)</td>
+                        </tr>
+                        <tr>
+                            <td>原始空間假設 (Assumption in original space)</td>
+                            <td>正規化高斯分佈 (Normalized Gaussian distribution)</td>
+                            <td>非正規化高斯分佈 (Unnormalized Gaussian distribution)</td>
+                        </tr>
+                        <tr>
+                            <td>重建空間假設 (Assumption in reconstructed space)</td>
+                            <td>正規化 t-分佈 (Normalized t-distribution)</td>
+                            <td>非正規化 t-分佈 (Unnormalized t-distribution)</td>
+                        </tr>
+                        <tr>
+                            <td>決定高斯分佈方差方式 (How to decide the variance of Gaussian distribution)</td>
+                            <td>困惑度 (Perplexity)</td>
+                            <td>鄰居數量 (Number of neighbors)</td>
+                        </tr>
+                        <tr>
+                            <td>重建空間距離度量 (Distance metric in reconstructed space)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                        </tr>
+                        <tr>
+                            <td>損失函數 (Loss function)</td>
+                            <td>KL 散度 (KL divergence)</td>
+                            <td>二元交叉熵 (Binary cross entropy)</td>
+                        </tr>
+                        <tr>
+                            <td>初始化 (Initialization)</td>
+                            <td>隨機 (Random)</td>
+                            <td>拉普拉斯特徵向量 (Eigenvectors of Laplacian)</td>
+                        </tr>
+                        <tr>
+                            <td>優化方法 (Optimization method)</td>
+                            <td>梯度下降 (Gradient descent)</td>
+                            <td>梯度下降 (Gradient descent)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bento-item lg-col-span-2 highlight-orange" id="graph-topology" data-custom="25">
+            <h2 class="text-section-title"><i class="fas fa-sitemap icon-style"></i><strong>圖拓撲結構的決定</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">決定圖的拓撲結構有兩種主要方法：</p>
+            <p class="text-content-eng">There are two main approaches to deciding the graph topology:</p>
+            <div class="mt-4">
+                <h4 class="text-xl font-semibold mb-2 text-content-bold">離散方法 (Discrete approach)</h4>
+                <p class="english-text">產生稀疏圖 (sparse graph)。</p>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 english-text">
+                    <li><strong>ε-鄰域 (ε-neighborhood):</strong> 將距離在 ε 內的頂點視為鄰居。</li>
+                    <li><strong>K-最近鄰 (k-nearest neighbor):</strong> 將 K 個最近的頂點視為鄰居。</li>
+                </ul>
+            </div>
+            <div class="mt-6">
+                <h4 class="text-xl font-semibold mb-2 text-content-bold">連續方法 (Continuous approach)</h4>
+                <p class="english-text">產生稠密圖 (dense graph)。</p>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 english-text">
+                    <li><strong>距離 (Distance):</strong> 直接使用成對距離 <code>d(x<sub>i</sub>, x<sub>j</sub>) = ||x<sub>i</sub> - x<sub>j</sub>||<sup>2</sup></code>。</li>
+                    <li><strong>由距離衍生的機率 (Probability derived from distance):</strong> 如 <code>P<sub>ij</sub> = e<sup>-d(x<sub>i</sub>,x<sub>j</sub>)<sup>2</sup>/σ</sup></code>。可能是非對稱的。</li>
+                </ul>
+            </div>
+            <p class="mt-4 english-text">無論哪種方法，都需要預先定義距離度量 (distance metric)。</p>
+        </section>
+        
+        <section class="bento-item flex flex-col items-center justify-center" id="umap-global-structure" data-custom="26">
+            <h2 class="text-section-title"><i class="fas fa-globe-americas icon-style"></i><strong>UMAP 與全局結構</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">UMAP 是否比 t-SNE 更好地保留全局結構？</p>
+            <p class="text-content-eng">Does UMAP preserve global structure better than t-SNE?</p>
+            <img src="https://i.imgur.com/9gZfQhE.png" alt="UMAP vs t-SNE global structure comparison" class="mt-4 rounded-lg shadow-md max-w-full h-auto">
+            <p class="mt-2 text-xs text-center text-gray-500">圖片來源: Kobak, D., & Linderman, G. C. (2019). UMAP does not preserve global structure any better than t-SNE when using the same initialization. doi: 10.1101/2019.12.19.877522</p>
+            <p class="mt-4 english-text">研究指出，當使用相同的初始化方法時 (例如都用隨機初始化，或都用譜方法初始化)，UMAP 在保留全局結構方面並不一定優於 t-SNE。UMAP 宣稱的全局結構保留能力很大程度上得益於其預設的譜初始化方法。</p>
+        </section>
+
+        <section class="bento-item lg-col-span-3 highlight-blue" id="gnn-relation" data-custom="27">
+            <h2 class="text-section-title"><i class="fas fa-brain icon-style"></i><strong>與圖神經網路的關聯</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-eng">Relation to Graph Neural Network (GNN).</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-4"> 
+                <div>
+                    <h4 class="text-xl font-semibold mb-2 text-content-bold">圖神經網路 (Graph Neural Network)</h4>
+                    <p class="english-text">轉換特徵於 <strong>給定的圖幾何結構</strong> 上。</p>
+                    <p class="text-content-eng">Transforms features on the <strong>given geometry of graph</strong>.</p>
+                    <div class="formula">Y' = f(X, graph)</div>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-2 text-content-bold">透過圖進行降維 (Dimensional Reduction via Graph)</h4>
+                    <p class="english-text">從特徵 <strong>構建圖</strong>，然後在該圖的幾何結構上轉換特徵。</p>
+                    <p class="text-content-eng">**Constructs graph** from features and then transforms features on the geometry of that graph.</p>
+                    <div class="formula">graph = f(X)</div>
+                    <div class="formula">Y' = g(X, graph)</div>
+                </div>
+            </div>
+            <img src="https://i.imgur.com/YfN8ZfX.png" alt="GNN vs Dimensional Reduction via Graph" class="mt-6 rounded-lg shadow-md max-w-full h-auto">
+            <p class="mt-4 english-text">兩者都利用圖結構，但 GNN 通常假設圖結構是預先給定的，而基於圖的降維方法 (如 UMAP, t-SNE) 則會先從數據本身推斷或構建圖結構。</p>
+        </section>
+        
+        <section class="bento-item" id="gcn-example" data-custom="28">
+            <h2 class="text-section-title"><i class="fas fa-wave-square icon-style"></i><strong>圖卷積網路 (GCN) 範例</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">一個簡單的 GCN 層可以表示為：</p>
+            <p class="text-content-eng">A simple GCN layer can be represented as:</p>
+            <div class="formula">X' = f(X, graph)</div>
+            <div class="formula">= x * G * g<sub>θ</sub></div>
+            <div class="formula">= σ( θ (I + D<sup>-1/2</sup> A D<sup>-1/2</sup>) x )</div>
+            <div class="formula">= σ( θ Ã x )</div>
+            <p class="mt-2 text-content-bold">其中正規化拉普拉斯矩陣 (Normalized Laplacian) L:</p>
+            <p class="text-content-eng">Where the Normalized Laplacian L is:</p>
+            <div class="formula">L = I - D<sup>-1/2</sup> A D<sup>-1/2</sup></div>
+            <p class="mt-2 english-text">這裡 <code>A</code> 是鄰接矩陣 (adjacency matrix)，<code>D</code> 是度矩陣 (degree matrix)，<code>I</code> 是單位矩陣，<code>θ</code> 是可學習的權重，<code>σ</code> 是激活函數。</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-gray-500 text-sm">
+        基於 Yueh-Hua Tu 於2020年3月20日的演講內容製作。
+        <br>
+        Original presentation by Yueh-Hua Tu. Webpage by AI.
+    </footer>
+
+    <script type="module">
+        import { animate } from "framer-motion";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log("DOM fully loaded and parsed. Starting animation setup.");
+
+            const elementsToAnimate = [
+                document.querySelector('header h1.header-main-title'),
+                document.querySelector('header h2.header-sub-title'),
+                document.querySelector('header p.header-presenter'),
+                ...document.querySelectorAll('.bento-item')
+            ].filter(el => {
+                if (el == null) {
+                    console.warn("A selector returned null. Check your HTML class names.");
+                }
+                return el != null;
+            });
+            
+            console.log(`Found ${elementsToAnimate.length} elements to animate.`);
+
+            elementsToAnimate.forEach((el, index) => {
+                const elementId = el.id || el.className.split(" ")[0]; 
+                const delayOrder = el.classList.contains('bento-item') ? parseInt(el.dataset.custom || "0") : index;
+                const initialY = el.tagName.startsWith('H') ? -30 : 20;
+                
+                // console.log(`Setting up animation for: ${elementId}, Delay order: ${delayOrder}, Initial Y: ${initialY}`);
+
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        const entryId = entry.target.id || entry.target.className.split(" ")[0];
+                        if (entry.isIntersecting) {
+                            console.log(`Animating: ${entryId}`);
+                            animate(entry.target, 
+                                { opacity: [0, 1], y: [initialY, 0] }, 
+                                { duration: 0.6, delay: delayOrder * 0.07 } 
+                            ).then(() => {
+                                // console.log(`Animation completed for: ${entryId}`);
+                            }).catch(error => {
+                                console.error(`Animation error for ${entryId}:`, error);
+                            });
+                            observer.unobserve(entry.target); 
+                        }
+                    });
+                }, { threshold: 0.1 });
+                
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
