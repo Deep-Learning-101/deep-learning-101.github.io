@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度學習模型訓練中的優化 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: outside;
+            padding-left: 1.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.5rem;
+        }
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+             /* Define spans for different boxes on larger screens */
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        /* Ensure Framer Motion divs take full height of parent bento-box if needed */
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed; /* Slightly different background for distinction */
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Optimization for Training Deep Models @ Deep Learning Book Chapter 8</strong>
+                </p>
+                <p><em>2017/03/10</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=DeXH5IMHfcs" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Optimization Techniques for Training Deep Models</a> 
+                    <span class="text-xs text-slate-500">(Covers concepts like SGD, Momentum, NAG, Batch Normalization, and more, based on the book chapter.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                深度學習模型訓練中的優化
+            </h1>
+            <p class="text-xl text-slate-600">
+                一份關於深度神經網路模型優化的整理匯總
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-brain icon-large"></i>
+                <h2 class="bento-title-large">概述 <span class="text-lg font-normal text-slate-500">Overview</span></h2>
+                <p class="bento-text">
+                    這份文件彙整了關於深度神經網路模型優化的各類資料。本章探討了深度學習中至關重要的優化問題，特別是<strong>神經網路的訓練</strong>。與傳統的純優化不同，機器學習中的優化通常是間接的，目標是提高模型在未見數據上的性能（泛化能力），而不是簡單地最小化訓練集上的損失。文件深入介紹了神經網路優化所面臨的挑戰，包括非凸性、病態條件、局部極小值和鞍點等，並回顧了基本優化算法（如 SGD、動量）以及更進階的技術（如自適應學習率方法、參數初始化策略、批標準化、坐標下降、Polyak 平均）和優化策略（如監督預訓練、設計易於優化的模型、課程學習）。
+                </p>
+                <p class="bento-text mt-4">
+                    深度學習中最重要的優化問題是<strong class="highlight-tech">神經網路的訓練</strong>。它的重要性在於模型的性能高度依賴於訓練結果的品質。其挑戰性在於，神經網路模型通常擁有數百萬甚至數十億個參數，且訓練資料集極為龐大，這使得訓練過程需要龐大的計算資源和漫長的時間，即使動用大量機器和數月時間也屬常見。本章主要關注尋找神經網路上的一組參數 $\theta$，使得一個代價函數 $J(\theta)$ 顯著降低。這個代價函數通常包含兩部分：一部分是衡量模型在整個訓練集上的性能的指標（如經驗風險），另一部分是額外的正則化項（用於防止過擬合）。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-balance-scale icon-large"></i>
+                <h2 class="bento-title">機器學習優化 vs. 純優化 <span class="text-base font-normal text-slate-500">Differences</span></h2>
+                <p class="bento-text">用於深度模型訓練的優化算法與傳統的優化算法在幾個方面有所不同。</p>
+                <h3 class="bento-subtitle">核心區別 <span class="text-sm font-normal text-slate-500">Core Distinctions</span></h3>
+                <ol class="bento-list bento-text">
+                    <li><strong>目的不同:</strong> 純優化旨在直接最小化目標函數 $J$。機器學習優化則關注在未知測試集上的效能度量 $P$（風險），間接優化代價函數 $J(\theta)$（經驗風險）。</li>
+                    <li><strong>目標函數結構:</strong> 機器學習的目標函數通常可分解為訓練樣本上的總和或平均，催生了小批量 (Minibatch) 方法。</li>
+                </ol>
+                <h3 class="bento-subtitle mt-6">經驗風險最小化 <span class="text-sm font-normal text-slate-500">Empirical Risk Minimization (ERM)</span></h3>
+                <p class="bento-text">
+                    ERM 是指最小化模型在<strong>有限訓練數據集</strong>上的平均損失。最終目標不僅是最小化訓練誤差，更重要的是希望模型在未見數據上表現良好（低真實風險），因此<strong class="highlight-tech">防止過擬合</strong>是重要考量。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-cogs icon-large"></i>
+                <h2 class="bento-title">代理損失與提前終止</h2>
+                <h3 class="bento-subtitle">代理損失函數 <span class="text-sm font-normal text-slate-500">Surrogate Loss</span></h3>
+                <p class="bento-text">當真正關心的損失函數（如0-1損失）難以優化時，轉而優化一個更容易處理的代理損失函數（如負對數似然）。</p>
+                <h3 class="bento-subtitle mt-4">提前終止 <span class="text-sm font-normal text-slate-500">Early Stopping</span></h3>
+                <p class="bento-text">監控模型在驗證集上的性能，當驗證集損失上升時停止訓練，以犧牲訓練集完美擬合換取更好泛化能力。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                 <i class="fas fa-layer-group icon-large"></i>
+                <h2 class="bento-title">批量與小批量算法</h2>
+                 <p class="bento-text mb-2">機器學習算法目標函數常分解為樣本求和，優化時僅用部分數據估計梯度。</p>
+                <ul class="bento-list bento-text">
+                    <li><strong>批量梯度下降:</strong> 使用整個訓練集計算梯度，精確但成本高。</li>
+                    <li><strong>隨機梯度下降 (SGD):</strong> 每次僅用一個樣本，速度快但噪聲大。</li>
+                    <li><strong>小批量 SGD:</strong> 每次用一小子集，<strong class="highlight-tech">深度學習中最常用</strong>，平衡準確性與效率。</li>
+                </ul>
+                <h3 class="bento-subtitle mt-4">小批量大小影響</h3>
+                <p class="bento-text">影響梯度估計方差、計算效率、內存消耗和硬體性能偏好。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-exclamation-triangle icon-large"></i>
+                <h2 class="bento-title">神經網路優化挑戰 <span class="text-base font-normal text-slate-500">Challenges</span></h2>
+                <p class="bento-text">優化神經網路是極其困難的非凸優化任務。</p>
+                <div class="mt-4 space-y-6">
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-wave-square mr-2"></i>病態 <span class="text-sm font-normal text-slate-500">Ill-conditioning</span></h3>
+                        <p class="bento-text">Hessian 矩陣條件數過大，導致梯度下降在陡峭方向震盪（需小學習率），平坦方向進展緩慢，整體收斂極慢。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-mountain mr-2"></i>局部極小值 <span class="text-sm font-normal text-slate-500">Local Minima</span></h3>
+                        <p class="bento-text">非凸函數可能存在多個局部極小值，算法可能陷入代價較高的局部解。但深度網路中，多數局部極小值代價接近全局最小。模型不可辨識性會導致等價局部極小值。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-sort-amount-down-alt mr-2 transform rotate-90"></i>高原、鞍點與平坦區域 <span class="text-sm font-normal text-slate-500">Plateaus, Saddle Points</span></h3>
+                        <p class="bento-text">高維非凸函數中，鞍點（梯度為零但非極值，Hessian 不定）比局部極小值更常見。鞍點附近梯度極小，算法易停滯。高原是梯度幾乎為零的廣闊平坦區。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-running icon-large"></i>
+                <h2 class="bento-title">基本優化算法 <span class="text-base font-normal text-slate-500">Basic Algorithms</span></h2>
+                
+                <h3 class="bento-subtitle">隨機梯度下降 (SGD) <span class="text-sm font-normal text-slate-500">Stochastic Gradient Descent</span></h3>
+                <p class="bento-text">機器學習中應用最多的優化算法。關鍵參數是學習率 $\epsilon_k$。理論收斂條件：$\sum_{k=1}^\infty \epsilon_k = \infty$ 且 $\sum_{k=1}^\infty \epsilon_k^2 < \infty$。</p>
+                <p class="bento-text mt-2"><strong>實踐中學習率衰減：</strong>常線性衰減 $\epsilon_k = (1-\alpha)\epsilon_0 + \alpha\epsilon_\tau$ 直到第 $\tau$ 次迭代，之後保持常數。初始 $\epsilon_0$ 和最終 $\epsilon_\tau$ 很重要。</p>
+
+                <h3 class="bento-subtitle mt-6">動量 (Momentum) <span class="text-sm font-normal text-slate-500">Polyak, 1964</span></h3>
+                <p class="bento-text">旨在加速學習，處理高曲率、小而一致梯度或噪聲梯度。引入速度向量 $v$ 積累過去梯度的指數加權移動平均。</p>
+                <p class="bento-text mt-1"><strong class="highlight-tech">更新規則：</strong> $v \leftarrow \alpha v - \epsilon \nabla_\theta J(\theta)$, $\theta \leftarrow \theta + v$。$\alpha \in [0,1)$ 控制衰減。解決 Hessian 病態和梯度方差問題。</p>
+
+                <h3 class="bento-subtitle mt-6">Nesterov 動量 <span class="text-sm font-normal text-slate-500">Nesterov, 1983; Sutskever et al., 2013</span></h3>
+                <p class="bento-text">標準動量的變種，梯度在參數近似「下一步位置」 $(\theta + \alpha v)$ 處計算。提供更及時修正，減少震盪。</p>
+                <p class="bento-text mt-1"><strong class="highlight-tech">更新規則：</strong> $v \leftarrow \alpha v - \epsilon \nabla_\theta J(\theta + \alpha v)$, $\theta \leftarrow \theta + v$。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-magic icon-large"></i>
+                <h2 class="bento-title">參數初始化策略</h2>
+                <p class="bento-text">非常重要，影響優化和最終性能。</p>
+                <ul class="bento-list bento-text mt-2">
+                    <li><strong>打破對稱性：</strong>避免所有權重學習相同特徵。</li>
+                    <li><strong>影響優化：</strong>好的初始化有助收斂。</li>
+                    <li><strong>控制梯度流動：</strong>避免梯度消失/爆炸。</li>
+                </ul>
+                <h3 class="bento-subtitle mt-4">常用策略</h3>
+                <p class="bento-text"><strong class="highlight-tech">Xavier/Glorot 初始化 (2010):</strong> 適用於 tanh/線性激活，方差 $Var(W) = 2 / (fan_{in} + fan_{out})$。</p>
+                <p class="bento-text mt-2"><strong class="highlight-tech">He 初始化 (2015):</strong> 專為 ReLU 設計，方差 $Var(W) = 2 / fan_{in}$。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-tachometer-alt icon-large"></i>
+                <h2 class="bento-title">自適應學習率算法 <span class="text-base font-normal text-slate-500">Adaptive LR Methods</span></h2>
+                <p class="bento-text mb-4">為每個參數獨立調整學習率，根據梯度特性自動調整步長。通常比手動調參的 SGD 更易用。</p>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div>
+                        <h3 class="bento-subtitle">AdaGrad <span class="text-sm font-normal text-slate-500">Duchi et al., 2011</span></h3>
+                        <p class="bento-text">縮放每個參數反比於其所有梯度歷史平方值總和的平方根。利於稀疏特徵。缺點：學習率最終可能過小。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">RMSProp <span class="text-sm font-normal text-slate-500">Hinton, 2012</span></h3>
+                        <p class="bento-text">改進 AdaGrad，使用梯度平方的指數加權移動平均，避免學習率過早衰減。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">Adam <span class="text-sm font-normal text-slate-500">Kingma & Ba, 2014</span></h3>
+                        <p class="bento-text">結合動量（一階矩）和 RMSProp（二階矩）思想。通常是魯棒且表現良好的<strong class="highlight-tech">預設優化器</strong>。</p>
+                    </div>
+                </div>
+                 <p class="bento-text mt-4"><strong>選擇算法：</strong>尚無公認最佳算法。精心調整的 SGD（帶動量）有時也能達到很好性能。實驗比較是關鍵。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-calculator icon-large"></i>
+                <h2 class="bento-title">二階近似方法</h2>
+                <h3 class="bento-subtitle">牛頓法 <span class="text-sm font-normal text-slate-500">Newton's Method</span></h3>
+                <p class="bento-text">使用一階和二階導數（Hessian）。$\theta^* = \theta_0 - H^{-1} \nabla_\theta J(\theta_0)$。收斂快但計算 $H^{-1}$ 成本高。</p>
+                <h3 class="bento-subtitle mt-2">共軛梯度法</h3>
+                <p class="bento-text">迭代方法，避免直接計算 $H^{-1}$。</p>
+                <h3 class="bento-subtitle mt-2">BFGS / L-BFGS</h3>
+                <p class="bento-text">擬牛頓法，近似 $H^{-1}$。L-BFGS 是內存受限版。</p>
+            </div>
+            
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-sliders-h icon-large"></i>
+                <h2 class="bento-title">批標準化 (Batch Normalization) <span class="text-base font-normal text-slate-500">Ioffe & Szegedy, 2015</span></h2>
+                <p class="bento-text">一種改善優化和泛化能力的網絡層設計。在仿射變換後、激活函數前，對每層輸入標準化（零均值，單位方差），再通過可學習參數 $\gamma, \beta$ 進行仿射變換。</p>
+                <p class="bento-text mt-2"><strong class="highlight-tech">計算：</strong> $\hat{H} = (H - \mu) / \sigma$; $BN(H) = \gamma\hat{H} + \beta$。$\mu, \sigma^2$ 在小批量上計算。</p>
+                <h3 class="bento-subtitle mt-4">作用：</h3>
+                <ul class="bento-list bento-text">
+                    <li>緩解內部協變量偏移。</li>
+                    <li>加速收斂，允許更大學習率。</li>
+                    <li>輕微正則化效果。</li>
+                    <li>避免梯度飽和。</li>
+                </ul>
+                <p class="bento-text mt-2">測試時使用整個訓練集的均值和方差（或其移動平均）。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-sitemap icon-large"></i>
+                <h2 class="bento-title">優化策略和元算法 <span class="text-base font-normal text-slate-500">Strategies & Meta-algorithms</span></h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle">坐標下降 <span class="text-sm font-normal text-slate-500">Coordinate Descent</span></h3>
+                        <p class="bento-text">一次只優化一個（或一組）參數，保持其他參數固定。適用於對單個參數優化高效或有閉式解的情況。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">Polyak 平均 <span class="text-sm font-normal text-slate-500">Polyak Averaging</span></h3>
+                        <p class="bento-text">對 SGD 訓練過程中的參數迭代序列進行平均，獲得可能更好的最終參數估計。減少噪聲影響，更穩定。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">監督預訓練 <span class="text-sm font-normal text-slate-500">Supervised Pretraining</span></h3>
+                        <p class="bento-text">先用標註數據訓練模型解決相關輔助任務，學到的參數用作最終任務的初始值。如逐層監督預訓練，ImageNet 預訓練。</p>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <h3 class="bento-subtitle">設計有助於優化的模型 <span class="text-sm font-normal text-slate-500">Designing for Optimization</span></h3>
+                        <p class="bento-text">改進模型架構比改進優化算法更有效。如<strong class="highlight-tech">跳躍/殘差連接 (ResNet)</strong>，允許訓練非常深的網絡，緩解梯度消失。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">延拓法與課程學習 <span class="text-sm font-normal text-slate-500">Continuation & Curriculum Learning</span></h3>
+                        <p class="bento-text"><strong>延拓法：</strong>從易解問題開始，逐漸變形到原始難題。<strong>課程學習：</strong>模仿人類學習，先展示容易樣本/簡單任務，逐步增難。有助加速收斂、改善泛化。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-question-circle icon-large"></i>
+                <h2 class="bento-title">常見問答匯總 <span class="text-base font-normal text-slate-500">FAQ</span></h2>
+                <div class="space-y-6">
+                    <div>
+                        <p class="bento-text font-semibold">什麼是深度學習中最核心的優化問題？它為何如此具有挑戰性？</p>
+                        <p class="bento-text">核心問題是<strong>神經網路的訓練</strong>。挑戰性在於參數多、數據集大，計算資源和時間需求龐大。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">機器學習中的優化與純粹的數學優化有何主要區別？</p>
+                        <p class="bento-text">1. <strong>間接優化：</strong>機器學習優化經驗風險以期降低真實風險（泛化能力），純優化直接最小化目標函數。 2. <strong>目標函數結構：</strong>機器學習目標函數可分解，支持小批量方法。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">什麼是經驗風險最小化（ERM）？它在機器學習中的最終目標是什麼？</p>
+                        <p class="bento-text">ERM 是最小化模型在訓練數據上的平均損失。最終目標是低訓練誤差的同時，也獲得低真實風險（良好泛化能力），需<strong class="highlight-tech">防止過擬合</strong>。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">代理損失函數和提前終止策略各自的目的是什麼？</p>
+                        <p class="bento-text"><strong>代理損失函數：</strong> 當真實損失難以優化時，使用易處理的代理（如交叉熵代替0-1損失）。<strong>提前終止：</strong> 監控驗證集性能，防止過擬合，平衡訓練誤差與泛化能力。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">神經網路非凸優化中的病態、局部極小值和鞍點分別帶來什麼挑戰？</p>
+                        <p class="bento-text"><strong>病態：</strong> Hessian條件數大，收斂慢。<strong>局部極小值：</strong> 可能陷入次優解。<strong>鞍點：</strong> 高維中比局部極小值更普遍，梯度小易停滯，更具挑戰性。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">動量和 Nesterov 動量方法的核心思想？如何改善 SGD 收斂性？</p>
+                        <p class="bento-text"><strong>動量：</strong> 積累過去梯度的指數加權移動平均，加速一致方向，抑制震盪。<strong>Nesterov 動量：</strong> 在「預測的」未來位置計算梯度，「向前看」機制修正更及時。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">為何神經網路參數初始化非常重要？不良初始化會帶來哪些問題？</p>
+                        <p class="bento-text">重要性：1. 打破對稱性。 2. 影響優化過程。 3. 控制梯度流動。不良初始化導致優化困難、梯度消失/爆炸。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">自適應學習率算法（如 AdaGrad, RMSProp, Adam）是什麼？與標準 SGD 的主要區別和優勢？</p>
+                        <p class="bento-text">為每個參數獨立調整學習率。優勢：自動調整步長，通常更易用。<strong>AdaGrad：</strong>適於稀疏數據，學習率單調降。<strong>RMSProp：</strong>用梯度平方的指數移動平均，防學習率過早衰減。<strong>Adam：</strong>結合動量和RMSProp，魯棒性好。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-history icon-large"></i>
+                <h2 class="bento-title">時間軸與主要人物 <span class="text-base font-normal text-slate-500">Timeline & Key Figures</span></h2>
+                <ul class="bento-list bento-text space-y-1">
+                    <li><strong>1964:</strong> Polyak - 動量方法 (Momentum)</li>
+                    <li><strong>1983, 2004:</strong> Nesterov - Nesterov 動量</li>
+                    <li><strong>2010:</strong> Glorot & Bengio - Xavier/Glorot 初始化</li>
+                    <li><strong>2011:</strong> Duchi et al. - AdaGrad</li>
+                    <li><strong>2012:</strong> Hinton - RMSProp (未發表)</li>
+                    <li><strong>2014:</strong> Kingma & Ba - Adam</li>
+                    <li><strong>2015:</strong> Ioffe & Szegedy - 批標準化 (BN); He et al. - He 初始化</li>
+                    <li><strong>2016:</strong> He et al. - 殘差網路 (ResNet)</li>
+                    <li><strong>主要人物:</strong> Polyak, Nesterov, Glorot, Bengio, Duchi, Hinton, Kingma, Ba, Ioffe, Szegedy, Srivastava, He, Schaul.</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-pen-alt icon-large"></i>
+                <h2 class="bento-title">研讀指南 - 測驗 <span class="text-base font-normal text-slate-500">Quiz</span></h2>
+                <p class="bento-text text-sm mb-3">請用 2-3 句話簡短回答：</p>
+                <ol class="bento-list bento-text text-sm space-y-2">
+                    <li>深度學習中最重要的優化問題是什麼？它為何具有挑戰性？</li>
+                    <li>機器學習中的「風險」和「經驗風險」有什麼區別？</li>
+                    <li>代理損失函數是什麼？為何需要它？</li>
+                    <li>Minibatch SGD 與其他梯度下降有何不同？為何受歡迎？</li>
+                    <li>優化中的「病態」指什麼？如何影響效率？</li>
+                    <li>高維空間中，為何鞍點比局部極小值更常見且難處理？</li>
+                    <li>動量方法的核心思想？如何加速訓練？</li>
+                    <li>Nesterov 動量與標準動量的主要區別與優勢？</li>
+                    <li>神經網路參數初始化為何重要？權重全零會怎樣？</li>
+                    <li>批標準化是什麼？有何作用？</li>
+                </ol>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-book-open icon-large"></i>
+                <h2 class="bento-title">研讀指南 - 申論題 <span class="text-base font-normal text-slate-500">Essay Questions</span></h2>
+                <p class="bento-text mb-3">請針對以下任五題進行詳細闡述：</p>
+                <ol class="bento-list bento-text text-sm space-y-2">
+                    <li>詳細比較機器學習優化與純優化，解釋為何關心泛化性能及過擬合角色。</li>
+                    <li>深入探討神經網路優化挑戰：病態、局部極小值、鞍點、高原的數學含義與影響。</li>
+                    <li>比較批量、隨機、小批量梯度下降的優缺點，為何小批量 SGD 普遍。</li>
+                    <li>詳細解釋動量和 Nesterov 動量原理，如何解決 Hessian 病態和梯度方差問題。</li>
+                    <li>探討自適應學習率算法（AdaGrad, RMSProp, Adam）工作原理、優勢與局限。</li>
+                    <li>解釋參數初始化重要性，介紹至少兩種方法（Xavier/Glorot, He）思想與適用場景，討論不當初始化的問題。</li>
+                    <li>批標準化工作原理、計算過程及其如何改善訓練（緩解ICS、加速收斂、正則化）。</li>
+                    <li>描述二階優化方法（牛頓法等）基本思想、優勢及在大型DNN中的計算挑戰。</li>
+                    <li>探討「設計有助於優化的模型」，以跳躍/殘差連接為例解釋模型架構如何改善優化。</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Framer Motion UMD is available as `motion` on the window object
+    // For MathJax (if you choose to use it for LaTeX rendering):
+    // window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }, svg: { fontCache: 'global' } };
+    // (Add MathJax script in <head> if needed)
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion; // Destructure from window.motion
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+        
+        // Animate the top info box
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            // Set initial styles
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, 
+                { opacity: 1, y: 0 }, 
+                { duration: 0.7, ease: 'easeOut' }
+            );
+        }
+
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            // Set initial styles for inView animation
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+
+            inView(box, 
+                () => { // Element enters view
+                    animate(box, 
+                        { opacity: 1, y: 0, scale: 1 }, 
+                        { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' } // Stagger delay
+                    );
+                },
+                { 
+                    amount: 0.1, // Trigger when 10% of the element is visible
+                  //  once: true // Removed to re-animate if scrolled out and back in. Add if only once.
+                } 
+            );
+        });
+    });
+    </script>
+</body>
+</html>
