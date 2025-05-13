@@ -10,7 +10,7 @@
     <script type="importmap">
       {
         "imports": {
-          "framer-motion": "https://cdn.jsdelivr.net/npm/framer-motion@11.2.10/dist/framer-motion.es.js"
+          "framer-motion": "https://esm.sh/framer-motion@11.2.10"
         }
       }
     </script>
@@ -40,7 +40,7 @@
             opacity: 0; /* Initial state for animation */
         }
 
-        .bento-item:hover { /* Added hover effect from second file, adapted for dark theme */
+        .bento-item:hover { 
             transform: translateY(-5px);
             box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.07), 0 4px 6px -4px rgba(255, 255, 255, 0.07);
         }
@@ -58,21 +58,20 @@
             color: #fff;
         }
 
-        h1, h2, h3, h4 { /* Added h4 */
+        h1, h2, h3, h4 { 
             font-weight: 600;
         }
-        /* Typography from first file (dark theme) */
-        .header-main-title { /* For main header H1 */
-            font-size: 3rem; /* Tailwind text-5xl or text-6xl */
+        
+        .header-main-title { 
+            font-size: 3rem; 
             line-height: 1.1;
-            font-weight: 700; /* font-bold */
-            margin-bottom: 0.75rem; /* mb-3 */
-             /* Gradient from original header */
+            font-weight: 700; 
+            margin-bottom: 0.75rem; 
             background-clip: text;
-            -webkit-background-clip: text; /* For Safari */
+            -webkit-background-clip: text; 
             color: transparent;
-            background-image: linear-gradient(to right, #60a5fa, #34d399); /* Tailwind blue-400 to emerald-400 */
-            opacity: 0; /* Initial state for animation */
+            background-image: linear-gradient(to right, #60a5fa, #34d399); 
+            opacity: 0; 
         }
          .header-main-title a {
             background-clip: text;
@@ -82,96 +81,92 @@
             text-decoration: none;
         }
         .header-main-title a:hover {
-             background-image: linear-gradient(to right, #3b82f6, #10b981); /* Darker hover */
+             background-image: linear-gradient(to right, #3b82f6, #10b981); 
         }
 
-
-        .header-sub-title { /* For main header H2 */
-            font-size: 1.875rem; /* text-3xl */
-            font-weight: 600; /* font-semibold */
-            color: #a1a1aa; /* zinc-400 */
-            margin-bottom: 0.5rem; /* mb-2 */
-            opacity: 0; /* Initial state for animation */
+        .header-sub-title { 
+            font-size: 1.875rem; 
+            font-weight: 600; 
+            color: #a1a1aa; 
+            margin-bottom: 0.5rem; 
+            opacity: 0; 
         }
-         .header-presenter { /* For main header P */
-            color: #71717a; /* zinc-500 */
-            opacity: 0; /* Initial state for animation */
+         .header-presenter { 
+            color: #71717a; 
+            opacity: 0; 
         }
 
-
-        .chinese-title { /* For bento item titles if primary lang is Chinese */
-            font-size: 2.25rem; /* text-4xl */
-            line-height: 2.5rem; /* leading-tight */
-            font-weight: 700; /* font-bold */
+        .chinese-title { 
+            font-size: 2.25rem; 
+            line-height: 2.5rem; 
+            font-weight: 700; 
             margin-bottom: 0.5rem;
             color: #f5f5f7;
         }
-        .chinese-subtitle { /* For bento item subtitles or H3s */
-            font-size: 1.5rem; /* text-2xl */
+        .chinese-subtitle { 
+            font-size: 1.5rem; 
             line-height: 2rem;
-            font-weight: 600; /* font-semibold */
-            color: #d4d4d8; /* zinc-300, slightly brighter for dark */
+            font-weight: 600; 
+            color: #d4d4d8; 
             margin-bottom: 1rem;
         }
-        .english-text { /* General body text in items */
-            font-size: 1rem; /* text-base */
-            color: #d4d4d8; /* zinc-300 */
+        .english-text { 
+            font-size: 1rem; 
+            color: #d4d4d8; 
             line-height: 1.6;
         }
-        .english-small { /* Smaller secondary text */
-            font-size: 0.875rem; /* text-sm */
-            color: #a1a1aa; /* zinc-400 */
+        .english-small { 
+            font-size: 0.875rem; 
+            color: #a1a1aa; 
         }
-
-        /* Styles from second file, adapted for dark theme and merged */
-        .text-section-title { /* Alternative for item titles, use if preferred */
-            font-size: 1.75rem; /* text-2xl or 3xl */
+        
+        .text-section-title { 
+            font-size: 1.75rem; 
             font-weight: 600;
             margin-bottom: 1rem;
-            color: #e5e5e5; /* Brighter for dark theme */
+            color: #e5e5e5; 
         }
          .text-content-bold {
-            font-size: 1.125rem; /* text-lg */
+            font-size: 1.125rem; 
             font-weight: 600;
-            color: #f0f0f0; /* Brighter for dark */
+            color: #f0f0f0; 
         }
-        .text-content-eng { /* Can be used for English sub-text if different styling needed */
+        .text-content-eng { 
             font-size: 0.9rem;
-            color: #a1a1aa; /* zinc-400 */
+            color: #a1a1aa; 
             margin-top: 0.25rem;
         }
-        .icon-style { /* From second file, for icons within items */
+        .icon-style { 
             margin-right: 0.75rem;
-            color: #0a84ff; /* Apple blue, good on dark */
+            color: #0a84ff; 
         }
 
-
-        .icon-large { /* From first file */
-            font-size: 3rem; /* Adjusted from 4rem */
+        .icon-large { 
+            font-size: 3rem; 
             margin-bottom: 1rem;
-            opacity: 0.6; /* Slightly more visible */
+            opacity: 0.6; 
         }
         .bento-item img {
-            border-radius: 0.75rem; /* rounded-xl */
+            border-radius: 0.75rem; 
             object-fit: contain;
-            max-height: 350px; /* Adjusted */
+            max-height: 350px; 
             margin: 1rem auto;
             display: block;
-            background-color: rgba(255,255,255,0.05); /* Slight bg for images from dark theme */
+            background-color: rgba(255,255,255,0.05); 
             padding: 0.5rem;
         }
-        .formula { /* From first file (dark theme) */
+        .formula { 
             background-color: #3a3a3c;
             padding: 1rem;
             border-radius: 0.5rem;
-            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; /* SFMono from 2nd file */
-            font-size: 1.05rem; /* Adjusted */
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; 
+            font-size: 1.05rem; 
             color: #f5f5f7;
             overflow-x: auto;
             margin: 1rem 0;
             border: 1px solid #4a4a4e;
         }
-        .formula code, .bento-item code { /* General code tag styling */
+        .formula code, .bento-item code { 
             background-color: #4a4a4c;
             padding: 0.2em 0.4em;
             margin: 0;
@@ -179,8 +174,7 @@
             border-radius: 3px;
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
         }
-
-        /* Table styles adapted for dark theme */
+        
         table {
             width: 100%;
             border-collapse: collapse;
@@ -188,30 +182,29 @@
             color: #d4d4d8;
         }
         th, td {
-            border: 1px solid #4a4a4e; /* Darker border */
+            border: 1px solid #4a4a4e; 
             padding: 0.75rem;
             text-align: left;
             font-size: 0.9rem;
         }
         th {
-            background-color: #3a3a3c; /* Darker header */
+            background-color: #3a3a3c; 
             font-weight: 600;
             color: #f5f5f7;
         }
         td:first-child {
             font-weight: 500;
         }
-
-        /* Bento grid layout adjustments (from first file) */
-        @media (min-width: 768px) { /* md */
+        
+        @media (min-width: 768px) { 
             .bento-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            .bento-item.md-col-span-2 { /* Renamed from col-span-2 for clarity */
+            .bento-item.md-col-span-2 { 
                 grid-column: span 2 / span 2;
             }
         }
-        @media (min-width: 1024px) { /* lg */
+        @media (min-width: 1024px) { 
             .bento-grid {
                 grid-template-columns: repeat(3, 1fr);
             }
@@ -225,7 +218,8 @@
     </style>
 </head>
 
-<body class="antialiased"> <header class="text-center py-12 md:py-16 px-6">
+<body class="antialiased"> 
+    <header class="text-center py-12 md:py-16 px-6">
         <h1 class="header-main-title text-5xl md:text-6xl">
             <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">
                 高維資料的降維演算法及視覺化
@@ -507,200 +501,4 @@
             <p class="text-content-bold">UMAP 使用二元交叉熵 (Binary Cross-Entropy) 作為損失函數：</p>
             <p class="text-content-eng">UMAP uses Binary Cross-Entropy as its loss function:</p>
             <div class="formula">H(p, q) = - Σ<sub>i</sub> ( p<sub>i</sub> log q<sub>i</sub> + (1 - p<sub>i</sub>) log(1 - q<sub>i</sub>) )</div>
-            <p class="mt-2 text-content-bold">此損失函數與 KL 散度 (KL Divergence) 相關：</p>
-            <p class="text-content-eng">This loss function is related to KL Divergence:</p>
-            <div class="formula">H(p, q) = H(p) + D<sub>KL</sub>(p || q)</div>
-            <p class="mt-2 english-text">由於 <code>H(p)</code> (原始空間機率分佈的熵) 是固定的，最小化交叉熵等同於最小化 KL 散度。優化方法為梯度下降 (Gradient Descent)。</p>
-        </section>
-
-        <section class="bento-item highlight-green" id="initialization" data-custom="23">
-            <h2 class="text-section-title"><i class="fas fa-cogs icon-style"></i><strong>UMAP: 初始化策略</strong> <span class="english-small">(File 2 Detail)</span></h2>
-            <p class="text-content-bold">UMAP 的初始化對於結果的全局結構保留和收斂速度至關重要。</p>
-            <p class="text-content-eng">UMAP's initialization is crucial for preserving global structure and for convergence speed.</p>
-            <p class="mt-4 text-content-bold">它使用正規化拉普拉斯矩陣 (Normalized Laplacian) 的特徵向量 (Eigenvectors) 進行初始化：</p>
-            <p class="text-content-eng">It uses eigenvectors of the Normalized Laplacian for initialization:</p>
-            <div class="formula">Lu = λu</div>
-            <p class="mt-2 english-text">這種基於譜方法 (spectral method) 的初始化有助於更快收斂，並更好地保留數據的全局拓撲結構，相比 t-SNE 常用的隨機初始化 (random initialization) 更具優勢。</p>
-        </section>
-        
-        <section class="bento-item lg-col-span-3" id="comparison-table-file2" data-custom="24">
-            <h2 class="text-section-title"><i class="fas fa-table icon-style"></i><strong>T-SNE 與 UMAP 詳細比較</strong> <span class="english-small">(File 2 Table)</span></h2>
-            <p class="text-content-eng">Detailed comparison of T-SNE and UMAP models.</p>
-            <div class="overflow-x-auto">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>特性 (Feature)</th>
-                            <th>T-SNE</th>
-                            <th>UMAP</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>原始空間距離度量 (Distance metric in original space)</td>
-                            <td>歐幾里德距離 (Euclidean distance)</td>
-                            <td>歐幾里德距離 (Euclidean distance)</td>
-                        </tr>
-                        <tr>
-                            <td>衡量數據點間權重方式 (How to measure weight between data points)</td>
-                            <td>機率 (Probability)</td>
-                            <td>機率 (Probability)</td>
-                        </tr>
-                        <tr>
-                            <td>原始空間假設 (Assumption in original space)</td>
-                            <td>正規化高斯分佈 (Normalized Gaussian distribution)</td>
-                            <td>非正規化高斯分佈 (Unnormalized Gaussian distribution)</td>
-                        </tr>
-                        <tr>
-                            <td>重建空間假設 (Assumption in reconstructed space)</td>
-                            <td>正規化 t-分佈 (Normalized t-distribution)</td>
-                            <td>非正規化 t-分佈 (Unnormalized t-distribution)</td>
-                        </tr>
-                        <tr>
-                            <td>決定高斯分佈方差方式 (How to decide the variance of Gaussian distribution)</td>
-                            <td>困惑度 (Perplexity)</td>
-                            <td>鄰居數量 (Number of neighbors)</td>
-                        </tr>
-                        <tr>
-                            <td>重建空間距離度量 (Distance metric in reconstructed space)</td>
-                            <td>歐幾里德距離 (Euclidean distance)</td>
-                            <td>歐幾里德距離 (Euclidean distance)</td>
-                        </tr>
-                        <tr>
-                            <td>損失函數 (Loss function)</td>
-                            <td>KL 散度 (KL divergence)</td>
-                            <td>二元交叉熵 (Binary cross entropy)</td>
-                        </tr>
-                        <tr>
-                            <td>初始化 (Initialization)</td>
-                            <td>隨機 (Random)</td>
-                            <td>拉普拉斯特徵向量 (Eigenvectors of Laplacian)</td>
-                        </tr>
-                        <tr>
-                            <td>優化方法 (Optimization method)</td>
-                            <td>梯度下降 (Gradient descent)</td>
-                            <td>梯度下降 (Gradient descent)</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="bento-item lg-col-span-2 highlight-orange" id="graph-topology" data-custom="25">
-            <h2 class="text-section-title"><i class="fas fa-sitemap icon-style"></i><strong>圖拓撲結構的決定</strong> <span class="english-small">(File 2 Detail)</span></h2>
-            <p class="text-content-bold">決定圖的拓撲結構有兩種主要方法：</p>
-            <p class="text-content-eng">There are two main approaches to deciding the graph topology:</p>
-            <div class="mt-4">
-                <h4 class="text-xl font-semibold mb-2 text-content-bold">離散方法 (Discrete approach)</h4>
-                <p class="english-text">產生稀疏圖 (sparse graph)。</p>
-                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 english-text">
-                    <li><strong>ε-鄰域 (ε-neighborhood):</strong> 將距離在 ε 內的頂點視為鄰居。</li>
-                    <li><strong>K-最近鄰 (k-nearest neighbor):</strong> 將 K 個最近的頂點視為鄰居。</li>
-                </ul>
-            </div>
-            <div class="mt-6">
-                <h4 class="text-xl font-semibold mb-2 text-content-bold">連續方法 (Continuous approach)</h4>
-                <p class="english-text">產生稠密圖 (dense graph)。</p>
-                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 english-text">
-                    <li><strong>距離 (Distance):</strong> 直接使用成對距離 <code>d(x<sub>i</sub>, x<sub>j</sub>) = ||x<sub>i</sub> - x<sub>j</sub>||<sup>2</sup></code>。</li>
-                    <li><strong>由距離衍生的機率 (Probability derived from distance):</strong> 如 <code>P<sub>ij</sub> = e<sup>-d(x<sub>i</sub>,x<sub>j</sub>)<sup>2</sup>/σ</sup></code>。可能是非對稱的。</li>
-                </ul>
-            </div>
-            <p class="mt-4 english-text">無論哪種方法，都需要預先定義距離度量 (distance metric)。</p>
-        </section>
-        
-        <section class="bento-item flex flex-col items-center justify-center" id="umap-global-structure" data-custom="26">
-            <h2 class="text-section-title"><i class="fas fa-globe-americas icon-style"></i><strong>UMAP 與全局結構</strong> <span class="english-small">(File 2 Detail)</span></h2>
-            <p class="text-content-bold">UMAP 是否比 t-SNE 更好地保留全局結構？</p>
-            <p class="text-content-eng">Does UMAP preserve global structure better than t-SNE?</p>
-            <img src="https://i.imgur.com/9gZfQhE.png" alt="UMAP vs t-SNE global structure comparison" class="mt-4 rounded-lg shadow-md max-w-full h-auto">
-            <p class="mt-2 text-xs text-center text-gray-500">圖片來源: Kobak, D., & Linderman, G. C. (2019). UMAP does not preserve global structure any better than t-SNE when using the same initialization. doi: 10.1101/2019.12.19.877522</p>
-            <p class="mt-4 english-text">研究指出，當使用相同的初始化方法時 (例如都用隨機初始化，或都用譜方法初始化)，UMAP 在保留全局結構方面並不一定優於 t-SNE。UMAP 宣稱的全局結構保留能力很大程度上得益於其預設的譜初始化方法。</p>
-        </section>
-
-        <section class="bento-item lg-col-span-3 highlight-blue" id="gnn-relation" data-custom="27">
-            <h2 class="text-section-title"><i class="fas fa-brain icon-style"></i><strong>與圖神經網路的關聯</strong> <span class="english-small">(File 2 Detail)</span></h2>
-            <p class="text-content-eng">Relation to Graph Neural Network (GNN).</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-4"> <div>
-                    <h4 class="text-xl font-semibold mb-2 text-content-bold">圖神經網路 (Graph Neural Network)</h4>
-                    <p class="english-text">轉換特徵於 <strong>給定的圖幾何結構</strong> 上。</p>
-                    <p class="text-content-eng">Transforms features on the <strong>given geometry of graph</strong>.</p>
-                    <div class="formula">Y' = f(X, graph)</div>
-                </div>
-                <div>
-                    <h4 class="text-xl font-semibold mb-2 text-content-bold">透過圖進行降維 (Dimensional Reduction via Graph)</h4>
-                    <p class="english-text">從特徵 <strong>構建圖</strong>，然後在該圖的幾何結構上轉換特徵。</p>
-                    <p class="text-content-eng">**Constructs graph** from features and then transforms features on the geometry of that graph.</p>
-                    <div class="formula">graph = f(X)</div>
-                    <div class="formula">Y' = g(X, graph)</div>
-                </div>
-            </div>
-            <img src="https://i.imgur.com/YfN8ZfX.png" alt="GNN vs Dimensional Reduction via Graph" class="mt-6 rounded-lg shadow-md max-w-full h-auto">
-            <p class="mt-4 english-text">兩者都利用圖結構，但 GNN 通常假設圖結構是預先給定的，而基於圖的降維方法 (如 UMAP, t-SNE) 則會先從數據本身推斷或構建圖結構。</p>
-        </section>
-        
-        <section class="bento-item" id="gcn-example" data-custom="28">
-            <h2 class="text-section-title"><i class="fas fa-wave-square icon-style"></i><strong>圖卷積網路 (GCN) 範例</strong> <span class="english-small">(File 2 Detail)</span></h2>
-            <p class="text-content-bold">一個簡單的 GCN 層可以表示為：</p>
-            <p class="text-content-eng">A simple GCN layer can be represented as:</p>
-            <div class="formula">X' = f(X, graph)</div>
-            <div class="formula">= x * G * g<sub>θ</sub></div>
-            <div class="formula">= σ( θ (I + D<sup>-1/2</sup> A D<sup>-1/2</sup>) x )</div>
-            <div class="formula">= σ( θ Ã x )</div>
-            <p class="mt-2 text-content-bold">其中正規化拉普拉斯矩陣 (Normalized Laplacian) L:</p>
-            <p class="text-content-eng">Where the Normalized Laplacian L is:</p>
-            <div class="formula">L = I - D<sup>-1/2</sup> A D<sup>-1/2</sup></div>
-            <p class="mt-2 english-text">這裡 <code>A</code> 是鄰接矩陣 (adjacency matrix)，<code>D</code> 是度矩陣 (degree matrix)，<code>I</code> 是單位矩陣，<code>θ</code> 是可學習的權重，<code>σ</code> 是激活函數。</p>
-        </section>
-
-    </main>
-
-    <footer class="text-center py-8 text-gray-500 text-sm">
-        基於 Yueh-Hua Tu 於2020年3月20日的演講內容製作。
-        <br>
-        Original presentation by Yueh-Hua Tu. Webpage by AI.
-    </footer>
-
-    <script type="module">
-        import { animate } from "framer-motion";
-
-        document.addEventListener('DOMContentLoaded', () => {
-            const elementsToAnimate = [
-                document.querySelector('header h1.header-main-title'),
-                document.querySelector('header h2.header-sub-title'),
-                document.querySelector('header p.header-presenter'),
-                ...document.querySelectorAll('.bento-item')
-            ].filter(el => el != null); // Filter out nulls if selectors miss
-
-            elementsToAnimate.forEach((el, index) => {
-                // For header elements, use a fixed small delay or their natural order.
-                // For bento items, use data-custom for sequencing.
-                const delayOrder = el.classList.contains('bento-item') ? parseInt(el.dataset.custom || "0") : index;
-                const initialY = el.tagName.startsWith('H') ? -30 : 20; // Different y for titles
-
-                // Ensure initial styles for animation are set if not in CSS
-                // animate function directly applies from/to, so opacity:0 in CSS for .bento-item is good.
-                // For header elements not initially styled with opacity:0, JS can handle it.
-                if (!el.classList.contains('bento-item')) {
-                    el.style.opacity = 0;
-                }
-
-
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            animate(entry.target, 
-                                { opacity: [0, 1], y: [initialY, 0] }, 
-                                { duration: 0.6, delay: delayOrder * 0.07 } // Adjusted delay factor
-                            );
-                            observer.unobserve(entry.target); // Animate once
-                        }
-                    });
-                }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
-                
-                observer.observe(el);
-            });
-        });
-    </script>
-</body>
-</html>
+            <p class="mt-2 text
