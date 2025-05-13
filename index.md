@@ -90,21 +90,21 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 <details>
 <summary>Speech Processing (語音處理)</summary>
 
-<h3><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing (語音處理)</a>：</h3><p><b><a href="https://www.twman.org/AI/ASR">針對訪談或對話進行分析與識別</a></b></p>
+<a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing (語音處理)</a>：<p><b><a href="https://www.twman.org/AI/ASR">針對訪談或對話進行分析與識別</a></b></p>
 
 </details>
 
 <details>
 <summary>Natural Language Processing, NLP (自然語言處理)</summary>
 
-<h3><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP (自然語言處理)</a>：</h3><p><b><a href="https://www.twman.org/AI/NLP">針對文檔進行分析與擷取</a></b></p>
+<a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP (自然語言處理)</a>：<p><b><a href="https://www.twman.org/AI/NLP">針對文檔進行分析與擷取</a></b></p>
 
 </details>
 
 <details>
 <summary>Computer Vision (電腦視覺)</summary>
 
-<h3><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision (電腦視覺)</a>：</h3><p><b><a href="https://www.twman.org/AI/CV">針對物件或場景影像進行分析與偵測</a></b></p>
+<a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision (電腦視覺)</a>：<p><b><a href="https://www.twman.org/AI/CV">針對物件或場景影像進行分析與偵測</a></b></p>
 
 </details>
 
@@ -123,7 +123,7 @@ Deep Learning 101 Meetup 歷年活動
 | 44  | [神經網路的黑執事](https://deep-learning-101.github.io/html/No44.html) | [2020/08/21](https://www.youtube.com/watch?v=gMaQTqZUW58) | 👤 Mark Liou |
 | 43  | 幾何深度學習是在幾何什麼的？ | [2020/07/24](https://www.youtube.com/watch?v=fatrgy2lo0k) | 👤 杜岳華 |
 | 42  | information in the weights | [2020/06/19](https://www.youtube.com/watch?v=Dz-7Jam_9C0) | 👤 Mark Chang |
-| 41  | NLP Landing & Machine Reading Comprehension | [2020/05/29](https://www.youtube.com/watch?v=aEntkDT3qdo) | 👤 Ian & Hsiang |
+| 41  | [NLP Landing & Machine Reading Comprehension]((https://deep-learning-101.github.io/html/No41.html)) | [2020/05/29](https://www.youtube.com/watch?v=aEntkDT3qdo) | 👤 Ian & Hsiang |
 | 40  | Instance Segmentation | [2020/05/01](https://www.youtube.com/watch?v=tXnzUd6sZz4) | 👤 顏志翰 (Bean) |
 | 39  | 高維資料的降維演算法及視覺化 | [2020/03/20](https://www.youtube.com/watch?v=jKd4eNsRoMM) | 👤 杜岳華 |
 | 38  | PAC Bayesian for Deep Learning | [2020/02/14](https://www.youtube.com/watch?v=MYpwAVtqFUk) | 👤 Mark Chang |
