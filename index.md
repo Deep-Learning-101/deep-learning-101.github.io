@@ -8,10 +8,9 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 </p>
 <p align="center">
   <strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong>
+</p>  
 <p align="center">
-  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
-    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
-  </a>
+  <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
 </p>
 <p align="center">
   <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> | 
@@ -82,34 +81,31 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 ---
 
 <details>
-  <summary>大語言模型 (Large Language Model)</summary>
-  <p>
-    <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper#llm"><strong>大語言模型 (Large Language Model)</strong></a>
-  </p>
+<summary>大語言模型 (Large Language Model)</summary>
+
+<h3><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper#llm">大語言模型 (Large Language Model)</a></h3>
+
 </details>
 
 <details>
-  <summary>Speech Processing (語音處理)</summary>
-  <p>
-    <a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper"><strong>Speech Processing (語音處理)</strong></a>：
-    <a href="https://www.twman.org/AI/ASR"><strong>針對訪談或對話進行分析與識別</strong></a>
-  </p>
+<summary>Speech Processing (語音處理)</summary>
+
+<h3><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing (語音處理)</a>：</h3><p><b><a href="https://www.twman.org/AI/ASR">針對訪談或對話進行分析與識別</a></b></p>
+
 </details>
 
 <details>
-  <summary>Natural Language Processing, NLP (自然語言處理)</summary>
-  <p>
-    <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper"><strong>Natural Language Processing, NLP (自然語言處理)</strong></a>：
-    <a href="https://www.twman.org/AI/NLP"><strong>針對文檔進行分析與擷取</strong></a>
-  </p>
+<summary>Natural Language Processing, NLP (自然語言處理)</summary>
+
+<h3><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP (自然語言處理)</a>：</h3><p><b><a href="https://www.twman.org/AI/NLP">針對文檔進行分析與擷取</a></b></p>
+
 </details>
 
 <details>
-  <summary>Computer Vision (電腦視覺)</summary>
-  <p>
-    <a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper"><strong>Computer Vision (電腦視覺)</strong></a>：
-    <a href="https://www.twman.org/AI/CV"><strong>針對物件或場景影像進行分析與偵測</strong></a>
-  </p>
+<summary>Computer Vision (電腦視覺)</summary>
+
+<h3><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision (電腦視覺)</a>：</h3><p><b><a href="https://www.twman.org/AI/CV">針對物件或場景影像進行分析與偵測</a></b></p>
+
 </details>
 
 ---
@@ -117,8 +113,6 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 # Deep Learning 101 Meetup
 
 Deep Learning 101 Meetup 歷年活動
-
-<div style="overflow-x: auto;">
 
 | No. | 主題 | 日期 | 講者 |
 |-----|------|------|------|
@@ -166,4 +160,3 @@ Deep Learning 101 Meetup 歷年活動
 | 05  | Optimization for Training Deep Models @ [Deep Learning Book Chapter 8](https://deep-learning-101.github.io/GeminiAbstract/PDF8) | [2017/03/10](https://www.youtube.com/watch?v=DeXH5IMHfcs) | - |
 | 04  | Regularization for Deep Learning @ [Deep Learning Book Chapter 7](https://deep-learning-101.github.io/GeminiAbstract/PDF7) | - | - |
 | 03  | Deep Feedforward Networks @ [Deep Learning Book Chapter 6](https://deep-learning-101.github.io/GeminiAbstract/PDF6) | - | - |
-</div>
