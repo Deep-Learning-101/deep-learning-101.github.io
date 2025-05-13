@@ -84,7 +84,7 @@
 
 Deep Learning 101 Meetup 歷年活動
 
-| No. | 主題 | 日期 | 講者 |
+| No. | 主題 (摘要) | 日期 (YT) | 講者 (逐字稿) |
 |-----|------|------|------|
 | 49  | On the Relationship among Convolution Attention and GNN | [2022/05/06](https://www.youtube.com/watch?v=2hpkTRrINgc) | 👤 杜岳華 |
 | 48  | Model-Based Reinforcement Learning | [2021/07/16](https://www.youtube.com/watch?v=uKJFypVGJdo) | 👤 翁崇恒 |
@@ -95,7 +95,7 @@ Deep Learning 101 Meetup 歷年活動
 | 42  | information in the weights | [2020/06/19](https://www.youtube.com/watch?v=Dz-7Jam_9C0) | 👤 Mark Chang |
 | 41  | [NLP Landing & Machine Reading Comprehension](https://deep-learning-101.github.io/html/No41.html) | [2020/05/29](https://www.youtube.com/watch?v=aEntkDT3qdo) | 👤 Ian & Hsiang |
 | 40  | Instance Segmentation | [2020/05/01](https://www.youtube.com/watch?v=tXnzUd6sZz4) | 👤 顏志翰 (Bean) |
-| 39  | 高維資料的降維演算法及視覺化 | [2020/03/20](https://www.youtube.com/watch?v=jKd4eNsRoMM) | 👤 杜岳華 |
+| 39  | [高維資料的降維演算法及視覺化](https://deep-learning-101.github.io/html/No39.html) | [2020/03/20](https://www.youtube.com/watch?v=jKd4eNsRoMM) | 👤 杜岳華 |
 | 38  | PAC Bayesian for Deep Learning | [2020/02/14](https://www.youtube.com/watch?v=MYpwAVtqFUk) | 👤 Mark Chang |
 | 37  | Introduction to geometric deep learning with implementation | [2020/01/10](https://www.youtube.com/watch?v=aeKY1X_QAhI) | 👤 杜岳華 |
 | 36  | Explainable Artificial Intelligence | [2019/12/13](https://www.youtube.com/watch?v=1Mu0Wm_X1DQ) | 👤 何宗諭 (Jiero) |
@@ -119,10 +119,10 @@ Deep Learning 101 Meetup 歷年活動
 | 17  | Approximate Inference @ [Deep Learning Book Chapter 19](https://deep-learning-101.github.io/GeminiAbstract/PDF19) | [2018/03/16](https://www.youtube.com/watch?v=YeCDY_wsojA) | - |
 | 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/html/CH18.html) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/GeminiAbstract/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | 👤 何宗諭 (Jiero) |
 | 14  | Monte Carlo Methods @ [Deep Learning Book Chapter 17](https://deep-learning-101.github.io/GeminiAbstract/PDF17) | [2017/12/15](https://www.youtube.com/watch?v=qef-XTUpDvE) | 👤 Ian Wang |
-| 12  | Structured Probabilistic Models @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | [2017/10/27](https://www.youtube.com/watch?v=n0rBS3sAqI0) | - |
+| 12  | [Structured Probabilistic Models](https://deep-learning-101.github.io/html/CH16.html) @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | [2017/10/27](https://www.youtube.com/watch?v=n0rBS3sAqI0) | - |
 | 11  | Autoencoders @ [Deep Learning Book Chapter 14](https://deep-learning-101.github.io/GeminiAbstract/PDF14) | [2017/09/08](https://www.youtube.com/watch?v=5mrJmzzpPBs) | 👤 Nat Lee |
-| 10  | Linear Factor Models @ [Deep Learning Book Chapter 13](https://deep-learning-101.github.io/GeminiAbstract/PDF13) | [2017/08/11](https://www.youtube.com/watch?v=zVENYs30Ny4&) | - |
-| 09  | Representation Learning @ [Deep Learning Book Chapter 15](https://deep-learning-101.github.io/GeminiAbstract/PDF15) | [2017/07/07](https://www.youtube.com/watch?v=MA52s5dQaGY) | - |
+| 10  | [Linear Factor Models](https://deep-learning-101.github.io/html/CH13.html) @ [Deep Learning Book Chapter 13](https://deep-learning-101.github.io/GeminiAbstract/PDF13) | [2017/08/11](https://www.youtube.com/watch?v=zVENYs30Ny4&) | - |
+| 09  | [Representation Learning](https://deep-learning-101.github.io/html/CH15.html) @ [Deep Learning Book Chapter 15](https://deep-learning-101.github.io/GeminiAbstract/PDF15) | [2017/07/07](https://www.youtube.com/watch?v=MA52s5dQaGY) | - |
 | --  | Applications @ [Deep Learning Book Chapter 12](https://deep-learning-101.github.io/GeminiAbstract/PDF12) | - | - |
 | --  | Practical Methodology @ [Deep Learning Book Chapter 11](https://deep-learning-101.github.io/GeminiAbstract/PDF11) | - | - |
 | 07  | Recurrent and Recursive Nets @ [Deep Learning Book Chapter 10](https://deep-learning-101.github.io/GeminiAbstract/PDF10) | [2017/05/05](https://www.youtube.com/watch?v=p6xzPqRd46w) | - |
