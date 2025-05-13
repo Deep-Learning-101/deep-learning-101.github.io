@@ -20,62 +20,46 @@ https://deep-learning-101.github.io/
 | [Google Cloud VM](https://cloud.google.com/compute/vm-instance-pricing?hl=zh-tw#sharedcore_machine_types) | 虛擬機器 | VM 執行個體定價頁面 |
 
 <details close>
-<summary><strong>手把手帶你一起踩AI坑：https://blog.twman.org/p/deeplearning101.html</strong></summary>
-   
-- [避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案](https://blog.twman.org/2025/03/AIAgent.html)：淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。
-   - 介紹生成式人工智慧（GenAI）的核心概念，包括大型語言模型（LLM）、提示詞設計（Prompt）、檢索增強生成（RAG）、微調（Fine-Tuning）、功能調用（Function Calling）、工作流程（Workflow）、代理人（Agentic）和多模態（Multimodal）等。
-   - 分享這些技術在實際應用中的經驗，並強調了硬體資源和數據在開發過程中的重要性。
-     
-- [白話文手把手帶你科普 GenAI](https://blog.twman.org/2024/08/LLM.html)：淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。
-   - 介紹生成式人工智慧（GenAI）的核心概念，包括大型語言模型（LLM）、提示詞設計（Prompt）、檢索增強生成（RAG）、微調（Fine-Tuning）、功能調用（Function Calling）、工作流程（Workflow）、代理人（Agentic）和多模態（Multimodal）等。
-   - 分享這些技術在實際應用中的經驗，並強調了硬體資源和數據在開發過程中的重要性。
+<summary>手把手帶你一起踩 AI 坑</summary>
 
-- [大型語言模型直接就打完收工？](https://blog.twman.org/2024/09/LLM.html)：回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。
-   - 回顧在大型語言模型（LLM）領域的探索歷程，分享了在語音識別、文本分類等多個自然語言處理（NLP）任務中的實踐經驗。
-   - 隨著 LLM 的出現，許多過去需要複雜處理的任務變得更加簡單，並討論了硬體升級對 AI 開發的重要性。
+<h3><a href="https://blog.twman.org/p/deeplearning101.html">手把手帶你一起踩 AI 坑</a>：<a href="https://www.twman.org/AI">https://www.twman.org/AI</a></h3>
 
-- [檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧](https://blog.twman.org/2024/07/RAG.html)：探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。
-   - 探討了檢索增強生成（Retrieval-Augmented Generation, RAG）技術的應用與挑戰，特別是結合知識圖譜的 GraphRAG 方法。 ​
-   - 分享在本地端部署大型語言模型（LLM）的經驗，並強調了硬體資源的重要性。
-   - 還介紹如何有效地將文檔拆分為片段（chunk），並使用嵌入模型和重新排序器（Reranker）來提升檢索結果的準確性。 ​
-   - 提供多種開源工具的推薦，如 Ollama、xinference 和 MinerU，來協助處理 PDF 等非結構化資料。
-   - 文章強調了在實施 RAG 技術時需注意的各種挑戰，並提供了實用的經驗分享和工具建議。
-  
-- [大型語言模型 (LLM) 入門完整指南：原理、應用與未來](https://blog.twman.org/2024/02/LLM.html)：探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。
-   - 探討多種大型語言模型（LLM）工具的應用與挑戰，包括 Ollama、Dify、OpenManus、LangFlow、Flowise、RAGFlow、AnythingLLM、CrewAI 和 AutoGen。
-   - 分享這些工具在實際應用中的經驗，並指出部分工具在穩定性和安裝過程中可能遇到的困難。
-   - 強調了硬體資源在 LLM 開發中的重要性，並提供了硬體升級的建議。       
+<ul>
+  <li>
+    <b><a href="https://blog.twman.org/2025/03/AIAgent.html">避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案</a></b>：<a href="https://deep-learning-101.github.io/agent">探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/08/LLM.html">白話文手把手帶你科普 GenAI</a></b>：<a href="https://deep-learning-101.github.io/GenAI">淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/09/LLM.html">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/07/RAG.html">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/02/LLM.html">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2023/04/GPT.html">什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/11/diffusion.html">Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)</a></b>；<a href="https://deep-learning-101.github.io/diffusion">深入探討影像生成與分割技術的應用，強調硬體資源的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2024/02/asr-tts.html">ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策</a></b>：<a href="https://deep-learning-101.github.io/asr-tts">探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2021/04/NLP.html">那些 NLP 踩的坑</a></b>：<a href="https://deep-learning-101.github.io/nlp">分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2021/04/ASR.html">那些語音處理踩的坑</a></b>：<a href="https://deep-learning-101.github.io/speech">分享語音處理領域的實務經驗，強調資料品質對模型效果的影響。</a>
+  </li>
+  <li>
+    <b><a href="https://blog.twman.org/2020/05/DeepLearning.html">手把手學深度學習安裝環境</a></b>：<a href="https://deep-learning-101.github.io/101">詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗。</a>
+  </li>
+</ul>
 
-- [Large Language Model，LLM](https://blog.twman.org/2023/04/GPT.html)：探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。
-   - 探討大型語言模型（LLM）的發展與應用，特別是 OpenAI 的 GPT-3 和 ChatGPT 的影響力。
-   - 詳細說明了訓練這些模型所需的龐大資源，例如，訓練 GPT-3 模型需要使用 1,024 張 A100 GPU，耗時 24 天。
-   - 強調硬體資源在 LLM 開發中的關鍵作用，並分享了作者在硬體升級方面的經驗。
-     
-- [Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)](https://blog.twman.org/2024/11/diffusion.html)：深入探討影像生成與分割技術的應用，強調硬體資源的重要性。
-   - 深入探討了多種影像生成與分割技術的應用與發展，特別是 ComfyUI、Stable Diffusion、FLUX、Segment Anything Model 2（SAM2）等工具的結合使用。
-   - 分享實際應用中的經驗，並強調了硬體資源在影像處理任務中的重要性。
-   - 介紹了多模態模型的應用，展示了如何同時處理文本、影像等多種數據形式，以提升影像生成與分割的效果。
-
-- [那些ASR和TTS可能會踩的坑](https://blog.twman.org/2024/02/asr-tts.html)探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性。
-   - 探討了在自動語音識別（ASR）和文本轉語音（TTS）技術應用中可能遇到的問題與解決方案。
-   - 分享在實際商業場景中使用 OpenAI 的 Whisper 模型的經驗，並強調了微調模型以提升中文語音識別效果的重要性。
-   - 文章介紹了多種開源工具，如 faster-whisper、WhisperX 和 BELLE-2，這些工具可用於優化 ASR 和 TTS 的性能。
-   - 強調數據質量在模型訓練中的關鍵作用，並提供了處理和訓練數據的工具與技巧。
-     
-- [那些自然語言處理踩的坑](https://blog.twman.org/2021/04/NLP.html)：分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響。
-   - 分享在自然語言處理（NLP）領域的實踐經驗，涵蓋文本糾錯、文本分類、文本相似度、命名實體識別、文本摘要和機器閱讀理解等應用。
-   - 強調數據質量對模型效果的關鍵影響，並指出在深度學習興起前，已有多種演算法可供使用。
-   - 文章提到 BERT 等模型的出現對 NLP 領域的重大影響，並建議讀者了解相關技術。
-
-- [那些語音處理 (Speech Processing) 踩的坑](https://blog.twman.org/2021/04/ASR.html)：分享語音處理領域的實務經驗，強調資料品質對模型效果的影響。
-   - 分享在語音處理領域的實務經驗，涵蓋了說話者辨識、語音增強、語音分離等多個面向。
-   - 強調資料品質對模型效果的關鍵影響，並指出在深度學習興起之前，已有多種演算法可供使用。
-   - 文章提到硬體資源在語音處理任務中的重要性，分享了作者在硬體升級的經驗。
-     
-- [手把手帶你學 Pytorch、CUDA、NVIDIA-SMI、cuDNN、Ubuntu、NGC、Docker、NVIDIA-Docker 的安裝與設定](https://blog.twman.org/2020/05/DeepLearning.html)：詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗。
-   - 詳細介紹在 Ubuntu 系統上安裝與配置深度學習環境的步驟，包括 TensorFlow、PyTorch、CUDA、NVIDIA-SMI、cuDNN、NGC、Docker 和 NVIDIA-Docker 等組件。
-   - 分享在實際操作中可能遇到的挑戰與解決方案，並強調硬體資源在深度學習開發中的重要性。
-   - 文章還介紹了作者在硬體升級方面的經驗，展示了從 GIGABYTE GTX 960 4G 到 RTX 6000 Ada 48 GB 等顯卡的演進過程。
 </details>
 
 # Speech Processing (語音處理)
@@ -87,7 +71,7 @@ https://deep-learning-101.github.io/
 - [Mozilla Common Voice Datasets - zhTW](https://huggingface.co/datasets/mozilla-foundation/common_voice_11_0/viewer/zh-TW)
 - [語音合成,語音辨識常見資料集](https://mp.weixin.qq.com/s/xGAEzuT5x7BkTRH6DCJFhA)
 
-#
+
 # 中文語音識別 (Chinese Speech Recognition)
 
 * 2024/05/01：[使用Hugging Face 推理終端建立強大的「語音辨識+ 說話者分割+ 投機解碼」工作流程](https://huggingface.co/blog/zh/asr-diarization)
@@ -128,10 +112,10 @@ https://deep-learning-101.github.io/
 語音辨識（speech recognition）技術，也被稱為自動語音辨識（英語：Automatic Speech Recognition, ASR）、電腦語音識別（英語：Computer Speech Recognition）或是語音轉文字識別（英語：Speech To Text, STT），其目標是以電腦自動將人類的語音內容轉換為相應的文字；跟小夥伴們一起嘗試過NEMO還有Kaldi、MASR、VOSK，wav2vec以及Google、Azure等API，更別說後來陸續又出現SpeechBrain、出門問問的WeNet跟騰訊PIKA等。目前已知可訓練聲學模型(AM)中文語音(中國發音/用語，可惜還沒臺灣較靠譜的)公開數據如：Magic-Data_Mandarin-Chinese-Read-Speech-Corpus、aidatatang、aishell-1 、aishell-2等約2000多小時(aishell目前已到4，但想商用至少得破萬小時較靠譜)；再搭配語言模型(LM)，然後基於各種演算法架構優化各有優缺點，效果也各有優劣。與說話人辨識及說話人確認不同，後者嘗試辨識或確認發出語音的說話人而非其中所包含的詞彙內容。 語音辨識技術的應用包括語音撥號、語音導航、室內裝置控制、語音文件檢索、簡單的聽寫資料錄入等。語音辨識技術與其他自然語言處理技術如機器翻譯及語音合成技術相結合，可以構建出更加複雜的應用，例如語音到語音的翻譯。語音辨識技術所涉及的領域包括：訊號處理、圖型識別、概率論和資訊理論、發聲機理和聽覺機理、人工智慧等等。
 
 
-#
+
 # 中文語者(聲紋)識別 (Chinese Speaker Recognition)
 
-https://www.twman.org/AI/ASR/SpeakerRecognition
+[https://www.twman.org/AI/ASR/SpeakerRecognition](https://www.twman.org/AI/ASR/SpeakerRecognition)
 
 找到描述特定對象的聲紋特徵，通過聲音判別說話人身份的技術；借助不同人的聲音，在語譜圖的分佈情況不同這一特徵，去對比兩個人的聲音，來判斷是否同人。
 
@@ -167,12 +151,12 @@ Real Time Factor 實時比:衡量提取時間跟音頻時長的關係，ex:1秒�
 ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 閥值：當分數超過閥值才做出接受決定。<br><br>  
 
-#
+
 # 中文語音增強(去噪) Chinese Speech Enhancement
 
-https://www.twman.org/AI/ASR/SpeechEnhancement
+[https://www.twman.org/AI/ASR/SpeechEnhancement](https://www.twman.org/AI/ASR/SpeechEnhancement)
 
-https://huggingface.co/spaces/DeepLearning101/Speech-Quality-Inspection_Meta-Denoiser
+[https://huggingface.co/spaces/DeepLearning101/Speech-Quality-Inspection_Meta-Denoiser](https://huggingface.co/spaces/DeepLearning101/Speech-Quality-Inspection_Meta-Denoiser)
 
 找到描述特定聲音特徵，並將其去除以提高質量；從含雜訊的語音信號中提取出純淨語音的過程
 
@@ -188,7 +172,7 @@ https://huggingface.co/spaces/DeepLearning101/Speech-Quality-Inspection_Meta-Den
 分組投入約150天；說到會做語音增強(去噪音)，這一切真的只是因為那有一面之緣的圖靈獎大神在FB發文介紹FAIR的最新成果；而噪音去除你可以跟另外一個聲音分離做聯想，基本概念其實差不多，只是噪音去除是把非人聲給去除 (記得注意一下是不是多通道)；而做這個項目時，一樣也是匯整準備了相當多的學術論文和實驗結果 (如下所附) ；做語音感覺上數據也是很重要，但噪音去除相對的數據集就比較好處理，網路上都可以找到，只要進行前後調整合併，就可以產出數量頗大的數據集，唯一需要考量的就是你的 GPU 夠不夠大整個吃下了，還有你這些數據集裡的人聲是不是一樣是英文，或者是你想要中文的效果？順道一提最後我們的模型大小是經過優化的9 MB，而 RTF 是 0.08。
 
 
-#
+
 # 中文語者分離(分割) Chinese Speech Separation (Speaker Separation)
 
 https://www.twman.org/AI/ASR/SpeechSeparation
@@ -224,7 +208,7 @@ https://huggingface.co/spaces/DeepLearning101/Speech-Separation
 中間也意外發現了Google brain 的 wavesplit，在有噪音及兩個人同時講話情形下，感覺效果還不差，但沒找到相關的code，未能進一步驗證或是嘗試更改數據集。還有又是那位有一起用餐之緣的深度學習大神 Yann LeCun繼發文介紹 完去噪後，又發文介紹了語音分離；後來還有像是最早應用在NLP的Transformer等Dual-path RNN (DP-RNN) 或 DPT-NET (Dual-path transformer) 等應用在語音增強/分割，另外VoiceFilter、TasNet 跟 Conv-TasNet還有sudo-rm等等也是語音分割相關，當然更不能錯過臺大電機李宏毅老師一篇SSL-pretraining-separation的論文 (務必看完臺大電機李宏毅老師的影片)，最後也是多虧李老師及第一作者黃同學的解惑，然後小夥伴們才又更深入的確認並且解決問題。
 這裡做數據時相對簡單一點，直接打散混合，再從中隨機挑選兩個人，然後分別挑出語音做混合，若長度不同，選擇短者為參考，將長者切到與短者相同，兩兩完全重疊或者兩兩互不完全重疊等都對效果有不小的影響；同時也研究了Data Parallel 跟 Distributed Data Parallel 的差異，但是如何才能在 CPU 上跑得又快又準才是落地的關鍵
 
-#
+
 # 中文語音合成 Chinese Speech Synthesis
 
 ### **相關連結**
