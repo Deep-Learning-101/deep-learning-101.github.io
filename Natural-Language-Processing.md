@@ -1,5 +1,7 @@
 [https://www.twman.org/AI/NLP](https://www.twman.org/AI/NLP)
 
+[https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper)
+
 [https://huggingface.co/DeepLearning101](https://huggingface.co/DeepLearning101)
 
 [https://deep-learning-101.github.io/](https://deep-learning-101.github.io/)
