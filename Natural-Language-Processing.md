@@ -136,7 +136,7 @@
   - 2024-11-21： [IBM開源一站式文件解析工具！輕鬆解析PDF、PPT、圖片及網頁等多種格式文檔](https://mp.weixin.qq.com/s/jTqFm5WzmitaxpyKowiBSA)
      - [Docling](https://github.com/DS4SD/docling)：[IBM 最新開源文件處理利器，完美整合 LLM 應用](https://most.tw/posts/ainews/introducedocling202411/)
 
- **[AI Agent 開源框架](https://blog.twman.org/2025/03/AIAgent.html)>**
+ **[AI Agent 開源框架](https://blog.twman.org/2025/03/AIAgent.html)**
 
 |  Agent 名稱 | 功能範疇 | 集成能力 | 適用場景 | 建議選擇 |
 |------------------|----------|----------|----------|----------|
@@ -261,7 +261,7 @@
   - 2024-06-24：[微調Florence-2 - 微軟的尖端視覺語言模型](https://huggingface.co/blog/zh/finetune-florence2)
 
 
-**<summary>語音助手工具</summary>**
+**語音助手工具**
 - [ESP-AI](https://espai.fun/)
 - [xiaozhi-esp32](https://github.com/78/xiaozhi-esp32)
    - [購買連結](https://rcnv1t9vps13.feishu.cn/wiki/LdCrw9neaiGgzrkrFyjclllynYd)
