@@ -93,7 +93,7 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 
 # Deep Learning 101 Meetup
 
-Deep Learning 101 Meetup 歷年活動
+Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro Preview 05-06 所生成，處理好會陸續補上)
 
 | No. | 主題 (摘要) | 日期 (YT) | 講者 (逐字稿) |
 |-----|------|------|------|
@@ -132,7 +132,7 @@ Deep Learning 101 Meetup 歷年活動
 | 14  | Monte Carlo Methods @ [Deep Learning Book Chapter 17](https://deep-learning-101.github.io/GeminiAbstract/PDF17) | [2017/12/15](https://www.youtube.com/watch?v=qef-XTUpDvE) | 👤 Ian Wang |
 | 12  | Structured Probabilistic Models @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | [2017/10/27](https://www.youtube.com/watch?v=n0rBS3sAqI0) | - |
 | 11  | Autoencoders @ [Deep Learning Book Chapter 14](https://deep-learning-101.github.io/GeminiAbstract/PDF14) | [2017/09/08](https://www.youtube.com/watch?v=5mrJmzzpPBs) | 👤 Nat Lee |
-| 10  | Linear Factor Models @ [Deep Learning Book Chapter 13](https://deep-learning-101.github.io/GeminiAbstract/PDF13) | [2017/08/11](https://www.youtube.com/watch?v=zVENYs30Ny4&) | - |
+| 10  | [Linear Factor Models](https://deep-learning-101.github.io/html/CH13.html) @ [Deep Learning Book Chapter 13](https://deep-learning-101.github.io/GeminiAbstract/PDF13) | [2017/08/11](https://www.youtube.com/watch?v=zVENYs30Ny4&) | - |
 | 09  | Representation Learning @ [Deep Learning Book Chapter 15](https://deep-learning-101.github.io/GeminiAbstract/PDF15) | [2017/07/07](https://www.youtube.com/watch?v=MA52s5dQaGY) | - |
 | --  | Applications @ [Deep Learning Book Chapter 12](https://deep-learning-101.github.io/GeminiAbstract/PDF12) | - | - |
 | --  | Practical Methodology @ [Deep Learning Book Chapter 11](https://deep-learning-101.github.io/GeminiAbstract/PDF11) | - | - |
