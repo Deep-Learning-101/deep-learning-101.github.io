@@ -118,6 +118,8 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 
 Deep Learning 101 Meetup 歷年活動
 
+<div style="overflow-x: auto;">
+
 | No. | 主題 | 日期 | 講者 |
 |-----|------|------|------|
 | 49  | On the Relationship among Convolution Attention and GNN | [2022/05/06](https://www.youtube.com/watch?v=2hpkTRrINgc) | 👤 杜岳華 |
@@ -164,3 +166,4 @@ Deep Learning 101 Meetup 歷年活動
 | 05  | Optimization for Training Deep Models @ [Deep Learning Book Chapter 8](https://deep-learning-101.github.io/GeminiAbstract/PDF8) | [2017/03/10](https://www.youtube.com/watch?v=DeXH5IMHfcs) | - |
 | 04  | Regularization for Deep Learning @ [Deep Learning Book Chapter 7](https://deep-learning-101.github.io/GeminiAbstract/PDF7) | - | - |
 | 03  | Deep Feedforward Networks @ [Deep Learning Book Chapter 6](https://deep-learning-101.github.io/GeminiAbstract/PDF6) | - | - |
+</div>
