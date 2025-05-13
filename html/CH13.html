@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>高維資料的降維演算法及視覺化 - tSNE 與 UMAP 比較</title>
-    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <title>第 13 章：線性因子模型 & 深度學習模型探索</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <script type="importmap">
       {
@@ -17,8 +16,8 @@
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-            background-color: #161617; /* Base: Apple Dark Background */
-            color: #f5f5f7; /* Base: Apple Light Text */
+            background-color: #000000; /* File A: Apple's deep black */
+            color: #f5f5f7; /* File A: Apple's off-white */
             overflow-x: hidden;
         }
 
@@ -30,165 +29,165 @@
             margin: 0 auto;
         }
 
-        .bento-item { /* Standardized bento item class */
-            background-color: #1d1d1f; /* File 3's dark gray for elements, slightly different from #2c2c2e */
-            border-radius: 20px; /* File 3's softer radius */
-            padding: 2rem; /* File 3's padding */
+        .bento-item {
+            background-color: #1d1d1f; /* File A: Apple's dark gray for elements */
+            border-radius: 20px; /* File A: Softer radius */
+            padding: 2rem; /* File A: Padding */
             overflow: hidden;
             position: relative;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1), 0 3px 6px rgba(0,0,0,0.08); /* File B shadow */
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out; /* File B transition */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* File B: Pushes content and footer apart */
             opacity: 0; /* Initial state for animation */
-            display: flex; /* Added for flex capabilities like in File 3 */
-            flex-direction: column; /* Added for flex capabilities */
         }
 
         .bento-item:hover { 
-            transform: translateY(-5px);
-            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.07), 0 4px 6px -4px rgba(255, 255, 255, 0.07);
+            transform: translateY(-5px); /* File B hover */
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15), 0 5px 10px rgba(0,0,0,0.1); /* File B hover shadow */
         }
 
-        /* Solid Highlights from Base File 1+2 */
-        .highlight-blue {
-            background: linear-gradient(90deg, rgba(0,122,255,0.6) 0%, rgba(0,122,255,0.2) 100%);
-            color: #fff;
-        }
-        .highlight-green {
-            background: linear-gradient(90deg, rgba(52,199,89,0.6) 0%, rgba(52,199,89,0.2) 100%);
-            color: #fff;
-        }
-        .highlight-orange {
-            background: linear-gradient(90deg, rgba(255,149,0,0.6) 0%, rgba(255,149,0,0.2) 100%);
-            color: #fff;
-        }
-
-        /* Gradient Highlights from File 3 */
+        /* Highlight Gradients from File A */
         .highlight-gradient-blue {
             background: linear-gradient(45deg, rgba(0, 122, 255, 0.7), rgba(0, 122, 255, 0.3));
-             color: #f5f5f7; /* Ensure text is readable */
+            color: #f5f5f7;
         }
         .highlight-gradient-green {
             background: linear-gradient(45deg, rgba(52, 199, 89, 0.7), rgba(52, 199, 89, 0.3));
-             color: #f5f5f7;
+            color: #f5f5f7;
         }
         .highlight-gradient-orange {
             background: linear-gradient(45deg, rgba(255, 149, 0, 0.7), rgba(255, 149, 0, 0.3));
-             color: #f5f5f7;
+            color: #f5f5f7;
+        }
+        /* Highlight Gradient from File B */
+        .highlight-gradient-general-blue { /* Renamed to avoid conflict if File A's is also generic blue */
+            background-image: linear-gradient(to bottom right, rgba(0, 122, 255, 0.3), rgba(0, 122, 255, 0.05));
+            color: #f5f5f7;
         }
 
 
         h1, h2, h3, h4 { 
             font-weight: 600;
-            color: #f5f5f7; /* Default h color from File 3 */
+            color: #f5f5f7; 
         }
         
-        /* Main Page Header Typography (from Base File 1+2) */
-        .header-main-title { 
-            font-size: 3rem; 
-            line-height: 1.1;
+        /* Main Page Header Typography */
+        .page-main-title { 
+            font-size: 2.8rem; /* Adjusted from File A's .chinese-title (2.5rem) and File B's header (5xl) */
+            line-height: 1.2;
             font-weight: 700; 
-            margin-bottom: 0.75rem; 
-            background-clip: text;
-            -webkit-background-clip: text; 
-            color: transparent;
-            background-image: linear-gradient(to right, #60a5fa, #34d399); 
+            margin-bottom: 0.5rem; 
+            color: #f5f5f7;
             opacity: 0; 
         }
-         .header-main-title a {
-            background-clip: text;
+         .page-main-title a {
+            color: inherit; /* Make link color same as text */
+            text-decoration: none;
+             background-image: linear-gradient(to right, #60a5fa, #34d399);
+             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
-            background-image: linear-gradient(to right, #60a5fa, #34d399);
-            text-decoration: none;
         }
-        .header-main-title a:hover {
-             background-image: linear-gradient(to right, #3b82f6, #10b981); 
+        .page-main-title a:hover {
+            background-image: linear-gradient(to right, #3b82f6, #10b981);
         }
-        .header-sub-title { 
-            font-size: 1.875rem; 
-            font-weight: 600; 
-            color: #a1a1aa; 
-            margin-bottom: 0.5rem; 
+        .page-english-sub { 
+            font-size: 1.2rem; /* Adjusted */
+            color: #86868b; /* File A .english-sub */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.75rem;
             opacity: 0; 
         }
-         .header-presenter { 
-            color: #71717a; 
+         .page-presenter-info { 
+            color: #86868b; /* File A .text-apple-gray */
+            font-size: 1rem;
             opacity: 0; 
         }
 
-        /* Typography for File 3's Hero Section */
-        .file3-hero-title { /* Distinct for File 3's hero */
-            font-size: 2.5rem; /* From File 3 .chinese-title */
-            font-weight: 600;
-            line-height: 1.2;
+        /* Section Hero Typography (for File B's intro) */
+        .section-hero-title {
+            font-size: 2.2rem; /* Adjusted */
+            font-weight: 700;
             color: #f5f5f7;
-            opacity: 0; /* For animation */
+            margin-bottom: 0.5rem;
+            opacity: 0;
         }
-        .file3-hero-english-sub { /* Distinct for File 3's hero */
-            font-size: 0.9rem;
-            color: #86868b; /* From File 3 .english-sub */
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            opacity: 0; /* For animation */
-        }
-        .file3-hero-presenter {
-            color: #86868b; /* From File 3 .text-apple-gray */
-            opacity: 0; /* For animation */
+        .section-hero-subtitle {
+            font-size: 1.1rem;
+            color: #86868b; /* text-apple-medium-gray */
+            max-width: 48rem; /* max-w-3xl */
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0;
         }
 
 
         /* Typography for Bento Item Content */
-        .bento-item .item-title-main { /* For H2 in items */
-            font-size: 1.8rem; /* From File 3 .chinese-subtitle */
+        .bento-item .item-title-main { 
+            font-size: 1.8rem; /* File A .chinese-subtitle */
             font-weight: 600;
             line-height: 1.3;
             color: #f5f5f7;
             margin-bottom: 0.25rem;
         }
-        .bento-item .item-title-sub-eng { /* For English sub-captions for titles */
-            font-size: 0.9rem; /* From File 3 .english-sub */
+        .bento-item .item-title-sub-eng { 
+            font-size: 0.9rem; /* File A .english-sub */
             color: #86868b;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             margin-bottom: 0.75rem;
         }
-        .bento-item .item-text-primary { /* General primary text in items */
+        .bento-item .item-text-primary { 
             font-size: 1rem; 
-            color: #d2d2d7; /* File 3 text-apple-light-gray */
+            color: #d2d2d7; /* File A .text-apple-light-gray */
             line-height: 1.6;
         }
-        .bento-item .item-text-secondary { /* Smaller secondary text */
+        .bento-item .item-text-secondary { 
             font-size: 0.875rem; 
-            color: #86868b; /* File 3 text-apple-gray */
+            color: #86868b; /* File A .text-apple-gray */
+        }
+        .bento-item .item-footer-text { /* For small text at bottom of File B cells */
+             margin-top: auto; /* Pushes to bottom because of flex-direction column and justify-content space-between */
+             padding-top: 1rem;
+             text-align: right;
+             font-size: 0.75rem; /* text-xs */
+             color: #6c6c70; /* text-apple-medium-gray/70 like */
         }
         
 
         /* Icons */
-        .icon-large { /* General large icon for items */
+        .icon-large { /* General large icon for items from File A */
             font-size: 3rem; 
             margin-bottom: 1rem;
-            opacity: 0.6; 
-            color: rgba(0, 122, 255, 0.8); /* File 3's blue for icons */
+            opacity: 0.8; 
+            color: rgba(0, 122, 255, 0.8); /* File A's blue for icons */
         }
-        .bento-item .icon-style { /* From previous merge, keep if used */
-            margin-right: 0.75rem;
-            color: #0a84ff; 
+        .icon-bg { /* From File B */
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
         }
-
-        .bento-item img {
+        
+        .bento-item img { /* Base img styling */
             border-radius: 0.75rem; 
             object-fit: contain;
             max-height: 350px; 
             margin: 1rem auto;
             display: block;
-            background-color: rgba(255,255,255,0.05); 
-            padding: 0.5rem;
         }
 
-        /* Formula/Equation Styling - Standardized to .formula (monospaced) */
+        /* Formula Styling (Monospaced) */
         .formula { 
-            background-color: #2c2c2e; /* Darker than File 3's, using #3a3a3c from prev base, but align with new bento item bg */
+            background-color: #2c2c2e; 
             padding: 1rem;
-            border-radius: 10px; /* Softer radius from File 3 */
+            border-radius: 10px; 
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; 
             font-size: 1.05rem; 
             color: #f5f5f7;
@@ -196,7 +195,7 @@
             margin: 1rem 0;
             border: 1px solid #4a4a4e;
         }
-        .formula code, .bento-item code { 
+        .formula code, .bento-item code { /* General code tag styling */
             background-color: #4a4a4c;
             padding: 0.2em 0.4em;
             margin: 0;
@@ -205,389 +204,155 @@
             font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
         }
         
-        /* Table styles */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            color: #d4d4d8;
-        }
-        th, td {
-            border: 1px solid #4a4a4e; 
-            padding: 0.75rem;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-        th {
-            background-color: #3a3a3c; 
-            font-weight: 600;
-            color: #f5f5f7;
-        }
-        td:first-child {
-            font-weight: 500;
-        }
-
-        /* List styling with Font Awesome check from File 3 */
-        .bento-item ul.fa-ul { /* Apply to ul elements that should have this style */
+        /* List styling with Font Awesome check from File A */
+        .bento-item ul.fa-ul { 
             list-style: none;
             padding-left: 0;
         }
         .bento-item ul.fa-ul li {
-            padding-left: 1.5em; /* Space for the icon */
+            padding-left: 1.75em; /* Space for the icon + a bit more */
             position: relative;
             margin-bottom: 0.5em;
-            color: #d2d2d7; /* text-apple-light-gray */
+            color: #d2d2d7; 
         }
         .bento-item ul.fa-ul li::before {
-            content: "\f00c"; /* Font Awesome check icon unicode */
+            content: "\f00c"; 
             font-family: "Font Awesome 6 Free";
-            font-weight: 900; /* Required for solid icons */
+            font-weight: 900; 
             position: absolute;
             left: 0;
-            top: 0.1em; /* Adjust vertical alignment if needed */
-            color: rgba(0, 122, 255, 0.8); /* Apple blue for icon */
+            top: 0.1em; 
+            color: rgba(0, 122, 255, 0.8); 
         }
         /* Standard list for other cases */
          .bento-item ul:not(.fa-ul) {
             list-style: disc;
-            padding-left: 1.5rem; /* Indent lists */
+            padding-left: 1.5rem; 
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
+            color: #d2d2d7; 
         }
          .bento-item ol {
             list-style-type: decimal;
             padding-left: 1.5rem;
             margin-top: 0.5rem;
             margin-bottom: 0.5rem;
+            color: #d2d2d7; 
         }
 
 
-        /* Diagram Placeholder from File 3 */
+        /* Diagram Placeholder from File A */
         .diagram-placeholder {
             border: 1px dashed #444;
             padding: 1rem;
             text-align: center;
-            color: #6c6c70; /* Darker gray for placeholder text */
-            min-height: 100px; /* Adjusted */
+            color: #6c6c70; 
+            min-height: 100px; 
             display: flex;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            border-radius: 10px; /* Softer radius */
+            border-radius: 10px; 
             margin-top: 0.5rem;
-            background-color: #232325; /* Slightly different bg for placeholder */
+            background-color: #232325; 
         }
         
-        /* Bento grid layout (from Base File 1+2, using md-col-span- etc.) */
-        @media (min-width: 768px) { 
+        /* Grid layout */
+        @media (min-width: 768px) { /* md screens */
             .bento-grid {
-                grid-template-columns: repeat(2, 1fr);
+                grid-template-columns: repeat(3, 1fr); /* Default to 3 columns on medium */
             }
-            /* Spans for File 3 content (md) */
             .bento-item.md-col-span-1 { grid-column: span 1 / span 1; }
             .bento-item.md-col-span-2 { grid-column: span 2 / span 2; }
-            .bento-item.md-col-span-3 { grid-column: span 3 / span 3; } /* Will span full on 2-col grid */
+            .bento-item.md-col-span-3 { grid-column: span 3 / span 3; }
         }
-        @media (min-width: 1024px) { 
+        @media (min-width: 1024px) { /* lg screens */
             .bento-grid {
-                grid-template-columns: repeat(4, 1fr); /* File 3 uses up to 4 cols */
+                grid-template-columns: repeat(4, 1fr); /* Up to 4 columns on large */
             }
             .bento-item.lg-col-span-1 { grid-column: span 1 / span 1; }
             .bento-item.lg-col-span-2 { grid-column: span 2 / span 2; }
             .bento-item.lg-col-span-3 { grid-column: span 3 / span 3; }
             .bento-item.lg-col-span-4 { grid-column: span 4 / span 4; }
+            /* Row spans for File B items */
+            .bento-item.lg-row-span-2 { grid-row: span 2 / span 2; }
         }
     </style>
 </head>
 
 <body class="antialiased"> 
     <header class="text-center py-12 md:py-16 px-6">
-        <h1 class="header-main-title text-5xl md:text-6xl">
+        <h1 class="page-main-title text-5xl md:text-6xl">
             <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">
-                高維資料的降維演算法及視覺化
+                第 13 章：線性因子模型
             </a>
         </h1>
-        <h2 class="header-sub-title text-xl md:text-2xl">
-            Comparison of tSNE and UMAP & Linear Factor Models
-        </h2>
-        <p class="header-presenter text-sm md:text-base">
-            Presentations by Yueh-Hua Tu (2020.3.20) & Ning-Yuan Lyu (2017.08.11)
+        <p class="page-english-sub text-xl md:text-2xl">Chapter 13: Linear Factor Models</p>
+        <p class="page-presenter-info text-md md:text-lg">
+            主講人：呂寧遠 (Ning-Yuan Lyu) | 日期：2017.08.11
         </p>
     </header>
 
     <main class="bento-grid">
-        <section class="bento-item md-col-span-2 lg-col-span-3" data-custom="0">
-            <h2 class="item-title-main"><i class="fas fa-info-circle mr-2"></i>開場白 <span class="item-title-sub-eng">Introduction (tSNE/UMAP)</span></h2>
-            <p class="item-text-primary mb-4">大家好，今天由我來為大家分享。原本安排的講者最近比較忙，所以臨時由我來代打。也因為疫情的關係，我們的聚會改成了線上直播的方式。</p>
-            <p class="item-text-primary">
-                今天的內容會聚焦在<strong>高維資料的降維演算法與視覺化</strong>，特別是比較兩種常用的方法：<strong>t-SNE</strong> 和 <strong>UMAP</strong>。
-                Compared to the previous broader talk, today we will focus on these two algorithms in more detail.
-            </p>
-        </section>
-        <section class="bento-item lg-col-span-1" data-custom="1"> {/* Adjusted span for 4-col LG grid */}
-            <i class="fas fa-project-diagram icon-large text-blue-400"></i>
-            <h3 class="item-title-main">降維與視覺化 <span class="item-title-sub-eng">Why it matters</span></h3>
-            <p class="item-text-primary">
-                高維資料難以直接觀察和理解。<strong>降維 (Dimensionality Reduction)</strong> 演算法將高維資料映射到低維空間（通常是2D或3D），而<strong>視覺化 (Visualization)</strong> 則幫助我們洞察資料結構。
-                Visualization is crucial for understanding high-dimensional data structures.
-            </p>
-        </section>
-        <section class="bento-item lg-col-span-2" data-custom="2">
-            <h3 class="item-title-main"><i class="fas fa-list-ol mr-2"></i>演講大綱 <span class="item-title-sub-eng">Outline (tSNE/UMAP)</span></h3>
-            <ul class="fa-ul item-text-primary space-y-1"> {/* Using fa-ul for check icons */}
-                <li>Brief introduction of Dimensional Reduction</li>
-                <li>Types of Dimensional Reduction</li>
-                <li>T-distributed Stochastic Neighbor Embedding (t-SNE)</li>
-                <li>Uniform Manifold Approximation and Projection (UMAP)</li>
-                <li>Comparison of two models</li>
-                <li>Dimensional reduction via graph</li>
-                <li>Relation to graph neural network</li>
-            </ul>
-        </section>
-        <section class="bento-item highlight-blue text-center lg-col-span-1" data-custom="3"> {/* Adjusted span */}
-            <img src="https://i.imgur.com/eU8zS6n.png" alt="Dimensional Reduction Concept"/>
-            <h3 class="item-title-main">降維基礎 <span class="item-title-sub-eng">Dimensional Reduction Basics</span></h3>
-            <p class="item-text-primary">A mapping from high dimensional space to low dimensional space.</p>
-            <p class="item-text-primary mt-2">其核心是將資料從高維空間映射到低維空間，同時盡可能保留資料原有的重要結構特性。例如，從三維空間映射到二維平面。</p>
-        </section>
-        <section class="bento-item lg-col-span-2" data-custom="4">
-            <h3 class="item-title-main"><i class="fas fa-sitemap mr-2"></i>降維方法分類 <span class="item-title-sub-eng">Types of Dimensional Reduction</span></h3>
-            <img src="https://i.imgur.com/JvK8fQp.png" alt="Types of Dimensional Reduction" class="w-full h-auto"/>
-            <p class="item-text-primary mt-4">主要分為<strong>線性 (Linear)</strong> 與<strong>非線性 (Non-linear)</strong> 方法。非線性方法中，又可根據保留<strong>全域結構 (Global Structure)</strong> 或<strong>區域結構 (Local Structure)</strong> 來細分。
-            This presentation focuses on non-linear methods like t-SNE and UMAP, which often preserve local data structures.
-            </p>
-        </section>
-        <section class="bento-item lg-col-span-1" data-custom="5"> {/* Adjusted span */}
-            <h3 class="item-title-main">瑞士卷資料集 <span class="item-title-sub-eng">Swiss Roll Example</span></h3>
-            <img src="https://i.imgur.com/oKqg7c1.png" alt="Swiss Roll Dataset"/>
-            <p class="item-text-primary">一個經典的非線性資料集，常用於測試流形學習 (Manifold Learning) 演算法的效果。目標是將這個三維的卷狀結構「攤平」到二維。</p>
-        </section>
-        <section class="bento-item lg-col-span-1" data-custom="6"> {/* Adjusted span */}
-            <h3 class="item-title-main">全域 vs. 區域結構 <span class="item-title-sub-eng">Global vs. Local Structure</span></h3>
-            <img src="https://i.imgur.com/tKjYmNl.png" alt="Global vs Local structure comparison"/>
-            <p class="item-text-primary">
-                有些方法（如MDS）試圖保留資料的<strong>整體形狀 (Global Structure)</strong>，而t-SNE和UMAP等方法更注重保留資料點之間的<strong>鄰近關係 (Local Structure)</strong>。
-            </p>
-        </section>
-        <section class="bento-item highlight-green lg-col-span-1" data-custom="7">  {/* Adjusted span */}
-            <i class="fas fa-calculator icon-large text-green-300"></i>
-            <h3 class="item-title-main">符號定義 <span class="item-title-sub-eng">Notation</span></h3>
-            <div class="formula">
-                <p>p<sub>j|i</sub> = p(x<sub>j</sub> | x<sub>i</sub>)</p>
-                <p>q<sub>j|i</sub> = q(y<sub>j</sub> | y<sub>i</sub>)</p>
-            </div>
-            <p class="item-text-primary mt-2 text-sm">p<sub>j|i</sub>: probability of path x<sub>i</sub> to x<sub>j</sub> in high-dim. q<sub>j|i</sub>: probability of path y<sub>i</sub> to y<sub>j</sub> in low-dim.</p>
-        </section>
-        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="8"> {/* Adjusted span */}
-            <h3 class="item-title-main">SNE: 隨機鄰近嵌入 <span class="item-title-sub-eng">Stochastic Neighbor Embedding</span></h3>
-            <img src="https://i.imgur.com/0sQpT11.png" alt="SNE Similarity Formulas"/>
-            <p class="item-text-primary mb-2 text-sm">SNE是t-SNE的前身。它在高維和低維空間都使用高斯核函數來計算點之間的相似度（機率）。目標是最小化兩個空間中機率分佈的KL散度。</p>
-            <div class="formula text-xs">Loss: arg min D<sub>KL</sub>(P||Q) = Σ<sub>i</sub> Σ<sub>j</sub> p<sub>j|i</sub> log (p<sub>j|i</sub> / q<sub>j|i</sub>)</div>
-        </section>
-        <section class="bento-item lg-col-span-1" data-custom="9"> {/* Adjusted span */}
-            <h3 class="item-title-main">擁擠問題 <span class="item-title-sub-eng">The Crowding Problem</span></h3>
-            <img src="https://i.imgur.com/V0sR0jR.png" alt="Crowding Problem Illustration" class="w-full h-auto"/>
-            <p class="item-text-primary text-sm">SNE在降維時，不同群集之間的點容易擠在一起，使得視覺化效果不佳。</p>
-        </section>
-        <section class="bento-item lg-col-span-4" data-custom="10"> {/* Adjusted span */}
-            <h3 class="item-title-main"><i class="fas fa-lightbulb mr-2"></i>t-SNE: T分佈隨機鄰近嵌入 <span class="item-title-sub-eng">T-distributed SNE</span></h3>
-            <div class="md:flex md:items-center md:space-x-6">
-                <img src="https://i.imgur.com/XjGf8cR.png" alt="t-SNE MNIST visualization" class="md:w-1/2 h-auto"/>
-                <div class="md:w-1/2 item-text-primary text-sm">
-                    <p class="mb-2">由 van der Maaten 和 Hinton 於2008年提出。關鍵改進：</p>
-                    <ul class="fa-ul space-y-1 mb-2">
-                        <li>高維 (p<sub>j|i</sub>) 仍用高斯分佈。</li>
-                        <li>低維 (q<sub>j|i</sub>) 改用學生t分佈 (自由度1 = 柯西分佈)。</li>
-                    </ul>
-                    <img src="https://i.imgur.com/Xb1i782.png" alt="t-SNE formulas" class="my-2 mx-auto max-h-28 object-contain"/>
-                    <p>t分佈具「厚尾」特性，有效緩解擁擠問題，產生更清晰群集。</p>
-                </div>
-            </div>
-        </section>
-        <section class="bento-item lg-col-span-2" data-custom="11"> {/* Adjusted span */}
-            <h3 class="item-title-main">高斯分佈的變異數 <span class="item-title-sub-eng">Variance of Gaussian</span></h3>
-            <p class="item-text-primary mb-2 text-sm">t-SNE 使用<strong>困惑度 (Perplexity)</strong> 決定 σ<sub>i</sub><sup>2</sup>。</p>
-            <p class="item-text-secondary text-xs mb-2">Perplexity: measures how well a probability distribution predicts a sample. Low perplexity = precise prediction.</p>
-            <div class="formula text-xs">perp(p) = 2<sup>H(p<sub>i</sub>)</sup> where H(p<sub>i</sub>) = - Σ<sub>j</sub> p<sub>j|i</sub> log<sub>2</sub> p<sub>j|i</sub></div>
-            <p class="item-text-primary mt-2 text-sm">困惑度增加 ⇔ H(p<sub>i</sub>) 增加 ⇔ σ<sub>i</sub> 增加。</p>
-        </section>
-        <section class="bento-item lg-col-span-2" data-custom="12"> {/* Adjusted span */}
-            <h3 class="item-title-main">對稱化 <span class="item-title-sub-eng">Making it Symmetric (t-SNE)</span></h3>
-            <p class="item-text-primary mb-2 text-sm">原始 p<sub>j|i</sub> 非對稱。t-SNE轉為對稱聯合機率 P<sub>i,j</sub>：</p>
-            <div class="formula">P<sub>i,j</sub> = (p<sub>j|i</sub> + p<sub>i|j</sub>) / 2n</div>
-            <p class="item-text-secondary mt-2 text-xs">假設：每個資料點都應有顯著貢獻: Σ<sub>j</sub> p<sub>j|i</sub> > 1/2n</p>
-        </section>
-        <section class="bento-item lg-col-span-4" data-custom="13"> {/* Adjusted span */}
-            <h3 class="item-title-main"><i class="fas fa-rocket mr-2"></i>UMAP: 均勻流形近似與投影 <span class="item-title-sub-eng">Uniform Manifold Approximation and Projection</span></h3>
-            <div class="md:flex md:items-center md:space-x-6">
-                <img src="https://i.imgur.com/R9gQ55M.png" alt="UMAP MNIST visualization" class="md:w-1/2 h-auto"/>
-                <div class="md:w-1/2 item-text-primary text-sm">
-                    <p class="mb-2">UMAP 通常能更好保留全域結構，運算也較快。核心思想：</p>
-                    <ol class="list-decimal list-inside space-y-1 mb-2">
-                        <li>假設資料均勻分佈在局部連通流形上。</li>
-                        <li>高維建構加權 k-近鄰圖。</li>
-                        <li>低維找到相似圖結構，最小化差異。</li>
-                    </ol>
-                    <img src="https://i.imgur.com/3m2z69y.png" alt="UMAP Concept" class="my-2 mx-auto max-h-28 object-contain"/>
-                </div>
-            </div>
-        </section>
-        <section class="bento-item lg-col-span-1" data-custom="14"> {/* Adjusted span */}
-            <h3 class="item-title-main">UMAP: ε-鄰域 <span class="item-title-sub-eng">ε-neighborhood</span></h3>
-            <img src="https://i.imgur.com/mYt51Wj.png" alt="Epsilon Neighborhood"/>
-            <p class="item-text-primary text-sm">若資料均勻分佈，固定 ε 半徑定義鄰域有效。實際分佈不均則可能導致圖斷裂。</p>
-        </section>
-        <section class="bento-item lg-col-span-2" data-custom="15"> {/* Adjusted span */}
-            <h3 class="item-title-main">UMAP: 模糊度量 <span class="item-title-sub-eng">Fuzzy Metric</span></h3>
-            <p class="item-text-primary mb-2 text-sm">為解不均勻分佈，UMAP用基於k-近鄰的自適應模糊度量：</p>
-            <div class="formula text-sm">p<sub>j|i</sub> = exp( - ( ||x<sub>i</sub> - x<sub>j</sub>||<sup>2</sup> - ρ<sub>i</sub> ) / σ<sub>i</sub> )</div>
-            <p class="item-text-primary mt-2 text-xs">ρ<sub>i</sub>: x<sub>i</sub>到最近鄰距離。σ<sub>i</sub>: 自適應帶寬確保 log<sub>2</sub>k = Σ<sub>j</sub> p<sub>i,j</sub> (k=鄰居數)。</p>
-        </section>
-        <section class="bento-item lg-col-span-1" data-custom="16"> {/* Adjusted span */}
-            <h3 class="item-title-main">UMAP: 對稱化 <span class="item-title-sub-eng">Symmetric Graph (UMAP High-dim)</span></h3>
-            <p class="item-text-primary mb-2 text-sm">UMAP圖初為有向。為得無向圖邊權重 P<sub>i,j</sub>，用機率模糊聯集：</p>
-            <div class="formula text-sm">P<sub>i,j</sub> = p<sub>j|i</sub> + p<sub>i|j</sub> - p<sub>j|i</sub>p<sub>i|j</sub></div>
-        </section>
-        <section class="bento-item md-col-span-2 lg-col-span-4" data-custom="17"> {/* Adjusted span */}
-            <h3 class="item-title-main"><i class="fas fa-balance-scale mr-2"></i>總結比較 (t-SNE vs UMAP) <span class="item-title-sub-eng">Summary & Comparison</span></h3>
-            <div class="overflow-x-auto">
-                <table class="item-text-primary text-xs">
-                    <thead><tr><th>特性</th><th>t-SNE</th><th>UMAP</th></tr></thead>
-                    <tbody>
-                        <tr><td>核心思想</td><td>保留成對局部相似性</td><td>基於流形假設和拓撲資料分析</td></tr>
-                        <tr><td>高維相似度</td><td>高斯核</td><td>模糊度量 (指數衰減)</td></tr>
-                        <tr><td>低維相似度</td><td>學生t分佈</td><td>類t分佈曲線族</td></tr>
-                        <tr><td>對稱化</td><td>平均</td><td>機率模糊聯集</td></tr>
-                        <tr><td>全域結構</td><td>相對較弱</td><td>通常較好</td></tr>
-                        <tr><td>計算效率</td><td>中等</td><td>較高</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-        <section class="bento-item lg-col-span-2 highlight-blue" id="knn-graph" data-custom="18">
-            <h2 class="item-title-main"><i class="fas fa-project-diagram icon-style"></i>UMAP: K-最近鄰圖構建 <span class="item-title-sub-eng">k-NN Graph</span></h2>
-            <p class="item-text-primary text-sm">給定 K，搜尋最佳 <code>σᵢ</code> 使 <code>log<sub>2</sub>k = Σ<sub>j</sub> p<sub>j|i</sub></code> 成立。</p>
-            <div class="formula text-xs">p<sub>j|i</sub> = exp( - ( ||x<sub>i</sub> - x<sub>j</sub>||<sup>2</sup> - ρ<sub>i</sub> ) / σ<sub>i</sub> )</div>
-            <p class="mt-2 item-text-secondary text-xs"><code>ρᵢ</code>: <code>xᵢ</code>到最近鄰距離。確保適應局部密度。</p>
-        </section>
-        <section class="bento-item lg-col-span-2 highlight-green" id="symmetric-prob-umap" data-custom="19"> {/* ID conflict, renamed */}
-            <h2 class="item-title-main"><i class="fas fa-sync-alt icon-style"></i>UMAP: 對稱化機率 <span class="item-title-sub-eng">Symmetrized Probability</span></h2>
-            <p class="item-text-primary text-sm">為得無向圖，條件機率對稱化：</p>
-            <div class="formula text-sm">p<sub>i,j</sub> = p<sub>j|i</sub> + p<sub>i|j</sub> - p<sub>j|i</sub> * p<sub>i|j</sub></div>
-            <p class="mt-2 item-text-secondary text-xs">此為模糊聯集，確保邊權重對稱。</p>
-        </section>
-        <section class="bento-item flex flex-col items-center justify-center lg-col-span-1" id="undirected-graph" data-custom="20">
-            <h2 class="item-title-main text-center"><i class="fas fa-share-alt icon-style"></i>無向局部連接圖</h2>
-            <p class="item-text-primary text-sm text-center">最終形成無向、局部連接的圖。</p>
-            <svg viewBox="0 0 200 100" class="w-full h-28 mt-2"><defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#0a84ff" /></marker></defs><circle cx="20" cy="50" r="3" fill="#0a84ff" /><circle cx="40" cy="30" r="3" fill="#0a84ff" /><circle cx="50" cy="70" r="3" fill="#0a84ff" /><circle cx="70" cy="40" r="3" fill="#0a84ff" /><circle cx="90" cy="60" r="3" fill="#0a84ff" /><circle cx="110" cy="20" r="3" fill="#0a84ff" /><circle cx="130" cy="50" r="3" fill="#0a84ff" /><circle cx="150" cy="80" r="3" fill="#0a84ff" /><circle cx="170" cy="30" r="3" fill="#0a84ff" /><line x1="20" y1="50" x2="40" y2="30" stroke="#71717a" stroke-width="1"/><line x1="20" y1="50" x2="50" y2="70" stroke="#71717a" stroke-width="1"/><line x1="40" y1="30" x2="70" y2="40" stroke="#71717a" stroke-width="1"/><line x1="50" y1="70" x2="90" y2="60" stroke="#71717a" stroke-width="1"/><line x1="70" y1="40" x2="90" y2="60" stroke="#71717a" stroke-width="1"/><line x1="70" y1="40" x2="110" y2="20" stroke="#71717a" stroke-width="1"/><line x1="110" y1="20" x2="130" y2="50" stroke="#71717a" stroke-width="1"/><line x1="90" y1="60" x2="130" y2="50" stroke="#71717a" stroke-width="1"/><line x1="130" y1="50" x2="150" y2="80" stroke="#71717a" stroke-width="1"/><line x1="150" y1="80" x2="170" y2="30" stroke="#71717a" stroke-width="1"/></svg>
-        </section>
-        <section class="bento-item highlight-orange lg-col-span-1" id="low-dim-recon" data-custom="21">
-            <h2 class="item-title-main"><i class="fas fa-compress-arrows-alt icon-style"></i>UMAP: 低維重建</h2>
-            <p class="item-text-primary text-sm">低維空間用類t-SNE的t-分佈 (<code>ν=1</code>) 計算相似度 <code>q<sub>i,j</sub></code>：</p>
-            <div class="formula text-xs">q<sub>i,j</sub> = ( 1 + a ||y<sub>i</sub> - y<sub>j</sub>||<sup>2b</sup> )<sup>-1</sup></div>
-            <p class="mt-1 item-text-secondary text-xs"><code>a, b</code> 由 <code>min_dist, spread</code> 超參數學習。</p>
-        </section>
-        <section class="bento-item lg-col-span-2 highlight-blue" id="umap-loss" data-custom="22">
-            <h2 class="item-title-main"><i class="fas fa-bullseye icon-style"></i>UMAP 損失函數</h2>
-            <p class="item-text-primary text-sm">用二元交叉熵 (Binary Cross-Entropy)：</p>
-            <div class="formula text-xs">H(p, q) = - Σ<sub>i</sub> ( p<sub>i</sub> log q<sub>i</sub> + (1-p<sub>i</sub>) log(1-q<sub>i</sub>) )</div>
-            <p class="mt-1 item-text-secondary text-xs">相關於KL散度: H(p,q) = H(p) + D<sub>KL</sub>(p||q)。最小化交叉熵即最小化KL散度。</p>
-        </section>
-        <section class="bento-item highlight-green lg-col-span-2" id="initialization" data-custom="23">
-            <h2 class="item-title-main"><i class="fas fa-cogs icon-style"></i>UMAP: 初始化策略</h2>
-            <p class="item-text-primary text-sm">用正規化拉普拉斯矩陣特徵向量初始化： <code>Lu = λu</code></p>
-            <p class="mt-1 item-text-secondary text-xs">譜方法有助更快收斂，更好保留全局拓撲，優於t-SNE隨機初始化。</p>
-        </section>
-        <section class="bento-item md-col-span-2 lg-col-span-2" id="comparison-table-file2" data-custom="24"> {/* Adjusted to fit 4-col better */}
-            <h2 class="item-title-main"><i class="fas fa-table icon-style"></i>T-SNE vs UMAP 詳細比較</h2>
-            <div class="overflow-x-auto"> <table class="item-text-primary text-xs"><thead><tr><th>特性</th><th>T-SNE</th><th>UMAP</th></tr></thead><tbody><tr><td>原始空間距離度量</td><td>歐幾里德距離</td><td>歐幾里德距離</td></tr><tr><td>權重衡量</td><td>機率</td><td>機率</td></tr><tr><td>原始空間假設</td><td>正規化高斯</td><td>非正規化高斯</td></tr><tr><td>重建空間假設</td><td>正規化t-分佈</td><td>非正規化t-分佈</td></tr><tr><td>方差決定</td><td>困惑度</td><td>鄰居數量</td></tr><tr><td>損失函數</td><td>KL散度</td><td>二元交叉熵</td></tr><tr><td>初始化</td><td>隨機</td><td>拉普拉斯特徵向量</td></tr></tbody></table></div>
-        </section>
-        <section class="bento-item lg-col-span-2 highlight-orange" id="graph-topology" data-custom="25">
-            <h2 class="item-title-main"><i class="fas fa-sitemap icon-style"></i>圖拓撲結構決定</h2>
-            <div class="grid grid-cols-2 gap-2 mt-1">
-                <div><h4 class="font-semibold item-text-primary text-sm">離散 (稀疏圖)</h4><ul class="list-disc list-inside item-text-secondary text-xs"><li>ε-鄰域</li><li>K-最近鄰</li></ul></div>
-                <div><h4 class="font-semibold item-text-primary text-sm">連續 (稠密圖)</h4><ul class="list-disc list-inside item-text-secondary text-xs"><li>距離</li><li>距離衍生機率</li></ul></div>
-            </div>
-        </section>
-        <section class="bento-item flex flex-col items-center justify-center lg-col-span-2" id="umap-global-structure" data-custom="26">
-            <h2 class="item-title-main text-center"><i class="fas fa-globe-americas icon-style"></i>UMAP 與全局結構</h2>
-            <img src="https://i.imgur.com/9gZfQhE.png" alt="UMAP vs t-SNE global structure comparison" class="my-2 rounded-lg shadow-md max-w-xs h-auto"/>
-            <p class="item-text-secondary text-xs text-center">研究指出，同初始化下，UMAP不一定優於t-SNE。其全局保留能力多得益於譜初始化。</p>
-        </section>
-        <section class="bento-item lg-col-span-4 highlight-blue" id="gnn-relation" data-custom="27">
-            <h2 class="item-title-main"><i class="fas fa-brain icon-style"></i>與圖神經網路 (GNN) 關聯</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-start mt-2">
-                <div><h4 class="font-semibold item-text-primary text-sm">GNN</h4><p class="item-text-secondary text-xs">轉換特徵於<strong>給定圖幾何</strong>: Y'=f(X,graph)</p></div>
-                <div><h4 class="font-semibold item-text-primary text-sm">圖降維</h4><p class="item-text-secondary text-xs">從特徵<strong>建構圖</strong>再轉換: graph=f(X), Y'=g(X,graph)</p></div>
-            </div>
-            <img src="https://i.imgur.com/YfN8ZfX.png" alt="GNN vs Dimensional Reduction via Graph" class="mt-3 rounded-lg shadow-md max-w-md mx-auto h-auto"/>
-        </section>
-        <section class="bento-item lg-col-span-2" id="gcn-example" data-custom="28"> {/* Adjusted span */}
-            <h2 class="item-title-main"><i class="fas fa-wave-square icon-style"></i>圖卷積網路 (GCN) 範例</h2>
-            <div class="formula text-xs">X' = σ( θ (I + D<sup>-1/2</sup>AD<sup>-1/2</sup>)X ) = σ( θ ÃX )</div>
-            <div class="formula text-xs mt-1">L = I - D<sup>-1/2</sup>AD<sup>-1/2</sup> (正規化拉普拉斯)</div>
-            <p class="item-text-secondary text-xs mt-1">A:鄰接矩陣, D:度矩陣, I:單位矩陣, θ:權重, σ:激活</p>
-        </section>
-
-        <section class="text-center my-12 md:my-16 px-2 md:col-span-2 lg:col-span-4" data-custom="29">
-             <h1 class="file3-hero-title text-4xl md:text-6xl mb-2"><strong>第 13 章：線性因子模型</strong></h1>
-             <p class="file3-hero-english-sub text-lg md:text-xl mb-3">Chapter 13: Linear Factor Models</p>
-             <p class="file3-hero-presenter text-md md:text-lg">主講人：<strong>呂寧遠 (Ning-Yuan Lyu)</strong> | 日期：2017.08.11</p>
-        </section>
-
-        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="30">
+        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="0">
             <i class="fas fa-stream icon-large"></i>
-            <h2 class="item-title-main">13.1 機率性 PCA 與因子分析</h2>
-            <p class="item-title-sub-eng">Probabilistic PCA and Factor Analysis</p>
-            <p class="item-text-primary mb-4">本節探討將主成分分析 (PCA) 與因子分析 (Factor Analysis) 框架擴展至機率模型的概念，並介紹相關的估計方法。</p>
-            <ul class="fa-ul item-text-primary">
-                <li><strong>機率模型</strong> (Probabilistic model)</li>
-                <li><strong>PPCA 的最大概似法</strong> (Maximum likelihood approach for PPCA)</li>
-                <li><strong>EM 演算法</strong> (EM algorithm)</li>
-            </ul>
+            <div>
+                <h2 class="item-title-main">13.1 機率性 PCA 與因子分析</h2>
+                <p class="item-title-sub-eng">Probabilistic PCA and Factor Analysis</p>
+                <p class="item-text-primary mb-4">本節探討將主成分分析 (PCA) 與因子分析 (Factor Analysis) 框架擴展至機率模型的概念，並介紹相關的估計方法。</p>
+                <ul class="fa-ul">
+                    <li><strong>機率模型</strong> (Probabilistic model)</li>
+                    <li><strong>PPCA 的最大概似法</strong> (Maximum likelihood approach for PPCA)</li>
+                    <li><strong>EM 演算法</strong> (EM algorithm)</li>
+                </ul>
+            </div>
             <p class="item-text-secondary mt-3 text-sm">
                 演講者說明：將介紹 PCA 和因子分析的機率模型，並使用最大概似法 (ML) 和期望最大化 (EM) 演算法來估計參數，特別適用於潛在變數模型。
             </p>
         </section>
 
-        <section class="bento-item lg-col-span-2 highlight-gradient-blue" data-custom="31">
+        <section class="bento-item md-col-span-1 lg-col-span-2 highlight-gradient-blue" data-custom="1">
             <i class="fas fa-project-diagram icon-large"></i>
-            <h3 class="item-title-main">機率性 PCA (PPCA) 模型</h3>
-            <p class="item-title-sub-eng">Probabilistic PCA Model</p>
-            <div class="formula">x = Wh + b + ε</div>
-            <p class="item-text-primary text-sm mb-2"><strong>假設 (Assumptions):</strong></p>
-            <ul class="fa-ul item-text-primary text-sm">
-                <li>潛在變數 (Latent variable) h: h ~ N(0, I)</li>
-                <li>雜訊 (Noise) ε: ε ~ N(0, σ²I)</li>
-                <li>觀測變數 (Observed variable) x: x ~ N(b, WWᵀ + σ²I)</li>
-            </ul>
-            <p class="item-text-primary text-sm mt-2"><strong>維度:</strong> h: d x 1, x & ε: n x 1, W: n x d</p>
-            <div class="diagram-placeholder mt-3">
+            <div>
+                <h3 class="item-title-main">機率性 PCA (PPCA) 模型</h3>
+                <p class="item-title-sub-eng">Probabilistic PCA Model</p>
+                <div class="formula">x = Wh + b + ε</div>
+                <p class="item-text-primary text-sm mb-2"><strong>假設 (Assumptions):</strong></p>
+                <ul class="fa-ul text-sm">
+                    <li>潛在變數 h: h ~ N(0, I)</li>
+                    <li>雜訊 ε: ε ~ N(0, σ²I)</li>
+                    <li>觀測變數 x (h 邊際化後): x ~ N(b, WWᵀ + σ²I)</li>
+                </ul>
+                <p class="item-text-primary text-sm mt-2"><strong>維度:</strong> h: d x 1, x & ε: n x 1, W: n x d</p>
+            </div>
+            <div class="diagram-placeholder mt-auto"> {/* Pushed to bottom */}
                 <i class="fas fa-brain text-2xl mb-2"></i>
                 圖形模型：hᵢ → xᵢ (受 W, b, σ² 影響)
                 <p class="text-xs mt-1">(Graphical Model: hᵢ influences xᵢ via W, b, σ²)</p>
             </div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-4" data-custom="32">
+        <section class="bento-item md-col-span-3 lg-col-span-4" data-custom="2">
             <i class="fas fa-chart-line icon-large"></i>
-            <h3 class="item-title-main">PPCA 模型視覺化</h3>
-            <p class="item-title-sub-eng">PPCA Model Visualization (13.1.1-picture)</p>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="diagram-placeholder">
-                    <p><strong>步驟 1：</strong>潛在變數 p(h)</p>
-                    <p class="text-xs">(Step 1: Latent variable p(h) - 1D Gaussian)</p>
-                    <i class="fas fa-wave-square mt-2 text-xl"></i>
-                </div>
-                <div class="diagram-placeholder">
-                    <p><strong>步驟 2：</strong>線性轉換 Wh + b</p>
-                    <p class="text-xs">(Step 2: Linear transformation Wh + b - maps 1D h to 2D line)</p>
-                    <i class="fas fa-long-arrow-alt-right mt-2 text-xl"></i>
-                </div>
-                <div class="diagram-placeholder">
-                    <p><strong>步驟 3：</strong>加入雜訊 p(x)</p>
-                    <p class="text-xs">(Step 3: Add noise, resulting p(x) - elliptical distribution)</p>
-                    <i class="fas fa-bullseye mt-2 text-xl"></i>
+            <div>
+                <h3 class="item-title-main">PPCA 模型視覺化</h3>
+                <p class="item-title-sub-eng">PPCA Model Visualization (13.1.1-picture)</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="diagram-placeholder">
+                        <p><strong>步驟 1：</strong>潛在變數 p(h)</p>
+                        <p class="text-xs">(Step 1: Latent variable p(h) - 1D Gaussian)</p>
+                        <i class="fas fa-wave-square mt-2 text-xl"></i>
+                    </div>
+                    <div class="diagram-placeholder">
+                        <p><strong>步驟 2：</strong>線性轉換 Wh + b</p>
+                        <p class="text-xs">(Step 2: Linear transformation Wh + b - maps 1D h to 2D line)</p>
+                        <i class="fas fa-long-arrow-alt-right mt-2 text-xl"></i>
+                    </div>
+                    <div class="diagram-placeholder">
+                        <p><strong>步驟 3：</strong>加入雜訊 p(x)</p>
+                        <p class="text-xs">(Step 3: Add noise, resulting p(x) - elliptical distribution)</p>
+                        <i class="fas fa-bullseye mt-2 text-xl"></i>
+                    </div>
                 </div>
             </div>
             <p class="item-text-secondary mt-3 text-sm">
@@ -595,83 +360,94 @@
             </p>
         </section>
 
-        <section class="bento-item lg-col-span-2 highlight-gradient-green" data-custom="33">
+        <section class="bento-item md-col-span-1 lg-col-span-2 highlight-gradient-green" data-custom="3">
             <i class="fas fa-sitemap icon-large"></i>
+            <div>
             <h3 class="item-title-main">因子分析模型</h3>
             <p class="item-title-sub-eng">Factor Analysis Model (13.1.2)</p>
-            <div class="formula"> x = Wh + b + ε </div>
+            <div class="formula">x = Wh + b + ε</div>
             <p class="item-text-primary text-sm mb-2"><strong>主要差異 (Key Difference from PPCA):</strong></p>
-            <ul class="fa-ul item-text-primary text-sm">
-                <li>雜訊 (Noise) ε: ε ~ N(0, Ψ)</li>
-                <li>其中 (where) Ψ = diag(σ₁², σ₂², ..., σₙ²)</li>
-                <li>觀測變數 (Observed variable) x: x ~ N(b, WWᵀ + Ψ)</li>
+            <ul class="fa-ul text-sm">
+                <li>雜訊 ε: ε ~ N(0, Ψ)</li>
+                <li>其中 Ψ = diag(σ₁², σ₂², ..., σₙ²)</li>
+                <li>觀測變數 x: x ~ N(b, WWᵀ + Ψ)</li>
             </ul>
+            </div>
             <p class="item-text-secondary mt-3 text-sm">
                 演講者說明：因子分析與 PPCA 類似，但其雜訊的共變異數矩陣 Ψ 是對角矩陣，允許各觀測維度有不同的雜訊變異數。
             </p>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="34">
+        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="4">
             <i class="fas fa-calculator icon-large"></i>
+            <div>
             <h3 class="item-title-main">平均值與共變異數</h3>
             <p class="item-title-sub-eng">Mean and Covariance (13.1.2)</p>
             <p class="item-text-primary mb-2">對於因子分析模型：</p>
-            <div class="formula"> E[x] = b </div>
-            <div class="formula"> Cov(x) = E[xxᵀ] - E[x]E[x]ᵀ = WWᵀ + Ψ </div>
+            <div class="formula">E[x] = b</div>
+            </div>
+            <div class="formula mt-auto">Cov(x) = E[xxᵀ] - E[x]E[x]ᵀ = WWᵀ + Ψ</div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-4" data-custom="35">
+        <section class="bento-item md-col-span-3 lg-col-span-4" data-custom="5">
             <i class="fas fa-infinity icon-large"></i>
+            <div>
             <h3 class="item-title-main">PPCA 的最大概似法</h3>
             <p class="item-title-sub-eng">Maximum Likelihood for PPCA (13.1.3)</p>
             <p class="item-text-primary mb-2">PPCA 的對數概似函數 (Log-likelihood):</p>
             <div class="formula text-xs">
                 LL = Σᵢ<sup>N</sup> ln[p(xᵢ|b,W,σ²)] = - (Nd/2)ln(2π) - (N/2)ln|C| - (1/2)Σᵢ<sup>N</sup>(xᵢ-b)ᵀC⁻¹(xᵢ-b)
             </div>
-            <p class="item-text-primary text-sm mb-1">其中 (where) C = WWᵀ + σ²I.</p>
+            <p class="item-text-primary text-sm mb-1">其中 C = WWᵀ + σ²I.</p>
             <p class="item-text-primary text-sm mb-2">對於 PPCA，參數 b, W, σ² 存在解析解:</p>
-            <ul class="fa-ul item-text-primary text-sm">
+            <ul class="fa-ul text-sm item-text-primary">
                 <li>b = (1/N) Σ xᵢ (樣本平均值)</li>
-                <li>W = Uₘ(Lₘ - σ²I)¹ᐟ² R</li>
-                <li>σ² = (1/(d-m)) Σ (j=m+1 to d) λⱼ</li>
+                <li>W = Uₘ(Lₘ - σ²I)¹ᐟ² R </li>
+                <li>σ² = (1/(d-m)) Σ (j=m+1 to d) λⱼ </li>
             </ul>
+            </div>
             <p class="item-text-secondary mt-3 text-sm">
-                演講者說明：當雜訊變異數 σ² → 0 時，PPCA 模型會收斂至標準 PCA。
+                演講者說明：當雜訊變異數 σ² → 0 時，PPCA 模型會收斂至標準 PCA。 (Uₘ: 前 m 特徵向量, Lₘ: 特徵值, R: 旋轉矩陣)
             </p>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="36">
+        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="6">
             <i class="fas fa-sync-alt icon-large"></i>
+            <div>
             <h3 class="item-title-main">EM 演算法</h3>
             <p class="item-title-sub-eng">EM Algorithm (13.1.4)</p>
             <p class="item-text-primary mb-2"><strong>為何需要 EM:</strong></p>
-            <ul class="fa-ul item-text-primary text-sm">
+            <ul class="fa-ul text-sm item-text-primary">
                 <li>減少計算複雜度</li>
                 <li>因子分析無解析解</li>
             </ul>
             <p class="item-text-primary text-sm mt-2 mb-1"><strong>EM 方法回顧:</strong></p>
             <div class="formula text-xs">ln(p(x)) = ELBO + KL Divergence</div>
-            <div class="diagram-placeholder mt-3">
+            </div>
+            <div class="diagram-placeholder mt-auto">
                 <i class="fas fa-chart-bar text-2xl mb-2"></i>
-                E-step: 固定參數, 更新 q(z) 使 KL=0。<br/>M-step: 固定 q(z), 最大化 ELBO 更新參數。
+                E-step: 固定參數，更新 q(z) 使 KL=0。<br/>M-step: 固定 q(z)，最大化 ELBO 更新參數。
             </div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2 highlight-gradient-orange" data-custom="37">
+        <section class="bento-item md-col-span-1 lg-col-span-2 highlight-gradient-orange" data-custom="7">
             <i class="fas fa-cogs icon-large"></i>
+            <div>
             <h3 class="item-title-main">PPCA/因子分析的 EM 步驟</h3>
             <p class="item-title-sub-eng">EM for PPCA and Factor Analysis (13.1.4)</p>
             <p class="item-text-primary mb-2"><strong>E-步驟:</strong> 固定參數，評估 q(hᵢ) = p(hᵢ|xᵢ, θ_old)</p>
-            <ul class="fa-ul item-text-primary text-sm"><li>計算 E[hᵢ] 和 E[hᵢhᵢᵀ]</li></ul>
+            <ul class="fa-ul text-sm item-text-primary"><li>計算 E[hᵢ] 和 E[hᵢhᵢᵀ]</li></ul>
             <p class="item-text-primary text-sm mt-2 mb-1"><strong>M-步驟:</strong> 固定 q(hᵢ)，最大化參數</p>
-            <ul class="fa-ul item-text-primary text-sm"><li>更新 W_new, σ²_new (或 Ψ_new)</li></ul>
+            <ul class="fa-ul text-sm item-text-primary"><li>更新 W_new, σ²_new (或 Ψ_new)</li></ul>
+            </div>
             <p class="item-text-secondary mt-3 text-sm">
                 演講者說明：E-步驟計算潛在變數的後驗期望。M-步驟使用這些期望來更新模型參數。
             </p>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-4" data-custom="38">
+        <section class="bento-item md-col-span-3 lg-col-span-4" data-custom="8">
             <i class="fas fa-random icon-large"></i>
+            <div>
             <h2 class="item-title-main">13.2 獨立成分分析 (ICA)</h2>
             <p class="item-title-sub-eng">Independent Component Analysis</p>
             <p class="item-text-primary mb-4">ICA 旨在將多變量信號分解為統計上獨立的非高斯子成分。</p>
@@ -681,63 +457,72 @@
                 <li><strong>非高斯性度量</strong> (Measure of non-Gaussianity)</li>
                 <li><strong>互信息觀點</strong> (Mutual information view point)</li>
             </ul>
+            </div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2 highlight-gradient-blue" data-custom="39">
+        <section class="bento-item md-col-span-2 lg-col-span-2 highlight-gradient-blue" data-custom="9">
             <i class="fas fa-puzzle-piece icon-large"></i>
+            <div>
             <h3 class="item-title-main">ICA 問題定義</h3>
             <p class="item-title-sub-eng">ICA Problem Definition</p>
             <p class="item-text-primary mb-2">觀測 x 是未知、獨立非高斯變數 h 的線性組合。目標是獲取 W (或 A) 及 h。</p>
             <div class="formula">x = Wh  或  x = Ah</div>
             <p class="item-text-primary text-sm mb-1"><strong>假設:</strong> &lt;xᵢ&gt; = 0, &lt;hⱼ&gt; = 0 (零均值)</p>
             <p class="item-text-primary text-sm mb-1"><strong>機率模型:</strong></p>
-            <ul class="fa-ul item-text-primary text-sm">
+            <ul class="fa-ul text-sm item-text-primary">
                 <li>p(h) = Πᵢ p(hᵢ) (源信號獨立)</li>
                 <li>p(hᵢ) is non-Gaussian</li>
                 <li>p(x) = (1/|det(A)|) p(h)</li>
             </ul>
+            </div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="40">
+        <section class="bento-item md-col-span-1 lg-col-span-2" data-custom="10">
             <i class="fas fa-microchip icon-large"></i>
+            <div>
             <h3 class="item-title-main">ICA 應用</h3>
             <p class="item-title-sub-eng">ICA Applications (13.2.1)</p>
             <p class="item-text-primary mb-2">ICA 通常用於恢復低階混合信號。</p>
-            <ul class="fa-ul item-text-primary text-sm">
+            <ul class="fa-ul text-sm item-text-primary">
                 <li><strong>MEG 數據中偽影分離</strong></li>
                 <li><strong>自然圖像降噪</strong></li>
                 <li><strong>金融數據中尋找隱藏因子</strong></li>
             </ul>
-            <div class="grid grid-cols-2 gap-2 mt-3">
+            </div>
+            <div class="grid grid-cols-2 gap-2 mt-auto">
                 <div class="diagram-placeholder text-xs">MEG: 混合(左) vs. 分離(右)</div>
                 <div class="diagram-placeholder text-xs">圖像: 原始 vs. 含噪 vs. ICA降噪</div>
             </div>
         </section>
 
-        <section class="bento-item lg-col-span-1" data-custom="41">
+        <section class="bento-item md-col-span-1 lg-col-span-1" data-custom="11">
             <i class="fas fa-unlink icon-large"></i>
+            <div>
             <h3 class="item-title-main">何謂「獨立」?</h3>
             <p class="item-title-sub-eng">What is "Independent"? (13.2.2)</p>
             <div class="formula text-sm">p(hᵢ, hⱼ) = p(hᵢ)p(hⱼ)</div>
             <p class="item-text-primary text-sm mb-1">意味著:</p>
             <div class="formula text-sm">E[f(hᵢ)g(hⱼ)] = E[f(hᵢ)]E[g(hⱼ)]</div>
-            <p class="item-text-primary text-sm mt-2">「不相關」: E[hᵢhⱼ] - E[hᵢ]E[hⱼ] = 0</p>
-            <p class="item-text-secondary mt-1 text-xs">注意：「不相關」不等於「獨立」。</p>
+            </div>
+            <p class="item-text-primary text-sm mt-auto">「不相關」: E[hᵢhⱼ] - E[hᵢ]E[hⱼ] = 0 <span class="item-text-secondary text-xs">(不相關 ≠ 獨立)</span></p>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-3 highlight-gradient-green" data-custom="42">
+        <section class="bento-item md-col-span-2 lg-col-span-3 highlight-gradient-green" data-custom="12">
             <i class="fas fa-check-double icon-large"></i>
+            <div>
             <h3 class="item-title-main">ICA 的條件 / 可分離源</h3>
             <p class="item-title-sub-eng">Conditions for ICA / Separable Sources (13.2.4)</p>
-            <ol class="list-decimal list-inside item-text-primary text-sm space-y-2">
+            <ol class="list-decimal list-inside item-text-primary text-sm space-y-1">
                 <li><strong>模糊性:</strong> x = ((1/k)W)(kh). 需指定 E[hᵢ²] = 1 (源信號單位變異數)。</li>
                 <li><strong>非高斯性:</strong> 需要非高斯隨機變數才能分離。最多只能有一個 hᵢ 是高斯分佈。</li>
                 <li><strong>線性組合:</strong> 若 y = Σ aᵢxᵢ = zᵀh，且 y 對應高斯性的局部最小值，則 z 中只有一個元素非零。</li>
             </ol>
+            </div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="43">
+        <section class="bento-item md-col-span-3 lg-col-span-2" data-custom="13">
             <i class="fas fa-ruler-combined icon-large"></i>
+            <div>
             <h3 class="item-title-main">非高斯性度量</h3>
             <p class="item-title-sub-eng">Measure of non-Gaussianity (13.2.5)</p>
             <p class="item-text-primary mb-1"><strong>1. 峰度 (Kurtosis):</strong></p>
@@ -754,95 +539,187 @@
             <p class="item-text-primary mt-2 mb-1"><strong>近似負熵:</strong></p>
             <div class="formula text-xs"> J[y] ≈ Σᵢ kᵢ [E[Gᵢ(y<sub>gauss</sub>)]-E[Gᵢ(y)]]² </div>
             <p class="item-text-primary text-sm">常用 G(y): (1/a₁) ln(cosh(a₁y)) 或 -exp(-y²/2)</p>
+            </div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2 highlight-gradient-orange" data-custom="44">
+        <section class="bento-item md-col-span-3 lg-col-span-2 highlight-gradient-orange" data-custom="14">
             <i class="fas fa-info-circle icon-large"></i>
+            <div>
             <h3 class="item-title-main">互信息</h3>
             <p class="item-title-sub-eng">Mutual Information (13.2.6)</p>
             <p class="item-text-primary mb-2">最小化互信息方法:</p>
             <div class="formula text-sm">I(y₁, ..., yₘ) = Σᵢ H[yᵢ] - H[y₁, ..., yₘ]</div>
-            <p class="item-text-secondary text-xs mt-2">結論: 最小化互信息 I(y₁,...,yₘ) 等價於最大化總負熵 Σ J[yᵢ]。</p>
+            <p class="item-text-primary text-sm mt-3"><strong>結論:</strong></p>
+            <p class="item-text-primary text-sm">最小化互信息 I(y₁, ..., yₘ) 等價於最大化總負熵 Σ J[yᵢ]。</p>
+            </div>
+            <p class="item-text-secondary mt-2 text-xs text-right">Note: I(x,y) = H(x) + H(y) - H(x,y)</p>
         </section>
 
-         <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="45">
-            <div class="icon-bg bg-orange-500/20 mx-auto">
-                 <i class="fas fa-th-large text-3xl text-orange-400"></i>
-            </div>
-            <h3 class="item-title-main text-center">稀疏編碼</h3>
-            <p class="item-title-sub-eng text-center">Sparse Coding</p>
-            <p class="item-text-primary text-sm mb-2">
-                <strong>核心思想：</strong>用少量「基函數」的線性組合表示輸入，保持「隱變量」稀疏。
+        <section class="text-center my-10 md:my-12 md-col-span-3 lg-col-span-4" data-custom="15">
+            <h1 class="section-hero-title text-4xl md:text-5xl">探索線性因子模型</h1>
+            <p class="section-hero-subtitle text-lg md:text-xl mt-2">深入理解 PCA, ICA, SFA 及稀疏編碼等無監督學習方法</p>
+        </section>
+
+        <section class="bento-item lg-col-span-2 lg-row-span-2 flex flex-col items-center justify-center text-center" data-custom="16">
+            <div class="icon-bg bg-blue-500/20">
+                <i class="fas fa-project-diagram text-3xl text-blue-400"></i> </div>
+            <h2 class="item-title-main text-3xl md:text-4xl">線性因子模型</h2>
+            <p class="item-title-sub-eng text-blue-400">Linear Factor Models</p>
+            <p class="item-text-secondary text-lg leading-relaxed">
+                本章節探討一系列用於從高維數據中提取潛在結構與表徵的無監督學習模型。這些模型旨在發現數據中更簡潔、更有意義的低維表示。
             </p>
-            <div class="text-xs">
-                <h4 class="font-semibold item-text-primary mb-1">成本函數</h4>
-                <p class="item-text-secondary">min Σ ||x⁽ⁿ⁾ - Σ hᵢ⁽ⁿ⁾φᵢ||² + λ Σ S(hᵢ⁽ⁿ⁾)</p>
-                <ul class="list-disc list-inside item-text-secondary/80 pl-2">
-                    <li>第一項：重建成本。</li>
-                    <li>第二項：稀疏性成本 (e.g. |hᵢ|)。</li>
+        </section>
+
+        <section class="bento-item" data-custom="17">
+            <div>
+                <div class="icon-bg bg-green-500/20">
+                    <i class="fas fa-chart-pie text-3xl text-green-400"></i>
+                </div>
+                <h3 class="item-title-main">主成分分析 (PCA)</h3>
+                <p class="item-title-sub-eng text-green-400">Principal Component Analysis & Probabilistic PCA</p>
+                <p class="item-text-secondary text-sm mb-2">
+                    <strong>目標：</strong>降維，找到數據變異最大的方向。
+                </p>
+                <ul class="fa-ul text-sm item-text-secondary space-y-1">
+                    <li>將數據投影到低維子空間。</li>
+                    <li><strong>機率PCA (PPCA)：</strong>為PCA引入機率模型，允許噪聲並能生成數據。當噪聲 <code class="text-xs">σ² → 0</code> 時，PPCA趨近於標準PCA。</li>
                 </ul>
             </div>
+            <div class="item-footer-text">Dimensionality Reduction</div>
         </section>
 
-        <section class="bento-item md-col-span-2 lg-col-span-2" data-custom="46">
-             <div class="icon-bg bg-teal-500/20 mx-auto">
-                <i class="fas fa-hourglass-half text-3xl text-teal-400"></i>
+        <section class="bento-item" data-custom="18">
+            <div>
+                <div class="icon-bg bg-purple-500/20">
+                    <i class="fas fa-unlink text-3xl text-purple-400"></i>
+                </div>
+                <h3 class="item-title-main">獨立成分分析 (ICA)</h3>
+                <p class="item-title-sub-eng text-purple-400">Independent Component Analysis</p>
+                <p class="item-text-secondary text-sm mb-2">
+                    <strong>目標：</strong>將混合信號分離成統計上獨立的原始信號。
+                </p>
+                <ul class="fa-ul text-sm item-text-secondary space-y-1">
+                    <li>最小化互信息等價於最大化總負熵。</li>
+                    <li>旨在使輸出分量盡可能非高斯化。</li>
+                    <li>應用於盲信號分離。</li>
+                </ul>
             </div>
-            <h3 class="item-title-main text-center">慢特徵分析 (SFA)</h3>
-            <p class="item-title-sub-eng text-center">Slow Feature Analysis</p>
-            <p class="item-text-primary text-sm mb-2">
-                <strong>慢度原則：</strong>場景重要特徵變化緩慢。目標是學習隨時間變化最慢特徵。
-            </p>
-            <p class="item-text-secondary text-xs">成本函數懲罰特徵在相鄰時間步長間的快速變化: Eₜ[(fᵢ(x(t+1)) - fᵢ(x(t)))²]</p>
+            <div class="item-footer-text">Signal Separation</div>
+        </section>
+
+        <section class="bento-item lg-col-span-2 lg-row-span-2 highlight-gradient-general-blue" data-custom="19">
+            <div>
+                <div class="icon-bg bg-orange-500/20">
+                    <i class="fas fa-th-large text-3xl text-orange-400"></i>
+                </div>
+                <h3 class="item-title-main text-3xl md:text-4xl">稀疏編碼</h3>
+                <p class="item-title-sub-eng text-orange-400">Sparse Coding</p>
+                <p class="item-text-secondary text-base mb-3">
+                    <strong>核心思想：</strong>用少量「基函數」的線性組合來表示輸入數據，同時保持用於組合的「隱變量」稀疏。
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div>
+                        <h4 class="font-semibold item-text-primary mb-1">成本函數最小化</h4>
+                        <p class="item-text-secondary text-xs">目標：<code>min Σ ||x⁽ⁿ⁾ - Σ hᵢ⁽ⁿ⁾φᵢ||² + λ Σ S(hᵢ⁽ⁿ⁾)</code></p>
+                        <ul class="fa-ul item-text-secondary/80 mt-1 pl-2 text-xs">
+                            <li>重建成本。</li>
+                            <li>稀疏性成本 (e.g. <code>S(hᵢ) = |hᵢ|</code>)。</li>
+                            <li>常使用超完備基 (k > d)。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold item-text-primary mb-1">機率模型觀點</h4>
+                        <p class="item-text-secondary text-xs"><code>x = Σ hᵢφᵢ + ε</code></p>
+                        <ul class="fa-ul item-text-secondary/80 mt-1 pl-2 text-xs">
+                            <li><code>ε</code>：高斯噪聲 <code>N(0, σ²I)</code>。</li>
+                            <li><code>p(h)</code>：隱變量的稀疏先驗 (如拉普拉斯)。</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="item-text-secondary text-base mt-3">
+                    <strong>應用範例：</strong>稀疏編碼自編碼器可學習類似邊緣檢測器特徵。
+                </p>
+            </div>
+            <div class="item-footer-text">Feature Learning & Representation</div>
+        </section>
+
+        <section class="bento-item" data-custom="20">
+            <div>
+                <div class="icon-bg bg-teal-500/20">
+                    <i class="fas fa-hourglass-half text-3xl text-teal-400"></i>
+                </div>
+                <h3 class="item-title-main">慢特徵分析 (SFA)</h3>
+                <p class="item-title-sub-eng text-teal-400">Slow Feature Analysis</p>
+                <p class="item-text-secondary text-sm mb-2">
+                    <strong>慢度原則：</strong>場景的重要特徵變化緩慢。
+                </p>
+                <ul class="fa-ul text-sm item-text-secondary space-y-1">
+                    <li>目標是學習隨時間變化最慢的特徵。</li>
+                    <li>成本函數懲罰特徵在相鄰時間步長間的快速變化: <code>Eₜ[(fᵢ(x(t+1)) - fᵢ(x(t)))²]</code>。</li>
+                </ul>
+            </div>
+            <div class="item-footer-text">Temporal Coherence</div>
+        </section>
+
+        <section class="bento-item" data-custom="21">
+            <div>
+                <div class="icon-bg bg-indigo-500/20">
+                    <i class="fas fa-map-marked-alt text-3xl text-indigo-400"></i>
+                </div>
+                <h3 class="item-title-main">拓撲ICA與其他</h3>
+                <p class="item-title-sub-eng text-indigo-400">Topographic ICA & Other Concepts</p>
+                <ul class="fa-ul text-sm item-text-secondary space-y-1">
+                    <li><strong>拓撲ICA：</strong>學習特徵按相似性排列。</li>
+                    <li><strong>NICE：</strong>堆疊一系列可逆轉換。</li>
+                    <li><strong>獨立子空間分析：</strong>組內相關，組間獨立。</li>
+                </ul>
+                <p class="item-text-secondary text-sm mt-2">
+                    共同目標是從複雜數據中提取有結構、有意義的低維表示。
+                </p>
+            </div>
+            <div class="item-footer-text">Advanced Representations</div>
         </section>
 
 
     </main>
 
-    <footer class="text-center py-8 text-gray-500 text-sm">
-        基於 Yueh-Hua Tu (2020.3.20) & Ning-Yuan Lyu (2017.08.11) 的演講內容製作。
-        <br>
-        Webpage by AI.
+    <footer class="text-center py-8 mt-8 border-t border-gray-700">
+        <p class="item-text-secondary text-sm">Presentations by Ning-Yuan Lyu (2017) & others. Compiled notes © 2024-2025.</p>
     </footer>
 
     <script type="module">
         import { animate } from "framer-motion";
 
         document.addEventListener('DOMContentLoaded', () => {
-            console.log("DOM fully loaded and parsed. Starting animation setup.");
+            // console.log("DOM fully loaded. Starting animation setup.");
 
             const elementsToAnimate = [
-                document.querySelector('header h1.header-main-title'),
-                document.querySelector('header h2.header-sub-title'),
-                document.querySelector('header p.header-presenter'),
-                document.querySelector('section.text-center.my-12 h1.file3-hero-title'), // File 3 Hero Title
-                document.querySelector('section.text-center.my-12 p.file3-hero-english-sub'), // File 3 Hero English Sub
-                document.querySelector('section.text-center.my-12 p.file3-hero-presenter'), // File 3 Hero Presenter
+                document.querySelector('header h1.page-main-title'),
+                document.querySelector('header p.page-english-sub'),
+                document.querySelector('header p.page-presenter-info'),
+                document.querySelector('section.text-center h1.section-hero-title'), 
+                document.querySelector('section.text-center p.section-hero-subtitle'),
                 ...document.querySelectorAll('.bento-item')
             ].filter(el => {
                 if (el == null) {
-                    // console.warn("A selector returned null. Check HTML class/tag names if elements are missing.");
+                    // console.warn("A selector returned null. Check HTML class/tag names.");
                 }
                 return el != null;
             });
             
-            console.log(`Found ${elementsToAnimate.length} elements to animate.`);
+            // console.log(`Found ${elementsToAnimate.length} elements to animate.`);
 
             elementsToAnimate.forEach((el, index) => {
                 const elementId = el.id || el.className.split(" ")[0] || el.tagName; 
-                // Use data-custom for bento items, simple index for header type elements
-                let delayOrder = index; 
-                if (el.classList.contains('bento-item') && el.dataset.custom) {
-                    delayOrder = parseInt(el.dataset.custom);
-                } else if (el.classList.contains('text-center') && el.classList.contains('my-12')) { // File 3 hero section
-                     delayOrder = parseInt(el.dataset.custom || "0"); // Assign data-custom to this section
-                }
-
-
-                const initialY = (el.tagName.startsWith('H') || el.classList.contains('file3-hero-title')) ? -20 : 20; // Adjusted initial Y
                 
-                // console.log(`Setting up animation for: ${elementId}, Delay order: ${delayOrder}, Initial Y: ${initialY}`);
-                el.style.opacity = 0; // Ensure initial opacity is 0 before observer first fires
+                let delayOrder = index; // Default for header elements
+                if (el.dataset.custom) { // Prioritize data-custom if present
+                    delayOrder = parseInt(el.dataset.custom);
+                }
+                
+                const initialY = (el.tagName.startsWith('H') || el.classList.contains('page-main-title') || el.classList.contains('section-hero-title')) ? -20 : 20;
+                
+                el.style.opacity = 0; // Ensure initial opacity is 0
 
                 const observer = new IntersectionObserver(entries => {
                     entries.forEach(entry => {
@@ -851,16 +728,14 @@
                             // console.log(`Animating: ${entryId}`);
                             animate(entry.target, 
                                 { opacity: [0, 1], y: [initialY, 0] }, 
-                                { duration: 0.5, delay: delayOrder * 0.055 } // Slightly adjusted delay factor
-                            ).then(() => {
-                                // console.log(`Animation completed for: ${entryId}`);
-                            }).catch(error => {
+                                { duration: 0.5, delay: delayOrder * 0.065 } 
+                            ).catch(error => {
                                 console.error(`Animation error for ${entryId}:`, error);
                             });
                             observer.unobserve(entry.target); 
                         }
                     });
-                }, { threshold: 0.05 }); // Trigger when 5% of the element is visible
+                }, { threshold: 0.05 }); 
                 
                 observer.observe(el);
             });
