@@ -140,4 +140,4 @@ Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro P
 | 06  | Convolutional Networks @ [Deep Learning Book Chapter 9](https://deep-learning-101.github.io/GeminiAbstract/PDF9) | [2017/04/14](https://www.youtube.com/watch?v=51cO6Kv37p4) | - | - | - |
 | 05  | Optimization for Training Deep Models @ [Deep Learning Book Chapter 8](https://deep-learning-101.github.io/GeminiAbstract/PDF8) | [2017/03/10](https://www.youtube.com/watch?v=DeXH5IMHfcs) | - | - | - |
 | 04  | Regularization for Deep Learning @ [Deep Learning Book Chapter 7](https://deep-learning-101.github.io/GeminiAbstract/PDF7) | - | - | - | - |
-| 03  | Deep Feedforward Networks @ [Deep Learning Book Chapter 6](https://deep-learning-101.github.io/GeminiAbstract/PDF6) | - | - | <audio controls style=""width:100px; height:12px;"><source src="notebooklm-mp3/CH6.mp3" type="audio/mpeg"></audio> | - |
+| 03  | Deep Feedforward Networks @ [Deep Learning Book Chapter 6](https://deep-learning-101.github.io/GeminiAbstract/PDF6) | - | - | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH6.mp3" type="audio/mpeg"></audio> | - |
