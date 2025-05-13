@@ -106,7 +106,7 @@ Deep Learning 101 Meetup 歷年活動
 | 42  | information in the weights | [2020/06/19](https://www.youtube.com/watch?v=Dz-7Jam_9C0) | 👤 Mark Chang |
 | 41  | [NLP Landing & Machine Reading Comprehension](https://deep-learning-101.github.io/html/No41.html) | [2020/05/29](https://www.youtube.com/watch?v=aEntkDT3qdo) | 👤 Ian & Hsiang |
 | 40  | Instance Segmentation | [2020/05/01](https://www.youtube.com/watch?v=tXnzUd6sZz4) | 👤 顏志翰 (Bean) |
-| 39  | 高維資料的降維演算法及視覺化 | [2020/03/20](https://www.youtube.com/watch?v=jKd4eNsRoMM) | 👤 杜岳華 |
+| 39  | [高維資料的降維演算法及視覺化](https://deep-learning-101.github.io/html/No39.html) | [2020/03/20](https://www.youtube.com/watch?v=jKd4eNsRoMM) | 👤 杜岳華 |
 | 38  | PAC Bayesian for Deep Learning | [2020/02/14](https://www.youtube.com/watch?v=MYpwAVtqFUk) | 👤 Mark Chang |
 | 37  | Introduction to geometric deep learning with implementation | [2020/01/10](https://www.youtube.com/watch?v=aeKY1X_QAhI) | 👤 杜岳華 |
 | 36  | Explainable Artificial Intelligence | [2019/12/13](https://www.youtube.com/watch?v=1Mu0Wm_X1DQ) | 👤 何宗諭 (Jiero) |
