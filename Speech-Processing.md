@@ -1,10 +1,9 @@
-#
-https://www.twman.org/AI/ASR
+[https://www.twman.org/AI/ASR](https://www.twman.org/AI/ASR)
 
-https://huggingface.co/DeepLearning101
+[https://huggingface.co/DeepLearning101](https://huggingface.co/DeepLearning101)
 
-https://deep-learning-101.github.io/
-#
+[https://deep-learning-101.github.io/](https://deep-learning-101.github.io/)
+
 
 ## 🎙️ 語音識別 / 合成平台價格比較
 
