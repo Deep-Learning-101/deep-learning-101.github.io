@@ -130,10 +130,10 @@ Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro P
 | 17  | Approximate Inference @ [Deep Learning Book Chapter 19](https://deep-learning-101.github.io/GeminiAbstract/PDF19) | [2018/03/16](https://www.youtube.com/watch?v=YeCDY_wsojA) | - |
 | 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/html/CH18.html) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/GeminiAbstract/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | 👤 何宗諭 (Jiero) |
 | 14  | Monte Carlo Methods @ [Deep Learning Book Chapter 17](https://deep-learning-101.github.io/GeminiAbstract/PDF17) | [2017/12/15](https://www.youtube.com/watch?v=qef-XTUpDvE) | 👤 Ian Wang |
-| 12  | Structured Probabilistic Models @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | [2017/10/27](https://www.youtube.com/watch?v=n0rBS3sAqI0) | - |
+| 12  | [Structured Probabilistic Models](https://deep-learning-101.github.io/html/CH16.html) @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | [2017/10/27](https://www.youtube.com/watch?v=n0rBS3sAqI0) | - |
 | 11  | Autoencoders @ [Deep Learning Book Chapter 14](https://deep-learning-101.github.io/GeminiAbstract/PDF14) | [2017/09/08](https://www.youtube.com/watch?v=5mrJmzzpPBs) | 👤 Nat Lee |
 | 10  | [Linear Factor Models](https://deep-learning-101.github.io/html/CH13.html) @ [Deep Learning Book Chapter 13](https://deep-learning-101.github.io/GeminiAbstract/PDF13) | [2017/08/11](https://www.youtube.com/watch?v=zVENYs30Ny4&) | - |
-| 09  | Representation Learning @ [Deep Learning Book Chapter 15](https://deep-learning-101.github.io/GeminiAbstract/PDF15) | [2017/07/07](https://www.youtube.com/watch?v=MA52s5dQaGY) | - |
+| 09  | [Representation Learning](https://deep-learning-101.github.io/html/CH15.html) @ [Deep Learning Book Chapter 15](https://deep-learning-101.github.io/GeminiAbstract/PDF15) | [2017/07/07](https://www.youtube.com/watch?v=MA52s5dQaGY) | - |
 | --  | Applications @ [Deep Learning Book Chapter 12](https://deep-learning-101.github.io/GeminiAbstract/PDF12) | - | - |
 | --  | Practical Methodology @ [Deep Learning Book Chapter 11](https://deep-learning-101.github.io/GeminiAbstract/PDF11) | - | - |
 | 07  | Recurrent and Recursive Nets @ [Deep Learning Book Chapter 10](https://deep-learning-101.github.io/GeminiAbstract/PDF10) | [2017/05/05](https://www.youtube.com/watch?v=p6xzPqRd46w) | - |
