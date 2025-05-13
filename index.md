@@ -71,9 +71,24 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 
 ---
 
-| <a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型</a> | <a href="https://deep-learning-101.github.io/Speech-Processing">語音處理</a> | <a href="https://deep-learning-101.github.io/Natural-Language-Processing">自然語言處理</a> | <a href="https://deep-learning-101.github.io//Computer-Vision">電腦視覺</a> |
-| <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm">Large Language Model</a> | <a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing</a> | <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP</a> | <a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision</a> |
+<div align="center">
 
+<table>
+  <tr>
+    <td><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型</a></td>
+    <td><a href="https://deep-learning-101.github.io/Speech-Processing">語音處理</a></td>
+    <td><a href="https://deep-learning-101.github.io/Natural-Language-Processing">自然語言處理</a></td>
+    <td><a href="https://deep-learning-101.github.io//Computer-Vision">電腦視覺</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm">Large Language Model</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision</a></td>
+  </tr>
+</table>
+
+</div>
 ---
 
 # Deep Learning 101 Meetup
