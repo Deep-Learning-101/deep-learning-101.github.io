@@ -127,7 +127,7 @@ Deep Learning 101 Meetup 歷年活動
 | 44  | [神經網路的黑執事](https://deep-learning-101.github.io/html/No44.html) | [2020/08/21](https://www.youtube.com/watch?v=gMaQTqZUW58) | 👤 Mark Liou |
 | 43  | 幾何深度學習是在幾何什麼的？ | [2020/07/24](https://www.youtube.com/watch?v=fatrgy2lo0k) | 👤 杜岳華 |
 | 42  | information in the weights | [2020/06/19](https://www.youtube.com/watch?v=Dz-7Jam_9C0) | 👤 Mark Chang |
-| 41  | [NLP Landing & Machine Reading Comprehension](https://deep-learning-101.github.io/html/No41.html) | [2020/05/29](https://www.youtube.com/watch?v=aEntkDT3qdo) | 👤 Ian & Hsiang |
+| 41  | [NLP Landing - Machine Reading Comprehension](https://deep-learning-101.github.io/html/No41.html) | [2020/05/29](https://www.youtube.com/watch?v=aEntkDT3qdo) | 👤 Ian + Hsiang |
 | 40  | Instance Segmentation | [2020/05/01](https://www.youtube.com/watch?v=tXnzUd6sZz4) | 👤 顏志翰 (Bean) |
 | 39  | 高維資料的降維演算法及視覺化 | [2020/03/20](https://www.youtube.com/watch?v=jKd4eNsRoMM) | 👤 杜岳華 |
 | 38  | PAC Bayesian for Deep Learning | [2020/02/14](https://www.youtube.com/watch?v=MYpwAVtqFUk) | 👤 Mark Chang |
