@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>	NLP Landing & Machine Reading Comprehension</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            background-color: #0d1117; /* GitHub dark background */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+            margin: 0;
+            padding: 1rem;
+        }
+
+        .bento-grid {
+            display: grid;
+            gap: 1rem; /* Default gap */
+            padding: 1rem;
+            max-width: 1400px; /* Adjust as needed */
+            margin: auto;
+        }
+
+        .bento-item {
+            background-color: #161b22; /* GitHub darker gray for boxes */
+            border: 1px solid #30363d; /* GitHub border color */
+            border-radius: 0.75rem; /* Tailwind: rounded-xl */
+            padding: 1.75rem; /* Tailwind: p-7 */
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3); /* Slightly stronger shadow */
+            position: relative;
+            overflow: hidden;
+        }
+        .bento-item h2 {
+            font-size: 1.875rem; /* Adjusted to be slightly smaller than 4xl for balance */
+            font-weight: 600; /* Tailwind: font-semibold */
+            margin-bottom: 1rem; /* Tailwind: mb-4 */
+            color: #e6edf3; /* GitHub lighter gray for titles */
+        }
+        .bento-item h2 strong { /* For emphasis like in the first file */
+            font-weight: 700;
+        }
+        .bento-item h3 {
+            font-size: 1.25rem; /* Tailwind: text-xl */
+            font-weight: 500; /* Tailwind: font-medium */
+            margin-top: 1rem;
+            margin-bottom: 0.5rem; /* Tailwind: mb-2 */
+            color: #8b949e; /* GitHub medium gray for sub-titles */
+        }
+        .bento-item p, .bento-item li {
+            font-size: 1rem; /* Adjusted to match first file's base, second was 1.125rem */
+            color: #adb5bd; /* Lighter medium gray for body text */
+            line-height: 1.7;
+        }
+        .bento-item ul, .bento-item ol {
+            padding-left: 1.5rem; /* Indent lists */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-item ul.list-inside, .bento-item ol.list-inside {
+             padding-left: 0; /* Reset for list-inside if needed */
+        }
+         .bento-item .list-disc { list-style-type: disc; }
+         .bento-item .list-decimal { list-style-type: decimal; }
+         .bento-item .list-circle { list-style-type: circle; }
+         .bento-item .space-y-1 > * + * { margin-top: 0.25rem; }
+         .bento-item .space-y-2 > * + * { margin-top: 0.5rem; }
+         .bento-item .ml-4 { margin-left: 1rem; }
+
+
+        .bento-item .icon {
+            font-size: 2.5rem; /* Adjusted, 3rem felt a bit large for all contexts */
+            color: #58a6ff; /* GitHub blue */
+            margin-bottom: 1rem; /* Adjusted */
+            align-self: flex-start;
+        }
+        .highlight-text {
+            background: linear-gradient(to right, rgba(88, 166, 255, 0.4), rgba(88, 166, 255, 0.1));
+            padding: 0.1em 0.35em;
+            border-radius: 0.3rem;
+            color: #c9d1d9;
+        }
+        .pill {
+            background-color: #21262d; /* GitHub darker pill background */
+            color: #8b949e;
+            padding: 0.3rem 0.8rem;
+            border-radius: 9999px;
+            font-size: 0.875rem; /* Match first file's base */
+            display: inline-block;
+            margin-right: 0.5rem; /* Match first file */
+            margin-bottom: 0.5rem; /* Match first file */
+            border: 1px solid #30363d;
+        }
+        .code-block {
+            background-color: #010409; /* Very dark for code blocks */
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 0.9em;
+            color: #abb2bf; /* Light gray for code text */
+            border: 1px solid #30363d;
+            margin-top: 0.75rem;
+        }
+        .code-block .code-comment { color: #6a737d; } /* Gray for comments */
+        .code-block .code-keyword { color: #f97583; } /* Pink for keywords */
+        .code-block .code-string { color: #9ecbff; } /* Blue for strings */
+        .code-block .code-function { color: #b392f0; } /* Purple for functions */
+
+        /* Grid spans from second file (more comprehensive) */
+        @media (min-width: 768px) { /* md */
+            .bento-grid { grid-template-columns: repeat(6, 1fr); }
+            .col-span-md-2 { grid-column: span 2 / span 2; }
+            .col-span-md-3 { grid-column: span 3 / span 3; }
+            .col-span-md-4 { grid-column: span 4 / span 4; }
+            .col-span-md-6 { grid-column: span 6 / span 6; }
+            .row-span-md-2 { grid-row: span 2 / span 2; }
+        }
+        @media (min-width: 1024px) { /* lg */
+            /* Adjusted to use 4 columns for lg as per original files, could be 4 or more */
+            .bento-grid { grid-template-columns: repeat(4, 1fr); }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+            .col-span-lg-4 { grid-column: span 4 / span 4; }
+            /* Retain md spans for elements that don't have lg specific spans */
+        }
+
+        .large-visual {
+            font-size: 5rem; /* Tailwind: text-8xl */
+            font-weight: 700;
+            text-align: center;
+            margin: auto 0 0.5rem 0; /* Push to bottom */
+            color: rgba(201, 209, 217, 0.08);
+            user-select: none;
+        }
+        .formula-visual {
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+            font-size: 1.5rem;
+            color: #58a6ff;
+            text-align: center;
+            padding: 1rem;
+            background-color: rgba(88, 166, 255, 0.05);
+            border-radius: 0.5rem;
+            margin-top: auto;
+        }
+
+        /* Utility classes from first file (basic implementation) */
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-3 { margin-top: 0.75rem; }
+        .mt-4 { margin-top: 1rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-neutral-500 { color: #6b7280; } /* Example, adjust if needed */
+        .text-blue-400 { color: #60a5fa; }
+        .hover\:underline:hover { text-decoration: underline; }
+        .pl-4 { padding-left: 1rem; }
+
+        /* Header styling for the demo header */
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #e6edf3; /* Light color for header text */
+        }
+        header h1 {
+            font-size: 2.5rem; /* Tailwind: text-4xl */
+            font-weight: 700; /* Tailwind: font-bold */
+            margin-bottom: 0.5rem;
+        }
+        header p {
+            font-size: 1.125rem; /* Tailwind: text-lg */
+            color: #adb5bd; /* Medium gray */
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>NLP Landing & Machine Reading Comprehension</h1>
+        <h2><a href="https://deep-learning-101.github.io/">https://deep-learning-101.github.io/</a></h2>
+    </header>
+
+    <div class="bento-grid">
+        <div class="bento-item col-span-md-3 col-span-lg-2 row-span-md-2" id="item-overview">
+            <i class="fas fa-chalkboard-teacher icon"></i>
+            <h2><strong>Deep Learning 101</strong> (AI) Meetup</h2>
+            <p class="mb-2">此研討會旨在深入探討深度學習的基礎與前沿應用，尤其聚焦於自然語言處理 (NLP) 領域。</p>
+            <p>儘管活動初期遭遇 <span class="pill">直播平台技術問題</span>，導致Facebook直播一度中斷，但團隊迅速切換至 <span class="pill">Google Meet</span> 與 <span class="pill">YouTube</span> 繼續進行，確保了內容的順利傳播。</p>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 0:00 - 1:28</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2" id="item-nchc">
+            <i class="fas fa-server icon"></i>
+            <h2>國網中心 <span class="highlight-text">GPU運算資源</span> 介紹</h2>
+            <p>會議中特別介紹了國網中心 (NCHC) 為支持「科技抗疫」專案提供的GPU運算資源：</p>
+            <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>可申請 <span class="pill">Tesla V100 GPU</span>，為研究提供強大算力。</li>
+                <li>每張顯卡擁有 <span class="pill">32GB 顯存</span>，適合處理大規模數據。</li>
+                <li>主機配置總記憶體高達 <span class="pill">約360GB</span>。</li>
+            </ul>
+            <p class="mt-2">此資源旨在推動新冠肺炎相關研究，並以聲紋辨識技術應用於防疫追蹤為例，展示了其實用價值。</p>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 1:28 - 2:47, 2:52 - 3:30</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2 row-span-md-2" id="item-nlp-demos">
+            <i class="fas fa-brain icon"></i>
+            <h2>NLP <span class="highlight-text">技術應用</span>展示</h2>
+            <p>研討會展示了多項NLP技術的實際應用，相關 Demo 可於獵豹移動提供的網址 (<a href="http://nlp.cm.com.tw:8383" target="_blank" class="text-blue-400 hover:underline">nlp.cm.com.tw:8383</a>，端口可能隨時間變更) 進行體驗：</p>
+            <ul class="list-disc list-inside mt-2 space-y-2">
+                <li><strong>中文文本分類 (Text Classification):</strong> 識別用戶輸入意圖，例如「帶我去麥當勞」被歸類為 <span class="pill">Mall Service</span>。</li>
+                <li><strong>中文實體識別 (NER - Named Entity Recognition):</strong> 從文本中抽取特定實體，如在「王小明喜歡日本Sony所製造的電視機」中識別出人名 (王小明)、地名 (日本) 和組織名 (Sony)。</li>
+                <li><strong>中文文本相似度 (Text Similarity):</strong> 計算兩段文本之間的語義相似程度。</li>
+                <li><strong>中文文本糾錯 (Text Correction):</strong> 自動校正輸入文本中的錯別字，例如將「我想去賣當辣」修正為「我想去麥當勞」。</li>
+            </ul>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 9:30 - 16:40</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2" id="item-mrc-chatbot">
+            <i class="fas fa-robot icon"></i>
+            <h2>深度學習 <span class="highlight-text">MRC聊天機器人</span> 技術解析</h2>
+            <p>會議後半段深入探討了基於機器閱讀理解 (Machine Reading Comprehension, MRC) 的聊天機器人架構與技術細節：</p>
+            <ul class="list-disc list-inside mt-2 space-y-1">
+                <li><strong>資料預處理 (Pre-Process)</strong>:
+                    <ul class="list-circle list-inside ml-4">
+                        <li>對應上下文選擇 (Corresponding Context Pick): 如何從大量文本中挑選與問題最相關的上下文。</li>
+                        <li>長文本處理 (Context Overlength): 解決模型輸入長度限制的問題，如通過文本摘要 (Summarization) 進行處理。</li>
+                    </ul>
+                </li>
+                <li><strong>核心技術與模型</strong>: 強調了 <span class="pill">BERT</span> 及其變體 (如 <span class="pill">ALBERT</span>) 在MRC任務中的重要性。提及 <span class="pill">TF-IDF Bag-of-words model (如 DrQA)</span> 和 <span class="pill">TextRank</span> 等相關技術。</li>
+                <li><strong>摘要方法比較</strong>: 探討了抽取式 (Extractive) 與生成式/抽象式 (Abstractive) 摘要技術的區別與應用。
+                    <ul class="list-circle list-inside ml-4">
+                        <li>抽取式: 如「只要是參加 Deep Learning 101 讀書會的人，之後運彩另外都能中頭獎成為億萬富翁。」(直接摘錄)</li>
+                        <li>生成式: 如「Deep Learning 101 讀書會的成員日後都成了億萬富翁。」(重新組織語句)</li>
+                    </ul>
+                </li>
+            </ul>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 21:15 - End</p>
+        </div>
+
+        <div class="bento-item col-span-md-2 col-span-lg-1" id="item-barista"> <i class="fas fa-mug-hot icon"></i>
+            <h2>會場花絮</h2>
+            <p>研討會現場設有 <span class="highlight-text">「豹甜米」 (Barista)</span> 全自動智能茶飲機，為與會者免費提供百香綠茶，增添了輕鬆的交流氛圍。</p>
+            <div class="large-visual mt-auto">🍵</div>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 4:51 - 5:19</p>
+        </div>
+
+        <div class="bento-item col-span-md-2 col-span-lg-1" id="item-tech-issues"> <i class="fas fa-tools icon"></i>
+            <h2>技術插曲</h2>
+            <p>活動開場時，原定的 <span class="pill">Facebook 直播</span> 功能出現問題，一度無法正常推流。團隊緊急應對，將直播轉移至 <span class="pill">Google Meet</span> 和 <span class="pill">YouTube</span> 平台，確保了研討會的順利進行。</p>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 0:00 - 1:15</p>
+        </div>
+
+
+        <div class="bento-item col-span-md-3 col-span-lg-2" id="item-context-overlength">
+            <i class="fas fa-file-alt icon"></i>
+            <h2><strong>長文本處理</strong> Context Overlength</h2>
+            <p>探討 NLP 模型在處理過長上下文時的挑戰，主要解決方案為 <span class="highlight-text">文本摘要 (Summarization)</span>。</p>
+            <h3 class="mt-3">摘要方法 Types of Summarization:</h3>
+            <ul class="list-disc list-inside space-y-1">
+                <li><strong>抽取式 (Extractive):</strong> 直接從原文中提取關鍵句子。
+                    <p class="text-sm text-neutral-500 pl-4">例：「只要是參加 Deep Learning 101 讀書會的人，之後運彩都能中頭獎成為億萬富翁。」</p>
+                </li>
+                <li><strong>生成式 (Abstractive):</strong> 理解原文後，生成新的摘要句子。
+                    <p class="text-sm text-neutral-500 pl-4">例：「Deep Learning 101 讀書會的成員日後都成了億萬富翁。」</p>
+                </li>
+            </ul>
+            <p class="mt-2 text-sm text-neutral-500">提及 <span class="pill">XLNet</span> 可能解決此問題。Timestamp: 0:00 - 0:09</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2" id="item-what-is-mrc">
+            <i class="fas fa-question-circle icon"></i>
+            <h2><strong>MRC</strong> 是什麼？ What is MRC?</h2>
+            <p>機器閱讀理解 (Machine Reading Comprehension) 的核心任務是：根據提出的 <span class="pill">問題 (Question)</span>，從給定的 <span class="pill">文章 (Context)</span> 中，**抽取 (Extract)** 出一個連續的文本片段 <span class="highlight-text">(Span)</span> 作為答案。</p>
+            <p class="mt-2">答案必須完全包含在原文中，不能由不連續的部分組成。</p>
+            <div class="large-visual">MRC</div>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 0:55 - 1:24</p>
+        </div>
+
+        <div class="bento-item col-span-md-6 col-span-lg-4 row-span-md-2" id="item-mrc-outline">
+            <i class="fas fa-sitemap icon"></i>
+            <h2><strong>MRC 技術大綱</strong> Technical Outline</h2>
+            <p class="mb-3">本次研討會深入探討了機器閱讀理解 (MRC) 的多個關鍵方面：</p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                <div>
+                    <h3 style="font-size: 1.1rem; font-weight: 500; color: #58a6ff;">核心概念與模型 Core Concepts & Models:</h3>
+                    <ul class="list-disc list-inside space-y-1 mt-1">
+                        <li>資料預處理 <span class="pill">Pre-Process</span></li>
+                        <li>MRC 定義 <span class="pill">What is MRC?</span></li>
+                        <li>QANet <span class="pill">Pre-BERT Model</span></li>
+                        <li>BERT <span class="pill">Bidirectional Transformer</span></li>
+                        <li>自研模型 <span class="pill">Our Design</span> (基於 QANet)</li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.1rem; font-weight: 500; color: #b392f0;">關鍵技術 Key Technologies:</h3>
+                    <ul class="list-disc list-inside space-y-1 mt-1">
+                        <li>上下文-查詢注意力 <span class="pill">Context-Query Attention</span></li>
+                        <li>自注意力機制 <span class="pill">Self-Attention</span></li>
+                        <li>Synthesizer <span class="pill">Attention Variants</span></li>
+                        <li>位置編碼 <span class="pill">Positional Encoding</span></li>
+                        <li>Hugging Face 工具包 <span class="pill">Transformers Toolkit</span></li>
+                        <li>NER 資料預處理 <span class="pill">NER Preprocessing</span></li>
+                    </ul>
+                </div>
+            </div>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 0:09 - 0:54 及後續各節點</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2" id="item-qanet">
+            <i class="fas fa-microchip icon"></i>
+            <h2><strong>QANet</strong> 模型解析</h2>
+            <p>QANet (Yu, et al., 2018) 是在 BERT 出現前的一個重要 MRC 模型。</p>
+            <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>架構類似 <span class="pill">BiDAF</span>，但以 <span class="highlight-text">Convolution + Self-Attention</span> 取代 LSTM。</li>
+                <li>首次將 <span class="pill">Self-Attention</span> 應用於 MRC。</li>
+                <li>編碼器中包含 <span class="pill">Positional Encoding</span>。</li>
+            </ul>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 1:25 - 2:25</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2 row-span-md-2" id="item-context-query">
+            <i class="fas fa-retweet icon"></i>
+            <h2><strong>上下文-查詢注意力</strong> Context-Query Attention</h2>
+            <p>源自 BiDAF 模型 (Seo, et al., 2017)，用於計算上下文與查詢間的關聯性。</p>
+            <h3 class="mt-2">主要步驟 Steps:</h3>
+            <ol class="list-decimal list-inside space-y-2 mt-2">
+                <li>計算 <span class="pill">相似度矩陣 (Similarity Matrix)</span> S<sub>ij</sub> = W<sub>0</sub>\[c<sub>i</sub>; q<sub>j</sub>; c<sub>i</sub> ⊙ q<sub>j</sub>]。</li>
+                <li>進行 Softmax 正規化得到 <span class="pill">注意力權重 (Attention Weights)</span> S̃ (C2Q) 和 S̃̃ (Q2C)。</li>
+                <li>生成帶有注意力的向量表示：
+                    <ul class="list-disc list-inside ml-4 text-sm">
+                        <li>Context-to-Query (C2Q): Ã = S̃ ⋅ Q<sup>T</sup></li>
+                        <li>Query-to-Context (Q2C): C̃ = S̃ ⋅ S̃̃<sup>T</sup> ⋅ C<sup>T</sup></li>
+                    </ul>
+                </li>
+                <li>最終輸出為拼接向量 G<sub>i</sub> = \[c<sub>i</sub>; ã<sub>i</sub>; c<sub>i</sub> ⊙ ã<sub>i</sub>; c<sub>i</sub> ⊙ c̃<sub>i</sub>]。</li>
+            </ol>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 2:25 - 4:55</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2" id="item-self-attention">
+            <i class="fas fa-atom icon"></i>
+            <h2><strong>自注意力機制</strong> Self-Attention</h2>
+            <p>經典的 Self-Attention 機制來自 "Attention is All You Need" (Vaswani, et al., 2017)。</p>
+            <div class="formula-visual">
+                Attention(Q, K, V) = softmax(QK<sup>T</sup>/√d<sub>k</sub>)V
+            </div>
+            <p class="mt-2">通過 Queries, Keys, Values 計算加權表示，並常用 <span class="pill">Multi-head Attention</span> 增強模型能力。</p>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 4:55 - 7:10</p>
+        </div>
+
+        <div class="bento-item col-span-md-3 col-span-lg-2" id="item-synthesizer">
+            <i class="fas fa-random icon"></i>
+            <h2><strong>Synthesizer</strong> 注意力變體</h2>
+            <p>Synthesizer (Y. Tay, et al., 2020) 論文探討了 Self-Attention 的不同變體：</p>
+            <ul class="list-disc list-inside mt-2 space-y-1">
+                <li><span class="pill">Transformer (Standard)</span>: 使用 QK<sup>T</sup> 交互。</li>
+                <li><span class="pill">Synthesizer (Dense)</span>: 以密集層學習注意力權重。</li>
+                <li><span class="pill">Synthesizer (Random)</span>: 使用隨機、固定的注意力權重。</li>
+            </ul>
+            <p class="mt-2">研究表明，即使是 <span class="highlight-text">隨機注意力</span> 有時也能取得不錯的性能。</p>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 7:10 - 8:06</p>
+        </div>
+
+        <div class="bento-item col-span-md-2 col-span-lg-2" id="item-positional-encoding">
+            <i class="fas fa-map-marked-alt icon"></i>
+            <h2><strong>位置信息</strong> Positional Information</h2>
+            <p>Self-Attention 本身不感知序列順序，需 <span class="highlight-text">位置編碼 (Positional Encoding)</span> 來引入順序信息。</p>
+            <ul class="list-disc list-inside mt-2 space-y-1">
+                <li><span class="pill">RNN</span>: 固有順序性。</li>
+                <li><span class="pill">Transformer/QANet</span>: 使用三角函數公式生成固定位置編碼。</li>
+                <li><span class="pill">BERT</span>: 使用可學習的 <span class="highlight-text">Positional Embeddings</span>。</li>
+            </ul>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 8:06 - 10:02</p>
+        </div>
+
+        <div class="bento-item col-span-md-2 col-span-lg-2" id="item-our-design">
+            <i class="fas fa-drafting-compass icon"></i>
+            <h2><strong>自研模型</strong> Our Design (QANet-based)</h2>
+            <p>基於 QANet 進行的改進，用於中文MRC任務 (DRCD數據集)：</p>
+            <ul class="list-disc list-inside mt-2 space-y-1">
+                <li>兩次 <span class="pill">Context-Query Attention</span> 操作。</li>
+                <li>使用 <span class="pill">Highway Network</span> 融合信息。</li>
+                <li>採用 <span class="pill">Single-head Self-Attention</span>。</li>
+            </ul>
+            <p class="mt-2">訓練約4小時，性能優於基線QANet，加入額外翻譯數據後進一步提升。</p>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 10:02 - 11:20</p>
+        </div>
+
+        <div class="bento-item col-span-md-2 col-span-lg-2" id="item-bert-mrc">
+            <i class="fas fa-bold icon"></i>
+            <h2><strong>BERT</strong> 應用於 MRC</h2>
+            <p>BERT (Devlin, et al., 2018) 將 Transformer 的 Encoder 進行雙向訓練。</p>
+            <p class="mt-2">在 MRC 中，將 <span class="pill">Question Tokens</span> 和 <span class="pill">Context Tokens</span> 合併輸入 BERT，模型輸出編碼後的 Tokens，再通過線性層預測答案的 <span class="highlight-text">Start/End Score</span>。</p>
+            <div class="large-visual mt-auto">BERT</div>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 11:20 - 13:19</p>
+        </div>
+
+        <div class="bento-item col-span-md-6 col-span-lg-2 row-span-md-2" id="item-huggingface">
+            <i class="fas fa-puzzle-piece icon"></i>
+            <h2><strong>Hugging Face</strong> Transformers Toolkit</h2>
+            <p>一個強大且廣泛使用的NLP工具包，極大簡化了 Transformer 模型的應用。</p>
+            <h3 class="mt-2">主要特性 Features:</h3>
+            <ul class="list-disc list-inside space-y-1">
+                <li>支持 <span class="pill">PyTorch</span> 和 <span class="pill">TensorFlow 2.0</span>。</li>
+                <li>提供大量官方及社群上傳的 <span class="highlight-text">預訓練模型 (Pretrained Models)</span>。</li>
+                <li>簡便的 <span class="pill">Tokenizer</span> 和 <span class="pill">Model</span> 加載接口。</li>
+                <li>針對不同下游任務 (Downstream Tasks) 的專用模型類，如：
+                    <ul class="list-circle list-inside ml-4 text-sm">
+                        <li>`BertForMaskedLM`</li>
+                        <li>`BertForSequenceClassification`</li>
+                        <li>`BertForTokenClassification` (for NER)</li>
+                        <li>`BertForQuestionAnswering` (for MRC)</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="code-block mt-auto">
+                <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> BertTokenizer, BertModel<br>
+                tokenizer = BertTokenizer.from_pretrained(<span class="code-string">'bert-base-chinese'</span>)<br>
+                model = BertModel.from_pretrained(<span class="code-string">'bert-base-chinese'</span>)<br>
+                <span class="code-comment"># text = "今天天氣很好" -> embeddings</span>
+            </div>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 13:19 - 20:30</p>
+        </div>
+
+        <div class="bento-item col-span-md-6 col-span-lg-2" id="item-hf-ner">
+            <i class="fas fa-cogs icon"></i>
+            <h2><strong>Hugging Face NER</strong> 資料預處理</h2>
+            <p>使用 Hugging Face 進行 NER 任務時的資料預處理步驟：</p>
+            <ol class="list-decimal list-inside mt-2 space-y-1">
+                <li>原始數據 (Raw Data) 通常為每行一個詞及其標籤 (e.g., <span class="pill">Stuttgart B-LOC</span>)。</li>
+                <li>執行預處理腳本 (`preprocess.py`)。</li>
+                <li>關鍵處理：
+                    <ul class="list-disc list-inside ml-4 text-sm">
+                        <li>過濾 <span class="pill">控制字符 (Control Characters)</span>，因 `BertTokenizer` 可能產生空 token。</li>
+                        <li>將長句子 <span class="pill">切分 (Split)</span> 成較短句子以符合模型輸入長度限制。</li>
+                    </ul>
+                </li>
+                <li>處理後格式：每個 token 一行，附帶其 NER 標籤，適用於 BERT 模型訓練。</li>
+            </ol>
+            <p class="mt-4 text-sm text-neutral-500">Timestamp: 20:30 - 26:48</p>
+        </div>
+
+    </div>
+
+<script>
+    // Framer Motion and Intersection Observer setup
+    document.addEventListener('DOMContentLoaded', () => {
+        const bentoItems = document.querySelectorAll('.bento-item');
+        bentoItems.forEach((item, index) => {
+            item.style.opacity = 0;
+            item.style.transform = 'translateY(30px)';
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        item.style.transition = `opacity 0.7s cubic-bezier(0.17, 0.55, 0.55, 1) ${index * 0.08}s, transform 0.7s cubic-bezier(0.17, 0.55, 0.55, 1) ${index * 0.08}s`;
+                        item.style.opacity = 1;
+                        item.style.transform = 'translateY(0px)';
+                        // observer.unobserve(entry.target); // Uncomment to animate only once
+                    } else {
+                        // Optional: Reset for re-animation on scroll up
+                        // item.style.opacity = 0;
+                        // item.style.transform = 'translateY(30px)';
+                    }
+                });
+            }, { threshold: 0.1 }); // Trigger when 10% of the item is visible
+
+            observer.observe(item);
+        });
+
+        // Header animation (simpler, non-Framer Motion directly for static HTML)
+        const headerH1 = document.querySelector('header h1');
+        const headerP = document.querySelector('header p');
+        if (headerH1) {
+            headerH1.style.opacity = 0;
+            headerH1.style.transform = 'translateY(-40px)';
+            setTimeout(() => {
+                headerH1.style.transition = 'opacity 0.9s ease-out, transform 0.9s ease-out';
+                headerH1.style.opacity = 1;
+                headerH1.style.transform = 'translateY(0)';
+            }, 100);
+        }
+        if (headerP) {
+            headerP.style.opacity = 0;
+            headerP.style.transform = 'translateY(25px)';
+            setTimeout(() => {
+                headerP.style.transition = 'opacity 0.9s ease-out 0.25s, transform 0.9s ease-out 0.25s';
+                headerP.style.opacity = 1;
+                headerP.style.transform = 'translateY(0)';
+            }, 100);
+        }
+    });
+</script>
+
+</body>
+</html>
