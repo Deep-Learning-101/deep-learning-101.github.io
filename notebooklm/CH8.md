@@ -1,3 +1,30 @@
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
+
+<p align="center">
+  <strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+</p>
+<p align="center">
+  <strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://deep-learning-101.github.io/">GitHub Pages</a> | 
+   <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> | 
+  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> | 
+  <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> | 
+  <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
+
 # 深度學習模型訓練中的優化 - 整理匯總
 
 ## 概述
