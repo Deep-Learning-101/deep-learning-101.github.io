@@ -71,13 +71,7 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 
 ---
 
-<h3><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型 (Large Language Model)</a></h3>
-
-<a href="https://deep-learning-101.github.io/Speech-Processing">Speech Processing (語音處理)</a>：<a href="https://www.twman.org/AI/ASR">針對訪談或對話進行分析與識別</a>
-
-<a href="https://deep-learning-101.github.io/Natural-Language-Processing">Natural Language Processing, NLP (自然語言處理)</a>：<a href="https://www.twman.org/AI/NLP">針對文檔進行分析與擷取</a>
-
-<a href="https://deep-learning-101.github.io//Computer-Vision">Computer Vision (電腦視覺)</a>：<a href="https://www.twman.org/AI/CV">針對物件或場景影像進行分析與偵測</a>
+| <h3><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型 (Large Language Model)</a></h3> | <h3><a href="https://deep-learning-101.github.io/Speech-Processing">Speech Processing (語音處理)</a></h3> | <h3><a href="https://deep-learning-101.github.io/Natural-Language-Processing">Natural Language Processing, NLP (自然語言處理)</a></h3> | <h3><a href="https://deep-learning-101.github.io//Computer-Vision">Computer Vision (電腦視覺)</a></h3> |
 
 ---
 
