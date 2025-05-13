@@ -75,19 +75,23 @@
 </ul>
 
 <details close>
-   
 <summary>Information/Event Extraction (資訊/事件擷取)</summary>
-     
-  - [HugNLP](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper/blob/main/HugNLP.md)
-     - [Jianing Wang, Nuo Chen, Qiushi Sun, Wenkang Huang, Chengyu Wang, Ming Gao, "HugNLP: A Unified and Comprehensive Library for Natural Language Processing", arXiv preprint, 	arXiv:2302.14286, 2023](./HugNLP.md)
-     - [基於機器閱讀理解(MRC)的指令微調(Instruction-tuning)的統一信息抽取框架之診斷書醫囑擷取分析](https://blog.twman.org/2023/07/HugIE.html)
-  - [DeepKE](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper/blob/main/DeepKE.md)
-     - [Ningyu Zhang, Xin Xu, Liankuan Tao, Haiyang Yu, Hongbin Ye, Shuofei Qiao, Xin Xie, Xiang Chen, Zhoubo Li, Lei Li, Xiaozhuan Liang, Yunzhi Yao, Shumin Deng, Peng Wang, Wen Zhang, Zhenru Zhang, Chuanqi Tan, Qiang Chen, Feiyu Xiong, Fei Huang, Guozhou Zheng, Huajun Chen, "DeepKE: A Deep Learning Based Knowledge Extraction Toolkit for Knowledge Base Population", arXiv preprint, arXiv:2201.03335, 2022](./DeepKE.md)
-     - [基於深度學習的開源中文知識圖譜抽取框架](https://github.com/zjunlp/DeepKE/blob/main/README_CN.md)
-     - [DeepKE-LLM: A Large Language Model Based Knowledge Extraction Toolkit](https://github.com/zjunlp/DeepKE/blob/main/example/llm/README_CN.md)
-     - [知識增強的開源語言大模型框架](https://github.com/zjunlp/KnowLM/blob/main/README_ZH.md)
-  - [ERINE-Layout](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper/blob/main/ERNIE-Layout.md)
-     - [Qiming Peng, Yinxu Pan, Wenjin Wang, Bin Luo, Zhenyu Zhang, Zhengjie Huang, Teng Hu, Weichong Yin, Yongfeng Chen, Yin Zhang, Shikun Feng, Yu Sun, Hao Tian, Hua Wu, Haifeng Wang, "ERNIE-Layout: Layout Knowledge Enhanced Pre-training for Visually-rich Document Understanding", arXiv preprint, arXiv:2210.06155, 2022](./ERNIE-Layout.md)
-  - [UIE @ PaddleNLP](https://huggingface.co/spaces/DeepLearning101/PaddleNLP-UIE)
-    - https://github.com/PaddlePaddle/PaddleNLP/tree/develop/model_zoo/uie
+<ul>
+  <li>
+    <b><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper/blob/main/HugNLP.md">HugNLP</a></b>：
+    <a href="https://blog.twman.org/2023/07/HugIE.html">以 MRC 為核心的統一信息抽取框架，支援醫療應用如診斷書與醫囑擷取。</a>
+  </li>
+  <li>
+    <b><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper/blob/main/DeepKE.md">DeepKE</a></b>：
+    <a href="https://github.com/zjunlp/DeepKE/blob/main/README_CN.md">支援中文知識圖譜抽取，包含 DeepKE-LLM 與 KnowLM 擴展模組。</a>
+  </li>
+  <li>
+    <b><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper/blob/main/ERNIE-Layout.md">ERNIE-Layout</a></b>：
+    <a href="https://arxiv.org/abs/2210.06155">增強視覺結構理解的預訓練模型，提升文件排版感知能力。</a>
+  </li>
+  <li>
+    <b><a href="https://huggingface.co/spaces/DeepLearning101/PaddleNLP-UIE">UIE @ PaddleNLP</a></b>：
+    <a href="https://github.com/PaddlePaddle/PaddleNLP/tree/develop/model_zoo/uie">支援任意類型信息抽取任務的開源工具。</a>
+  </li>
+</ul>
 </details>
