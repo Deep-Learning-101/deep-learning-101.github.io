@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>高維資料的降維演算法及視覺化 - tSNE 與 UMAP 比較</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <script type="importmap">
+      {
+        "imports": {
+          "framer-motion": "https://cdn.jsdelivr.net/npm/framer-motion@11.2.10/dist/framer-motion.es.js"
+        }
+      }
+    </script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #161617; /* Apple Dark Background */
+            color: #f5f5f7; /* Apple Light Text */
+            overflow-x: hidden;
+        }
+
+        .bento-grid {
+            display: grid;
+            gap: 1.5rem; /* gap-6 */
+            padding: 1.5rem; /* p-6 */
+            max-width: 1280px; /* max-w-screen-xl */
+            margin: 0 auto;
+        }
+
+        .bento-item {
+            background-color: #2c2c2e; /* Slightly lighter dark for cards */
+            border-radius: 1.5rem; /* rounded-3xl */
+            padding: 1.5rem; /* p-6 */
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            opacity: 0; /* Initial state for animation */
+        }
+
+        .bento-item:hover { /* Added hover effect from second file, adapted for dark theme */
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(255, 255, 255, 0.07), 0 4px 6px -4px rgba(255, 255, 255, 0.07);
+        }
+
+        .highlight-blue {
+            background: linear-gradient(90deg, rgba(0,122,255,0.6) 0%, rgba(0,122,255,0.2) 100%);
+            color: #fff;
+        }
+        .highlight-green {
+            background: linear-gradient(90deg, rgba(52,199,89,0.6) 0%, rgba(52,199,89,0.2) 100%);
+            color: #fff;
+        }
+        .highlight-orange {
+            background: linear-gradient(90deg, rgba(255,149,0,0.6) 0%, rgba(255,149,0,0.2) 100%);
+            color: #fff;
+        }
+
+        h1, h2, h3, h4 { /* Added h4 */
+            font-weight: 600;
+        }
+        /* Typography from first file (dark theme) */
+        .header-main-title { /* For main header H1 */
+            font-size: 3rem; /* Tailwind text-5xl or text-6xl */
+            line-height: 1.1;
+            font-weight: 700; /* font-bold */
+            margin-bottom: 0.75rem; /* mb-3 */
+             /* Gradient from original header */
+            background-clip: text;
+            -webkit-background-clip: text; /* For Safari */
+            color: transparent;
+            background-image: linear-gradient(to right, #60a5fa, #34d399); /* Tailwind blue-400 to emerald-400 */
+            opacity: 0; /* Initial state for animation */
+        }
+         .header-main-title a {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(to right, #60a5fa, #34d399);
+            text-decoration: none;
+        }
+        .header-main-title a:hover {
+             background-image: linear-gradient(to right, #3b82f6, #10b981); /* Darker hover */
+        }
+
+
+        .header-sub-title { /* For main header H2 */
+            font-size: 1.875rem; /* text-3xl */
+            font-weight: 600; /* font-semibold */
+            color: #a1a1aa; /* zinc-400 */
+            margin-bottom: 0.5rem; /* mb-2 */
+            opacity: 0; /* Initial state for animation */
+        }
+         .header-presenter { /* For main header P */
+            color: #71717a; /* zinc-500 */
+            opacity: 0; /* Initial state for animation */
+        }
+
+
+        .chinese-title { /* For bento item titles if primary lang is Chinese */
+            font-size: 2.25rem; /* text-4xl */
+            line-height: 2.5rem; /* leading-tight */
+            font-weight: 700; /* font-bold */
+            margin-bottom: 0.5rem;
+            color: #f5f5f7;
+        }
+        .chinese-subtitle { /* For bento item subtitles or H3s */
+            font-size: 1.5rem; /* text-2xl */
+            line-height: 2rem;
+            font-weight: 600; /* font-semibold */
+            color: #d4d4d8; /* zinc-300, slightly brighter for dark */
+            margin-bottom: 1rem;
+        }
+        .english-text { /* General body text in items */
+            font-size: 1rem; /* text-base */
+            color: #d4d4d8; /* zinc-300 */
+            line-height: 1.6;
+        }
+        .english-small { /* Smaller secondary text */
+            font-size: 0.875rem; /* text-sm */
+            color: #a1a1aa; /* zinc-400 */
+        }
+
+        /* Styles from second file, adapted for dark theme and merged */
+        .text-section-title { /* Alternative for item titles, use if preferred */
+            font-size: 1.75rem; /* text-2xl or 3xl */
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #e5e5e5; /* Brighter for dark theme */
+        }
+         .text-content-bold {
+            font-size: 1.125rem; /* text-lg */
+            font-weight: 600;
+            color: #f0f0f0; /* Brighter for dark */
+        }
+        .text-content-eng { /* Can be used for English sub-text if different styling needed */
+            font-size: 0.9rem;
+            color: #a1a1aa; /* zinc-400 */
+            margin-top: 0.25rem;
+        }
+        .icon-style { /* From second file, for icons within items */
+            margin-right: 0.75rem;
+            color: #0a84ff; /* Apple blue, good on dark */
+        }
+
+
+        .icon-large { /* From first file */
+            font-size: 3rem; /* Adjusted from 4rem */
+            margin-bottom: 1rem;
+            opacity: 0.6; /* Slightly more visible */
+        }
+        .bento-item img {
+            border-radius: 0.75rem; /* rounded-xl */
+            object-fit: contain;
+            max-height: 350px; /* Adjusted */
+            margin: 1rem auto;
+            display: block;
+            background-color: rgba(255,255,255,0.05); /* Slight bg for images from dark theme */
+            padding: 0.5rem;
+        }
+        .formula { /* From first file (dark theme) */
+            background-color: #3a3a3c;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace; /* SFMono from 2nd file */
+            font-size: 1.05rem; /* Adjusted */
+            color: #f5f5f7;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #4a4a4e;
+        }
+        .formula code, .bento-item code { /* General code tag styling */
+            background-color: #4a4a4c;
+            padding: 0.2em 0.4em;
+            margin: 0;
+            font-size: 85%;
+            border-radius: 3px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+        }
+
+        /* Table styles adapted for dark theme */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            color: #d4d4d8;
+        }
+        th, td {
+            border: 1px solid #4a4a4e; /* Darker border */
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        th {
+            background-color: #3a3a3c; /* Darker header */
+            font-weight: 600;
+            color: #f5f5f7;
+        }
+        td:first-child {
+            font-weight: 500;
+        }
+
+        /* Bento grid layout adjustments (from first file) */
+        @media (min-width: 768px) { /* md */
+            .bento-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .bento-item.md-col-span-2 { /* Renamed from col-span-2 for clarity */
+                grid-column: span 2 / span 2;
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .bento-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .bento-item.lg-col-span-2 {
+                grid-column: span 2 / span 2;
+            }
+            .bento-item.lg-col-span-3 {
+                grid-column: span 3 / span 3;
+            }
+        }
+    </style>
+</head>
+
+<body class="antialiased"> <header class="text-center py-12 md:py-16 px-6">
+        <h1 class="header-main-title text-5xl md:text-6xl">
+            <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">
+                高維資料的降維演算法及視覺化
+            </a>
+        </h1>
+        <h2 class="header-sub-title text-xl md:text-2xl">
+            Comparison of tSNE and UMAP
+        </h2>
+        <p class="header-presenter text-sm md:text-base">
+            主講人：杜岳華 (Yueh-Hua Tu) | 日期：2020.3.20
+        </p>
+    </header>
+
+    <main class="bento-grid">
+        <section class="bento-item md-col-span-2 lg-col-span-3" data-custom="0">
+            <h2 class="chinese-subtitle"><i class="fas fa-info-circle mr-2"></i>開場白 <span class="english-small">Introduction</span></h2>
+            <p class="english-text mb-4">大家好，今天由我來為大家分享。原本安排的講者最近比較忙，所以臨時由我來代打。也因為疫情的關係，我們的聚會改成了線上直播的方式。</p>
+            <p class="english-text">
+                今天的內容會聚焦在<strong>高維資料的降維演算法與視覺化</strong>，特別是比較兩種常用的方法：<strong>t-SNE</strong> 和 <strong>UMAP</strong>。
+                Compared to the previous broader talk, today we will focus on these two algorithms in more detail.
+            </p>
+        </section>
+
+        <section class="bento-item" data-custom="1">
+            <i class="fas fa-project-diagram icon-large text-blue-400"></i>
+            <h3 class="chinese-subtitle">降維與視覺化 <span class="english-small">Why it matters</span></h3>
+            <p class="english-text">
+                高維資料難以直接觀察和理解。<strong>降維 (Dimensionality Reduction)</strong> 演算法將高維資料映射到低維空間（通常是2D或3D），而<strong>視覺化 (Visualization)</strong> 則幫助我們洞察資料結構。
+                Visualization is crucial for understanding high-dimensional data structures.
+            </p>
+        </section>
+
+        <section class="bento-item lg-col-span-2" data-custom="2">
+            <h3 class="chinese-subtitle"><i class="fas fa-list-ol mr-2"></i>演講大綱 <span class="english-small">Outline</span></h3>
+            <ul class="list-disc list-inside english-text space-y-2">
+                <li>Brief introduction of Dimensional Reduction</li>
+                <li>Types of Dimensional Reduction</li>
+                <li>T-distributed Stochastic Neighbor Embedding (t-SNE)</li>
+                <li>Uniform Manifold Approximation and Projection (UMAP)</li>
+                <li>Comparison of two models</li>
+                <li>Dimensional reduction via graph</li>
+                <li>Relation to graph neural network</li>
+            </ul>
+        </section>
+
+        <section class="bento-item highlight-blue text-center" data-custom="3">
+            <img src="https://i.imgur.com/eU8zS6n.png" alt="Dimensional Reduction Concept" class="my-4 mx-auto h-48 object-contain"/>
+            <h3 class="chinese-title">降維基礎 <span class="english-small">Dimensional Reduction Basics</span></h3>
+            <p class="english-text">A mapping from high dimensional space to low dimensional space.</p>
+            <p class="english-text mt-2">其核心是將資料從高維空間映射到低維空間，同時盡可能保留資料原有的重要結構特性。例如，從三維空間映射到二維平面。</p>
+        </section>
+
+        <section class="bento-item lg-col-span-2" data-custom="4">
+            <h3 class="chinese-subtitle"><i class="fas fa-sitemap mr-2"></i>降維方法分類 <span class="english-small">Types of Dimensional Reduction</span></h3>
+            <img src="https://i.imgur.com/JvK8fQp.png" alt="Types of Dimensional Reduction" class="w-full h-auto"/>
+            <p class="english-text mt-4">主要分為<strong>線性 (Linear)</strong> 與<strong>非線性 (Non-linear)</strong> 方法。非線性方法中，又可根據保留<strong>全域結構 (Global Structure)</strong> 或<strong>區域結構 (Local Structure)</strong> 來細分。
+            This presentation focuses on non-linear methods like t-SNE and UMAP, which often preserve local data structures.
+            </p>
+        </section>
+
+        <section class="bento-item" data-custom="5">
+            <h3 class="chinese-subtitle">瑞士卷資料集 <span class="english-small">Swiss Roll Example</span></h3>
+            <img src="https://i.imgur.com/oKqg7c1.png" alt="Swiss Roll Dataset" class="my-4 mx-auto h-48 object-contain"/>
+            <p class="english-text">一個經典的非線性資料集，常用於測試流形學習 (Manifold Learning) 演算法的效果。目標是將這個三維的卷狀結構「攤平」到二維。</p>
+        </section>
+
+        <section class="bento-item" data-custom="6">
+            <h3 class="chinese-subtitle">全域 vs. 區域結構 <span class="english-small">Global vs. Local Structure</span></h3>
+            <img src="https://i.imgur.com/tKjYmNl.png" alt="Global vs Local structure comparison" class="my-4 mx-auto h-48 object-contain"/>
+            <p class="english-text">
+                有些方法（如MDS）試圖保留資料的<strong>整體形狀 (Global Structure)</strong>，而t-SNE和UMAP等方法更注重保留資料點之間的<strong>鄰近關係 (Local Structure)</strong>。
+            </p>
+        </section>
+        
+        <section class="bento-item highlight-green" data-custom="7">
+            <i class="fas fa-calculator icon-large text-green-300"></i>
+            <h3 class="chinese-title">符號定義 <span class="english-small">Notation</span></h3>
+            <div class="formula">
+                <p>p<sub>j|i</sub> = p(x<sub>j</sub> | x<sub>i</sub>) : the probability of a path from x<sub>i</sub> to x<sub>j</sub></p>
+                <p>q<sub>j|i</sub> = q(y<sub>j</sub> | y<sub>i</sub>) : the probability of a path from y<sub>i</sub> to y<sub>j</sub></p>
+            </div>
+            <p class="english-text mt-2">p<sub>j|i</sub> 代表在高維原始空間中，從點 x<sub>i</sub> 到點 x<sub>j</sub> 的路徑機率。q<sub>j|i</sub> 代表在降維後的低維空間中，從點 y<sub>i</sub> 到點 y<sub>j</sub> 的路徑機率。</p>
+        </section>
+
+        <section class="bento-item md-col-span-2" data-custom="8">
+            <h3 class="chinese-subtitle">SNE: 隨機鄰近嵌入 <span class="english-small">Stochastic Neighbor Embedding</span></h3>
+            <img src="https://i.imgur.com/0sQpT11.png" alt="SNE Similarity Formulas" class="my-4 mx-auto max-h-40 object-contain"/>
+            <p class="english-text mb-2">SNE是t-SNE的前身。它在高維和低維空間都使用高斯核函數來計算點之間的相似度（機率）。目標是最小化兩個空間中機率分佈的KL散度 (Kullback-Leibler divergence)。</p>
+            <div class="formula">Loss function: arg min D<sub>KL</sub>(P||Q) = Σ<sub>i</sub> D<sub>KL</sub>(P<sub>i</sub>||Q<sub>i</sub>) = Σ<sub>i</sub> Σ<sub>j</sub> p<sub>j|i</sub> log (p<sub>j|i</sub> / q<sub>j|i</sub>)</div>
+            <p class="english-text mt-2">Optimization: gradient descent. Minimize the dissimilarity of distribution between p and q.</p>
+        </section>
+
+        <section class="bento-item" data-custom="9">
+            <h3 class="chinese-subtitle">擁擠問題 <span class="english-small">The Crowding Problem</span></h3>
+            <img src="https://i.imgur.com/V0sR0jR.png" alt="Crowding Problem Illustration" class="w-full h-auto"/>
+            <p class="english-text">SNE在降維時，不同群集之間的點容易擠在一起，使得視覺化效果不佳。這就是所謂的「擁擠問題」。</p>
+        </section>
+
+        <section class="bento-item lg-col-span-3" data-custom="10">
+            <h3 class="chinese-subtitle"><i class="fas fa-lightbulb mr-2"></i>t-SNE: T分佈隨機鄰近嵌入 <span class="english-small">T-distributed Stochastic Neighbor Embedding</span></h3>
+            <div class="md:flex md:items-center md:space-x-6">
+                <img src="https://i.imgur.com/XjGf8cR.png" alt="t-SNE MNIST visualization" class="md:w-1/2 h-auto"/>
+                <div class="md:w-1/2">
+                    <p class="english-text mb-2">由 van der Maaten 和 Hinton 於2008年提出。t-SNE 的關鍵改進是：</p>
+                    <ul class="list-disc list-inside english-text space-y-1 mb-2">
+                        <li>在高維空間 (p<sub>j|i</sub>) 仍使用高斯分佈。</li>
+                        <li>在低維空間 (q<sub>j|i</sub>) 改用<strong>學生t分佈 (Student's t-distribution)</strong>，特別是自由度為1的t分佈（即柯西分佈 Cauchy distribution）。</li>
+                    </ul>
+                    <img src="https://i.imgur.com/Xb1i782.png" alt="t-SNE formulas" class="my-2 mx-auto max-h-32 object-contain"/>
+                    <p class="english-text">t分佈具有「厚尾 (heavy tail)」特性，能更有效地將不相似的點在低維空間中推開，從而緩解擁擠問題，產生更清晰的群集視覺效果。</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bento-item" data-custom="11">
+            <h3 class="chinese-subtitle">高斯分佈的變異數 <span class="english-small">Variance of Gaussian</span></h3>
+            <p class="english-text mb-2">如何決定高斯分佈中的變異數 σ<sub>i</sub><sup>2</sup>？t-SNE 使用<strong>困惑度 (Perplexity)</strong> 這個概念。</p>
+            <p class="english-text mb-2">Perplexity: In information theory, to measure how well a probability distribution predicts a sample. A low perplexity indicates the prediction is precise.</p>
+            <div class="formula">perp(p) = 2<sup>H(p<sub>i</sub>)</sup> where H(p<sub>i</sub>) = - Σ<sub>j</sub> p<sub>j|i</sub> log<sub>2</sub> p<sub>j|i</sub></div>
+            <p class="english-text mt-2">困惑度增加 ⇔ 熵 H(p<sub>i</sub>) 增加 ⇔ σ<sub>i</sub> 增加。</p>
+            <ul class="list-disc list-inside english-text space-y-1 mt-2">
+                <li>Large σ<sub>i</sub>: points get crowded.</li>
+                <li>Small σ<sub>i</sub>: components break into segments.</li>
+            </ul>
+        </section>
+
+        <section class="bento-item" data-custom="12">
+            <h3 class="chinese-subtitle">對稱化 <span class="english-small">Making it Symmetric</span></h3>
+            <p class="english-text mb-2">原始的 p<sub>j|i</sub> 和 p<sub>i|j</sub> (條件機率) 是非對稱的。t-SNE將其轉換為對稱的聯合機率 P<sub>i,j</sub>：</p>
+            <div class="formula">P<sub>i,j</sub> = (p<sub>j|i</sub> + p<sub>i|j</sub>) / 2n</div>
+            <p class="english-text mt-2">假設：每個資料點都應有顯著貢獻 (make each data point contributes significantly)。</p>
+            <div class="formula">Σ<sub>j</sub> p<sub>j|i</sub> > 1/2n</div>
+        </section>
+        
+        <section class="bento-item lg-col-span-3" data-custom="13">
+            <h3 class="chinese-subtitle"><i class="fas fa-rocket mr-2"></i>UMAP: 均勻流形近似與投影 <span class="english-small">Uniform Manifold Approximation and Projection</span></h3>
+            <div class="md:flex md:items-center md:space-x-6">
+                <img src="https://i.imgur.com/R9gQ55M.png" alt="UMAP MNIST visualization" class="md:w-1/2 h-auto"/>
+                <div class="md:w-1/2">
+                    <p class="english-text mb-2">UMAP 是繼 t-SNE 之後廣受歡迎的降維演算法。它通常能更好地保留資料的<strong>全域結構</strong>，同時運算速度也較快。</p>
+                    <p class="english-text mb-2">核心思想：</p>
+                    <ol class="list-decimal list-inside english-text space-y-1 mb-2">
+                        <li>假設資料均勻分佈在一個<strong>局部連通的流形 (locally connected manifold)</strong>上。</li>
+                        <li>在高維空間中建構一個加權的 k-近鄰圖 (k-nearest neighbor graph)。</li>
+                        <li>在低維空間中找到一個相似的圖結構，最小化兩個圖結構之間的差異。</li>
+                    </ol>
+                    <img src="https://i.imgur.com/3m2z69y.png" alt="UMAP Concept" class="my-2 mx-auto max-h-32 object-contain"/>
+                </div>
+            </div>
+        </section>
+
+        <section class="bento-item" data-custom="14">
+            <h3 class="chinese-subtitle">UMAP: ε-鄰域 <span class="english-small">ε-neighborhood</span></h3>
+            <img src="https://i.imgur.com/mYt51Wj.png" alt="Epsilon Neighborhood" class="my-4 mx-auto h-48 object-contain"/>
+            <p class="english-text">UMAP假設流形是局部連通的。如果資料在流形上均勻分佈，使用固定的 ε 半徑來定義鄰域（覆蓋）會很有效。但實際資料分佈不均，這會導致圖的斷裂。</p>
+        </section>
+
+        <section class="bento-item" data-custom="15">
+            <h3 class="chinese-subtitle">UMAP: 模糊度量 <span class="english-small">Fuzzy Metric</span></h3>
+            <p class="english-text mb-2">為解決不均勻分佈問題，UMAP使用基於k-近鄰的自適應模糊度量：</p>
+            <div class="formula">p<sub>j|i</sub> = exp( - ( ||x<sub>i</sub> - x<sub>j</sub>||<sup>2</sup> - ρ<sub>i</sub> ) / σ<sub>i</sub> )</div>
+            <p class="english-text mt-2">ρ<sub>i</sub> 是點 x<sub>i</sub> 到其最近鄰居的距離。σ<sub>i</sub> 是自適應的帶寬，確保 <code>log<sub>2</sub>k = Σ<sub>j</sub> p<sub>i,j</sub></code>，其中 k 是鄰居數量。</p>
+        </section>
+
+        <section class="bento-item" data-custom="16">
+            <h3 class="chinese-subtitle">UMAP: 對稱化 <span class="english-small">Symmetric Graph (High-dim)</span></h3>
+            <p class="english-text mb-2">UMAP的圖最初是<strong>有向的 (Directed connected graph)</strong>。為了得到無向圖的邊權重 P<sub>i,j</sub>，UMAP使用<strong>機率模糊聯集 (Probabilistic fuzzy union)</strong>：</p>
+            <div class="formula">P<sub>i,j</sub> = p<sub>j|i</sub> + p<sub>i|j</sub> - p<sub>j|i</sub> * p<sub>i|j</sub></div>
+            <p class="english-text mt-2">這與t-SNE的平均法不同，旨在更好地結合兩個方向的連接強度。</p>
+        </section>
+
+        <section class="bento-item md-col-span-2 lg-col-span-3" data-custom="17">
+            <h3 class="chinese-subtitle"><i class="fas fa-balance-scale mr-2"></i>總結與比較 (t-SNE vs UMAP from File 1) <span class="english-small">Summary & Comparison</span></h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left english-text">
+                    <thead>
+                        <tr class="border-b border-gray-700">
+                            <th class="p-2">特性 Feature</th>
+                            <th class="p-2">t-SNE</th>
+                            <th class="p-2">UMAP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-gray-500">
+                            <td class="p-2"><strong>核心思想</strong> Core Idea</td>
+                            <td class="p-2">保留成對點之間的局部相似性 Preserves pairwise local similarities</td>
+                            <td class="p-2">基於流形假設和拓撲資料分析 Assumes data lies on a manifold, uses topological data analysis</td>
+                        </tr>
+                        <tr class="border-b border-gray-500">
+                            <td class="p-2"><strong>高維相似度</strong> High-dim Similarity</td>
+                            <td class="p-2">高斯核 Gaussian Kernel</td>
+                            <td class="p-2">模糊度量 (基於指數衰減) Fuzzy Metric (exponential decay based)</td>
+                        </tr>
+                        <tr class="border-b border-gray-500">
+                            <td class="p-2"><strong>低維相似度</strong> Low-dim Similarity</td>
+                            <td class="p-2">學生t分佈 Student's t-distribution</td>
+                            <td class="p-2">類似t分佈的曲線族 Family of curves similar to t-distribution</td>
+                        </tr>
+                        <tr class="border-b border-gray-500">
+                            <td class="p-2"><strong>對稱化</strong> Symmetrization</td>
+                            <td class="p-2">平均 (P<sub>i,j</sub> + P<sub>j,i</sub>)/2n</td>
+                            <td class="p-2">機率模糊聯集 Probabilistic Fuzzy Union</td>
+                        </tr>
+                        <tr class="border-b border-gray-500">
+                            <td class="p-2"><strong>全域結構保留</strong> Global Structure</td>
+                            <td class="p-2">相對較弱 Relatively weaker</td>
+                            <td class="p-2">通常較好 Generally better</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2"><strong>計算效率</strong> Efficiency</td>
+                            <td class="p-2">中等 Moderate</td>
+                            <td class="p-2">較高 Higher (often faster)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="english-text mt-4">影片中提到 UMAP 的論文大量使用數學推導，尤其在證明其 probabilistic fuzzy union 的可行性。而 t-SNE 和 UMAP 都是非線性降維方法，擅長於視覺化高維資料中的群集結構。UMAP 通常在保留全域結構和計算速度上略勝一籌。</p>
+        </section>
+
+        <section class="bento-item lg-col-span-2 highlight-blue" id="knn-graph" data-custom="18">
+            <h2 class="text-section-title"><i class="fas fa-project-diagram icon-style"></i><strong>UMAP: K-最近鄰圖構建</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">UMAP 的核心步驟之一是構建 K-最近鄰圖 (k-nearest neighbor graph)。</p>
+            <p class="text-content-eng">One of the core steps in UMAP is constructing a k-nearest neighbor graph.</p>
+            <p class="mt-4 text-content-bold">給定 K，搜尋最佳的 <code>σᵢ</code> (標準差) 使得以下約束成立：</p>
+            <p class="text-content-eng">Given K, search for the optimal standard deviation <code>σᵢ</code> such that the following constraint holds:</p>
+            <div class="formula">log<sub>2</sub> k = Σ<sub>j</sub> p<sub>j|i</sub></div>
+            <p class="mt-2 text-content-bold">其中條件機率 <code>p<sub>j|i</sub></code> 定義為：</p>
+            <p class="text-content-eng">Where the conditional probability <code>p<sub>j|i</sub></code> is defined as:</p>
+            <div class="formula">p<sub>j|i</sub> = exp( - ( ||x<sub>i</sub> - x<sub>j</sub>||<sup>2</sup> - ρ<sub>i</sub> ) / σ<sub>i</sub> )</div>
+            <p class="mt-2 english-text"><code>ρ<sub>i</sub></code> 是點 <code>x<sub>i</sub></code> 到其最近鄰居的距離 (若 k=1)。此步驟確保每個點都有相似數量的鄰居，適應數據的局部密度。</p>
+        </section>
+
+        <section class="bento-item highlight-green" id="symmetric-prob" data-custom="19">
+            <h2 class="text-section-title"><i class="fas fa-sync-alt icon-style"></i><strong>UMAP: 對稱化機率</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">為了得到無向圖，需要將條件機率對稱化：</p>
+            <p class="text-content-eng">To obtain an undirected graph, conditional probabilities are symmetrized:</p>
+            <div class="formula">p<sub>i,j</sub> = p<sub>j|i</sub> + p<sub>i|j</sub> - p<sub>j|i</sub> * p<sub>i|j</sub></div>
+            <p class="mt-2 english-text">這是一種模糊聯集 (fuzzy union) 的形式，確保了邊權重的對稱性。</p>
+        </section>
+
+        <section class="bento-item flex flex-col items-center justify-center" id="undirected-graph" data-custom="20">
+            <h2 class="text-section-title"><i class="fas fa-share-alt icon-style"></i><strong>無向局部連接圖</strong></h2>
+            <p class="text-content-bold">最終形成一個無向的、局部連接的圖結構。</p>
+            <p class="text-content-eng">This results in an undirected, locally connected graph structure.</p>
+            <svg viewBox="0 0 200 100" class="w-full h-32 mt-4">
+                <defs>
+                    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                        <polygon points="0 0, 10 3.5, 0 7" fill="#0a84ff" />
+                    </marker>
+                </defs>
+                <circle cx="20" cy="50" r="3" fill="#0a84ff" /> <circle cx="40" cy="30" r="3" fill="#0a84ff" />
+                <circle cx="50" cy="70" r="3" fill="#0a84ff" /> <circle cx="70" cy="40" r="3" fill="#0a84ff" />
+                <circle cx="90" cy="60" r="3" fill="#0a84ff" /> <circle cx="110" cy="20" r="3" fill="#0a84ff" />
+                <circle cx="130" cy="50" r="3" fill="#0a84ff" /> <circle cx="150" cy="80" r="3" fill="#0a84ff" />
+                <circle cx="170" cy="30" r="3" fill="#0a84ff" />
+                <line x1="20" y1="50" x2="40" y2="30" stroke="#71717a" stroke-width="1"/>
+                <line x1="20" y1="50" x2="50" y2="70" stroke="#71717a" stroke-width="1"/>
+                <line x1="40" y1="30" x2="70" y2="40" stroke="#71717a" stroke-width="1"/>
+                <line x1="50" y1="70" x2="90" y2="60" stroke="#71717a" stroke-width="1"/>
+                <line x1="70" y1="40" x2="90" y2="60" stroke="#71717a" stroke-width="1"/>
+                <line x1="70" y1="40" x2="110" y2="20" stroke="#71717a" stroke-width="1"/>
+                <line x1="110" y1="20" x2="130" y2="50" stroke="#71717a" stroke-width="1"/>
+                <line x1="90" y1="60" x2="130" y2="50" stroke="#71717a" stroke-width="1"/>
+                <line x1="130" y1="50" x2="150" y2="80" stroke="#71717a" stroke-width="1"/>
+                <line x1="150" y1="80" x2="170" y2="30" stroke="#71717a" stroke-width="1"/>
+            </svg>
+        </section>
+        
+        <section class="bento-item highlight-orange" id="low-dim-recon" data-custom="21">
+            <h2 class="text-section-title"><i class="fas fa-compress-arrows-alt icon-style"></i><strong>UMAP: 低維空間重建</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">在低維空間中，UMAP 使用類似 t-SNE 的 t-分佈 (自由度 <code>ν=1</code>) 來計算點之間的相似度 <code>q<sub>i,j</sub></code>：</p>
+            <p class="text-content-eng">In the low-dimensional space, UMAP uses a t-distribution (degrees of freedom <code>ν=1</code>), similar to t-SNE, to compute similarities <code>q<sub>i,j</sub></code>:</p>
+            <div class="formula">q<sub>i,j</sub> = ( 1 + a ||y<sub>i</sub> - y<sub>j</sub>||<sup>2b</sup> )<sup>-1</sup></div>
+            <p class="mt-2 english-text"><code>y<sub>i</sub></code> 和 <code>y<sub>j</sub></code> 是低維空間中的點。參數 <code>a</code> 和 <code>b</code> 通常由 UMAP 根據 <code>min_dist</code> 和 <code>spread</code> 超參數自動學習。</p>
+        </section>
+
+        <section class="bento-item lg-col-span-2 highlight-blue" id="umap-loss" data-custom="22">
+            <h2 class="text-section-title"><i class="fas fa-bullseye icon-style"></i><strong>UMAP 損失函數</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">UMAP 使用二元交叉熵 (Binary Cross-Entropy) 作為損失函數：</p>
+            <p class="text-content-eng">UMAP uses Binary Cross-Entropy as its loss function:</p>
+            <div class="formula">H(p, q) = - Σ<sub>i</sub> ( p<sub>i</sub> log q<sub>i</sub> + (1 - p<sub>i</sub>) log(1 - q<sub>i</sub>) )</div>
+            <p class="mt-2 text-content-bold">此損失函數與 KL 散度 (KL Divergence) 相關：</p>
+            <p class="text-content-eng">This loss function is related to KL Divergence:</p>
+            <div class="formula">H(p, q) = H(p) + D<sub>KL</sub>(p || q)</div>
+            <p class="mt-2 english-text">由於 <code>H(p)</code> (原始空間機率分佈的熵) 是固定的，最小化交叉熵等同於最小化 KL 散度。優化方法為梯度下降 (Gradient Descent)。</p>
+        </section>
+
+        <section class="bento-item highlight-green" id="initialization" data-custom="23">
+            <h2 class="text-section-title"><i class="fas fa-cogs icon-style"></i><strong>UMAP: 初始化策略</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">UMAP 的初始化對於結果的全局結構保留和收斂速度至關重要。</p>
+            <p class="text-content-eng">UMAP's initialization is crucial for preserving global structure and for convergence speed.</p>
+            <p class="mt-4 text-content-bold">它使用正規化拉普拉斯矩陣 (Normalized Laplacian) 的特徵向量 (Eigenvectors) 進行初始化：</p>
+            <p class="text-content-eng">It uses eigenvectors of the Normalized Laplacian for initialization:</p>
+            <div class="formula">Lu = λu</div>
+            <p class="mt-2 english-text">這種基於譜方法 (spectral method) 的初始化有助於更快收斂，並更好地保留數據的全局拓撲結構，相比 t-SNE 常用的隨機初始化 (random initialization) 更具優勢。</p>
+        </section>
+        
+        <section class="bento-item lg-col-span-3" id="comparison-table-file2" data-custom="24">
+            <h2 class="text-section-title"><i class="fas fa-table icon-style"></i><strong>T-SNE 與 UMAP 詳細比較</strong> <span class="english-small">(File 2 Table)</span></h2>
+            <p class="text-content-eng">Detailed comparison of T-SNE and UMAP models.</p>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>特性 (Feature)</th>
+                            <th>T-SNE</th>
+                            <th>UMAP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>原始空間距離度量 (Distance metric in original space)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                        </tr>
+                        <tr>
+                            <td>衡量數據點間權重方式 (How to measure weight between data points)</td>
+                            <td>機率 (Probability)</td>
+                            <td>機率 (Probability)</td>
+                        </tr>
+                        <tr>
+                            <td>原始空間假設 (Assumption in original space)</td>
+                            <td>正規化高斯分佈 (Normalized Gaussian distribution)</td>
+                            <td>非正規化高斯分佈 (Unnormalized Gaussian distribution)</td>
+                        </tr>
+                        <tr>
+                            <td>重建空間假設 (Assumption in reconstructed space)</td>
+                            <td>正規化 t-分佈 (Normalized t-distribution)</td>
+                            <td>非正規化 t-分佈 (Unnormalized t-distribution)</td>
+                        </tr>
+                        <tr>
+                            <td>決定高斯分佈方差方式 (How to decide the variance of Gaussian distribution)</td>
+                            <td>困惑度 (Perplexity)</td>
+                            <td>鄰居數量 (Number of neighbors)</td>
+                        </tr>
+                        <tr>
+                            <td>重建空間距離度量 (Distance metric in reconstructed space)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                            <td>歐幾里德距離 (Euclidean distance)</td>
+                        </tr>
+                        <tr>
+                            <td>損失函數 (Loss function)</td>
+                            <td>KL 散度 (KL divergence)</td>
+                            <td>二元交叉熵 (Binary cross entropy)</td>
+                        </tr>
+                        <tr>
+                            <td>初始化 (Initialization)</td>
+                            <td>隨機 (Random)</td>
+                            <td>拉普拉斯特徵向量 (Eigenvectors of Laplacian)</td>
+                        </tr>
+                        <tr>
+                            <td>優化方法 (Optimization method)</td>
+                            <td>梯度下降 (Gradient descent)</td>
+                            <td>梯度下降 (Gradient descent)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="bento-item lg-col-span-2 highlight-orange" id="graph-topology" data-custom="25">
+            <h2 class="text-section-title"><i class="fas fa-sitemap icon-style"></i><strong>圖拓撲結構的決定</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">決定圖的拓撲結構有兩種主要方法：</p>
+            <p class="text-content-eng">There are two main approaches to deciding the graph topology:</p>
+            <div class="mt-4">
+                <h4 class="text-xl font-semibold mb-2 text-content-bold">離散方法 (Discrete approach)</h4>
+                <p class="english-text">產生稀疏圖 (sparse graph)。</p>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 english-text">
+                    <li><strong>ε-鄰域 (ε-neighborhood):</strong> 將距離在 ε 內的頂點視為鄰居。</li>
+                    <li><strong>K-最近鄰 (k-nearest neighbor):</strong> 將 K 個最近的頂點視為鄰居。</li>
+                </ul>
+            </div>
+            <div class="mt-6">
+                <h4 class="text-xl font-semibold mb-2 text-content-bold">連續方法 (Continuous approach)</h4>
+                <p class="english-text">產生稠密圖 (dense graph)。</p>
+                <ul class="list-disc list-inside ml-4 mt-2 space-y-1 english-text">
+                    <li><strong>距離 (Distance):</strong> 直接使用成對距離 <code>d(x<sub>i</sub>, x<sub>j</sub>) = ||x<sub>i</sub> - x<sub>j</sub>||<sup>2</sup></code>。</li>
+                    <li><strong>由距離衍生的機率 (Probability derived from distance):</strong> 如 <code>P<sub>ij</sub> = e<sup>-d(x<sub>i</sub>,x<sub>j</sub>)<sup>2</sup>/σ</sup></code>。可能是非對稱的。</li>
+                </ul>
+            </div>
+            <p class="mt-4 english-text">無論哪種方法，都需要預先定義距離度量 (distance metric)。</p>
+        </section>
+        
+        <section class="bento-item flex flex-col items-center justify-center" id="umap-global-structure" data-custom="26">
+            <h2 class="text-section-title"><i class="fas fa-globe-americas icon-style"></i><strong>UMAP 與全局結構</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">UMAP 是否比 t-SNE 更好地保留全局結構？</p>
+            <p class="text-content-eng">Does UMAP preserve global structure better than t-SNE?</p>
+            <img src="https://i.imgur.com/9gZfQhE.png" alt="UMAP vs t-SNE global structure comparison" class="mt-4 rounded-lg shadow-md max-w-full h-auto">
+            <p class="mt-2 text-xs text-center text-gray-500">圖片來源: Kobak, D., & Linderman, G. C. (2019). UMAP does not preserve global structure any better than t-SNE when using the same initialization. doi: 10.1101/2019.12.19.877522</p>
+            <p class="mt-4 english-text">研究指出，當使用相同的初始化方法時 (例如都用隨機初始化，或都用譜方法初始化)，UMAP 在保留全局結構方面並不一定優於 t-SNE。UMAP 宣稱的全局結構保留能力很大程度上得益於其預設的譜初始化方法。</p>
+        </section>
+
+        <section class="bento-item lg-col-span-3 highlight-blue" id="gnn-relation" data-custom="27">
+            <h2 class="text-section-title"><i class="fas fa-brain icon-style"></i><strong>與圖神經網路的關聯</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-eng">Relation to Graph Neural Network (GNN).</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start mt-4"> <div>
+                    <h4 class="text-xl font-semibold mb-2 text-content-bold">圖神經網路 (Graph Neural Network)</h4>
+                    <p class="english-text">轉換特徵於 <strong>給定的圖幾何結構</strong> 上。</p>
+                    <p class="text-content-eng">Transforms features on the <strong>given geometry of graph</strong>.</p>
+                    <div class="formula">Y' = f(X, graph)</div>
+                </div>
+                <div>
+                    <h4 class="text-xl font-semibold mb-2 text-content-bold">透過圖進行降維 (Dimensional Reduction via Graph)</h4>
+                    <p class="english-text">從特徵 <strong>構建圖</strong>，然後在該圖的幾何結構上轉換特徵。</p>
+                    <p class="text-content-eng">**Constructs graph** from features and then transforms features on the geometry of that graph.</p>
+                    <div class="formula">graph = f(X)</div>
+                    <div class="formula">Y' = g(X, graph)</div>
+                </div>
+            </div>
+            <img src="https://i.imgur.com/YfN8ZfX.png" alt="GNN vs Dimensional Reduction via Graph" class="mt-6 rounded-lg shadow-md max-w-full h-auto">
+            <p class="mt-4 english-text">兩者都利用圖結構，但 GNN 通常假設圖結構是預先給定的，而基於圖的降維方法 (如 UMAP, t-SNE) 則會先從數據本身推斷或構建圖結構。</p>
+        </section>
+        
+        <section class="bento-item" id="gcn-example" data-custom="28">
+            <h2 class="text-section-title"><i class="fas fa-wave-square icon-style"></i><strong>圖卷積網路 (GCN) 範例</strong> <span class="english-small">(File 2 Detail)</span></h2>
+            <p class="text-content-bold">一個簡單的 GCN 層可以表示為：</p>
+            <p class="text-content-eng">A simple GCN layer can be represented as:</p>
+            <div class="formula">X' = f(X, graph)</div>
+            <div class="formula">= x * G * g<sub>θ</sub></div>
+            <div class="formula">= σ( θ (I + D<sup>-1/2</sup> A D<sup>-1/2</sup>) x )</div>
+            <div class="formula">= σ( θ Ã x )</div>
+            <p class="mt-2 text-content-bold">其中正規化拉普拉斯矩陣 (Normalized Laplacian) L:</p>
+            <p class="text-content-eng">Where the Normalized Laplacian L is:</p>
+            <div class="formula">L = I - D<sup>-1/2</sup> A D<sup>-1/2</sup></div>
+            <p class="mt-2 english-text">這裡 <code>A</code> 是鄰接矩陣 (adjacency matrix)，<code>D</code> 是度矩陣 (degree matrix)，<code>I</code> 是單位矩陣，<code>θ</code> 是可學習的權重，<code>σ</code> 是激活函數。</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-8 text-gray-500 text-sm">
+        基於 Yueh-Hua Tu 於2020年3月20日的演講內容製作。
+        <br>
+        Original presentation by Yueh-Hua Tu. Webpage by AI.
+    </footer>
+
+    <script type="module">
+        import { animate } from "framer-motion";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const elementsToAnimate = [
+                document.querySelector('header h1.header-main-title'),
+                document.querySelector('header h2.header-sub-title'),
+                document.querySelector('header p.header-presenter'),
+                ...document.querySelectorAll('.bento-item')
+            ].filter(el => el != null); // Filter out nulls if selectors miss
+
+            elementsToAnimate.forEach((el, index) => {
+                // For header elements, use a fixed small delay or their natural order.
+                // For bento items, use data-custom for sequencing.
+                const delayOrder = el.classList.contains('bento-item') ? parseInt(el.dataset.custom || "0") : index;
+                const initialY = el.tagName.startsWith('H') ? -30 : 20; // Different y for titles
+
+                // Ensure initial styles for animation are set if not in CSS
+                // animate function directly applies from/to, so opacity:0 in CSS for .bento-item is good.
+                // For header elements not initially styled with opacity:0, JS can handle it.
+                if (!el.classList.contains('bento-item')) {
+                    el.style.opacity = 0;
+                }
+
+
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            animate(entry.target, 
+                                { opacity: [0, 1], y: [initialY, 0] }, 
+                                { duration: 0.6, delay: delayOrder * 0.07 } // Adjusted delay factor
+                            );
+                            observer.unobserve(entry.target); // Animate once
+                        }
+                    });
+                }, { threshold: 0.1 }); // Trigger when 10% of the element is visible
+                
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
