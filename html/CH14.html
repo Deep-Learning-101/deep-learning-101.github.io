@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>自編碼器 (Autoencoders) - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Autoencoders @ Deep Learning Book Chapter 14</strong>
+                </p>
+                <p><em>2017/09/08</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=5mrJmzzpPBs" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Exploring Autoencoders</a>
+                    <span class="text-xs text-slate-500">(Covers core concepts, variants like DAE, Sparse AE, Deep AE, and applications.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                自編碼器 (Autoencoder)
+            </h1>
+            <p class="text-xl text-slate-600">
+                深入解析自編碼器的核心概念、主要變體及其多樣化應用
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-cogs icon-large"></i>
+                <h2 class="bento-title-large">核心目標與基本架構 <span class="text-lg font-normal text-slate-500">Core Concepts & Architecture</span></h2>
+                <p class="bento-text">
+                    <strong>核心目標 (Core Objective)：</strong> 自編碼器的主要目標是學習輸入數據的<strong class="highlight-tech">有效低維編碼表示 (隱藏層)</strong>，並能利用此編碼<strong class="highlight-tech">準確重構原始輸入</strong>。這個過程迫使模型從高維輸入中提取最重要、最具代表性的特徵。
+                </p>
+                <p class="bento-text mt-4">
+                    <strong>基本架構 (Basic Architecture)：</strong> 由<strong class="highlight-tech">編碼器 (encoder)</strong> $f(x)$ 將輸入 $x$ 映射到潛在表示 $h$，以及<strong class="highlight-tech">解碼器 (decoder)</strong> $g(h)$ 從 $h$ 重建輸出 $r$ 組成。中間層稱為潛在表示或隱藏層。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>訓練目標 (Training Goal)：</strong> 最小化原始輸入與重建輸出之間的<strong class="highlight-tech">重構誤差</strong> $L(x, r)$，常用<strong class="highlight-tech">均方誤差 (Mean Squared Error, MSE)</strong>。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-network-wired icon-large"></i>
+                <h2 class="bento-title-large">自編碼器的主要變體 <span class="text-lg font-normal text-slate-500">Main Variants</span></h2>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-compress-arrows-alt icon-large"></i>
+                <h3 class="bento-subtitle">欠完備自編碼器 <span class="text-sm font-normal text-slate-500">Undercomplete AE</span></h3>
+                <p class="bento-text">
+                    <strong>特點：</strong> <strong class="highlight-tech">隱藏層的維度小於輸入層維度</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>機制：</strong> 強制模型對輸入數據進行<strong class="highlight-tech">壓縮</strong>，被迫學習並保留輸入中最顯著、最有信息的特徵。
+                </p>
+                 <p class="bento-text mt-2">與非線性 PCA 類似，有助於捕捉最顯著的特徵，不學習過多細節。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-qrcode icon-large"></i>
+                <h3 class="bento-subtitle">稀疏自編碼器 <span class="text-sm font-normal text-slate-500">Sparse AE</span></h3>
+                <p class="bento-text">
+                    <strong>特點：</strong> 除了重構誤差，還懲罰隱藏層編碼 $h$ 的<strong class="highlight-tech">非稀疏性</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>機制：</strong> 通過 <strong class="highlight-tech">L1 正則化</strong> (λ $\sum_i |h_i|$) 或 <strong class="highlight-tech">KL 散度懲罰</strong>誘導稀疏性，鼓勵模型只激活少數隱藏單元。
+                </p>
+                <p class="bento-text mt-2">優勢：被迫發現數據中更本質的特徵，潛在優勢包括更具可解釋性的特徵、更好的泛化能力。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-magic icon-large"></i>
+                <h3 class="bento-subtitle">去噪自編碼器 (DAE) <span class="text-sm font-normal text-slate-500">Denoising AE</span></h3>
+                <p class="bento-text">
+                    <strong>訓練目標：</strong> 接收一個被<strong class="highlight-tech">隨機損壞 (加噪)</strong> 的輸入版本 $\tilde{x}$，並學習<strong class="highlight-tech">重構原始的、未被損壞的輸入 $x$</strong> ($L(x, g(f(\tilde{x})))$)。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>機制：</strong> 迫使模型學習數據變數之間的依賴關係，並能從損壞數據中恢復。DAE 學習從偏離流形點「拉回」到流形上，其重構方向可視為估計數據流形在該點的局部切線方向。
+                </p>
+                 <p class="bento-text mt-2">當噪聲很小時，DAE 的訓練目標近似於學習數據分佈的<strong class="highlight-tech">得分 (score)</strong>，即 $\nabla_x \log p_{\text{data}}(x)$。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-layer-group icon-large"></i>
+                <h2 class="bento-title">深度自編碼器 <span class="text-base font-normal text-slate-500">Deep Autoencoder</span></h2>
+                <p class="bento-text">
+                    <strong>特點：</strong> 編碼器和解碼器包含<strong class="highlight-tech">多個隱藏層</strong>。
+                </p>
+                <h3 class="bento-subtitle mt-4">優勢 <span class="text-sm font-normal text-slate-500">Advantages</span></h3>
+                <ul class="bento-list bento-text">
+                    <li>能學習到<strong class="highlight-tech">更複雜的非線性函數</strong>。</li>
+                    <li>用<strong class="highlight-tech">更少參數</strong>逼近複雜目標。</li>
+                    <li>能夠學習<strong class="highlight-tech">層次化特徵</strong>。</li>
+                    <li>可以<strong class="highlight-tech">更有效地將數據壓縮到低維空間</strong>。</li>
+                    <li>潛在減少訓練數據量和時間，將複雜映射分解為多層可能更容易優化。</li>
+                </ul>
+                 <p class="bento-text mt-2">
+                    <strong>訓練 (Training)：</strong> 通常採用<strong class="highlight-tech">逐層預訓練</strong>後進行微調的方式。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-search-dollar icon-large"></i>
+                <h3 class="bento-subtitle">預測稀疏分解 (PSD) <span class="text-sm font-normal text-slate-500">Predictive Sparse Decomposition</span></h3>
+                <p class="bento-text">
+                    <strong>特點：</strong> 結合了<strong class="highlight-tech">稀疏編碼</strong>和<strong class="highlight-tech">自編碼器</strong>的思想。不僅尋找稀疏表示，也學習一個編碼器來<strong class="highlight-tech">直接預測</strong>這個稀疏表示。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>損失函數：</strong> 包含重構誤差項 ($||x - g(h)||^2$)、稀疏懲罰項 ($\lambda||h||_1$)、以及預測誤差項 ($\gamma||h - f(x)||^2$)。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-compress icon-large"></i>
+                <h3 class="bento-subtitle">收縮自編碼器 <span class="text-sm font-normal text-slate-500">Contractive AE</span></h3>
+                <p class="bento-text">
+                    <strong>機制：</strong> 通過<strong class="highlight-tech">懲罰編碼函數對輸入的敏感度</strong> (即導數的大小) 來實現。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>目標：</strong> 學習能夠捕捉數據本質結構，同時<strong class="highlight-tech">對無關擾動不敏感</strong>的特徵。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-link icon-large"></i>
+                <h2 class="bento-title">與理論概念的連結 <span class="text-base font-normal text-slate-500">Theoretical Connections</span></h2>
+                <h3 class="bento-subtitle">數據流形假設 <span class="text-sm font-normal text-slate-500">Data Manifold Hypothesis</span></h3>
+                <p class="bento-text">
+                    高維數據點實際上集中在一個嵌入在高維空間中的<strong class="highlight-tech">低維光滑子空間 (流形)</strong> 上或其附近。自編碼器試圖<strong class="highlight-tech">學習這個低維流形的結構</strong>。DAE 通過學習將損壞點拉回流形，間接學習了流形的局部幾何結構。
+                </p>
+                <h3 class="bento-subtitle mt-4">與機率模型的關係 <span class="text-sm font-normal text-slate-500">Relation to Probabilistic Models</span></h3>
+                <p class="bento-text">
+                    確定性自編碼器可視為<strong class="highlight-tech">隨機模型的一種特殊或退化情況</strong>。確定性解碼器 $r=g(h)$ 可解釋為一個隨機解碼器 $p_{\text{decoder}}(x|h)$，其機率質量完全集中在點 $g(h)$ 上。最小化重構誤差可解釋為<strong class="highlight-tech">最大化條件對數概似</strong>。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-lightbulb icon-large"></i>
+                <h2 class="bento-title-large">實際應用與實務考量 <span class="text-lg font-normal text-slate-500">Applications & Practicalities</span></h2>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle">主要用途 <span class="text-sm font-normal text-slate-500">Main Uses</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong class="highlight-tech">降維與可視化</strong> (如 MNIST)</li>
+                    <li><strong class="highlight-tech">信息檢索</strong> (語義哈希)</li>
+                    <li>異常檢測</li>
+                    <li>生成模型 (VAE 核心)</li>
+                    <li>特徵學習 (預訓練)</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                 <h3 class="bento-subtitle">實際應用案例 (音頻來源) <span class="text-sm font-normal text-slate-500">Example Use Cases (from audio)</span></h3>
+                 <p class="bento-text">雖然以下案例非特指自編碼器，但體現了機器學習應用中的考量：</p>
+                <ul class="bento-list bento-text">
+                    <li><strong>APP 推送通知點擊預測：</strong> 利用用戶行為和設備特徵預測點擊率，以減少打擾、提高轉換率。</li>
+                    <li><strong>二進制文件病毒檢測：</strong> 將二進制文件 (如 APK) 轉換為圖像，利用 CNN (如 InceptionV3) 進行分類檢測，有潛力識別新變種病毒。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <h3 class="bento-subtitle">實務部署考量 (音頻來源) <span class="text-sm font-normal text-slate-500">Deployment Considerations (from audio)</span></h3>
+                <div class="grid md:grid-cols-2 gap-4 mt-2">
+                    <p class="bento-text text-sm"><strong class="highlight-tech">模型大小：</strong> 影響部署，尤其在行動裝置或需快速響應的後端服務。</p>
+                    <p class="bento-text text-sm"><strong class="highlight-tech">響應時間 (Latency)：</strong> 實際應用常需毫秒級預測，大型模型計算耗時。</p>
+                    <p class="bento-text text-sm"><strong class="highlight-tech">訓練資源：</strong> 大型模型需大量數據、計算資源 (GPU) 和時間。</p>
+                    <p class="bento-text text-sm"><strong class="highlight-tech">效果與大小權衡：</strong> 有時為縮小模型犧牲微小精度以符部署需求。</p>
+                    <p class="bento-text text-sm"><strong class="highlight-tech">數據特性：</strong> 需根據數據特性選擇合適模型，Random Forest 等在某些結構化數據上可能更優。</p>
+                    <p class="bento-text text-sm"><strong class="highlight-tech">學術界與業界差異：</strong> 業界需考量部署可行性、成本、效率和商業目標。</p>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
