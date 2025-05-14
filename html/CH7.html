@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度學習正則化技術匯整 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside; /* Changed to inside for better alignment with bento style */
+            padding-left: 0.5rem; /* Adjust if needed */
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem; /* Increased spacing */
+            padding-left: 1rem; /* Indent list items */
+            position: relative;
+        }
+        .bento-list li::before { /* Custom bullet points */
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em; /* Adjust vertical alignment */
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        th, td {
+            border: 1px solid #e2e8f0; /* Tailwind gray-300 */
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.9rem;
+        }
+        th {
+            background-color: #f8f9fa; /* Light gray background for headers */
+            font-weight: 600;
+        }
+        .table-container {
+            overflow-x: auto; /* Allows table to be scrollable on small screens */
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Regularization for Deep Learning @ Deep Learning Book Chapter 7</strong>
+                </p>
+                <p><em>2017/02/10</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=gSymqOhKW8o" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Regularization Techniques in Deep Learning</a>
+                    <span class="text-xs text-slate-500">(Covers concepts like L1/L2, Dropout, Data Augmentation, Early Stopping, etc., based on the book chapter.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                深度學習正則化技術匯整
+            </h1>
+            <p class="text-xl text-slate-600">
+                一份關於深度神經網路模型正則化方法的全面概述
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-bullseye icon-large"></i>
+                <h2 class="bento-title-large">正則化的基本含義與目標 <span class="text-lg font-normal text-slate-500">Fundamentals of Regularization</span></h2>
+                <p class="bento-text">
+                    <strong>定義與目標 (Definition & Goals)：</strong> 正則化是指對學習演算法的一系列修改，其主要目標是<strong class="highlight-tech">減少模型的泛化誤差</strong>（即在未見過的新資料上的誤差），而不是僅僅降低訓練誤差。它通常透過向模型引入額外的約束或懲罰，以防止模型過度擬合訓練資料。
+                </p>
+                <p class="bento-text mt-4">
+                    <strong>偏差與方差的權衡 (Bias-Variance Trade-off)：</strong> 一個有效的正則化通常被認為是一種在模型的<strong class="highlight-tech">偏差 (bias)</strong> 和<strong class="highlight-tech">方差 (variance)</strong> 之間的有利「交易」。
+                </p>
+                <ul class="bento-list bento-text mt-2">
+                    <li><strong>偏差 (Bias)：</strong> 指模型的預測值與真實值之間的系統性差異，通常源於模型的簡化假設。</li>
+                    <li><strong>方差 (Variance)：</strong> 指模型在不同訓練資料集上學習到的函數的變異程度，通常源於模型對訓練數據中噪聲的過度敏感。</li>
+                </ul>
+                <p class="bento-text mt-2">
+                    正則化通常會<strong>增加模型的偏差</strong>（因為它限制了模型的靈活性），但其主要目的是<strong>顯著減少模型的方差</strong>（使其對訓練數據的微小變化不那麼敏感，從而提高泛化能力）。一個有利的交易意味著方差的減少程度遠大於偏差的增加程度，從而導致整體泛化誤差的降低。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-sitemap icon-large"></i>
+                <h2 class="bento-title">常見的正則化策略類型 <span class="text-base font-normal text-slate-500">Types of Regularization Strategies</span></h2>
+                <p class="bento-text">正則化策略通常可以歸納為幾種主要方式：</p>
+                <div class="grid md:grid-cols-2 gap-4 mt-4">
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-sliders-h mr-2"></i>添加參數約束 <span class="text-xs font-normal text-slate-500">Parameter Constraints</span></h3>
+                        <p class="bento-text text-sm">對模型的參數施加額外的限制（例如，限制參數的取值範圍或範數）。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-crosshairs mr-2"></i>修改目標函數 <span class="text-xs font-normal text-slate-500">Modifying Objective Function</span></h3>
+                        <p class="bento-text text-sm">在原始的目標函數中添加一個額外的懲罰項（正則化項）。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-folder-plus mr-2"></i>增加數據集 <span class="text-xs font-normal text-slate-500">Dataset Augmentation</span></h3>
+                        <p class="bento-text text-sm">透過數據增強等方式增加訓練數據的多樣性。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-cubes mr-2"></i>模型集成 <span class="text-xs font-normal text-slate-500">Model Ensembling</span></h3>
+                        <p class="bento-text text-sm">訓練多個模型並將它們的預測結果結合起來。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-stop-circle mr-2"></i>修改優化過程 <span class="text-xs font-normal text-slate-500">Modifying Optimization</span></h3>
+                        <p class="bento-text text-sm">例如**提前終止 (early stopping)**。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-volume-up mr-2"></i>向模型中注入噪聲 <span class="text-xs font-normal text-slate-500">Noise Robustness</span></h3>
+                        <p class="bento-text text-sm">提高模型對擾動的魯棒性。</p>
+                    </div>
+                     <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-vector-square mr-2"></i>稀疏表示 <span class="text-xs font-normal text-slate-500">Sparse Representation</span></h3>
+                        <p class="bento-text text-sm">鼓勵模型參數或激活值稀疏。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-share-alt mr-2"></i>參數共享/多任務學習 <span class="text-xs font-normal text-slate-500">Parameter Sharing/Multitask Learning</span></h3>
+                        <p class="bento-text text-sm">讓多個任務共享參數以提高泛化。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-layer-group mr-2"></i>半監督學習 <span class="text-xs font-normal text-slate-500">Semi-supervised Learning</span></h3>
+                        <p class="bento-text text-sm">利用無標註數據輔助學習。</p>
+                    </div>
+                    <div class="p-3 rounded-lg bg-slate-50">
+                        <h3 class="bento-subtitle text-sm"><i class="fas fa-random mr-2"></i>Dropout</h3>
+                        <p class="bento-text text-sm">訓練時隨機丟棄神經元。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-weight-hanging icon-large"></i>
+                <h2 class="bento-title">參數范數懲罰 <span class="text-base font-normal text-slate-500">Parameter Norm Penalties</span></h2>
+                <p class="bento-text">
+                    <strong>基本概念 (Basic Concept)：</strong> 透過向目標函數 $J$ 添加一個參數范數懲罰 $\Omega(\theta)$ 來限制模型的學習能力。正則化後的目標函數 $\tilde{J}$ 為：$\tilde{J}(\theta; X, y) = J(\theta; X, y) + \alpha\Omega(\theta)$，其中 $\alpha \ge 0$ 是權衡懲罰項和標準目標函數相對貢獻的超參數。$\alpha$ 越大，正則化懲罰越大。
+                </p>
+                 <p class="bento-text mt-2">
+                    <strong>懲罰對象 (Penalty Target)：</strong> 參數范數懲罰通常<strong class="highlight-tech">只對權重 w 進行懲罰，而不對偏置 b 進行懲罰</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>作為約束優化 (Constrained Optimization)：</strong> 向目標函數添加參數范數懲罰在數學上可被視為在某個范數约束下最小化原始目標函數的拉格朗日乘子形式。
+                </p>
+
+                <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <div class="bento-box p-6 ring-1 ring-slate-200">
+                        <h3 class="bento-subtitle"><i class="fas fa-vector-square mr-2"></i>L² 參數正則化 (權重衰減) <span class="text-sm font-normal text-slate-500">L² Regularization (Weight Decay)</span></h3>
+                        <p class="bento-text">
+                            <strong>正則化項 (Term)：</strong> $\Omega(w) = \frac{1}{2} ||w||_2^2 = \frac{1}{2} \sum_i w_i^2$。
+                        </p>
+                        <p class="bento-text mt-2">
+                            <strong>影響權重 (Effect on Weights)：</strong> 使權重在每次更新時「衰減」，傾向於使權重值變小、更接近零，但<strong class="highlight-tech">通常不會使其恰好為零</strong>。
+                        </p>
+                        <p class="bento-text mt-2">
+                            <strong>貝葉斯角度 (Bayesian View)：</strong> 等價於對權重引入一個<strong class="highlight-tech">高斯先驗 (Gaussian prior)</strong>。
+                        </p>
+                    </div>
+
+                    <div class="bento-box p-6 ring-1 ring-slate-200">
+                        <h3 class="bento-subtitle"><i class="fas fa-vector-square mr-2"></i>L¹ 參數正則化 <span class="text-sm font-normal text-slate-500">L¹ Regularization</span></h3>
+                        <p class="bento-text">
+                            <strong>正則化項 (Term)：</strong> $\Omega(w) = ||w||_1 = \sum_i |w_i|$。
+                        </p>
+                        <p class="bento-text mt-2">
+                            <strong>影響權重 (Effect on Weights)：</strong> L¹ 會使<strong class="highlight-tech">許多權重恰好變為零</strong>。
+                        </p>
+                        <p class="bento-text mt-2">
+                            <strong>稀疏性 (Sparsity)：</strong> 能夠產生稀疏解，可用於<strong class="highlight-tech">特徵選擇 (feature selection)</strong>。
+                        </p>
+                        <p class="bento-text mt-2">
+                            <strong>貝葉斯角度 (Bayesian View)：</strong> 等價於對權重引入一個<strong class="highlight-tech">拉普拉斯先驗 (Laplacian prior)</strong>。
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mt-8 table-container">
+                     <h3 class="bento-subtitle mb-2"><i class="fas fa-exchange-alt mr-2"></i>L¹ 與 L² 的比較 <span class="text-sm font-normal text-slate-500">L¹ vs. L² Comparison</span></h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特性 (Feature)</th>
+                                <th>L¹ 正則化 (Lasso)</th>
+                                <th>L² 正則化 (Ridge / 權重衰減)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>正則化項 (Term)</td>
+                                <td>權重絕對值之和 $\sum|w_i|$</td>
+                                <td>權重平方和的一半 $\frac{1}{2}\sum w_i^2$</td>
+                            </tr>
+                            <tr>
+                                <td>對權重的影響 (Effect on Weights)</td>
+                                <td>傾向於使許多權重變為零</td>
+                                <td>傾向於使權重變小但不為零</td>
+                            </tr>
+                            <tr>
+                                <td>解的特性 (Solution Property)</td>
+                                <td><strong>稀疏解 (Sparse Solution)</strong></td>
+                                <td><strong>非稀疏解 (Non-sparse Solution)</strong></td>
+                            </tr>
+                            <tr>
+                                <td>特徵選擇能力 (Feature Selection)</td>
+                                <td>強 (因為能使權重為零)</td>
+                                <td>無特徵選擇能力</td>
+                            </tr>
+                            <tr>
+                                <td>與先驗的關聯 (Bayesian Prior)</td>
+                                <td>拉普拉斯先驗 (Laplacian Prior)</td>
+                                <td>高斯先驗 (Gaussian Prior)</td>
+                            </tr>
+                            <tr>
+                                <td>幾何解釋 (Geometric View)</td>
+                                <td>約束區域為菱形/多邊形 (2D)</td>
+                                <td>約束區域為圓形 (2D)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                 <p class="bento-text mt-4">選擇使用 L¹ 或 L² 正則化通常取決於具體問題和數據的特性。如果認為許多特徵是不相關的且希望模型更稀疏，L¹ 可能更適合；如果認為所有特徵都可能對結果有貢獻，L² 可能更適合。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-images icon-large"></i>
+                <h2 class="bento-title">數據集增強 <span class="text-base font-normal text-slate-500">Dataset Augmentation</span></h2>
+                <p class="bento-text">
+                    <strong>定義與目的 (Definition & Purpose)：</strong> 對現有訓練數據應用<strong class="highlight-tech">保持標籤不變 (label preservation)</strong> 的隨機變換，人工生成新樣本。主要目的是<strong>增加訓練數據的多樣性和數量</strong>，<strong>提高模型的泛化能力和魯棒性</strong>，並<strong>減少過度擬合</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>重要原則 (Key Principle)：</strong> <strong class="highlight-tech">保持標籤不變性</strong>是關鍵原則。變換不能改變樣本的真實類別標籤。
+                </p>
+                <h3 class="bento-subtitle mt-4">圖像領域常見方法 <span class="text-sm font-normal text-slate-500">Common Image Augmentation Techniques</span></h3>
+                <ul class="bento-list bento-text">
+                    <li>幾何變換 (Geometric): 平移 (translation), 旋轉 (rotation), 縮放 (scaling), 裁剪 (cropping), 翻轉 (flipping).</li>
+                    <li>顏色空間變換 (Color Space): 亮度 (brightness), 對比度 (contrast), 飽和度 (saturation).</li>
+                    <li>添加噪聲 (Adding Noise).</li>
+                </ul>
+                <p class="bento-text mt-2">例如，水平翻轉對一般物體識別（如貓 vs. 狗）是合適的，但對字符識別（如 "b" 和 "d"）則不合適。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-volume-mute icon-large"></i>
+                <h2 class="bento-title">噪聲魯棒性 <span class="text-base font-normal text-slate-500">Noise Robustness</span></h2>
+                <p class="bento-text">
+                    <strong>核心思想 (Core Idea)：</strong> 向模型中注入噪聲可以提高其魯棒性，作為一種正則化手段。這有助於<strong class="highlight-tech">防止過擬合</strong>、<strong class="highlight-tech">平滑損失景觀</strong>，並提高對真實世界噪聲的適應性。
+                </p>
+                <h3 class="bento-subtitle mt-4">實現方式 <span class="text-sm font-normal text-slate-500">Implementations</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>向權重注入噪聲 (Noise in Weights)：</strong> 等價於權重具有高斯先驗。</li>
+                    <li><strong>向輸出注入噪聲 / 標籤平滑 (Noise in Outputs / Label Smoothing)：</strong> (Szegedy et al., 2015) 將目標標籤稍微「平滑」，防止模型過於自信。例如，正確類別目標值 1-ϵ，其他為 ϵ/(k-1)。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-compress-arrows-alt icon-large"></i>
+                <h2 class="bento-title">稀疏表示 <span class="text-base font-normal text-slate-500">Sparse Representation</span></h2>
+                <p class="bento-text">
+                    <strong>定義 (Definition)：</strong> 數據表示（如隱藏層激活值）或模型參數（權重）中大部分元素為零或接近零。
+                </p>
+                <h3 class="bento-subtitle mt-4">正則化實現 <span class="text-sm font-normal text-slate-500">Regularization Methods</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>懲罰表示的激活值 (Penalizing Activations)：</strong> 在損失函數中加入激活值的 L1 範數 $\alpha||h||_1$。</li>
+                    <li><strong>懲罰模型的權重 (Penalizing Weights)：</strong> 使用 L1 權重衰減 $\alpha||w||_1$。</li>
+                </ul>
+                 <p class="bento-text mt-2">
+                    <strong>潛在好處 (Benefits)：</strong> <strong class="highlight-tech">特徵選擇</strong>, <strong class="highlight-tech">提高可解釋性</strong>, 計算效率, <strong class="highlight-tech">改善泛化</strong>。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-braille icon-large" style="transform: rotate(90deg);"></i> <h2 class="bento-title-large">Dropout</h2>
+                <p class="bento-text">
+                    <strong>定義 (Definition)：</strong> 一種非常有效且被廣泛使用的針對神經網路的正則化技術。
+                </p>
+                <h3 class="bento-subtitle mt-4">工作原理 (訓練期間) <span class="text-sm font-normal text-slate-500">Mechanism (Training)</span></h3>
+                <p class="bento-text">
+                    在每次前向傳播時，對於網路的每個隱藏單元（有時包括輸入單元），以一個預設機率 p（例如 0.5）將其隨機地「丟棄」(drop out)，即暫時將其輸出置為零。每次訓練一個小批量數據時，都會隨機生成一個新的「丟棄掩碼 (dropout mask)」。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong class="highlight-tech">Inverted Dropout：</strong> 在訓練時將未被丟棄的單元的激活值除以保留機率 (1-p)，以保持激活值的期望一致。
+                </p>
+
+                <h3 class="bento-subtitle mt-4">工作原理 (測試期間) <span class="text-sm font-normal text-slate-500">Mechanism (Testing)</span></h3>
+                <p class="bento-text">
+                    <strong>通常不進行 Dropout</strong>，即所有的神經單元都被保留並參與計算。由於訓練時使用了 Inverted Dropout，測試時<strong class="highlight-tech">不需要對權重進行額外的縮放</strong>。
+                </p>
+                <h3 class="bento-subtitle mt-4">正則化作用 <span class="text-sm font-normal text-slate-500">Regularization Effect</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>防止特征之間的過度協同適應 (Prevents Co-adaptation)：</strong> 模型不能過度依賴於任何少數幾個特定的特征，而是被迫學習更魯棒、更分散的特征表示。</li>
+                    <li><strong>近似於訓練大量共享權重的「瘦」網路的集成 (Ensemble Approximation)：</strong> 每次應用 Dropout 都相當於從原始網路中採樣出一個不同的子網路。整個訓練過程可以被看作是在訓練這些大量不同的子網路的集成。這是一種計算上非常高效的 Bagging 近似。</li>
+                </ul>
+            </div>
+
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-adjust icon-large"></i> <h2 class="bento-title">半監督學習 <span class="text-base font-normal text-slate-500">Semi-supervised Learning</span></h2>
+                <p class="bento-text">
+                    <strong>定義 (Definition)：</strong> 一種機器學習範式，它在訓練時同時使用<strong class="highlight-tech">少量有標註的數據</strong>和<strong class="highlight-tech">大量無標註的數據</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>作為正則化 (As Regularization)：</strong> 無標註數據攜帶了關於輸入數據 $x$ 的分佈 $P(x)$ 的有用信息。利用這些信息學習 $P(x)$ 的結構，可以幫助改進對 $P(y|x)$ 的學習，相當於利用數據分佈的結構信息來<strong class="highlight-tech">約束模型</strong>，提高泛化能力。
+                </p>
+            </div>
+
+             <div class="bento-box col-span-lg-2">
+                <i class="fas fa-tasks icon-large"></i>
+                <h2 class="bento-title">多任務學習 <span class="text-base font-normal text-slate-500">Multitask Learning</span></h2>
+                <p class="bento-text">
+                    <strong>定義 (Definition)：</strong> 一種機器學習方法，它通過<strong class="highlight-tech">同時學習多個相關的任務</strong>，並讓這些任務<strong class="highlight-tech">共享模型的一部分參數或表示</strong>，來提高每個單獨任務的學習性能和泛化能力。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>核心思想 (Core Idea)：</strong> 如果多個任務之間存在相關性，同時學習可以讓模型從所有任務的數據中學習到<strong class="highlight-tech">更通用、更魯棒的表示</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>參數共享 (Parameter Sharing)：</strong> 常見的方式是<strong class="highlight-tech">硬參數共享 (hard parameter sharing)</strong>，底層的特征提取層在所有任務之間是共享的。共享參數增加了有效訓練數據量，迫使共享表示對多個任務都有用，本身就是一種<strong class="highlight-tech">隱式的正則化</strong>。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-hand-paper icon-large"></i>
+                <h2 class="bento-title">提前終止 <span class="text-base font-normal text-slate-500">Early Stopping</span></h2>
+                <p class="bento-text">
+                    <strong>定義 (Definition)：</strong> 一種在訓練迭代學習模型時使用的正則化技術和停止準則。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>工作原理 (Mechanism)：</strong> 在訓練過程中，同時在一個獨立的<strong class="highlight-tech">驗證集 (validation set)</strong> 上監控模型的性能。如果驗證集性能不再提升或開始惡化，就提前停止訓練。通常會保存並返回在驗證集上性能達到最佳時的模型參數。
+                </p>
+                <h3 class="bento-subtitle mt-4">正則化作用 <span class="text-sm font-normal text-slate-500">Regularization Effect</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>限制模型有效容量 (Limits Effective Capacity)：</strong> 限制模型學習過於複雜函數的能力。</li>
+                    <li><strong>選擇泛化能力好的模型 (Selects Generalizable Model)：</strong> 直接優化泛化能力。</li>
+                </ul>
+                <p class="bento-text mt-2">
+                    <strong>優點 (Pros)：</strong> 實現簡單、計算高效、自動確定訓練輪數、通常非常有效。
+                </p>
+                 <p class="bento-text mt-2">
+                    <strong>潛在缺點 (Cons)：</strong> 需要驗證集、對驗證集敏感、可能過早停止。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-balance-scale-left icon-large"></i>
+                <h2 class="bento-title">欠約束 / 欠定問題 <span class="text-base font-normal text-slate-500">Underconstrained / Underdetermined Problems</span></h2>
+                <p class="bento-text">
+                    <strong>定義 (Definition)：</strong> 訓練數據提供的信息不足以唯一確定模型的參數。通常發生在特徵數量遠大於樣本數量，或模型過於複雜/靈活時，存在無限多個解都能使得訓練誤差達到最小值。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>正則化的幫助 (How Regularization Helps)：</strong> 正則化通過向學習問題引入額外的約束或偏好，幫助解決欠約束問題。當存在多個能同樣好地擬合訓練數據的解時，正則化項會引導優化算法選擇其中一個滿足特定屬性（由正則化項定義）的解。例如 L² 選擇 L² 范數最小的解，L¹ 選擇 L¹ 范數最小（稀疏）的解。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-link icon-large"></i>
+                <h2 class="bento-title">其他相關概念 <span class="text-base font-normal text-slate-500">Other Concepts</span></h2>
+                <ul class="bento-list bento-text space-y-1">
+                    <li><strong>參數共享 (Parameter Sharing)：</strong> 如 CNN 的卷積核，減少參數，提高效率和泛化。</li>
+                    <li><strong>參數綁定 (Parameter Tying)：</strong> 更廣義，要求參數間滿足某種關係。</li>
+                    <li><strong>投影梯度下降 (Projected Gradient Descent)：</strong> 用於顯式約束，將參數投影回約束區域。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-tools icon-large"></i>
+                <h2 class="bento-title">實作考量與工具 <span class="text-base font-normal text-slate-500">Implementation & Tools</span></h2>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-cogs mr-2"></i>使用現有框架/套件 <span class="text-sm font-normal text-slate-500">Frameworks/Kits</span></h3>
+                        <p class="bento-text">許多深度學習框架提供內建正則化選項 (L1/L2, Dropout)。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-rocket mr-2"></i>使用預訓練模型 <span class="text-sm font-normal text-slate-500">Pre-trained Models</span></h3>
+                        <p class="bento-text">數據有限時，用大規模數據集預訓練模型 (如 ImageNet 上的 Inception-v3) 微調，有效利用通用特徵，避免過擬合。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-database mr-2"></i>數據處理 <span class="text-sm font-normal text-slate-500">Data Handling</span></h3>
+                        <p class="bento-text">處理大量圖片數據時，檔案I/O速度可能成為瓶頸。注意圖片格式、大小、通道數。</p>
+                    </div>
+                     <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-code mr-2"></i>實作細節 <span class="text-sm font-normal text-slate-500">Implementation Details</span></h3>
+                        <p class="bento-text">例如 Dropout 在訓練和測試時的處理方式不同。</p>
+                    </div>
+                    <div class="lg:col-span-2">
+                        <h3 class="bento-subtitle"><i class="fas fa-desktop mr-2"></i>開發工具 <span class="text-sm font-normal text-slate-500">Development Tools</span></h3>
+                        <p class="bento-text">工具如 Digit (Caffe) 提供圖形化介面，方便設定、監控訓練與驗證。</p>
+                    </div>
+                     <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-cog mr-2"></i>環境配置 <span class="text-sm font-normal text-slate-500">Environment Setup</span></h3>
+                        <p class="bento-text">安裝框架 (如 Caffe) 及依賴 (CUDA, cuDNN) 可能複雜，注意版本兼容性。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
