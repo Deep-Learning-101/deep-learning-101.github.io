@@ -97,9 +97,9 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 
 # Deep Learning 101 Meetup
 
-Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro Preview 05-06 所生成，處理好會陸續補上)
+Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro Preview 05-06 及 NotebookLM 所生成，處理好會陸續補上)
 
-| No. | 主題 (網頁) | 日期 (YT) | 講者 (文字摘要) | 語音摘要 | 心智圖 |
+| No. | 主題 (網頁) | 日期 (YT) | 講者 (摘要) | 語音 | 心智圖 |
 |-----|------|------|------|------|------|
 | 49  | On the Relationship among Convolution Attention and GNN | [2022/05/06](https://www.youtube.com/watch?v=2hpkTRrINgc) | 杜岳華 | - |
 | 48  | Model-Based Reinforcement Learning | [2021/07/16](https://www.youtube.com/watch?v=uKJFypVGJdo) | 翁崇恒 | - | - |
