@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>表示學習 (Representation Learning) - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Representation Learning @ Deep Learning Book Chapter 15</strong>
+                </p>
+                <p><em>2017/07/07</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=MA52s5dQaGY" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Demystifying Representation Learning</a>
+                    <span class="text-xs text-slate-500">(Covers core ideas, ideal properties, autoencoders, pre-training, and transfer learning.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                表示學習重點摘要
+            </h1>
+            <p class="text-xl text-slate-600">
+                探索數據的內在結構：從理想特徵到深度學習的遷移與應用
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-brain icon-large"></i>
+                <h2 class="bento-title-large">表示學習的核心思想與理想屬性 <span class="text-lg font-normal text-slate-500">Core Ideas & Ideal Properties</span></h2>
+                <p class="bento-text">
+                    <strong>表示學習 (Representation Learning)</strong> 的核心思想是學習數據的良好表示或特徵，以便更容易解決後續的學習任務，例如分類或回歸。一個好的表示能夠捕捉數據中的<strong class="highlight-tech">本質結構和有用信息</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    理想的表示應捕捉數據的<strong class="highlight-tech">潛在成因 (latent factors of variation)</strong>。基於潛在成因的表示具有更高的可解釋性、泛化能力和魯棒性。
+                </p>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-unlink mr-2"></i>解耦表示 <span class="text-sm font-normal text-slate-500">Disentangled Representation</span></h3>
+                        <p class="bento-text text-sm">單個潛在單元對數據變化的單個獨立生成因素敏感，具強可解釋性、易於控制操作，利於遷移和泛化。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-braille mr-2"></i>分佈式表示 <span class="text-sm font-normal text-slate-500">Distributed Representation</span></h3>
+                        <p class="bento-text text-sm">許多特徵同時激活，每個特徵可參與多個表示。優勢：指數級表示能力、更好泛化、更豐富相似性度量。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-ruler-combined mr-2"></i>平滑性/局部不變性 <span class="text-sm font-normal text-slate-500">Smoothness/Local Invariance</span></h3>
+                        <p class="bento-text text-sm">相似輸入映射到相似表示，或表示對不重要局部變化保持不變，助於魯棒性、泛化並簡化決策邊界。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-sitemap mr-2"></i>層次組織 <span class="text-sm font-normal text-slate-500">Hierarchical Organization</span></h3>
+                        <p class="bento-text text-sm">現實世界概念具層次結構，深度網路多層結構自然體現此點，從低層簡單特徵組合到高層抽象特徵。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-qrcode mr-2"></i>稀疏性 <span class="text-sm font-normal text-slate-500">Sparsity</span></h3>
+                        <p class="bento-text text-sm">表示中只有少數特徵活躍，助於提取本質信息、提高可解釋性、計算效率並作為正則化避免過擬合。</p>
+                    </div>
+                     <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-shapes mr-2"></i>流形學習 <span class="text-sm font-normal text-slate-500">Manifold Learning</span></h3>
+                        <p class="bento-text text-sm">高維數據位於低維非線性流形上，表示學習目標之一是找到並學習數據在流形上的表示以捕捉內在結構。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-cogs icon-large"></i>
+                <h2 class="bento-title-large">Autoencoder 及其變體 <span class="text-lg font-normal text-slate-500">Autoencoders & Variants</span></h2>
+                <p class="bento-text">
+                    <strong>Autoencoder</strong> 是一種神經網路，訓練目標是使輸出與輸入相似。它包含將輸入映射到隱藏層 (Code Layer) 的<strong class="highlight-tech">編碼器 (Encoder)</strong> 和將隱藏層映射回輸出的<strong class="highlight-tech">解碼器 (Decoder)</strong>。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-compress-arrows-alt mr-2"></i>欠完備自編碼器 <span class="text-sm font-normal text-slate-500">Undercomplete AE</span></h3>
+                <p class="bento-text">隱藏層維度比輸入維度小，強迫模型捕捉輸入數據的最顯著特徵。</p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-asterisk mr-2"></i>稀疏自編碼器 <span class="text-sm font-normal text-slate-500">Sparse AE</span></h3>
+                <p class="bento-text">在隱藏層輸出上施加稀疏性懲罰，鼓勵學習更多特徵。</p>
+            </div>
+             <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-magic mr-2"></i>去噪自編碼器 <span class="text-sm font-normal text-slate-500">Denoising AE</span></h3>
+                <p class="bento-text">訓練目標是從帶有雜訊的輸入中重構出原始的乾淨數據。</p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-compress mr-2"></i>收縮自編碼器 <span class="text-sm font-normal text-slate-500">Contractive AE</span></h3>
+                <p class="bento-text">懲罰表示對輸入微小變化的敏感度，助於學習數據分佈結構。</p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-layer-group mr-2"></i>深度 Autoencoder <span class="text-sm font-normal text-slate-500">Deep AE</span></h3>
+                <p class="bento-text">相較淺層具更高表示效率，可能需更少數據和訓練時間。</p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                 <h3 class="bento-subtitle"><i class="fas fa-search-dollar mr-2"></i>參數化稀疏編碼 (PSC) <span class="text-sm font-normal text-slate-500">Parametric Sparse Coding</span></h3>
+                <p class="bento-text">結合 Autoencoder 與稀疏編碼，預測輸出並推斷稀疏潛在表示。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-rocket icon-large"></i>
+                <h2 class="bento-title-large">深度學習中的預訓練與遷移學習 <span class="text-lg font-normal text-slate-500">Pre-training & Transfer Learning</span></h2>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <h3 class="bento-subtitle">貪心逐層無監督預訓練 <span class="text-sm font-normal text-slate-500">Greedy Layer-wise Unsupervised Pre-training</span></h3>
+                <p class="bento-text">
+                    一種早期訓練深度網路的方法，逐層獨立地無監督訓練網路，為後續監督學習（精調）提供更好參數初始值。有助於緩解梯度消失/爆炸等優化困難。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong class="highlight-tech">有效性因素：</strong> 標註數據稀少但有大量未標註數據時特別有效；可作正則化；助於解決優化困難；任務相關性重要。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1 row-span-lg-2">
+                <i class="fas fa-exchange-alt icon-large"></i>
+                <h3 class="bento-subtitle">遷移學習與精調 <span class="text-sm font-normal text-slate-500">Transfer Learning & Fine-tuning</span></h3>
+                <p class="bento-text">
+                    利用在大規模數據集上預訓練好的模型，作為特徵提取器或進行<strong class="highlight-tech">精調 (Fine-tuning)</strong> 應用於新任務。專家建議在實際應用中<strong class="highlight-tech">不要從零開始訓練極深的網路</strong> ("don't be a hero")。
+                </p>
+                <h4 class="font-semibold mt-3 mb-1 text-slate-700">精調策略 (Fine-tuning Strategies):</h4>
+                <ul class="bento-list bento-text text-sm">
+                    <li><strong>數據小且相似：</strong>作固定特徵提取器，只訓分類器。</li>
+                    <li><strong>數據大且相似：</strong>精調最後幾層。</li>
+                    <li><strong>數據小但不同：</strong>替換後幾層，考慮前層加SVM。</li>
+                    <li><strong>數據大但不同：</strong>精調較多層。</li>
+                </ul>
+                 <p class="bento-text text-sm mt-2">可對不同層使用不同學習率。</p>
+                <p class="bento-text text-sm mt-2"><strong class="highlight-tech">層次遷移 (Layer Transfer)：</strong>複製預訓練模型的部分層到新模型初始化。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-industry icon-large"></i>
+                <h2 class="bento-title-large">實際應用與挑戰 <span class="text-lg font-normal text-slate-500">Practical Applications & Challenges</span></h2>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-mobile-alt mr-2"></i>APP通知推薦 <span class="text-sm font-normal text-slate-500">App Notification Recommendation</span></h3>
+                <p class="bento-text">
+                利用多種用戶和設備特徵預測用戶點擊通知的可能性，提升點擊率及收益，減少打擾。
+                </p>
+            </div>
+             <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-shield-virus mr-2"></i>病毒檢測 <span class="text-sm font-normal text-slate-500">Virus Detection</span></h3>
+                <p class="bento-text">
+                將二進位數據轉換成圖像，使用 CNN (如 Inception V3) 分析，可能識別未知病毒，避免複雜特徵工程。
+                </p>
+            </div>
+
+             <div class="bento-box col-span-lg-1 row-span-lg-1">
+                <i class="fas fa-exclamation-triangle icon-large"></i>
+                <h3 class="bento-subtitle">部署挑戰 <span class="text-sm font-normal text-slate-500">Deployment Challenges</span></h3>
+                <ul class="bento-list bento-text text-sm">
+                    <li><strong class="highlight-tech">模型大小與延遲：</strong> 複雜模型檔案大，影響部署和響應速度。</li>
+                    <li><strong class="highlight-tech">計算資源與時間：</strong> 訓練需強大硬體和長時間。</li>
+                    <li><strong class="highlight-tech">實務與學術落差：</strong> 業界需考慮成本、效率、用戶體驗和收益。</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
