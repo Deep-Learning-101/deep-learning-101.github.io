@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>線性因子模型 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Linear Factor Models @ Deep Learning Book Chapter 13</strong>
+                </p>
+                <p><em>2017/08/11</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=zVENYs30Ny4&" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Understanding Linear Factor Models</a>
+                    <span class="text-xs text-slate-500">(Covers PCA, PPCA, Factor Analysis, ICA, Sparse Coding, and their applications.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                線性因子模型重點摘要
+            </h1>
+            <p class="text-xl text-slate-600">
+                探索數據背後的潛在結構：PCA、因子分析、ICA 與稀疏編碼
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-atom icon-large"></i>
+                <h2 class="bento-title-large">線性因子模型的基本概念 <span class="text-lg font-normal text-slate-500">Fundamentals of Linear Factor Models</span></h2>
+                <p class="bento-text">
+                    <strong>核心思想 (Core Idea)：</strong> 觀測數據 $x$ 假定是由一組潛在的、未觀察到的因子 $h$ 通過一個線性變換，再加上一些噪聲生成的。
+                </p>
+                <h3 class="bento-subtitle mt-4">生成過程 <span class="text-sm font-normal text-slate-500">Generative Process</span></h3>
+                <ol class="bento-list bento-text">
+                    <li>從一個先驗分布 $p(h)$ 中抽取潛在因子 $h$。此先驗分布通常假設是因子化的 ($p(h) = \Pi_i p(h_i)$)，表示潛在因子之間先驗獨立。</li>
+                    <li>觀測數據 $x$ 由潛在因子 $h$ 通過一個線性變換 $Wh + b$ 生成，並疊加上一些噪聲：$x = Wh + b + \text{noise}$。其中 $W$ 是因子載荷矩陣，$b$ 是偏置向量。</li>
+                </ol>
+                <p class="bento-text mt-2">
+                    <strong>潛在因子 $h$ 的先驗分布：</strong> 通常是因子化的，每個 $p(h_i)$ 通常是一個簡單的分布。常見選擇包括<strong class="highlight-tech">高斯分布</strong> (PPCA, FA) 或<strong class="highlight-tech">非高斯分布</strong> (稀疏編碼，如 Laplace)。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>噪聲項：</strong> 通常假設是獨立的（在 $x$ 的不同維度上），並且服從高斯分布，例如均值為零、協方差為對角矩陣的高斯噪聲。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>角色與應用 (Role & Applications)：</strong> 線性因子模型是許多更複雜機率模型的基礎，可用於<strong class="highlight-tech">降維</strong>、<strong class="highlight-tech">特徵學習</strong>、<strong class="highlight-tech">密度估計</strong>及作為混合模型的組件。它們被認為是「最簡單的生成模型和學習數據表示的最簡單模型」，主要捕捉數據的線性和二階統計特性。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-chart-pie icon-large"></i>
+                <h2 class="bento-title">機率 PCA (PPCA) 和因子分析 (FA) <span class="text-base font-normal text-slate-500">Probabilistic PCA & Factor Analysis</span></h2>
+                <p class="bento-text">
+                    <strong>共同點 (Commonalities)：</strong> 都是線性因子模型；潛在因子 $h$ 服從標準正態分布 $N(0, I)$；觀測數據 $x$ 在給定 $h$ 時服從高斯分布。
+                </p>
+                <h3 class="bento-subtitle mt-4">主要區別 (噪聲協方差矩陣) <span class="text-sm font-normal text-slate-500">Key Difference (Noise Covariance)</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>PPCA：</strong> 假設噪聲是 <strong class="highlight-tech">各向同性 (isotropic)</strong> 的高斯噪聲，協方差矩陣是 $\sigma^2I$。所有觀測維度上的噪聲方差相同。</li>
+                    <li><strong>FA：</strong> 假設噪聲協方差矩陣是 <strong class="highlight-tech">對角的 ($\psi = \text{diag}(\sigma^2)$)</strong>，但不一定是各向同性的。每個觀測維度 $x_i$ 可以有自己的噪聲方差 $\sigma_i^2$。</li>
+                </ul>
+                <p class="bento-text mt-2">
+                    <strong>參數學習 (Parameter Learning)：</strong> 通常使用 <strong class="highlight-tech">期望最大化 (EM) 算法</strong>。當 PPCA 的噪聲方差 $\sigma^2$ 趨近於零時，其結果應趨近於標準 PCA。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-sync-alt icon-large"></i>
+                <h2 class="bento-title">期望最大化 (EM) 算法 <span class="text-base font-normal text-slate-500">EM Algorithm</span></h2>
+                <p class="bento-text">
+                    EM 算法是一種廣泛用於學習帶有潛變量機率模型參數的迭代算法。
+                </p>
+                <h3 class="bento-subtitle mt-4">步驟 <span class="text-sm font-normal text-slate-500">Steps</span></h3>
+                <ol class="bento-list bento-text">
+                    <li><strong>E 步 (Expectation)：</strong> 在當前參數下，計算潛變量 $h$ 的後驗分布 $p(h|x, \theta)$。</li>
+                    <li><strong>M 步 (Maximization)：</strong> 更新模型參數 $\theta$ 以最大化數據的期望完整對數概似。</li>
+                </ol>
+                <p class="bento-text mt-2">EM 算法通過 E 和 M 步驟的交替進行，不斷提升觀測數據對數概似的下界，從而最大化概似。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-assistive-listening-systems icon-large"></i>
+                <h2 class="bento-title">獨立成分分析 (ICA) <span class="text-base font-normal text-slate-500">Independent Component Analysis</span></h2>
+                <p class="bento-text">
+                    <strong>核心思想 (Core Idea)：</strong> 將觀測到的多維信號分解為若干個統計上 <strong class="highlight-tech">獨立的非高斯</strong> 源信號的線性混合。觀測數據 $x$ 被建模為 $x = Wh$。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>關鍵假設 (Key Assumption)：</strong> 潛在因子 $h$ (即源信號) 是 <strong class="highlight-tech">非高斯</strong> 且 <strong class="highlight-tech">統計上相互獨立</strong> 的。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>非高斯性的必要性 (Necessity of Non-Gaussianity)：</strong> 根據中心極限定理，多個獨立隨機變量的和趨向於高斯分布。如果源信號是高斯的，它們的線性混合仍是高斯的，無法唯一地分離出原始源信號。只有當源信號是非高斯時，ICA 才得以通過最大化非高斯性來分離成分。
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle">學習準則 <span class="text-sm font-normal text-slate-500">Learning Criteria</span></h3>
+                        <p class="bento-text">通常涉及最大化觀測數據的概似，或等價地最大化某種衡量源信號獨立性的度量。常用度量包括：</p>
+                        <ul class="bento-list bento-text">
+                            <li><strong>最大化非高斯性：</strong> 如 <strong class="highlight-tech">負熵 (Negentropy)</strong> 和 <strong class="highlight-tech">峰度 (Kurtosis)</strong>。</li>
+                            <li><strong>最小化互信息 (Mutual Information)：</strong> 使估計出的源信號盡可能獨立。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">應用 <span class="text-sm font-normal text-slate-500">Applications</span></h3>
+                        <p class="bento-text">ICA 有廣泛應用，例如：</p>
+                        <ul class="bento-list bento-text">
+                            <li>腦磁圖 (MEG) 中的腦活動分離。</li>
+                            <li>圖像去噪（分離圖像與噪聲）。</li>
+                            <li>金融時間序列分析。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-tachometer-alt-slow icon-large"></i>
+                <h2 class="bento-title">慢特徵分析 (SFA) <span class="text-base font-normal text-slate-500">Slow Feature Analysis</span></h2>
+                <p class="bento-text">
+                    <strong>核心思想 (Core Idea)：</strong> <strong class="highlight-tech">慢度原則 (slowness principle)</strong>。場景中描述物體的重要特徵的變化通常比原始感官輸入（如像素值）的變化慢得多。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>目標 (Goal)：</strong> 從快速變化的時間信號中學習 <strong class="highlight-tech">時間上緩慢變化</strong> 的不變特徵。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>學習過程 (Learning)：</strong> 旨在找到輸入信號的線性變換 $f(x^{(t)})$，使得輸出的特徵 $f(x^{(t)})$ 隨時間變化盡可能緩慢。目標函數通常是最小化輸出特徵在相鄰時間步之間的平方差的期望。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>應用場景 (Applications)：</strong> 從視覺輸入中學習不變特徵、機器人導航、語音處理等。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-qrcode icon-large"></i> <h2 class="bento-title-large">稀疏編碼 (Sparse Coding) <span class="text-lg font-normal text-slate-500">Sparse Coding</span></h2>
+                <p class="bento-text">
+                    <strong>核心思想 (Core Idea)：</strong> 輸入數據 $x$ 可以由一個「超完備」的基向量（稱為 <strong class="highlight-tech">字典 W</strong>）的 <strong class="highlight-tech">稀疏線性組合</strong> 來表示 ($x \approx Wh$)。
+                </p>
+                <ul class="bento-list bento-text mt-2">
+                    <li><strong>超完備字典 (Overcomplete Dictionary)：</strong> 潛在編碼 $h$ 的維度通常 <strong class="highlight-tech">大於</strong> 觀測數據 $x$ 的維度。</li>
+                    <li><strong>稀疏性 (Sparsity)：</strong> 對於每個輸入 $x$，其對應的編碼 $h$ 中的 <strong class="highlight-tech">大部分元素都應該是零或接近零</strong>。</li>
+                    <li><strong>潛在編碼 $h$ 的先驗分布：</strong> 選擇能誘導稀疏性的 <strong class="highlight-tech">非高斯分布</strong>，例如 Laplace 分布或 Student-t 分布。</li>
+                </ul>
+                 <h3 class="bento-subtitle mt-4">參數學習 <span class="text-sm font-normal text-slate-500">Parameter Learning</span></h3>
+                <p class="bento-text">通常包含兩個交替步驟:</p>
+                <ol class="bento-list bento-text">
+                    <li><strong>推斷潛在編碼 h：</strong> 給定字典 $W$ 和輸入 $x$，找到最優的稀疏編碼 $h^*$。通常通過最小化 $||x - Wh||^2 + \lambda||h||_1$ (L1 範數懲罰)。</li>
+                    <li><strong>更新字典 W：</strong> 給定稀疏編碼 $h$，更新字典 $W$ 以更好地重構數據。</li>
+                </ol>
+                <p class="bento-text mt-2">
+                    <strong>學習到的字典基特性 (Learned Dictionary Bases)：</strong> 通常是 <strong class="highlight-tech">局部的、定向的、帶通的 (localized, oriented, and bandpass)</strong>，類似於邊緣檢測器或 Gabor 濾波器。當在自然圖像塊上訓練時，學習到的基向量非常像哺乳動物初级視覺皮層 (V1) 中簡單細胞的感受野，這提供了稀疏編碼在生物學上的證據支持。
+                </p>
+                <p class="bento-text mt-2">稀疏編碼可以在 Autoencoder 框架下實現，通過將重構誤差和稀疏懲罰項加入 Autoencoder 的目標函數中進行學習。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-shapes icon-large"></i>
+                <h2 class="bento-title">PCA 的流形解釋 <span class="text-base font-normal text-slate-500">Manifold Interpretation of PCA</span></h2>
+                <p class="bento-text">
+                    <strong>流形學習角度 (Manifold Learning Perspective)：</strong> 線性因子模型，包括 PCA，可以被理解為學習一個數據流形。PCA 可以被視為試圖找到一個能夠最好地（在均方誤差意義下）近似數據所在流形的 <strong class="highlight-tech">低維線性子空間（或仿射子空間）</strong>。
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle">編碼器與解碼器 <span class="text-sm font-normal text-slate-500">Encoder & Decoder</span></h3>
+                        <ul class="bento-list bento-text">
+                            <li><strong>編碼器 (Encoder)：</strong> 將原始數據點 $x$ 投影到主子空間上，得到低維表示 $h = W_d^T (x - \mu)$。</li>
+                            <li><strong>解碼器 (Decoder)：</strong> 從低維表示 $h$ 重構回原始數據空間中的點 $\hat{x} = W_d h + \mu$。</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">重構誤差 <span class="text-sm font-normal text-slate-500">Reconstruction Error</span></h3>
+                        <p class="bento-text">
+                            PCA 最小化重構誤差 $E[||x - \hat{x}||^2]$。這個均方重構誤差等於數據協方差矩陣中那些被丟棄的（對應較小特徵值的）特徵值之和 $\sum_{i=d+1}^D \lambda_i$。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-users icon-large"></i>
+                <h2 class="bento-title">主要人物 (提及或參與討論) <span class="text-base font-normal text-slate-500">Key Figures Mentioned</span></h2>
+                <p class="bento-text">
+                根據資料來源，以下人物在本次討論或報告中被提及：
+                </p>
+                <ul class="bento-list bento-text grid grid-cols-2 md:grid-cols-3 gap-x-4 text-sm">
+                    <li>林遠 (本次報告主講人)</li>
+                    <li>JON (MEG 分析專家)</li>
+                    <li>Bishop (EM 算法圖示著作引用)</li>
+                    <li>溫達 (Wendell) (稀疏編碼/Autoencoder 資料提供)</li>
+                    <li>Larry (EM 算法討論互動)</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
