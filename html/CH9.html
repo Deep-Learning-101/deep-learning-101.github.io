@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卷積神經網路 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+        .bento-box {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem;
+            line-height: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem;
+            line-height: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #0071e3;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: outside;
+            padding-left: 1.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.5rem;
+        }
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        @media (min-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) {
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p><a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a></p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3"><strong>Convolutional Neural Networks @ Deep Learning Book Chapter 9</strong></p>
+                <p><em>2017/04/14</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=51cO6Kv37p4" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Convolutional Networks </a>
+                    <span class="text-xs text-slate-500">(Explore CNN concepts, architectures, and applications)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                卷積神經網路
+            </h1>
+            <p class="text-xl text-slate-600">
+                一份關於卷積神經網路的整理匯總
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-brain icon-large"></i>
+                <h2 class="bento-title-large">概述 <span class="text-lg font-normal text-slate-500">Overview</span></h2>
+                <p class="bento-text">
+                    卷積神經網路 (CNN) 是一種專為處理網格狀數據（如圖像、時間序列）設計的深度學習模型，通過 <strong class="highlight-tech">卷積操作</strong>、<strong class="highlight-tech">池化操作</strong> 和 <strong class="highlight-tech">參數共享</strong> 高效提取特徵。本章探討 CNN 的核心概念、架構設計、訓練策略及神經科學啟發，介紹其在圖像識別、語音處理等領域的應用，並回顧其發展歷程與實務挑戰。
+                </p>
+                <p class="bento-text mt-4">
+                    CNN 的重要性在於其對圖像數據的適應性，特別是其 3D 結構（寬、高、深度）。它通過局部連接和權重共享大幅減少參數量，降低計算成本並增強泛化能力。挑戰包括高效利用 GPU、配置深度學習框架（如 TensorFlow、Caffe）以及滿足大量標註數據的需求。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-filter icon-large"></i>
+                <h2 class="bento-title">卷積操作 <span class="text-base font-normal text-slate-500">Convolution</span></h2>
+                <p class="bento-text">
+                    卷積是一種數學運算，將 <strong>濾波器</strong> 在輸入數據上滑動，計算點積以提取局部特徵。在機器學習中，通常使用 <strong class="highlight-tech">互相關</strong>，不翻轉濾波器。
+                </p>
+                <h3 class="bento-subtitle">核心特性 <span class="text-sm font-normal text-slate-500">Key Features</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>局部連接：</strong> 僅與輸入的局部區域交互，減少參數。</li>
+                    <li><strong>參數共享：</strong> 同一濾波器在不同位置重複使用，增強效率。</li>
+                    <li><strong>等變表示：</strong> 對平移保持一致性，適合圖像處理。</li>
+                </ul>
+                <p class="bento-text mt-4">
+                    <em>“Convolution involves sliding a filter over the input to compute feature maps.”</em> (Source: Deep Learning Book)
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-compress-arrows-alt icon-large"></i>
+                <h2 class="bento-title">池化操作 <span class="text-base font-normal text-slate-500">Pooling</span></h2>
+                <p class="bento-text">
+                    <strong>池化層</strong> 通過降採樣（如最大池化）減少空間尺寸，增強模型對微小平移的 <strong class="highlight-tech">不變性</strong>，並降低計算量。
+                </p>
+                <p class="bento-text mt-2">
+                    <em>“Pooling provides invariance to local translations.”</em> (Source: Deep Learning Book)
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-layer-group icon-large"></i>
+                <h2 class="bento-title">架構設計</h2>
+                <p class="bento-text">
+                    典型 CNN 包含 <strong>卷積層</strong>、<strong>激活函數</strong>（如 ReLU）、<strong>池化層</strong> 和 <strong>全連接層</strong>。小濾波器多層設計提升非線性與效率。
+                </p>
+                <p class="bento-text mt-2">
+                    <em>“Smaller filters with more layers enhance expressiveness.”</em> (Source: Deep Learning Book)
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-exclamation-triangle icon-large"></i>
+                <h2 class="bento-title">神經科學啟發 <span class="text-base font-normal text-slate-500">Neuroscience Inspiration</span></h2>
+                <p class="bento-text">
+                    CNN 設計受 <strong>視覺皮層</strong> 啟發，模仿 <strong>簡單細胞</strong>（局部特徵檢測）和 <strong>複雜細胞</strong>（平移不變性）。<strong class="highlight-tech">Gabor 濾波器</strong> 模擬簡單細胞感受野。
+                </p>
+                <div class="mt-4 space-y-6">
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-eye mr-2"></i>簡單細胞 <span class="text-sm font-normal text-slate-500">Simple Cells</span></h3>
+                        <p class="bento-text">檢測局部邊緣或圖案，對特定位置敏感。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-brain mr-2"></i>複雜細胞 <span class="text-sm font-normal text-slate-500">Complex Cells</span></h3>
+                        <p class="bento-text">對特徵位置變化不敏感，提供平移不變性。</p>
+                    </div>
+                </div>
+                <p class="bento-text mt-4">
+                    <em>“Simple cells detect edges; complex cells provide invariance.”</em> (Source: Deep Learning Book)
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-graduation-cap icon-large"></i>
+                <h2 class="bento-title">訓練策略 <span class="text-base font-normal text-slate-500">Training Strategies</span></h2>
+                <p class="bento-text">
+                    CNN 訓練包括以下策略：
+                </p>
+                <ul class="bento-list bento-text">
+                    <li><strong>隨機特徵：</strong> 使用隨機初始化的濾波器，成本低但性能有限。</li>
+                    <li><strong>無監督特徵：</strong> 利用無標註數據學習特徵，減少標註需求。</li>
+                    <li><strong>端到端訓練：</strong> 監督學習優化所有層，性能最佳但需大量數據。</li>
+                </ul>
+                <p class="bento-text mt-2">
+                    <em>“Unsupervised features leverage unlabeled data.”</em> (Source: Deep Learning Book)
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-history icon-large"></i>
+                <h2 class="bento-title">發展歷程</h2>
+                <ul class="bento-list bento-text">
+                    <li><strong>1980:</strong> Neocognitron 奠基。</li>
+                    <li><strong>1989:</strong> LeNet 應用反向傳播。</li>
+                    <li><strong>2012:</strong> AlexNet 突破 ImageNet。</li>
+                </ul>
+                <p class="bento-text mt-2">
+                    <em>“AlexNet marked the rise of deep learning.”</em> (Source: Deep Learning Book)
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-tools icon-large"></i>
+                <h2 class="bento-title">實務挑戰 <span class="text-base font-normal text-slate-500">Practical Challenges</span></h2>
+                <p class="bento-text">
+                    CNN 實務挑戰包括：
+                </p>
+                <ul class="bento-list bento-text">
+                    <li><strong>GPU 性能：</strong> 高效利用 GPU 加速訓練。</li>
+                    <li><strong>框架配置：</strong> 需熟悉 TensorFlow、Caffe 等框架。</li>
+                    <li><strong>數據需求：</strong> 大量標註數據，遷移學習可緩解。</li>
+                </ul>
+                <p class="bento-text mt-2">
+                    <em>“Data is critical for high-performing models.”</em> (Source: Deep Learning Book)
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-question-circle icon-large"></i>
+                <h2 class="bento-title">常見問答匯總 <span class="text-base font-normal text-slate-500">FAQ</span></h2>
+                <div class="space-y-6">
+                    <div>
+                        <p class="bento-text font-semibold">為何 CNN 適合圖像數據？</p>
+                        <p class="bento-text">因圖像為 3D 結構（寬、高、深度），CNN 透過 <strong class="highlight-tech">局部連接</strong> 與 <strong class="highlight-tech">權重共享</strong> 提取特徵，減少參數並增強泛化。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">物理角度的卷積是什麼？</p>
+                        <p class="bento-text">訊號透過通道傳輸，疊加延遲與衰減版本，形成特徵圖。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text font-semibold">數學角度的卷積是什麼？</p>
+                        <p class="bento-text">濾波器翻轉後滑動，與輸入計算點積，生成特徵映射。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-pen-alt icon-large"></i>
+                <h2 class="bento-title">研讀指南 - 測驗 <span class="text-base font-normal text-slate-500">Quiz</span></h2>
+                <p class="bento-text text-sm mb-3">請用 2-3 句話簡短回答：</p>
+                <ol class="bento-list bento-text text-sm space-y-2">
+                    <li>為何 CNN 適合圖像數據？</li>
+                    <li>卷積操作的核心特性是什麼？</li>
+                    <li>池化層的作用是什麼？</li>
+                    <li>什麼是參數共享？如何降低計算成本？</li>
+                    <li>CNN 架構中的激活函數有何作用？</li>
+                </ol>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-book-open icon-large"></i>
+                <h2 class="bento-title">研讀指南 - 詞彙 <span class="text-base font-normal text-slate-500">Glossary</span></h2>
+                <ul class="bento-list bento-text">
+                    <li><strong>卷積：</strong> 濾波器滑動計算點積，提取局部特徵。</li>
+                    <li><strong>感受野：</strong> 輸出單元對應的輸入區域。</li>
+                    <li><strong>池化：</strong> 降採樣，增強不變性。</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const { animate, inView } = motion;
+
+            const headerH1 = document.querySelector('header h1');
+            if (headerH1) {
+                animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+            }
+            const headerP = document.querySelector('header p');
+            if (headerP) {
+                animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+            }
+
+            const topInfoBox = document.querySelector('.top-info-box');
+            if (topInfoBox) {
+                topInfoBox.style.opacity = 0;
+                topInfoBox.style.transform = 'translateY(-30px)';
+                animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+            }
+
+            const bentoBoxes = document.querySelectorAll('.bento-box');
+            bentoBoxes.forEach((box, index) => {
+                box.style.opacity = 0;
+                box.style.transform = 'translateY(20px) scale(0.95)';
+                inView(box, () => {
+                    animate(box, { opacity: 1, y: 0, scale: 1 }, 
+                        { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+                }, { amount: 0.1 });
+            });
+        });
+    </script>
+</body>
+</html>
