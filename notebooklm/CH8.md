@@ -15,9 +15,10 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
   </a>
 </p>
 <p align="center">
-  <a href="https://deep-learning-101.github.io/">GitHub Pages</a> | 
-   <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> | 
+  <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> | 
   <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> | 
+  <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |  
+  <a href="https://deep-learning-101.github.io/">GitHub Pages</a> |   
   <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> | 
   <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
 </p>
