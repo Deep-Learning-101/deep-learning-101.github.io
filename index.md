@@ -13,19 +13,19 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
   Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
 </p>  
 <p align="center">
-  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ"">
     <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
   </a>
 </p>
 <p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101 target="_blank">YouTube</a> | 
-  <a href="https://www.facebook.com/groups/525579498272187/ target="_blank">台灣人工智慧社團 FB</a> | 
-  <a href="https://www.twman.org/ target="_blank">TonTon Huang Ph.D.</a> |   
-  <a href="http://DeepLearning101.TWMAN.ORG target="_blank">台灣人工智慧社團 網站</a> | 
-  <a href="https://huggingface.co/DeepLearning101 target="_blank">Hugging Face</a>
+  <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> | 
+  <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |   
+  <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> | 
+  <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
 </p>
 <p align="center">
-<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/DeepLearning101""><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 </p>
 
 ---
@@ -33,41 +33,41 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 <details>
 <summary>手把手帶你一起踩 AI 坑</summary>
 
-<h3><a href="https://blog.twman.org/p/deeplearning101.html target="_blank">手把手帶你一起踩 AI 坑</a>：<a href="https://www.twman.org/AI">https://www.twman.org/AI</a></h3>
+<h3><a href="https://blog.twman.org/p/deeplearning101.html">手把手帶你一起踩 AI 坑</a>：<a href="https://www.twman.org/AI">https://www.twman.org/AI</a></h3>
 
 <ul>
   <li>
-    <b><a href="https://blog.twman.org/2025/03/AIAgent.html target="_blank">避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案</a></b>：<a href="https://deep-learning-101.github.io/agent">探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
+    <b><a href="https://blog.twman.org/2025/03/AIAgent.html">避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案</a></b>：<a href="https://deep-learning-101.github.io/agent">探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2024/08/LLM.html target="_blank">白話文手把手帶你科普 GenAI</a></b>：<a href="https://deep-learning-101.github.io/GenAI">淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。</a>
+    <b><a href="https://blog.twman.org/2024/08/LLM.html">白話文手把手帶你科普 GenAI</a></b>：<a href="https://deep-learning-101.github.io/GenAI">淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2024/09/LLM.html target="_blank">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
+    <b><a href="https://blog.twman.org/2024/09/LLM.html">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2024/07/RAG.html target="_blank">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
+    <b><a href="https://blog.twman.org/2024/07/RAG.html">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2024/02/LLM.html target="_blank">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
+    <b><a href="https://blog.twman.org/2024/02/LLM.html">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2023/04/GPT.html target="_blank">什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。</a>
+    <b><a href="https://blog.twman.org/2023/04/GPT.html">什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2024/11/diffusion.html target="_blank">Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)</a></b>；<a href="https://deep-learning-101.github.io/diffusion">深入探討影像生成與分割技術的應用，強調硬體資源的重要性。</a>
+    <b><a href="https://blog.twman.org/2024/11/diffusion.html">Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)</a></b>；<a href="https://deep-learning-101.github.io/diffusion">深入探討影像生成與分割技術的應用，強調硬體資源的重要性。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2024/02/asr-tts.html target="_blank">ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策</a></b>：<a href="https://deep-learning-101.github.io/asr-tts">探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性。</a>
+    <b><a href="https://blog.twman.org/2024/02/asr-tts.html">ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策</a></b>：<a href="https://deep-learning-101.github.io/asr-tts">探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2021/04/NLP.html target="_blank">那些 NLP 踩的坑</a></b>：<a href="https://deep-learning-101.github.io/nlp">分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響。</a>
+    <b><a href="https://blog.twman.org/2021/04/NLP.html">那些 NLP 踩的坑</a></b>：<a href="https://deep-learning-101.github.io/nlp">分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2021/04/ASR.html target="_blank">那些語音處理踩的坑</a></b>：<a href="https://deep-learning-101.github.io/speech">分享語音處理領域的實務經驗，強調資料品質對模型效果的影響。</a>
+    <b><a href="https://blog.twman.org/2021/04/ASR.html">那些語音處理踩的坑</a></b>：<a href="https://deep-learning-101.github.io/speech">分享語音處理領域的實務經驗，強調資料品質對模型效果的影響。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2020/05/DeepLearning.html target="_blank">手把手學深度學習安裝環境</a></b>：<a href="https://deep-learning-101.github.io/101">詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗。</a>
+    <b><a href="https://blog.twman.org/2020/05/DeepLearning.html">手把手學深度學習安裝環境</a></b>：<a href="https://deep-learning-101.github.io/101">詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗。</a>
   </li>
 </ul>
 
@@ -79,16 +79,16 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 
 <table>
   <tr>
-    <td><a href="https://deep-learning-101.github.io/Large-Language-Model target="_blank">大語言模型</a></td>
-    <td><a href="https://deep-learning-101.github.io/Speech-Processing target="_blank">語音處理</a></td>
-    <td><a href="https://deep-learning-101.github.io/Natural-Language-Processing target="_blank">自然語言處理</a></td>
-    <td><a href="https://deep-learning-101.github.io//Computer-Vision target="_blank">電腦視覺</a></td>
+    <td><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型</a></td>
+    <td><a href="https://deep-learning-101.github.io/Speech-Processing">語音處理</a></td>
+    <td><a href="https://deep-learning-101.github.io/Natural-Language-Processing">自然語言處理</a></td>
+    <td><a href="https://deep-learning-101.github.io//Computer-Vision">電腦視覺</a></td>
   </tr>
   <tr>
-    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm target="_blank">Large Language Model</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper target="_blank">Speech Processing</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper target="_blank">Natural Language Processing, NLP</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper target="_blank">Computer Vision</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm">Large Language Model</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision</a></td>
   </tr>
 </table>
 
@@ -129,9 +129,9 @@ Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro P
 | 21  | Dynamic Routing Between Capsules | [2018/07/06](https://www.youtube.com/watch?v=MPzqoY0e_YM) | Jiero Ho |   |
 | 20  | VAE: A generative model for 2D anime character faces | [2018/06/08](https://www.youtube.com/watch?v=DF9GMPU8wPU) | Nat, Boris, Alice, Ian |   |
 | 19  | Towards Principled Methods for Training Generative Adversarial Networks | [2018/05/11](https://www.youtube.com/watch?v=7_lyjNljMf0) | Mark Chang |   |
-| 18  | [Deep Generative Models](https://deep-learning-101.github.io/html/CH20.html) @ [Deep Learning Book Chapter 20](https://deep-learning-101.github.io/GeminiAbstract/PDF20) | [2018/04/13](https://www.youtube.com/watch?v=oiDYD1qibBQ) | [文字摘要](https://deep-learning-101.github.io/notebooklm/CH20) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH20.mp3" type="audio/mpeg"></audio>   |
+| 18  | [Deep Generative Models](https://deep-learning-101.github.io/html/CH20.html) @ [Deep Learning Book Chapter 20](https://deep-learning-101.github.io/GeminiAbstract/PDF20) | [2018/04/13](https://www.youtube.com/watch?v=oiDYD1qibBQ) | [文字摘要](https://deep-learning-101.github.io/notebooklm/CH20) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH20.mp3" type="audio/mpeg"></audio> |
 | 17  | [Approximate Inference](https://deep-learning-101.github.io/html/CH19.html) @ [Deep Learning Book Chapter 19](https://deep-learning-101.github.io/GeminiAbstract/PDF19) | [2018/03/16](https://www.youtube.com/watch?v=YeCDY_wsojA) | [文字摘要](https://deep-learning-101.github.io/notebooklm/CH19)  | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH19.mp3" type="audio/mpeg"></audio> |
-| 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/html/CH18.html) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/GeminiAbstract/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | [何宗諭 (Jiero)](https://deep-learning-101.github.io/notebooklm/CH18) |   |
+| 15  | [Confronting the Partition Function](https://deep-learning-101.github.io/html/CH18.html) @ [Deep Learning Book Chapter 18](https://deep-learning-101.github.io/GeminiAbstract/PDF18) | [2018/01/12](https://www.youtube.com/watch?v=yw1JDopTuwo) | [何宗諭 (Jiero)](https://deep-learning-101.github.io/notebooklm/CH18) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH18.mp3" type="audio/mpeg"></audio> |
 | 14  | [Monte Carlo Methods](https://deep-learning-101.github.io/html/CH17.html) @ [Deep Learning Book Chapter 17](https://deep-learning-101.github.io/GeminiAbstract/PDF17) | [2017/12/15](https://www.youtube.com/watch?v=qef-XTUpDvE) | [Ian Wang](https://deep-learning-101.github.io/notebooklm/CH17)  | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH17.mp3" type="audio/mpeg"></audio> |
 | 12  | [Structured Probabilistic Models](https://deep-learning-101.github.io/html/CH16.html) @ [Deep Learning Book Chapter 16](https://deep-learning-101.github.io/GeminiAbstract/PDF16) | [2017/10/27](https://www.youtube.com/watch?v=n0rBS3sAqI0) | [文字摘要](https://deep-learning-101.github.io/notebooklm/CH16)  | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH16.mp3" type="audio/mpeg"></audio> |
 | 11  | [Autoencoders](https://deep-learning-101.github.io/html/CH14.html) @ [Deep Learning Book Chapter 14](https://deep-learning-101.github.io/GeminiAbstract/PDF14) | [2017/09/08](https://www.youtube.com/watch?v=5mrJmzzpPBs) | [Nat Lee](https://deep-learning-101.github.io/notebooklm/CH14) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH14.mp3" type="audio/mpeg"></audio> |
