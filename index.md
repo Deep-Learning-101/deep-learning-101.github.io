@@ -105,7 +105,7 @@ Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro P
 | 48  | Model-Based Reinforcement Learning | [2021/07/16](https://www.youtube.com/watch?v=uKJFypVGJdo) | 翁崇恒 |   |
 | 47  | 深度學習也可以學傅立葉轉換 | [2020/12/04](https://www.youtube.com/watch?v=1IVMJmVr2Pw) | 杜岳華 |   |
 | 45  | Modeling the Dynamics of SGD by Stochastic Differential Equation | [2020/09/11](https://www.youtube.com/watch?v=Vs9YQw5RO-w) | Mark Chang |   |
-| 44  | 神經網路的黑執事 | [2020/08/21](https://www.youtube.com/watch?v=gMaQTqZUW58) | Mark Liou |   |
+| 44  | [神經網路的黑執事](https://deep-learning-101.github.io/html/NO44.html) | [2020/08/21](https://www.youtube.com/watch?v=gMaQTqZUW58) | [Mark Liou](https://deep-learning-101.github.io/notebooklm/NO44) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/NO44.mp3" type="audio/mpeg"></audio> |
 | 43  | 幾何深度學習是在幾何什麼的？ | [2020/07/24](https://www.youtube.com/watch?v=fatrgy2lo0k) | 杜岳華 |   |
 | 42  | information in the weights | [2020/06/19](https://www.youtube.com/watch?v=Dz-7Jam_9C0) | Mark Chang |   |
 | 41  | NLP Landing & Machine Reading Comprehension | [2020/05/29](https://www.youtube.com/watch?v=aEntkDT3qdo) | Ian & Hsiang |   |
