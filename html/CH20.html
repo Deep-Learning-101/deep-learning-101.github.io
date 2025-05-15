@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度生成模型 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Deep Generative Models @ Deep Learning Book Chapter 20</strong>
+                </p>
+                <p><em>2018/04/13</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=oiDYD1qibBQ" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Insights into Deep Generative Models</a>
+                    <span class="text-xs text-slate-500">(Covers RBMs, DBNs, DBMs, VAEs, GMMNs, Autoregressive Models, and evaluation.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                深度生成模型
+            </h1>
+            <p class="text-xl text-slate-600">
+                探索 RBM、DBN、DBM、VAE、GMMN 與自回歸模型等核心技術
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-lightbulb icon-large"></i>
+                <h2 class="bento-title-large">總體目標與模型類型 <span class="text-lg font-normal text-slate-500">Overall Goals & Model Types</span></h2>
+                <p class="bento-text">
+                    深度生成模型的核心目標是<strong class="highlight-tech">表示多個變數的機率分佈</strong>。
+                </p>
+                <p class="bento-text mt-2">這些模型可大致分為兩類：</p>
+                <ul class="bento-list bento-text mt-2">
+                    <li><strong>基於能量的模型 (Energy-based Models, EBM)：</strong>如玻爾茲曼機、RBM、DBM。這些模型使用能量函數定義聯合機率分佈。</li>
+                    <li><strong>可微分生成網路 (Differentiable Generator Networks)：</strong>如 VAE 和 GMMN。這類模型通常將潛在變數通過一個可微分函數（通常是神經網路）映射到資料空間。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-atom icon-large"></i>
+                <h2 class="bento-title">受限玻爾茲曼機 (RBM) <span class="text-base font-normal text-slate-500">Restricted Boltzmann Machine</span></h2>
+                <p class="bento-text">
+                    RBM 是一種具有單個隱藏層的玻爾茲曼機，其特點是<strong class="highlight-tech">可見單元 (v) 和隱藏單元 (h) 之間有連接，但層內沒有連接</strong> (二分圖結構)。其機率分佈由能量函數定義，機率與能量的負指數成正比。
+                </p>
+                <h3 class="bento-subtitle mt-4">挑戰與優勢 <span class="text-sm font-normal text-slate-500">Challenges & Advantages</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>挑戰：</strong> RBM 的可見單元邊緣機率 $P(v)$ 和配分函數 $Z$ (歸一化常數) 是<strong class="highlight-tech">難解的 (intractable)</strong>。</li>
+                    <li><strong>優勢：</strong> 儘管 $P(v)$ 和 $Z$ 難解，RBM 的二分圖結構使得其<strong class="highlight-tech">條件分佈 $P(h|v)$ 和 $P(v|h)$ 可以分解為單元獨立的形式</strong>。這使得計算和<strong class="highlight-tech">塊吉布斯採樣 (Block Gibbs Sampling)</strong> 相對簡單且高效。</li>
+                </ul>
+                <h3 class="bento-subtitle mt-4">訓練 <span class="text-sm font-normal text-slate-500">Training</span></h3>
+                <p class="bento-text">
+                    通常使用基於 MCMC 採樣的近似最大概似方法，如<strong class="highlight-tech">對比散度 (CD)</strong> 和<strong class="highlight-tech">隨機最大概似 (SML / PCD)</strong>。訓練過程涉及最大化 log 概似，其梯度包含 Positive Phase (數據驅動) 和 Negative Phase (模型驅動)。Negative Phase 難以直接計算，需通過採樣近似。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1 row-span-lg-2">
+                <i class="fas fa-network-wired icon-large"></i>
+                <h2 class="bento-title">深度信念網路 (DBN) <span class="text-base font-normal text-slate-500">Deep Belief Network</span></h2>
+                <p class="bento-text">
+                    DBN 是最早成功應用的深度非卷積生成模型之一。
+                </p>
+                <h3 class="bento-subtitle mt-4">結構特點 <span class="text-sm font-normal text-slate-500">Structural Features</span></h3>
+                <p class="bento-text">
+                    是一個<strong class="highlight-tech">混合圖模型</strong>：頂部兩層之間的連接是無向的 (構成一個 RBM)；所有其他層之間的連接是有向的，箭頭指向最接近數據的可見層。層內沒有連接。
+                </p>
+                <h3 class="bento-subtitle mt-4">推斷與訓練 <span class="text-sm font-normal text-slate-500">Inference & Training</span></h3>
+                <p class="bento-text">
+                    DBN 中的精確推斷是難解的，原因包括有向層內的「解釋消除」效應以及頂部兩層無向連接的相互作用。
+                </p>
+                <p class="bento-text mt-2">
+                    標準訓練採用<strong class="highlight-tech">貪婪逐層預訓練</strong>：首先訓練一個 RBM 建模輸入，然後將其隱藏層激活作為下一層 RBM 的輸入，重複此過程。訓練好的 DBN 權重常用於初始化 MLP 參數進行判別性微調。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-layer-group icon-large"></i>
+                <h2 class="bento-title-large">深度玻爾茲曼機 (DBM) <span class="text-lg font-normal text-slate-500">Deep Boltzmann Machine</span></h2>
+                <p class="bento-text">
+                    DBM 是一種<strong class="highlight-tech">完全無向的深度生成模型</strong>，擁有多個潛變數層。每層內的單元與相鄰層單元條件獨立 (層內無連接)。
+                </p>
+                 <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle">採樣與推斷 <span class="text-sm font-normal text-slate-500">Sampling & Inference</span></h3>
+                        <p class="bento-text">DBM 的層可組織成二分圖，使得<strong class="highlight-tech">塊吉布斯採樣可以高效進行</strong>。然而，從模型生成樣本相對困難，需在所有層使用 MCMC。推斷 $P(h|v)$ 難解，但相較 DBN <strong class="highlight-tech">更容易使用變分近似</strong> (如平均場近似) 處理。平均場推斷允許 DBM 捕獲<strong class="highlight-tech">自頂向下的反饋交互影響</strong>。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">訓練挑戰與方法 <span class="text-sm font-normal text-slate-500">Training Challenges & Methods</span></h3>
+                        <p class="bento-text">面臨<strong class="highlight-tech">難解的配分函數</strong>和<strong class="highlight-tech">難解的後驗分佈</strong>雙重挑戰。參數學習通常通過最大化對數概似的變分下界，使用 SML。<strong class="highlight-tech">貪婪逐層預訓練</strong>是一種常見且有效的方法，RBM 參數在組合成 DBM 前需調整 (如權重除以2)。</p>
+                        <p class="bento-text mt-2"><strong>聯合訓練方法：</strong> 中心化 DBM (Centered DBM) 和多預測 DBM (MP-DBM) 提供了替代方案。</p>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-random icon-large"></i>
+                <h2 class="bento-title-large">可微分生成網路 <span class="text-lg font-normal text-slate-500">Differentiable Generator Networks</span></h2>
+                <p class="bento-text">這類模型不直接建模能量或可視變數上的複雜機率分佈，而是訓練一個可微分的生成器網路。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-vr-cardboard mr-2"></i>變分自動編碼器 (VAE) <span class="text-sm font-normal text-slate-500">Variational Autoencoder</span></h3>
+                <p class="bento-text">編碼器將輸入映射到潛在空間中一個<strong class="highlight-tech">分佈的參數</strong> (如高斯分佈的均值和標準差)。從此潛在分佈<strong class="highlight-tech">採樣</strong>一個潛在變數，解碼器將其映射回資料空間。</p>
+                <p class="bento-text mt-2"><strong class="highlight-tech">重參數化技巧 (Reparameterization Trick)</strong> 允許梯度通過採樣步驟反向傳播。</p>
+                <p class="bento-text mt-2">訓練目標是最大化<strong class="highlight-tech">證據下界 (ELBO)</strong>，包含重構項和正則化項。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                 <h3 class="bento-subtitle"><i class="fas fa-chart-bar mr-2"></i>生成矩匹配網路 (GMMN) <span class="text-sm font-normal text-slate-500">Generative Moment Matching Network</span></h3>
+                <p class="bento-text">訓練目標是使生成器產生的樣本的<strong class="highlight-tech">矩 (統計量)</strong> 與真實數據樣本的矩盡可能匹配。通過最小化<strong class="highlight-tech">最大平均偏差 (MMD)</strong> 代價函數實現。</p>
+                <p class="bento-text mt-2">與 GAN 和 VAE 不同：GMMN <strong class="highlight-tech">不需要判別器網路</strong>，也<strong class="highlight-tech">不需要編碼器/推斷網路</strong>。</p>
+                 <p class="bento-text mt-2">批量大小對 MMD 的準確估計至關重要。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-sort-numeric-down icon-large"></i>
+                 <h3 class="bento-subtitle">自回歸網路 <span class="text-sm font-normal text-slate-500">Autoregressive Networks</span></h3>
+                <p class="bento-text">這是有向機率模型，<strong class="highlight-tech">沒有潛在隨機變數</strong>。使用機率的鏈式法則分解聯合機率 $P(x) = \prod P(x_i | x_{<i})$。每個條件機率 $P(x_i | x_{<i})$ 由神經網路表示 (也稱 FVBN)。</p>
+                <p class="bento-text mt-2">優勢：避免維度災難，允許參數/特徵共享。NADE 是一種具體參數共享方案。RNADE 可擴展至實值數據。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-code-branch icon-large"></i>
+                <h2 class="bento-title">其他玻爾茲曼機變體 <span class="text-base font-normal text-slate-500">Other Boltzmann Machine Variants</span></h2>
+                <ul class="bento-list bento-text">
+                    <li><strong>實值數據上的玻爾茲曼機：</strong> 如 Gaussian-Bernoulli RBM (GB-RBM), Mean and Covariance RBM (mcRBM), Spike and Slab RBM (ssRBM)。</li>
+                    <li><strong>卷積玻爾茲曼機：</strong> 將卷積結構引入玻爾茲曼機，引入<strong class="highlight-tech">機率最大池化 (probabilistic max pooling)</strong>。</li>
+                    <li><strong>用於結構化或序列輸出的玻爾茲曼機：</strong> 如條件 RBM (CRBM) 和 RNN-RBM。</li>
+                    <li><strong>其他變體：</strong> 判別式 RBM, 高階玻爾茲曼機, 選通 (Gating) 機制。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-clipboard-check icon-large"></i>
+                <h2 class="bento-title">模型評估注意事項 <span class="text-base font-normal text-slate-500">Model Evaluation</span></h2>
+                <p class="bento-text">
+                    <strong>對數概似 (Log Likelihood) 比較：</strong> 在 MNIST 等數據集上需小心，數據處理方式會極大影響結果，不同處理方式下的值不可直接比較。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>視覺樣本檢查：</strong> 具有局限性。判斷主觀；難以發現<strong class="highlight-tech">模式崩潰 (Mode Collapse)</strong> 和<strong class="highlight-tech">過擬合</strong>；無法檢測低機率但重要的錯誤。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-flag-checkered icon-large"></i>
+                <h2 class="bento-title">總結 <span class="text-base font-normal text-slate-500">Conclusion</span></h2>
+                <p class="bento-text">
+                    本章介紹的多種深度生成模型架構 (包括玻爾茲曼機、DBN、DBM、VAE、GAN (雖然GAN在本文檔CH20.md中未詳細展開，但屬於此類模型範疇)、自回歸模型等) <strong class="highlight-tech">沒有一種是普適的最佳選擇</strong>。模型的選擇取決於具體的應用需求、數據特性和計算資源。
+                </p>
+            </div>
+
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
