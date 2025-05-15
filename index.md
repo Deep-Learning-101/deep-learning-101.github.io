@@ -18,11 +18,11 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
   </a>
 </p>
 <p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
-  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> | 
-  <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |
-  <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> | 
-  <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
 </p>
 <p align="center">
 <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
