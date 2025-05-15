@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>結構化機率模型 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Structured Probabilistic Models @ Deep Learning Book Chapter 16</strong>
+                </p>
+                <p><em>2017/10/27</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=n0rBS3sAqI0" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Exploring Structured Probabilistic Models</a>
+                    <span class="text-xs text-slate-500">(Covers graphical models, Bayesian networks, Markov networks, RBMs, and inference.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                結構化機率模型與圖模型
+            </h1>
+            <p class="text-xl text-slate-600">
+                深度學習中的依賴關係建模、推斷與挑戰
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-project-diagram icon-large"></i>
+                <h2 class="bento-title-large">核心概念與定義 <span class="text-lg font-normal text-slate-500">Core Concepts & Definitions</span></h2>
+                <p class="bento-text">
+                    <strong>結構化機率模型 (Structured Probabilistic Model)</strong>，也稱 <strong class="highlight-tech">圖模型 (Graphical Model)</strong>，其核心思想是使用圖 (graph) 來描述<strong class="highlight-tech">機率分佈中多個隨機變數之間的直接相互作用</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    圖中的<strong class="highlight-tech">節點代表隨機變數</strong>，而<strong class="highlight-tech">邊則表示這些變數之間的直接依賴或相互作用</strong>。圖模型之所以得名，是因為其結構是由圖來定義和可視化的。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-puzzle-piece icon-large"></i>
+                <h2 class="bento-title">非結構化建模的挑戰與結構化模型的優勢 <span class="text-base font-normal text-slate-500">Challenges & Advantages</span></h2>
+                <p class="bento-text">
+                    <strong>非結構化機率建模</strong>在處理高維數據時面臨嚴重的計算挑戰，即<strong class="highlight-tech">維度災難 (Curse of Dimensionality)</strong>。
+                </p>
+                <h3 class="bento-subtitle mt-4">維度災難體現 <span class="text-sm font-normal text-slate-500">Manifestations of Curse of Dimensionality</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>內存開銷巨大：</strong> 儲存完整的聯合機率分佈表需要指數級的記憶體。</li>
+                    <li><strong>統計效率低下：</strong> 參數數量龐大，需要指數級增長的訓練數據量。</li>
+                    <li><strong>運行時間成本高昂：</strong> 計算推斷任務和從分佈中採樣的計算量呈指數級增長。</li>
+                </ul>
+                <p class="bento-text mt-4">
+                    <strong>結構化機率模型</strong>通過顯式描述變數子集間（通常是稀疏的）相互作用，用較少參數對複雜依賴關係建模，顯著<strong class="highlight-tech">降低表示、學習和推斷的成本</strong>。其他優勢包括：允許<strong class="highlight-tech">融入先驗知識</strong>、提供<strong class="highlight-tech">模組化和可解釋性</strong>、為開發<strong class="highlight-tech">高效算法</strong>提供基礎。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-sitemap icon-large"></i>
+                <h2 class="bento-title-large">圖模型的種類與表示 <span class="text-lg font-normal text-slate-500">Types of Graphical Models</span></h2>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-long-arrow-alt-right icon-large"></i>
+                <h3 class="bento-subtitle">有向圖模型 (貝氏網路) <span class="text-sm font-normal text-slate-500">Directed Models (Bayesian Networks)</span></h3>
+                <p class="bento-text">
+                    使用<strong class="highlight-tech">有向無環圖 (DAG)</strong> 表示變數間的條件依賴關係或因果關係。
+                </p>
+                <p class="bento-text mt-2">
+                    聯合機率分佈分解為： $p(x) = \prod_i p(x_i | \text{Pa}_G(x_i))$。
+                </p>
+                <p class="bento-text mt-2">優勢：大大<strong class="highlight-tech">減少了所需的參數數量和計算複雜度</strong>。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1 row-span-lg-2">
+                <i class="fas fa-arrows-alt-h icon-large"></i>
+                <h3 class="bento-subtitle">無向圖模型 (馬可夫隨機場) <span class="text-sm font-normal text-slate-500">Undirected Models (Markov Networks)</span></h3>
+                <p class="bento-text">
+                    使用<strong class="highlight-tech">無向圖</strong>表示變數間的對稱相互作用或關聯，<strong class="highlight-tech">不指定因果方向</strong>。適合描述變數間依賴是對稱的情況。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>團 (Clique)：</strong> 圖中任意兩節點間都有邊連接的節點子集。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>因子 (Factor) / 勢函數 $\phi(C)$：</strong> 定義在圖的團 C 上的非負函數。
+                </p>
+                <p class="bento-text mt-2">
+                    聯合機率定義 (未歸一化)： $\tilde{p}(x) = \prod_{C \in G} \phi(C)$。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>配分函數 (Partition Function) $Z$：</strong> $Z = \sum_x \tilde{p}(x)$。其計算通常很困難，是<strong class="highlight-tech">精確學習和推斷的主要挑戰</strong>。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                 <i class="fas fa-bolt icon-large"></i>
+                <h3 class="bento-subtitle">基於能量的模型 (EBM) <span class="text-sm font-normal text-slate-500">Energy-Based Models</span></h3>
+                <p class="bento-text">
+                    一種無向圖模型框架，未歸一化機率與<strong class="highlight-tech">能量函數 $E(x)$ 的負指數成正比</strong>： $\tilde{p}(x) = \exp(-E(x))$。
+                </p>
+                <p class="bento-text mt-2">學習目標是調整 $E(x)$，使<strong class="highlight-tech">期望狀態能量低，非期望狀態能量高</strong>。</p>
+                <p class="bento-text mt-2">例子：玻爾茲曼機 (Boltzmann Machine)、專家乘積 (Product of Experts)。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-grip-lines icon-large"></i>
+                <h3 class="bento-subtitle">因子圖 <span class="text-sm font-normal text-slate-500">Factor Graphs</span></h3>
+                <p class="bento-text">
+                    一種二分圖，通過顯式引入因子節點更精確表示因式分解結構，有助於消息傳遞算法。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-unlink icon-large"></i>
+                <h2 class="bento-title">條件獨立性判斷 <span class="text-base font-normal text-slate-500">Conditional Independence</span></h2>
+                <ul class="bento-list bento-text">
+                    <li><strong>無向模型中的分離 (Separation)：</strong> 在給定集合 S 時，若 A 到 B 的所有路徑被 S 中節點阻斷，則 A 和 B 在給定 S 時條件獨立。</li>
+                    <li><strong>有向模型中的 d-分離 (d-Separation)：</strong> 判斷條件獨立性時考慮邊方向和「對撞」結構 (collider / V-結構 $i \rightarrow m \leftarrow j$)。</li>
+                     <li><strong>對撞節點特殊規則：</strong> 對撞節點 $m$ 若未被觀察，則路徑阻斷；若 $m$ 或其後代被觀察，路徑則暢通，可能使原本獨立的父節點變得相關。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-retweet icon-large"></i>
+                 <h3 class="bento-subtitle">圖模型間的轉換 <span class="text-sm font-normal text-slate-500">Model Conversion</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>有向到無向 (Moralization)：</strong> 處理「不道德結構」，連接共同子節點的父節點並去掉箭頭。</li>
+                    <li><strong>無向到有向：</strong> 通常更複雜，需定向邊而不引入新的有向圖獨立性。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-dice-d6 icon-large"></i>
+                <h3 class="bento-subtitle">從圖模型中採樣 <span class="text-sm font-normal text-slate-500">Sampling from Models</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>有向模型：</strong> 通常使用<strong class="highlight-tech">原始採樣 (Ancestral Sampling)</strong>。</li>
+                    <li><strong>無向模型：</strong> 通常使用<strong class="highlight-tech">近似採樣</strong>，如 <strong class="highlight-tech">Gibbs 採樣 (Gibbs Sampling)</strong> (一種 MCMC 方法)。</li>
+                </ul>
+            </div>
+
+             <div class="bento-box col-span-lg-2">
+                <i class="fas fa-eye-slash icon-large"></i>
+                <h2 class="bento-title">學習依賴關係與潛變數 <span class="text-base font-normal text-slate-500">Learning Dependencies & Latent Variables</span></h2>
+                <p class="bento-text">
+                    <strong>潛變數 (Hidden Variables) $h$：</strong> 模型中未觀察到的變數，用於建模可見變數 $v$ 間的複雜依賴關係、學習抽象表示或簡化計算。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>結構學習 (Structure Learning)：</strong> 從數據中學習圖模型的圖結構。深度學習通常不直接學習稀疏連接，而是使用固定結構和正則化等間接方式。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-calculator icon-large"></i>
+                <h2 class="bento-title">推斷與近似推斷 <span class="text-base font-normal text-slate-500">Inference & Approximation</span></h2>
+                <p class="bento-text">
+                    <strong>推斷 (Inference)：</strong> 計算未觀察變數（特別是潛變數 $h$）在給定觀察變數 $v$ 下的<strong class="highlight-tech">後驗機率分佈 $p(h|v)$</strong> 或其期望值。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>精確推斷 (Exact Inference)：</strong> 對於許多複雜模型是<strong class="highlight-tech">難以處理的 (intractable)</strong> (#P-hard)，因計算歸一化常數（分母 $p(v)$）需對所有潛變數配置進行指數級求和或積分。
+                </p>
+                 <p class="bento-text mt-2">
+                    <strong>近似推斷 (Approximate Inference)：</strong> 當精確推斷不可行時使用，旨在尋找後驗分佈的良好近似，例如<strong class="highlight-tech">置信傳播 (Belief Propagation)</strong>、變分推斷 (Variational Inference)。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                 <i class="fas fa-atom icon-large"></i> <h2 class="bento-title-large">實例：受限玻爾茲曼機 (RBM) <span class="text-lg font-normal text-slate-500">Example: Restricted Boltzmann Machine</span></h2>
+                <p class="bento-text">
+                    <strong>結構 (Structure)：</strong> 一種無向圖模型 (EBM)，有<strong class="highlight-tech">一層可見單元 $v$ 和一層隱藏單元 $h$</strong>，形成<strong class="highlight-tech">二分圖結構</strong>（層內無連接）。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>能量函數 (Energy Function)：</strong> 通常為 $E(v,h) = -b^T v - c^T h - v^T W h$。
+                </p>
+                <h3 class="bento-subtitle mt-4">計算優勢 (源於二分圖結構) <span class="text-sm font-normal text-slate-500">Computational Advantages (from Bipartite Structure)</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>條件獨立性：</strong> 給定一層（$v$ 或 $h$），另一層的單元是條件獨立的。</li>
+                    <li><strong>高效 Gibbs 採樣：</strong> 可並行對一層單元進行塊 Gibbs 採樣。</li>
+                    <li><strong>易於計算的梯度</strong>。</li>
+                </ul>
+                <p class="bento-text mt-2">RBM 用於學習數據的表示 $E_{h \sim p(h|v)}[h]$。早期曾用於深度學習模型的預訓練或初始化，但目前較少使用。</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
