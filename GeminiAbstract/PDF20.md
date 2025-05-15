@@ -1,10 +1,38 @@
-## 第二十章 深度生成模型 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
 
-2018-04-13
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
-Deep Generative Models
 
-[https://www.youtube.com/watch?v=oiDYD1qibBQ](https://www.youtube.com/watch?v=oiDYD1qibBQ)
+# 第二十章 深度生成模型   - [YouTube](https://www.youtube.com/watch?v=oiDYD1qibBQ) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+
+### Deep Generative Models (2018/04/13)
+
 
 **重點摘要:**
 本章旨在介紹多種具體的深度生成模型，這些模型利用前面章節（十六至十九章）討論的技術進行構建和訓練。所有這些模型的核心目標是表示多個變量的機率分佈。部分模型允許顯式計算機率分佈函數，而另一些模型則不支持直接評估，但允許從分佈中採樣等隱式操作。某些模型使用圖模型語言進行結構化描述，而其他模型雖然也代表機率分佈，但無法簡單地從因子角度描述。

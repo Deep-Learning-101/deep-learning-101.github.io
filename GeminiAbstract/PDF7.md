@@ -29,6 +29,7 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 </p>
 
 # 第七章 深度學習中的正則化 - [YouTube](https://www.youtube.com/watch?v=gSymqOhKW8o) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+
 ### Regularization for Deep Learning @ Deep Learning Book Chapter 7 (2017/02/10)
 
 **重點摘要:**

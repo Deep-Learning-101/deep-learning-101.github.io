@@ -1,10 +1,38 @@
-## 第十九章 近似推斷 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
 
-2018-03-16
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
-Approximate Inference
 
-[https://www.youtube.com/watch?v=YeCDY_wsojA](https://www.youtube.com/watch?v=YeCDY_wsojA)
+# 第十九章 近似推斷   - [YouTube](https://www.youtube.com/watch?v=YeCDY_wsojA) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+
+### Approximate Inference (2018/03/16)
+
 
 **重點摘要:**
 許多機率模型難以訓練的核心原因在於推斷困難，特別是在深度學習中，當我們有一系列可見變數 `v` 和一系列潛變數 `h` 時，計算後驗機率 `p(h|v)` 或其期望值往往是必需的，但計算上卻非常困難。即使是僅含單層隱藏變數的簡單模型（如受限玻爾茲曼機、機率PCA）可能設計成易於計算 `p(h|v)`，但大多數具有多層隱藏變數的圖模型的後驗分佈都難以處理，精確推斷算法通常需要指數級的運行時間。本章旨在介紹解決這些難處理推斷問題的技巧，並為後續第二十章中更複雜模型（如深度信念網路、深度玻爾茲曼機）的訓練奠定基礎。推斷困難通常源於結構化圖模型中潛變數之間的相互作用，這些相互作用可能是無向模型的直接連接，或有向模型中共父節點導致的「相消解釋」效應。

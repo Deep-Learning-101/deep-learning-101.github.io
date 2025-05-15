@@ -1,10 +1,38 @@
-## 第十一章 實踐方法論 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
 
-2017-06-09
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
-Practical Methodology
 
-[https://www.youtube.com/live/gjca8HvfyLM?si=k5Iz-aT6AyLHCuP8](https://www.youtube.com/live/gjca8HvfyLM?si=k5Iz-aT6AyLHCuP8)
+# 第十一章 實踐方法論 - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+
+### Practical Methodology
+
 
 **重點摘要:**
 要成功地使用深度學習技術，僅僅知道有哪些算法和解釋它們為何有效的原因是不夠的。一個優秀的機器學習實踐者還需要知道如何針對具體應用挑選一個合適的算法以及如何監控，並根據反饋改進機器學習系統。在機器學習系統的日常開發中，實踐者需要決定是否收集更多數據、增加或減少模型容量、添加或刪除正則化項、改進模型的優化、改進模型的近似推斷或調試模型的軟件實現。這些操作都需要大量時間，因此確定正確做法至關重要。

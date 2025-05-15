@@ -1,10 +1,37 @@
-## 第十八章 直面配分函數 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
 
-2018-01-12
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
-Confronting the Partition Function
+# 第十八章 直面配分函數  - [YouTube](https://www.youtube.com/watch?v=yw1JDopTuwo) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
 
-[https://www.youtube.com/watch?v=yw1JDopTuwo](https://www.youtube.com/watch?v=yw1JDopTuwo)
+### Confronting the Partition Function (2018/01/12)
+
 
 **重點摘要:**
 許多機率模型（尤其是無向圖模型）由一個未歸一化的機率分佈 `p̃(x;θ)` 定義。為了獲得一個有效的機率分佈 `p(x;θ)`，必須將 `p̃(x;θ)` 除以一個歸一化常數，即配分函數 `Z(θ)` (公式 18.1)。配分函數是未歸一化機率在所有狀態上的積分（對於連續變量）或求和（對於離散變量）(公式 18.2, 18.3)。對於許多有趣的深度學習模型而言，這個積分或求和難以計算。雖然有些模型設計成具有易於處理的歸一化常數或避免直接計算 `p(x)`，但其他模型則必須直接面對這個挑戰。本章旨在介紹用於訓練和評估那些具有難以處理的配分函數的模型的技術。

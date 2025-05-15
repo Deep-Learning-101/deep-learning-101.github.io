@@ -1,10 +1,37 @@
-## 第十五章 表示學習 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
 
-2017-07-07
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
-Representation Learning
+# 第十五章 表示學習  - [YouTube](https://www.youtube.com/watch?v=MA52s5dQaGY) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
 
-[https://www.youtube.com/watch?v=MA52s5dQaGY](https://www.youtube.com/watch?v=MA52s5dQaGY)
+### Representation Learning (2017/07/07)
+
 
 **重點摘要:**
 本章首先討論表示學習是什麼意思，以及表示的概念如何有助於深度框架的設計。接著探討學習算法如何在不同任務中共享統計信息，包括使用無監督任務中的信息來完成監督任務。共享表示有助於處理多模式或多領域，或是將已學到的知識遷移到樣本很少或沒有，但任務表示依然存在的任務上。最後，探討表示學習成功的原​​因，從分佈式表示 (Hinton et al., 1986) 和深度表示的理論優勢，以及生成過程潛在假設的更一般概念，特別是觀測數據的基本成因。

@@ -1,10 +1,37 @@
-## 第十七章 蒙特卡羅方法 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
 
-2017-12-15
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
-Monte Carlo Methods
+# 第十七章 蒙特卡羅方法  - [YouTube](https://www.youtube.com/watch?v=qef-XTUpDvE) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
 
-[https://www.youtube.com/watch?v=qef-XTUpDvE](https://www.youtube.com/watch?v=qef-XTUpDvE)
+### Monte Carlo Methods (2017/12/15)
+
 
 **重點摘要:**
 隨機算法可以粗略地分為兩類：Las Vegas 算法和蒙特卡羅算法。Las Vegas 算法總是精確地返回一個正確答案（或者返回算法失敗了），但計算資源（一般指內存或運行時間）會有波動。蒙特卡羅算法則相反，它返回的答案具有隨機大小的錯誤，但花費更多的計算資源可以減少這種錯誤。在任意固定的計算資源下，蒙特卡羅算法可以得到一個近似解。對於機器學習中的許多問題來說，精確答案很難得到，確定性算法或 Las Vegas 算法難以解決。因此，確定性的近似算法或蒙特卡羅近似方法成為常用選擇。本章主要關注蒙特卡羅方法。
