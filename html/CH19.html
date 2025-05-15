@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>近似推斷 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Approximate Inference @ Deep Learning Book Chapter 19</strong>
+                </p>
+                <p><em>2018/03/16</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=YeCDY_wsojA" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Understanding Approximate Inference</a>
+                    <span class="text-xs text-slate-500">(Covers MAP, Variational Inference, Mean-Field, Amortized Inference, and EM Algorithm.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                近似推斷
+            </h1>
+            <p class="text-xl text-slate-600">
+                探索 MAP 推斷、變分推斷、均值場方法與學成近似推斷等核心技術
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-map-marker-alt icon-large"></i>
+                <h2 class="bento-title">最大後驗 (MAP) 推斷 <span class="text-base font-normal text-slate-500">Maximum A Posteriori Inference</span></h2>
+                <p class="bento-text">
+                    <strong>定義 (Definition)：</strong> MAP 推斷是計算潛變數 $h$ 在給定可見變數 $v$ 時的<strong class="highlight-tech">最可能值 (眾數) $h^*$</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    與完整後驗分佈的差異：它只提供一個點估計，而不是完整的機率分佈。若將 MAP 結果 $h^*$ 定義為近似後驗 $q$，則 $q(h|v) = \delta(h-h^*)$ (狄拉克函數)。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>局限性 (Limitations)：</strong> 從變分下界角度看，狄拉克分佈的熵趨近負無窮，導致 ELBO 的下界無限鬆散，通常不被認為是好的變分近似方法。
+                </p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-qrcode mr-2"></i>在稀疏編碼中的應用 <span class="text-sm font-normal text-slate-500">Application in Sparse Coding</span></h3>
+                <p class="bento-text">
+                    MAP 推斷在深度學習中被廣泛應用於<strong class="highlight-tech">稀疏編碼模型</strong>。因在稀疏編碼中，計算精確後驗 $p(h|v)$ 非常困難 (尤其當潛變數先驗非高斯，如 Laplace 稀疏先驗)，MAP 推斷成為實用替代方案。
+                </p>
+                <p class="bento-text mt-2">
+                    學習目標通常是最小化包含稀疏性懲罰項 (如 L1 範數 $\sum \lambda|H_{i,j}|$) 和重構誤差項的組合函數。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-vector-square icon-large"></i>
+                <h2 class="bento-title-large">變分推斷 <span class="text-lg font-normal text-slate-500">Variational Inference</span></h2>
+                <p class="bento-text">
+                    <strong>核心思想 (Core Idea)：</strong> 在一個<strong class="highlight-tech">預先定義的、受約束的分佈族 $Q$</strong> 中，尋找一個近似後驗分佈 $q \in Q$，使得<strong class="highlight-tech">證據下界 (ELBO) $L(v, \theta, q)$ 被最大化</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>與 KL 散度的關係 (Relation to KL Divergence)：</strong> 最大化 ELBO 等價於最小化近似後驗 $q$ 與真實後驗 $p(h|v)$ 之間的 <strong class="highlight-tech">KL 散度 $D_{KL}(q||p)$</strong>。最小化 $D_{KL}(q||p)$ 傾向於找到一個 $q$，使得在真實後驗 $p$ 機率低的地方，$q$ 的機率也低。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-atom icon-large"></i>
+                <h2 class="bento-title">均值場 (Mean-field) 方法 <span class="text-base font-normal text-slate-500">Mean-field Method</span></h2>
+                <p class="bento-text">
+                    一種常用的變分學習方法，假設近似後驗 $q$ 可以<strong class="highlight-tech">分解為各個潛變數邊緣分佈的乘積</strong>，即 $q(h|v) = \prod_i q(h_i|v)$。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>帶來的簡化 (Simplification)：</strong> 均值場近似使得原本複雜的聯合後驗期望計算可以分解為對各個獨立的 $q(h_i|v)$ 的期望計算，使 ELBO 更容易處理和優化。
+                </p>
+                <h3 class="bento-subtitle mt-4">參數優化 <span class="text-sm font-normal text-slate-500">Parameter Optimization</span></h3>
+                <p class="bento-text">
+                    近似後驗 $q$ 的參數通常可以通過求解<strong class="highlight-tech">不動點方程</strong>來優化，反覆迭代更新直到收斂 (類似坐標上升法)。
+                </p>
+                <p class="bento-text mt-2">
+                    對於連續型潛變數，最優單個因子 $q(h_i|v)$ 的通用更新規則是未歸一化的 $\tilde{q}(h_i|v) = \exp(E_{h_{-i} \sim \prod_{j \neq i}q(h_j|v)}[\log p(v,h)])$。
+                </p>
+                 <p class="bento-text mt-2">
+                    可以通過選擇 $q$ 的圖模型結構來更靈活地決定近似程度 (結構化變分推斷)。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-1 row-span-lg-2">
+                <i class="fas fa-tachometer-alt icon-large"></i>
+                <h2 class="bento-title">學成近似推斷 <span class="text-base font-normal text-slate-500">Amortized Inference</span></h2>
+                <p class="bento-text">
+                    訓練一個<strong class="highlight-tech">額外的參數化函數 (推斷網路)</strong>，直接從輸入 $v$ <strong class="highlight-tech">預測潛變數的近似後驗分佈 $q(h|v)$ 的參數</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>主要優勢 (Main Advantage)：</strong> 避免在每次需要推斷時都執行耗時的迭代優化過程。一旦推斷網路訓練完成，對於新的輸入 $v$，只需<strong class="highlight-tech">一次前向傳播</strong>就能快速得到近似後驗。
+                </p>
+                <h3 class="bento-subtitle mt-4">應用示例 <span class="text-sm font-normal text-slate-500">Application Examples</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>變分自編碼器 (VAE)：</strong> 編碼器 (推斷網路) 直接參數化近似後驗分佈 $q(z|x)$。</li>
+                    <li><strong>深度玻爾茲曼機 (DBM)：</strong> 可用學成推斷網路加速，訓練推斷網路輸出改進後的均值場估計。</li>
+                    <li><strong>預測性稀疏分解 (PSD)：</strong> 編碼器被視為執行學成近似 MAP 推斷的網路。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-sync-alt icon-large"></i>
+                <h2 class="bento-title-large">期望最大化 (EM) 演算法 (相關背景) <span class="text-lg font-normal text-slate-500">EM Algorithm (Related Background)</span></h2>
+                <p class="bento-text">
+                    <strong>目標 (Objective)：</strong> 最大化模型參數 $\theta$ 下數據的<strong class="highlight-tech">對數概似 $\log p(v;\theta)$</strong>。
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle">步驟 (Steps)</h3>
+                        <ol class="bento-list bento-text">
+                            <li><strong>E 步 (Expectation)：</strong> 基於當前模型參數 $\theta$ 和可見變數 $v$，推斷潛變數 $h$ 的後驗分佈 $q(h|v)$。</li>
+                            <li><strong>M 步 (Maximization)：</strong> 固定 E 步得到的 $q(h|v)$，調整模型參數 $\theta$ 以最大化證據下界 $L(v, \theta, q)$ (等價於最大化 $E_q[\log p(v,h;\theta)]$)。</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle">與變分推斷的聯繫 <span class="text-sm font-normal text-slate-500">Connection to Variational Inference</span></h3>
+                        <p class="bento-text">
+                        EM 演算法<strong class="highlight-tech">最大化 ELBO</strong>。當完整後驗 $p(h|v)$ 難以計算時，需使用近似推斷方法 (如變分推斷) 來近似後驗 $p(h|v)$。
+                        </p>
+                        <p class="bento-text mt-2">
+                        EM 可被看作是<strong class="highlight-tech">坐標上升法</strong>的一種應用，通過交替優化 $q$ (E 步) 和 $\theta$ (M 步) 來單調最大化 ELBO。
+                        </p>
+                        <p class="bento-text mt-2">
+                        深度學習中 M 步通常需梯度下降等迭代優化，而非解析解。
+                        </p>
+                    </div>
+                </div>
+                 <p class="bento-text mt-4">
+                    <strong>醒眠算法 (Wake-Sleep algorithm)：</strong> 一種學成近似推斷方法。Wake 階段使用推斷網路推斷 $h$ 並更新生成模型。Sleep 階段從生成模型採樣 $(v,h)$ 對，並訓練推斷網路去預測這些採樣到的 $h$。
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
