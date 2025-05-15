@@ -13,7 +13,7 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
   Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
 </p>  
 <p align="center">
-  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ"">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
     <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
   </a>
 </p>
@@ -25,7 +25,7 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
   <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
 </p>
 <p align="center">
-<a href="https://www.buymeacoffee.com/DeepLearning101""><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 </p>
 
 ---
@@ -33,7 +33,7 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 <details>
 <summary>手把手帶你一起踩 AI 坑</summary>
 
-<h3><a href="https://blog.twman.org/p/deeplearning101.html">手把手帶你一起踩 AI 坑</a>：<a href="https://www.twman.org/AI">https://www.twman.org/AI</a></h3>
+<h3><a href="https://blog.twman.org/p/deeplearning101.html" target="_blank">手把手帶你一起踩 AI 坑</a>：<a href="https://www.twman.org/AI">https://www.twman.org/AI</a></h3>
 
 <ul>
   <li>
