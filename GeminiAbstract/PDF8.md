@@ -1,10 +1,36 @@
-## 第八章 深度模型中的優化 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
 
-2017-03-10
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
 
-Optimization for Training Deep Models
+# 第八章 深度模型中的優化 - [YouTube](https://www.youtube.com/watch?v=DeXH5IMHfcs) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
 
-[https://www.youtube.com/watch?v=DeXH5IMHfcs](https://www.youtube.com/watch?v=DeXH5IMHfcs)
+### Optimization for Training Deep Models (2017/03/10)
 
 **重點摘要:**
 深度學習算法在許多情況下都涉及到優化。模型中的進行推斷（如PCA）涉及到求解優化問題。我們經常使用解析優化去證明或設計算法。在深度學習涉及到的諸多優化問題中，最難的是神經網路訓練。即使是用幾百台機器投入幾天到幾個月來解決單個神經網路訓練問題，也是很常見的。因為這其中的優化問題很重要，代價也很高，因此研究者們開發了一組專門為此設計的優化技術。本章會介紹神經網路訓練中的這些優化技術。

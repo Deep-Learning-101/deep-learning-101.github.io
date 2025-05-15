@@ -1,4 +1,35 @@
-## 第六章 深度前饋網路 (開篇引言)
+---
+layout: default
+title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+---
+
+<p align="center">
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+</p>
+<p align="center">
+  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
+  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="https://deep-learning-101.github.io/">回 GitHub Pages</a> |  
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+</p>
+<p align="center">
+<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+</p>
+
+## 第六章 深度前饋網路
 
 **重點摘要:**
 深度前饋網路 (deep feedforward network)，也叫作前饋神經網路 (feedforward neural network) 或者多層感知機 (multilayer perceptron, MLP)，是典型的深度學習模型。前饋網路的目標是近似某個函數 `f*`。例如，對於分類器，`y = f*(x)` 將輸入 `x` 映射到一個類別 `y`。前饋網路定義了一個映射 `y = f(x; θ)`，並且學習參數 `θ` 的值，使它能夠得到最佳的函數近似。
