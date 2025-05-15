@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>直面配分函數 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Confronting the Partition Function @ Deep Learning Book Chapter 18</strong>
+                </p>
+                <p><em>2018/01/12</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=yw1JDopTuwo" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Confronting the Partition Function</a>
+                    <span class="text-xs text-slate-500">(Covers challenges with Z(θ), gradient issues, and techniques like CD, SML, NCE, AIS.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                直面配分函數
+            </h1>
+            <p class="text-xl text-slate-600">
+                深入探討機率模型中配分函數的挑戰與應對策略
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-infinity icon-large"></i>
+                <h2 class="bento-title-large">核心挑戰：配分函數 Z(θ) <span class="text-lg font-normal text-slate-500">The Core Challenge: Z(θ)</span></h2>
+                <p class="bento-text">
+                    <strong>定義與重要性 (Definition & Importance)：</strong> 配分函數 $Z(\theta)$ 是一個歸一化常數，用於將未歸一化的機率分佈 $\tilde{p}(x;\theta)$ 轉換為一個有效的機率分佈 $p(x;\theta) = \tilde{p}(x;\theta) / Z(\theta)$。$Z(\theta)$ 是 $\tilde{p}(x;\theta)$ 在所有可能狀態 $x$ 上的總和（離散）或積分（連續）。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>帶來的挑戰 (The Challenge)：</strong> 對於許多有趣的機率模型，特別是無向圖模型或具有複雜依賴結構及高維狀態空間的深度學習模型，計算 $Z(\theta)$ 在計算上是<strong class="highlight-tech">難以處理的 (intractable)</strong>。這使得直接計算歸一化機率 $p(x;\theta)$ 或其對數概似變得非常困難。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-wave-square icon-large"></i>
+                <h2 class="bento-title">最大概似學習中的梯度計算問題 <span class="text-base font-normal text-slate-500">Gradient Issues in ML Learning</span></h2>
+                <p class="bento-text">
+                    對數概似 $\log p(x;\theta)$ 對參數 $\theta$ 的梯度可以分解為兩項： $\nabla_\theta \log p(x;\theta) = \nabla_\theta \log \tilde{p}(x;\theta) - \nabla_\theta \log Z(\theta)$。
+                </p>
+                <div class="grid md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-plus-circle mr-2"></i>正相 (Positive Phase)</h3>
+                        <p class="bento-text">$\nabla_\theta \log \tilde{p}(x;\theta)$。通常相對容易計算，傾向於增加訓練數據點 $x$ 的未歸一化機率，將機率質量<strong class="highlight-tech">拉向訓練數據</strong>。</p>
+                    </div>
+                    <div>
+                        <h3 class="bento-subtitle"><i class="fas fa-minus-circle mr-2"></i>負相 (Negative Phase)</h3>
+                        <p class="bento-text">$ - \nabla_\theta \log Z(\theta) = - E_{x' \sim p(x';\theta)}[\nabla_\theta \log \tilde{p}(x';\theta)]$。是在模型自身分佈下的期望，傾向於減少模型生成樣本的未歸一化機率，將機率質量<strong class="highlight-tech">推離模型認為高機率的區域</strong>。</p>
+                        <p class="bento-text mt-2"><strong>計算困難：</strong> 計算負相需要從模型自身的分佈 $p(x;\theta)$ 中採樣大量的樣本，這通常非常困難。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-dice icon-large"></i>
+                <h2 class="bento-title-large">解決負相計算困難的技術 (訓練階段) <span class="text-lg font-normal text-slate-500">Techniques for Negative Phase (Training)</span></h2>
+                <h3 class="bento-subtitle mt-0 mb-4">基於 MCMC 採樣估計負相 <span class="text-sm font-normal text-slate-500">MCMC-based Estimation</span></h3>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h4 class="font-semibold text-slate-700 text-lg mb-2">對比散度 (CD-k) <span class="text-sm font-normal text-slate-500">Contrastive Divergence</span></h4>
+                <p class="bento-text text-sm">每個梯度步驟從訓練數據樣本初始化 MCMC 鏈，<strong class="highlight-tech">只運行少量 k 步</strong> (k=1-20)。</p>
+                <p class="bento-text text-sm mt-2"><strong>優點：</strong> 計算效率高，訓練快，對淺層模型 (如 RBM) 有效。</p>
+                <p class="bento-text text-sm mt-2"><strong>缺點：</strong> 有偏估計，易形成<strong class="highlight-tech">虛假模態</strong>，對深度模型效果有限。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                 <h4 class="font-semibold text-slate-700 text-lg mb-2">隨機最大概似 (SML/PCD-k) <span class="text-sm font-normal text-slate-500">Stochastic Maximum Likelihood</span></h4>
+                <p class="bento-text text-sm">MCMC 鏈<strong class="highlight-tech">在整個訓練過程持續運行</strong>，當前步驟鏈狀態繼承自上一步。</p>
+                <p class="bento-text text-sm mt-2"><strong>優點：</strong> 偏差比 CD 小，更好探索模型分佈，不易形成虛假模態，更適合訓練深度模型。</p>
+                <p class="bento-text text-sm mt-2"><strong>潛在問題：</strong> 學習率過大或 k 過少時，鏈可能無法跟上模型變化。</p>
+            </div>
+             <div class="bento-box col-span-lg-1">
+                <h4 class="font-semibold text-slate-700 text-lg mb-2">朴素 MCMC 方法 <span class="text-sm font-normal text-slate-500">Naive MCMC</span></h4>
+                <p class="bento-text text-sm">每次計算梯度時，從隨機狀態開始運行 MCMC 鏈，等待鏈「混合」後採樣。</p>
+                <p class="bento-text text-sm mt-2"><strong>缺點：</strong> 計算代價極高，實際中不可行。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-divide icon-large"></i>
+                <h3 class="bento-subtitle">偽概似 <span class="text-sm font-normal text-slate-500">Pseudolikelihood</span></h3>
+                <p class="bento-text">最大化數據中每個變數 $x_i$ 在給定所有其他變數 $x_{-i}$ 條件下的對數機率之和 $\sum_i \log p(x_i | x_{-i})$。條件機率的分母僅涉及對單個變數 $x_i$ 的求和，計算量遠小於 Z。</p>
+                <p class="bento-text mt-2">估計是<strong class="highlight-tech">漸近一致的</strong>，但有限數據下可能不如最大概似，不兼容只提供 $\tilde{p}(x)$ 下界的方法。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-equals icon-large"></i>
+                <h3 class="bento-subtitle">得分/比率匹配 <span class="text-sm font-normal text-slate-500">Score/Ratio Matching</span></h3>
+                <p class="bento-text"><strong>得分匹配 (Score Matching)：</strong> 最小化模型得分 $\nabla_x \log p_{\text{model}}(x;\theta)$ 與數據得分 $\nabla_x \log p_{\text{data}}(x)$ 的平方差期望。$Z(\theta)$ 不依賴於 $x$，故 $\nabla_x \log Z(\theta) = 0$。</p>
+                <p class="bento-text mt-2"><strong>比率匹配 (Ratio Matching)：</strong> 擴展得分匹配到<strong class="highlight-tech">離散數據</strong>，最小化涉及 $\tilde{p}(x)/\tilde{p}(f(x,j))$ 比率的目標函數，$Z(\theta)$ 被消去。</p>
+                 <p class="bento-text mt-2"><strong class="highlight-tech">去噪得分匹配：</strong> 匹配平滑後數據分佈的得分，有助學習更平滑、泛化的密度模型。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-random icon-large"></i>
+                <h3 class="bento-subtitle">噪聲對比估計 (NCE) <span class="text-sm font-normal text-slate-500">Noise-Contrastive Estimation</span></h3>
+                <p class="bento-text">將<strong class="highlight-tech">無監督密度估計轉化為監督式二元分類</strong>。引入易處理的<strong class="highlight-tech">噪聲分佈 $p_{\text{noise}}(x)$</strong>，訓練分類器區分真實數據和噪聲樣本。</p>
+                <p class="bento-text mt-2">$\log p_{\text{model}}(x)$ 表示為 $\log \tilde{p}_{\text{model}}(x;\theta) + c$，其中 $c = -\log Z(\theta)$ 作為<strong class="highlight-tech">可學習參數</strong>。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-calculator icon-large"></i>
+                <h2 class="bento-title-large">估計配分函數 Z(θ) 本身的重要性與方法 <span class="text-lg font-normal text-slate-500">Estimating Z(θ) Itself</span></h2>
+                <p class="bento-text">
+                    即使訓練時避免計算 $Z(\theta)$，估計它對於<strong class="highlight-tech">模型評估、模型比較、監控訓練進度</strong>等仍然重要。
+                </p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle">重要性採樣 <span class="text-sm font-normal text-slate-500">Importance Sampling</span></h3>
+                <p class="bento-text">從已知 $Z_0$ 的提議分佈 $p_0$ 採樣估計目標分佈 $p_1$ 的 $Z_1$。$Z_1/Z_0$ 估計為 $(1/K) \sum [\tilde{p}_1/\tilde{p}_0]$。若 $p_0, p_1$ 相差大，方差大。</p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle">退火重要性採樣 (AIS) <span class="text-sm font-normal text-slate-500">Annealed Importance Sampling</span></h3>
+                <p class="bento-text">引入一系列中間分佈平滑地從 $p_0$ 過渡到 $p_1$，估計相鄰中間分佈配分函數比率並連乘估計 $Z_1/Z_0$。</p>
+            </div>
+             <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle">橋式/鏈接重要性採樣 <span class="text-sm font-normal text-slate-500">Bridge/Chained IS</span></h3>
+                <p class="bento-text"><strong>橋式採樣：</strong> 依賴單個「橋」分佈在 $p_0, p_1$ 間插值。</p>
+                <p class="bento-text mt-2"><strong>鏈接重要性採樣：</strong> 結合 AIS 和橋式採樣。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-users icon-large"></i>
+                 <h2 class="bento-title">重要人物與時間線 <span class="text-base font-normal text-slate-500">Key Figures & Timeline</span></h2>
+                <ul class="bento-list bento-text grid grid-cols-2 md:grid-cols-3 gap-x-4 text-sm">
+                    <li><strong>1976:</strong> Bennett (橋式採樣)</li>
+                    <li><strong>2000:</strong> Hinton (CD)</li>
+                    <li><strong>2001:</strong> Neal (AIS)</li>
+                    <li><strong>2005:</strong> Neal (鏈接IS); Hyvärinen (得分匹配)</li>
+                    <li><strong>2007:</strong> Hyvärinen (比率匹配)</li>
+                    <li><strong>2010:</strong> Hinton (CD-k); Gutmann & Hyvärinen (NCE)</li>
+                    <li><strong>2011:</strong> Desjardins et al. (RBM Z 估計)</li>
+                    <li><strong>主要人物:</strong> Hinton, Hyvärinen, Gutmann, Neal, Bennett, Desjardins</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
