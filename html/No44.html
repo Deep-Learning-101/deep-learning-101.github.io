@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度學習進階訓練技巧與應用 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>神經網路的黑執事 - 深度學習進階訓練技巧與應用</strong>
+                </p>
+                <p><em>2020/08/21 - Mark Liou</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=gMaQTqZUW58" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Advanced Training Techniques in Deep Learning</a>
+                    <span class="text-xs text-slate-500">(Covers data & model regularization, label smoothing, data augmentation, semi-supervised and self-supervised learning.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                深度學習進階訓練技巧與應用
+            </h1>
+            <p class="text-xl text-slate-600">
+                探討資料正規化、標籤平滑、資料擴增及自監督學習等關鍵技術
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-cogs icon-large"></i>
+                <h2 class="bento-title-large">核心主題與重要概念 <span class="text-lg font-normal text-slate-500">Core Themes & Concepts</span></h2>
+                <p class="bento-text">
+                    影片強調，許多近期有效的模型訓練方法的核心思想並非傳統上直接對模型權重進行正規化，而是在 <strong class="highlight-tech">資料本身</strong> 或透過操作資料來約束模型的學習過程，使其學到的表示更魯棒和通用。這被視為從傳統模型正規化轉變為<strong class="highlight-tech">數據正規化 (Data Regularization)</strong>的趨勢。
+                </p>
+                <p class="bento-text mt-2">
+                    神經網路內部存在一種「<strong class="highlight-tech">隱生 (Emergent Properties)</strong>」特性，若善用，能有效處理大量資料。資料擴增可被視為從不同視角看待原始數據。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-tags icon-large"></i>
+                <h2 class="bento-title">標籤平滑 <span class="text-base font-normal text-slate-500">Label Smoothing</span></h2>
+                <p class="bento-text">
+                    Label Smoothing 是一種正規化技術，用於修改分類問題的目標標籤。傳統 One-Hot Encoding 將正確類別機率設為 1，其他為 0；Label Smoothing 則將正確類別的一小部分機率 ($\alpha/k$) 分攤到其他類別。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong class="highlight-tech">優勢：</strong> 防止模型對訓練資料過度自信，考慮其他類別可能性，提升泛化能力。其效果類似於知識蒸餾中的「溫度」，使模型能從較低機率分佈中學習額外資訊。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-images icon-large"></i>
+                <h2 class="bento-title">資料擴增技術 <span class="text-base font-normal text-slate-500">Data Augmentation</span></h2>
+                <p class="bento-text">
+                    資料擴增是提升模型性能的「共識」方法，特別是在有限標記資料時。它透過對現有資料进行變換，增加訓練樣本多樣性，迫使模型學習更魯棒、更具泛化能力的特徵。
+                </p>
+                <h3 class="bento-subtitle mt-4">具體技術 <span class="text-sm font-normal text-slate-500">Specific Techniques</span></h3>
+                <div class="grid grid-cols-2 gap-4 mt-2">
+                    <div>
+                        <h4 class="font-semibold text-slate-700 text-sm mb-1">Mixup</h4>
+                        <p class="bento-text text-xs">混合兩張圖片及其標籤。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 text-sm mb-1">CutMix</h4>
+                        <p class="bento-text text-xs">將一張圖片的部分區域替換為另一張圖片的區域，並混合標籤，鼓勵模型關注關鍵部分。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 text-sm mb-1">Cutout</h4>
+                        <p class="bento-text text-xs">在圖片中隨機遮擋一個區域，提高對遮擋的魯棒性。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 text-sm mb-1">Manifold Mixup</h4>
+                        <p class="bento-text text-xs">在神經網路中間層對多個樣本的特徵表示進行混合，旨在學習更平滑的特徵空間。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-adjust icon-large"></i> <h2 class="bento-title">半監督學習與未標記資料利用 <span class="text-base font-normal text-slate-500">Semi-Supervised Learning</span></h2>
+                <p class="bento-text">
+                    當標記資料有限但未標記資料豐富時，半監督學習變得重要。
+                </p>
+                <ul class="bento-list bento-text mt-2">
+                    <li><strong class="highlight-tech">偽標籤 (Pseudo-labeling)：</strong> 用已訓練模型預測未標記資料，將預測結果作為「偽標籤」訓練或微調模型。</li>
+                    <li><strong class="highlight-tech">Unsupervised Data Augmentation (UDA)：</strong> 結合有標記資料的監督學習和未標記資料上的資料擴增。核心思想是對未標記資料擴增後，模型輸出應與原始未擴增的未標記資料輸出保持一致或相似，鼓勵模型對資料擴增保持「不變性」。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-1 row-span-lg-2">
+                <i class="fas fa-sync-alt icon-large"></i>
+                <h2 class="bento-title">自監督與對比學習 <span class="text-base font-normal text-slate-500">Self-Supervised & Contrastive Learning</span></h2>
+                <p class="bento-text">
+                    <strong class="highlight-tech">自監督學習 (Self-Supervised Learning)</strong> 是一種無需人工標記，透過設計輔助任務來學習資料表示的方法。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong class="highlight-tech">對比學習 (Contrastive Learning)</strong> 核心思想是學習區分「相似」和「不相似」的樣本對，希望「自己跟自己」的表示很像，「自己跟別人」的表示很不一樣。
+                </p>
+                <h3 class="bento-subtitle mt-4">Contrastive Predictive Coding (CPC)</h3>
+                <p class="bento-text">
+                    學習一種編碼表示，使模型能區分時間或空間上相鄰的數據樣本（正樣本對）與隨機抽取的數據樣本（負樣本）。它希望模型能將不同視角下的同一個物體或同一時間序列中的相鄰部分映射到相似的表示空間。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-random icon-large"></i>
+                <h3 class="bento-subtitle">領域適應 <span class="text-sm font-normal text-slate-500">Domain Adaptation</span></h3>
+                <p class="bento-text">
+                    當模型訓練在一個領域但應用於不同領域時會遇到挑戰。利用未標記資料和資料擴增的技術有助於模型學習對資料分佈變化更魯棒的特徵，從而更好地適應新的領域。
+                </p>
+            </div>
+            
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-users icon-large"></i>
+                <h2 class="bento-title">時間軸梗概與提及人物 <span class="text-base font-normal text-slate-500">Timeline & Figures</span></h2>
+                <p class="bento-text">
+                    <strong class="highlight-tech">概念發展順序：</strong> 傳統模型正規化 → 開始利用未標記數據 → 知識蒸餾/溫度概念受重視 → 各式資料擴增技術 (Mixup, CutMix等) → UDA 等一致性訓練方法 → 對比學習與 CPC 方法興起。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong class="highlight-tech">提及人物：</strong> 演講者 (Mark Liou)、金馬克、郭大佬、CP 論文作者 ("M 的那位人") 等。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-exclamation-circle icon-large"></i>
+                <h2 class="bento-title">訓練挑戰與個人心得 <span class="text-base font-normal text-slate-500">Training Challenges & Insights</span></h2>
+                <ul class="bento-list bento-text">
+                    <li><strong>訓練難度：</strong> 某些技術（如早期的 Label Smoothing）可能「不太好練」。</li>
+                    <li><strong>數據量影響：</strong> 數據量稀缺會顯著影響訓練效果。</li>
+                    <li><strong>模型強大程度：</strong> 技術效果也與神經網路本身的強大程度有關。</li>
+                    <li><strong>計算資源：</strong> 某些模型（如某些對比學習方法）可能需要大量計算資源（顯卡）。</li>
+                </ul>
+                 <p class="bento-text mt-2">總而言之，影片深入探討了如何透過巧妙的資料處理和訓練目標設計，利用未標記資料、增強模型魯棒性，進而在有限標記數據情況下提升模型性能，並指出資料正規化和自監督/半監督學習是重要的發展方向。</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
