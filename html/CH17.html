@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蒙地卡羅方法 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Monte Carlo Methods @ Deep Learning Book Chapter 17</strong>
+                </p>
+                <p><em>2017/12/15</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=qef-XTUpDvE" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Introduction to Monte Carlo Methods</a>
+                    <span class="text-xs text-slate-500">(Covers sampling basics, importance sampling, MCMC, Gibbs sampling, and applications.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                機器學習中的採樣與蒙地卡羅方法
+            </h1>
+            <p class="text-xl text-slate-600">
+                深入探討採樣技術、重要性採樣、MCMC及其在深度學習中的應用
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-dice-d20 icon-large"></i>
+                <h2 class="bento-title-large">採樣的必要性與蒙地卡羅方法基礎 <span class="text-lg font-normal text-slate-500">Sampling & Monte Carlo Fundamentals</span></h2>
+                <p class="bento-text">
+                    在機器學習中，<strong class="highlight-tech">經常需要從機率分佈中採樣</strong>。主要原因是為了<strong class="highlight-tech">近似難以精確計算的數學表達式</strong>，例如複雜的和或積分。
+                </p>
+                <p class="bento-text mt-2">
+                    蒙地卡羅採樣是使用重複隨機採樣來獲得數值結果的計算方法，常用於<strong class="highlight-tech">估計期望值、積分或求和</strong>。核心思想是將要求解的和或積分視為某個分佈下的期望值 $E_p[f(x)]$，然後通過從分佈 $p$ 中抽取獨立同分佈 (i.i.d.) 樣本 $x^{(i)}$ 並計算經驗平均值 $\hat{s}_n = \frac{1}{n} \sum_{i=1}^n f(x^{(i)})$ 來近似這個期望值。
+                </p>
+                <ul class="bento-list bento-text mt-2">
+                    <li>蒙地卡羅估計量 $\hat{s}_n$ 是<strong class="highlight-tech">無偏估計</strong>。</li>
+                    <li>根據<strong class="highlight-tech">大數定律</strong>，當樣本數量 $n$ 趨於無窮大時，$\hat{s}_n$ 將會依機率收斂到真實期望值 $s$。</li>
+                    <li><strong class="highlight-tech">中心極限定理</strong>指出，大量獨立同分佈隨機變數的平均值的分佈會趨於正態分佈。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-balance-scale icon-large"></i>
+                <h2 class="bento-title">重要性採樣 <span class="text-base font-normal text-slate-500">Importance Sampling</span></h2>
+                <p class="bento-text">
+                    重要性採樣的主要目的是在<strong class="highlight-tech">無法直接或有效從目標分佈 $p(x)$ 中採樣時</strong>，通過從一個易於採樣的提議分佈 $q(x)$ 中抽取樣本來估計在 $p(x)$ 下的期望值 $E_p[f(x)]$。
+                </p>
+                <p class="bento-text mt-2">
+                    核心思想是使用<strong class="highlight-tech">重要性權重 $w(x) = p(x)/q(x)$</strong> 對從 $q$ 中抽取的樣本進行加權，以校正偏差。
+                </p>
+                <h3 class="bento-subtitle mt-4">採樣方法 <span class="text-sm font-normal text-slate-500">Sampling Methods</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>無偏重要性採樣：</strong> $\hat{s}_{\text{UIS}} = \frac{1}{n} \sum_{i=1}^n w(x^{(i)}) f(x^{(i)})$。要求 $p, q$ 歸一化常數已知。</li>
+                    <li><strong>有偏（自歸一化）重要性採樣：</strong> $\hat{s}_{\text{BIS}} = \frac{\sum_{i=1}^n w(x^{(i)}) f(x^{(i)})}{\sum_{i=1}^n w(x^{(i)})}$。不需 $p, q$ 歸一化常數，但有限樣本下有偏，通常方差更低。</li>
+                </ul>
+                 <p class="bento-text mt-2">
+                    <strong class="highlight-tech">提議分佈 $q(x)$ 的選擇至關重要</strong>，應與 $p(x)|f(x)|$ 形狀相似，否則可能導致權重方差過大。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-sync-alt icon-large"></i>
+                <h2 class="bento-title">Gibbs 採樣 <span class="text-base font-normal text-slate-500">Gibbs Sampling</span></h2>
+                <p class="bento-text">
+                    Gibbs 採樣是一種<strong class="highlight-tech">特殊的 MCMC 算法</strong>。它適用於<strong class="highlight-tech">目標分佈的全條件分佈易於採樣的情況</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    工作原理：通過<strong class="highlight-tech">輪流對每個變數進行採樣</strong>，每次都從該變數在給定所有其他變數當前值的情況下的全條件分佈中採樣。
+                </p>
+                <p class="bento-text mt-2">
+                    優點包括實現相對簡單、無需調整提議分佈，且接受率總是 1。
+                </p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-link icon-large"></i>
+                <h2 class="bento-title-large">馬爾可夫鏈蒙地卡羅 (MCMC) 方法 <span class="text-lg font-normal text-slate-500">Markov Chain Monte Carlo</span></h2>
+                <p class="bento-text">
+                    MCMC 方法主要解決在<strong class="highlight-tech">目標分佈難以直接進行獨立同分佈採樣的問題</strong>，特別是對於<strong class="highlight-tech">高維分佈</strong>或其歸一化常數難以計算的情況。
+                </p>
+                <p class="bento-text mt-2">
+                    核心思想是<strong class="highlight-tech">構造一個馬爾可夫鏈</strong>，使其在經過足夠長時間的演變後，能夠收斂到以<strong class="highlight-tech">目標分佈 $p$ 作為其平穩分佈</strong>。
+                </p>
+                <p class="bento-text mt-2">
+                    一旦馬爾可夫鏈達到平穩狀態（經過「燒入期」burn-in period 後），從鏈中抽取出的樣本序列在理論上就近似於從目標分佈 $p$ 中抽取的樣本。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <i class="fas fa-tools icon-large"></i>
+                 <h2 class="bento-title">MCMC 的挑戰與改善方法 <span class="text-base font-normal text-slate-500">MCMC Challenges & Improvements</span></h2>
+                <h3 class="bento-subtitle">常見挑戰 <span class="text-sm font-normal text-slate-500">Common Challenges</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>收斂性 (Convergence)：</strong> 確定何時達到收斂是一個難題。</li>
+                    <li><strong>混合性 (Mixing)：</strong> 馬爾可夫鏈需要有效地探索整個狀態空間，特別是對於多模態分佈。</li>
+                    <li><strong>能量景觀崎嶇問題 (Rugged energy landscapes)：</strong> MCMC 可能被困在局部能量極小點，導致混合緩慢。</li>
+                </ul>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle">改善方法 <span class="text-sm font-normal text-slate-500">Improvement Methods</span></h3>
+                 <p class="bento-text">
+                    <strong>退火 (Annealing) / 回火 (Tempering)：</strong> 模擬物理系統的退溫過程，在高「溫度」下增加狀態轉換機率，使鏈更容易探索狀態空間，然後逐漸降溫。
+                </p>
+                <ul class="bento-list bento-text text-sm mt-2">
+                    <li><strong>單鏈回火 (Simulated Annealing):</strong> 在時間上逐漸改變單條鏈的溫度。</li>
+                    <li><strong>並行回火 (Parallel Tempering):</strong> 運行多條不同溫度的馬爾可夫鏈，並允許鏈之間交換狀態，以改善整體混合性。</li>
+                </ul>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-camera-retro icon-large"></i>
+                <h2 class="bento-title-large">深度學習圖像處理項目案例 <span class="text-lg font-normal text-slate-500">Case Study: Image Processing Project</span></h2>
+                <p class="bento-text">
+                    一個基於深度學習技術的<strong class="highlight-tech">平面角色處理和識別項目正在進行中</strong>，由台灣科技大學和清華大學成員參與。
+                </p>
+                <h3 class="bento-subtitle mt-4">項目挑戰與進展 <span class="text-sm font-normal text-slate-500">Challenges & Progress</span></h3>
+                <div class="grid md:grid-cols-2 gap-6 mt-2">
+                    <div>
+                        <p class="bento-text"><strong>主要挑戰：</strong> <strong class="highlight-tech">動漫角色圖像數據集稀缺</strong>。</p>
+                        <p class="bento-text mt-2"><strong>數據收集：</strong> 建立網站號召志願者協助<strong class="highlight-tech">標註數據 (框選角色臉部)</strong>。</p>
+                        <p class="bento-text mt-2"><strong>模型適應性：</strong> 現有預訓練模型在動漫圖像上效果不佳，因<strong class="highlight-tech">真實世界圖像與動漫圖像本質差異</strong>。</p>
+                         <p class="bento-text mt-2"><strong>圖像分割與超解析度：</strong> 嘗試分割角色臉部，並使用生成模型 (如 GAN) 提升動漫圖像解析度，採用分塊並行放大處理。</p>
+                    </div>
+                    <div>
+                        <p class="bento-text"><strong>顏色空間探索：</strong> 研究在不同顏色空間 (RGB, Lab, Lch, HSV) 分析圖像，發現 <strong class="highlight-tech">Lab 空間可能更適合處理顏色</strong>。</p>
+                        <p class="bento-text mt-2"><strong>模型架構與激活函數：</strong> 嘗試改進預處理和模型架構，如使用不同大小卷積核，並測試 GELU 等新型激活函數。</p>
+                        <p class="bento-text mt-2"><strong>稀疏數據處理：</strong> 探索使用<strong class="highlight-tech">單次學習 (single-shot learning)</strong> 模型處理角色識別。</p>
+                        <p class="bento-text mt-2"><strong>語義分析：</strong> 研究通過角色服裝等非臉部特徵輔助識別。</p>
+                    </div>
+                </div>
+                <p class="bento-text mt-4">項目強調了數據質量控制和人工審核的重要性。</p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
