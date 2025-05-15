@@ -4,7 +4,7 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 ---
 
 <p align="center">
-  <strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
 </p>
 <p align="center">
   <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
@@ -18,18 +18,17 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
   </a>
 </p>
 <p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
-  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> |
-  <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |  
-  <a href="https://deep-learning-101.github.io/">回 GitHub Pages</a> |
-  <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> |
-  <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
+  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
 </p>
 <p align="center">
 <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 </p>
 
-# 深度學習正則化技術匯整 - [YouTube](https://www.youtube.com/watch?v=gSymqOhKW8o)
+# 第七章 深度學習中的正則化 - [YouTube](https://www.youtube.com/watch?v=gSymqOhKW8o) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
 ### Regularization for Deep Learning @ Deep Learning Book Chapter 7 (2017/02/10)
 
 ## 1. 正則化的基本含義與目標

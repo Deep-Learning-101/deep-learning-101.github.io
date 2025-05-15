@@ -21,7 +21,6 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
   <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
   <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> |
   <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |  
-  <a href="https://deep-learning-101.github.io/">回 GitHub Pages</a> |
   <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> |
   <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
 </p>
@@ -29,8 +28,9 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
 </p>
 
-# 深度學習模型訓練中的優化 - [YouTube](https://www.youtube.com/watch?v=DeXH5IMHfcs)
-### Optimization for Training Deep Models @ Deep Learning Book Chapter 8 (2017/03/10)
+# 第八章 深度模型中的優化 - [YouTube](https://www.youtube.com/watch?v=DeXH5IMHfcs) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+
+### Optimization for Training Deep Models (2017/03/10)
 
 ## 概述
 
