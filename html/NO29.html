@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>深度學習進階訓練技巧與應用 - Deep Learning 101</title>
+    <title>網域適應 (Domain Adaptation) - Deep Learning 101</title>
     <script src="https://cdn.tailwindcss.com/3.4.3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -134,8 +134,7 @@
             border-radius: 1.5rem;
             margin-bottom: 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            margin: 0 auto;
-            text-align: center;
+            text-align: center; /* Center align text */
         }
         .top-info-title {
             font-size: 2rem; /* 32px */
@@ -151,6 +150,9 @@
         .top-info-text p {
             margin-bottom: 0.5rem;
         }
+        .top-info-text p:last-child {
+            margin-bottom: 0;
+        }
         .top-info-text a {
             color: #0071e3;
             font-weight: 500;
@@ -158,6 +160,12 @@
         }
         .top-info-text a:hover {
             text-decoration: underline;
+        }
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 400px; /* Match image width in markdown */
         }
     </style>
 </head>
@@ -176,128 +184,117 @@
                     <strong>神經網路的黑執事 - 深度學習進階訓練技巧與應用</strong>
                 </p>
                 <p>
-                    <a href="https://www.youtube.com/watch?v=gMaQTqZUW58" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Advanced Training Techniques in Deep Learning</a>
+                    <a href="https://www.youtube.com/watch?v=C0HeMGPYif8" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Key Concepts in Domain Adaptation</a>
                 </p>
                 <p>
-                    <span class="text-xs text-slate-500">(Covers data & model regularization, label smoothing, data augmentation, semi-supervised and self-supervised learning.)</span>
+                    <span class="text-xs text-slate-500">(Covers core problems, theoretical basis, distance metrics, and application cases like synthetic data.)</span>
                 </p>
             </div>
         </div>
 
         <header class="text-center my-12">
             <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
-                深度學習進階訓練技巧與應用
+                網域適應關鍵重點匯整
             </h1>
             <p class="text-xl text-slate-600">
-                探討資料正規化、標籤平滑、資料擴增及自監督學習等關鍵技術
+                探討資料分佈不一致下的機器學習挑戰與解決方案
             </p>
         </header>
 
         <div class="grid-container">
             <div class="bento-box col-span-lg-3">
-                <i class="fas fa-cogs icon-large"></i>
-                <h2 class="bento-title-large">核心主題與重要概念 <span class="text-lg font-normal text-slate-500">Core Themes & Concepts</span></h2>
+                <i class="fas fa-globe-americas icon-large"></i>
+                <h2 class="bento-title-large">核心概念與問題定義 <span class="text-lg font-normal text-slate-500">Core Concept & Problem Definition</span></h2>
                 <p class="bento-text">
-                    影片強調，許多近期有效的模型訓練方法的核心思想並非傳統上直接對模型權重進行正規化，而是在 <strong class="highlight-tech">資料本身</strong> 或透過操作資料來約束模型的學習過程，使其學到的表示更魯棒和通用。這被視為從傳統模型正規化轉變為<strong class="highlight-tech">數據正規化 (Data Regularization)</strong>的趨勢。
+                    傳統機器學習模型假設訓練資料 (Source Domain) 和測試資料 (Target Domain) 來自<strong class="highlight-tech">同一個資料分佈</strong>。然而，<strong class="highlight-tech">網域適應 (Domain Adaptation)</strong> 處理的核心問題是訓練資料和實際應用資料的<strong class="highlight-tech">資料分佈不一致</strong>的情況。
                 </p>
                 <p class="bento-text mt-2">
-                    神經網路內部存在一種「<strong class="highlight-tech">隱生 (Emergent Properties)</strong>」特性，若善用，能有效處理大量資料。資料擴增可被視為從不同視角看待原始數據。
+                    當資料分佈不同時，傳統機器學習理論不再適用，在 Source Domain 訓練的模型直接應用於 Target Domain 可能<strong class="highlight-tech">性能會顯著下降</strong>。因此，Domain Adaptation 需要新的理論來保證在 Target Domain 上的誤差與 Source Domain 訓練誤差之間的關係。
                 </p>
             </div>
 
             <div class="bento-box col-span-lg-1">
-                <i class="fas fa-tags icon-large"></i>
-                <h2 class="bento-title">標籤平滑 <span class="text-base font-normal text-slate-500">Label Smoothing</span></h2>
-                <p class="bento-text">
-                    Label Smoothing 是一種正規化技術，用於修改分類問題的目標標籤。傳統 One-Hot Encoding 將正確類別機率設為 1，其他為 0；Label Smoothing 則將正確類別的一小部分機率 ($\alpha/k$) 分攤到其他類別。
-                </p>
-                <p class="bento-text mt-2">
-                    <strong class="highlight-tech">優勢：</strong> 防止模型對訓練資料過度自信，考慮其他類別可能性，提升泛化能力。其效果類似於知識蒸餾中的「溫度」，使模型能從較低機率分佈中學習額外資訊。
-                </p>
+                <i class="fas fa-balance-scale-left icon-large"></i>
+                <h2 class="bento-title">影響目標網域性能的因素 <span class="text-base font-normal text-slate-500">Influencing Factors</span></h2>
+                <p class="bento-text">模型在 Target Domain 上的表現主要受到以下因素影響：</p>
+                <ul class="bento-list bento-text mt-2">
+                    <li><strong>輸入資料 (Input X) 的分佈差異：</strong> Source 和 Target Domain 輸入資料分佈的距離。</li>
+                    <li><strong>標記者的差異 (Labeler Difference / Label Distance)：</strong> Source 和 Target Domain 資料標記標準的不一致性。</li>
+                </ul>
             </div>
 
             <div class="bento-box col-span-lg-2 row-span-lg-2">
-                <i class="fas fa-images icon-large"></i>
-                <h2 class="bento-title">資料擴增技術 <span class="text-base font-normal text-slate-500">Data Augmentation</span></h2>
+                <i class="fas fa-book-open icon-large"></i>
+                <h2 class="bento-title">理論基礎與誤差界限 <span class="text-base font-normal text-slate-500">Theoretical Basis & Error Bounds</span></h2>
                 <p class="bento-text">
-                    資料擴增是提升模型性能的「共識」方法，特別是在有限標記資料時。它透過對現有資料进行變換，增加訓練樣本多樣性，迫使模型學習更魯棒、更具泛化能力的特徵。
+                    Domain Adaptation 的目標是開發理論和方法，即使在分佈不同的情況下，也能使在 Source Domain 訓練的模型在 Target Domain 的表現接近理想狀況。理論上需要推導出 Target Domain 誤差的上限 (Error Bound)。
                 </p>
-                <h3 class="bento-subtitle mt-4">具體技術 <span class="text-sm font-normal text-slate-500">Specific Techniques</span></h3>
-                <div class="grid grid-cols-2 gap-4 mt-2">
-                    <div>
-                        <h4 class="font-semibold text-slate-700 text-sm mb-1">Mixup</h4>
-                        <p class="bento-text text-xs">混合兩張圖片及其標籤。</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-slate-700 text-sm mb-1">CutMix</h4>
-                        <p class="bento-text text-xs">將一張圖片的部分區域替換為另一張圖片的區域，並混合標籤，鼓勵模型關注關鍵部分。</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-slate-700 text-sm mb-1">Cutout</h4>
-                        <p class="bento-text text-xs">在圖片中隨機遮擋一個區域，提高對遮擋的魯棒性。</p>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-slate-700 text-sm mb-1">Manifold Mixup</h4>
-                        <p class="bento-text text-xs">在神經網路中間層對多個樣本的特徵表示進行混合，旨在學習更平滑的特徵空間。</p>
-                    </div>
-                </div>
+                <h3 class="bento-subtitle mt-4">基礎理論 (Theorem 1 概念) <span class="text-sm font-normal text-slate-500">Basic Theory (Theorem 1 Concept)</span></h3>
+                <p class="bento-text">
+                    Target Domain 上的錯誤率上限受限於 Source Domain 錯誤率、Source 和 Target Domain 之間的輸入資料分佈距離 (Distance of X)，以及理想假設下的組合錯誤（或標記者標準差異相關項）。
+                </p>
+                <h3 class="bento-subtitle mt-4">改進的理論 (Theorem 2) <span class="text-sm font-normal text-slate-500">Improved Theory (Theorem 2)</span></h3>
+                <p class="bento-text">
+                    基於 Hypothesis 估計距離的改進理論提供了更接近實際應用的誤差上界，主要包含：Source Domain 錯誤率、Source 和 Target Domain 間的 <strong class="highlight-tech">Hypothesis 距離</strong>、與 Hypothesis 空間複雜度 (<strong class="highlight-tech">VC Dimension</strong>) 和資料量有關的項（考慮過度擬合風險），以及理想假設下的聯合錯誤率。
+                </p>
+                 <p class="bento-text mt-2">
+                    <strong class="highlight-tech">理想假設 (Ideal Hypothesis H*)：</strong> 指在知道所有 Source 和 Target Domain 資料的標籤情況下，能在聯合資料分佈上達到最低誤差的假設。
+                </p>
             </div>
 
             <div class="bento-box col-span-lg-2">
-                <i class="fas fa-adjust icon-large"></i> <h2 class="bento-title">半監督學習與未標記資料利用 <span class="text-base font-normal text-slate-500">Semi-Supervised Learning</span></h2>
+                <i class="fas fa-ruler-combined icon-large"></i>
+                <h2 class="bento-title">衡量網域間距離 <span class="text-base font-normal text-slate-500">Measuring Domain Distance</span></h2>
                 <p class="bento-text">
-                    當標記資料有限但未標記資料豐富時，半監督學習變得重要。
+                    實際應用中直接計算基於分佈的距離非常困難，因處理複雜分佈形狀和對微小位置偏移過於敏感。
                 </p>
-                <ul class="bento-list bento-text mt-2">
-                    <li><strong class="highlight-tech">偽標籤 (Pseudo-labeling)：</strong> 用已訓練模型預測未標記資料，將預測結果作為「偽標籤」訓練或微調模型。</li>
-                    <li><strong class="highlight-tech">Unsupervised Data Augmentation (UDA)：</strong> 結合有標記資料的監督學習和未標記資料上的資料擴增。核心思想是對未標記資料擴增後，模型輸出應與原始未擴增的未標記資料輸出保持一致或相似，鼓勵模型對資料擴增保持「不變性」。</li>
-                </ul>
+                <p class="bento-text mt-2">
+                    <strong class="highlight-tech">利用 Hypothesis 估計距離：</strong> 訓練一個分類器 (Hypothesis H) 來區分來自 Source 和 Target Domain 的資料。分類器<strong class="highlight-tech">越難區分</strong>（錯誤率越高），表示兩個 Domain 距離<strong class="highlight-tech">越小</strong>。
+                </p>
+                 <p class="bento-text mt-2">
+                    <strong class="highlight-tech">Symmetric Difference Hypothesis Space Distance：</strong> 一種基於 Hypothesis 的距離衡量方法，定義了兩個 Hypothesis 在資料分佈上產生不同預測結果的區域的「大小」。
+                </p>
             </div>
 
             <div class="bento-box col-span-lg-1 row-span-lg-2">
-                <i class="fas fa-sync-alt icon-large"></i>
-                <h2 class="bento-title">自監督與對比學習 <span class="text-base font-normal text-slate-500">Self-Supervised & Contrastive Learning</span></h2>
+                <i class="fas fa-cogs icon-large"></i>
+                <h2 class="bento-title">實際應用方法與案例 <span class="text-base font-normal text-slate-500">Applications & Cases</span></h2>
                 <p class="bento-text">
-                    <strong class="highlight-tech">自監督學習 (Self-Supervised Learning)</strong> 是一種無需人工標記，透過設計輔助任務來學習資料表示的方法。
+                    Domain Adaptation 理論指導演算法設計，目標是通過<strong class="highlight-tech">減小 Source 和 Target 之間的距離</strong>來改進模型性能。
                 </p>
-                <p class="bento-text mt-2">
-                    <strong class="highlight-tech">對比學習 (Contrastive Learning)</strong> 核心思想是學習區分「相似」和「不相似」的樣本對，希望「自己跟自己」的表示很像，「自己跟別人」的表示很不一樣。
-                </p>
-                <h3 class="bento-subtitle mt-4">Contrastive Predictive Coding (CPC)</h3>
-                <p class="bento-text">
-                    學習一種編碼表示，使模型能區分時間或空間上相鄰的數據樣本（正樣本對）與隨機抽取的數據樣本（負樣本）。它希望模型能將不同視角下的同一個物體或同一時間序列中的相鄰部分映射到相似的表示空間。
-                </p>
-            </div>
-
-            <div class="bento-box col-span-lg-1">
-                <i class="fas fa-random icon-large"></i>
-                <h3 class="bento-subtitle">領域適應 <span class="text-sm font-normal text-slate-500">Domain Adaptation</span></h3>
-                <p class="bento-text">
-                    當模型訓練在一個領域但應用於不同領域時會遇到挑戰。利用未標記資料和資料擴增的技術有助於模型學習對資料分佈變化更魯棒的特徵，從而更好地適應新的領域。
-                </p>
-            </div>
-            
-            <div class="bento-box col-span-lg-3">
-                <i class="fas fa-users icon-large"></i>
-                <h2 class="bento-title">時間軸梗概與提及人物 <span class="text-base font-normal text-slate-500">Timeline & Figures</span></h2>
-                <p class="bento-text">
-                    <strong class="highlight-tech">概念發展順序：</strong> 傳統模型正規化 → 開始利用未標記數據 → 知識蒸餾/溫度概念受重視 → 各式資料擴增技術 (Mixup, CutMix等) → UDA 等一致性訓練方法 → 對比學習與 CPC 方法興起。
-                </p>
-                <p class="bento-text mt-2">
-                    <strong class="highlight-tech">提及人物：</strong> 演講者 (Mark Liou)、金馬克、郭大佬、CP 論文作者 ("M 的那位人") 等。
-                </p>
-            </div>
-
-            <div class="bento-box col-span-lg-3">
-                <i class="fas fa-exclamation-circle icon-large"></i>
-                <h2 class="bento-title">訓練挑戰與個人心得 <span class="text-base font-normal text-slate-500">Training Challenges & Insights</span></h2>
+                <h3 class="bento-subtitle mt-4">縮小網域差距方法 (GANs) <span class="text-sm font-normal text-slate-500">Bridging Domain Gap (GANs)</span></h3>
                 <ul class="bento-list bento-text">
-                    <li><strong>訓練難度：</strong> 某些技術（如早期的 Label Smoothing）可能「不太好練」。</li>
-                    <li><strong>數據量影響：</strong> 數據量稀缺會顯著影響訓練效果。</li>
-                    <li><strong>模型強大程度：</strong> 技術效果也與神經網路本身的強大程度有關。</li>
-                    <li><strong>計算資源：</strong> 某些模型（如某些對比學習方法）可能需要大量計算資源（顯卡）。</li>
+                    <li>減小 Feature Space 距離：利用 GAN 的 Discriminator 區分 Source/Target Feature，訓練生成器產生能騙過判別器的 Source Features。</li>
+                    <li>減小 Image Space 距離：直接將 Source Domain 圖像轉換為 Target Domain 風格 (類似 CycleGAN)。</li>
                 </ul>
-                 <p class="bento-text mt-2">總而言之，影片深入探討了如何透過巧妙的資料處理和訓練目標設計，利用未標記資料、增強模型魯棒性，進而在有限標記數據情況下提升模型性能，並指出資料正規化和自監督/半監督學習是重要的發展方向。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <h3 class="bento-subtitle"><i class="fas fa-vr-cardboard mr-2"></i>合成資料的應用 <span class="text-sm font-normal text-slate-500">Application of Synthetic Data</span></h3>
+                <p class="bento-text">
+                    在 Target Domain 標籤資料稀缺時非常有用。可以使用 3D 建模工具（如 <strong class="highlight-tech">Blender</strong> 和 <strong class="highlight-tech">MakeHuman</strong>）生成大量帶有精確標籤的 Source Domain 合成資料（如人體關節位置），然後將模型遷移到少量真實 Target Domain 資料上。合成資料優勢在於可大量生成並控制變數。
+                </p>
+            </div>
+            <div class="bento-box col-span-lg-1">
+                 <h3 class="bento-subtitle"><i class="fas fa-user-md mr-2"></i>醫學資料應用 <span class="text-sm font-normal text-slate-500">Medical Data Applications</span></h3>
+                <p class="bento-text">
+                醫學資料獲取真實標記困難，不同醫院/儀器資料差異大，標記標準不一。克服挑戰需技術、法規、制度和合作。連續學習或終身學習有潛力。
+                </p>
+            </div>
+            <div class="bento-box col-span-lg-2">
+                <h3 class="bento-subtitle"><i class="fas fa-check-double mr-2"></i>多個 Source Domain 的選擇 <span class="text-sm font-normal text-slate-500">Selecting from Multiple Sources</span></h3>
+                <p class="bento-text">
+                當有多個 Source Domain 可選時，應選擇與 Target Domain 距離最小的。可通過訓練分類器區分不同 Source Domain 和 Target Domain 的資料，難以區分的 Source Domain（分類錯誤率高）表示距離較小，是較好的選擇。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-link icon-large"></i>
+                <h2 class="bento-title">相關概念 <span class="text-base font-normal text-slate-500">Related Concepts</span></h2>
+                <ul class="bento-list bento-text">
+                    <li><strong>Domain Adaptation vs. Transfer Learning：</strong> Domain Adaptation 更側重於<strong class="highlight-tech">理論上量化 Source 和 Target 之間的距離</strong>，並提供評估不同 Domain 資料代表性的方法。Transfer Learning 是更廣泛的概念，Domain Adaptation 是其下的分支。</li>
+                    <li><strong>Domain Adaptation vs. MCMC：</strong> Domain Adaptation 中的採樣是從固定的分佈中抽取資料，與 MCMC 中在不同狀態之間移動來採樣的概念不同。</li>
+                </ul>
             </div>
 
         </div>
