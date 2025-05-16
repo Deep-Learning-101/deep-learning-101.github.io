@@ -119,7 +119,7 @@ Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro P
 | 32  | Transfer Learnings & Multitask Learning | [2019/07/19](https://www.youtube.com/watch?v=1M0fjIsA0vA) | Mark Chang |   |
 | 31  | [Machine Teaching](https://deep-learning-101.github.io/html/NO31.html) | [2019/06/28](https://www.youtube.com/watch?v=q1XhbjnFICc) | [Mark Liou](https://deep-learning-101.github.io/notebooklm/NO31) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/NO31.mp3" type="audio/mpeg"></audio> |
 | 30  | The Hackathon/Formosa Grand Challenge Between Us | [2019/05/17](https://www.youtube.com/watch?v=S19yP1LMrhQ) | Ryan Chao |   |
-| 29  | Domain adaptation | [2019/03/08](https://www.youtube.com/watch?v=C0HeMGPYif8) | Mark Chang |   |
+| 29  | [Domain adaptation](https://deep-learning-101.github.io/html/NO29.html) | [2019/03/08](https://www.youtube.com/watch?v=C0HeMGPYif8) | [Mark Chang](https://deep-learning-101.github.io/notebooklm/NO29) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/NO29.mp3" type="audio/mpeg"></audio> |
 | 28  | Deep knowledge representation and reasoning | [2019/02/15](https://www.youtube.com/watch?v=BDdtkODrlKo) | Chin-Hui Chen |   |
 | 27  | Semi-Supervised Classification with Graph Convolutional Networks | [2019/01/11](https://www.youtube.com/watch?v=hAr_OHrFXI8) | Bean Yen |   |
 | 26  | Machine Reading Comprehension | [2018/12/07](https://www.youtube.com/watch?v=SXLukeWNIkw) | Nat, Alice & Ian |   |
