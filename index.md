@@ -117,7 +117,7 @@ Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro P
 | 34  | High-Dimensional Continuous Control Using Generalized Advantage Estimation | [2019/10/04](https://www.youtube.com/watch?v=fjoJbSII-mQ) | Cecile Liu |   |
 | 33  | Hardware Accelerators for Machine Learning | [2019/08/23](https://www.youtube.com/watch?v=poNOcIExglw) | 林家銘 |   |
 | 32  | Transfer Learnings & Multitask Learning | [2019/07/19](https://www.youtube.com/watch?v=1M0fjIsA0vA) | Mark Chang |   |
-| 31  | Machine Teaching | [2019/06/28](https://www.youtube.com/watch?v=q1XhbjnFICc) | Mark Liou |   |
+| 31  | [Machine Teaching](https://deep-learning-101.github.io/html/NO31.html) | [2019/06/28](https://www.youtube.com/watch?v=q1XhbjnFICc) | [Mark Liou](https://deep-learning-101.github.io/notebooklm/NO31) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/NO31.mp3" type="audio/mpeg"></audio> |
 | 30  | The Hackathon/Formosa Grand Challenge Between Us | [2019/05/17](https://www.youtube.com/watch?v=S19yP1LMrhQ) | Ryan Chao |   |
 | 29  | Domain adaptation | [2019/03/08](https://www.youtube.com/watch?v=C0HeMGPYif8) | Mark Chang |   |
 | 28  | Deep knowledge representation and reasoning | [2019/02/15](https://www.youtube.com/watch?v=BDdtkODrlKo) | Chin-Hui Chen |   |
