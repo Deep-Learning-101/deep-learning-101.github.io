@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>機器教學與蒸餾 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #0071e3;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            margin: 0 auto;
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">https://deep-learning-101.github.io/</a>
+                </p>
+                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
+                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+                <p class="mt-3">
+                    <strong>Machine Teaching - 機器教學與蒸餾</strong>
+                </p>
+                <p><em>2019/06/28 - Mark Liou</em></p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=q1XhbjnFICc" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Machine Teaching and Distillation</a>
+                </p>
+                <p>
+                    <span class="text-xs text-slate-500">(Covers model distillation, dataset distillation, and related concepts.)</span>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                機器教學與蒸餾
+            </h1>
+            <p class="text-xl text-slate-600">
+                模型蒸餾、資料集蒸餾的核心概念與方法探討
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-chalkboard-teacher icon-large"></i>
+                <h2 class="bento-title-large">核心概念：機器教學 <span class="text-lg font-normal text-slate-500">Core Concept: Machine Teaching</span></h2>
+                <p class="bento-text">
+                    <strong>機器教學 (Machine Teaching)</strong> 的核心概念是指人類利用機器直接去訓練機器的過程。與傳統的監督式學習從大量標註資料中學習不同，機器教學探討如何利用現有的模型或資料，將知識轉移或濃縮，以教導新的模型，尤其是更小、更有效率的模型，以便部署在資源受限的裝置上。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-compress-alt icon-large"></i>
+                <h2 class="bento-title-large">模型蒸餾 <span class="text-lg font-normal text-slate-500">Model Distillation</span></h2>
+                <p class="bento-text">
+                    模型蒸餾的核心思想是將一個較大或性能更好的<strong class="highlight-tech">教師模型 (Teacher Net)</strong> 的知識轉移到一個通常較小、更有效率的<strong class="highlight-tech">學生模型 (Student Net)</strong> 上。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-graduation-cap mr-2"></i>經典做法 (Knowledge Distillation)</h3>
+                <p class="bento-text">學生模型學習教師模型的輸出結果（而非僅 Ground Truth），以捕捉類別間的細微關係，即<strong class="highlight-tech">暗知識 (Dark Knowledge)</strong>。例如，教師模型識別 "9" 時，可能也給 "4" 較高機率，學生模型學習此分佈有助區分相似類別。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-wave-square mr-2"></i>Logits 與 Softmax 的學習</h3>
+                <p class="bento-text">直接學習 Softmax 前的 <strong class="highlight-tech">Logits</strong> 可能比學習 Softmax 後的機率分佈效果更好、訓練更快，因其保留了類別預測值間的數值大小關係。Loss Function 可用 MSE 或 KL Divergence。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-thermometer-half mr-2"></i>Temperature 參數影響</h3>
+                <p class="bento-text">在 Softmax 中加入 <strong class="highlight-tech">Temperature 參數 (T)</strong> 可使機率分佈更平滑。T 值越大，分佈越平坦。實驗發現在蒸餾中加入 T 可讓學生模型學得更好，類似 Ny Teacher 概念。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                 <h3 class="bento-subtitle"><i class="fas fa-tags mr-2"></i>Label Smoothing 與 Temperature</h3>
+                <p class="bento-text">同時使用 Label Smoothing 和 Temperature 可能導致結果變差，因 Label Smoothing 使數據點在特徵空間更集中，學生模型難學到細微差別。蒸餾時應避免同時使用。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-project-diagram mr-2"></i>Relational Knowledge Distillation</h3>
+                <p class="bento-text">CVPR 2019 提出，學生模型除學習單點輸出外，還學習<strong class="highlight-tech">樣本與樣本之間的關係</strong>（如中間層或 Logits 輸出間的距離/角度），有助捕捉空間資訊。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-user-friends mr-2"></i>Teacher Assistant System</h3>
+                <p class="bento-text">DeepMind (2019) 提出，解決「教師太大、學生太小學不好」問題。引入中等規模「助理老師」模型，透過多階段知識傳遞提升小型學生模型性能，暗示知識傳遞需逐步進行。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-filter icon-large"></i>
+                <h2 class="bento-title-large">資料集蒸餾 <span class="text-lg font-normal text-slate-500">Dataset Distillation</span></h2>
+                <p class="bento-text">
+                    資料集蒸餾的核心思想是將原始的大型數據集<strong class="highlight-tech">濃縮成一個小型、合成的數據集</strong>，此合成數據集包含足夠資訊，能用來訓練一個模型，使其在原始數據集上達到良好性能。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                <h3 class="bento-subtitle">試圖解決的問題 <span class="text-sm font-normal text-slate-500">Problems Addressed</span></h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>數據壓縮和傳輸：</strong> 將大型數據集壓縮成小尺寸，方便儲存和傳輸，特別是在網絡頻寬受限或數據量龐大的情況下（如台積電或基因數據傳輸問題）。</li>
+                    <li><strong>數據隱私：</strong> 合成數據集通常與原始數據集的樣貌不同，可以保護原始數據的隱私。模型可以在處理過的數據上訓練，而無需直接接觸敏感的原始數據。</li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-1 row-span-lg-2">
+                <i class="fas fa-vial icon-large"></i>
+                <h3 class="bento-subtitle">迭代優化合成數據 <span class="text-sm font-normal text-slate-500">Iterative Synthetic Data Optimization</span></h3>
+                <p class="bento-text">
+                    目標是將大型數據集濃縮成極小的合成數據集（如 MNIST 6萬張 -> 幾十張）。
+                </p>
+                <p class="bento-text mt-2">
+                    <strong>流程：</strong> <strong class="highlight-tech">迭代優化</strong>一個小的合成數據集。初始化合成數據 -> 用合成數據訓練模型 -> 用此模型預測<strong class="highlight-tech">原始數據集</strong>並計算損失 -> 反向傳播損失回<strong class="highlight-tech">合成數據集</strong>更新像素值 -> 重複。
+                </p>
+                <p class="bento-text mt-2">
+                    最終合成圖片可能<strong class="highlight-tech">模糊或奇怪</strong>。用此合成數據集訓練的模型在原始數據集上可達一定準確率。核心價值在於極大壓縮資料量、解決數據傳輸限制和保護數據隱私。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2">
+                 <h3 class="bento-subtitle">其他資料集蒸餾相關方法 <span class="text-sm font-normal text-slate-500">Other Related Methods</span></h3>
+                 <ul class="bento-list bento-text">
+                    <li><strong>利用教師模型輔助標註 (Omni-Supervised)：</strong> 利用已訓練模型對未標註資料進行標註（結合數據增強和模型集成），作為學生模型訓練資料。</li>
+                    <li><strong>Data-Free Distillation (無資料蒸餾)：</strong> 在無法接觸原始訓練資料下訓練新模型。構想是傳輸教師模型處理後的「元資料」(Meta Data)，如記錄各層 Activation 狀態，用於訓練學生模型。</li>
+                     <li><strong>GANs for Dataset Distillation：</strong> 論文使用 GAN 方式進行，概念無本質區別。</li>
+                 </ul>
+                  <p class="bento-text mt-2">Dataset Distillation 生成的合成數據集也可能被惡意使用進行<strong class="highlight-tech">模型攻擊 (Poison Image)</strong>。</p>
+            </div>
+
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-comments icon-large"></i>
+                <h2 class="bento-title">其他相關概念與社群討論 <span class="text-base font-normal text-slate-500">Other Concepts & Community</span></h2>
+                 <p class="bento-text">
+                    <strong>CVPR 2019 趨勢觀察：</strong> <strong class="highlight-tech">GVN (Graph Neural Network)</strong> 興起，<strong class="highlight-tech">GAN (生成對抗網路)</strong> 熱度下降，<strong class="highlight-tech">Self-Supervised Learning (自監督學習)</strong> 和 <strong class="highlight-tech">Meta Learning (元學習)</strong> 很常見。
+                </p>
+                <p class="bento-text mt-2">
+                    社群聚會旨在促進交流和學習，鼓勵成員定期分享看到的論文、公司經驗或研究問題。社群內有經驗豐富的成員可以提供幫助。
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const bentoBoxes = document.querySelectorAll('.bento-box');
+        bentoBoxes.forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px) scale(0.95)';
+            inView(box, () => {
+                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
