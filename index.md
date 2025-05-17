@@ -24,8 +24,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
 </p>
 
-</p>
-
 ---
 
 <div align="center">
