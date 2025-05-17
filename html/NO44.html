@@ -134,22 +134,26 @@
             border-radius: 1.5rem;
             margin-bottom: 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            margin: 0 auto;
+            margin-left: auto;
+            margin-right: auto;
             text-align: center;
         }
-        .top-info-title {
+        .top-info-title { /* Applied to the main title inside top-info-box */
             font-size: 2rem; /* 32px */
             font-weight: 700;
             color: #1d1d1f;
             margin-bottom: 0.5rem;
         }
-        .top-info-text {
+        .top-info-text { /* Applied to the paragraph group in top-info-box */
             font-size: 1rem;
             line-height: 1.6;
             color: #333333;
         }
         .top-info-text p {
             margin-bottom: 0.5rem;
+        }
+         .top-info-text p:last-child {
+            margin-bottom: 0;
         }
         .top-info-text a {
             color: #0071e3;
@@ -159,35 +163,53 @@
         .top-info-text a:hover {
             text-decoration: underline;
         }
+        .centered-image {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 400px;
+        }
+        .markdown-links a {
+             margin-left: 0.25rem;
+             margin-right: 0.25rem;
+        }
     </style>
 </head>
 <body>
     <div id="app" class="content-wrapper">
 
         <div class="top-info-box">
-            <h1 class="top-info-title">Deep Learning 101</h1>
+            <p><strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong></p>
+            <p><strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
+            <p>AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
+            本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
+            Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer</p>
+            <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" class="centered-image my-4">
+            </a>
+            <p class="markdown-links">
+              <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
+              <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> |
+              <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |
+              <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> |
+              <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
+            </p>
+            <p class="mt-4">
+                <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important; display: inline-block;" ></a>
+            </p>
+            <hr class="my-6 border-gray-300"> <h1 class="top-info-title">神經網路的黑執事</h1>
             <div class="top-info-text">
-                <p>
-                    <a href="https://deep-learning-101.github.io/" rel="noopener noreferrer">回上一頁 https://deep-learning-101.github.io/</a>
-                </p>
-                <p>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</p>
-                <p><strong>台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
-                <p class="mt-3">
-                    <strong>神經網路的黑執事 - 深度學習進階訓練技巧與應用</strong>
-                </p>
                 <p><em>2020/08/21 - Mark Liou</em></p>
                 <p>
                     <a href="https://www.youtube.com/watch?v=gMaQTqZUW58" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Advanced Training Techniques in Deep Learning</a>
-                </p>
-                <p>
-                    <span class="text-xs text-slate-500">(Covers data & model regularization, label smoothing, data augmentation, semi-supervised and self-supervised learning.)</span>
+                     | <a href="https://deep-learning-101.github.io/" rel="noopener noreferrer">回 GitHub Pages</a>
                 </p>
             </div>
         </div>
 
         <header class="text-center my-12">
             <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
-                深度學習進階訓練技巧與應用
+                深度學習進階訓練技巧與應用匯整報告
             </h1>
             <p class="text-xl text-slate-600">
                 探討資料正規化、標籤平滑、資料擴增及自監督學習等關鍵技術

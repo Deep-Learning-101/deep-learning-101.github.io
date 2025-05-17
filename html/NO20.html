@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>機器教學與蒸餾 - Deep Learning 101</title>
+    <title>VAE 於動漫角色影像生成之研究 - Deep Learning 101</title>
     <script src="https://cdn.tailwindcss.com/3.4.3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -138,13 +138,13 @@
             margin-right: auto;
             text-align: center;
         }
-        .top-info-title {
+        .top-info-title { /* Applied to the main title inside top-info-box */
             font-size: 2rem; /* 32px */
             font-weight: 700;
             color: #1d1d1f;
             margin-bottom: 0.5rem;
         }
-        .top-info-text {
+        .top-info-text { /* Applied to the paragraph group in top-info-box */
             font-size: 1rem;
             line-height: 1.6;
             color: #333333;
@@ -198,11 +198,11 @@
                 <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important; display: inline-block;" ></a>
             </p>
             <hr class="my-6 border-gray-300">
-            <h1 class="top-info-title">Machine Teaching</h1>
+            <h1 class="top-info-title">VAE: A generative model for 2D anime character faces</h1>
             <div class="top-info-text">
-                <p><em>2019/06/28 - Mark Liou</em></p>
+                <p><em>2018/06/08 - Nat, Boris, Alice, Ian (蠻牛小隊)</em></p>
                 <p>
-                    <a href="https://www.youtube.com/watch?v=q1XhbjnFICc" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Machine Teaching and Distillation</a>
+                    <a href="https://www.youtube.com/watch?v=DF9GMPU8wPU" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: VAE for Anime Character Generation</a>
                      | <a href="https://deep-learning-101.github.io/" rel="noopener noreferrer">回 GitHub Pages</a>
                 </p>
             </div>
@@ -210,112 +210,128 @@
 
         <header class="text-center my-12">
             <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
-                機器教學與蒸餾
+                Variational Autoencoder (VAE) 於動漫角色影像生成
             </h1>
             <p class="text-xl text-slate-600">
-                模型蒸餾、資料集蒸餾的核心概念與方法探討
+                研究筆記與新手入門指南：從 AE 到 VAE 的生成模型探索
             </p>
         </header>
 
         <div class="grid-container">
             <div class="bento-box col-span-lg-3">
-                <i class="fas fa-chalkboard-teacher icon-large"></i>
-                <h2 class="bento-title-large">核心概念：機器教學 <span class="text-lg font-normal text-slate-500">Core Concept: Machine Teaching</span></h2>
+                <i class="fas fa-cogs icon-large"></i>
+                <h2 class="bento-title-large">從 Autoencoder (AE) 談起 <span class="text-lg font-normal text-slate-500">Starting with Autoencoders</span></h2>
                 <p class="bento-text">
-                    <strong>機器教學 (Machine Teaching)</strong> 的核心概念是指人類利用機器直接去訓練機器的過程。與傳統的監督式學習從大量標註資料中學習不同，機器教學探討如何利用現有的模型或資料，將知識轉移或濃縮，以教導新的模型，尤其是更小、更有效率的模型，以便部署在資源受限的裝置上。
+                    傳統 <strong class="highlight-tech">Autoencoder (AE)</strong> 可想成數據壓縮與解壓縮過程。透過 <strong class="highlight-tech">Encoder</strong> 將高維輸入壓縮至低維 <strong class="highlight-tech">Latent Space (潛在空間)</strong> 的 <strong class="highlight-tech">Latent Vector (潛在向量)</strong>，再由 <strong class="highlight-tech">Decoder</strong> 還原。
+                </p>
+                <p class="bento-text mt-2">
+                    AE 主要用於資料降維和特徵提取。然而，傳統 AE 將每個輸入數據點映射到潛在空間中的一個「點」，形成離散的 <strong class="highlight-tech">Clusters (群集)</strong>。這些群集間的「空白區域」若用於採樣解碼，結果往往不佳，限制了其生成新數據的能力。
                 </p>
             </div>
 
             <div class="bento-box col-span-lg-3">
-                <i class="fas fa-compress-alt icon-large"></i>
-                <h2 class="bento-title-large">模型蒸餾 <span class="text-lg font-normal text-slate-500">Model Distillation</span></h2>
+                <i class="fas fa-magic icon-large"></i>
+                <h2 class="bento-title-large">Variational Autoencoder (VAE)：邁向生成模型 <span class="text-lg font-normal text-slate-500">VAE: Towards Generative Models</span></h2>
                 <p class="bento-text">
-                    模型蒸餾的核心思想是將一個較大或性能更好的<strong class="highlight-tech">教師模型 (Teacher Net)</strong> 的知識轉移到一個通常較小、更有效率的<strong class="highlight-tech">學生模型 (Student Net)</strong> 上。
+                    VAE 不再將輸入編碼為潛在空間的單一「點」，而是編碼為一個「區域」或「分佈」，通常假定為<strong class="highlight-tech">高斯分佈</strong>。Encoder 輸出描述此分佈的<strong class="highlight-tech">均值向量 (μ)</strong> 和<strong class="highlight-tech">標準差向量 (σ)</strong>。Decoder 從此分佈中<strong class="highlight-tech">採樣 (Sampling)</strong> 得到潛在向量再解碼。
+                </p>
+                <p class="bento-text mt-2">
+                    VAE 的生成能力源於此「分佈」概念，可在潛在空間的「空白」區域採樣並解碼出合理圖像。潛在空間形成更集中且連續的區域，同時保留群集特性，但訓練難度較高。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-microchip icon-large"></i>
+                <h2 class="bento-title">VAE 的模型架構與訓練要點 <span class="text-base font-normal text-slate-500">VAE Architecture & Training</span></h2>
+                <p class="bento-text">VAE 模型架構：</p>
+                <ol class="bento-list bento-text mt-2">
+                    <li><strong>Encoder Network：</strong> 接收輸入，通常使用 <strong class="highlight-tech">Convolution (卷積)</strong> 層提取特徵。</li>
+                    <li><strong>輸出分佈參數：</strong> Encoder 輸出均值向量 (μ) 和標準差向量 (σ)。</li>
+                    <li><strong>Sampling (採樣)：</strong> 從以 μ 為均值、σ 為標準差的高斯分佈中採樣得到 Latent Vector。</li>
+                    <li><strong>Decoder Network：</strong> 接收採樣的 Latent Vector，通常使用 <strong class="highlight-tech">Deconvolution (反卷積)</strong> 層重建圖像。</li>
+                    <li><strong>輸出生成圖像。</strong></li>
+                </ol>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-lightbulb mr-2"></i>重參數化技巧 <span class="text-sm font-normal text-slate-500">Reparameterization Trick</span></h3>
+                <p class="bento-text">
+                    解決「隨機抽取」不可微分問題。從標準高斯分佈採樣隨機向量 $\epsilon$，再透過 `latent_vector = μ + σ * ε` 得到目標分佈採樣，使誤差可反向傳播。
                 </p>
             </div>
 
             <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-graduation-cap mr-2"></i>經典做法 (Knowledge Distillation)</h3>
-                <p class="bento-text">學生模型學習教師模型的輸出結果（而非僅 Ground Truth），以捕捉類別間的細微關係，即<strong class="highlight-tech">暗知識 (Dark Knowledge)</strong>。例如，教師模型識別 "9" 時，可能也給 "4" 較高機率，學生模型學習此分佈有助區分相似類別。</p>
-            </div>
-
-            <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-wave-square mr-2"></i>Logits 與 Softmax 的學習</h3>
-                <p class="bento-text">直接學習 Softmax 前的 <strong class="highlight-tech">Logits</strong> 可能比學習 Softmax 後的機率分佈效果更好、訓練更快，因其保留了類別預測值間的數值大小關係。Loss Function 可用 MSE 或 KL Divergence。</p>
-            </div>
-
-            <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-thermometer-half mr-2"></i>Temperature 參數影響</h3>
-                <p class="bento-text">在 Softmax 中加入 <strong class="highlight-tech">Temperature 參數 (T)</strong> 可使機率分佈更平滑。T 值越大，分佈越平坦。實驗發現在蒸餾中加入 T 可讓學生模型學得更好，類似 Ny Teacher 概念。</p>
-            </div>
-
-            <div class="bento-box col-span-lg-1">
-                 <h3 class="bento-subtitle"><i class="fas fa-tags mr-2"></i>Label Smoothing 與 Temperature</h3>
-                <p class="bento-text">同時使用 Label Smoothing 和 Temperature 可能導致結果變差，因 Label Smoothing 使數據點在特徵空間更集中，學生模型難學到細微差別。蒸餾時應避免同時使用。</p>
-            </div>
-
-            <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-project-diagram mr-2"></i>Relational Knowledge Distillation</h3>
-                <p class="bento-text">CVPR 2019 提出，學生模型除學習單點輸出外，還學習<strong class="highlight-tech">樣本與樣本之間的關係</strong>（如中間層或 Logits 輸出間的距離/角度），有助捕捉空間資訊。</p>
-            </div>
-
-            <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-user-friends mr-2"></i>Teacher Assistant System</h3>
-                <p class="bento-text">DeepMind (2019) 提出，解決「教師太大、學生太小學不好」問題。引入中等規模「助理老師」模型，透過多階段知識傳遞提升小型學生模型性能，暗示知識傳遞需逐步進行。</p>
-            </div>
-
-            <div class="bento-box col-span-lg-3">
-                <i class="fas fa-filter icon-large"></i>
-                <h2 class="bento-title-large">資料集蒸餾 <span class="text-lg font-normal text-slate-500">Dataset Distillation</span></h2>
-                <p class="bento-text">
-                    資料集蒸餾的核心思想是將原始的大型數據集<strong class="highlight-tech">濃縮成一個小型、合成的數據集</strong>，此合成數據集包含足夠資訊，能用來訓練一個模型，使其在原始數據集上達到良好性能。
-                </p>
-            </div>
-
-            <div class="bento-box col-span-lg-2">
-                <h3 class="bento-subtitle">試圖解決的問題 <span class="text-sm font-normal text-slate-500">Problems Addressed</span></h3>
-                <ul class="bento-list bento-text">
-                    <li><strong>數據壓縮和傳輸：</strong> 將大型數據集壓縮成小尺寸，方便儲存和傳輸，特別是在網絡頻寬受限或數據量龐大的情況下（如台積電或基因數據傳輸問題）。</li>
-                    <li><strong>數據隱私：</strong> 合成數據集通常與原始數據集的樣貌不同，可以保護原始數據的隱私。模型可以在處理過的數據上訓練，而無需直接接觸敏感的原始數據。</li>
+                <h3 class="bento-subtitle"><i class="fas fa-bullseye mr-2"></i>損失函數 <span class="text-sm font-normal text-slate-500">Loss Function</span></h3>
+                <p class="bento-text">包含兩部分：</p>
+                <ul class="bento-list bento-text text-sm">
+                    <li><strong>Reconstruction Loss：</strong> 如 L2 Loss，度量生成圖像與原始輸入相似度。</li>
+                    <li><strong>KL Divergence：</strong> 度量潛在分佈與標準高斯先驗分佈的差異，促使潛在空間連續平滑。</li>
                 </ul>
             </div>
 
-            <div class="bento-box col-span-lg-1 row-span-lg-2">
-                <i class="fas fa-vial icon-large"></i>
-                <h3 class="bento-subtitle">迭代優化合成數據 <span class="text-sm font-normal text-slate-500">Iterative Synthetic Data Optimization</span></h3>
+             <div class="bento-box col-span-lg-3">
+                <i class="fas fa-paint-brush icon-large"></i>
+                <h2 class="bento-title-large">動漫角色影像生成實驗與發現 <span class="text-lg font-normal text-slate-500">Anime Character Generation Experiments</span></h2>
                 <p class="bento-text">
-                    目標是將大型數據集濃縮成極小的合成數據集（如 MNIST 6萬張 -> 幾十張）。
-                </p>
-                <p class="bento-text mt-2">
-                    <strong>流程：</strong> <strong class="highlight-tech">迭代優化</strong>一個小的合成數據集。初始化合成數據 -> 用合成數據訓練模型 -> 用此模型預測<strong class="highlight-tech">原始數據集</strong>並計算損失 -> 反向傳播損失回<strong class="highlight-tech">合成數據集</strong>更新像素值 -> 重複。
-                </p>
-                <p class="bento-text mt-2">
-                    最終合成圖片可能<strong class="highlight-tech">模糊或奇怪</strong>。用此合成數據集訓練的模型在原始數據集上可達一定準確率。核心價值在於極大壓縮資料量、解決數據傳輸限制和保護數據隱私。
+                    使用約 4000 張動漫角色頭部圖片 (128x128px)，潛在空間設為 50 維，訓練 1000 個世代。
                 </p>
             </div>
 
-            <div class="bento-box col-span-lg-2">
-                 <h3 class="bento-subtitle">其他資料集蒸餾相關方法 <span class="text-sm font-normal text-slate-500">Other Related Methods</span></h3>
-                 <ul class="bento-list bento-text">
-                    <li><strong>利用教師模型輔助標註 (Omni-Supervised)：</strong> 利用已訓練模型對未標註資料進行標註（結合數據增強和模型集成），作為學生模型訓練資料。</li>
-                    <li><strong>Data-Free Distillation (無資料蒸餾)：</strong> 在無法接觸原始訓練資料下訓練新模型。構想是傳輸教師模型處理後的「元資料」(Meta Data)，如記錄各層 Activation 狀態，用於訓練學生模型。</li>
-                     <li><strong>GANs for Dataset Distillation：</strong> 論文使用 GAN 方式進行，概念無本質區別。</li>
-                 </ul>
-                  <p class="bento-text mt-2">Dataset Distillation 生成的合成數據集也可能被惡意使用進行<strong class="highlight-tech">模型攻擊 (Poison Image)</strong>。</p>
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-chart-area mr-2"></i>潛在空間分佈 <span class="text-sm font-normal text-slate-500">Latent Space Distribution</span></h3>
+                <p class="bento-text">VAE 形成巨大、內部混雜的連續區域，而非 AE 的離散群集。相似圖像潛在向量距離近 (約1.15-1.75)，不同人物則較遠 (>2.0)，保留了相似性結構。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-sliders-h mr-2"></i>圖像特徵操控 <span class="text-sm font-normal text-slate-500">Feature Manipulation</span></h3>
+                <p class="bento-text">微擾潛在向量可平滑改變生成圖像特徵，如<strong class="highlight-tech">眼睛顏色、表情、髮型</strong> (有時傾向變捲髮)。</p>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <h3 class="bento-subtitle"><i class="fas fa-users-cog mr-2"></i>角色融合 <span class="text-sm font-normal text-slate-500">Character Fusion</span></h3>
+                <p class="bento-text">線性組合不同角色潛在向量可生成融合特徵的新角色，但有時效果像「拼接」而非自然融合。</p>
+            </div>
+             <div class="bento-box col-span-lg-3">
+                <h3 class="bento-subtitle"><i class="fas fa-photo-video mr-2"></i>連續生成比較 <span class="text-sm font-normal text-slate-500">Continuous Generation Comparison</span></h3>
+                <p class="bento-text">
+                VAE 在潛在空間中沿路徑移動能產生<strong class="highlight-tech">平滑過渡的圖像序列</strong>，而傳統 AE 在空白區域解碼圖像會模糊或損壞。這與 VAE 潛在空間更集中、標準差較小的分佈特性相關。
+                </p>
             </div>
 
 
             <div class="bento-box col-span-lg-3">
-                <i class="fas fa-comments icon-large"></i>
-                <h2 class="bento-title">其他相關概念與社群討論 <span class="text-base font-normal text-slate-500">Other Concepts & Community</span></h2>
-                 <p class="bento-text">
-                    <strong>CVPR 2019 趨勢觀察：</strong> <strong class="highlight-tech">GVN (Graph Neural Network)</strong> 興起，<strong class="highlight-tech">GAN (生成對抗網路)</strong> 熱度下降，<strong class="highlight-tech">Self-Supervised Learning (自監督學習)</strong> 和 <strong class="highlight-tech">Meta Learning (元學習)</strong> 很常見。
-                </p>
-                <p class="bento-text mt-2">
-                    社群聚會旨在促進交流和學習，鼓勵成員定期分享看到的論文、公司經驗或研究問題。社群內有經驗豐富的成員可以提供幫助。
+                <i class="fas fa-tasks icon-large"></i>
+                <h2 class="bento-title-large">挑戰與未來展望 <span class="text-lg font-normal text-slate-500">Challenges & Future Outlook</span></h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-1"><i class="fas fa-image mr-1"></i>圖像解析度與清晰度</h4>
+                        <p class="bento-text text-sm">目前 128x128px 放大後模糊，需更大數據與更強模型提升品質。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-1"><i class="fas fa-thumbs-up mr-1"></i>生成質量與主觀性</h4>
+                        <p class="bento-text text-sm">評估生成圖像「可愛度」等主觀，需客觀指標評估多樣性與真實感。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-1"><i class="fas fa-brain mr-1"></i>潛在空間理解與控制</h4>
+                        <p class="bento-text text-sm">VAE 學到的潛在特徵難以直接對應，缺乏精確控制。可考慮結合 Conditional GANs 等技術。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-1"><i class="fas fa-database mr-1"></i>數據集特性影響</h4>
+                        <p class="bento-text text-sm">動漫圖像多樣性影響模型效果，乾淨一致數據集 (如姿態歸一化) 更佳。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-1"><i class="fas fa-cogs mr-1"></i>模型訓練複雜性</h4>
+                        <p class="bento-text text-sm">VAE 訓練較 AE 複雜，需仔細調整損失函數權重。</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-slate-700 mb-1"><i class="fas fa-copyright mr-1"></i>版權問題</h4>
+                        <p class="bento-text text-sm">使用動漫角色圖像訓練和展示存在潛在版權問題，需謹慎處理。</p>
+                    </div>
+                </div>
+                <p class="bento-text mt-4">
+                    <strong>未來展望：</strong> 提高解析度、增強特徵控制、探索更複雜數據集、結合 VAE-GAN、StyleGAN 等技術。Cosplay 照片與動漫角色跨領域轉換也是有趣方向。
                 </p>
             </div>
-
         </div>
     </div>
 
