@@ -7,21 +7,21 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
 </p>
 <p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
-  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
-  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
-  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
-  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
-</p>
-<p align="center">
   AI是一條孤獨且充滿不確定的惶恐旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
   衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
-  由 TonTon Huang Ph.D. 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
+  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
 </p>  
 <p align="center">
   <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
     <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180"></a>
     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
+</p>
+<p align="center">
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+  <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
 </p>
 
 ---
