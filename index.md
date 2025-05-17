@@ -1,32 +1,51 @@
 ---
 layout: default
-title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
 ---
 
 <p align="center">
-  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
-</p>
-<p align="center">
-  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
-  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
-  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
-  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
-</p>  
-<p align="center">
-  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
-    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
-  </a>
+  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
 </p>
 <p align="center">
   <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
   <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
   <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
   <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
-  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
 </p>
 <p align="center">
-<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+  AI是一條孤獨且充滿不確定的惶恐旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+  由 TonTon Huang Ph.D. 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
+</p>  
+<p align="center">
+  <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180"></a>
+    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
 </p>
+
+</p>
+
+---
+
+<div align="center">
+
+<table>
+  <tr>
+    <td align="center"><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型</a></td>
+    <td align="center"><a href="https://deep-learning-101.github.io/Speech-Processing">語音處理</a></td>
+    <td align="center"><a href="https://deep-learning-101.github.io/Natural-Language-Processing">自然語言處理</a></td>
+    <td align="center"><a href="https://deep-learning-101.github.io//Computer-Vision">電腦視覺</a></td>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm">Large Language Model</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP</a></td>
+    <td><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision</a></td>
+  </tr>
+</table>
+
+</div>
 
 ---
 
@@ -73,26 +92,6 @@ title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 
 
 </details>
 
----
-
-<div align="center">
-
-<table>
-  <tr>
-    <td><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型</a></td>
-    <td><a href="https://deep-learning-101.github.io/Speech-Processing">語音處理</a></td>
-    <td><a href="https://deep-learning-101.github.io/Natural-Language-Processing">自然語言處理</a></td>
-    <td><a href="https://deep-learning-101.github.io//Computer-Vision">電腦視覺</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm">Large Language Model</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision</a></td>
-  </tr>
-</table>
-
-</div>
 ---
 
 # Deep Learning 101 Meetup
