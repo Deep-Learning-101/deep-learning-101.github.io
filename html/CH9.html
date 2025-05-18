@@ -51,9 +51,9 @@
             font-weight: 600;
             color: #1d1d1f;
         }
-        .bento-text em {
+        .bento-text em { /* For markdown emphasis */
             font-style: italic;
-            color: #0071e3;
+            color: #555; /* Slightly darker for emphasis */
         }
         .bento-text a {
             color: #0071e3;
@@ -63,15 +63,15 @@
             text-decoration: underline;
         }
         .bento-list {
-            list-style-position: inside; /* Changed to inside for better alignment with bento style */
-            padding-left: 0.5rem; /* Adjust if needed */
+            list-style-position: inside;
+            padding-left: 0.5rem;
         }
         .bento-list li {
-            margin-bottom: 0.75rem; /* Increased spacing */
-            padding-left: 1rem; /* Indent list items */
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
             position: relative;
         }
-        .bento-list li::before { /* Custom bullet points */
+        .bento-list li::before {
             content: "\f111"; /* Font Awesome circle icon */
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
@@ -79,7 +79,7 @@
             font-size: 0.5rem;
             position: absolute;
             left: -0.25rem;
-            top: 0.5em; /* Adjust vertical alignment */
+            top: 0.5em;
         }
 
         .highlight-tech {
@@ -94,7 +94,7 @@
             color: #0071e3; /* Apple blue for icons */
         }
         .content-wrapper {
-            max-width: 1024px;
+            max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
@@ -128,6 +128,14 @@
             flex-direction: column;
         }
 
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center; /* Centered text */
+        }
         .top-info-title {
             font-size: 2rem; /* 32px */
             font-weight: 700;
@@ -142,6 +150,9 @@
         .top-info-text p {
             margin-bottom: 0.5rem;
         }
+        .top-info-text strong { /* Ensure strong inside top-info-text is also bold */
+             font-weight: 700;
+        }
         .top-info-text a {
             color: #0071e3;
             font-weight: 500;
@@ -150,33 +161,14 @@
         .top-info-text a:hover {
             text-decoration: underline;
         }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-            margin-bottom: 1rem;
+        .chinese-main-title {
+            font-size: 2.8rem; /* Even larger for main Chinese title */
+            font-weight: 700;
         }
-        th, td {
-            border: 1px solid #e2e8f0; /* Tailwind gray-300 */
-            padding: 0.75rem;
-            text-align: left;
-            font-size: 0.9rem;
-        }
-        th {
-            background-color: #f8f9fa; /* Light gray background for headers */
-            font-weight: 600;
-        }
-        .table-container {
-            overflow-x: auto; /* Allows table to be scrollable on small screens */
-        }
-        .top-info-box {
-            background-color: #e9e9ed;
-            padding: 1.5rem 2rem;
-            border-radius: 1.5rem;
-            margin-bottom: 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            margin: 0 auto;
-            text-align: center;
+        .english-subtitle {
+            font-size: 1.5rem; /* Smaller English subtitle */
+            color: #666;
+            font-weight: 400;
         }
     </style>
 </head>
@@ -191,16 +183,18 @@
             <strong>Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
             </p>
             <p align="center">
-            AI是一條孤獨且充滿不確定的惶恐旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+            AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
             衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
             由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
             </p>
-            <p align="center">
-            <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
-                <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block;"></a>
-                 <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
-                    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block;">
-            </p>
+                <p align="center">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px;">
+                    </a>
+                </p>
             <p align="center">
             <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
             <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
@@ -208,10 +202,8 @@
             <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
             <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
             </p>
-                <p class="mt-3"><strong>2017/04/14, Convolutional Neural Networks @ Deep Learning Book Chapter 9</strong></p>
                 <p>
-                    <a href="https://www.youtube.com/watch?v=51cO6Kv37p4" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Convolutional Networks </a><br>
-                    <span class="text-xs text-slate-500">(Explore CNN concepts, architectures, and applications)</span>
+               <a href="https://www.youtube.com/watch?v=51cO6Kv37p4" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> <strong>2017/04/14, Convolutional Neural Networks @ Deep Learning Book Chapter 9</strong></a><br>
                 </p>
             </div>
         </div>

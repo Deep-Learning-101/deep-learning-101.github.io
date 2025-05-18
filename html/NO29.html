@@ -51,9 +51,9 @@
             font-weight: 600;
             color: #1d1d1f;
         }
-        .bento-text em {
+        .bento-text em { /* For markdown emphasis */
             font-style: italic;
-            color: #0071e3;
+            color: #555; /* Slightly darker for emphasis */
         }
         .bento-text a {
             color: #0071e3;
@@ -134,10 +134,7 @@
             border-radius: 1.5rem;
             margin-bottom: 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            /* text-align: center; /* Centering text within top-info-box if desired */
-            margin-left: auto; /* Center the box itself if its parent is wider */
-            margin-right: auto; /* Center the box itself if its parent is wider */
-            text-align: center; /* Center the text content inside the box */
+            text-align: center; /* Centered text */
         }
         .top-info-title {
             font-size: 2rem; /* 32px */
@@ -153,8 +150,8 @@
         .top-info-text p {
             margin-bottom: 0.5rem;
         }
-         .top-info-text p:last-child {
-            margin-bottom: 0;
+        .top-info-text strong { /* Ensure strong inside top-info-text is also bold */
+             font-weight: 700;
         }
         .top-info-text a {
             color: #0071e3;
@@ -164,15 +161,14 @@
         .top-info-text a:hover {
             text-decoration: underline;
         }
-        .centered-image {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 400px; /* Match image width in markdown */
+        .chinese-main-title {
+            font-size: 2.8rem; /* Even larger for main Chinese title */
+            font-weight: 700;
         }
-        .markdown-links a {
-             margin-left: 0.25rem;
-             margin-right: 0.25rem;
+        .english-subtitle {
+            font-size: 1.5rem; /* Smaller English subtitle */
+            color: #666;
+            font-weight: 400;
         }
     </style>
 </head>
@@ -180,38 +176,41 @@
     <div id="app" class="content-wrapper">
 
         <div class="top-info-box">
-            <p><strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong></p>
-            <p><strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
-            <p>AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
-            本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
-            Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer</p>
-            <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" class="centered-image my-4">
-            </a>
-            <p class="markdown-links">
-              <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
-              <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> |
-              <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |
-              <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> |
-              <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
-            </p>
-             <p class="mt-4">
-                <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important; display: inline-block;" ></a>
-            </p>
-            <hr class="my-6 border-gray-300">
-            <h1 class="top-info-title">Domain adaptation</h1>
+            <h1 class="top-info-title">Deep Learning 101</h1>
             <div class="top-info-text">
-                <p><em>2019/03/08 - Mark Chang</em></p>
+
+            <p align="center">
+            <strong>Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+            </p>
+            <p align="center">
+            AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+            衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+            由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
+            </p>
+                <p align="center">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px;">
+                    </a>
+                </p>
+            <p align="center">
+            <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+            <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+            <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+            <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+            <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+            </p>
                 <p>
-                    <a href="https://www.youtube.com/watch?v=C0HeMGPYif8" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Key Concepts in Domain Adaptation</a>
-                     | <a href="https://deep-learning-101.github.io/" rel="noopener noreferrer">回上頁 GitHub Pages</a>
+                    <a href="https://www.youtube.com/watch?v=C0HeMGPYif8" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2019/03/08, Mark Chang, Domain adaptation</a><br>
                 </p>
             </div>
         </div>
 
         <header class="text-center my-12">
             <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
-                網域適應 (Domain Adaptation) 關鍵重點匯整
+                網域適應關鍵重點
             </h1>
             <p class="text-xl text-slate-600">
                 探討資料分佈不一致下的機器學習挑戰與解決方案

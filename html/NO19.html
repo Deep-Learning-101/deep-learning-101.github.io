@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>集合的可數性、不可數性與測度及其應用 - Deep Learning 101</title>
+    <title>集合的可數性、不可數性與測度 - Deep Learning 101</title>
     <script src="https://cdn.tailwindcss.com/3.4.3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -51,9 +51,9 @@
             font-weight: 600;
             color: #1d1d1f;
         }
-        .bento-text em {
+        .bento-text em { /* For markdown emphasis */
             font-style: italic;
-            color: #0071e3;
+            color: #555; /* Slightly darker for emphasis */
         }
         .bento-text a {
             color: #0071e3;
@@ -134,9 +134,7 @@
             border-radius: 1.5rem;
             margin-bottom: 2rem;
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
-            margin-left: auto; /* Center align */
-            margin-right: auto; /* Center align */
-            text-align: center; /* Center align text content */
+            text-align: center; /* Centered text */
         }
         .top-info-title {
             font-size: 2rem; /* 32px */
@@ -152,8 +150,8 @@
         .top-info-text p {
             margin-bottom: 0.5rem;
         }
-         .top-info-text p:last-child {
-            margin-bottom: 0;
+        .top-info-text strong { /* Ensure strong inside top-info-text is also bold */
+             font-weight: 700;
         }
         .top-info-text a {
             color: #0071e3;
@@ -163,15 +161,14 @@
         .top-info-text a:hover {
             text-decoration: underline;
         }
-        .centered-image {
-            display: block;
-            margin-left: auto;
-            margin-right: auto;
-            width: 400px; /* Match image width in markdown */
+        .chinese-main-title {
+            font-size: 2.8rem; /* Even larger for main Chinese title */
+            font-weight: 700;
         }
-        .markdown-links a {
-             margin-left: 0.25rem;
-             margin-right: 0.25rem;
+        .english-subtitle {
+            font-size: 1.5rem; /* Smaller English subtitle */
+            color: #666;
+            font-weight: 400;
         }
     </style>
 </head>
@@ -179,218 +176,310 @@
     <div id="app" class="content-wrapper">
 
         <div class="top-info-box">
-            <p><strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong></p>
-            <p><strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong></p>
-            <p>AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
-            本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
-            Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer</p>
-            <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" class="centered-image my-4">
-            </a>
-            <p class="markdown-links">
-              <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
-              <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> |
-              <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |
-              <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> |
-              <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
-            </p>
-             <p class="mt-4">
-                <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important; display: inline-block;" ></a>
-            </p>
-            <hr class="my-6 border-gray-300">
-            <h1 class="top-info-title">Towards Principled Methods for Training Generative Adversarial Networks</h1>
+            <h1 class="top-info-title">Deep Learning 101</h1>
             <div class="top-info-text">
-                 <p><em>2018/05/11 - Mark Chang</em></p>
-                <p>
-                    <a href="https://www.youtube.com/watch?v=q1XhbjnFICc" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> Video: Countability, Measure, and Applications in Neural Network Theory</a>
-                     | <a href="https://deep-learning-101.github.io/">回上頁 GitHub Pages</a>
-                </p>
 
+            <p align="center">
+            <strong>Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+            </p>
+            <p align="center">
+            AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+            衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+            由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
+            </p>
+                <p align="center">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px;">
+                    </a>
+                </p>
+            <p align="center">
+            <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+            <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+            <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+            <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+            <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+            </p>
+
+                <p>
+                    <a href="https://www.youtube.com/watch?v=q1XhbjnFICc" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2018/05/11, Mark Chang, Towards Principled Methods for Training Generative Adversarial Networks</a><br>
+                </p>
             </div>
         </div>
 
         <header class="text-center my-12">
-            <h1 class="text-5xl md:text-7xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
-                集合的可數性、不可數性與測度
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                邁向更有理論基礎的生成對抗網路訓練方法
             </h1>
-            <p class="text-xl text-slate-600">
-                及其在神經網絡理論中的應用
+            <p class="english-subtitle mt-2">
+                集合的可數性、不可數性與測度，及其在神經網絡理論中的應用
             </p>
         </header>
 
         <div class="grid-container">
-            <div class="bento-box col-span-lg-3">
-                <i class="fas fa-infinity icon-large"></i>
-                <h2 class="bento-title-large">集合的可數性與不可數性 <span class="text-lg font-normal text-slate-500">Countability & Uncountability</span></h2>
-                <p class="bento-text">
-                    討論無限集合「大小」時，我們透過與自然數集合 ($\mathbb{N}$) 建立<strong class="highlight-tech">一對一對應</strong>關係來區分。
-                </p>
-                <div class="grid md:grid-cols-2 gap-6 mt-4">
-                    <div>
-                        <h3 class="bento-subtitle"><i class="fas fa-list-ol mr-2"></i>可數集合 (Countable Set)</h3>
-                        <p class="bento-text">可與自然數集合建立一對一對應。想像可為每個元素賦予唯一自然數「編號」。<br><strong>例子：</strong> 自然數 ($\mathbb{N}$), 整數 ($\mathbb{Z}$), 有理數 ($\mathbb{Q}$)。</p>
-                    </div>
-                    <div>
-                        <h3 class="bento-subtitle"><i class="fas fa-ban mr-2"></i>不可數集合 (Uncountable Set)</h3>
-                        <p class="bento-text">無法與自然數集合建立一對一對應。無論如何編號，總有元素被遺漏。<br><strong>經典例子：</strong> 實數集合 ($\mathbb{R}$)。</p>
-                    </div>
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-list-ol icon-large"></i>
+                    <h2 class="bento-title-large">1. 集合的可數性與不可數性 <span class="text-lg font-normal text-slate-500">Countability & Uncountability</span></h2>
+                    <p class="bento-text">
+                        首先，讓我們從集合的「大小」概念談起。雖然我們無法用數「個數」的方式來比較所有無限集合的大小，但我們可以藉由與自然數集合（正整數集合 <span class="math-notation">$\mathbb{N} = \{1, 2, 3, ...\}$</span>）建立<strong>一對一對應（one-to-one correspondence）</strong>關係來區分無限集合。
+                    </p>
+                    <h3 class="bento-subtitle">定義與例子 <span class="text-sm font-normal text-slate-500">Definitions & Examples</span></h3>
+                    <ul class="bento-list bento-text">
+                        <li><strong>可數集合（Countable Set）</strong>：一個集合如果可以與自然數集合建立一對一對應關係，我們就稱它是可數的。這意味著，你可以想像為集合裡的每一個元素都能被賦予一個唯一的自然數作為「編號」，而且這個編號過程可以遍及集合中的所有元素。即使集合是無限的，只要能像這樣依序編號數下去，它就是可數的。
+                            <ul class="bento-list bento-text">
+                                <li><strong>新手重點：</strong> 想像你可以把集合裡的元素「排隊」，然後從1開始，給第一個元素編號1，第二個編號2，依此類推，直到（無限地）編完所有元素。如果辦得到，它就是可數的。</li>
+                                <li><strong>例子：</strong>
+                                    <ul class="bento-list bento-text">
+                                        <li><strong>自然數集合 (<span class="math-notation">$\mathbb{N}$</span>)</strong>：根據定義，它當然是可數的。</li>
+                                        <li><strong>整數集合 (<span class="math-notation">$\mathbb{Z} = \{..., -2, -1, 0, 1, 2, ...\}$</span>)</strong>：雖然包含負數和零，但我們一樣可以找到方法為它們編號。例如，0對應1，正整數$n$對應$2n$，負整數$-n$對應$2n+1$。透過這種方式，每一個整數都能對應到一個唯一的自然數，所以整數集合是可數的。</li>
+                                        <li><strong>有理數集合 (<span class="math-notation">$\mathbb{Q} = \{p/q \mid p \in \mathbb{Z}, q \in \mathbb{Z}, q \neq 0\}$</span>)</strong>：這可能讓人驚訝，但有理數集合也是可數的。有多種方法可以證明這一點。一種方法是將有理數按分母分類，例如$S_1$是分母為1的有理數（即整數），$S_2$是分母為2的有理數，以此類推。每個$S_i$集合中的分子是整數，而整數是可數的，所以每個$S_i$都是可數集合。分母的集合$\{1, 2, 3, ...\}$本身也是可數的。有理數集合可以看作是這些可數集合 $S_i$ 的可數聯集（countable union）。另一種直觀的編號方法是將有理數$p/q$（已約分）排列在一個二維網格中（分子為橫軸，分母為縱軸），然後沿著對角線方向依序編號，跳過非約分和分母為零的情況。無論採用哪種方法，我們都能為每個有理數找到一個唯一的自然數編號，證明其可數性。</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><strong>不可數集合（Uncountable Set）</strong>：如果一個集合無法與自然數集合建立一對一對應關係，則稱它是不可數的。這意味著無論你如何嘗試編號，總會有集合中的元素被遺漏。</li>
+                    </ul>
+                    <h3 class="bento-subtitle">實數集合的不可數性與康托爾對角線法 <span class="text-sm font-normal text-slate-500">Uncountability of Real Numbers & Cantor's Diagonalization</span></h3>
+                    <p class="bento-text">
+                        那麼，什麼集合是不可數的呢？最經典的例子就是<strong>實數集合（Real Numbers, <span class="math-notation">$\mathbb{R}$</span>）</strong>。實數包含有理數和無理數（如<span class="math-notation">$\pi$</span>, <span class="math-notation">$\sqrt{2}$</span>等）。無理數的存在使得整個實數集合變成了不可數的。
+                    </p>
+                    <p class="bento-text">
+                        證明實數不可數的著名方法是<strong>康托爾對角線法（Cantor's Diagonalization Argument）</strong>，這是一個美麗的反證法：
+                    </p>
+                    <ol class="list-decimal list-inside bento-text pl-4">
+                        <li><strong>假設</strong>：我們假設實數集合是可數的。如果實數集合是可數的，那麼理論上存在一個函數 $F$，可以將所有實數（我們可以考慮0到1之間的實數小數表示，這足以證明）與自然數一一對應起來。這意味著我們可以將所有0到1之間的實數列成一個無限的列表：<br>
+                        $S_1 = 0.d_{11} d_{12} d_{13} ...$<br>
+                        $S_2 = 0.d_{21} d_{22} d_{23} ...$<br>
+                        $S_3 = 0.d_{31} d_{32} d_{33} ...$<br>
+                        $...$<br>
+                        $S_n = 0.d_{n1} d_{n2} d_{n3} ...$<br>
+                        $...$<br>
+                        其中 $d_{ij}$ 表示列表裡第 $i$ 個實數小數點後的第 $j$ 位數字。
+                        </li>
+                        <li><strong>構造矛盾</strong>：現在，我們构造一個新的實數 $x$（也在0到1之間），它的构造方式非常特別：我們讓 $x$ 的小數點後第 $k$ 位數字 $d_{kk}'$ 與列表中第 $k$ 個實數 $S_k$ 的小數點後第 $k$ 位數字 $d_{kk}$ *不同*。例如，我們可以規定如果 $d_{kk}$ 是0，我們就讓 $d_{kk}'$ 是1；如果 $d_{kk}$ 不是0，我們就讓 $d_{kk}'$ 是0（或者選擇任何其他不同於 $d_{kk}$ 的數字）。例如：<br>
+                        $x = 0.d_{11}' d_{22}' d_{33}' ... d_{nn}' ...$<br>
+                        其中 $d_{nn}' \neq d_{nn}$ 對於所有 $n \ge 1$ 都成立。
+                        </li>
+                        <li><strong>得出結論</strong>：現在思考一下构造出來的實數 $x$。根據我們的构造方式，$x$ 的第一位小數 $d_{11}'$ 與 $S_1$ 的第一位小數 $d_{11}$ 不同，所以 $x \neq S_1$。$x$ 的第二位小數 $d_{22}'$ 與 $S_2$ 的第二位小數 $d_{22}$ 不同，所以 $x \neq S_2$，依此類推。對於列表中的任何一個實數 $S_n$，我們的构造保證了 $x$ 的第 $n$ 位小數與 $S_n$ 的第 $n$ 位小數不同，因此 $x \neq S_n$ 對於所有 $n$ 都成立。
+                        這意味著，我們构造出了一個實數 $x$，它存在於0到1之間，但卻不在我們聲稱「包含了所有實數」的列表之中。這與我們最初「實數集合是可數的，所以所有實數都可以被列出」的假設產生了矛盾。因此，最初的假設是錯誤的，實數集合是<strong>不可數的</strong>。
+                        <ul class="bento-list bento-text"><li><strong>新手重點：</strong> 對角線法的精髓在於「找到一個無法被編號的漏網之魚」，從而證明「所有元素都能被編號」這個前提是錯的。</li></ul>
+                        </li>
+                    </ol>
+                    <h3 class="bento-subtitle">可數集合的重要定理 <span class="text-sm font-normal text-slate-500">Theorems on Countable Sets</span></h3>
+                    <ul class="bento-list bento-text">
+                        <li><strong>可數集合的可數聯集是可數的（Countable union of countable sets is countable）</strong>：如果我們有一系列集合 $A_1, A_2, A_3, ...$，每個集合 $A_i$ 都是可數的，並且集合的數量是可數的（無限多個但其數量本身是可數的），那麼這些集合的聯集 $A_1 \cup A_2 \cup A_3 \cup ...$ 仍然是可數的。這解釋了為什麼有理數可數（可數個可數集合的聯集）。即使集合之間有重疊，這個定理依然成立。</li>
+                        <li><strong>可數集合的任意子集是可數的（Any subset of a countable set is countable）</strong>：從一個可數集合中取出任何一部分元素構成一個子集，這個子集仍然是可數的（它不會變成不可數集合）。</li>
+                    </ul>
                 </div>
             </div>
 
-            <div class="bento-box col-span-lg-2">
-                <h3 class="bento-subtitle"><i class="fas fa-project-diagram mr-2"></i>康托爾對角線法 <span class="text-sm font-normal text-slate-500">Cantor's Diagonalization Argument</span></h3>
-                <p class="bento-text">
-                    證明實數不可數的著名反證法：
-                </p>
-                <ol class="bento-list bento-text text-sm">
-                    <li><strong>假設：</strong> 假設0到1之間的實數可數，可列成無限列表 $S_1, S_2, S_3, ...$。</li>
-                    <li><strong>構造矛盾：</strong> 構造一個新實數 $x$，使其小數點後第 $k$ 位數字與列表 $S_k$ 的第 $k$ 位數字不同。</li>
-                    <li><strong>結論：</strong> 此新實數 $x$ 不在原列表中，與「所有實數皆可列出」的假設矛盾。故實數不可數。</li>
-                </ol>
-            </div>
-
-             <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-check-circle mr-2"></i>可數集合重要定理 <span class="text-sm font-normal text-slate-500">Theorems on Countable Sets</span></h3>
-                <ul class="bento-list bento-text text-sm">
-                    <li>可數集合的<strong class="highlight-tech">可數聯集</strong>是可數的。</li>
-                    <li>可數集合的<strong class="highlight-tech">任意子集</strong>是可數的。</li>
-                </ul>
-            </div>
-
-
-            <div class="bento-box col-span-lg-3">
-                <i class="fas fa-ruler-combined icon-large"></i>
-                <h2 class="bento-title-large">測度 (Measure) <span class="text-lg font-normal text-slate-500">Concept of Measure</span></h2>
-                <p class="bento-text">
-                    為了解決基於不可數集合進行分解和重組可能產生的矛盾，數學家引入測度概念，為集合賦予嚴謹的「大小」或「體積」。測度是長度、面積或體積等概念在數學上的推廣。
-                </p>
-            </div>
-            <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-map-signs mr-2"></i>定義測度的前提 <span class="text-sm font-normal text-slate-500">Prerequisites for Measure</span></h3>
-                <ul class="bento-list bento-text text-sm">
-                    <li><strong>可測空間 (X, $\Sigma$)：</strong> X 是空間，$\Sigma$ 是其子集構成的 <strong class="highlight-tech">$\sigma$-代數</strong>。</li>
-                    <li><strong>$\sigma$-代數：</strong> 滿足空集存在、補集封閉、可數聯集封閉的集合族。</li>
-                    <li><strong>可測集：</strong> 屬於 $\sigma$-代數的集合，即可被測量的集合。</li>
-                </ul>
-            </div>
-            <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-balance-scale mr-2"></i>測度函數 M 的性質 <span class="text-sm font-normal text-slate-500">Properties of Measure Function M</span></h3>
-                 <ul class="bento-list bento-text text-sm">
-                    <li><strong>非負性：</strong> $M(S) \ge 0$。</li>
-                    <li><strong>空集測度為零：</strong> $M(\emptyset) = 0$。</li>
-                    <li><strong>可數可加性：</strong> 對互斥可測集 $S_i$, $M(\cup S_i) = \sum M(S_i)$。</li>
-                </ul>
-            </div>
-            <div class="bento-box col-span-lg-1">
-                <h3 class="bento-subtitle"><i class="fas fa-circle-notch mr-2"></i>測度零 (Measure Zero) <span class="text-sm font-normal text-slate-500">Measure Zero Concept</span></h3>
-                <p class="bento-text text-sm">
-                    集合測度為零不代表集合為空。一維中，點或可數個點的測度（長度）為零。二維中，線或可數條線的測度（面積）為零。
-                </p>
-                <p class="bento-text text-sm mt-2"><strong>重要定理：</strong> 在 X 維空間中，可數個 G 維流形 (G < X) 的聯集，其在 X 維空間中的測度為零。</p>
-            </div>
-
-
-            <div class="bento-box col-span-lg-2">
-                <i class="fas fa-shapes icon-large"></i>
-                <h2 class="bento-title">流形與維度 <span class="text-base font-normal text-slate-500">Manifold and Dimension</span></h2>
-                <p class="bento-text">
-                    流形是一種在<strong class="highlight-tech">局部看起來像歐幾里得空間</strong>的拓撲空間。一個 N 維流形上每點都有一個開鄰域，可透過<strong class="highlight-tech">同胚 (Homeomorphism)</strong> 映射到 N 維歐幾里得空間的開子集。
-                </p>
-                <ul class="bento-list bento-text mt-2">
-                    <li><strong>同胚：</strong> 保持拓撲性質（包括維度）的雙向連續映射，其反函數也連續。</li>
-                    <li><strong>微分同胚 (Diffeomorphism)：</strong> 更強條件，要求映射和反函數皆可微分，保持微分結構和維度。</li>
-                    <li><strong>空間填充曲線：</strong> 如皮亞諾曲線，可將一維線段連續映射「填充」二維平面，但<strong class="highlight-tech">不是同胚</strong>。</li>
-                </ul>
-            </div>
-
-            <div class="bento-box col-span-lg-1 row-span-lg-2">
-                <i class="fas fa-network-wired icon-large"></i>
-                <h2 class="bento-title">神經網絡與維度不增加定理 <span class="text-base font-normal text-slate-500">Neural Networks & Dimension Theorem</span></h2>
-                <p class="bento-text">
-                    一個核心數學定理指出：神經網絡的生成器 (Generator) <strong class="highlight-tech">不會將一個 D 維度的流形轉換到一個維度超過 D 的流形</strong>。即神經網絡層的運算最多維持輸入流形的維度，或降低維度，但不會增加維度。
-                </p>
-                 <h3 class="bento-subtitle mt-4">證明思路 <span class="text-sm font-normal text-slate-500">Proof Outline</span></h3>
-                <p class="bento-text text-sm">基於分析神經網絡的各組成部分：</p>
-                <ul class="bento-list bento-text text-xs">
-                    <li><strong>權重與偏置：</strong> 偏置是同胚；權重矩陣（線性變換）透過SVD分解為基變換、嵌入和投影，均不增加維度。投影產生的臨界點集合測度為零。</li>
-                    <li><strong>激活函數：</strong>
-                        <ul>
-                            <li>不平滑激活 (如 ReLU) 映射到有限個低維子空間的聯集，不增維。</li>
-                            <li>平滑激活 (如 Sigmoid) 通常是微分同胚，保持維度。</li>
-                        </ul>
-                    </li>
-                </ul>
-                 <p class="bento-text text-sm mt-2">因此，整個神經網絡不會增加輸入流形的維度。</p>
-            </div>
-
-
-            <div class="bento-box col-span-lg-3">
-                <i class="fas fa-robot icon-large"></i>
-                <h2 class="bento-title-large">定理在 GAN 問題上的應用與討論 <span class="text-lg font-normal text-slate-500">Application to GANs & Discussion</span></h2>
-                <p class="bento-text">
-                    「維度不增加定理」被用來解釋 GAN 可能面臨的訓練挑戰，尤其是<strong class="highlight-tech">模式崩潰 (Mode Collapse)</strong> 問題。
-                </p>
-                <div class="grid md:grid-cols-2 gap-6 mt-4">
-                    <div>
-                        <h3 class="bento-subtitle">潛在問題：測度分離 <span class="text-sm font-normal text-slate-500">Potential Issue: Measure Separation</span></h3>
-                        <p class="bento-text">
-                        如果生成器 G 將低維潛在空間映射到高維數據空間，其輸出數據（理論上）會分佈在一個維度不高於潛在空間維度的流形上。若真實數據分佈維度更高，則生成數據分佈在數據空間中的<strong class="highlight-tech">測度極可能為零</strong>，導致生成數據與真實數據分佈在測度意義上幾乎沒有交集。
-                        </p>
-                    </div>
-                    <div>
-                        <h3 class="bento-subtitle">與 GAN 訓練挑戰的聯繫 <span class="text-sm font-normal text-slate-500">Link to GAN Training Challenges</span></h3>
-                        <p class="bento-text">
-                        若生成數據和真實數據分佈測度分離，理論上存在<strong class="highlight-tech">完美判別器</strong>能完全區分二者。這可能導致訓練不穩定，生成器難以找到真實數據分佈的完整映射，最終可能導致模式崩潰。
-                        </p>
-                    </div>
+            <div class="bento-box col-span-lg-1 row-span-lg-2 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-ruler-combined icon-large"></i>
+                    <h2 class="bento-title">2. 測度 <span class="text-base font-normal text-slate-500">Measure</span></h2>
+                    <p class="bento-text">
+                        既然我們知道有些無限集合（如實數）是不可數的，這就引出了一些有趣的數學問題。考慮一條長度為1的線段，它可以被看作由不可數個點組成。如果我們將這條線段「分解」成構成它的所有點，然後再用這些點重新「組合」，直觀上似乎只能組合成總長度為1的東西。但如果沒有嚴謹的數學工具，理論上可能會推導出從長度為1的線段分解出的點，可以重組成兩條長度都為1的線段，這顯然違背直覺。
+                    </p>
+                    <h3 class="bento-subtitle">測度的目的與直觀理解 <span class="text-sm font-normal text-slate-500">Purpose & Intuition</span></h3>
+                    <ul class="bento-list bento-text">
+                        <li><strong>目的：</strong> 測度理論的引入，正是為了解決基於不可數集合進行分解和重組可能產生的矛盾，它為集合賦予一個嚴謹的「大小」概念。</li>
+                        <li><strong>直觀理解：</strong> 測度是長度、面積或體積等概念在數學上的推廣。它是一個函數，能夠量化集合在某個空間中的「佔有程度」。</li>
+                    </ul>
+                    <h3 class="bento-subtitle">定義測度的前提：可測空間與可測集 <span class="text-sm font-normal text-slate-500">Prerequisites: Measurable Space & Sets</span></h3>
+                     <ol class="list-decimal list-inside bento-text pl-4">
+                        <li><strong>可測空間（Measurable Space, (<span class="math-notation">$X, \Sigma$</span>)）</strong>：定義測度的空間 X。這個空間通常具有一定的維度（如一維的直線空間、二維的平面空間、三維的立體空間等）。<span class="math-notation">$\Sigma$</span> 是一個特殊的集合族，稱為 <strong>$\sigma$-代數（Sigma-algebra）</strong>。</li>
+                        <li><strong>$\sigma$-代數（<span class="math-notation">$\Sigma$</span>）</strong>：$\sigma$-代數是空間 X 的子集構成的一個集合族，它必須滿足三個條件：(1) 空集 (<span class="math-notation">$\emptyset$</span>) 屬於 <span class="math-notation">$\Sigma$</span>；(2) 如果集合 A 屬於 <span class="math-notation">$\Sigma$</span>，則它的補集（X \ A）也屬於 <span class="math-notation">$\Sigma$</span>；(3) 如果有一系列可數個集合 $A_1, A_2, A_3, ...$ 都屬於 <span class="math-notation">$\Sigma$</span>，則它們的可數聯集 $A_1 \cup A_2 \cup A_3 \cup ...$ 也屬於 <span class="math-notation">$\Sigma$</span>。</li>
+                        <li><strong>可測集（Measurable Set）</strong>：屬於 $\sigma$-代數 <span class="math-notation">$\Sigma$</span> 的集合，就是可以被測量的集合。測度函數就是定義在這些可測集上的。
+                            <ul class="bento-list bento-text"><li><strong>新手重點：</strong> $\sigma$-代數可以理解為所有「規矩」、「可以用測度來量大小」的集合的集合。只有屬於這個集合族的集合，我們才能談論它的測度。</li></ul>
+                        </li>
+                    </ol>
+                     <h3 class="bento-subtitle">測度函數（Measure function M）的基本性質 <span class="text-sm font-normal text-slate-500">Properties of Measure Function M</span></h3>
+                    <p class="bento-text">一個測度函數 M 是一個從 <span class="math-notation">$\Sigma$</span> 到非負實數（或 <span class="math-notation">$+\infty$</span>）的函數，它必須滿足以下三個基本條件：</p>
+                    <ol class="list-decimal list-inside bento-text pl-4">
+                        <li><strong>非負性（Non-negativity）</strong>：對於任何可測集 $S \in \Sigma$，其測度 $M(S)$ 必須大於或等於零。$M(S) \ge 0$。這符合我們對長度、面積、體積等「大小」概念的直觀理解，它們不會是負數。</li>
+                        <li><strong>空集的測度為零（Measure of the empty set is zero）</strong>：空集合的測度是零，$M(\emptyset) = 0$。一個沒有任何元素的集合，其「大小」自然是零。</li>
+                        <li><strong>可數可加性（Countable Additivity）</strong>：對於一組<strong>互斥（Disjoint）</strong>的可測集 $S_1, S_2, S_3, ...$（即任意兩個集合之間沒有共同元素，$S_i \cap S_j = \emptyset$ 對於所有 $i \neq j$），其可數聯集的測度等於這些集合各自測度的總和。$M(\cup_{i=1}^{\infty} S_i) = \sum_{i=1}^{\infty} M(S_i)$。這個性質非常重要，它確保了先將互斥的集合合併再測量，與先測量每個集合再將測度相加，結果是一樣的。
+                            <ul class="bento-list bento-text"><li><strong>新手重點：</strong> 這個性質保證了「部分加總等於整體」的合理性，但請注意，它只對<strong>互斥的可數個集合</strong>的聯集成立。</li></ul>
+                        </li>
+                    </ol>
+                    <h3 class="bento-subtitle">測度零（Measure Zero）的概念與重要定理 <span class="text-sm font-normal text-slate-500">Measure Zero & Key Theorem</span></h3>
+                    <p class="bento-text"><strong>測度零</strong>是指一個集合的測度為零。這並不意味著集合一定是空的或只有有限個點。</p>
+                     <ul class="bento-list bento-text">
+                        <li><strong>例子：</strong>
+                            <ul class="bento-list bento-text">
+                                <li>在一維空間（直線）中，一個點的測度（長度）為零。有限個點或可數無限個點組成的集合，其測度（長度）仍然是零。我們可以通過用一系列總長度可以任意小的開區間覆蓋這些點來證明這一點。這也解釋了為何從一個長度為1的線段「分解」出的可數個點，即使數量無限，其總長度仍然是零，無法直接用它們組合成非零長度的線段來產生矛盾。</li>
+                                <li>在二維空間（平面）中，一條線的測度（面積）為零。可數無限條線組成的集合，其面積仍然是零。</li>
+                                <li>在三維空間中，一個平面或一條線的測度（體積）為零。可數無限個平面組成的集合，其體積仍然是零。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p class="bento-text mt-2">
+                        這引出了一個重要的定理：<strong>在一個 X 維空間中，可數個數的 G 維流形（G-dimensional manifold）的聯集，如果 G < X，那麼這個聯集在 X 維空間中的測度為零</strong>。例如，在三維空間中，可數無限個平面的總體積為零。這個定理對於理解後續神經網絡的特性至關重要。
+                    </p>
                 </div>
-                 <h3 class="bento-subtitle mt-4">討論與局限性 <span class="text-sm font-normal text-slate-500">Discussion & Limitations</span></h3>
-                <ul class="bento-list bento-text">
-                    <li><strong>完美判別器是否存在？</strong> 現實中判別器能力有限（受VC維度限制），可能無法完美區分測度為零的集合，為GAN訓練留下空間。</li>
-                    <li><strong>真實數據分佈特性：</strong> 現實數據常為離散，其測度可能也為零。但論文可能進一步證明「完美對齊」不會發生。</li>
-                </ul>
-                 <p class="bento-text mt-2">此定理提供了一個從數學分析角度理解 GAN 潛在困難的理論框架，但也需結合實際模型能力理解現象。</p>
             </div>
 
-            <div class="bento-box col-span-lg-3">
-                <i class="fas fa-flag-checkered icon-large"></i>
-                <h2 class="bento-title">結論 <span class="text-base font-normal text-slate-500">Conclusion</span></h2>
-                <p class="bento-text">
-                本討論從集合的可數性與不可數性出發，介紹了測度（特別是測度零）和流形的概念，並將這些數學工具應用於分析神經網絡的特性。核心結論是神經網絡的<strong class="highlight-tech">維度不增加定理</strong>，及其對理解生成對抗網絡（GAN）潛在訓練挑戰（如模式崩潰）的啟示。對於初學者，掌握可數性、測度零和流形的直觀認識是理解更深入理論的基礎。
-                </p>
+            <div class="bento-box col-span-lg-2 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-shapes icon-large"></i>
+                    <h2 class="bento-title">3. 流形與維度 <span class="text-base font-normal text-slate-500">Manifold & Dimension</span></h2>
+                    <p class="bento-text">
+                        在數學和物理學中，流形是一個重要的概念，它概括了曲線、曲面等幾何對象的性質。
+                    </p>
+                    <h3 class="bento-subtitle">流形的直觀理解與數學定義 <span class="text-sm font-normal text-slate-500">Intuition & Definition</span></h3>
+                    <ul class="bento-list bento-text">
+                        <li><strong>直觀理解：</strong> 流形是一種在局部看起來像歐幾里得空間（我們熟悉的平面、立體空間等）的拓撲空間。我們可以想像地球表面是一個二維流形；雖然地球整體是彎曲的（嵌在三維空間中），但在很小的範圍內（例如你站著的地方），它看起來就像一個平坦的二維平面。一條光滑的曲線是一維流形，一個球體表面是二維流形。</li>
+                        <li><strong>數學定義：</strong> 更形式化地說，一個 N 維流形是一個拓撲空間，其上每一個點都有一個開鄰域，這個開鄰域可以透過一個稱為<strong>同胚（Homeomorphism）</strong>的映射，轉換到 N 維歐幾里得空間 <span class="math-notation">$\mathbb{R}^N$</span> 的一個開子集。
+                            <ul class="bento-list bento-text"><li><strong>新手重點：</strong> 「局部像歐幾里得空間」是流形的核心思想。想像你在一個球面上，你無法區分你腳下的這一小塊表面和平面上的一小塊區域有什麼本質區別。</li></ul>
+                        </li>
+                    </ul>
+                    <h3 class="bento-subtitle">同胚與微分同胚 <span class="text-sm font-normal text-slate-500">Homeomorphism & Diffeomorphism</span></h3>
+                     <ul class="bento-list bento-text">
+                        <li><strong>同胚（Homeomorphism）</strong>：這是定義流形維度的關鍵。同胚是兩個拓撲空間之間的一對一（bijective）、連續（continuous），並且其反函數也是連續的映射。同胚映射在拓撲學中被視為「一樣」的，因為它們保持了拓撲性質（例如連通性、緊緻性等），也包括<strong>維度</strong>。一個 N 維流形透過同胚映射只能轉換到 N 維的空間。
+                            <ul class="bento-list bento-text"><li><strong>例子：</strong> 一個馬克杯和一個甜甜圈在拓撲學中是同胚的，因為它們都有一個「洞」，你可以想像通過連續變形將一個變成另一個（但不允許撕裂或黏合）。它們都是一維環面的推廣（雖然通常討論的是表面）。</li></ul>
+                        </li>
+                        <li><strong>微分同胚（Diffeomorphism）</strong>：這是比同胚更強的條件。微分同胚是兩個<strong>可微分流形</strong>之間的同胚，並且其映射和反函數都是<strong>可微分的</strong>。微分同胚不僅保持拓撲結構，還保持微分結構，因此更嚴格地保持了流形的維度。
+                            <ul class="bento-list bento-text"><li><strong>新手重點：</strong> 如果說同胚是拓撲結構上的等價，那麼微分同胚是在此基礎上加上光滑性（可微分性）的等價。在討論可微分流形（許多數學模型中的流形都是可微分的）時，微分同胚更能保證維度不變。</li></ul>
+                        </li>
+                    </ul>
+                    <h3 class="bento-subtitle">空間填充曲線 <span class="text-sm font-normal text-slate-500">Space-Filling Curve</span></h3>
+                    <p class="bento-text">
+                        值得一提的是，存在一些特殊的連續函數，例如皮亞諾曲線（Peano curve），它可以將一維的線段連續地映射到二維的平面上，似乎「填充」了二維空間。這類曲線稱為<strong>空間填充曲線（Space-Filling Curve）</strong>。然而，空間填充曲線<strong>不是同胚</strong>。雖然它們是連續的，但它們通常不是一對一的（一個點可能被映射到多個位置，或者反函數不連續），因此不滿足同胚的要求，也不會是微分同胚。這是理解後續神經網絡定理的關鍵區別。
+                    </p>
+                </div>
             </div>
 
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-network-wired icon-large"></i>
+                    <h2 class="bento-title-large">4. 神經網絡與維度不增加定理 <span class="text-lg font-normal text-slate-500">Neural Networks & Dimension Non-Increasing Theorem</span></h2>
+                    <p class="bento-text">
+                        現在，我們將上述概念應用到神經網絡，特別是生成對抗網絡（GAN）中的生成器（Generator, G）。GAN的生成器通常將一個低維度的潛在空間（latent space，通常被認為是一個流形）映射到高維度的數據空間，以產生逼真的數據（如圖像）。
+                    </p>
+                    <h3 class="bento-subtitle">定理敘述 <span class="text-sm font-normal text-slate-500">Theorem Statement</span></h3>
+                    <p class="bento-text">
+                        一個核心的數學定理（在來源中有詳細證明）指出：<strong>一個神經網絡的生成器（Generator）不會將一個 D 維度的流形轉換到一個維度超過 D 的流形。換句話說，神經網絡層的運算最多維持輸入流形的維度，或者降低維度，但不會增加維度。</strong>神經網絡的結構保證了它不會是像空間填充曲線那樣可以增加維度的映射。
+                    </p>
+                    <h3 class="bento-subtitle">證明思路與組成部分分析 <span class="text-sm font-normal text-slate-500">Proof Outline & Component Analysis</span></h3>
+                    <p class="bento-text">這個定理的證明是基於分析神經網絡的各個基本組成部分：</p>
+                    <ol class="list-decimal list-inside bento-text pl-4">
+                        <li><strong>權重矩陣（Weights, W）與偏置向量（Biases, B）</strong>：
+                            <ul class="bento-list bento-text">
+                                <li>加入偏置向量 $B$ 是一種平移，它是一個同胚映射，因此不會改變流形的維度。</li>
+                                <li>乘以權重矩陣 $W$ 是一種線性變換。根據線性代數的奇異值分解（SVD），任何矩陣乘法可以分解為基變換（Change of Basis）、嵌入（Embedding）和投影（Projection）。
+                                    <ul class="bento-list bento-text">
+                                        <li>基變換是微分同胚，不改變維度。</li>
+                                        <li>嵌入是將低維流形放入高維空間（例如將二維平面放入三維空間），這也不增加流形本身的維度（它依然是二維的）。</li>
+                                        <li>投影是將高維空間投影到低維空間，這顯然不會增加維度。</li>
+                                    </ul>
+                                </li>
+                                <li>證明中還討論了投影可能產生的一些特殊點，稱為<strong>臨界點（Critical Point）</strong>，這些點在投影方向上導數為零。這些臨界點的集合被證明是<strong>孤立點（Isolated Point）</strong>的集合。一個集合中的點如果是孤立點（即在其周圍存在一個小鄰域不包含該集合中的其他點），那麼這個孤立點的集合一定是<strong>可數的</strong>。而我們知道，可數個點組成的集合，其在任何高於零維的空間中的測度都為零。因此，雖然投影可能產生這些點，但它們不會構成一個更高維度的流形，也不會增加整體集合的測度。</li>
+                                <li><strong>新手重點：</strong> 線性變換雖然能旋轉、縮放、甚至將空間「壓扁」（投影），但它不能「拉伸」空間以增加流形的維度。</li>
+                            </ul>
+                        </li>
+                        <li><strong>激活函數（Activation Functions）</strong>：神經網絡的非線性能力主要來自激活函數。定理的證明將激活函數分為兩類：
+                            <ul class="bento-list bento-text">
+                                <li><strong>不平滑激活函數（如 ReLU, $f(x) = \max(0, x)$）</strong>：ReLU 的轉換可以被視為與一系列有限數量的特殊對角線矩陣相乘（對角線元素為0或1）。當輸入經過 ReLU 時，它會被映射到這些矩陣對應的線性子空間的有限聯集上。由於這些子空間的維度不高於輸入空間維度，且其數量是有限的（有限包含於可數），根據前面提到的定理，有限（可數）個低維空間的聯集不會構成一個更高維度的空間。因此，ReLU 不會增加輸入流形的維度。
+                                    <ul class="bento-list bento-text"><li><strong>新手重點：</strong> ReLU 把一些輸入變成零，相當於把流形的一部分「壓」到一個低維的「平面」上，或者讓某些維度上的變化消失。這只會降低或保持維度，不會增加。</li></ul>
+                                </li>
+                                <li><strong>平滑激活函數（如 Sigmoid, Tanh）</strong>：這些函數通常是可微分的且是嚴格單調遞增的（或遞減）。嚴格單調遞增的可微分函數通常是微分同胚。如前所述，微分同胚會保持維度。因此，平滑激活函數也不會增加輸入流形的維度。
+                                     <ul class="bento-list bento-text"><li><strong>新手重點：</strong> 平滑激活函數雖然是彎曲的非線性變換，但它們是「拉伸」或「壓縮」空間，而不是像空間填充曲線那樣將低維「鋪展」成高維。因為它們是可微分且一對一的（在單調區間內），所以保持了局部結構和維度。</li></ul>
+                                </li>
+                            </ul>
+                        </li>
+                    </ol>
+                     <h3 class="bento-subtitle">定理總結 <span class="text-sm font-normal text-slate-500">Theorem Summary</span></h3>
+                    <p class="bento-text">
+                        綜合來看，由於神經網絡的每個組成部分（線性變換、激活函數）都不會增加輸入流形的維度，整個神經網絡（作為這些層的堆疊）也不會將一個低維的輸入流形轉換成一個更高維度的流形。生成器將潛在空間（一個低維流形）映射到數據空間，其輸出仍然是一個維度不高於潛在空間維度的流形。
+                    </p>
+                </div>
+            </div>
 
+            <div class="bento-box col-span-lg-2 row-span-lg-1 motion-div">
+                 <div class="motion-div-full-height">
+                    <i class="fas fa-lightbulb-on icon-large"></i>
+                    <h2 class="bento-title">5. 定理在 GAN 問題上的應用與討論 <span class="text-base font-normal text-slate-500">Application to GANs & Discussion</span></h2>
+                    <p class="bento-text">
+                        這個「維度不增加定理」被用來解釋 GAN 可能面臨的訓練挑戰，尤其是<strong>模式崩潰（Mode Collapse）</strong>問題。
+                    </p>
+                    <h3 class="bento-subtitle">潛在問題：生成數據與真實數據分佈的測度分離 <span class="text-sm font-normal text-slate-500">Potential Issue: Measure Separation</span></h3>
+                    <p class="bento-text">
+                        論文的核心論點之一是，如果生成器 G 是一個神經網絡，它將低維的潛在空間映射到高維的數據空間。根據上述定理，生成器輸出的數據（理論上）會分佈在一個維度不高於潛在空間維度的流形上。
+                    </p>
+                    <p class="bento-text">
+                        問題在於，真實世界的數據分佈可能居住在一個複雜的、可能維度更高（或至少佔據數據空間中一個測度非零的區域）的流形上。如果生成器輸出的流形維度低於數據空間維度，那麼根據測度零定理，生成數據的分佈在數據空間中的<strong>測度極可能為零</strong>。
+                    </p>
+                    <p class="bento-text">
+                        這樣一來，生成數據的分佈與真實數據的分佈在測度意義上可能幾乎沒有交集（或者交集的測度為零）。
+                    </p>
+                     <h3 class="bento-subtitle">與 GAN 訓練挑戰的聯繫 <span class="text-sm font-normal text-slate-500">Connection to GAN Training Challenges</span></h3>
+                    <p class="bento-text">
+                        如果生成數據和真實數據的分佈在測度上是分離的（交集測度為零），那麼理論上存在一個<strong>完美的判別器（Perfect Discriminator）</strong>，能夠將生成數據和真實數據完全區分開來。因為測度零的集合在測度上是「小」的，一個完美的判別器可以簡單地忽略那些測度為零的區域，從而完美地將生成數據分類為假，真實數據分類為真。
+                    </p>
+                    <p class="bento-text">
+                        在 GAN 的對抗訓練框架下，如果判別器變得完美，它的梯度會指向一個方向，告訴生成器需要大幅改變才能騙過判別器。這可能導致訓練不穩定，生成器難以找到真實數據分佈的完整映射，最終可能只集中生成真實數據分佈中的一小部分模式，這就是模式崩潰。
+                    </p>
+                </div>
+            </div>
+            <div class="bento-box col-span-lg-1 row-span-lg-1 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-comments-alt icon-large"></i>
+                    <h2 class="bento-title">討論與局限性 <span class="text-base font-normal text-slate-500">Discussion & Limitations</span></h2>
+                    <p class="bento-text">
+                        然而，這個論點也存在一些討論和潛在的局限性。來源中也提到了質疑的聲音：
+                    </p>
+                    <ol class="list-decimal list-inside bento-text pl-4">
+                        <li><strong>完美判別器是否存在？</strong>：上述論證很大程度上依賴於「完美判別器」的存在。但在現實中，我們使用的神經網絡判別器其能力是有限的，例如受到其 VC 維度（VC Dimension）的限制。一個有限容量的判別器可能無法完美地區分兩個測度為零的集合，或者區分一個測度為零的集合與一個測度非零但離散的點集。即使生成數據和真實數據在測度上分離，實際的判別器可能仍無法將它們完全分開，這為 GAN 的訓練（以及一定程度上的成功）留下了空間。</li>
+                        <li><strong>真實數據分佈的特性</strong>：真實世界的數據，尤其是在計算機中表示時，通常是離散的。雖然我們可以將它們視為一個高維空間中的點集，這個點集的測度可能也是零（例如，有限個點集的測度是零）。如果真實數據和生成數據都是測度為零的集合，它們仍然可能有交集。然而，論文可能進一步證明了「完美對齊（perfectly alignment）」的情況（即生成數據分佈與真實數據分佈完全重合）是不會發生的。</li>
+                    </ol>
+                    <p class="bento-text mt-2">
+                        總體而言，這個定理提供了一個從數學分析（拓撲學、測度論）角度理解 GAN 潛在困難的理論框架，特別是解釋了生成數據可能無法「覆蓋」真實數據分佈的原因。但也需要結合統計學和機器學習模型的有限能力來全面理解實際 GAN 訓練中的現象。
+                    </p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-flag-checkered icon-large"></i>
+                    <h2 class="bento-title">結論 <span class="text-base font-normal text-slate-500">Conclusion</span></h2>
+                    <p class="bento-text">
+                        回顧一下，我們從集合的可數性與不可數性開始，了解了如何區分不同大小的無限集合，特別是實數的不可數性及其證明（康托爾對角線法）。接著，我們引入了測度的概念，它為集合賦予了嚴謹的「大小」，並透過測度零的概念理解了低維集合在高維空間中的「體積」。這些工具幫助我們理解了流形及其維度，以及同胚和微分同胚如何保持維度。最後，我們將這些知識應用到神經網絡，看到了神經網絡（作為流形映射）的維度不增加定理，並探討了這個定理如何解釋 GAN 在生成與真實數據分佈上的潛在分離，以及由此可能導致的訓練挑戰，同時也認識到現實世界中判別器的局限性對此理論的影響。
+                    </p>
+                    <p class="bento-text mt-2">
+                        對於初學者，掌握可數性與不可數性的區別、測度的基本概念（特別是測度零）以及流形的直觀認識，是理解更深入數學分析和相關機器學習理論的基礎。希望這次的探討能為您提供一個清晰的入門視角。
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
-        const { animate, inView } = motion;
-
-        const headerH1 = document.querySelector('header h1');
-        if (headerH1) {
-            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
-        }
-        const headerP = document.querySelector('header p');
-        if (headerP) {
-            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
-        }
+        const { animate, inView, stagger } = motion;
 
         const topInfoBox = document.querySelector('.top-info-box');
         if (topInfoBox) {
-            topInfoBox.style.opacity = 0;
-            topInfoBox.style.transform = 'translateY(-30px)';
-            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
         }
 
-        const bentoBoxes = document.querySelectorAll('.bento-box');
-        bentoBoxes.forEach((box, index) => {
-            box.style.opacity = 0;
-            box.style.transform = 'translateY(20px) scale(0.95)';
-            inView(box, () => {
-                animate(box, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
-            }, { amount: 0.1 });
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div) => {
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: 0.1, ease: "easeOut" });
+                return () => animate(div, { opacity: 0, y: -20, scale: 0.95 }, { duration: 0.3 }); // Optional: animate out
+            }, { amount: 0.1 }); // Trigger when 10% of the element is in view
         });
     });
     </script>
