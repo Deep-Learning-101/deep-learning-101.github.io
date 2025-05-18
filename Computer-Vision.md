@@ -102,7 +102,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 - [CVPR 2025, Segment Any Motion in Videos, Segment Any Motion in Videos](https://www.alphaxiv.org/zh/overview/2503.22268)；[Github](https://github.com/nnanhuang/SegAnyMo)
 - [CVPR 2025 Highlight, Exact: Exploring Space-Time Perceptive Clues for Weakly Supervised Satellite Image Time Series Semantic Segmentation](https://www.alphaxiv.org/zh/overview/2412.03968)；[Github](https://github.com/MiSsU-HH/Exact)；[Exact：基於遙感影像時間序列弱監督學習的作物提取方法](https://zhuanlan.zhihu.com/p/38754229963)
 - [MatAnyone](https://github.com/pq-yang/MatAnyone)：[視訊摳圖MatAnyone來了，一次指定全程追踪，髮絲級還原](https://www.jiqizhixin.com/articles/2025-04-17-27)
-- [MatAnyone](https://github.com/pq-yang/MatAnyone)：[視訊摳圖MatAnyone來了，一次指定全程追踪，髮絲級還原](https://www.jiqizhixin.com/articles/2025-04-17-27)
 - [Meta Segment Anything Model 2 (SAM 2)](https://ai.meta.com/sam2/)
    - [60行程式碼訓練/微調Segment Anything 2](https://mp.weixin.qq.com/s/YfgYCzvi0cXxOFIfQvE_9w)
    - [CLIPSeg：Image Segmentation Using Text and Image Prompts](https://github.com/timojl/clipseg)：[Huggingface Space](https://huggingface.co/spaces/taesiri/CLIPSeg)
