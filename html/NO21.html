@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Routing Between Capsules - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em { /* For markdown emphasis */
+            font-style: italic;
+            color: #555; /* Slightly darker for emphasis */
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center; /* Centered text */
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+        .presenter-info {
+            font-size: 1.125rem; /* 18px */
+            color: #555;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                    AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                    衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                    由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p style="display: flex; justify-content: center; align-items: center; gap: 1rem;">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" style="width: 180px; height: auto; border-radius: 10px;">
+                    </a>
+                    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; border-radius: 10px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                 <p>
+                    <a href="https://www.youtube.com/watch?v=MPzqoY0e_YM" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2018/07/06, Jiero Ho, Dynamic Routing Between Capsules</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                膠囊網路中的動態路由機制
+            </h1>
+            <p class="english-subtitle mt-2">
+                Dynamic Routing Between Capsules
+            </p>
+            <p class="presenter-info mt-4">分享者：Jiero Ho | 日期：2018/07/06</p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-shield-alt icon-large"></i>
+                    <h2 class="bento-title-large">區塊鏈智能合約安全現況與風險 <span class="text-lg font-normal text-slate-500">Blockchain Smart Contract Security</span></h2>
+                    <p class="bento-text">
+                        從研究的視角來看，區塊鏈技術，特別是智能合約的普及，帶來了新的安全挑戰。資料顯示，僅在 <strong class="highlight-tech">2018 年上半年</strong>，全球區塊鏈行業因攻擊事件造成的損失就高達 <strong class="highlight-tech">11.5 億美元</strong>，這已經超過了 2016 年全年的總和，可見問題的嚴重性。對於初學者來說，了解這些風險是進入該領域研究的第一步。
+                    </p>
+                    <h3 class="bento-subtitle">主要的安全風險 <span class="text-sm font-normal text-slate-500">Key Security Risks</span></h3>
+                    <ul class="bento-list bento-text">
+                        <li><strong>釣魚網站與詐騙</strong>：針對使用者或專案方常見的攻擊手法，例如仿冒交易所（如幣安）或知名人士（如 Vitalik 或 Elon Musk）的社群媒體頁面或網站，誘騙使用者洩漏敏感資訊或轉移資金。</li>
+                        <li><strong>程式碼層面的漏洞 (Code Vulnerabilities)</strong>：智能合約本身就是一段運行在區塊鏈上的程式碼（<strong class="highlight-tech">bytecode</strong>）。如同所有軟體，智能合約也可能存在程式錯誤或邏輯缺陷。資料中提到，一個嚴重的漏洞可能導致「<strong class="highlight-tech">資料溢出</strong>」，讓攻擊者得以憑空創造代幣。</li>
+                        <li><strong>交易系統 API 故障或被利用</strong>：即使合約本身沒問題，底層的交易系統或其 API 也可能存在漏洞或故障，導致巨大損失。</li>
+                        <li><strong>大量智能合約存在問題</strong>：有研究（例如新加坡國立大學的研究）指出，大量部署在以太坊主鏈上的智能合約存在安全問題。</li>
+                        <li><strong>ICO 專案的高失敗率</strong>：超過九成的首次代幣發行 (ICO) 專案最終失敗或不可靠，部分原因可能與其安全問題相關。這也說明了在追求創新同時，應謹慎評估項目的可靠性與安全性。</li>
+                    </ul>
+                     <p class="bento-text mt-4">
+                        針對這些安全問題，學術界和業界都在積極探索審計（Audit）方法。審計就是對智能合約程式碼進行安全審查。傳統的方法可能包括靜態分析、符號執行或邏輯驗證。
+                    </p>
+                     <p class="bento-text mt-2">
+                        資料中特別介紹了一種結合深度學習的方法，稱作 <strong class="highlight-tech">R2D2 方法</strong>，用於智能合約安全檢測。其核心思想是將智能合約的位元碼（bytecode，編譯後的機器碼形式）轉換成<strong class="highlight-tech">彩色圖片</strong>進行分析。具體做法是將位元碼中特定的數值對應到 RGB 顏色值（例如 606060 轉成 969696）。然後將整個位元碼掃描並生成一張彩色圖片。接著，利用訓練好的深度學習模型（基於 CNN）來識別圖片中的特徵模式，從而判斷合約是否存在已知的安全漏洞或問題。這種方法的優勢在於，被標記為有問題的合約通常確實存在問題，信任度較高，這與傳統防毒軟體識別的不確定性不同。
+                    </p>
+                    <p class="bento-text mt-2">
+                        為了協助使用者評估 ICO 和智能合約的安全性，存在如 <strong class="highlight-tech">rating.io (ingpocket.net)</strong> 這樣的平台。該平台提供多方面的評估功能：
+                    </p>
+                     <ul class="bento-list bento-text">
+                        <li><strong>ICO 評估</strong>：蒐集並分析 ICO 專案的多項公開指標，例如社群媒體（Facebook, Twitter, Telegram）熱度、GitHub 程式碼更新頻率、團隊資訊透明度等。這些資訊會被加權計算出一個綜合分數，作為可靠性的參考。</li>
+                        <li><strong>智能合約檢測</strong>：平台會同步監控以太坊主鏈上新增的合約，並利用包括 R2D2 在内的方法對合約位元碼進行掃描和分析，提供安全評分和解析。儘管智能合約的安全性評分可能不是平台整體分數的主要組成部分。</li>
+                    </ul>
+                    <p class="bento-text mt-2">
+                        對於初入區塊鏈安全領域的研究者，了解這些基本概念、常見攻擊類型以及現有的檢測和評估工具，是開展進一步研究的基礎。
+                    </p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-brain icon-large"></i>
+                    <h2 class="bento-title-large">深度學習的挑戰與新探索：以膠囊網路為例 <span class="text-lg font-normal text-slate-500">Deep Learning Challenges & Capsule Networks</span></h2>
+                    <p class="bento-text">
+                        卷積神經網路（CNN）在圖像識別領域取得了巨大成功，甚至在 ImageNet 等比賽中超越了人類平均水平。然而，這項技術也面臨著一些瓶頸和挑戰，引發了學術界對其局限性的反思，甚至有人提出了「深度學習的冬天來了」的觀點。
+                    </p>
+                    <h3 class="bento-subtitle">CNN 主要的挑戰 <span class="text-sm font-normal text-slate-500">Key CNN Challenges</span></h3>
+                    <ul class="bento-list bento-text">
+                        <li><strong>對訓練資料集的強烈依賴與泛化能力不足</strong>：CNN 模型高度依賴於訓練資料的特性。如果遇到與訓練資料集分佈差異較大、或經過變形的圖像（如 CIFAR-10 的變形數據集），模型的準確度會大幅下降。這表明模型可能過度擬合了特定資料集的細節，而未能真正學到物體的本質特徵，缺乏足夠的泛化能力。</li>
+                        <li><strong>處理物體變形（如旋轉、縮放、位置變化）的效率問題</strong>：傳統 CNN 主要利用<strong class="highlight-tech">池化層</strong>來實現對物體位置和角度變化的「<strong class="highlight-tech">等價性</strong>」（Invariance），即識別出物體是同一類別，而不關心其具體的姿態或位置。為了學習這種不變性，CNN 需要看到大量不同變形角度的訓練樣本。這需要龐大的資料集和計算資源。</li>
+                    </ul>
+                    <p class="bento-text mt-4">
+                        Geoffrey Hinton，這位在深度學習領域舉足輕重的人物，也是 CNN 的批評者之一。他對 CNN 在處理空間層次關係和物體變形上的不足表示擔憂，並早在 <strong class="highlight-tech">2011 年</strong>就提出了「膠囊網路」（Capsule Network）的初步想法，包含 Autoencoder 的概念，旨在克服 CNN 的這些局限性。
+                    </p>
+                    <h3 class="bento-subtitle mt-4">膠囊網路 (Capsule Networks) <span class="text-sm font-normal text-slate-500">Introduction to Capsule Networks</span></h3>
+                     <p class="bento-text">
+                        膠囊網路是一種新型的神經網路架構，其核心思想是用「<strong class="highlight-tech">膠囊</strong>」（Capsule）取代傳統神經網路中的標量神經元。一個膠囊的輸出不再是一個單一的數值，而是一個<strong class="highlight-tech">向量（Activation Vectors）</strong>。這個向量的「長度」代表了該向量所表示的實體（如物體或物體的一部分）存在的機率（通常被約束在 0 到 1 之間），而向量的「方向」則代表了實體的各種「屬性」（如位置、角度、大小、變形程度甚至顏色等）。
+                    </p>
+                    <h4 class="bento-subtitle text-base mt-3">關鍵組成部分與概念 <span class="text-xs font-normal text-slate-500">Key Components & Concepts</span></h4>
+                    <ul class="bento-list bento-text">
+                        <li><strong>Activation Vectors</strong>：膠囊的輸出向量，其長度代表實體存在機率，方向代表屬性。</li>
+                        <li><strong>Affine Transform Function</strong>：用於轉換低級別膠囊到高級別膠囊的輸出。</li>
+                        <li><strong>Squashing Function</strong>：一個非線性函數，用於將膠囊輸出向量的長度「壓縮」到 0 到 1 的範圍，以便其可以被解釋為機率，同時保持向量的方向不變。</li>
+                        <li><strong>Routing by Agreement (動態路由)</strong>：核心機制之一。它是一種迭代的路由演算法，用於確定低級別膠囊的輸出應該「發送」到哪些高級別膠囊。基於「協議」或「一致性」：如果低級別膠囊的輸出轉換後與某個高級別膠囊的「預測」向量對齊，兩者間連接權重加強。這使網路能學到物體部分的空間層次關係，與 CNN 的最大池化不同。</li>
+                        <li><strong>Decoder (解碼器)</strong>：訓練過程中包含，用於從最終膠囊表示重建原始輸入圖像，驗證膠囊是否成功捕捉關鍵特徵和屬性，體現 Autoencoder 設計理念。</li>
+                    </ul>
+                    <p class="bento-text mt-4">
+                        膠囊網路的目標是實現對物體變形的「<strong class="highlight-tech">等變性</strong>」（Equivariance），而非 CNN 的等價性。這意味著當物體發生變形時，其膠囊表示的向量也會以可預測的方式隨之變動。這使得膠囊網路有望在看到少量不同變形的樣本後，就能理解該物體的各種變形姿態，從而可能只需要比 CNN 少得多的資料就能進行訓練。
+                    </p>
+                    <h4 class="bento-subtitle text-base mt-3">目前挑戰 <span class="text-xs font-normal text-slate-500">Current Challenges</span></h4>
+                     <ul class="bento-list bento-text">
+                        <li><strong>計算量大與訓練速度慢</strong>：尤其在處理大型圖像時，動態路由等機制需要迭代計算。</li>
+                        <li><strong>在複雜圖像數據集上的效果仍需驗證和優化</strong>：目前在 MNIST 等簡單數據集上表現優異，但在 ImageNet 等複雜數據集上的競爭力有待更多研究。</li>
+                    </ul>
+                    <p class="bento-text mt-2">
+                        從研究生的角度來看，膠囊網路代表了後 CNN 時代，研究者探索新神經網路架構的一種方向。理解其動機、核心思想與工作原理，對於未來在機器學習領域進行創新和解決實際問題具有啟發意義。
+                    </p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3 motion-div">
+                 <div class="motion-div-full-height">
+                    <i class="fas fa-project-diagram icon-large"></i>
+                    <h2 class="bento-title">其他相關技術活動與研究方向 <span class="text-base font-normal text-slate-500">Other Related Activities & Research</span></h2>
+                    <p class="bento-text">
+                        除了區塊鏈安全和膠囊網路，資料中也提及了一些其他值得關注的技術活動和研究方向，這反映了當前技術領域的熱點：
+                    </p>
+                    <ul class="bento-list bento-text">
+                        <li><strong>技術交流與分享會</strong>：學術與業界社群會定期舉辦分享會。例如關於「膠囊網路」的分享，預計的「推薦系統」分享會（九月）和邀請老師演講計畫（十一月後）。還有關於「圖像增強」（Image Enhancement）論文的分享會（八月十七日），技術已應用到 Photogen APP。</li>
+                        <li><strong>駭客松 (Hackathon)</strong>：結合實際應用與技術挑戰。例如 PicCollage 舉辦的駭客松（八月十八至十九日），題目涵蓋物聯網（IoT，使用 Google Voice Kit）和深度學習（GAN 美食圖像生成）。常與業界或政府合作，提供真實資料（如台北市政府交通 Log）和技術支援（如動見未來 SoundAI 中文語音識別）。</li>
+                        <li><strong>R2D2 方法在資安領域的應用</strong>：除了智能合約，R2D2 方法過去曾應用於 ASIACrypt 和澳洲某會議發表內容，暗示其在更廣泛資安領域（如病毒檢測）的潛力。</li>
+                    </ul>
+                     <p class="bento-text mt-4">
+                        總體而言，這些活動和研究方向都指向了當前技術的前沿：智能合約安全、新型神經網路、語音識別、圖像生成、物聯網、推薦系統等。對於研究人員和初學者而言，了解這些領域的發展動態，積極參與社群交流和實踐活動，是拓展視野和提升能力的重要途徑。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+         const presenterInfo = document.querySelector('header p.presenter-info');
+        if (presenterInfo) {
+            animate(presenterInfo, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, delay: 0.3, ease: 'easeOut' });
+        }
+
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div, index) => {
+            div.style.opacity = 0;
+            div.style.transform = 'translateY(20px) scale(0.95)';
+            inView(div, () => {
+                animate(div, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(motionDivs.length, 3)) * 0.1 + 0.5, ease: 'easeOut' });
+            }, { amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
