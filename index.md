@@ -7,7 +7,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
 </p>
 <p align="center">
-  AI是一條孤獨且充滿不確定的惶恐旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
   衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
   由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
 </p>  
