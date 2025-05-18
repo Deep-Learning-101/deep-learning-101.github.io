@@ -1,36 +1,32 @@
 ---
 layout: default
-title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
 ---
 
 <p align="center">
-  <strong>The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
 </p>
 <p align="center">
-  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
-  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
-  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
-  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
 </p>  
 <p align="center">
   <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
-    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
-  </a>
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180"></a>
+    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
 </p>
 <p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101">YouTube</a> |
-  <a href="https://www.facebook.com/groups/525579498272187/">台灣人工智慧社團 FB</a> |
-  <a href="https://www.twman.org/">TonTon Huang Ph.D.</a> |  
-  <a href="http://DeepLearning101.TWMAN.ORG">台灣人工智慧社團 網站</a> |
-  <a href="https://huggingface.co/DeepLearning101">Hugging Face</a>
-</p>
-<p align="center">
-<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+  <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
 </p>
 
-# 第九章 卷積網路 - [YouTube](https://www.youtube.com/watch?v=51cO6Kv37p4) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+# 第九章 卷積網路
 
-### Convolutional Networks (2017/04/14)
+<a href="https://www.youtube.com/watch?v=51cO6Kv37p4" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> <strong>2017/04/14, Convolutional Neural Networks @ Deep Learning Book Chapter 9</strong></a><br>
 
 
 **重點摘要:**  卷積神經網路 (Convolutional Neural Network, CNN)，有時也叫做卷積網路 (convolutional network)，是一類專門用來處理具有類似網格結構的數據的神經網路。例如，時間序列數據（可以認為是在時間軸上規律採樣形成的一維網格）和圖像數據（可以看作是二維的像素網格）。卷積網路在諸多應用領域都表現優異。「卷積神經網路」一詞表明該網路使用了 **卷積 (convolution)**  這種數學運算。卷積是一種特殊的線性運算。卷積網路是指那些至少在網路的一層中使用卷積運算來替代一般矩陣乘法運算的神經網路。 本章將首先說明什麼是卷積運算，接著解釋在神經網路中使用卷積運算的動機。然後介紹 **池化 (pooling)** ，這是一種幾乎所有的卷積網路都會用到的操作。通常來說，卷積神經網路中用到的卷積運算和其他領域（例如工程領域以及純數學領域）中的定義並不完全一致。我們會對神經網路實踐中廣泛應用的幾種卷積函數的變體進行說明。也會說明如何在多種不同維數的數據上使用卷積運算，之後討論使得卷積運算更加高效的一些方法。
