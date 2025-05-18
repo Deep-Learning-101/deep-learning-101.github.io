@@ -1,36 +1,32 @@
 ---
 layout: default
-title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
 ---
 
 <p align="center">
-  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
 </p>
 <p align="center">
-  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
-  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
-  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
-  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
 </p>  
 <p align="center">
   <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
-    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
-  </a>
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180"></a>
+    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
 </p>
 <p align="center">
   <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
-  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
-  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
-  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
-  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
-</p>
-<p align="center">
-<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+  <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
 </p>
 
-# 第七章 深度學習中的正則化 - [YouTube](https://www.youtube.com/watch?v=gSymqOhKW8o) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+# 第七章 深度學習中的正則化
 
-### Regularization for Deep Learning @ Deep Learning Book Chapter 7 (2017/02/10)
+<a href="https://www.youtube.com/watch?v=gSymqOhKW8o" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i><strong>2017/02/10, Regularization for Deep Learning @ Deep Learning Book Chapter 7</strong></a><br>
 
 **重點摘要:**
 機器學習中的一個核心問題是設計不僅在訓練數據上表現好，並且能 在新輸入上泛化好的算法。在機器學習中，許多策略顯式地被設計為減少測試誤差（可能會以增大訓練誤差為代價）。這些策略被統稱為**正則化 (regularization)**。我們將在后文看到，深度學習工作者可以使用許多不同形式的正則化策略。事實上，開發更有效的正則化策略已成為本領域的主要研究工作之一。

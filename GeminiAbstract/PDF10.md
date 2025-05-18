@@ -1,36 +1,32 @@
 ---
 layout: default
-title: Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101
+title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
 ---
 
 <p align="center">
-  <strong>Deep Learning 101, The top private AI Meetup in Taiwan, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
+  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>  
 </p>
 <p align="center">
-  <strong>Deep Learning 101, 台灣曾經最高最早發起的深度學習社群 @ 83F, 台北101</strong><br><br>
-  AI是條寂寞且惶恐的道路，花俏的收費課程或活動絕不會是條捷徑<br>
-  本頁內容為過往實名分享制的讀書會，感謝來自不同公司參與者的支持；如欲移除資訊還請告知。<br>
-  Deep Learning 101 只由 TonTon Huang Ph.D. 及其當時任職公司無償贊助場地及茶水點心，無 Co-organizer<br>
+  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
 </p>  
 <p align="center">
   <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
-    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="400">
-  </a>
+    <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180"></a>
+    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
 </p>
 <p align="center">
   <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
-  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">台灣人工智慧社團 FB</a> |
-  <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> |
-  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">台灣人工智慧社團 網站</a> |
-  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face</a>
-</p>
-<p align="center">
-<a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 60px !important;width: 217px !important;" ></a>
+  <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+  <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+  <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
 </p>
 
-# 第十章 序列建模：循環和遞歸網路 - [YouTube](https://www.youtube.com/watch?v=p6xzPqRd46w) - <a href="https://deep-learning-101.github.io/">回上一頁 GitHub Pages</a>
+# 第十章 序列建模：循環和遞歸網路
 
-### Recurrent and Recursive Nets (2017/05/05)
+<a href="https://www.youtube.com/watch?v=p6xzPqRd46w" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2017/05/05, Recurrent and Recursive Nets @ Deep Learning Book Chapter 10</a><br>
 
 **重點摘要:**
 循環神經網路 (Recurrent Neural Network, RNN) 是一類用於處理序列數據的神經網路。就像卷積網路是專門用於處理網格化數據（如圖像）的神經網路一樣，循環神經網路專門用於處理序列 `x^(1), ..., x^(τ)`。正如同卷積網路可以很容易地擴展到具有很大寬度和高度的圖像，以及處理大小可變的圖像，循環網路可以擴展到更長的序列（比起不基於序列的特化網路長得多）。大多數循環網路也能處理可變長度的序列。
