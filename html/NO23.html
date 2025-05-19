@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>推薦系統 Recommender System - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em { /* For markdown emphasis */
+            font-style: italic;
+            color: #555; /* Slightly darker for emphasis */
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+        .bento-list ol { /* Nested ordered list */
+            list-style-type: decimal;
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .bento-list ul { /* Nested unordered list */
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .bento-list ul li::before, .bento-list ol li::before {
+            content: ""; /* Remove parent's ::before for nested lists */
+        }
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center; /* Centered text */
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+        .presenter-info {
+            font-size: 1.125rem; /* 18px */
+            color: #555;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .main-content-section h1.bento-title-large {
+            margin-bottom: 0.5rem; /* Reduced margin for main section titles */
+        }
+        .main-content-section h2.bento-title { /* Targeting h2 specifically */
+             font-size: 1.5rem; /* 24px */
+             line-height: 2rem; /* 32px */
+             margin-top: 1.5rem;
+             margin-bottom: 0.75rem;
+             color: #1d1d1f;
+        }
+        .main-content-section h3.bento-subtitle {
+            margin-top: 1.25rem;
+            font-size: 1.2rem; /* H3 subtitles */
+            color: #0071e3;
+        }
+         .main-content-section h4.bento-subtitle { /* For CF sub-types */
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #1a5fb4; /* Darker blue */
+        }
+        hr.section-divider {
+            border-top: 2px solid #e5e7eb; /* Slightly thicker and lighter than default */
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                    AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                    衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                    由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top:1rem; margin-bottom:1rem;">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" style="width: 180px; height: auto; border-radius: 10px;">
+                    </a>
+                    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; border-radius: 10px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p class="mt-2">
+                    <a href="https://www.youtube.com/watch?v=Zu-27CNloiQ" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2018/09/14, SAS, Recommender System</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                推薦系統
+            </h1>
+            <p class="english-subtitle mt-2">
+                Recommender System
+            </p>
+            <p class="presenter-info mt-4">分享者：SAS | 日期：2018/09/14</p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3 motion-div main-content-section">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-cogs icon-large"></i>
+                    <h2 class="bento-title">推薦系統核心概念與重要性 <span class="text-base font-normal text-slate-500">Core Concepts & Importance</span></h2>
+                    <p class="bento-text">
+                        首先，推薦系統是什麼？簡單來說，它是一種資訊過濾工具，旨在幫助使用者從<strong class="highlight-tech">海量內容或商品</strong>中快速找到他們可能感興趣或喜歡的項目 [1-3]。為什麼它如此重要？因為在內容和商品<strong class="highlight-tech">爆炸性增長</strong>的今天，使用者很難自行從中發掘所需，推薦系統透過主動推薦來解決這個<strong class="highlight-tech">資訊過載</strong>問題 [1-3]。它的應用場景非常廣泛，從文章、新聞、電影（如 Netflix）到音樂（如 KKBOX, Spotify）、商品（如電商平台）甚至廣告，幾乎各行各業都能看到它的身影 [1, 2]。核心目標就是要找出使用者「可能或許會是喜歡的」東西 [1]。
+                    </p>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">主要的推薦方法類型 <span class="text-base font-normal text-slate-500">Main Recommendation Approaches</span></h2>
+                    <p class="bento-text">推薦系統的建構方法大致可以分為幾種主要類型，這些是我們入門時需要掌握的基礎：</p>
+
+                    <h3 class="bento-subtitle"><i class="fas fa-file-alt mr-2"></i>1. Content-Based Filtering (內容基礎過濾)</h3>
+                    <ul class="bento-list bento-text">
+                        <li>這種方法主要依賴於<strong class="highlight-tech">商品/內容本身的特徵</strong>（metadata, features）和<strong class="highlight-tech">使用者的特徵</strong>來進行推薦 [1-3]。</li>
+                        <li>商品特徵可能包括標題、內容、類別、價格等 [1-3]。</li>
+                        <li>使用者特徵則可能包括年齡、性別、個人喜好等 [1, 2]。</li>
+                        <li>其基本思路是將這些特徵作為模型輸入，預測使用者對特定項目的偏好 [1-3]。</li>
+                        <li>從研究角度看，這可以視為一個基於特徵的預測問題，例如使用簡單的迴歸模型 [1]。</li>
+                        <li><strong>挑戰</strong>在於，有時候<strong class="highlight-tech">使用者特徵難以獲取</strong>（例如，網站不一定知道使用者的年齡或性別），而商品特徵也可能不夠豐富或難以量化 [1, 4]。</li>
+                    </ul>
+
+                    <h3 class="bento-subtitle"><i class="fas fa-users mr-2"></i>2. Collaborative Filtering (CF, 協同過濾)</h3>
+                    <ul class="bento-list bento-text">
+                        <li>CF 方法則走了一條不同的路徑：它<strong class="highlight-tech">不直接依賴</strong>於商品或使用者的<strong class="highlight-tech">顯性特徵</strong>，而是純粹利用<strong class="highlight-tech">使用者的行為數據</strong>來進行推薦 [1, 2]。這些行為數據可能是瀏覽、購買、點擊或明確的評分 [1-5]。</li>
+                        <li>在最簡化的情況下，原始數據可能只有 User ID、Item ID 和對應的行為或評分 [1, 4]。</li>
+                        <li>其<strong class="highlight-tech">核心假設</strong>是「物以類聚，人以群分」：<strong class="highlight-tech">相似的使用者</strong>會對<strong class="highlight-tech">相似的物品</strong>給予相似的評價或展現相似的偏好；反之，<strong class="highlight-tech">相似的物品</strong>也會被<strong class="highlight-tech">相似的使用者</strong>給予相似的評價或展現相似的偏好 [1-3, 6]。這是理解CF的基石。</li>
+                        <li>Netflix Prize 競賽是一個經典的例子，它提供了大量的使用者電影評分數據，參賽者需要預測使用者對未評分電影的偏好，這是一個典型的基於評分的 CF 問題 [2-5, 7]。</li>
+                    </ul>
+
+                    <h4 class="bento-subtitle">CF的子類型：記憶基礎與模型基礎</h4>
+                    <ul class="bento-list bento-text">
+                        <li><strong>Memory-Based (記憶基礎)</strong>: 這類方法直接使用原始的使用者行為數據（如評分矩陣）來計算相似度並生成推薦。
+                            <ul class="bento-list bento-text">
+                                <li><strong>User-Based CF</strong>: 計算<strong class="highlight-tech">使用者之間的相似度</strong>（例如使用 Cosine similarity 或 Pearson correlation 等度量方法），然後基於與目標使用者相似的其他使用者對某個物品的評分，進行加權平均來預測目標使用者對該物品的評分 [1, 6]。</li>
+                                <li><strong>Item-Based CF</strong>: 計算<strong class="highlight-tech">物品之間的相似度</strong>，然後基於目標使用者對與目標物品相似的其他物品的評分，進行加權平均來預測使用者對目標物品的評分 [1, 8]。</li>
+                                <li>在實際應用中，Item-Based CF 在許多方面展現出優勢。特別是當物品數量（Item）遠少於使用者數量（User）時，計算物品相似度的<strong class="highlight-tech">計算量可能較少</strong> [1, 8]。此外，物品之間的相似度相對穩定，而使用者偏好可能變化較快 [1, 8]。另一個關鍵優勢在於<strong class="highlight-tech">Serving (線上服務)</strong>：Item 相似度可以預先計算並儲存，當用戶有新的行為時，可以快速查找相似物品進行推薦，這在實時推薦場景下非常重要 [1, 8, 9]。Amazon 或 HP 的研究人員被認為在這個領域做出了重要貢獻，Item-Based CF 的創新性甚至獲得過獎項 [1, 5, 8, 10]。</li>
+                                <li>Memory-Based 方法的<strong class="highlight-tech">局限性</strong>在於，它的預測過程是基於相似度計算和加權平均，這可能<strong class="highlight-tech">限制了模型的表達能力</strong>，且相似度的定義可能與最終預測目標沒有直接的優化關聯 [1, 9]。同時，對於像 Harry Potter 系列這樣有多集的內容，簡單的相似度計算可能導致不準確，因為看過一集和看過多集的使用者其真實興趣強度可能被扭曲 [1, 9]。</li>
+                            </ul>
+                        </li>
+                        <li><strong>Model-Based (模型基礎)</strong>: 這類方法則嘗試學習一個模型來概括使用者與物品之間的關係。
+                            <ul class="bento-list bento-text">
+                                <li><strong>Matrix Factorization (MF, 矩陣分解)</strong>: 這是模型基礎CF中最經典且影響深遠的方法之一 [1, 2, 11, 12]。</li>
+                                <li><strong class="highlight-tech">核心思想</strong>：將使用者-物品互動（如評分）矩陣分解為兩個低維的矩陣：一個是<strong class="highlight-tech">使用者隱含特徵矩陣</strong>（或稱使用者 Embedding），另一個是<strong class="highlight-tech">物品隱含特徵矩陣</strong>（或稱物品 Embedding）[1-3, 11, 12]。使用者對物品的評分（或偏好）被建模為對應的使用者隱含向量和物品隱含向量的<strong class="highlight-tech">內積</strong> [1-3, 11, 12]。直觀來說，這些隱含向量捕捉了使用者和物品在某些未知的「維度」上的特徵，例如使用者對「動作片」的偏好強度和某部電影是「動作片」的程度 [1, 12]。</li>
+                                <li><strong>訓練過程</strong>：通過定義一個<strong class="highlight-tech">目標函數</strong>（通常是最小化預測評分與實際評分之間的誤差，例如 RMSE/MSE），並通過優化算法來學習得到最佳的使用者 Embedding 矩陣 (P) 和物品 Embedding 矩陣 (Q) [1, 3, 12, 13]。</li>
+                                <li><strong>求解方法</strong>：常用的優化算法包括：
+                                    <ul class="bento-list bento-text">
+                                        <li><strong>Alternating Least Squares (ALS)</strong>: 迭代地固定使用者矩陣求解物品矩陣，再固定物品矩陣求解使用者矩陣，重複進行直到收斂 [1, 3, 11-13]。ALS的優勢在於相對容易進行<strong class="highlight-tech">分散式計算</strong>，適合處理大規模數據 [1, 13]。</li>
+                                        <li><strong>Stochastic Gradient Descent (SGD)</strong>: 一種通用的優化算法，也可以用於訓練 MF 模型 [1, 3, 11, 12]。</li>
+                                    </ul>
+                                </li>
+                                <li><strong>改進</strong>：MF 模型可以通過加入<strong class="highlight-tech">Bias 項</strong>（例如，某些使用者傾向於給高分，某些物品普遍得分較高）和<strong class="highlight-tech">正規化項</strong>（防止過擬合）來提升性能 [1, 13]。此外，也可以通過加入<strong class="highlight-tech">其他特徵</strong>（如商品類別、時間因素）來擴展模型 [1, 13-15]。</li>
+                                <li>MF 本質上與 Autoencoder 有相似之處，可以視為一種<strong class="highlight-tech">降維和重建</strong>使用者-物品互動矩陣的方法 [1, 6, 16]。</li>
+                                <li><strong>其他模型</strong>：除了 MF，PLSA、RBM（受限玻爾茲曼機）等模型也可以用於推薦系統 [1, 6].</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">處理隱性回饋 (Implicit Feedback) <span class="text-base font-normal text-slate-500">Handling Implicit Feedback</span></h2>
+                    <p class="bento-text">在實際應用中，我們往往沒有使用者明確的評分數據 (Explicit Feedback)，更多的是<strong class="highlight-tech">隱性回饋</strong>，例如瀏覽、點擊、購買等行為 [1, 3, 11, 14, 17, 18]。這類數據的挑戰在於：</p>
+                    <ol class="bento-list bento-text" style="list-style-type: decimal; padding-left: 1.5rem;">
+                        <li><strong class="highlight-tech">只有正面樣本</strong>：我們知道使用者對哪些項目產生了行為，但對於那些沒有行為的項目，我們<strong class="highlight-tech">不確定</strong>是使用者不感興趣，還是根本沒有看到或注意到 [1, 3, 14, 17, 18]。這不像評分數據，我們可以明確知道使用者「不喜歡」某個項目。</li>
+                        <li><strong class="highlight-tech">缺乏程度信息</strong>：即使使用者與某個項目發生了互動（如瀏覽），我們也無法直接得知其喜歡的程度，不像評分有1-5分的分級 [1, 18]。</li>
+                    </ol>
+                    <p class="bento-text">處理隱性回饋的<strong class="highlight-tech">常用方法</strong>包括 [1, 3, 14, 15, 17]:</p>
+                    <ul class="bento-list bento-text">
+                        <li>將有行為的項目標記為 1（正面樣本），沒有行為的項目標記為 0（負面樣本）。</li>
+                        <li>在模型訓練時，給予這些<strong class="highlight-tech">未觀測到的「0」樣本較小的權重</strong>，以反映其不確定性 [1, 3, 14, 15, 17]。</li>
+                        <li>這種處理方式可以應用於 MF 或其他模型。</li>
+                    </ul>
+
+                     <hr class="section-divider">
+
+                    <h2 class="bento-title">進階的推薦方法與技術 <span class="text-base font-normal text-slate-500">Advanced Methods & Techniques</span></h2>
+                    <p class="bento-text">隨著研究的深入和數據的複雜化，出現了更多先進的推薦系統方法：</p>
+                    <ol class="bento-list bento-text" style="list-style-type: decimal; padding-left: 1.5rem;">
+                        <li><strong>Word2Vec 等 Embedding 方法的應用</strong>: 將使用者<strong class="highlight-tech">瀏覽或互動的物品序列</strong>視為一個「句子」，將<strong class="highlight-tech">物品視為「詞」</strong>[1, 14, 16]。應用 Word2Vec (如 Skip-gram) 或其變種（如 Meta-Prod2Vec）來學習<strong class="highlight-tech">物品的 Embedding 向量</strong> [1, 14, 16]。這樣可以將物品轉換為低維度的密集向量表示，捕捉物品之間的語義或關聯性 [1, 14, 16]。如果將使用者行為表達為圖結構，也可以使用 Node2Vec 等圖嵌入方法 [1, 16]。</li>
+                        <li><strong>深度學習 (Deep Learning, DL)</strong>: DL 模型可以構建更深層次的結構，以學習使用者和物品之間<strong class="highlight-tech">更複雜的交互關係</strong>和<strong class="highlight-tech">抽象高層次特徵</strong> [1, 14, 16].
+                            <ul class="bento-list bento-text">
+                                <li><strong>Wide & Deep Learning (Google)</strong>: 結合了 Wide 部分（類似線性模型，擅長記憶處理稀疏的交叉特徵）和 Deep 部分（深度神經網絡，擅長從特徵中泛化學習隱含模式），旨在結合兩者的優勢以獲得更好的性能 [1, 14, 16].</li>
+                                <li><strong>RNN (循環神經網絡)</strong>: 在<strong class="highlight-tech">序列推薦</strong>中表現出色。將使用者的瀏覽或購買歷史視為一個<strong class="highlight-tech">序列</strong>，RNN 可以捕捉使用者興趣的<strong class="highlight-tech">短期或長期演變</strong>，特別適用於 Session-based 推薦，即根據使用者在一個特定時間段內的行為序列進行推薦 [1, 11, 14, 19]. Session 的定義通常基於時間間隔（如 30 分鐘無活動則 Session 結束）[7, 11, 19].</li>
+                            </ul>
+                        </li>
+                        <li><strong>強化學習 (Reinforcement Learning, RL)</strong>: 將推薦過程建模為一個<strong class="highlight-tech">序列決策問題</strong>，智能體（推薦系統）在不同的<strong class="highlight-tech">狀態</strong>（使用者當前的狀態/瀏覽歷史）下採取<strong class="highlight-tech">動作</strong>（推薦物品），並根據使用者的反應獲得<strong class="highlight-tech">獎勵</strong>（點擊、購買等），目標是學習一個策略來<strong class="highlight-tech">最大化長期的累積獎勵</strong> [1, 11, 14, 19-21].
+                            <ul class="bento-list bento-text">
+                                <li>淘寶有將整個購物流程視為一個RL過程，優化使用者最終購買的機率的應用案例 [1, 14, 19].</li>
+                                <li><strong>挑戰</strong>：RL 需要大量的<strong class="highlight-tech">在線互動試錯</strong>來學習，這在實際線上環境中成本很高且風險大 [1, 22]. 數據稀疏和 Off-policy Evaluation (在舊策略下評估新策略) 也是難點 [1, 20, 22].</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">推薦系統面臨的實際挑戰與進階問題 <span class="text-base font-normal text-slate-500">Practical Challenges & Advanced Issues</span></h2>
+                    <p class="bento-text">建構一個實用的推薦系統遠不止選擇算法那麼簡單，我們還需要面對許多實際問題：</p>
+                    <ol class="bento-list bento-text" style="list-style-type: decimal; padding-left: 1.5rem;">
+                        <li><strong>冷啟動問題 (Cold Start)</strong>: 對於<strong class="highlight-tech">新使用者</strong>或<strong class="highlight-tech">新物品</strong>，由於缺乏歷史互動數據，我們無法使用 CF 方法進行推薦 [1, 3, 11, 17, 23]. 這是一個很普遍的挑戰。常見的緩解方法包括利用內容特徵、使用者註冊時提供的信息或一些啟發式規則 [1, 17, 23].</li>
+                        <li><strong>長尾效應 (Long Tail Effect)</strong>: 在許多平台中，少數熱門物品佔據了大部分的互動，而絕大多數物品位於「長尾」部分 [1, 11, 23]. 如果推薦系統只優化點擊率等短期指標，往往會導致<strong class="highlight-tech">熱門更熱，冷門更冷</strong>的「馬太效應」[1, 20, 23]. 長尾物品很難被發現和推薦。</li>
+                        <li><strong>探索與利用的平衡 (Exploration vs. Exploitation, E&E)</strong>: 這是解決長尾效應和冷啟動的關鍵問題之一 [1, 11, 23, 24].
+                            <ul class="bento-list bento-text">
+                                <li><strong>Exploitation (利用)</strong>: 推薦那些基於歷史數據<strong class="highlight-tech">已知會獲得高獎勵</strong>（如高點擊率、購買率）的物品 [1, 11, 23-25].</li>
+                                <li><strong>Exploration (探索)</strong>: 推薦一些使用者<strong class="highlight-tech">可能感興趣但過去未曾互動過的物品</strong>，或一些<strong class="highlight-tech">系統不確定其表現</strong>的物品，以發現使用者新的興趣點或潛在的高獎勵物品 [1, 11, 23-25].</li>
+                                <li>只 Exploitation 會導致使用者興趣狹窄和長尾問題；只 Exploration 會導致推薦不準確，使用者體驗下降 [24].</li>
+                                <li><strong>Bandit 算法</strong>（源於多臂老虎機問題）被廣泛用於解決 E&E 問題，特別是在廣告和新聞推薦中 [1, 11, 17, 22-26]. 它平衡了選擇已知最佳選項和嘗試未知選項 [17, 24, 25].</li>
+                                <li><strong>Multi-Armed Bandit (MAB)</strong>: 假設每個推薦選項（「手臂」）有固定的未知獎勵機率，目標是在有限嘗試內最大化總獎勵 [11, 17, 22, 24, 25].</li>
+                                <li><strong>UCB (Upper Confidence Bound)</strong>: 一種經典的 MAB 算法，它選擇能夠最大化「平均獎勵 + 一個與不確定性相關的項」的選項，鼓勵探索那些不確定性高（即置信區間上界高）的選項 [1, 11, 17, 24, 25].</li>
+                                <li><strong>Contextual Bandit (C Bandy)</strong>: 在 MAB 的基礎上引入<strong class="highlight-tech">上下文特徵</strong>（如使用者或物品的特徵），根據當前情境來決定探索與利用策略，使得推薦更具個性化 [1, 11, 17, 24-26].</li>
+                                <li>Bandit 算法還可以巧妙地應用於 A/B Test 的決策，通過動態分配流量，逐漸偏向表現更好的算法版本 [1, 17, 26].</li>
+                            </ul>
+                        </li>
+                        <li><strong>多目標優化</strong>: 實際系統不僅追求<strong class="highlight-tech">準確率</strong>（如 RMSE，雖然在評分預測中重要，但好的RMSE不一定等於好的Top-K排序 [27, 28]），還需要考慮許多其他重要指標，例如<strong class="highlight-tech">點擊率 (CTR)</strong>、<strong class="highlight-tech">轉換率 (CVR)</strong>、使用者停留時間、<strong class="highlight-tech">多樣性 (Diversity)</strong>（避免推薦過於相似的物品 [27, 29]）、<strong class="highlight-tech">新穎性 (Novelty)</strong>（推薦使用者未曾見過的好東西）等 [11, 27, 28]. 如何在這些多個目標之間找到最佳平衡是一個複雜的問題 [27].</li>
+                        <li><strong>排序問題 (Ranking)</strong>: 推薦系統最終輸出的是一個<strong class="highlight-tech">排序列表</strong> [27, 28]. 預測單個物品的偏好（點預測）與優化整個推薦列表的排序是不同的問題 [27, 28]. Top-K Ranking，即如何優化列表前K個位置的推薦效果，通常比簡單的評分預測更為重要 [26-28]. 優化 Top-K Ranking 指標本身較難，常需要特定的排序模型或損失函數 [26-28]. 不同頁面位置（如首頁、商品詳情頁）或不同使用者階段（瀏覽、購買）的推薦策略和側重點也應不同 [27-30]. 例如，商品頁可能更側重推薦相似或互補商品，而首頁可能需要更高的多樣性 [27-30].</li>
+                        <li><strong>數據挑戰</strong>:
+                            <ul class="bento-list bento-text">
+                                <li><strong>數據規模與稀疏性</strong>: 實際系統面對<strong class="highlight-tech">百萬甚至數十億的使用者和物品</strong> [27]. 使用者-物品互動矩陣<strong class="highlight-tech">極度稀疏</strong>，已知互動可能只佔總數的不到1%或0.1% [7, 17, 27, 31]. 從如此稀疏的數據中學習準確偏好是巨大的挑戰 [7, 17, 27, 31].</li>
+                                <li><strong>隱性回饋的歧義</strong>: 如前所述，無法確定未互動的真正原因 [17].</li>
+                                <li><strong>數據時效性</strong>: 使用者興趣和物品流行度隨時間變化，模型需要能夠捕捉這種動態變化 [15, 17].</li>
+                                <li><strong>處理極端稀疏或不規律數據</strong>: 對於某些銷售數據極度稀疏、長期沒有銷售但偶爾出現銷售的物品，精確預測非常困難，可能需要特殊處理或簡單的規則/隨機推薦 [7, 31].</li>
+                            </ul>
+                        </li>
+                        <li><strong>實際實作與系統挑戰</strong>:
+                            <ul class="bento-list bento-text">
+                                <li><strong>實時性 (Real-time Serving)</strong>: 推薦系統需要在使用者請求時快速生成推薦結果，對延遲要求很高 [27-29]. 模型通常離線訓練，但<strong class="highlight-tech">線上 Serving 必須高效</strong> [27-29]. Item-Based CF 或 MF 可以通過<strong class="highlight-tech">預計算</strong>或利用<strong class="highlight-tech">高效的向量檢索</strong>（如 Faiss 庫，Facebook 有類似的用於快速查找近鄰特徵的庫）來實現快速 Serving [27-29]. 深度學習模型的 Serving 可能計算開銷較大 [27].</li>
+                                <li><strong>系統架構</strong>: 需要設計<strong class="highlight-tech">分散式、可擴展的系統</strong>來處理大規模數據、訓練複雜模型和應對高併發請求 [27-29]. 系統能力往往限制了可以採用的算法 [5, 28, 31].</li>
+                                <li><strong>數據獲取與清洗</strong>: 獲取高質量的用戶行為數據和物品特徵是基礎且至關重要的工作 [27].</li>
+                                <li><strong>個性化推薦的實現門檻</strong>: 對於個人網站或部落格，由於<strong class="highlight-tech">難以獲取足夠的使用者行為數據</strong>，實現複雜的個性化推薦系統門檻較高，通常需要平台級的數據基礎支持 [7, 31].</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">其他相關概念與考量 <span class="text-base font-normal text-slate-500">Other Concepts & Considerations</span></h2>
+                     <ul class="bento-list bento-text">
+                        <li><strong>模型融合 (Ensembling)</strong>: 在 Netflix Prize 競賽後期，獲勝隊伍通過<strong class="highlight-tech">融合多個模型</strong>的結果來提升性能，這是一種常見的提高推薦效果的技術 [5, 7, 13, 18]. 對於L2損失優化的模型，可以直接對模型輸出進行L2插值融合 [7, 18].</li>
+                        <li><strong>跨領域推薦</strong>: 利用不同領域的數據（如閱讀和購買行為）來增強推薦效果 [5, 15]. 可以通過共享使用者 Embedding 或正則化關聯不同領域的 Embedding 來實現 [5, 15].</li>
+                        <li><strong>社交推薦</strong>: 利用使用者之間的社交關係來進行推薦，例如朋友喜歡的東西可能也推薦給你 [7, 10, 32]. 這方面資料來源未詳細展開，但作為一種潛在方向被提及，甚至有透過操縱社交推薦系統來增加個人曝光的案例 [10, 32].</li>
+                        <li><strong>推薦系統與 SEO 的差異</strong>: 推薦系統是主動向使用者推送可能感興趣的內容，而 SEO 旨在優化網站在特定搜尋詞下的排名，兩者目標和機制不同 [7, 32].</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+         const presenterInfo = document.querySelector('header p.presenter-info');
+        if (presenterInfo) {
+            animate(presenterInfo, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, delay: 0.3, ease: 'easeOut' });
+        }
+
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div, index) => {
+            div.style.opacity = 0;
+            div.style.transform = 'translateY(20px) scale(0.95)';
+            inView(div, () => {
+                animate(div, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(motionDivs.length, 3)) * 0.1 + 0.5, ease: 'easeOut' });
+            }, { amount: 0.05 }); // Trigger when 5% of the element is in view for potentially taller main content
+        });
+    });
+    </script>
+</body>
+</html>

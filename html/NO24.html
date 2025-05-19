@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC: Social-network Opinion and Comment - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em { /* For markdown emphasis */
+            font-style: italic;
+            color: #555; /* Slightly darker for emphasis */
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+        .bento-list ol { /* Nested ordered list */
+            list-style-type: decimal;
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .bento-list ul { /* Nested unordered list */
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .bento-list ul li::before, .bento-list ol li::before {
+            content: ""; /* Remove parent's ::before for nested lists */
+        }
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center; /* Centered text */
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+        .presenter-info {
+            font-size: 1.125rem; /* 18px */
+            color: #555;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .main-content-section h1.bento-title-large {
+            margin-bottom: 0.5rem; /* Reduced margin for main section titles */
+        }
+        .main-content-section h2.bento-title { /* Targeting h2 specifically */
+             font-size: 1.6rem; /* 26px */
+             line-height: 2.1rem; /* ~34px */
+             margin-top: 1.5rem;
+             margin-bottom: 0.75rem;
+             color: #1d1d1f;
+        }
+        .main-content-section h3.bento-subtitle {
+            margin-top: 1.25rem;
+            font-size: 1.25rem; /* H3 subtitles */
+            color: #0071e3;
+        }
+         .main-content-section h4.bento-subtitle {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #1a5fb4; /* Darker blue */
+        }
+        hr.section-divider {
+            border-top: 2px solid #e5e7eb; /* Slightly thicker and lighter than default */
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                    AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                    衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                    由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top:1rem; margin-bottom:1rem;">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" style="width: 180px; height: auto; border-radius: 10px;">
+                    </a>
+                    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; border-radius: 10px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p class="mt-2">
+                    <a href="https://www.youtube.com/watch?v=TABprCGNHc8" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2018/10/12, Nat Lee, SOC: Social-network Opinion and Comment</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                社群網路意見與評論分析系統
+            </h1>
+            <p class="english-subtitle mt-2">
+                SOC: Social-network Opinion and Comment
+            </p>
+            <p class="presenter-info mt-4">分享者：Nat Lee | 日期：2018/10/12</p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3 motion-div main-content-section">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-brain icon-large"></i>
+                    <h2 class="bento-title">智能情感分析：核心概念與技術入門 <span class="text-base font-normal text-slate-500">Intelligent Sentiment Analysis: Core Concepts & Introduction</span></h2>
+                    <p class="bento-text">
+                        情感分析，簡單來說，是一種<strong class="highlight-tech">自然語言處理（NLP）</strong>技術，目的在於判定一段文本所表達的情感傾向，究竟是正面的、負面的，還是中立的 [1, 2]。這對於理解大眾對特定事物（例如產品、服務，或是資料中特別關注的 ICO 項目）的看法至關重要 [1, 3]。對於新手來說，理解其核心目標——從文字中「讀懂」情緒——是踏入此領域的第一步。
+                    </p>
+
+                    <h3 class="bento-subtitle"><i class="fas fa-cogs mr-2"></i>資料處理流程：理解數據的轉換之旅 <span class="text-sm font-normal text-slate-500">Data Processing Pipeline</span></h3>
+                    <p class="bento-text">
+                        在進行情感分析之前，原始文本資料需要經過一系列的處理步驟，這是一個在 NLP 領域非常基礎且關鍵的流程 [1, 4]。想像一下，我們從社群平台（資料中主要提及 Facebook, Twitter, Telegram [1, 4, 5]）抓取了大量的評論或貼文，這些原始資料充滿了各種噪音和非結構化資訊。因此，資料處理流程是模型能夠有效學習的基石。
+                    </p>
+                    <ol class="bento-list bento-text" style="list-style-type: decimal; padding-left: 1.5rem;">
+                        <li><strong>預處理 (Pre-processing):</strong> [1, 2, 4] 這是資料清洗的階段，目的是移除或轉換那些對情感分析模型訓練沒有幫助的元素。
+                            <ul class="bento-list bento-text">
+                                <li>例如，社群媒體上常見的表情符號、特殊字符（如標點符號過多）會被過濾或標準化處理 [1, 4]。</li>
+                                <li>Hashtag (警字號 + 文字) 會被轉換成統一的標記 <code class="highlight-tech">&lt;hashtag&gt;</code> [1, 4]，例如 #bitcoin 就變成 <code class="highlight-tech">&lt;hashtag&gt;</code>。</li>
+                                <li>提及用戶 (@ + 用戶名) 也會被轉換成統一的標記 <code class="highlight-tech">&lt;user&gt;</code> [1, 4]，例如 @elonmusk 就變成 <code class="highlight-tech">&lt;user&gt;</code>。</li>
+                                <li>這樣做的原因在於，原始的表情符號或具體的用戶名、Hashtag 可能過於多樣且不具備泛化性，標準化處理可以減少模型的負擔並提高其泛化能力。</li>
+                            </ul>
+                        </li>
+                        <li><strong>分詞 (Tokenization):</strong> [1, 2, 4] 預處理之後的文本仍然是一串連續的字元。分詞的作用是將這串連續文本分割成有意義的單元，通常是詞語或符號 (tokens)。例如，句子 "I ❤️ it" 經過分詞後，可能會變成 ["I", "&lt;3", "it"] 或 ["I", "heart", "it"]，甚至轉換成數字序列 [4, 6]。這一步是將人類語言轉換為電腦可以理解的離散單元，為後續的數值化表示做準備。</li>
+                        <li><strong>詞嵌入 (Embedding):</strong> [1, 2, 4] 分詞後的結果是離散的符號（如單詞 ID）。詞嵌入的目的是將這些離散的單詞或符號轉換為連續向量空間中的低維稠密向量表示 [1, 2, 4, 6]。這一步非常關鍵，因為它能捕捉詞語之間的語義和語法關係，使意義相似的詞語在向量空間中距離較近 [1, 4, 6]。文獻中提到這是一個「離散空間轉變成連續空間」的過程 [6]，並用星座的比喻來解釋 [6, 7]，說明如何將「勇敢」、「領導力」等離散形容詞對應到連續的星座序列中 [6, 7]。對於模型來說，處理連續向量比處理離散符號更有效率，且能利用詞語之間的相似性。</li>
+                    </ol>
+
+                    <h3 class="bento-subtitle"><i class="fas fa-microchip mr-2"></i>模型架構：LSTM 加 CNN 的考量 <span class="text-sm font-normal text-slate-500">Model Architecture: LSTM + CNN</span></h3>
+                    <p class="bento-text">
+                        資料中提及的情感分析模型採用了 <strong class="highlight-tech">LSTM (Long Short-Term Memory)</strong> 加 <strong class="highlight-tech">CNN (Convolutional Neural Network)</strong> 的組合架構 [1, 4-6]。這與市面上一些常見的 CNN 後接 LSTM 的做法不同 [4, 7]。
+                    </p>
+                    <ul class="bento-list bento-text">
+                        <li><strong>CNN</strong> 在文本處理中常用於提取局部特徵，例如短語或 N-gram [2, 4, 7]。它可以識別文本中的關鍵模式或詞語組合。</li>
+                        <li><strong>LSTM</strong> 是一種特殊的循環神經網絡 (RNN)，特別擅長處理序列資料並捕捉長距離的依賴關係 [2, 4]。在句子中，詞語的順序很重要，LSTM 可以幫助模型理解上下文。</li>
+                    </ul>
+                    <p class="bento-text">
+                        將兩者結合，通常是為了利用 CNN 的局部特徵提取能力和 LSTM 的序列建模能力。資料中提到，選擇 LSTM 加 CNN 的順序可能是為了處理<strong class="highlight-tech">較短的文本</strong>，如社交媒體留言，通常在 60-100 字左右 [4, 8]。這點值得我們思考，不同文本長度或類型的任務，可能會需要調整模型的組合方式或順序。
+                    </p>
+                    <p class="bento-text">
+                        模型訓練完成後，資料中報告的訓練集準確率約為 82%，人工驗證準確率約為 83% [4, 9]。這也帶出了模型驗證和數據標註的挑戰。
+                    </p>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">學術與實務的挑戰：數據、標註與可重現性 <span class="text-base font-normal text-slate-500">Academic & Practical Challenges</span></h2>
+                    <p class="bento-text">
+                        進行 NLP 領域的研究與開發，特別是在情感分析這樣的任務上，會遇到一些普遍的挑戰，這些在資料中被反覆強調，對於新手研究者而言是重要的提醒 [1, 10-12]。
+                    </p>
+                    <ol class="bento-list bento-text" style="list-style-type: decimal; padding-left: 1.5rem;">
+                        <li><strong>缺乏標準化與公開的資料集 (Dataset):</strong> [1, 10-12] 這是資料中講者大力批評的問題 [10-12]。許多學術論文不公開其使用的資料集或驗證方法 [1, 10-12]。這導致其他研究者難以重現實驗結果，無法公平地比較不同模型或方法的效能 [1, 10-12]。有時即使提供了連結，資料也可能已經失效 [12]。這種「不可重現性 (Reproducibility)」是學術研究嚴謹性的重要障礙 [2, 13]。作為入門者，尋找高質量、公開且驗證方法清晰的資料集是學習和實踐的第一步，但現實中這並不容易。資料中提到團隊計劃將他們收集的資料集公開，並可能放在 Kaggle 等平台，這是一種積極的回饋社群的行為 [10, 14]。</li>
+                        <li><strong>資料標註 (Labeling) 的困難與耗時:</strong> [1, 10, 14, 15] 訓練監督式學習模型需要大量帶有標籤的資料，但在 NLP 領域，為文本標註情感（正面、負面、中立）需要大量的人工投入 [1, 10, 14, 15]。文獻中也提到不同人對同一句話的情感判斷可能存在差異，這會影響標註的一致性 [4, 9, 15]。為了解決這個問題，團隊開發了一個網站 <strong class="highlight-tech">se.twman.org</strong> [1, 10, 14, 16]，希望透過社群志願者的力量來協助資料標註，並提供獎勵機制鼓勵參與 [10, 14, 16]。這提示我們，數據的質量和數量是模型性能的關鍵，而獲取高質量的標註數據往往是實務中最耗時且困難的部分。</li>
+                        <li><strong>權重演算法 (Weighting Algorithm) 的設計:</strong> [1, 2, 4, 9, 17] 在將單一文本的情感分數匯總成一個項目或主題的總體分數時，會面臨一個問題：如何避免少數評論（即使其情感得分很高）主導整體評分 [1, 4, 9, 17]。特別是對於討論熱度低的項目，幾句正面評論就可能使其得分很高，這與討論熱度高的項目可能因少量負面評論而無法獲得滿分的情況形成對比，是不合理的 [4, 9, 17]。蠻牛哥設計的權重演算法旨在解決這個問題，其核心思想是根據社群的總聲量（留言或討論數量）來計算權重，聲量越大權重越高（越接近 1.0），這樣總分更能反映整體的討論狀況和熱度 [4, 17]。這提示我們，從學術模型輸出的原始結果到實際應用中的呈現，往往需要額外的工程和算法來處理邊界情況和提升用戶體驗。</li>
+                    </ol>
+
+                     <hr class="section-divider">
+
+                    <h2 class="bento-title">情感分析的實際應用與產品落地 <span class="text-base font-normal text-slate-500">Practical Applications & Products</span></h2>
+                    <p class="bento-text">
+                        這些情感分析的技術成果並非僅限於實驗室研究，而是被實際應用並「落地」到產品中 [8, 10]。
+                    </p>
+                    <ul class="bento-list bento-text">
+                        <li><strong>Rating Token (ratingtoken.net):</strong> [1, 4, 5, 17-19] 這是一個專門用於收集 ICO 相關數據並展示情感分析結果的產品 [1, 4, 18, 19]。它展示了不同平台（Facebook, Twitter, Telegram）上的情感分數，通常顯示 14 天內的數據，並提供走勢圖（可選 7 天、14 天、30 天）[4, 17]。它也提供了 API 供第三方應用接入 [4, 11]。</li>
+                        <li><strong>Coin Master:</strong> [1, 4, 5, 18-20] 這是另一個產品，也應用了情感分析功能，可能用於評估加密貨幣項目的社群溫度或評論分析 [1, 4, 5, 18, 19]。資料中提到 Coin Master 包含情感分析的一個 P 版本，用於展示預期分析狀況 [18, 19]。</li>
+                    </ul>
+                    <p class="bento-text">
+                        這些產品應用展示了情感分析技術如何從研究走向實際服務，為使用者提供有價值的資訊。同時，產品的實際部署也提供了寶貴的用戶回饋，有助於系統的持續優化和迭代 [1, 11]。
+                    </p>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">更多基於 AI/DL 的探索與產品 <span class="text-base font-normal text-slate-500">Broader AI/DL Explorations & Products</span></h2>
+                    <p class="bento-text">
+                        除了情感分析，這個團隊和社群還在其他 AI 和深度學習領域進行了探索並開發了多個實際應用 [1, 4, 21-23]。這顯示了他們技術廣度以及將技術轉化為產品的能力。
+                    </p>
+                    <ol class="bento-list bento-text" style="list-style-type: decimal; padding-left: 1.5rem;">
+                        <li><strong>智能合約安全檢測與惡意軟體辨識 (Code-to-Image):</strong> [1, 4, 13, 20, 23] 這是一個非常有趣的應用，將傳統的安全分析方法與深度學習結合。其核心思想是將智能合約的程式碼（特別是 bytecode）或安卓病毒的二進制數據轉換成圖像 [1, 4, 20, 23]。
+                            <ul class="bento-list bento-text">
+                                <li>具體做法是將 bytecode 轉換為 RGB 圖像 [1, 2, 20]。</li>
+                                <li>然後將這些圖像輸入到深度學習模型（例如 Inception v3，一種常用的圖像分類模型）進行分析和分類 [1, 2, 4, 20, 23]。</li>
+                                <li>這樣做的優點在於避免了傳統安全檢測依賴特徵碼需要不斷更新的問題 [4, 20]。圖像化後，相似的病毒或具有相似特徵的智能合約在圖像上會呈現出相似的視覺模式，這種方法被形象地稱為 "Look Virus" [4, 13]。</li>
+                                <li>這個系統是一個多標籤分類系統，意味著一個樣本可能同時屬於多個類別（例如一個智能合約可能同時具備多個功能選擇器或需要多個權限）[4, 20]。資料中提到，通過結合靜態分析系統，可以自動生成標籤，解決了部分標註難題 [4, 20]。這項成果曾在美國拉斯維加斯和澳洲墨爾本的會議上發表 [4, 13, 20]。</li>
+                            </ul>
+                        </li>
+                        <li><strong>智能推送通知優化:</strong> [1, 4, 13, 18, 23] 這個應用旨在解決 App 通知過於頻繁或彈出時機不當的問題 [1, 4, 13, 18, 23]。目標是根據用戶的點擊行為模式，預測用戶最有可能點擊通知的時間，從而在最佳時機推送通知，提高點擊率並減少對用戶的打擾 [1, 4, 13, 23]。
+                            <ul class="bento-list bento-text">
+                                <li>使用了類似 Google 推薦系統的 DNN + Wide Model 架構 [4, 13]。</li>
+                                <li>面臨的挑戰是數據的嚴重不平衡：大多數通知不會被點擊，導致正負樣本差異懸殊 [4, 13, 15]。這需要大量的數據來處理這個問題 [4, 13]。</li>
+                                <li>實施後，系統的 7 天留存率有所增加 [4, 13]。</li>
+                            </ul>
+                        </li>
+                        <li><strong>AI 相關硬體產品:</strong> [1, 4, 8, 18, 19, 23-25] 團隊也開發了實體硬體產品，這對於將 AI 技術落地到日常生活中非常重要。
+                            <ul class="bento-list bento-text">
+                                <li><strong class="highlight-tech">小豹音箱:</strong> [1, 4, 8, 18, 19, 23-25] 一款智能音箱，具備語音控制和智能家居功能，例如播放音樂、有聲小說、控制家電、查詢天氣、設定鬧鐘等 [1, 4, 23, 24]。使用了團隊自行開發的語音辨識作業系統 [8, 24]。</li>
+                                <li><strong class="highlight-tech">翻譯棒:</strong> [1, 4, 8, 14, 16, 18, 23-25] 一款基於語音辨識技術的即時翻譯設備，通過連接手機 App 使用 [1, 4, 23, 24]。資料中提到支援中英、中日、中韓互譯 [18, 23, 24]。這兩個硬體產品展示了團隊將語音識別和自然語言理解技術整合到消費級產品中的能力。</li>
+                            </ul>
+                        </li>
+                        <li><strong>Swall 錢包軟體:</strong> [1, 4, 18, 19] 這是一個錢包應用程序，資料中也提及其未來計劃發布硬體錢包（類似 USB 形式的區塊鏈錢包）[1, 4, 18, 19]。雖然這本身不是純粹的 AI 應用，但與團隊在區塊鏈領域（ICO 情感分析、智能合約安全檢測）的關注方向是契合的。</li>
+                    </ol>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">社群與未來展望：共享、協作與持續成長 <span class="text-base font-normal text-slate-500">Community & Future Outlook</span></h2>
+                     <p class="bento-text">
+                        這個讀書會社群的存在與發展本身就是一個重要關鍵點 [5, 10, 19, 21, 22, 26]。活動起源於 2016 年 11 月 11 日，從最初預計辦兩三次，持續至今已經舉辦了 24 次活動，歷時兩年 [5, 18, 19, 21, 26]。讀書會模式為現場直播且未經修改，強調真實分享 [21, 26]。
+                    </p>
+                    <ul class="bento-list bento-text">
+                        <li><strong>回饋社群與促進研究:</strong> [5, 10, 14] 講者多次強調公開資料集和模型的重要性 [5, 10, 14]。他們計劃將情感分析數據集和模型開源 [5, 10, 14]，這對於促進學術研究和領域發展是很大的貢獻。對於新手研究者來說，能夠獲取公開的資料集和參考模型是寶貴的學習資源。</li>
+                        <li><strong>志願者數據標註平台:</strong> [1, 5, 10, 14, 16, 18, 23] 前面提到的 <strong class="highlight-tech">se.twman.org</strong> 網站 [1, 10, 14, 16] 不僅是解決數據標註困難的方法，也是鼓勵社群協作的體現 [10, 14, 16, 23]。透過大眾參與標註，可以加速數據集的擴充和改進模型的性能。</li>
+                        <li><strong>持續學習與落地實踐:</strong> 讀書會的理念是做出能夠「落地」的實際產品應用 [8, 10]，這與許多純學術研究導向的項目不同 [8, 10]。他們也強調持續優化和迭代系統的重要性 [1, 11]。</li>
+                        <li><strong>未來發展方向:</strong> 展望未來，團隊希望將情感分析應用擴展到更多領域 [1, 5, 8, 10]，持續改進模型和算法 [5, 10]，開發更多基於 AI 的產品（如機器人） [5, 10]，並希望讀書會能夠持續舉辦下去，成為分享技術和經驗的平台 [5, 10, 25, 27]。</li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+         const presenterInfo = document.querySelector('header p.presenter-info');
+        if (presenterInfo) {
+            animate(presenterInfo, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, delay: 0.3, ease: 'easeOut' });
+        }
+
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div, index) => {
+            div.style.opacity = 0;
+            div.style.transform = 'translateY(20px) scale(0.95)';
+            inView(div, () => {
+                animate(div, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(motionDivs.length, 3)) * 0.1 + 0.5, ease: 'easeOut' });
+            }, { amount: 0.05 }); // Trigger when 5% of the element is in view
+        });
+    });
+    </script>
+</body>
+</html>
