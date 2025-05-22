@@ -96,7 +96,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 大語言模型 (Large Language Model)
 
 ## ✨LLM API Platform Price Comparison
-大型語言模型API平台價格比較
+大型語言模型API平台價格比較 ~2025/04
 
 | 平台 | 模型 | 輸入費用 (USD/1M Tokens) | 輸出費用 (USD/1M Tokens) | 上下文窗口 | 免費層級 | 最大速率限制 (RPM / TPM) | 多模態能力 | 特點 / 說明 | 定價連結 |
 |------|------|---------------------------|---------------------------|-------------|-----------|---------------------------|----------------|----------------|-----------|
@@ -161,6 +161,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   - [browser-use](https://github.com/browser-use/browser-use)
      - 2025-04-16：[browser-use/web-ui](https://github.com/browser-use/web-ui)；[如何使用](https://deepwiki.com/search/_bfd33aa8-cd79-4f1d-a1e8-5620d4374329)
      - 2025-03-28：[browser-use-webui](https://github.com/browser-use/web-ui)
+     - 2025-03-22：[SmolDocling](https://github.com/AIAnytime/SmolDocling-OCR-App)；[IBM放出『PDF薩諾斯』:2.56億參數屠榜文件AI](https://www.53ai.com/news/LargeLanguageModel/2025041436491.html)；[SmolDocling：用於端對端文件轉換的超緊湊型視覺語言模型](https://www.alphaxiv.org/zh/overview/2503.11576)
      - 2025-02-16：[browser use webui部署（實現瀏覽器自動化）](https://zhuanlan.zhihu.com/p/24116360552)
      - 2025-01-23：[Browser Use – 讓AI 像人類一樣使用瀏覽器](https://zhuanlan.zhihu.com/p/20038156945)
   - 2025-05-20：[news-agents](https://deepwiki.com/eugeneyan/news-agents)
@@ -256,6 +257,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
     
 **大型語言模型**
+  - 2024-05-21：[Gemma 3n](https://deepmind.google/models/gemma/?hl=zh-tw)；[Preview](https://huggingface.co/google/gemma-3n-E4B-it-litert-preview)
   - 2024-12-05：[InternVL2.5](https://github.com/OpenGVLab/InternVL)
   - 2024-11-23：[Ai2 Tülu 3](https://github.com/allenai/open-instruct)：[這才是真・開源模型！公開「後訓練」一切，性能超越Llama 3.1 Instruct](https://www.jiqizhixin.com/articles/2024-11-23-5)
      - DEMO：[https://playground.allenai.org/](https://playground.allenai.org/)
