@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>卷積、注意力與GNN的關係 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+        .bento-text ol.list-decimal ul.bento-list { /* Nested ul inside ol */
+            padding-left: 1rem; /* Indent nested ul further */
+            margin-top: 0.5rem;
+        }
+        .bento-text ol.list-decimal ul.bento-list li {
+            font-size: 0.95rem; /* Slightly smaller for nested items if desired */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=2hpkTRrINgc" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2022/05/06, 杜岳華, On the Relationship among Convolution Attention and GNN</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                卷積、注意力與圖神經網路的關聯性探討
+                 <a href="https://www.youtube.com/watch?v=2hpkTRrINgc" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                On the Relationship among Convolution, Attention, and GNN
+            </p>
+            <p class="text-slate-500 mt-1">2022/05/06 杜岳華</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-brain icon-large"></i>
+                    <h2 class="bento-title-large">深度學習核心：自動化表示學習 <span class="text-lg font-normal text-slate-500">Deep Learning Core: Automated Representation Learning</span></h2>
+                    <div class="bento-text">
+                        <p>首先，讓我們回顧一下深度學習相較於傳統機器學習的核心突破點。在傳統機器學習流程中，我們通常需要手工進行繁瑣的資料前處理、特徵工程（feature engineering），將原始資料轉換成模型容易理解的「好表示」後，再送入模型進行學習 [1-3]。這就像是廚師必須先把食材切好、備好料才能下鍋。深度學習則像是擁有了會自己學習備料的智慧廚具 [1, 4]。它的強大之處在於能夠透過多層次的網路結構，<strong>自動從原始資料中學習對特定任務（如分類、回歸）最有效的特徵表示（representation learning）</strong> [1, 2, 4, 5]。這種能力使得深度學習模型在處理大規模、高維度的資料時，能夠學習到更強健（robust）的特徵提取器 [1, 2, 4]。</p>
+                        <p>對於新手入門者，理解「表示學習」很重要。想像你有一堆照片，傳統方法可能需要你手動標記照片裡的物件（特徵），告訴模型哪裡有眼睛、鼻子。表示學習是讓模型自己去看很多照片後，學會如何識別眼睛、鼻子，甚至更抽象的概念，並將相似的照片在一個「表示空間」中放在一起 [1, 3]。深度學習就是實現這種自動學習表示的一種主要技術，透過堆疊不同的<strong>層 (layer)</strong> 來逐步提取更抽象的特徵 [1, 2, 5]。</p>
+                        <p>AI 這個大領域就像是一個廣闊的蛋糕 [1, 6]。早期的基於規則系統（rule-based system）是基礎，機器學習是讓電腦從資料中學習規則，而不是直接被告知規則 [1, 2, 6]。表示學習則是機器學習中讓模型自動學習資料「好表示」的方法 [1, 2, 6]。深度學習，透過多層神經網路，是實現表示學習的一種主要方式 [1, 6]。有人比喻，強化學習（reinforcement learning）是蛋糕上的櫻桃，監督學習（supervised learning）是糖霜，而表示學習，尤其是自監督學習（self-supervised learning），則是支撐整個蛋糕的蛋糕體本身，它學習到的良好表示能極大地提升後續監督學習和強化學習的效果 [1, 6]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-th icon-large"></i>
+                    <h2 class="bento-title-large">卷積神經網路 (CNN) 解析 <span class="text-lg font-normal text-slate-500">CNN Explained</span></h2>
+                    <div class="bento-text">
+                        <p>接著，我們來看看 CNN [2]。CNN 的核心是<strong>卷積運算 (convolution)</strong> [2, 3, 7, 8]。它最初是為處理影像資料而設計的 [2, 7]。影像資料有幾個關鍵特性很適合卷積操作 [2, 7, 9, 10]:</p>
+                        <ol class="list-decimal">
+                            <li><strong>局部性 (Locality of patterns):</strong> 影像中的重要圖案（如眼睛、邊緣）通常只佔影像的一小部分 [7, 9]。卷積層使用一個小型「濾波器 (filter)」或「核心 (kernel)」來掃描影像的局部區域，從中學習和辨識這些局部圖案 [7, 9, 11]。</li>
+                            <li><strong>平移同變性 (Translational Equivariance):</strong> 同一個圖案可能出現在影像的不同位置 [7, 10]。卷積操作本身具有這種特性：如果輸入影像中的模式發生平移，卷積層輸出的特徵圖中對應的響應也會發生相應的平移 [2, 7, 8, 12, 13]。</li>
+                            <li><strong>平移不變性 (Translation Invariance):</strong> 對於某些任務（如影像分類），我們希望模型在識別圖案時，對其在影像中的位置不敏感 [2, 7]。雖然卷積提供同變性，但 CNN 中的<strong>池化層 (pooling layer)</strong>（如 MaxPooling）可以對偵測到的特徵進行降採樣 (subsampling) [2, 7, 10, 11]，降低細節敏感度，從而實現一定程度的平移不變性 [2, 7, 8, 12]。</li>
+                        </ol>
+                        <p>對於新手，可以把濾波器想成一個小放大鏡，它在圖片上到處移動，尋找特定的紋理（例如，找到所有水平線）[7, 9, 11]。池化層則像是在找到的紋理中做總結，只記錄最重要的發現，忽略其精確位置，這樣即使紋理移動了一點，總結的結果可能還是差不多 [7, 10, 11]。CNN 的前幾層通過卷積和池化學習這些局部且具有一定位置不變性的特徵表示，後面的全連接層再利用這些特徵進行最終的分類或迴歸 [2, 5]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                     <i class="fas fa-search-plus icon-large"></i>
+                    <h2 class="bento-title-large">注意力機制 (Attention) 詳解 <span class="text-lg font-normal text-slate-500">Attention Mechanism Explained</span></h2>
+                    <div class="bento-text">
+                        <p>接著，我們轉向<strong>注意力機制 (Attention)</strong> [2, 3, 8]。它最初在處理序列資料（特別是自然語言）時展現威力 [2, 14]。傳統序列模型如 RNN/LSTM 在處理長句子時，難以捕捉相隔較遠的詞語之間的依賴關係，即**遠程依賴性 (long-term dependency)** 問題 [2, 15, 16]。這就像是讀一個很長的故事，讀到後面時常常忘記開頭的細節。注意力機制，尤其是**自注意力機制 (self-attention)**，讓模型在處理序列中的一個元素時，可以「回頭」或「向前」關注序列中的所有其他元素，並根據它們之間的關聯性來加權這些元素的表示 [2, 15, 16]。</p>
+                        <p>自注意力機制的核心思想可以類比為一個動態的資料庫查詢 [8, 15, 17]。對於序列中的每個元素（例如一個詞），我們計算它的<strong>Query (Q)</strong> 向量 [11, 15, 16]。然後，我們拿這個 Q 去與序列中所有元素的<strong>Key (K)</strong> 向量進行比較（例如計算內積），得到一組關聯分數 [11, 15, 16]。這些分數經過 Softmax 轉換成權重（機率分佈），表示當前元素對序列中其他元素的關注程度 [15-17]。最後，我們根據這些權重，對序列中所有元素的<strong>Value (V)</strong> 向量進行加權求和，得到當前元素新的表示，這個新表示就包含了它與序列中其他所有元素互動的資訊 [11, 15, 17]。此外，還有<strong>交叉注意力 (cross-attention)</strong> 處理不同序列之間的關係（如翻譯時源語言和目標語言）[2, 17] 以及<strong>多頭自注意力 (multi-head self-attention)</strong> 允許模型同時關注不同類型的關係 [2, 9]。</p>
+                        <p>對新手來說，Q, K, V 可以想像成：Q 是你感興趣的問題 (What am I looking for?)，K 像是書的目錄或索引 (What information do you have?)，V 則是書的實際內容 (Here is the information) [11, 15]。自注意力就是拿你的問題去跟所有書的目錄比對，找到相關的書，然後把這些相關書的內容（根據相關程度加權後）匯總起來，形成你對當前問題的答案。這種機制使得模型能夠有效地「跳躍」式地捕捉遠程依賴，即使詞語相隔很遠也能建立聯繫 [15, 16]。</p>
+                        <p>然而，純粹的注意力機制有一個重要的限制：它將序列視為一個<strong>集合 (set)</strong>，只計算元素之間的關聯性，<strong>不考慮元素的順序或位置</strong> [2, 8, 9, 18]。對於文字序列而言，詞語的順序至關重要（例如，「狗咬人」和「人咬狗」意思完全不同）。為了解決這個問題，<strong>Transformer 架構</strong> [2, 8, 15] 引入了<strong>位置編碼 (Positional Encoding)</strong> [2, 8, 11, 18-20]。位置編碼將元素在序列中的位置信息編碼成向量，並加到原始的詞嵌入 (word embedding) 中 [2, 11, 18, 19]。這樣，注意力機制在計算關聯性時，就能同時考慮元素的內容（詞嵌入）和位置信息（位置編碼），從而感知到序列的順序結構 [11, 18, 19]。</p>
+                        <p>新手需要知道的是，注意力機制本身就像是把所有詞語打散，然後根據詞語內容的重要性重新組合。但如果沒有位置信息，模型就不知道哪個詞是第一個，哪個是第二個。位置編碼就像是給每個詞貼上一個小標籤，上面寫著它在句子裡是第幾個詞，這樣模型在組合時就知道它們原來的相對位置了 [11, 18, 19]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-shapes icon-large"></i>
+                    <h2 class="bento-title-large">幾何深度學習：內容與幾何信息 <span class="text-lg font-normal text-slate-500">Geometric Deep Learning: Content & Geometry</span></h2>
+                    <div class="bento-text">
+                        <p>現在，讓我們引入一個更廣泛的視角：<strong>幾何深度學習 (Geometric Deep Learning)</strong> [2, 8, 21, 22]。這個框架提出，許多深度學習模型的核心都在於處理資料的兩種基本資訊：<strong>內容資訊 (Content Information)</strong> 和 <strong>幾何資訊 (Geometry Information)</strong> [2, 8, 18, 22-24]。</p>
+                        <ul class="bento-list">
+                            <li><strong>內容資訊</strong>指的是資料本身的屬性或數值，例如影像中像素的顏色、文字中詞語的含義、圖中節點的特徵 [11, 18, 24]。</li>
+                            <li><strong>幾何資訊</strong>指的是資料元素之間的關係、位置或結構，例如影像中像素的座標、文字中詞語的順序、圖中節點之間的連接關係（鄰接矩陣, adjacency matrix）[11, 18, 19, 24]。</li>
+                        </ul>
+                        <p>不同的神經網路模型在處理這兩種信息的方式上有所側重和差異 [19, 22, 23]:</p>
+                        <ul class="bento-list">
+                            <li><strong>CNN:</strong> 卷積層主要關注局部內容信息，但其卷積操作本身就隱含地利用了像素的局部幾何信息（相鄰像素的固定相對位置）[19, 23]。</li>
+                            <li><strong>Attention/Transformer:</strong> 純粹的注意力機制主要關注內容信息之間的關聯性（集合上的操作）[9, 23]。Transformer 透過位置編碼顯式地將序列的幾何信息（位置/順序）整合進來 [19, 23]。</li>
+                            <li><strong>GNN:</strong> 圖神經網路設計來處理圖結構資料。節點特徵是內容信息，而圖的邊和整體結構是幾何信息。GNN 的操作（如訊息傳遞或圖卷積）同時結合了節點的內容及其鄰居的內容和結構信息來更新表示 [19, 23, 24]。</li>
+                        </ul>
+                        <p>從這個角度看，CNN、Attention 和 GNN 都可以被視為處理具有不同幾何結構資料的工具 [2, 20-22]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-link icon-large"></i>
+                    <h2 class="bento-title-large">卷積：自注意力的特例 <span class="text-lg font-normal text-slate-500">Convolution as a Special Case of Self-Attention</span></h2>
+                    <div class="bento-text">
+                        <p>值得注意的是，有研究從理論上證明，<strong>卷積操作實際上是自注意力機制的一種特例</strong> [2, 11, 15, 20, 25]。從概念上理解 [11, 15, 26]: 卷積可以看作是一種特殊的自注意力。它的「查詢」範圍（即卷積核的大小）是固定且規則的（例如一個 3x3 的方形框），而且只關注這個固定框內的元素 [11, 26]。它的權重也不是動態學習的（不像注意力機制中的機率分佈），而是固定的卷積核權重 [11, 26]。可以想像成，卷積是一種「硬性 (hard)」且「局部 (local)」的注意力，注意力範圍固定且框外權重為零 [11, 15, 26]。而自注意力是一種「軟性 (soft)」且「全局 (global)」的注意力，其關注範圍和權重都是根據資料內容動態學習的，可以連接序列中的任意元素 [15, 26]。雖然自注意力不考慮順序而卷積設計包含了局部位置信息 [15, 26]，但從數學形式上，卷積確實可以透過一些數學轉換，被表達為一種受限的自注意力形式 [15, 25]。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-project-diagram icon-large"></i>
+                    <h2 class="bento-title-large">圖神經網路 (GNN) 概覽 <span class="text-lg font-normal text-slate-500">Graph Neural Networks (GNN) Overview</span></h2>
+                    <div class="bento-text">
+                        <p>最後，我們來探討<strong>圖神經網路 (GNN)</strong> [2, 3, 8]。GNN 是專門設計用於處理圖結構資料的模型，例如社交網絡、分子結構、引文網絡等 [2, 8]。圖資料由<strong>節點 (node)</strong> 和<strong>邊 (edge)</strong> 組成，節點和邊都可以有自己的特徵 [2, 8]。圖結構資料的一個關鍵特性是<strong>置換不變性 (Permutation Invariance)</strong> [2, 8, 27]。這意味著，對於一個圖，如果僅僅改變節點在列表中的排列順序，但其連接關係和節點特徵不變，那麼圖的本質結構和整體屬性（例如整個圖的分類結果或所有節點的嵌入表示的集合）應該保持不變 [2, 8, 27]。相應地，某些操作（如圖卷積）具有<strong>置換等變性 (Permutation Equivalence)</strong> [2, 8, 27]，即當輸入圖的節點順序發生置換時，輸出的節點表示也會以相應的方式進行置換 [2, 27]。</p>
+                        <p>GNN 最常被理解為<strong>將傳統卷積概念推廣到非歐幾里得空間，也就是圖結構資料上</strong> [2, 8, 20, 21, 23, 27]。標準卷積在規則網格（如影像像素點）上操作，關注中心點及其固定位置的鄰居。圖卷積則在任意圖結構上操作，關注中心節點本身及其連接的鄰居節點 [2, 23, 27]。這將卷積的局部感知能力擴展到更通用的圖結構 [23, 27]。實現圖卷積的方法有很多種，早期的 Spectral GNN [2, 28, 29] 計算量較大 [28-30]，實際應用中更常用的是基於空間域的簡化或逼近方法，例如 Message Passing Network (MPN) [2, 8, 28, 30, 31]。</p>
+                        <p>對新手而言，可以想像標準卷積只在一個整齊的棋盤格上移動「放大鏡」 [12, 27]。圖卷積則是在一個任意連線的網絡上移動「放大鏡」 [27, 28]。這個「放大鏡」關注的不再是固定方向（上、下、左、右），而是與中心節點相連的所有鄰居節點 [23, 27, 28]。</p>
+                        <p><strong>Message Passing Network (MPN)</strong> 是一種通用的 GNN 框架 [2, 8, 28]。它通過在圖的節點之間傳遞和匯總信息來更新節點的表示。一個典型的 MPN 包含三個步驟 [11, 28]:</p>
+                        <ol class="list-decimal">
+                            <li><strong>Message Function:</strong> 定義每個節點如何根據自身特徵、鄰居特徵和邊特徵生成要發送給中心節點的「訊息」 [11, 28]。</li>
+                            <li><strong>Aggregate Function:</strong> 中心節點如何匯總從所有鄰居接收到的訊息（例如，相加、取平均、取最大值等） [11, 28]。</li>
+                            <li><strong>Update Function:</strong> 中心節點如何結合自身當前的特徵和匯總後的訊息來更新自己的特徵表示 [11, 28]。</li>
+                        </ol>
+                        <p>這種訊息傳遞機制使得 GNN 能夠學習到結合局部結構和節點內容的表示 [23, 28]。雖然 MPN 在實踐中非常流行且高效 [2, 30, 31]，但其理論基礎可能不如基於圖譜分析 (spectral graph theory) 的方法那樣紮實 [30, 31]。</p>
+                        <p>GNN 在許多科學領域有重要應用 [2, 13, 28]。例如，AlphaFold 2 [2, 28] 在蛋白質結構預測上取得巨大成功 [2, 28]，它利用了圖結構來表示氨基酸殘基之間的關係 [28]。另一個有趣的例子是使用 GNN 結合 Symbolic Regression 來學習物理系統的定律，如預測行星軌跡 [13, 21]。在推薦系統中，GNN 也被廣泛應用 [30, 31]。可以將用戶和物品表示為圖中的節點，用戶與物品之間的交互（如購買、評分）表示為邊，形成一個用戶-物品的二部圖 (bipartite graph) [30-32]。也可以構建用戶-用戶或物品-物品之間的關係圖 [30, 32]。GNN 能夠有效地處理這種圖結構，學習更豐富的用戶和物品表示，從而改進推薦效果，尤其是在處理包含不同類型節點和邊的異質圖 (heterogeneous graph) 時 [30, 32]。</p>
+                        <p>回到幾何深度學習的框架 [2, 20-22]。CNN 可以被視為處理在規則網格上的資料（一種特殊的圖結構）的特例 [2, 21, 22]。Transformer 處理序列資料，可以將序列視為鏈狀圖或完全連接圖 (complete graph) [2, 21, 22]，通過自注意力處理任意節點（元素）間的內容關係，並用位置編碼引入幾何信息 [2, 18, 21]。GNN 則是處理任意圖結構資料的通用框架 [2, 21, 22]。此外，還有將卷積推廣到其他對稱性操作下的 <strong>Group Equivariant CNN (G-CNN)</strong> [2, 8, 13, 20, 21, 33]，例如處理具有旋轉對稱性的影像 [2, 21, 33]。這進一步擴展了卷積的概念，使其能夠在更廣泛的具有特定幾何結構的空間上進行有效的特徵提取 [2, 20-22]。這種通用性也體現在，即使是像 Wavelet Transform 這樣的訊號處理技術，也可以從 Geometric Deep Learning 的角度被視為一種考慮尺度和平移等變性的廣義卷積 [2, 22, 33]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-flag-checkered icon-large"></i>
+                    <h2 class="bento-title-large">總結：共通核心與展望 <span class="text-lg font-normal text-slate-500">Conclusion: Common Core & Outlook</span></h2>
+                    <div class="bento-text">
+                        <p>總而言之，從研究者的角度看，CNN、Attention 和 GNN 雖然有不同的應用背景和最初的設計目標，但它們都共享著處理資料<strong>內容</strong>與<strong>幾何</strong>資訊的核心任務 [2, 20, 22, 34]。它們的成功在於設計了能夠捕捉資料特定<strong>集合特性</strong>（如影像的局部性和平移特性、序列的遠程依賴性、圖的連接結構和置換特性）的運算單元 [2, 12, 22, 27]。卷積、自注意力以及圖卷積，都可以被視為處理資料結構的工具，並可以透過設計<strong>等變性層 (Equivariance Layer)</strong> 和<strong>不變性層 (Invariance Layer)</strong> [2, 8, 20] 來構建能夠在特定幾何變換下保持輸出與輸入變換關係或保持輸出不變的深度學習模型 [2, 8, 21]。</p>
+                        <p>希望這個整理對您及入門者有所幫助。深入探索這些模型，不僅要理解其數學原理，更要理解它們背後所針對的資料特性和設計哲學。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

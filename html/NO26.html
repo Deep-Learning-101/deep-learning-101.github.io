@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Machine Reading Comprehension - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em { /* For markdown emphasis */
+            font-style: italic;
+            color: #555; /* Slightly darker for emphasis */
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+        .bento-list ol { /* Nested ordered list */
+            list-style-type: decimal;
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .bento-list ul { /* Nested unordered list */
+            list-style-type: disc;
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+        .bento-list ul li::before, .bento-list ol li::before {
+            content: ""; /* Remove parent's ::before for nested lists */
+        }
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center; /* Centered text */
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle {
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+        .presenter-info {
+            font-size: 1.125rem; /* 18px */
+            color: #555;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .main-content-section h1.bento-title-large {
+            margin-bottom: 0.5rem; /* Reduced margin for main section titles */
+        }
+        .main-content-section h2.bento-title { /* Targeting h2 specifically */
+             font-size: 1.6rem; /* 26px */
+             line-height: 2.1rem; /* ~34px */
+             margin-top: 1.5rem;
+             margin-bottom: 0.75rem;
+             color: #1d1d1f;
+        }
+        .main-content-section h3.bento-subtitle {
+            margin-top: 1.25rem;
+            font-size: 1.25rem; /* H3 subtitles */
+            color: #0071e3;
+        }
+         .main-content-section h4.bento-subtitle {
+            margin-top: 1rem;
+            font-size: 1.1rem;
+            color: #1a5fb4; /* Darker blue */
+        }
+        hr.section-divider {
+            border-top: 2px solid #e5e7eb; /* Slightly thicker and lighter than default */
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                    <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                    AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                    衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                    由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p style="display: flex; justify-content: center; align-items: center; gap: 1rem; margin-top:1rem; margin-bottom:1rem;">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" style="width: 180px; height: auto; border-radius: 10px;">
+                    </a>
+                    <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; border-radius: 10px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p class="mt-2">
+                    <a href="https://www.youtube.com/watch?v=SXLukeWNIkw" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2018/12/07, Nat, Alice & Ian, Machine Reading Comprehension</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                機器閱讀理解
+            </h1>
+            <p class="english-subtitle mt-2">
+                Machine Reading Comprehension
+            </p>
+            <p class="presenter-info mt-4">分享者：Nat, Alice & Ian | 日期：2018/12/07</p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3 motion-div main-content-section">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-book-reader icon-large"></i>
+                    <h2 class="bento-title">機器閱讀理解核心概念 <span class="text-base font-normal text-slate-500">Core Concepts of MRC</span></h2>
+                    <p class="bento-text">
+                        在 MRC 中，問題類型大致可以分為兩類:
+                    </p>
+                    <ul class="bento-list bento-text">
+                        <li><strong>封閉領域 (Close Domain / Closed-book QA):</strong> 這是指模型的知識來源僅限於提供的文章或文本。答案必須從原文中直接找到。這就像我們高中時做的閱讀測驗。</li>
+                        <li><strong>開放領域 (Open Domain / Open-book QA):</strong> 這種情況下，模型除了給定的文章外，還可以利用額外的背景知識來回答問題。這可能需要模型具備更多的常識或能存取外部知識庫。目前主流研究，尤其是在 SQuAD 資料集上的工作，多數集中在 Close Domain 問題。</li>
+                    </ul>
+                    <p class="bento-text">
+                        對於新手來說，理解 MRC 模型和技術的演進非常重要。早期的模型可能基於循環神經網路 (RNN) 或長短期記憶網路 (LSTM)。例如，Match-LSTM (MLSTM) 就是一種結合 LSTM 和 Attention 機制的模型。雙向 Attention Flow (BiDAF) 則是另一種早期的重要模型，它引入了問題與文章之間的雙向 Attention 交互。這些基於 RNN/LSTM 的模型在處理序列資料時，有其時序上的限制，一次只能處理有限的時間步長。
+                    </p>
+                    <p class="bento-text">
+                        然而，自然語言處理領域的一個關鍵進展是 <strong class="highlight-tech">Attention Mechanism (注意力機制)</strong>。這個機制讓模型在處理一個詞語時，能夠考慮到句子中所有其他詞語的資訊，並透過加權的方式，讓模型關注到更重要的部分。例如，在「蘋果很好吃」和「蘋果的股價又漲了」這兩句話中，Attention 機制可以幫助模型理解「蘋果」這個詞在不同語境下的不同含義，因為它會與「很好吃」或「股價」等詞語產生不同的關聯和權重。這使得模型能夠更有效地捕捉詞語之間的長距離依賴關係。
+                    </p>
+                    <p class="bento-text">
+                        基於 Attention 機制，Google 提出了 <strong class="highlight-tech">Transformer 模型</strong>，其代表性論文標題就是「Attention is all you need」。這個模型革命性地完全捨棄了 RNN 和 LSTM 的時序結構，僅依賴 Attention 機制來處理序列。Transformer 通常包含 Encoder 和 Decoder 兩部分，常用於翻譯等序列到序列的任務。為了彌補 Attention 機制本身缺乏順序資訊的缺點，Transformer 引入了 <strong class="highlight-tech">Positional Encoding (位置編碼)</strong>，透過數學函數（如正弦和餘弦函數）為詞語的位置賦予向量表示，讓模型能夠區分不同位置的詞。在機器閱讀理解任務中，Transformer 模型通常只需要使用其 Encoder 部分。
+                    </p>
+                    <p class="bento-text">
+                        隨後，<strong class="highlight-tech">BERT (Bidirectional Encoder Representations from Transformers)</strong> 橫空出世，它是一個基於 Transformer Encoder 的大型預訓練模型。BERT 的核心優勢在於其雙向 Self-Attention 機制，使得模型在處理每個詞語時，都能同時考慮到它左邊和右邊的上下文資訊，從而學習到更豐富的語義表示。
+                    </p>
+                    <p class="bento-text">
+                        BERT 透過兩個關鍵的預訓練任務來學習通用的語言表示:
+                    </p>
+                    <ol class="bento-list bento-text" style="list-style-type: decimal; padding-left: 1.5rem;">
+                        <li><strong>Masked Language Model (MLM):</strong> 隨機遮蔽輸入序列中的部分詞語，模型需要預測這些被遮蔽的詞。這迫使模型深入理解詞語之間的關係和上下文。</li>
+                        <li><strong>Next Sentence Prediction (NSP):</strong> 給定兩個句子 A 和 B，模型需要判斷 B 是否是 A 的下一句話。這有助於模型理解句子之間的關係。</li>
+                    </ol>
+                    <p class="bento-text">
+                        透過在大量文本資料上進行這兩個任務的預訓練，BERT 學習到了強大的語言表示能力，並在多種 NLP 任務（包括 MRC）上取得了 SOTA (State Of The Art，最先進) 的表現。例如，在 SQuAD 資料集上的排行榜中，基於 BERT 的模型常常位居前列。
+                    </p>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">重要資料集與評估指標 <span class="text-base font-normal text-slate-500">Key Datasets & Evaluation Metrics</span></h2>
+                    <p class="bento-text">
+                        說到資料集，<strong class="highlight-tech">SQuAD (Stanford Question Answering Dataset)</strong> 是機器閱讀理解領域最重要的基準資料集之一。它由 Stanford University 收集，包含從維基百科文章中提取的大量問題與答案對。在 SQuAD 1.1 版本中，問題的答案必須是文章中的一段連續文字。然而，SQuAD 1.1 的一個問題是模型在找不到答案時可能會「亂回答」。為了提高模型的魯棒性，SQuAD 2.0 版本引入了「impossible」問題，即答案不在原文中的問題，模型需要判斷並告知無法回答。
+                    </p>
+                    <p class="bento-text">
+                        評估 MRC 模型在 SQuAD 等資料集上的表現，常用的指標包括:
+                    </p>
+                    <ul class="bento-list bento-text">
+                        <li><strong>F1 Score (F1 分數):</strong> 衡量模型的精確率 (Precision) 和召回率 (Recall) 的調和平均數。它綜合考慮了模型找到正確答案的能力。</li>
+                        <li><strong>EM (Exact Match, 精確匹配):</strong> 要求模型輸出的答案必須與標準答案完全一致。這是一個較為嚴格的指標。</li>
+                    </ul>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">挑戰與未來展望 <span class="text-base font-normal text-slate-500">Challenges & Future Outlook</span></h2>
+                    <p class="bento-text">
+                        儘管 BERT 等大型模型在準確性上取得了巨大成功，但在實際應用中仍面臨不少挑戰。特別是在中文 MRC 領域，我們研究人員深感數據集的稀缺性是一個重要的瓶頸。相較於英文，高品質的中文機器閱讀理解資料集非常少。構建這樣的資料集耗時耗力，需要大量的人工標註。我們團隊也曾嘗試過人工標註中文維基百科文章來建立 Q&A 資料集，這過程需要人工理解文章、設計問題並從文中框選答案，確實非常辛苦。百度雖然推出了 Dureader 中文資料集，但我們在實際測試其程式碼和資料時也遇到了一些問題。Delta Research 也有一個中文閱讀理解資料集和標註平台正在建設中，這對於中文 MRC 的發展是一個正面的信號。
+                    </p>
+                    <p class="bento-text">
+                        除了資料集問題，大型模型如 BERT 對計算資源的需求也是一個巨大的挑戰。BERT 的完整訓練或從頭重新訓練需要龐大的計算能力，例如高階 GPU (如 Titan XP, Titan V) 或 TPU。這對於個人或小型團隊來說門檻很高。雖然 Google 提供了預訓練好的 BERT 模型，我們可以透過 Fine-tuning (微調) 來適應特定任務，但這仍然需要可觀的計算資源。
+                    </p>
+                    <p class="bento-text">
+                        此外，中文本身的語言特性，如沒有空格導致需要進行斷詞斷字，以及語義的歧義性，也對模型的理解帶來了挑戰。在實際應用中，將大型機器閱讀理解模型部署到邊緣設備（如機器人、智能音箱）時，還需要考慮模型大小、計算延遲和網路延遲等問題。雖然 BERT 在準確性上表現出色，但在需要即時反應的場景下，其推理延遲仍然是一個需要克服的障礙。我們團隊也在測試各種模型，並嘗試根據實際應用場景進行優化和調整，希望能讓模型在實際硬體上實用化。
+                    </p>
+                    <p class="bento-text">
+                        總而言之，機器閱讀理解領域從早期的模型演進到基於 Attention 的 Transformer 和 BERT，展現了巨大的潛力。BERT 的出現將該領域的準確性推向了新的高度。然而，對於中文環境的研究和應用，我們仍然面臨著資料集稀缺、計算資源限制以及語言特性帶來的挑戰。持續投入於高品質中文資料集的建構以及模型的優化和輕量化，是推動中文 MRC 技術發展的關鍵方向。
+                    </p>
+
+                    <hr class="section-divider">
+
+                    <h2 class="bento-title">關鍵詞彙解釋 <span class="text-base font-normal text-slate-500">Glossary</span></h2>
+                    <ul class="bento-list bento-text">
+                        <li><strong>NLP (Natural Language Processing):</strong> 自然語言處理。研究如何讓電腦理解、處理和生成人類語言的領域。</li>
+                        <li><strong>MRC (Machine Reading Complication):</strong> 機器閱讀理解。指機器從文本中理解內容並回答相關問題的能力。 (*Note: The source material has "Complication" but it should be "Comprehension". Corrected here based on common NLP terminology and the context of the document.*)</li>
+                        <li><strong>QA (Question Answering):</strong> 問答系統。一種能夠回答用戶提出的問題的系統。</li>
+                        <li><strong>Sentiment Analysis:</strong> 語情感分析。判斷文本表達的情感（正面、負面、中立等）。</li>
+                        <li><strong>Dataset:</strong> 資料集。用於訓練和評估機器學習模型的資料集合。</li>
+                        <li><strong>SQuAD (Stanford Question Answering Dataset):</strong> 一個大型的機器閱讀理解資料集。</li>
+                        <li><strong>F1 Score:</strong> F1 分數。衡量分類模型效能的指標，是精確率和召回率的調和平均數。</li>
+                        <li><strong>EM (Exact Match):</strong> 精確匹配。評估機器閱讀理解模型時，要求模型輸出的答案與標準答案完全一致。</li>
+                        <li><strong>Attention Mechanism:</strong> 注意力機制。一種讓模型在處理序列資料時能夠關注到不同部分權重的方法。</li>
+                        <li><strong>Transformer Model:</strong> Transformer 模型。一種基於注意力機制的神經網路模型，在 NLP 領域表現出色。</li>
+                        <li><strong>Positional Encoding:</strong> 位置編碼。為 Transformer 模型中的詞語添加位置資訊的方法。</li>
+                        <li><strong>RNN (Recurrent Neural Network):</strong> 循環神經網路。一種處理序列資料的神經網路。</li>
+                        <li><strong>LSTM (Long Short-Term Memory):</strong> 長短期記憶網路。一種特殊的 RNN，能夠更好地處理長距離依賴問題。</li>
+                        <li><strong>BERT (Bidirectional Encoder Representations from Transformers):</strong> 一個基於 Transformer Encoder 的大型預訓練模型。</li>
+                        <li><strong>MLM (Masked Language Model):</strong> 遮蔽語言模型。BERT 的預訓練任務之一。</li>
+                        <li><strong>NSP (Next Sentence Prediction):</strong> 下一句預測。BERT 的預訓練任務之一。</li>
+                        <li><strong>SOTA (State Of The Art):</strong> 最先進。指在某個領域或任務中表現最好的技術或模型。</li>
+                        <li><strong>Fine-tuning:</strong> 微調。使用特定任務的資料對預訓練模型進行進一步訓練，使其適應特定任務。</li>
+                        <li><strong>GPU (Graphics Processing Unit):</strong> 圖形處理單元。常用於加速深度學習模型的訓練和推理。</li>
+                        <li><strong>TPU (Tensor Processing Unit):</strong> 張量處理單元。Google 開發的專用於機器學習的硬體加速器。</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+        }
+         const presenterInfo = document.querySelector('header p.presenter-info');
+        if (presenterInfo) {
+            animate(presenterInfo, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            topInfoBox.style.opacity = 0;
+            topInfoBox.style.transform = 'translateY(-30px)';
+            animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, delay: 0.3, ease: 'easeOut' });
+        }
+
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div, index) => {
+            div.style.opacity = 0;
+            div.style.transform = 'translateY(20px) scale(0.95)';
+            inView(div, () => {
+                animate(div, { opacity: 1, y: 0, scale: 1 }, { duration: 0.5, delay: (index % Math.min(motionDivs.length, 3)) * 0.1 + 0.5, ease: 'easeOut' });
+            }, { amount: 0.05 }); // Trigger when 5% of the element is in view
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度學習與傅立葉轉換：神經算子 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+        .bento-text ol.list-decimal ul.bento-list { /* Nested ul inside ol */
+            padding-left: 1rem; /* Indent nested ul further */
+            margin-top: 0.5rem;
+        }
+        .bento-text ol.list-decimal ul.bento-list li {
+            font-size: 0.95rem; /* Slightly smaller for nested items if desired */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=1IVMJmVr2Pw" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2020/12/04, 杜岳華, 深度學習也可以學傅立葉轉換</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                深度學習也可以學傅立葉轉換
+                 <a href="https://www.youtube.com/watch?v=1IVMJmVr2Pw" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Deep Learning Can Also Learn Fourier Transforms: Neural Operators
+            </p>
+            <p class="text-slate-500 mt-1">2020/12/04 杜岳華</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-microscope icon-large"></i>
+                    <h2 class="bento-title-large">深度學習求解PDE：神經算子方法 <span class="text-lg font-normal text-slate-500">Deep Learning for PDEs: Neural Operator Methods</span></h2>
+                    <div class="bento-text">
+                        <p>在科學與工程領域，偏微分方程 (PDE) 是描述許多自然現象與物理過程的核心工具，從熱傳導、波動傳播到流體力學（如 Navier-Stokes 方程）[1-3]。然而，求解這些方程往往極具挑戰性，傳統上主要依賴於數值方法，例如有限元素法 (Finite Element Method)、有限體積法 (Finite Volume Method) 或有限差分法 (Finite Difference Method) [1, 3, 4]。這些方法雖然成熟且廣泛應用，但經常受到網格分辨率的限制（即所謂的 mesh-dependent），且在處理複雜問題或需要快速求解時可能顯得效率不足 [4, 5]。</p>
+                        <p>深度學習的興起為 PDE 求解帶來了新的視角。相較於傳統數值方法，神經網路有潛力提供更快、更精準的解 [1, 6]。早期的研究也嘗試將神經網路應用於此，我們從資料中看到主要有兩種嘗試方向 [1, 3, 4]：</p>
+                        <ol class="list-decimal">
+                            <li><strong>使用卷積神經網路 (CNN) 作為算子：</strong>
+                                <ul class="bento-list">
+                                    <li>這個想法是將 CNN 模型本身視為一個「算子」，直接學習從輸入函數（例如 PDE 的初始條件或邊界條件）到輸出函數（即 PDE 的解）的映射 [3, 4]。</li>
+                                    <li>然而，這種方法通常是基於離散的網格點進行採樣的 (Mesh dependent) [4]。這意味著模型的效能會直接受到採樣點的分辨率影響 [4]。更關鍵的問題是，如果重要的區域沒有被充分採樣（例如現象變化劇烈的區域），CNN 可能難以捕捉其真正的特性 [4]。同時，由於它學到的是特定採樣點上的對應關係，它難以對新的座標點或未在訓練中出現的參數設置下的解進行有效的查詢或預測 [3, 4]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>使用神經網路直接參數化 PDE 的解：</strong>
+                                <ul class="bento-list">
+                                    <li>另一種方法是讓神經網路直接學習 PDE 解函數本身的參數化表示 [3, 4]。這種方法不依賴於固定的網格 (Mesh independent) [4]。</li>
+                                    <li>(新手入門：想像 PDE 的解 $u(x, y)$ 是一個函數，這種方法是訓練一個神經網路 $NN(x, y)$ 去直接逼近 $u(x, y)$ 的值)。</li>
+                                    <li>儘管擺脫了網格依賴，這種方法依然難以對訓練時未見過的新參數或新的座標點進行有效的查詢或預測 [3, 4]。這點與第一種方法有類似的局限性 [4]。講者生動地比喻，這就像圖像分類模型只看過特定角度的貓圖片，遇到不同角度或有點像老虎的圖片時可能判斷失誤 [7]。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <p>這些早期方法雖然有其貢獻，但未能從根本上解決神經網路在處理連續函數和泛化到不同離散化程度時遇到的挑戰。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-infinity icon-large"></i>
+                    <h2 class="bento-title-large">神經算子 (Neural Operator) 的概念崛起 <span class="text-lg font-normal text-slate-500">The Rise of Neural Operators</span></h2>
+                    <div class="bento-text">
+                        <p>為了克服上述限制，<strong>神經算子 (Neural Operator)</strong> 的概念被提出，其核心目標是直接學習函數空間到函數空間的映射 [1, 6-8]。</p>
+                        <p>(新手入門：傳統的神經網路通常處理的是固定長度的向量輸入到固定長度的向量輸出（例如圖片分類：輸入固定大小圖片（向量），輸出類別機率（向量））。而神經算子處理的是「函數」這個概念作為輸入和輸出。函數可以看作是無限維空間中的一個點，例如一個曲面、一張圖片（每個空間座標對應一個像素值）、一個訊號（每個時間點對應一個振幅），都可以被視為一個函數 [9-12])。</p>
+                        <p>在數學上，<strong>算子 (Operator)</strong> 就是一種將一個函數（可能存在於無限維空間）映射到另一個函數（可能存在於另一個無限維空間）的轉換 [1, 6-8, 11]。PDE 系統在數學上就可以對應到一個算子的作用 [8, 11]。神經算子正是希望利用神經網路來學習實現這種無限維空間之間的映射 [6, 7, 13]。</p>
+                        <p>(研究者視角：從無限維空間直接學習聽起來很理論化，實際在電腦中操作有限的數據點，如何逼近無限維度的映射是關鍵挑戰 [7, 13-15])。</p>
+                        <p>講者在資料中詳細闡述了神經算子的數學基礎 [7, 16, 17]：</p>
+                        <ul class="bento-list">
+                            <li>PDE 的解常常可以表示為一個積分形式，其中涉及 <strong>Green's Function</strong> 和 <strong>Integral Kernel</strong> [7, 11, 16]。Green's Function 可以視為算子的解，而積分核 (Kernel Function C) 描述了輸入函數和 Green's Function 如何相互作用，通過積分產生輸出函數 [7, 11, 16, 17]。這個 Kernel Function 的概念與機器學習中用於定義相似度的 Kernel Function 來源於 Reproducing Kernel Hilbert Space (RKHS) [7, 17-20]。</li>
+                            <li>(新手入門：可以把積分想像成一種特殊的加權求和，Kernel Function 決定了不同點之間的相互影響有多大)。</li>
+                            <li>傳統的 Neural Operator 模型結構嘗試將這個積分項和可能存在的線性或常數項表示為神經網路的組合，並通過激活函數 [7, 16, 17]。這可以像深度學習模型一樣疊加多個層 (layer)，每一層都接收前一層的函數表示作為輸入，並通過學習到的算子進行轉換 [7, 16, 17]。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-project-diagram icon-large"></i>
+                    <h2 class="bento-title-large">從數學積分到神經網路實現：利用圖神經網路 (GNN) <span class="text-lg font-normal text-slate-500">From Integration to GNN Implementation</span></h2>
+                    <div class="bento-text">
+                        <p>然而，直接在電腦中實現無限維空間的積分是不切實際的 [7, 14]。因此，實際實現神經算子時，會將數學上的積分轉換為對離散採樣點的求和 (summation) [7, 14]。這正是可以利用 <strong>圖神經網路 (Graph Neural Network, GNN)</strong> 或其中的 <strong>Message Passing Neural Network</strong> 框架的地方 [1, 7, 14]。</p>
+                        <ul class="bento-list">
+                            <li>(新手入門：GNN 善於處理圖結構的資料。想像我們的資料點就是圖的「節點」(node)，它們的空間位置和對應的函數值是節點的「特徵」。我們可以在這些點之間建立「邊」(edge) 來表示它們之間的關係，例如物理上的鄰近性)。</li>
+                            <li>在使用 GNN 實現神經算子時，可以根據點之間的距離來構建圖，例如設定一個半徑 R，將半徑內的點視為鄰居並建立連接 (Ball Major) [1, 7, 19, 21]。</li>
+                            <li>神經算子中的積分求和項，可以被視為 GNN 中的 <strong>訊息傳遞 (Message Passing)</strong> 過程 [1, 7, 14]。Kernel Function $k(x, y, a(x), a(y))$ 可以被視為一個 <strong>Message Function</strong>，它根據點 x 和其鄰居 y 的座標和值計算一個「訊息」或「邊特徵」(edge feature) [1, 7, 14]。將所有鄰居的訊息加總起來就是 <strong>Aggregation Function</strong> [7, 14]。最後，結合自身的特徵和經過Aggregation後的訊息，節點更新其狀態，這對應於神經算子公式中的線性項和激活函數 [7, 14]。</li>
+                            <li>講者提到 <strong>Stone-Weierstrass Approximation Theorem</strong> 和 <strong>Nyström Approximation</strong> [1, 7, 19]。 (研究者視角：這些定理為在 Reproducing Kernel Hilbert Space (RKHS) 中使用有限的數據點（即採樣點）來有效地逼近或表示無限維空間中的 Kernel Function 提供了理論依據 [1, 7, 15, 19, 20])。在 RKHS 中，滿足特定條件（如對稱正定）的 Kernel Function 是唯一存在的 [7, 17, 19]。通過 Nyström Approximation，我們可以利用採樣點上的 Kernel 值來逼近整個連續 Kernel [7, 19, 20]。</li>
+                        </ul>
+                        <p>因此，藉由 GNN 的框架，神經算子將抽象的無限維積分轉換為在離散圖結構上的訊息傳遞和聚合，從而在實際中實現了對函數算子的學習 [7, 14, 19]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-wave-square icon-large"></i>
+                    <h2 class="bento-title-large">傅立葉神經算子 (Fourier Neural Operator, FNO) <span class="text-lg font-normal text-slate-500">Fourier Neural Operator (FNO)</span></h2>
+                    <div class="bento-text">
+                        <p>在神經算子這個通用框架的基礎上，<strong>傅立葉神經算子 (Fourier Neural Operator, FNO)</strong> 進一步引入了 <strong>傅立葉變換 (Fourier Transform)</strong> 的概念 [1, 6, 7]。</p>
+                        <ul class="bento-list">
+                            <li>傅立葉變換是一種強大的數學工具，它可以將函數從原始域（如空間域）轉換到頻率域 (frequency domain) [1, 3, 7, 22, 23]。在傳統 PDE 求解中，傅立葉變換常用於將 PDE 轉換為更容易求解的常微分方程 (ODE)，在頻域求解後再通過逆傅立葉變換 (Inverse Fourier Transform) 回到原始域得到解 [1-3, 7, 11, 22, 24]。</li>
+                            <li>(新手入門：傅立葉變換可以將複雜的波形分解成不同頻率的簡單波形疊加。在頻率域，函數的卷積 (convolution) 操作會變成簡單的乘法 (multiplication)) [7, 22, 23]。</li>
+                        </ul>
+                        <p>FNO 的核心思想是利用這一點，將神經算子中的 Kernel Function $k$ 特化為一個與傅立葉變換相關的算子，具體來說是一個 <strong>Convolution Kernel</strong> [1, 7, 17, 22, 23]。由於空間域的卷積等價於頻域的乘法，FNO 的做法就是：</p>
+                        <ol class="list-decimal">
+                            <li>將輸入數據和座標通過 <strong>快速傅立葉變換 (FFT)</strong> 轉換到頻率域 [1, 7, 22, 23, 25, 26]。</li>
+                            <li>在頻率域中，不是進行複雜的卷積或積分，而是與一個<strong>可學習的參數矩陣 R</strong> 相乘 [1, 7, 22, 23, 25, 26]。這個矩陣 R 相當於在頻域中選擇和轉換不同的頻率模式 [7, 23, 25]。通常只保留前 K 個頻率成分，K 是一個超參數 [7, 23, 25, 26]。</li>
+                            <li>將結果通過 <strong>逆快速傅立葉變換 (IFFT)</strong> 轉換回原始空間域 [1, 7, 22, 23, 25, 26]。</li>
+                            <li>最後可能再通過一個線性層和激活函數，形成 FNO 的一個層 (layer) [1, 7, 16, 17, 23, 25]。這種層結構可以疊加多層 [7, 16, 17, 26]。</li>
+                        </ol>
+                        <p>(新手入門：想像你有一張圖片（空間域的函數），FFT 將它變成頻譜圖（頻率域的表示）。FNO 在頻譜圖上對不同頻率成分進行加權或篩選（乘以 R），就像一個智能濾波器，然後再變回一張處理過的圖片 (IFFT)) [7, 23, 25]。這個 R 矩陣的參數是通過訓練學到的 [7, 26]。</p>
+                        <p>(研究者視角：將操作轉移到頻域處理，尤其是使用 FFT，在計算上通常更高效 [23, 25, 27, 28]。而且，直接在頻域操作可學習的 Kernel，使得模型更能捕捉函數的全局頻率特徵，這或許是其 Mesh independent 能力的關鍵 [5, 6, 28])。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                     <i class="fas fa-chart-line icon-large"></i>
+                    <h2 class="bento-title-large">FNO 的優勢與實驗結果 <span class="text-lg font-normal text-slate-500">FNO: Advantages & Experimental Results</span></h2>
+                    <div class="bento-text">
+                        <p>相較於傳統方法和早期的神經網路方法，FNO 展現出顯著的優勢 [5, 6, 27]:</p>
+                        <ul class="bento-list">
+                            <li><strong>Mesh independent：</strong> FNO 不依賴於數據的採樣網格或分辨率 [5, 6]。它可以直接在連續函數空間（通過頻域表示）學習算子，因此訓練好的模型能夠泛化到具有不同分辨率的數據 [5, 6]。</li>
+                            <li><strong>強大的泛化能力：</strong> FNO 能夠對訓練時未見過的新參數設置下的 PDE 解進行準確預測 [5, 6]。</li>
+                            <li><strong>學習無限維空間映射：</strong> 從理論上更貼近學習函數算子本身，捕捉問題的本質特性 [5, 7]。</li>
+                        </ul>
+                        <p>資料中展示了 FNO 在不同 PDE 問題（如 Burgers equation, 2D Darcy flow, Navier-Stokes equation）上的實驗結果，並與 FCN (Fully Convolutional Network，這裡可能代表基於 CNN 的早期方法) 和 GKN (Graph Kernel Network，基於 GNN 的 Neural Operator) 等方法進行了比較 [5, 6, 15, 27, 28]。</p>
+                        <ul class="bento-list">
+                            <li><strong>關鍵發現：</strong> 在大多數測試問題中，FNO (通常是圖表中誤差最低的線) 在不同的數據分辨率下都能保持較低且穩定的誤差 [5, 15, 27, 28]。</li>
+                            <li>令人驚訝的觀察是，對於 FCN 這樣的方法，隨著數據分辨率的提高（採樣點越多），其誤差反而可能增大，表現變差 [5, 27, 28]。這引起了講者和聽眾的好奇 [5, 27, 28]。(研究者視角：這可能與 FCN 的局部感受野特性有關，當分辨率很高時，局部信息可能變得過於細碎，難以整合全局信息，或者與其對網格的敏感性有關 [4, 13])。</li>
+                            <li>總體而言，Neural Operator 系列模型（包括 FNO 及其變體）的性能普遍優於 FCN 和 GKN，並在不同分辨率下表現出更好的穩定性和泛化能力 [5, 15, 27, 28]。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+             <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-comments icon-large"></i>
+                    <h2 class="bento-title-large">討論與潛在應用 <span class="text-lg font-normal text-slate-500">Discussion & Potential Applications</span></h2>
+                    <div class="bento-text">
+                        <p>資料中也提到了一些關於 FNO 的討論點 [25, 27-29]：</p>
+                        <ul class="bento-list">
+                            <li><strong>激活函數的位置：</strong> 作者討論了將激活函數放在空間域或頻率域的效果，認為影響不大 [27, 28]。</li>
+                            <li><strong>計算效率：</strong> 雖然數學形式看起來複雜，但利用快速傅立葉變換 (FFT)，FNO 的實際計算是相對簡單和高效的 [23, 25, 27, 28]。</li>
+                            <li><strong>邊界條件：</strong> 與一些傳統傅立葉方法不同，FNO 不需要嚴格的週期性邊界條件，這擴展了其適用範圍 [25, 27, 29]。</li>
+                            <li><strong>遞歸結構潛力：</strong> FNO 的層結構可以被視為一種遞歸網路 (recurrent network) 形式 [25, 27, 29]。這意味著 FNO 的核心思想不僅限於求解 PDE，還可能應用於其他領域，如計算機視覺或信號處理 [1, 25-27, 29]。(研究者視角：將函數算子學習的思想應用於圖像等數據，可以想像模型學習的是某種尺度或頻率上的全局轉換，而非局部的卷積，這可能帶來新的模型設計思路)。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-flag-checkered icon-large"></i>
+                    <h2 class="bento-title-large">總結與展望 <span class="text-lg font-normal text-slate-500">Conclusion & Outlook</span></h2>
+                    <div class="bento-text">
+                        <p>總而言之，Fourier Neural Operator 代表了深度學習在求解 PDE 問題上的一個重要進展，它通過學習函數算子，並巧妙地將傅立葉變換融入其中，實現了對傳統數值方法和先前神經網路方法限制的突破。其 Mesh independent 的特性和良好的泛化能力，為利用深度學習解決科學和工程領域的挑戰性問題提供了新的強大工具 [6, 29, 30]。對於新手研究者而言，理解神經算子和 FNO 的核心概念，特別是從處理離散點到處理連續函數的思維轉變，以及如何在離散數據中逼近無限維度的算子，是進入這個領域的關鍵重點。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

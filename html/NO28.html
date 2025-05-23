@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>深度知識表達與推理 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title { /* Used for smaller box titles if needed, or general purpose */
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes */
+            font-size: 2.2rem; /* Adjusted from 2.5 to fit longer Chinese titles */
+            line-height: 2.8rem; /* Adjusted */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for h3 level subtitles within a bento box */
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list { /* For ul with custom bullets */
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+        /* For ol (numbered lists) */
+        .list-decimal.bento-text li {
+            margin-bottom: 0.5rem;
+        }
+
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 2.5rem; /* Slightly smaller than 3rem for balance */
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem; 
+            font-weight: 700;
+        }
+        .english-subtitle {
+            font-size: 1.5rem; 
+            color: #666;
+            font-weight: 400;
+        }
+        .bento-text p {
+            margin-bottom: 1rem; /* Add space between paragraphs within bento-text */
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=BDdtkODrlKo" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2019/02/15, Chin-Hui Chen, Deep knowledge representation and reasoning</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                深度知識表達與推理
+                <a href="https://www.youtube.com/watch?v=BDdtkODrlKo" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Deep knowledge representation and reasoning: From Expert Systems to Modern Approaches
+            </p>
+            <p class="text-slate-500 mt-1">2019/02/15 Chin-Hui Chen</p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-archive icon-large"></i>
+                    <h2 class="bento-title-large">人工智慧早期：專家系統的輝煌與侷限 <span class="text-lg font-normal text-slate-500">Early AI: The Glory and Limitations of Expert Systems</span></h2>
+                    <div class="bento-text">
+                        <p>在人工智慧發展的早期階段，據稱大約在1970年代到1980年代 [1, 3]，專家系統 (Expert Systems) 是主流方法之一 [1]。對於入門的同學，你可以把它想像成一個試圖模仿人類專家的思考過程來解決特定問題的電腦程式 [1]。</p>
+                        <p><strong>核心原理：基於規則與符號</strong></p>
+                        <p>專家系統的基礎是一系列的<strong>邏輯規則</strong> [1]。這些規則通常以「如果 (If) ... 則 (Then) ...」的形式存在，用來定義在特定條件下應該採取的行動或推導出的結論 [1]。系統會根據輸入的事實去匹配這些規則，進行邏輯推論 [1]. 來源中也提到，這些規則需要手動建立 [4, 5].</p>
+                        <p><strong>主要的挑戰與侷限：</strong></p>
+                        <ol class="list-decimal list-inside pl-4">
+                            <li>
+                                <strong>僵化的零一邏輯，難處理不確定性</strong><br>
+                                專家系統最根本的問題在於它的邏輯是<strong>「零跟一」</strong>的 [1, 4]。這意味著它只能判斷一個事物是「真」或「假」，而無法處理<strong>機率</strong>或介於中間的模糊狀態 [1, 4]. 來源引述提到：「這最主要問題就是它邏輯只有零跟一嘛，那你沒有辦法處理機率的問題。又沒有介於中間的。」[1, 6]. 就像手寫數字辨識中，一個寫得不太標準的數字，可能像 1 又有點像 7，專家系統很難用確切的規則來判斷 [1, 4].
+                            </li>
+                            <li>
+                                <strong>詞彙的多重含義與上下文依賴性</strong><br>
+                                對於自然語言處理來說，這是一個更大的難題 [1, 4]. 一個詞彙往往有很多個意思，而它的確切意思取決於它所在的<strong>上下文</strong> [1, 4]. 來源引述指出：「那其實語言的每個詞彙它都有很多個意思，那以每一個字的意識跟它的上下文都有關係，然候這又是一個機率的問題，就就是便變成沒有辦法很明確的說這個字性代表什麼東西。因為跟他上下在一起到是說這個自己到有可能是。」[1, 6]. 這種根據上下文而變化的語義，本質上是<strong>機率性</strong>的 [1, 4]。專家系統基於零一邏輯的設計，很難彈性地捕捉和處理這種多重含義和上下文相關性 [1, 4].
+                            </li>
+                            <li>
+                                <strong>知識庫的手工建構與擴展困難</strong><br>
+                                專家系統的另一個巨大瓶頸在於其<strong>知識庫的建構高度依賴於人工</strong> [1, 4, 5]。研究人員需要花費大量的時間和精力去人工編寫和定義這些規則和關係 [1, 4, 5]. 這不僅耗時耗力，而且<strong>難以擴展和泛化</strong> [1, 4]. 來源中有人分享了建構病毒知識庫或小吃建議系統的經驗 [1, 5]，就體會到這種手工建構的艱辛與侷限性 [5]. 一個針對特定領域（如醫療或法律）建立的專家系統，其知識和規則是高度專業化的，難以直接應用到其他不同的領域（<strong>領域限定性</strong>）[7]. 史丹佛大學雖然在醫學領域使用了類似的技術進行研究 [3]，但這也反映了這種領域限定的特點 [7].
+                            </li>
+                        </ol>
+                        <p><strong>標準化與結構化的嘗試</strong></p>
+                        <p>為了解決手工建構和缺乏標準化的問題，學界曾嘗試引入一些標準化的技術 [3, 6]，例如 <strong>OWL (Web Ontology Language)</strong> 和 <strong>RDF (Resource Description Framework)</strong> [1, 4]. 曼徹斯特大學 (University of Manchester) 在2011年左右是開發OWL的代表之一 [3]，可能也開發過相關軟體，例如一個名為 Port 的軟體 [3, 5]. 這些技術試圖提供一種更有結構、更標準化的方式來表示知識 [1, 4]，例如定義概念、屬性以及它們之間的關係 [4]. 一些工具（例如被稱為「Page」或「Port」的軟體 [5, 7]，結合 SWRL (Semantic Web Rule Language) [5, 7]）也應運而生，允許建立結構化的關係並進行推論 [5, 7]. 例如，可以建立「A 是 B 的爸爸」這樣的二元關係 [5]，並通過規則推論出 A 和 C（B 的媽媽）之間的關係 [5]. 來源提到，這種推論是基於已定義的關係，而不是因果關係 [8].</p>
+                        <p>然而，即使有了 OWL 這樣的工具，早期的知識庫仍然存在限制 [4]. 它們通常只能建立<strong>有限種類的關係</strong> [4]，例如本體論中的屬性關聯或簡單的二元關係 [4, 5]. 雖然可以進行簡單的邏輯推論 [5, 7]，但要處理更複雜、更抽象或在<strong>開放領域 (Open Domain)</strong> 中未見過的名詞和關係時，仍然非常困難 [4, 5, 7]. 來源中提到，那個年代即使使用了這些標準化工具，在開放領域仍然沒有辦法做好，只是不需要完全手動鍵而已 [5]. 這促使一些研究者甚至嘗試開發新的語言（如「FM language」）[6, 7, 9]，試圖將「黎」的概念引入來增強關係的表示能力 [6, 7]，這顯示出大家已經意識到僅靠簡單的結構化關係是不足夠的 [7].</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-rocket icon-large"></i>
+                    <h2 class="bento-title-large">近代方法的興起：擁抱連續空間與數據學習 <span class="text-lg font-normal text-slate-500">The Rise of Modern Methods: Embracing Continuous Spaces and Data Learning</span></h2>
+                    <div class="bento-text">
+                        <p>面對專家系統在處理不確定性、語義多樣性 [1, 4] 和擴展性 [1, 4] 方面的根本性挑戰，研究方向開始轉向 [2]. 雖然來源中沒有在關鍵比較點明確提及「詞向量」，但其對近代方法能力的描述 [1, 2]，與<strong>詞向量 (Word Embeddings)</strong> 的核心思想高度契合。</p>
+                        <p><strong>核心原理：將詞彙映射到向量空間</strong></p>
+                        <p>近代的方法，特別是像詞向量這樣的技術，其核心思想是將每一個詞彙或符號不再視為孤立的單元，而是將它們<strong>映射到一個連續的數學向量空間</strong>中 [1, 2]. 每個詞彙都由空間中的一個高維向量來表示 [1, 2]. 來源中也提到了向量和矩陣運算的概念 [10, 11]，這與這種表示方式是相符的 [10, 11].</p>
+                        <p><strong>詞向量的優勢與能力：</strong></p>
+                        <ol class="list-decimal list-inside pl-4">
+                            <li>
+                                <strong>捕捉語義關係與處理機率</strong><br>
+                                在這個向量空間中，詞彙之間的<strong>語義關係</strong>得以捕捉 [1, 2]. 那些語義相似的詞彙，在這個空間中的距離會比較近 [1, 2]. 更進一步，特定的語義關係可以通過向量之間的<strong>代數運算</strong>來體現 [1, 10, 11]. 這使得系統能夠處理專家系統難以應對的<strong>機率問題</strong> [1, 4] 和<strong>語義的多樣性</strong> [1, 4]. 詞彙的向量表示是從<strong>大量的文本數據</strong>中學習而來的 [2]，其位置反映了它在不同語境下的用法和頻率，因此能自然地捕捉到詞彙的多重含義及其上下文相關性 [1, 4].
+                            </li>
+                            <li>
+                                <strong>數據驅動與良好的泛化能力</strong><br>
+                                與專家系統需要人工手動編寫規則不同 [1, 4]，詞向量是通過<strong>數據學習</strong>的方式獲得的 [2]. 這使得系統的建構和更新效率大大提高 [2]，並且具有更好的<strong>擴展性和泛化能力</strong> [2]. 即使是模型在訓練時沒有直接見過的新詞 [1, 2]，也可以通過其在上下文中的出現來學習其向量表示，並被歸類或理解 [1, 5]（即使可能還不知道具體的「是什麼東西」 [5]，但能歸到某一類 [1, 5]）. 來源中引述（意譯，描述詞向量的能力）提到：「你不是可以把沒有看過的把它歸成一類嗎？或者是歸成某一個。」[1, 5]
+                            </li>
+                            <li>
+                                <strong>向量與矩陣運算</strong><br>
+                                來源中提到了<strong>向量和矩陣運算</strong>的概念 [10, 11]，例如不同維度矩陣的相乘或相加 [10, 11]. 這暗示了在近代方法中，知識的表示和處理是通過數學計算來完成的 [10, 11]. 這種基於數值計算的方式，與專家系統基於符號和規則的邏輯推理方法截然不同 [10]. 來源中也暗示了這種方法可以捕捉更複雜的關係，例如「國王 - 男人 + 女人 = 皇后」之類的類比關係，通過向量的加減法來實現 [1].
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-glasses-alt icon-large"></i>
+                    <h2 class="bento-title-large">總結：範式轉移的意義 <span class="text-lg font-normal text-slate-500">Conclusion: The Significance of the Paradigm Shift</span></h2>
+                    <div class="bento-text">
+                        <p>從專家系統到詞向量這類方法的轉變，是人工智慧領域一次深刻的<strong>範式轉移</strong> [2]. 它標誌著從早期的<strong>符號主義 (Symbolism)</strong> 方法（強調用邏輯規則和符號表示知識 [2]）向<strong>連接主義 (Connectionism)</strong> 或說<strong>數據驅動 (Data-driven)</strong> 方法（強調從數據中學習，用向量等連續表示來捕捉模式 [2]）的演進。</p>
+                        <p>專家系統因其僵化的零一邏輯 [1, 4]、難處理不確定性與語義多樣性 [1, 4]，以及對人工知識建構的依賴 [1, 4] 而面臨嚴峻挑戰 [1, 2]. 近代方法通過將詞彙等信息表示在連續的向量空間中 [1, 2]，利用大規模數據學習的能力 [2]，更靈活和強大地捕捉語義關聯和處理複雜語言現象 [1, 2]. 這種轉變不僅是技術上的進步 [2]，也反映了我們對如何表示和處理知識有了更深入的理解 [2]. 對於初學者而言，理解這兩種方法在核心思想和處理能力上的根本差異 [1, 2, 4, 10]，是掌握當前自然語言處理技術發展脈絡的關鍵一步 [1, 2].</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div, index) => {
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: (index % 3) * 0.1 + 0.1, ease: "easeOut" }); // Stagger based on index
+                // return () => animate(div, { opacity: 0, y: -20, scale: 0.95 }, { duration: 0.3 }); // Optional: animate out
+            }, { amount: 0.1 }); // Trigger when 10% of the element is in view
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGD 動態模型：隨機微分方程 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+        .bento-text ol.list-decimal ul.bento-list { /* Nested ul inside ol */
+            padding-left: 1rem; /* Indent nested ul further */
+            margin-top: 0.5rem;
+        }
+        .bento-text ol.list-decimal ul.bento-list li {
+            font-size: 0.95rem; /* Slightly smaller for nested items if desired */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=Vs9YQw5RO-w" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2020/09/11, Mark Chang, Modeling the Dynamics of SGD by Stochastic Differential Equation</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                以隨機微分方程模擬隨機梯度下降之動態
+                 <a href="https://www.youtube.com/watch?v=Vs9YQw5RO-w" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Modeling the Dynamics of SGD by Stochastic Differential Equation
+            </p>
+            <p class="text-slate-500 mt-1">2020/09/11 Mark Chang</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-random icon-large"></i>
+                    <h2 class="bento-title-large">梯度下降 (GD) 與隨機梯度下降 (SGD) 的基本差異與核心問題 <span class="text-lg font-normal text-slate-500">GD vs. SGD: Differences & Core Issues</span></h2>
+                    <div class="bento-text">
+                        <p>首先，讓我們先回顧一下機器學習中的基本目標：透過調整模型參數 (W) 來最小化一個「損失函數」（Loss Function），這個函數衡量了模型預測值與實際標籤之間的差異 [1-3]。損失函數值越低，模型預測通常越準確 [3]。</p>
+                        <p>傳統的<strong>梯度下降 (Gradient Descent, GD)</strong> 是一種用來最小化損失函數的演算法 [2]。它的做法是計算損失函數在<strong>整個</strong>訓練數據集上的梯度，這個梯度指出了損失函數值增加最快的方向，因此我們沿著梯度的<strong>反方向</strong>去更新模型參數，希望逐步走向損失函數的最小值 [2, 3]。從幾何上看，如果把損失函數想像成一座山的地形，GD 每次更新都會找到當前位置最陡峭的下坡方向，並沿著這個方向走一小步（步長由學習率決定） [3]。由於使用了整個數據集，計算出的梯度方向非常準確，理論上在凸函數（沒有局部最小值，只有一個全域最小值）的損失函數地形中，GD 可以沿著直線高效地走向最小值 [3, 4]。</p>
+                        <p>然而，當面對大規模深度學習任務時，GD 存在一個嚴重的問題：每次更新都需要遍歷並計算整個龐大數據集的梯度，這對計算資源（特別是記憶體）的要求極高，且計算效率低下 [1, 3-5]。</p>
+                        <p>為了解決這個問題，我們引入了<strong>隨機梯度下降 (Stochastic Gradient Descent, SGD)</strong> [2]。SGD 的核心思想是在每次參數更新時，不再使用整個數據集，而是僅隨機抽取一小批（mini-batch）數據，甚至是單一數據點，來計算損失函數的梯度並更新參數 [1-5]。這種方法的計算效率大大提高，因為每次更新的計算量顯著減少，使其能夠處理非常大型的數據集 [1, 4, 5]。</p>
+                        <p>這裡就出現了一個關鍵問題：使用一小批數據計算出的梯度，是對整個數據集上真實梯度的「估計」[1, 4, 5]。這個估計不可避免地會存在誤差 [4, 6]。每次抽取的 mini-batch 不同，這個估計誤差也會不同，這就為 SGD 的參數更新過程引入了「雜訊」或「隨機性」[1, 4-7]。從幾何上看，如果說 GD 是沿著準確的直線下降，那麼 SGD 的路徑則由於這些估計誤差而呈現出「歪七扭八」、彎彎曲曲的行走方式 [1, 4, 6, 8]。</p>
+                        <p>這引發了一個讓許多初學者甚至研究人員感到困惑的問題：既然 GD 的梯度方向更準確，理論上能更直接地走向最小值（尤其是在凸函數設定下，傳統理論可以證明 SGD 也能收斂到最小值，但 GD 似乎更直接高效），那為什麼在實際的非凸深度學習損失函數訓練中，我們更常用帶有雜訊的 SGD，而且它往往表現更好？傳統的最佳化數學理論對此難以給出令人滿意的解釋，因為它們通常建立在凸函數假設上，且沒有充分考慮這種訓練過程中的隨機性 [1, 4, 6, 9]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-wave-square icon-large"></i>
+                    <h2 class="bento-title-large">將 SGD 視為隨機過程：引入隨機微分方程 (SDE) <span class="text-lg font-normal text-slate-500">SGD as Stochastic Process: Introducing SDE</span></h2>
+                    <div class="bento-text">
+                        <p>要理解 SGD 中雜訊的益處，研究人員借用了物理學和財經領域中描述隨機運動的數學工具——<strong>隨機微分方程 (Stochastic Differential Equation, SDE)</strong> [1, 4, 7, 10]。</p>
+                        <p>想像一下「隨機漫步」(Random Walk) 這個例子 [1, 2, 7]。一個粒子從原點出發，每隔一段時間，它都有 1/2 的機率向左移動一步，1/2 的機率向右移動一步 [7, 11]。它的位置隨著時間是隨機變化的 [7]。如果在無限的時間步長和無限小的時間間隔下觀察，這種隨機漫步的行為會趨近於「布朗運動」(Brownian Motion) [1, 2, 4]。布朗運動是一個連續時間的隨機過程，其特徵是位置隨時間隨機變動，且這種變動具有獨立增量（過去的運動不影響未來的增量）和常態分佈的性質 [1, 10, 11]。</p>
+                        <p>傳統的「常微分方程」(Ordinary Differential Equation, ODE) 用來描述一個確定性系統隨時間的演變，給定初始條件，其未來的軌跡是唯一確定的 [1, 2, 10]。而 SDE 則描述一個包含隨機擾動的系統 [1, 2, 10]。一個 SDE 通常包含兩個主要部分：「確定性部分」(Deterministic Part) 和「隨機性部分」(Stochastic Part) [1, 2, 10]。確定性部分描述了系統在沒有隨機擾動時的演變趨勢（類似 ODE 的項），而隨機性部分則捕捉了系統受到的隨機影響，通常與布朗運動的微分相關 [1, 2, 8, 10]。由於隨機性部分的存在，SDE 的解不是一個確定的數值或函數，而是一個「隨機變數」或隨機過程，其結果是帶有平均值 (mean) 和變異數 (variance) 的機率分佈 [2, 11, 12]。</p>
+                        <p>現在，我們可以將 SGD 的更新規則近似地轉化為一個連續時間的 SDE [1, 4, 8, 13]。SGD 的更新可以被分解為兩部分：一部分對應於使用<strong>整個</strong>數據集計算的真實梯度（這部分是確定的），另一部分則是由於使用 mini-batch 抽樣而引入的誤差，這部分就是雜訊 [1, 4, 8]。這個抽樣引入的雜訊是無偏的（平均而言，抽樣梯度是真實梯度的無偏估計），並且具有一個可以計算的協方差 (covariance) [8]。透過將 SGD 近似為 SDE，確定性部分對應於損失函數的真實梯度下降，而隨機性部分則對應於抽樣帶來的雜訊項 [1, 4, 8]。</p>
+                        <p>將 SGD 視為 SDE 的好處在於，我們可以借用 SDE 成熟的數學工具來分析 SGD 的行為 [1, 4, 5, 12]。例如，可以求解這個 SDE，得到模型參數隨時間演變的機率分佈（它的期望值和變異數），而不再是僅僅追蹤一個確定的參數值 [1, 4, 12, 13]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-chart-area icon-large"></i>
+                    <h2 class="bento-title-large">從 SDE 看 SGD 的訓練過程：下降階段與波動階段 <span class="text-lg font-normal text-slate-500">SGD Training via SDE: Descent & Fluctuation Phases</span></h2>
+                    <div class="bento-text">
+                        <p>透過 SDE 的視角，我們可以更清晰地理解 SGD 訓練過程的兩個階段 [1, 4, 14]。在訓練初期，或者說「下降階段」(Descent Face/Phase)，參數的期望值（平均路徑）佔主導地位 [1, 4, 9, 14]。此時，損失函數的梯度較大，參數的期望值會快速地朝著損失函數的最小值方向下降 [1, 4, 14]。儘管雜訊的存在導致參數的實際路徑會在這個期望值周圍波動，但整體的趨勢是明確的下降 [1, 4, 14]。</p>
+                        <p>隨著訓練的進行，損失函數的期望值下降速度會減慢，並逐漸接近最小值 [1, 4, 14]。此時，訓練進入「波動階段」(Fluctuation Face/Phase) [1, 4, 14]。在這個階段，參數的期望值可能已經非常接近最小值，不再有顯著的下降，但由於雜訊的存在，參數的實際值會在最小值附近持續震盪 [1, 4, 9, 14, 15]。SDE 的解顯示，在波動階段，參數分佈的變異數變得更加顯著，代表了參數在最小值附近的擴散和波動程度 [1, 4, 13, 14]。很多時候，當訓練進入波動階段，即使損失函數仍在震盪，其平均值不再顯著下降時，就可以考慮停止訓練了 [1, 9, 14]。</p>
+                        <p>透過將實際 SGD 訓練的結果（如參數的期望值和變異數隨時間的變化）與 SDE 模型估計出的結果進行比較，研究表明 SDE 模型能夠很好地捕捉 SGD 的行為 [1, 9]。這為利用 SDE 分析和改進 SGD 提供了基礎。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-sliders-h icon-large"></i>
+                     <h2 class="bento-title-large">學習率與批量大小：控制雜訊的關鍵超參數 <span class="text-lg font-normal text-slate-500">Learning Rate & Batch Size: Controlling Noise</span></h2>
+                     <div class="bento-text">
+                        <p>從 SDE 的角度分析 SGD，我們可以更深入地理解學習率 (Learning Rate, η) 和批量大小 (Batch Size, B) 這兩個核心超參數的作用 [1, 4, 5]。</p>
+                        <p>學習率 (η) 決定了每次參數更新的步長 [2, 5]。從 SDE 的公式來看，學習率就像是一個放大係數，它會放大 SGD 更新中的梯度項，同時也會放大由抽樣引入的雜訊項 [1, 4, 5, 16]。因此，在雜訊水平固定的情況下，學習率越大，參數更新的步長越大，同時雜訊的影響也被放大，導致參數更新路徑更為曲折和不穩定，震盪幅度更大 [1, 4, 5, 15, 16]。學習率越小，步長越小，雜訊影響也相對減小，路徑趨於平滑，震盪幅度較小 [1, 4, 5, 15]。</p>
+                        <p>批量大小 (B) 則直接影響了 SGD 估計梯度的準確性，進而影響雜訊的大小 [1, 4, 5, 16]。回想一下，SGD 的雜訊來自於使用 mini-batch 估計整個數據集的梯度 [1, 4-6]。當批量大小越大，用於計算梯度的樣本數量越多，抽樣誤差就越小，對真實梯度的估計就越準確，引入的雜訊也就越小 [1, 4, 5, 16]。極端情況下，當批量大小等於整個數據集大小時，SGD 就變成了 GD，此時雜訊為零 [1, 3, 4]。反之，批量大小越小，用於估計梯度的樣本越少，抽樣誤差越大，引入的雜訊也就越大 [1, 4, 5, 16]。</p>
+                        <p>因此，學習率和批量大小共同決定了 SGD 訓練過程中雜訊的水平 [1, 4, 5]。學習率越大或批量大小越小，雜訊越大。</p>
+                     </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-mountain icon-large"></i>
+                    <h2 class="bento-title-large">雜訊、最小值形狀與模型泛化能力 <span class="text-lg font-normal text-slate-500">Noise, Minima Shape & Generalization</span></h2>
+                    <div class="bento-text">
+                        <p>現在我們可以解釋為什麼 SGD 中的雜訊是有益的，以及學習率和批量大小如何影響模型最終的性能，特別是泛化能力（在未見過的測試數據上表現良好的能力）[1, 4, 5]。這與模型收斂到的損失函數最小值的「形狀」有關 [1, 4, 5, 16]。</p>
+                        <p>損失函數地形中的最小值可以分為兩類：「尖銳最小值」(Sharp Minimum) 和「平坦最小值」(Flat Minimum) [1, 2, 4, 5, 16]。</p>
+                        <ul class="bento-list">
+                            <li><strong>尖銳最小值 (Sharp Minimum):</strong> 在這種最小值附近，損失函數的曲率（由 Hessian 矩陣描述）較大 [2, 17]。參數的微小變化會導致損失函數值較大的變化 [4, 5, 16]。想像一個狹窄而深的坑 [16]。收斂到尖銳最小值的模型，對參數的微小擾動很敏感 [4, 5]。在訓練數據上可能表現很好，但面對測試數據中與訓練數據的微小差異時，性能可能會急劇下降，這就是<strong>過度擬合 (Overfitting)</strong> 的表現 [1, 2, 4, 5, 16]。</li>
+                            <li><strong>平坦最小值 (Flat Minimum):</strong> 在這種最小值附近，損失函數的曲率較小 [2, 17]。參數的微小變化對損失函數值的影響較小 [4, 5, 16]。想像一個寬廣而平坦的盆地 [16]。收斂到平坦最小值的模型對參數變化更具魯棒性 [4, 5]，在測試數據上的表現通常更好，具有更強的泛化能力，更不容易過度擬合 [1, 4, 5, 16]。</li>
+                        </ul>
+                        <p>研究發現，SGD 引入的雜訊可以幫助模型<strong>避免</strong>陷入訓練數據上的尖銳最小值，而傾向於收斂到平坦最小值 [1, 4, 5, 17-19]。這是因為較大的雜訊使得參數更新路徑更加「動盪」，這種動盪的力量可以幫助模型「跳出」狹窄的尖銳最小值區域，而更容易進入或穩定在寬廣的平坦最小值區域 [5, 17, 18]。</p>
+                        <p>更重要的是，從 SDE 理論推導得出，損失函數在收斂到的最小值處的 Hessian 矩陣的 Trace（Hessian 矩陣的對角線元素之和，與曲率相關）與學習率除以批量大小的比例 ($η/B$) 成正比 [1, 4, 17]。Flat Minimum 對應著較小的 Trace，而 Sharp Minimum 對應著較大的 Trace [1, 4, 17]。因此，較大的 $η/B$ 比值（意味著較大的學習率和/或較小的批量大小，即較大的雜訊）傾向於使模型收斂到 Hessian Trace 較小的地方，也就是平坦最小值 [1, 4, 5, 17]。反之，較小的 $η/B$ 比值（較小的雜訊）則容易使模型收斂到尖銳最小值 [1, 4, 5, 17]。</p>
+                        <p>這從理論上解釋了為什麼在固定學習率時，較大的學習率可以使模型收斂到更好的解（泛化能力更強）[1, 4]。也解釋了為什麼較小的批量大小（雜訊更大）通常能帶來更好的泛化性能 [1, 4, 5, 19]。</p>
+                        <p>基於此，我們可以得出一個重要的實踐建議：在調整批量大小時，需要同時考慮學習率 [1, 4, 5, 19]。如果你增加了批量大小（減小了雜訊），為了維持類似的雜訊水平和泛化性能，你也應該相應地增加學習率 [1, 4, 5, 19]。目標是維持 $η/B$ 這個比例在一個有利於泛化的範圍 [1, 4, 5]。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-tasks icon-large"></i>
+                    <h2 class="bento-title-large">學習率調整策略的理論支持 <span class="text-lg font-normal text-slate-500">Theory of Learning Rate Scheduling</span></h2>
+                    <div class="bento-text">
+                        <p>傳統上，訓練深度學習模型時有一個經驗法則：學習率應該隨著時間的推移逐漸減小（Learning Rate Decay 或 Scheduling）[1, 4, 9, 15, 19]。這個經驗法則從 SDE 的角度得到了理論支持 [1, 4, 20, 21]。</p>
+                        <p>一種稱為 Control SGD 的方法，利用 SDE 和最佳控制理論（Optimal Control）來尋找一個隨時間變化的學習率函數，以最小化損失函數的期望值 [1, 4, 20, 22]。對於一個簡單的二次損失函數，理論推導表明，最佳的學習率策略是：在訓練初期（下降階段）使用較大的學習率，以快速逼近最小值；而在訓練後期（波動階段）則逐漸減小學習率，以減小參數在最小值附近的震盪幅度，實現更穩定的收斂 [1, 4, 15, 20, 21]。減小學習率相當於減小了雜訊的放大倍數 [1, 4, 15, 21]。</p>
+                        <p>對於更一般的非二次損失函數，雖然無法得到簡單的解析解，但可以透過在每個訓練步驟估計當前參數附近的損失函數的二次逼近（計算與 Hessian 矩陣相關的項），並應用類似的最佳控制策略來動態調整學習率 [1, 4, 22]。</p>
+                        <p>這與實際訓練中觀察到的現象完全一致：一開始用較大的學習率快速下降，隨著損失不再顯著下降，逐漸減小學習率進行微調和穩定 [1, 4, 9, 15, 19]。SDE 框架為這種學習率調整策略提供了堅實的理論基礎。</p>
+                        <p>同時，這也解釋了為什麼不應該一開始就使用非常小的學習率 [1, 4, 18, 19]。過小的初始學習率意味著雜訊的影響被極度抑制，模型可能會過早地收斂到訓練數據上的某個尖銳局部最小值，而無法利用雜訊探索損失函數空間並跳出這些較差的解，最終導致泛化能力較差 [1, 18, 19]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-lightbulb icon-large"></i>
+                    <h2 class="bento-title-large">總結與實踐建議 <span class="text-lg font-normal text-slate-500">Conclusion & Practical Advice</span></h2>
+                    <div class="bento-text">
+                        <p>從研究的角度看，SGD 中的雜訊不再僅僅是抽樣帶來的不便，而是一種內在的、對訓練過程和泛化能力有益的特性 [1, 4, 5, 19]。透過將 SGD 近似為隨機微分方程，我們可以深入分析學習率和批量大小如何控制這種雜訊，以及它如何影響模型收斂到不同形狀的最小值 [1, 4, 5]。</p>
+                        <p>核心 takeaways 包括：</p>
+                        <ul class="bento-list">
+                            <li>SGD 相較於 GD 更適合大規模深度學習，雖然引入了雜訊，但這種雜訊並非全然有害 [1, 3-6]。</li>
+                            <li>SDE 模型提供了一個理解 SGD 行為的理論框架，將其更新拆分為確定性（梯度）和隨機性（雜訊）兩部分 [1, 4, 8, 10]。</li>
+                            <li>學習率和批量大小是控制 SGD 雜訊水平的關鍵超參數；學習率放大雜訊，批量大小與雜訊大小呈反比 [1, 4, 5, 16]。</li>
+                            <li>適度的雜訊（通常通過較大的學習率和/或較小的批量大小實現，關注 $η/B$ 比例）有助於模型收斂到泛化能力更好的平坦最小值，避免過度擬合尖銳最小值 [1, 4, 5, 17, 18]。</li>
+                            <li>學習率應隨著時間衰減，這是理論和實踐都支持的策略，目的是在下降階段快速進步並探索，在波動階段穩定收斂 [1, 4, 9, 15, 19-21]。不要使用過小的初始學習率 [1, 18, 19]。</li>
+                            <li>調整批量大小時，考慮同步調整學習率以維持期望的雜訊水平和泛化效果 [1, 4, 5, 19]。</li>
+                        </ul>
+                        <p>值得注意的是，過度擬合並非僅僅與模型容量（傳統觀點認為模型越大越容易過擬合）有關 [19]。它還與數據集中的雜訊、訓練時間、正則化技術以及我們今天討論的學習率、批量大小等超參數設置及其帶來的雜訊緊密相關 [1, 4, 19]。事實上，通過調整學習率和批量大小來控制雜訊，可以被視為一種不同於傳統權重衰減（Weight Decay）或早停（Early Stopping）等手段的「正則化」方式，用以提升模型的泛化能力 [1, 19]。</p>
+                        <p>當然，將離散的 SGD 近似為連續的 SDE 在數學上仍有其局限性，特別是對於高度複雜的深度學習模型架構和非凸損失函數 [23]。SDE 模型是否能完全精確地描述所有情況下的 SGD 行為，雜訊在多大程度上能幫助跳出任意局部最小值，以及基於 SDE 的控制策略（如 Control SGD）在實際應用中的計算效率等，都還是值得進一步研究和探索的問題 [23]。例如，「二次下降」(Secondary Descent) 現象（模型似乎已收斂到一個局部最小值，損失函數卻在之後再次顯著下降）[20, 23]，可能就與雜訊幫助模型跳出一個局部最小值，進而找到另一個更優的最小值有關 [20, 23]。</p>
+                        <p>對於初學者而言，不需要立即深入 SDE 的數學細節 [10, 17]。關鍵的啟發是理解：SGD 的隨機性（或雜訊）並非總是壞事，它是訓練大規模非凸模型不可或缺的一部分，並且通過控制學習率和批量大小來調節這種隨機性，是影響模型收斂和泛化能力的重要手段。掌握學習率衰減的策略、理解批量大小對雜訊的影響、以及批量大小和學習率需要協同調整，這些是實際訓練中非常實用的入門關鍵重點。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

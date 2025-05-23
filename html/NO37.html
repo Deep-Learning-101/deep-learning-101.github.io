@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幾何深度學習入門 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=aeKY1X_QAhI" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2020/01/10, 杜岳華, Introduction to geometric deep learning with implementation</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                幾何深度學習入門與實作
+                 <a href="https://www.youtube.com/watch?v=aeKY1X_QAhI" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Introduction to geometric deep learning with implementation
+            </p>
+            <p class="text-slate-500 mt-1">2020/01/10 杜岳華</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-project-diagram icon-large"></i>
+                    <h2 class="bento-title-large">為什麼需要圖神經網路？處理非歐幾里德空間資料的重要性 <span class="text-lg font-normal text-slate-500">Why Graph Neural Networks? Handling Non-Euclidean Data</span></h2>
+                    <div class="bento-text">
+                        <p>首先，從事研究工作，我們必須理解不同資料類型的特性以及為何需要專門的模型來處理它們。傳統上，我們熟悉的電腦視覺處理影像資料，自然語言處理處理文字序列，這些資料都位在相對「規則」的歐幾里德空間中 [1]。例如，影像資料是規則的二維網格，每個像素都有固定的鄰居（上下左右），維度也是固定的 [2]。語音或文字則是標準的一維序列資料 [3]。</p>
+                        <p>然而，現實世界中存在大量的資料，它們的結構並不像這樣規則，而是呈現出複雜的關係或連結，這些資料就存在於「非歐幾里德空間」中 [1, 2, 4]。舉例來說，人際關係的社交網絡就不是單純的距離可以定義的，人與人之間的「距離」可能取決於他們共同的朋友數量 [4]。交通網絡也是一個典型的非歐幾里德空間資料，節點之間透過邊連接，但每個節點的鄰居數量和連接方式差異很大 [2, 4]。其他重要的非歐幾里德資料範例還包括生物資訊中的基因調控網絡、分子的結構、甚至是 3D 繪圖中的曲面表示等 [1, 2, 4, 5]。處理這些具有不規則或複雜結構的資料，就是圖神經網路誕生的重要原因 [1, 4]。圖（Graph）是描述複雜系統中「關係」的強大工具，這也是複雜科學（Complex Science）的核心處理對象之一 [4, 6]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-sitemap icon-large"></i>
+                    <h2 class="bento-title-large">圖的基本概念 <span class="text-lg font-normal text-slate-500">Basic Concepts of Graphs</span></h2>
+                    <div class="bento-text">
+                        <p>在深入GNN之前，理解圖的數學定義和表示方法是基礎 [1]。一個圖（Graph） G 通常由兩個集合構成：節點集合 V (Vertices 或 Nodes) 和邊集合 E (Edges) [6]。節點集合 V 可以用一個集合 {v1, v2, ..., vn} 來表示，其中的元素就是圖中的各個點 [6]。邊集合 E 則表示節點之間的連接關係，它是一個對偶（pair）的集合，例如 (vi, vj) 表示節點 vi 和 vj 之間有一條邊 [2, 6]。這兩個集合構成了圖的結構 [6]。</p>
+                        <p>在電腦科學中，表示圖結構最常用的方法之一是「鄰接矩陣」（Adjacency Matrix） [1, 6]。鄰接矩陣 A 是一個二維矩陣，其大小通常是 N x N，其中 N 是節點的數量 [6, 7]。如果節點 i 和節點 j 之間存在連線（邊），那麼矩陣中對應的位置 A[i, j] 的值通常會設為 1 [2, 6]。如果沒有連線，則設為 0 [2, 6]。在處理有權重的圖（Weighted Graph 或 Network）時，A[i, j] 的值可以表示邊的權重，例如交通網絡中道路的車流量或最大載量 [8]。對於無向圖（Undirected Graph），鄰接矩陣通常是對稱的，即 A[i, j] = A[j, i] [6]。而對於有向圖（Directed Graph），矩陣則可能不對稱 [6, 8]。</p>
+                        <p>另一個重要的圖概念是「節點的度」（Degree） [2, 6]。在無向圖中，一個節點的度是指與該節點相連的邊的總數 [2, 6]。我們可以構造一個對角矩陣 D（Degree Matrix），其對角線上的元素 D[i, i] 就是節點 i 的度，非對角線元素為零 [6]。對於有權重的圖，度的計算方式會將相連邊的權重加總 [8]。有向圖則區分為入度（Indegree）和出度（Outdegree），分別計算指向該節點和從該節點指出的邊數量（或權重總和） [8]。</p>
+                        <p>圖不一定是一張完全連通的圖，它可能由幾個相互獨立的子圖組成，這些子圖之間沒有邊相連 [8]。這些相互連通的節點組成的子圖稱為「連通分量」（Connected Component） [2, 8]。在研究中，找出圖中的連通分量是一個常見的問題 [8]。一個有趣的技巧是利用隨機漫步（Random Walk），讓一個虛擬的「小機器人」在圖的邊上隨機移動 [8]。如果讓它走足夠多的步驟，它會把所有能到達的地方都探索到，而無法到達的地方則屬於不同的連通分量 [8, 9]。這個隨機漫步的轉移機率可以根據鄰接矩陣和度矩陣計算得到，並與馬可夫鏈（Markov Chain）的概念相關 [8, 9]。推到極限（無限步）時，這個分佈會達到穩定狀態 [9]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-wave-square icon-large"></i>
+                    <h2 class="bento-title-large">圖信號處理與譜域GNN的基礎 <span class="text-lg font-normal text-slate-500">Graph Signal Processing & Spectral GNNs</span></h2>
+                    <div class="bento-text">
+                        <p>圖神經網路的一個重要分支是「譜域GNN」（Spectral-based GNN），它的理論基礎來自圖信號處理（Graph Signal Processing, GSP） [1, 10-12]。傳統的訊號處理通常處理的是時間序列訊號，它是時間的函數，我們可以對它進行傅立葉變換（Fourier Transform），將訊號從時域轉換到頻域進行分析和處理 [10]。在圖信號處理中，訊號不再是時間的函數，而是定義在圖的節點上的函數或向量 [10]。我們可以將圖上每個節點的特徵視為圖訊號 [10, 12]。</p>
+                        <p>類比傳統訊號處理的傅立葉變換，圖信號處理的核心概念是「圖傅立葉變換」（Graph Fourier Transform） [1, 10, 13]。在傳統傅立葉變換中，我們將訊號分解成不同頻率的正弦和餘弦波的組合；而在圖傅立葉變換中，我們將圖上的訊號分解到「圖拉普拉斯矩陣」（Graph Laplacian Matrix）的「特徵向量」（Eigenvectors）組成的基上 [4, 9, 10, 13]。</p>
+                        <p>圖拉普拉斯矩陣 L 是圖譜理論（Spectral Graph Theory）中的核心概念 [4, 9]。它的定義是 度矩陣 D 減去 鄰接矩陣 A (L = D - A) [9]。拉普拉斯矩陣可以視為一種「差分運算子」（Difference Operator） [14]。當將圖訊號（定義在節點上的特徵向量 X）與拉普拉斯矩陣相乘時，其效果類似於計算一個節點的特徵值與其鄰居節點特徵值的差異總和 [10, 14]。這個差異平方的總和（即 X<sup>T</sup> * L * X）可以衡量圖上訊號的「平滑度」（Smoothness） [10, 15]。如果訊號在相鄰節點之間差異很大，平滑度低，這個值就大；如果差異很小，訊號平滑，這個值就小 [10, 15]。拉普拉斯矩陣的特徵值（Eigenvalues）與特徵向量（Eigenvectors）揭示了圖的結構特性 [9, 13]。最小的特徵值是 0，其對應的特徵向量與圖的連通分量數量有關：如果有 K 個特徵值為 0，則表示圖有 K 個連通分量 [9]。更重要的是，拉普拉斯矩陣的特徵向量可以作為圖上的「頻率」基底，類似於傅立葉變換中的正弦/餘弦波 [13]. 對圖訊號做圖傅立葉變換，就是將訊號投影到這些特徵向量上，得到其在頻域的表示 [11, 13].</p>
+                        <p>有了圖傅立葉變換，就可以定義圖上的「卷積」（Graph Convolution） [1, 13]。傳統圖像卷積是透過一個卷積核（Filter）在圖像的局部區域（鄰居像素）上進行運算 [2, 16]。圖上的卷積可以類比為對圖中一個節點及其鄰居節點的資訊進行運算聚合 [2, 12]。根據卷積定理，在時域或空間域的卷積等價於在頻域的乘法 [11, 13]。因此，在譜域GCN中，圖上的卷積被定義為：將圖訊號透過圖傅立葉變換轉換到頻域，與一個定義在頻域的「濾波器」（Filter）相乘，然後再透過逆圖傅立葉變換轉換回節點域 [11-13]。這個濾波器就是要學習的參數 [12, 17]。</p>
+                        <p>原始的譜域GCN需要對圖拉普拉斯矩陣進行特徵值分解，這項計算的複雜度非常高，對於大型圖來說是主要的計算瓶頸，因此這種直接的方式很少被使用 [4, 17]。為了解決這個問題，後續的研究提出了優化方法 [4, 17]。其中一個重要的改進是使用切比雪夫多項式（Chebyshev Polynomials）來逼近頻域的濾波器 [4, 17]。這種方法避免了完整的特徵值分解，降低了計算複雜度 [17]。進一步簡化，只考慮切比雪夫多項式的一階近似，就得到了著名的 Graph Convolutional Network (GCN) 模型 [17, 18]。這使得卷積操作可以直接在節點域進行，不需要頻域轉換 [18]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-arrows-alt-h icon-large"></i>
+                    <h2 class="bento-title-large">空間域GNN與訊息傳遞框架 <span class="text-lg font-normal text-slate-500">Spatial GNNs & Message Passing</span></h2>
+                    <div class="bento-text">
+                        <p>除了譜域方法，另一類主流的GNN模型是「空間域GNN」（Spatial-based GNN） [1, 12]. 這類方法直接在圖的節點及其鄰居上定義卷積操作，類似於傳統卷積直接作用於圖像像素及其鄰域 [12]. 空間域方法通常更容易理解和實現，且對於大型圖具有更好的擴展性，因為它們的操作是局部的 [12].</p>
+                        <p>目前，許多空間域GNN模型都可以統一到一個通用的框架下，稱為「訊息傳遞神經網路」（Message Passing Neural Network, MPNN） [4, 7, 18, 19]。MPNN 的核心思想是透過重複的「訊息傳遞」（Message Passing）和「節點更新」（Node Update）步驟來學習節點的表示 [7, 19]. 在每一次傳遞步驟中：</p>
+                        <ol class="list-decimal">
+                            <li><strong>訊息函數 (Message Function):</strong> 每個節點（例如節點 i）從其鄰居節點（例如節點 j）接收訊息 [7, 19]. 這個訊息通常是基於鄰居節點的特徵以及連接它們的邊的特徵（如果有的話），透過一個可學習的函數（例如神經網路）轉換得來 [7, 19].</li>
+                            <li><strong>聚合函數 (Aggregation Function):</strong> 節點 i 聚合所有來自其鄰居節點 j 的訊息 [7, 19]. 常用的聚合操作包括求和（Sum）、求平均（Average）、最大值（Max）等 [19].</li>
+                            <li><strong>更新函數 (Update Function):</strong> 節點 i 將聚合後的訊息與自身當前輪次的特徵表示結合，透過另一個可學習的函數來更新自己的特徵表示 [7, 19].</li>
+                        </ol>
+                        <p>這個訊息傳遞和更新的過程會重複執行多個步驟 [7]. 隨著步驟數的增加，每個節點的特徵表示能夠整合來自其多跳（multi-hop）鄰居的資訊，擴展其感受野（Receptive Field） [7]. MPNN框架的提出為設計新的空間域GNN模型提供了統一的視角，許多現有的空間域模型都可以視為 MPNN 的特例 [7]. 在化學分子預測等領域，MPNN因其能夠有效捕捉分子結構中的原子（節點）和化學鍵（邊）之間的關係而被廣泛應用 [4, 18]. 目前主流的圖深度學習函式庫，例如 PyTorch Geometric (PyG)，也常常以 MPNN 作為其基礎框架來實現各種GNN層 [4, 19].</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-cogs icon-large"></i>
+                    <h2 class="bento-title-large">GNN中的其他重要技術 <span class="text-lg font-normal text-slate-500">Other Key Techniques in GNNs</span></h2>
+                    <div class="bento-text">
+                        <p>除了核心的卷積/訊息傳遞層，GNN還結合了許多其他深度學習中的常用技術：</p>
+                        <ul class="bento-list">
+                            <li><strong>池化（Pooling）:</strong> 類似於圖像CNN中的池化操作，圖上的池化旨在對節點資訊進行下採樣（Downsampling），減少圖的規模，同時保留關鍵資訊，以便學習更高層次的圖表示 [2, 11, 19, 20]. 池化操作可以改變圖的結構，減少節點數量 [19]. 常見的圖池化方法包括 Min Pooling、Max Pooling、Sum Pooling [2, 19]. 也有更複雜的方法，如 Top-k Pooling，它根據節點的特徵計算一個分數（權重或機率），然後選擇得分最高的 K 個節點及其相關邊，作為下一層的輸入 [19]. 這相當於一個可學習的門控（Gating）機制來篩選節點和圖結構 [19].</li>
+                            <li><strong>注意力機制（Attention Mechanism）:</strong> 受Transformer等模型的啟發，注意力機制也被引入GNNs，產生了圖注意力網路（Graph Attention Network, GAT） [2, 11, 20, 21]. 在GAT中，注意力機制允許節點在聚合鄰居資訊時，為不同的鄰居分配不同的權重，而不是簡單地取平均 [2, 21]. 這種機制可以讓模型學習到哪些鄰居節點更重要，哪些關係更關鍵 [2, 21]. 這種加權聚合的方式相較於簡單平均具有潛在優勢 [2]. 計算注意力權重通常是透過一個可學習的兼容性函數（Compatibility Function）來衡量節點對與其鄰居之間的關係強度 [21].</li>
+                            <li><strong>編碼器-解碼器（Encoder-Decoder）模型:</strong> GNN也可以用在編碼器-解碼器框架中，例如圖自編碼器（Graph Autoencoder） [2, 11, 20-22]. 編碼器（通常是GCN或其他GNN）將圖結構或節點特徵映射到一個低維的隱藏表示（Latent Representation），而解碼器（可能是GCN或其他模型）則試圖利用這個隱藏表示重建原始圖結構（如鄰接矩陣）或節點特徵 [22]. 學習到的隱藏表示可以用於下游任務，如節點嵌入（Node Embedding）或邊預測（Edge Prediction） [22].</li>
+                            <li><strong>生成模型（Generating Network）:</strong> 也有研究將生成對抗網路（GANs）等生成模型框架應用於圖上，例如用於生成新的分子結構 [2, 11, 20, 22]. 這種模型可以學習到圖資料的分佈特性，並生成符合該分佈的新圖 [22].</li>
+                            <li><strong>時空網路（Spatial-Temporal Network）:</strong> 對於那些既有圖結構又有時間序列特性的資料（例如交通網絡、感測器網路），可以利用時空圖神經網路（Graph Spatial-Temporal Network）來處理 [2, 11, 20, 22]. 這類模型通常會結合圖卷積來捕捉空間上的相互依賴關係，並結合RNN、LSTM、ConvLSTM或其他序列模型來捕捉時間上的動態變化 [22, 23]. 例如，在交通流量預測中，可以使用GNN處理不同路段（節點）之間的空間關聯，並使用RNN處理每個路段在時間上的車速變化 [22]. 其中提到的 Diffusion Convolutional Recurrent Neural Network (DCRNN) 就引入了擴散卷積（Diffusion Convolution）的概念，模擬交通流量在路網中的擴散過程，並結合RNN進行時間序列預測 [22, 23].</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-tasks icon-large"></i>
+                    <h2 class="bento-title-large">GNN的任務類型與應用範例 <span class="text-lg font-normal text-slate-500">GNN Tasks & Applications</span></h2>
+                    <div class="bento-text">
+                        <p>GNN可以應用於多種圖相關的機器學習任務，根據預測對象不同，主要可分為幾類 [1, 11]:</p>
+                        <ul class="bento-list">
+                            <li><strong>節點層級任務 (Node-level Tasks):</strong> 預測圖中每個節點的屬性或類別 [1, 11]. 例如，在社交網絡中預測用戶的興趣類別，或在論文引用網絡中預測論文的主題 [11]. 這可以分為節點分類（Node Classification）或節點回歸（Node Regression） [11].</li>
+                            <li><strong>邊層級任務 (Edge-level Tasks):</strong> 預測圖中邊的屬性或是否存在邊 [1, 11]. 例如，在社交網絡中預測兩個人之間是否會建立聯繫（邊預測），或在推薦系統中預測用戶對某個商品的評分 [11].</li>
+                            <li><strong>圖層級任務 (Graph-level Tasks):</strong> 預測整個圖的屬性或對圖進行分類 [1, 11]. 例如，判斷一個分子是否具有某種藥物活性（圖分類），或預測一個程序的安全性（圖分類） [11].</li>
+                        </ul>
+                        <p>一些具體的應用範例包括：</p>
+                        <ul class="bento-list">
+                            <li><strong>程式碼相似度比對:</strong> 將程式碼表示為抽象語法樹（Abstract Syntax Tree）或控制流圖（Control Flow Graph）等圖結構 [1, 4, 24]. 利用GNN對這些圖進行嵌入（Embedding），得到一個低維度的圖向量表示 [24]. 然後計算兩個程式碼圖向量之間的相似度，即可判斷它們是否執行類似的功能 [24]. 這是一個圖相似性問題 [24].</li>
+                            <li><strong>推薦系統:</strong> 將用戶和商品（或項目）表示為圖的節點 [1, 4, 24, 25]. 如果用戶對商品進行過互動（如購買、評分），則在用戶節點和商品節點之間建立一條邊，邊的權重可以是評分值 [24, 25]. 這種結構可以是二部圖（Bipartite Graph）或包含用戶、商品、評分等多種類型節點和邊的複雜圖 [25]. 利用GNN可以捕捉用戶之間的相似性（共享的商品）和商品之間的相似性（被類似的用戶喜愛），並結合已有的評分資訊（邊特徵）來預測用戶對未互動商品的潛在興趣 [25]. 阿里巴巴在推薦系統中已經部署了基於GNN的分散式系統 [4, 24]. 這也與矩陣補全（Matrix Completion）問題相關，GNN可以利用圖結構資訊來更精準地填補評分矩陣中的缺失值 [24, 25]. 傳統推薦系統方法包括協同過濾（Collaborative Filtering）和內容過濾（Content Filtering），GNN可以結合這些方法的思想並利用圖結構的優勢 [25].</li>
+                            <li><strong>其他應用:</strong> 如前所述，GNNs也在社交網絡分析（發現社群、分析關係）、交通流量預測、生物網絡分析（藥物發現、蛋白質結構預測）、知識圖譜推理（補全知識庫中的缺失邊）等方面展現出巨大潛力 [1, 2, 4-6, 22, 26, 27].</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-infinity icon-large"></i>
+                     <h2 class="bento-title-large">更通用的框架與未來展望 <span class="text-lg font-normal text-slate-500">General Frameworks & Future Outlook</span></h2>
+                     <div class="bento-text">
+                        <p>為了提供一個更統一的視角來理解和設計GNN模型，有研究提出了更通用的圖神經網路框架 [4, 26]. 例如 Graph Networks 框架 [26]. 這個框架認為 GNN 的運作可以被分解為三個層級的更新：邊更新、節點更新和全局狀態更新 [26]. 邊更新利用相鄰節點和邊自身的特徵 [26]. 節點更新利用節點自身、其相鄰邊和相鄰節點的特徵 [26]. 全局狀態更新則利用所有邊、所有節點以及圖的全局特徵 [26]. 這個框架涵蓋了許多現有的GNN模型，包括 Message Passing Network，並提供了一個更抽象的視角來理解資訊在圖中的流動和轉換 [26]. 它也與關係歸納偏置（Relational Inductive Bias）的概念相關，強調GNNs能夠捕捉資料中潛在的關係結構，這是其區別於傳統全連接或卷積網路的重要特性 [23, 26].</p>
+                        <p>目前，GNN領域仍在快速發展，研究人員在探索新的模型架構、提升計算效率、處理大規模圖、應用於更複雜的任務等方面不斷努力 [15, 27, 28]. 同時，也有研究人員在開發易於使用的GNN函式庫，降低入門門檻 [1, 15]. 雖然有些進階概念涉及較多數學理論（如圖譜理論），但從新手入門的角度，掌握圖的基本表示、GNN處理非歐幾里德資料的核心思想、訊息傳遞的基本框架以及幾種典型的模型和應用，已經是很好的開始 [1, 6, 12, 19, 28]. 希望這些整理的關鍵重點能幫助大家更好地理解GNNs的世界。</p>
+                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.1 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1;
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

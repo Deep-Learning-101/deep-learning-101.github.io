@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>科技大擂台語音閱讀理解競賽心得 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem; 
+            line-height: 2.8rem; 
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem; /* Slightly larger for H3 */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem; /* More space above H3 */
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; 
+            color: #333333; 
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem; 
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ol {
+            list-style-position: outside; /* Align numbers outside */
+            padding-left: 1.5rem; /* Indent list items */
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        .bento-text ol li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+
+        .icon-large {
+            font-size: 2.5rem; 
+            margin-bottom: 1rem;
+            color: #0071e3; 
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; 
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem; 
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem; 
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem; 
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=S19yP1LMrhQ" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2019/05/17, Ryan Chao, The Hackathon/Formosa Grand Challenge Between Us</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                黑客松與福爾摩沙大挑戰經驗談
+                 <a href="https://www.youtube.com/watch?v=S19yP1LMrhQ" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                The Hackathon/Formosa Grand Challenge Between Us
+            </p>
+            <p class="text-slate-500 mt-1">2019/05/17 Ryan Chao</p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3 motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-trophy icon-large"></i>
+                    <h2 class="bento-title-large">科技大擂台語音閱讀理解競賽心得分享：重點匯整與新手入門觀點 <span class="text-lg font-normal text-slate-500">Formosa Grand Challenge Speech Comprehension: Review, Key Points & Beginner's Guide</span></h2>
+                    <div class="bento-text">
+                        <p>好的，針對您先前的要求，很抱歉我前一次未能以未渲染的 Markdown 源碼格式呈現。這次我將嘗試依據您的指示，從博士生及研究人員的角度，並適度加入新手應注意的關鍵重點，匯整來源資料中的重要內容，並以原始 Markdown 格式顯示。</p>
+                        <p>本分享主要圍繞著一個團隊參與科技部「科技大擂台」語音閱讀理解競賽的經驗 [1, 2]。這項競賽的核心挑戰在於處理<strong>語音形式</strong>的文章、問題及選項，並找出正確答案，結合了語音辨識 (ASR) 與閱讀理解 (MRC) 技術 [1, 2]。對新手來說，這點非常重要：實際問題往往需要多種 AI 技術的整合，而非單一模型的應用。</p>
+
+                        <h3 class="bento-subtitle">語音辨識 (ASR) 部分 <span class="text-sm font-normal text-slate-500">Automatic Speech Recognition (ASR)</span></h3>
+                        <p>團隊在 ASR 部分的核心工具是 <strong>Kaldi</strong> [1, 2]。Kaldi 是一個開源的 ASR 工具包，其基礎架構大量依賴<strong>有限狀態轉換器 (Finite State Transducer, FST)</strong> [1, 3]。新手理解 FST 的關鍵在於，它可以被視為一種強大的狀態機，用於將一個序列轉換為另一個序列，例如聲音訊號轉換為文字 [3]。在 Kaldi 中，不同的語言學知識（如語言模型 G、詞彙模型 L、聲學模型 H, C, T）都被表示為 FST，再透過 Composition (組合) 操作融合成一個大型的解碼圖 (graph)，用於尋找與輸入音訊最匹配的文字序列 [1, 3-5]。</p>
+                        <p>聲學模型的訓練是 ASR 的核心之一，傳統方法使用 <strong>隱藏式馬可夫模型 (HMM)</strong> 來建模音素 (phone) 的時間序列特性，通常一個音素會拆分成三個狀態 (start, middle, end)，形成 Left-to-Right 的結構 [6]。而聲音特徵的建模則常用 <strong>高斯混合模型 (GMM)</strong> [7, 8]。EM (Expectation-Maximization) 演算法在這裡扮演了關鍵角色 [7, 8]。EM 是一種疊代演算法，用於估計含有<strong>隱藏變數</strong>的模型參數，就像估計混合了來自 A、B 兩枚硬幣的正面機率一樣，即使不知道每次投擲來自哪一枚硬幣 [8-10]。對於 GMM 而言，EM 演算法通過 E-step (估計每個資料點屬於哪個高斯分量的機率) 和 M-step (更新高斯分量的參數如均值、協方差、權重) 來估計模型參數 [7, 11, 12]。EM 演算法保證每次疊代都會增加對數概似函數 (log-likelihood)，最終收斂 [12, 13]。對於新手而言，理解 EM 處理的是「資料來源不明」或「含有潛在結構」的參數估計問題是個好的起點。</p>
+                        <p>在特徵提取方面，從原始音訊訊號中提取出對語音辨識有用的資訊至關重要 [6, 14]。常用的方法是計算 <strong>梅爾頻率倒譜係數 (MFCC)</strong> [14, 15]。這涉及幾個步驟：對音訊進行短時傅立葉轉換 (STFT) 得到頻譜；在梅爾尺度上進行濾波（模仿人類聽覺對低頻更敏感的特性）；取對數後進行離散餘弦轉換 (DC，類似第二次 FFT) 得到倒譜；最後取低頻部分的係數 [14, 15]。這些基本 MFCC (通常13維) 會再加入一階和二階差分 (Delta 和 Delta-Delta)，總共形成 39 維的特徵向量 [15]。這些特徵被用來訓練聲學模型，用於將聲學特徵映射到音素狀態 [16]。</p>
+                        <p>值得注意的是，早期的 Kaldi 主要基於 HMM-GMM 結合 FST 的統計方法 [5]。較新的版本已開始融入 <strong>深度學習 (Deep Learning, DL)</strong> 技術，例如用神經網路取代 GMM 作為聲學模型的狀態發射機率模型 [5]。然而，Kaldi 的訓練風格仍偏向 Step-by-Step 和 Iteration，而非完全的 End-to-End [5, 8]。這反映了 AI 領域中，傳統方法與 DL 技術的結合是一個重要的研究方向 [17-19]。</p>
+
+                        <h3 class="bento-subtitle">音訊斷點偵測 <span class="text-sm font-normal text-slate-500">Audio Tokenization</span></h3>
+                        <p>由於競賽提供的選項是連在一起的音訊，需要將其切分成單獨的選項音訊檔案 [7, 20]。團隊為此開發了一種斷音方法 [7, 20]。最初嘗試基於音訊波形局部極值 (波谷) 的<strong>規則方法</strong> [7, 20]。然而，隨著競賽音訊加入大量雜訊，波形變得不規則，規則方法失效 [3, 20, 21]。為了解決雜訊問題，團隊轉向結合<strong>分類器和密度估計</strong> [7, 20]。利用前期較乾淨的資料，訓練一個分類器來判斷找到的可能斷點屬於哪個選項，同時計算該點作為斷點的可靠性（密度）[7, 20]。只保留可靠性高的點作為最終斷點 [7, 20]。這個過程雖然是經驗性的，但說明了在真實場景中，資料品質變化需要更魯棒 (robust) 的處理策略，有時甚至需要結合統計模型或機器學習方法來增強基於規則的方法 [20, 21]。</p>
+
+                        <h3 class="bento-subtitle">閱讀理解 (MRC) 部分 <span class="text-sm font-normal text-slate-500">Machine Reading Comprehension (MRC)</span></h3>
+                        <p>在 ASR 輸出文字後，下一步是從選項中找出正確答案 [1, 22]。競賽題目是選擇題，答案包含在選項中，這與 SQuAD 1.0 等需要從文章中擷取答案區間的資料集不同 [7, 23]。團隊在當時的 MRC 方法相對基礎，主要利用 <strong>TF-IDF</strong> 權重來衡量詞語的重要性 [1, 22, 24]。TF-IDF 是一種常見的文字特徵表示方法，衡量詞語在單一文件中的重要性以及在整個語料庫中的稀有度 [1, 24]。</p>
+                        <p>基本策略包括：檢查選項中的詞彙是否出現在文章中 [22]；利用 TF-IDF 權重和詞彙在文章中的<strong>位置</strong>與問題或選項的相關性來計分 [1, 22, 24]。分數最高的選項被選為答案 [24]。為了處理詞彙不在關鍵位置附近的情況，團隊使用了類似 Language Model 中的 <strong>Smoothing</strong> 技巧，給予關鍵詞周圍的詞彙一定的權重 [24]。除了文字 (Characters) 層級的匹配，團隊也嘗試了音素 (Phones) 層級的匹配，因為 ASR 的錯誤可能導致錯字，而音素層級的差異可能較小 [24]。最終結合這兩層級的分數來選擇答案 [24]。</p>
+                        <p>然而，這種基於詞彙匹配和位置的方法有其局限性 [18, 22]。對於涉及<strong>否定</strong> (如「下列何者無關」) 或需要<strong>推理</strong>的題目，僅靠詞彙匹配很難處理 [18, 22]。這類問題可能需要更複雜的規則判斷或結合外部知識 [18, 22]。學術界目前前沿研究方向之一，正是嘗試將傳統的符號處理和知識推理方法與神經網路結合，以處理這類需要更高層次理解和推理的問題 [17-19]。這對新手研究人員來說，是個值得關注的跨領域方向。</p>
+
+                        <h3 class="bento-subtitle">挑戰與限制 <span class="text-sm font-normal text-slate-500">Challenges and Limitations</span></h3>
+                        <p>整個競賽過程中最大的挑戰之一是<strong>語料資料</strong>的問題 [22, 23, 25, 26]。特別是<strong>中文語音和文本資料</strong>的缺乏 [22, 23, 26]。大規模、高質量的有標籤中文語料庫非常稀缺 [22, 23, 26]。競賽中語音資料的<strong>領域適應性 (Domain Adaptation)</strong> 是一個顯著挑戰，訓練資料與測試資料來源差異大（如新聞 vs. 文學作品）導致 ASR 準確度大幅下降 [2, 3, 17]。後期的音訊還加入了難以處理的<strong>背景雜訊</strong>，進一步降低了辨識準確率 [3, 17, 21]。</p>
+                        <p>此外，雖然深度學習在許多領域取得了巨大成功，但分享者也指出 <strong>Deep Learning 並非萬能</strong>，特別是在<strong>資料量不足</strong>時面臨挑戰 [17, 27]。這時可能需要額外的技術，例如資料增強 (Data Augmentation) 或生成模型來擴充資料 [17, 27]。選擇合適的方法（傳統或 DL 或結合）應權衡資料量、問題類型和計算資源 [17, 23, 24, 27]。例如，像 BERT 這樣的 DL 模型在 MRC 上的表現可能優於傳統 TF-IDF 方法，但需要大量的標籤資料和 GPU 等計算資源，且推理速度可能較慢 [23, 24, 27]。</p>
+                        <p>對新手而言，從這個案例中學習到：在實際應用中，資料的質量和數量、領域變化以及環境雜訊是嚴峻的挑戰；理解傳統方法（如 EM, GMM, FST, TF-IDF, 規則處理）的原理和適用場景仍然重要；深度學習是強大的工具，但需要足夠的資料和計算資源；解決複雜問題可能需要結合不同方法的優勢；中文處理面臨語料不足和斷詞等特有挑戰 [3, 7, 15, 17, 20-23, 25-28]。</p>
+                        <p>總之，這次競賽經驗體現了從學術研究到實際系統建置之間的複雜性與挑戰，需要深入理解各項技術的原理、適用範圍，並具備處理真實世界資料問題的能力。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div, index) => {
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: (index % 3) * 0.1 + 0.1, ease: "easeOut" });
+            }, { amount: 0.1 }); 
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遷移學習與多任務學習 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+        .bento-text ol.list-decimal ul.bento-list { /* Nested ul inside ol */
+            padding-left: 1rem; /* Indent nested ul further */
+            margin-top: 0.5rem;
+        }
+        .bento-text ol.list-decimal ul.bento-list li {
+            font-size: 0.95rem; /* Slightly smaller for nested items if desired */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=1M0fjIsA0vA" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2019/07/19, Mark Chang, Transfer Learnings & Multitask Learning</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                遷移學習與多任務學習
+                 <a href="https://www.youtube.com/watch?v=1M0fjIsA0vA" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Transfer Learning & Multitask Learning
+            </p>
+            <p class="text-slate-500 mt-1">2019/07/19 Mark Chang</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-bullhorn icon-large"></i>
+                    <h2 class="bento-title-large">會議背景與本次分享動機 <span class="text-lg font-normal text-slate-500">Background & Motivation</span></h2>
+                    <div class="bento-text">
+                        <p>本次活動是一個每月一次的技術分享聚會，大家輪流提供主題並交流想法 [1]。我的分享主題是 Multi-task Learning 和 Transfer Learning，這兩種方法都涉及到使用「很多個不一樣的分類的 Task」 [1]。我的分享主要是基於一篇名為 "Model Inductive Bias Learning" 的論文，這篇論文的數學模型可以涵蓋 Multi-task Learning 和 Transfer Learning 這兩種學習範式 [1]。</p>
+                        <p>我之所以想分享這個主題，是因為我認為當前許多深度學習研究存在一個嚴重的問題：大家過度專注於做實驗、追求分數上的提升，但卻往往無法真正解釋模型為什麼會表現更好 [1, 2, 4]。這篇論文提供了一個數學理論框架，可以解釋為什麼使用 Multi-task Learning 或 Transfer Learning 在某些情況下會比單一 Task 學習表現更優越 [1]。這強調了數學解釋的必要性，而非僅僅依賴於實驗結果 [1, 2, 4, 5]。這讓我深感，真正的研究應該是透過理論來解決問題，而不是像「抽樂透」一樣隨機嘗試各種設定 [4]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-calculator icon-large"></i>
+                    <h2 class="bento-title-large">單一 Task Learning 的數學模型基礎 <span class="text-lg font-normal text-slate-500">Single Task Learning: Mathematical Foundations</span></h2>
+                    <div class="bento-text">
+                        <p>在深入探討 Multi-task Learning 和 Transfer Learning 之前，我們需要先回顧單一 Task Learning 的基本設定，因為後兩者可以被視為單一 Task Learning 的延伸或特例 [6, 7]。</p>
+                        <ol class="list-decimal">
+                            <li><strong>Data (資料):</strong>
+                                <ul class="bento-list">
+                                    <li>一般我們將資料定義為來自某個機率分佈 P 的有限訓練樣本 (X, Y) [6-8]。</li>
+                                    <li>X 是輸入 (Input)，Y 是對應的標籤 (Label) [6, 7]。</li>
+                                    <li>我們擁有的訓練資料是有限的，總共有 M 個樣本 [6-8]。</li>
+                                    <li>機率分佈 P 描述了輸入和標籤之間的機率關係 [6, 8]。我們從 P 中抽樣得到訓練資料 [6, 7]。</li>
+                                    <li>機器學習的目標是利用有限的訓練樣本，訓練出一個模型，使其能夠在整個資料分佈 P 上有好的表現 [6, 7]。這是一個統計抽樣和泛化的問題 [6, 7]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Hypothesis (假設):</strong>
+                                <ul class="bento-list">
+                                    <li>Hypothesis (H) 是我們希望找到的一個函數，它可以根據輸入 X 來預測 Y [6, 7]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Hypothesis Set (假設空間 $\mathcal{H}$):</strong>
+                                <ul class="bento-list">
+                                    <li>Hypothesis Set 是所有可能的 Hypothesis 的集合 [6, 9, 10]。</li>
+                                    <li>例如，對於一個神經網絡，其所有可能的參數組合所對應的函數就構成了 Hypothesis Set [6, 10]。</li>
+                                    <li>這個集合通常是不可數的 (uncountable) [6, 10]。</li>
+                                    <li>我們可以將其想像成一個巨大的空間，其中包含了模型所有可能的形態 [6, 10]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Learning Algorithm (學習演算法):</strong>
+                                <ul class="bento-list">
+                                    <li>學習演算法的作用是從龐大的 Hypothesis Set 中選擇一個 Hypothesis (H) [6, 10]。</li>
+                                    <li>訓練過程本質上就是一個不斷從 Hypothesis Set 中搜尋並挑選出合適參數組合（即 Hypothesis）的過程 [6, 10]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Loss Function (損失函數):</strong>
+                                <ul class="bento-list">
+                                    <li>Loss Function (L) 用來量化模型輸出 (H(X)) 與真實 Label (Y) 之間的差異 [6, 10]。</li>
+                                    <li>在本次討論中，Loss Function 的定義是一個簡單的 0-1 Loss：如果模型輸出與真實標籤一樣則 Loss 為 0，不一樣則為 1 [6, 10]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Empirical Risk (經驗損失):</strong>
+                                <ul class="bento-list">
+                                    <li>Empirical Risk 是模型在所有<strong>有限的訓練樣本</strong>上的 Loss 的平均值 [6, 10-12]。</li>
+                                    <li>它衡量了模型在訓練資料上的表現 [11, 12]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Expected Risk (期望損失):</strong>
+                                <ul class="bento-list">
+                                    <li>Expected Risk 是模型在<strong>整個資料分佈 P</strong> 上的平均 Loss [6, 11, 12]。</li>
+                                    <li>這代表了模型在實際、未見過資料上的表現 [6, 11, 12]。</li>
+                                    <li>Expected Risk 通常無法直接精確計算，在數學理論中常用積分來表示 [6, 12]。</li>
+                                    <li>在實際應用中，我們通常會使用<strong>測試資料 (Testing Data)</strong> 的 Loss 來估計 Expected Risk [6, 12]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Generalization Gap (泛化差距):</strong>
+                                <ul class="bento-list">
+                                    <li>Generalization Gap 是 Empirical Risk 與 Expected Risk 之間的差異 [6, 12, 13]。</li>
+                                    <li>它量化了模型在訓練資料上表現良好，但在未見過資料上表現較差的情況，也就是<strong>過度擬合 (Overfitting)</strong> 的程度 [6, 12, 13]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>泛化誤差公式 (或界限):</strong>
+                                <ul class="bento-list">
+                                    <li>存在一個泛化誤差公式，它給出了 Expected Risk 的一個上界 (非百分百成立，有一定機率) [6, 12, 14]。公式的簡化形式可能接近於：Expected Risk $\le$ Empirical Risk + $\text{sqrt}(\text{C} \cdot \text{log}(|\mathcal{H}|) / \text{M} + \text{log}(1/\delta) / \text{M})$ [6, 12]。</li>
+                                    <li>其中，M 是訓練樣本數量，$|\mathcal{H}|$ 代表 Hypothesis Set 的複雜度 (可以用 VC Dimension 或 Covering Number 等概念衡量)，C 是常數，$\delta$ 是不等式不成立的機率 [6, 12-15]。</li>
+                                    <li>這個公式的物理意義非常重要，它解釋了哪些因素會影響模型的泛化能力 [4, 6, 12]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>公式的物理意義對入門者的啟示:</strong>
+                                <ul class="bento-list">
+                                    <li><strong>M (樣本數量):</strong> 公式中的 M 在分母項，M 越大，$\text{sqrt}(\dots / \text{M})$ 這項就越小，泛化差距隨之減小 [4, 6, 8, 12]。這說明訓練樣本越多，模型越不容易 Overfitting [4, 6, 8]。從實務上看，這是一個非常有力的論點，可以用來<strong>說服老闆增加資料收集</strong>，因為資料量是改善模型泛化能力的最直接因素之一 [4, 6, 8]。</li>
+                                    <li><strong>$|\mathcal{H}|$ 或 VC Dimension (模型複雜度):</strong> 公式中的 $|\mathcal{H}|$ 或其相關的複雜度度量 (如 VC Dimension 或 Capacity) 在分子項的 log 裡面 [4, 6, 13, 15]。Hypothesis Set 越大（模型越複雜），這項值越大，導致泛化差距越大，越容易 Overfitting [4, 6, 8, 13, 14]。這解釋了為什麼在訓練資料量較小時，不應該使用過於龐大或過於複雜（例如非常深的神經網絡）的模型 [6, 14]。<strong>選擇合適的模型複雜度</strong>是避免 Overfitting 的關鍵策略之一 [8]。</li>
+                                    <li><strong>$\delta$ (不滿足不等式的機率):</strong> $\delta$ 越小（我們希望不等式成立的機率越高，即對結果越有信心），$\text{log}(1/\delta)$ 這項就越大，導致泛化差距越大 [6, 14]。這項提醒我們，即使是基於理論的實驗結果，也可能存在偶然性或運氣成分 [6, 14]。理論的證明更為重要，因為它提供了在大多數情況下成立的保證，而不是僅僅依賴於特定資料集的抽樣結果 [6, 14]。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-drafting-compass icon-large"></i>
+                    <h2 class="bento-title-large">Model Inductive Bias Learning 模型 <span class="text-lg font-normal text-slate-500">Model Inductive Bias Learning</span></h2>
+                    <div class="bento-text">
+                        <p>Multi-task Learning 和 Transfer Learning 都可以視為 Model Inductive Bias Learning 框架下的特例 [16-18]。這個模型嘗試類比人類持續學習的能力，希望 AI 也能夠學習新事物，並將舊知識推廣到新問題上 [16]。它考慮的範疇比單一任務更廣泛，模型面對的不是單一一個 P 分佈，而是一個包含所有可能學習問題的「環境」 [16, 17]。</p>
+                        <ol class="list-decimal">
+                            <li><strong>Environment (環境, Q):</strong>
+                                <ul class="bento-list">
+                                    <li>Inductive Bias Learning 模型引入了 Environment (Q) 的概念 [11, 16, 18]。</li>
+                                    <li>Q 不是一個簡單的資料分佈，而是一個<strong>機率分佈的機率分佈 (Distribution over Distributions)</strong> [11, 16, 18, 19]。換句話說，Q 是所有可能的學習問題（Task, 以 P 表示）的機率分佈集合 [11, 16, 18]。</li>
+                                    <li>我們可以從 Environment Q 中抽取一個 Task P，這個 P 就代表一個特定的學習問題（比如手寫數字辨識 P1，貓狗分類 P2 等） [11, 16]。Q 裡面可能包含無限多個這樣的 Task (P) [16]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Hypothesis Space Family (假設空間族, $\mathbb{H}$):</strong>
+                                <ul class="bento-list">
+                                    <li>這個模型也引入了 Hypothesis Space Family ($\mathbb{H}$) 的概念 [13, 16, 17, 20]。</li>
+                                    <li>如果將神經網絡分為前端的 Feature Extractor (F) 和後端的 Classifier (G)，一個 Hypothesis Space (H) 可以由固定的 Feature Extractor 和所有可能的 Classifier 組合而成 [16, 17, 20]。例如，固定 F1 後，搭配所有可能的 G1, G2... 形成 Hypothesis Space H1 [16, 17, 20]。</li>
+                                    <li>Hypothesis Space Family ($\mathbb{H}$) 則是不同 Feature Extractor 所產生的 Hypothesis Space 的集合 [13, 16, 17, 20]。換句話說，$\mathbb{H} = \{H_1, H_2, \dots\}$，其中每個 $H_i$ 對應於一個特定的 Feature Extractor $F_i$ [20]。</li>
+                                    <li>可以將選擇一個好的 Feature Extractor (F) 的過程，類比為從 Hypothesis Space Family ($\mathbb{H}$) 中選擇一個好的 Hypothesis Space (H) [16, 17, 21]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>Inductive Bias Learning 的過程與目標:</strong>
+                                <ul class="bento-list">
+                                    <li>從 Environment Q 中抽取<strong>有限個</strong> Task ($P_1$ 到 $P_n$) 作為訓練 Task [16, 21]。</li>
+                                    <li>每個訓練 Task $P_i$ 又有<strong>有限個</strong>訓練樣本 ($M_i$) [16, 21]。</li>
+                                    <li>Inductive Bias Learning 的核心是從 Hypothesis Space Family ($\mathbb{H}$) 中選擇一個好的 Hypothesis Space (例如，學習或選擇一個好的 Feature Extractor)，使得在這個選定的空間中，後續可以找到好的 Hypothesis 來解決從 Q 中抽取的 Task (包括未見過的新 Task) [16, 19, 21]。</li>
+                                    <li>這個模型的訓練誤差可以定義為在所有訓練 Task 上的 Empirical Risk 的平均值 [16, 19]。</li>
+                                    <li>真實誤差 (Expected Risk) 則是在整個 Environment Q 上的期望表現 [16, 19]。目標是學習到的模型能夠有效地推廣到 Q 中的<strong>新 Task 和新資料</strong> [16, 19]。</li>
+                                    <li>泛化差距衡量了模型從有限的訓練 Task 和資料泛化到整個 Environment Q 的能力 [15, 16, 19]。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-exchange-alt icon-large"></i>
+                    <h2 class="bento-title-large">Transfer Learning (遷移學習) <span class="text-lg font-normal text-slate-500">Transfer Learning</span></h2>
+                    <div class="bento-text">
+                         <p>遷移學習是 Model Inductive Bias Learning 的一個非常常見的應用模式和特例 [17, 18, 22]。</p>
+                         <ol class="list-decimal">
+                            <li><strong>基本概念與流程:</strong>
+                                <ul class="bento-list">
+                                    <li>遷移學習的核心思想是將在一個或多個<strong>來源任務 (Source Task)</strong> 上學習到的知識，應用到一個<strong>目標任務 (Target Task)</strong> 上 [22, 23]。</li>
+                                    <li>通常分為兩個主要階段 [3, 13, 22-24]:
+                                        <ul class="bento-list">
+                                            <li><strong>Pre-train (預訓練):</strong> 在一個大型資料集或與目標任務相關的來源任務上訓練模型的<strong>前端部分 (Feature Extractor)</strong> [3, 22, 23]。例如，在 ImageNet 上訓練一個圖像分類模型的前端部分 [9, 15, 23, 25]。即使來源任務（如 ImageNet 的 1000 類分類）並非我們的最終目標，其大量的資料有助於訓練出一個泛化能力較好的 Feature Extractor [3, 22, 23]。</li>
+                                            <li><strong>Target Task / Fine-tune (微調) 或 Fix Weight (固定權重):</strong> 將預訓練好的 Feature Extractor 用於解決目標任務 [3, 22, 23]。目標任務通常資料量較小 [23]。後端的 Classifier 部分是新的，需要重新訓練 [3, 22, 23]。
+                                                <ul class="bento-list">
+                                                    <li><strong>Fixed Weight:</strong> 固定 Pre-train 好的 Feature Extractor 的權重不變，只訓練後端新的 Classifier [3, 13, 22, 23]。</li>
+                                                    <li><strong>Fine-tune:</strong> 使用 Pre-train 好的權重作為初始化，然後在 Target Task 的資料上微調整個模型（包括 Feature Extractor 的部分權重）[13, 22, 23]。</li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li><strong>與 Inductive Bias Learning 的關聯與泛化能力解釋:</strong>
+                                <ul class="bento-list">
+                                    <li>在 Inductive Bias Learning 框架下，Transfer Learning 可以理解為：先透過在某些 P 分佈（來源 Task）上 Pre-train，從 Hypothesis Space Family ($\mathbb{H}$) 中選定或學習到一個好的 Hypothesis Space (即一個好的 Feature Extractor F) [17, 18, 24]。</li>
+                                    <li>然後，在 Target Task (新的 P 分佈) 上，我們將 Feature Extractor F 固定住（或僅微調少量參數），主要訓練後端的 Classifier G [3, 22, 23]。</li>
+                                    <li>從泛化誤差公式的角度看，固定 Feature Extractor 意味著我們在 Target Task 上選擇的 Hypothesis Space ($H_F$) 相對於整個 Hypothesis Space Family ($\mathbb{H}$) 要小得多 [17, 21, 24-26]。Hypothesis Space 變小，模型的複雜度 (Model Capacity) 降低 [17, 21, 25, 26]。</li>
+                                    <li>根據單一 Task Learning 的泛化誤差公式，模型複雜度越低，達到相同泛化能力所需的訓練樣本 M 就越少 [4, 6, 8, 14, 21, 24, 25]。這解釋了為什麼 Transfer Learning (特別是使用固定權重的方法) 在目標任務資料量較少時依然能表現良好，並且不容易 Overfitting [23, 25]。</li>
+                                    <li>預訓練在大型資料集（如 ImageNet，Task 數量多，n 大）上得到的 Feature Extractor 之所以通用且有效，是因為訓練 Task 的數量夠多 (n 夠大)，有助於學習到能夠泛化到新 Task 的通用特徵表示 [9, 15, 23]。</li>
+                                    <li>但任務之間的相關性也很重要 [9]。如果 Pre-train 的 Task (如中文文字分類) 與 Target Task (如 Pikachu 圖像分類) 分佈差異過大 (Environment Q 極不平均)，即使進行 Transfer Learning，效果也可能很差 [9, 27, 28]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>實際應用案例:</strong>
+                                <ul class="bento-list">
+                                    <li>圖像識別領域非常常見，如使用在 ImageNet 上預訓練的 CNN 模型處理其他圖像分類、目標檢測等任務 [3, 22, 23]。</li>
+                                    <li>自然語言處理領域也是如此，如使用預訓練好的 Word Embedding (例如 Google 提供的) 或大型語言模型 (如 BERT, GPT 等) 的詞向量或中間層表示，來解決下游的 NLP 任務 [3, 22]。</li>
+                                </ul>
+                            </li>
+                         </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-tasks icon-large"></i>
+                    <h2 class="bento-title-large">Multi-task Learning (多任務學習) <span class="text-lg font-normal text-slate-500">Multitask Learning</span></h2>
+                    <div class="bento-text">
+                        <p>多任務學習也被視為 Model Inductive Bias Learning 的一個特例 [17, 18, 22]。</p>
+                        <ol class="list-decimal">
+                            <li><strong>基本概念與流程:</strong>
+                                <ul class="bento-list">
+                                    <li>多任務學習是指同時訓練一個模型來解決多個相關的 Task [11, 22, 23]。</li>
+                                    <li>其常見的實現機制是<strong>共享模型的前端部分 (Feature Extractor)</strong>，而後端則為每個 Task 設置獨立的分類器 (Classifier) [11, 22, 23, 25]。所有的 Task 都共用同一個 Feature Extractor [22, 25]。</li>
+                                    <li>例如，手寫數字分類 (0-9) 可以看作一個多任務學習的特例：前端共享一個 Feature Extractor，後端接 10 個分類器，每個分類器判斷輸入是否為對應的數字 [21, 22]。多類別分類 (Multiclassing) 其實也是一種 Multi-task Learning 的特例 [22]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>與 Inductive Bias Learning 的關聯與泛化能力解釋:</strong>
+                                <ul class="bento-list">
+                                    <li>在 Inductive Bias Learning 框架下，Multi-task Learning 可以看作是同時處理從 Environment Q 中抽取的<strong>N 個已知 Task ($P_1$ 到 $P_N$)</strong>，並共用一個 Hypothesis Space (對應於一個共享的 Feature Extractor F) [17, 18, 25]。我們目標是在這個共享的 Hypothesis Space 中，為每個 Task 找到最好的 Hypothesis (訓練出各 Task 的 Classifier) [25]。</li>
+                                    <li>多任務學習的泛化能力分析會考慮到 Task 的數量 (n) 和每個 Task 的樣本數量 (m) [17, 29]。</li>
+                                    <li>理論分析表明，在某些情況下，<strong>增加 Task 的數量 (n) 可以幫助減少每個 Task 所需的資料數量 (m)</strong> [11, 23, 29]。這是因為不同 Task 之間可以通過共享 Feature Extractor 來相互學習、傳遞知識，從而提高學習效率和泛化能力 [11, 23, 29]。</li>
+                                    <li>然而，這種益處並非絕對 [17, 29]。泛化能力的提升程度取決於多個因素，包括 Task 之間的相關性以及模型複雜度隨 Task 數量增加的比例 [17, 29]。如果增加 Task 數量導致模型複雜度以一個較大的比例增加，那麼可能對減少每個 Task 所需的資料量幫助不大，甚至沒有幫助 [17, 29]。</li>
+                                </ul>
+                            </li>
+                            <li><strong>實際應用案例:</strong>
+                                <ul class="bento-list">
+                                    <li>生物學領域：將預測不同藥物抗藥性視為不同 Task，利用多任務學習來利用不同種類的資料，提高模型準確度 [9, 27]。</li>
+                                    <li>語音辨識：在訓練特定語句辨識模型時，加入其他無關的音素資料一起訓練，可以提升效果，這印證了 Task 數量增加有助於泛化 [9, 27]。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                     <i class="fas fa-balance-scale icon-large"></i>
+                    <h2 class="bento-title-large">理論研究在機器學習中的重要性 <span class="text-lg font-normal text-slate-500">Importance of Theoretical Research in ML</span></h2>
+                    <div class="bento-text">
+                        <p>從這次分享的內容可以看出，理解模型背後的數學理論，特別是像 Model Inductive Bias Learning 這樣的泛化誤差分析，對於實際的深度學習研究和應用具有非常重要的意義 [1, 2]。</p>
+                        <ol class="list-decimal">
+                            <li><strong>提供解釋與證明:</strong> 理論研究可以為模型行為和泛化能力提供解釋和嚴謹的數學證明 [1, 2, 4, 6, 14]。這幫助我們理解為什麼某些方法有效，以及它們在哪種條件下有效 [2]。例如，泛化誤差公式解釋了資料量、模型複雜度和泛化能力的定量關係 [4, 6, 8, 14]。</li>
+                            <li><strong>指導模型設計與改進:</strong> 數學理論可以為模型設計和改進提供明確的指導方向，而不是僅僅依賴於實驗試誤 [1, 2, 4, 5]。有了理論依據，我們可以更合理地決定是否需要更多資料、選擇什麼樣的模型結構（複雜度）以及如何設計更有效的學習框架（如是否使用 Multi-task 或 Transfer Learning） [2, 4]。這有助於將機器學習研究從「抽樂透」式的實驗轉變為更具系統性和科學性的探索 [4, 5]。</li>
+                            <li><strong>預測模型行為:</strong> 理論可以幫助我們預測模型在不同情況下的表現 [4, 6, 14]。例如，當遇到資料量很小的問題時，理論告訴我們使用過於複雜的模型可能會導致嚴重的 Overfitting [6, 14]。</li>
+                            <li><strong>超越經驗法則:</strong> 雖然許多經驗法則在實務中有效，但理論提供了更深層次的原因 [2, 4]。例如，Transfer Learning 中固定 Feature Extractor 的做法，理論上可以解釋為限制 Hypothesis Space，降低模型複雜度，從而減少對目標任務資料量的需求 [17, 21, 23-26]。</li>
+                        </ol>
+                        <p>歷史上也多次顯示了理論與實驗結合的重要性 [5, 30]。早期神經網絡的興起與低谷，以及與統計學習理論和 SVM 的競爭，都說明了僅有實驗或僅有理論的局限性 [5, 30, 31]。雖然近年來 GPU 發展導致實驗性研究佔主導地位 [9, 30, 32]，但已經出現了回歸理論研究的趨勢 [5, 9, 30, 32]。面對當前複雜的深度學習模型，VC Dimension 等早期理論可能不再完全適用，需要 PAC-Bayes、Information Theory 等新的理論框架來解釋和指導模型設計 [9, 13, 30, 32, 33]。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-flag-checkered icon-large"></i>
+                    <h2 class="bento-title-large">結論 <span class="text-lg font-normal text-slate-500">Conclusion</span></h2>
+                    <div class="bento-text">
+                        <p>總結來說，Multi-task Learning 和 Transfer Learning 這兩種強大的深度學習技術，都可以透過 Model Inductive Bias Learning 這個數學框架來理解其泛化能力的來源 [1, 17, 18]。泛化誤差公式，無論是在單一任務還是更廣泛的框架下，都清晰地揭示了資料數量、模型複雜度以及 Task 數量等關鍵因素如何影響模型的表現 [4, 6, 8, 14, 17, 29]。對於剛入門的研究者來說，理解這些理論基礎，可以幫助我們更有方向地進行實驗設計和模型選擇，而不會僅僅停留在調整超參數和嘗試不同架構的層面 [1, 2, 4]。</p>
+                        <p>本次分享希望能拋磚引玉，鼓勵大家在實踐的同時，也能多關注機器學習背後的數學理論研究。這將有助於我們不僅知道「怎麼做」，更能理解「為什麼這樣做」，從而推動領域的進步 [1, 2, 4, 5]。雖然本次分享涉及的理論較深，但透過林軒田老師的課程等資源打好基礎，相信大家都能逐步深入，體會理論的魅力 [1, 6, 7, 27, 34]。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>權重中的資訊量與泛化理論 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+        .bento-text ol.list-decimal ul.bento-list { /* Nested ul inside ol */
+            padding-left: 1rem; /* Indent nested ul further */
+            margin-top: 0.5rem;
+        }
+        .bento-text ol.list-decimal ul.bento-list li {
+            font-size: 0.95rem; /* Slightly smaller for nested items if desired */
+        }
+
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=PCC0ffWYyng" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2020/06/19, Mark Chang, information in the weights</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                權重中的資訊量
+                 <a href="https://www.youtube.com/watch?v=PCC0ffWYyng" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Information in the Weights & Generalization Theory
+            </p>
+            <p class="text-slate-500 mt-1">2020/06/19 Mark Chang</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-landmark icon-large"></i>
+                    <h2 class="bento-title-large">傳統機器學習的泛化理論：VC 維度及其局限性 <span class="text-lg font-normal text-slate-500">Traditional Generalization: VC Dimension & Its Limitations</span></h2>
+                    <div class="bento-text">
+                        <p>在傳統機器學習中，我們常用 VC (Vapnik-Chervonenkis) 維度理論來分析模型的泛化能力。VC 維度是衡量模型複雜度的一個指標。傳統 VC 維度理論認為，模型的參數越多，VC 維度就越高，模型就越複雜。當模型過於複雜（VC 維度太高）且訓練資料數量不足時，模型就容易過度記憶訓練資料中的雜訊或特有細節，而非學到資料的普遍規律。這種現象就是我們常說的「過度擬合」(overfitting)。過度擬合的模型在訓練資料上表現很好，但在測試資料上表現會顯著下降。</p>
+                        <p>VC 維度理論提供了一個衡量訓練誤差與測試誤差之間差距的上界（VC bound）。這個上界指出，測試誤差與訓練誤差的差距會隨著 VC 維度的增加而擴大，同時隨著訓練資料數量 (N) 的增加而縮小。這似乎合理地解釋了為什麼我們需要足夠的資料來訓練複雜的模型。從這個理論出發，避免過度擬合的方法就是限制模型的複雜度（降低 VC 維度）或者增加訓練資料量。</p>
+                        <p>然而，當我們將這一套理論應用到深度學習模型時，發現它遇到了嚴重的局限性。深度學習模型通常擁有數量龐大的參數，其 VC 維度往往遠遠超過訓練資料的數量。根據傳統 VC 維度理論的推斷，這應該會導致嚴重的過度擬合，模型應該無法有效泛化。但實際情況是，深度學習模型即使在參數數量遠大於資料數量的情況下，依然能夠表現出良好的泛化能力。</p>
+                        <p>更具體地說，深度學習存在一種「過度參數化」(Over-parametrization) 現象。傳統 VC 理論預測，隨著模型複雜度（VC 維度）的增加，測試誤差會單調上升。但在 Over-parametrization 區域，即參數多到一個極高的程度時，測試誤差反而會開始下降。這與傳統 VC 理論的預測是相互矛盾的。這表明，簡單地用 VC 維度來衡量深度學習模型的複雜度和預測泛化能力是不夠的。</p>
+                        <p>另一個 VC 維度理論的局限在於它是獨立於資料分佈的。VC 維度主要取決於模型的架構和參數數量，與訓練資料的具體內容無關。然而，經驗觀察發現，深度學習模型的泛化能力受訓練資料品質（如雜訊水平、異常值）的影響非常大。例如，同一個模型架構，用乾淨的資料訓練可能會泛化得很好，但用有隨機標籤（雜訊）的資料訓練就會嚴重過度擬合。VC 維度理論無法解釋這種現象，因為它不考慮資料的影響。</p>
+                        <p>因此，我們需要新的數學理論來解釋深度學習的泛化能力，特別是它為何能在 Over-parametrization 區域表現良好，以及資料的特性如何影響泛化。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-search icon-large"></i>
+                    <h2 class="bento-title-large">探索新的泛化視角：PAC-Bayes 理論 <span class="text-lg font-normal text-slate-500">New Perspective: PAC-Bayes Theory</span></h2>
+                    <div class="bento-text">
+                        <p>PAC-Bayes (Probably Approximately Correct-Bayesian) 理論提供了一種新的視角來理解深度學習的泛化問題。與 VC 維度理論不同，PAC-Bayes 理論在考慮泛化上界時，將資料分佈的影響納入其中。PAC-Bayes bound 提供了一個訓練誤差與測試誤差差距的上界，這個上界與訓練資料數量 (N) 以及模型權重分佈在訓練前後的變化有關。</p>
+                        <p>在 PAC-Bayes 框架下，我們不只考慮一個固定的模型，而是考慮模型權重的一個分佈。在訓練之前，我們有一個先驗分佈 (prior, P) 來描述權重的可能性。訓練之後，我們得到一個後驗分佈 (posterior, Q)，這個分佈反映了從訓練資料中學到的資訊對權重分佈的影響。PAC-Bayes bound 表明，訓練誤差和測試誤差之間的差距與先驗分佈 (P) 和後驗分佈 (Q) 之間的差異程度（可以用 KL 散度等資訊理論度量來量化）以及訓練資料的數量 (N) 有關。</p>
+                        <p>具體來說，PAC-Bayes bound 的一個形式可以寫成訓練誤差加上一個與 KL 散度 (D(Q || P)) 和 N 相關的項。這項是訓練誤差和測試誤差之間的差距的衡量。從這個公式可以看出：</p>
+                        <ol class="list-decimal">
+                            <li><strong>資料量 N 的影響：</strong> 訓練資料越多，這個差距項就越小。但與 VC bound 不同的是，PAC-Bayes bound 中的 N 通常不是在對數項的指數位置，這意味著它對 N 的要求不像 VC bound 那麼嚴苛，不需要 N 遠大於模型的複雜度指標（如 VC 維度）。即使資料量不大，如果 KL 散度很小，泛化差距也可以很小。</li>
+                            <li><strong>權重分佈變化的影響 (KL 散度 D(Q || P))：</strong> 先驗分佈 (P) 和訓練後的後驗分佈 (Q) 之間的差異越大（KL 散度越大），訓練誤差與測試誤差的差距就可能越大，越容易過度擬合。反之，如果訓練後權重分佈 (Q) 與訓練前 (P) 沒有太大變化，那麼即使訓練誤差很低，泛化差距也可能很小。</li>
+                        </ol>
+                        <p>這提供了一種新的理解：模型的泛化能力不僅與模型本身的靜態複雜度有關，更與它在訓練過程中「學習」了多少資訊，以及這些資訊是否有效有關。如果模型權重從一個簡單的先驗分佈 (P) 變化到一個非常複雜、與先驗差異很大的後驗分佈 (Q)，這可能意味著模型學到了訓練資料中的過多細節，包括雜訊，從而導致過度擬合。</p>
+                        <p>PAC-Bayes 理論也能解釋一些常用的正則化技術為何有效。例如，Early stopping（早期停止）可以被解釋為在模型權重分佈 (Q) 與先驗 (P) 差異變得太大之前停止訓練，從而限制了模型學到的資訊量，保留了較好的泛化能力。遷移學習 (Transfer learning) 也可以用 PAC-Bayes 來解釋。通過在一個相關任務上預訓練模型，我們得到了一個好的權重初始化（可以看作是一個更接近理想後驗分佈的先驗 P），在新的任務上只需要對權重進行微小的調整（Q 與 P 差異小），就能取得好的效果。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-database icon-large"></i>
+                    <h2 class="bento-title-large">Information in the Weights：量化模型學到的資訊 <span class="text-lg font-normal text-slate-500">Information in Weights: Quantifying Learning</span></h2>
+                    <div class="bento-text">
+                        <p>Information in the Weights（權重中的資訊量）這個概念，正是從資訊理論的角度來量化模型權重在學習過程中從訓練資料中獲取的資訊量。這個概念與 PAC-Bayes 理論中的 KL 散度 D(Q || P) 密切相關，它量化了模型權重從初始分佈 (P) 訓練到最終分佈 (Q) 的變化程度。這種變化代表了權重從資料中學到的資訊。</p>
+                        <p>借用資訊理論的語言，Information in the Weights 可以用權重 (W) 與訓練資料 (Data) 之間的互信息 (Mutual Information, I(W; Data)) 來衡量。互信息量化了知道其中一個變數可以減少另一個變數多少不確定性。在這個語境下，I(W; Data) 表示了解模型權重 (W) 可以減少多少關於訓練資料 (Data) 的不確定性，或者反過來，了解訓練資料可以減少多少關於權重的不確定性。</p>
+                        <p>Information in the Weights 的核心觀點是，深度學習模型是否過度擬合與其權重學習到多少與資料相關的資訊量有關。過度擬合可以被理解為模型權重學習到了訓練資料中無用或嘈雜的資訊（noise 或 outlier），而這些資訊並不反映真實資料分佈的規律。</p>
+                        <p>我們可以想像將訓練資料 (Data) 分為反映真實規律的「有用資訊」(Useful Information) 和不反映真實規律的「無用資訊」(Useless Information)，後者主要來自資料中的雜訊和異常值。模型在訓練過程中，為了最小化訓練誤差，會同時學習到這兩部分資訊。Information in the Weights 量化的是權重從訓練資料中學到的總資訊量。當權重學到的總資訊量過多時，這通常意味著模型不僅學到了有用的普遍規律，也過度記憶了訓練資料中的雜訊或特定細節。</p>
+                        <p>來源資料提到，資料的乾淨程度 (noise level) 直接影響模型學到的 Information in the Weights。資料的 noise level 越高，模型為了擬合這些雜訊，權重就需要進行更大的調整，從訓練資料中學到的 Information in the Weights 就會越多。當權重學到過多的資訊（特別是來自雜訊的無用資訊）時，這些資訊無法泛化到測試資料上，導致模型在未見過的資料上表現不佳，即發生過度擬合。</p>
+                        <p>簡單來說，Information in the Weights 學得越多，模型越容易過度擬合。這是因為學到的資訊越多，模型就越可能捕捉到訓練資料中的特有細節，而這些細節在測試資料中可能並不存在。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-tools icon-large"></i>
+                    <h2 class="bento-title-large">基於 Information in the Weights 的泛化改進策略 <span class="text-lg font-normal text-slate-500">Improving Generalization via Information in Weights</span></h2>
+                    <div class="bento-text">
+                        <p>理解了 Information in the Weights 的概念，我們就可以從這個角度來思考如何改進深度學習模型的泛化能力。核心思想是限制模型權重學習到的總資訊量，特別是那些來自資料雜訊的無用資訊。</p>
+                        <ol class="list-decimal">
+                            <li><strong>提升資料品質：</strong> 這是最根本的方法。如果訓練資料本身就很乾淨，雜訊和異常值很少，那麼模型自然就難以從中學到無用資訊。乾淨的資料意味著 Information in the Weights 中「無用資訊」的部分會比較少。這也解釋了為什麼在實際應用中，花時間清洗和標記資料至關重要。資料的雜訊水平越高，模型學到的 Information in the Weights 就越多，越容易過度擬合。</li>
+                            <li><strong>應用正則化技術：</strong> 許多正則化方法可以被視為限制 Information in the Weights 的手段。
+                                <ul class="bento-list">
+                                    <li><strong>Early stopping：</strong> 早期停止訓練，防止模型在訓練資料上擬合過度，從而避免權重學到過多對訓練資料細節（包括雜訊）的資訊。這可以解釋為在 PAC-Bayes bound 中，限制了 Q 與 P 之間的 KL 散度，進而限制了 Information in the Weights。</li>
+                                    <li><strong>Weight decay (L2 正則化)：</strong> 通過在損失函數中加入權重平方和的懲罰項，鼓勵權重值保持較小。這可以限制權重從資料中學習到的資訊量。Weight decay 可以被看作是在 Information in the Weights 框架下，限制權重分佈從先驗（通常假設接近零）漂移太遠，從而限制學到的資訊總量。</li>
+                                    <li><strong>其他正則化方法：</strong> Dropout 等方法也可以從限制模型學到的資訊量的角度來理解，儘管可能需要更深入的分析。</li>
+                                </ul>
+                            </li>
+                            <li><strong>謹慎使用資料增強 (Data Augmentation)：</strong> 資料增強可以增加訓練資料的多樣性，有助於泛化。然而，如果資料增強引入了不符合真實資料分佈的變異（例如將數字 6 旋轉成類似 9 的樣子），反而會引入新的雜訊，增加模型學到無用資訊的可能性。因此，資料增強應選擇那些能夠模擬真實世界資料變化的方法。</li>
+                            <li><strong>考慮問題本身的複雜度：</strong> 即使資料很乾淨，某些問題本身的複雜度（例如 ImageNet 這種背景複雜的圖像分類）決定了模型需要學到更豐富、更複雜的特徵。這意味著需要學到更多的有用資訊，權重的變化 (Information in the Weights) 相應也會較大。對於這類問題，可能確實需要更多的資料來確保學到的是普遍規律而非特定樣本的細節。</li>
+                        </ol>
+                        <p>總之，Information in the Weights 概念為我們提供了一個從資訊理論角度理解深度學習泛化和過度擬合的新框架。它強調模型學到的資訊量與資料品質之間的密切關係，並指出限制模型學習過多無用資訊是提升泛化能力的關鍵。這與傳統 VC 維度理論側重模型參數數量的視角形成了鮮明對比。對於新手入門者而言，這提醒我們在解決深度學習問題時，除了調整模型架構和超參數外，應更加關注資料本身的特性和訓練過程中權重的學習動態。從「資料優先」的角度出發，處理好資料的雜訊和異常值，並採用適當的正則化方法來控制學到的資訊量，往往能更有效地提升模型的泛化表現。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

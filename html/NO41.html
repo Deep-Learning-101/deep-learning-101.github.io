@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NLP落地與機器閱讀理解 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+        .bento-text ol.list-decimal ul.bento-list { /* Nested ul inside ol */
+            padding-left: 1rem; /* Indent nested ul further */
+            margin-top: 0.5rem;
+        }
+        .bento-text ol.list-decimal ul.bento-list li {
+            font-size: 0.95rem; /* Slightly smaller for nested items if desired */
+        }
+
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=aEntkDT3qdo" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2020/05/29, Ian & Hsiang, NLP Landing & Machine Reading Comprehension</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                自然語言處理落地與機器閱讀理解
+                 <a href="https://www.youtube.com/watch?v=aEntkDT3qdo" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                NLP Landing & Machine Reading Comprehension
+            </p>
+            <p class="text-slate-500 mt-1">2020/05/29 Ian & Hsiang</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-language icon-large"></i>
+                    <h2 class="bento-title-large">自然語言處理 (NLP) 及其應用展示 <span class="text-lg font-normal text-slate-500">NLP & Its Application Showcase</span></h2>
+                    <div class="bento-text">
+                        <p>這次分享會的核心圍繞在自然語言處理技術及其在實際應用中的部署與挑戰 [1]。對於新手來說，理解 NLP 是讓電腦「理解」和「處理」人類語言的技術，是入門的第一步 [2]。演講中展示了團隊開發的多種 NLP 應用，這讓初學者能對這個領域的廣度有一個初步認識 [1, 3]。</p>
+                        <h3 class="bento-subtitle">國網中心 GPU 資源 <span class="text-sm font-normal text-slate-500">NCHC GPU Resources</span></h3>
+                        <p>首先，講者大力推薦申請國網中心 (National Center for High-performance Computing, NCHC) 的 GPU 資源，並稱其「太佛心了」 [1, 4]。這項資源提供了配備 32GB 記憶體的 Tesla V100 GPU 以及將近 360GB 的主機記憶體，對於需要大量運算的研究或專案來說非常充裕 [1, 4-6]。對於想進行深度學習模型訓練的新手而言，取得足夠的計算資源是至關重要的前提，因此了解如何申請這類學術或國家資源是一個實用關鍵點 [4-6]。申請時需要寫一個好的理由，例如用於訓練語音識別模型來追蹤人員位置等 [1, 4-6]。</p>
+                        <h3 class="bento-subtitle">團隊開發的 NLP 應用展示 <span class="text-sm font-normal text-slate-500">Team's NLP Application Showcase</span></h3>
+                        <p>團隊透過一個網頁 demo 平台展示了多種已完成的 NLP 應用 [1, 3]。這個平台（nlp.twm.org:8383，影片中提到，實際可訪問性需驗證）提供了一個直觀的入口，讓新手可以實際操作體驗 NLP 的能力 [1, 7-9]。展示的應用包括：</p>
+                        <ul class="bento-list">
+                            <li><strong>文本分類 (Text Classification):</strong> 判斷一段文字屬於哪個預定義的類別，例如區分商場中的對話是詢問廁所還是商店位置 [1, 3, 6, 10]。這是 NLP 中最基礎也最廣泛的任務之一 [8]。</li>
+                            <li><strong>中文實體識別 (Named Entity Recognition - NER):</strong> 從文本中識別出具有特定意義的命名實體，如人名、地名、組織名等 [1, 6, 8, 10]。這對於資訊抽取和理解文本內容非常重要 [2]。團隊的 demo 是基於 BERT 模型實現的 [1, 8]。</li>
+                            <li><strong>相似度比較 (Similarity Comparison):</strong> 計算兩句話或多個候選句子的相似程度 [1, 6, 8, 10]。這在對話系統或資訊檢索中非常實用 [10]。團隊 demo 開放了單一句子對比功能，也是使用 BERT 模型 [1, 8]。</li>
+                            <li><strong>中文糾錯 (Chinese Spelling Correction):</strong> 針對 ASR (Automatic Speech Recognition，自動語音識別) 轉文字時可能出現的錯誤（如同音異字）進行自動修正 [1, 6, 9, 10]。由於 ASR 轉文字的錯誤率，這個應用在實際場景中非常必要 [6, 9, 10]。</li>
+                        </ul>
+                        <p>演講中提到，這些應用可以串聯起來形成完整的 NLP 流程，例如將會議記錄通過 ASR 轉為文字後，再利用文本分類、NER、MRC 等技術進行處理和問答 [1]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-book-reader icon-large"></i>
+                    <h2 class="bento-title-large">機器閱讀理解 (MRC) 的核心與挑戰 <span class="text-lg font-normal text-slate-500">Machine Reading Comprehension (MRC): Core & Challenges</span></h2>
+                    <div class="bento-text">
+                        <p>機器閱讀理解 (Machine Reading Comprehension, MRC) 是本次分享會的重點之一 [1]。</p>
+                        <h3 class="bento-subtitle">什麼是 MRC? <span class="text-sm font-normal text-slate-500">What is MRC?</span></h3>
+                        <p>MRC 的核心概念是：根據使用者提出的問題，從給定的文章中「抽出」正確的答案 [1, 3, 5, 6, 11]。對於新手來說，一個關鍵重點是，MRC 模型的答案必須<strong>存在於原始文章中</strong>，而且必須是連續的一個文字「span」（區間），不能是文章中斷開的片段拼湊而成 [1, 3, 5, 6, 11]。</p>
+
+                        <h3 class="bento-subtitle">MRC 的應用場景 <span class="text-sm font-normal text-slate-500">MRC Application Scenarios</span></h3>
+                        <p>MRC 的應用場景廣泛，例如將會議記錄轉為文字後進行問答，或從大量文章中快速尋找特定問題的答案，無需手動翻查 [1, 3, 5]。這種自動化的問答方式極大地提高了從文本中獲取資訊的效率 [5]。</p>
+
+                        <h3 class="bento-subtitle">MRC 前處理的挑戰 <span class="text-sm font-normal text-slate-500">Challenges in MRC Preprocessing</span></h3>
+                        <p>在將 MRC 應用於大量文本資料時，會遇到幾個前處理的挑戰 [1, 10]。</p>
+                        <ol class="list-decimal">
+                            <li>
+                                <strong>文章選擇 (Picking Documents):</strong> 如何從龐大的文章庫中挑選出與使用者問題最相關的文章是第一個難題 [1, 10, 12]。演講中提到了兩種主要方法：
+                                <ul class="bento-list">
+                                    <li><strong>基於關鍵字的方法 (Keyword-based Methods):</strong> 這包括人工建立關鍵字、使用 TextRank 算法（一種非模型方法，基於 PageRank）或 NER [1, 10, 12]。它的優點是速度快，易於控制（可以手動添加或調整關鍵字），且不需特定領域的訓練資料 [1, 10, 13]。對於新手來說，從這種直觀的方法入手比較容易理解 [10]。然而，它的缺點是難以處理同義詞或表達方式不同的情況 [10, 13]。較舊的方法如 TF-IDF 也曾被用於此，但效果有限 [12]。</li>
+                                    <li><strong>基於模型訓練的方法 (Model-based Methods):</strong> 這類方法通常是將問題和文章編碼成向量後計算相似度，或者將問題和文章拼接後使用分類模型判斷其相關性 [1, 10, 12]。它的優點是可以處理同義詞等語義上的相似 [10, 13]。然而，缺點在於模型對不同領域的泛化能力有限，需要特定領域的訓練資料，且當模型表現不佳時，很難判斷是出了什麼問題，難以控制和除錯 [1, 10, 13]。演講者提到，實務上這兩種方法的優劣不一定，但關鍵字方法在可控性上更具優勢 [10, 13]。對於新手，理解這兩種思路以及它們各自的權衡 (速度/可控性 vs. 語義理解) 是很重要的 [10, 13]。</li>
+                                </ul>
+                            </li>
+                            <li>
+                                <strong>處理文章長度限制:</strong> 大多數 MRC 模型對輸入的文章長度有硬性限制 [1, 10, 12]。當文章過長時，超過限制的部分資訊就會被截斷，這是一個難以徹底解決的問題 [1, 12-14]。演講中提到了可能的解決方案（雖然效果不彰）：
+                                <ul class="bento-list">
+                                    <li><strong>抽取式摘要 (Extractive Summarization):</strong> 從原文中選取重要的句子或片段組成摘要 [1, 13, 14]。問題在於這樣抽取的片段可能不連貫，且更重要的限制是，MRC 需要回答的可能是文章中的細節，而非僅僅是主旨，而摘要通常只包含主要內容，會遺漏細節資訊 [1, 13, 14]。</li>
+                                    <li><strong>抽象式摘要 (Abstractive Summarization):</strong> 通過模型生成全新的句子作為摘要 [1, 13, 14]。這類摘要通常比較連貫，但也同樣面臨資訊遺漏的問題 [1, 13, 14]。</li>
+                                    <li><strong>結論:</strong> 演講者強調，對於 MRC 任務而言，摘要方法的效果並不好，因為它們無法保證保留所有可能被提問的細節 [1, 13, 14]。文章長度限制仍然是一個挑戰 [1, 13, 14]。即使有聽說新的模型（如 Excelet）可能沒有這個問題，原因仍不明朗 [1, 11, 13]。對於新手，這提醒我們在實際應用 MRC 時，數據前處理中的長度處理是一個需要特別注意且可能需要其他變通方法的點 [1, 14]。</li>
+                                </ul>
+                            </li>
+                        </ol>
+
+                        <h3 class="bento-subtitle">MRC 模型架構與演變 <span class="text-sm font-normal text-slate-500">MRC Model Architecture & Evolution</span></h3>
+                        <p>演講深入探討了幾種重要的 MRC 模型及其背後的技術 [1, 14]。</p>
+                        <p><strong>QANet</strong></p>
+                        <p>在 Google 的 BERT 模型出現之前，QANet 是廣泛使用且效果較好的模型之一，它與 BERT 同一年（2017 年）問世，但時間上稍早 [1, 7, 11, 14]。QANet 的設計借鑒了較早的 Bidirectional Attention Flow (BiDAF) 模型，但將 BiDAF 中用於序列處理的 LSTM 層替換為堆疊的 Convolution (卷積) 和 Self-Attention (自注意力機制) 層組成的 Encoder Block [1, 2, 11, 14]。QANet 也是第一個將 Self-Attention 用於閱讀理解的模型 [1, 7, 11, 14, 15]。對於新手，理解模型如何從文章中提取資訊是關鍵，而 QANet 展示了卷積網絡（捕捉局部特徵）和注意力機制（捕捉長距離依賴）的結合應用 [2, 14]。</p>
+                        <p><strong>Attention 機制</strong></p>
+                        <p>QANet 和許多現代 NLP 模型都依賴於 Attention 機制 [1, 2, 14]。演講中重點介紹了兩種：</p>
+                        <ol class="list-decimal">
+                            <li><strong>Context-Query Attention (C2Q Attention):</strong> 用於計算文章 (Context) 和問題 (Query) 之間的關聯性 [1, 2, 11, 14, 15]。它的基本流程是先計算文章中每個詞與問題中每個詞之間的相似度，形成一個相似度矩陣 [1, 11, 14]。然後基於這個相似度矩陣計算 Context 到 Query 的 Attention (C2Q) 和 Query 到 Context 的 Attention (Q2C)，並將結果拼接起來 [1, 14, 16]。C2Q Attention 可以被視為一種將問題的資訊融入到文章表示中的方法，以便模型在處理文章時能考慮問題的重點 [1, 14, 16]。BiDAF 模型中也使用了 Context-Query Attention [1, 7, 11]。對於新手來說，理解 Attention 的目的是讓模型在處理當前資訊時，能「關注」到其他相關的資訊，是理解許多現代 NLP 模型（如 Transformer）的基礎 [2, 14, 17]。</li>
+                            <li><strong>Self-Attention (自注意力機制):</strong> 用於計算序列內部每個詞與序列中其他詞之間的關聯性 [1, 2, 14, 15, 17]。其核心計算涉及將輸入的 Embedding 轉換為 Query (Q)、Key (K) 和 Value (V) 三種表示 [1, 14, 17]。然後計算 Query 與 Key 的相似度（通常是點積），經過 Softmax 歸一化後，再乘以 Value [1, 14, 17]。這樣得到的結果就是該詞基於序列內部其他詞的加權聚合表示 [14, 17]。在 Transformer 和 QANet 的原始設計中，通常會對後面的詞進行 Masking，實現單向的 Attention，這與 BERT 的雙向 Attention 不同 [1, 14, 17]。Self-Attention 使得模型能夠捕捉詞語在序列中的長距離依賴關係，而不像 RNN 需要一步步傳遞 [2, 14]。</li>
+                            <li><strong>Multi-Head Attention (多頭注意力機制):</strong> 這是對 Self-Attention 的擴展 [1, 2, 14]。它將 Query、Key、Value 的計算分成多個「頭」，獨立計算多次 Attention，最後將不同頭的結果拼接起來 [1, 14, 17]。這樣做的目的是讓模型能夠在不同的子空間或從不同的角度捕捉到不同的關聯性資訊 [2, 14]。</li>
+                        </ol>
+                        <p>演講中還提到了一個 2020 年的研究，探討了 Self-Attention 的計算方式是否一定需要 Query 與 Key 的複雜點積 [1, 14, 15, 17]。研究者嘗試使用其他方法（如 Decomposable Attention 或直接使用可訓練的 Table）來取代部分計算，發現這些替代方法在某些任務上的效果甚至更好 [1, 14, 17]。這引發了一個思考：雖然原始 Self-Attention 可能在多數任務上表現綜合最佳，但在特定應用場景下，其複雜性不一定是必須的，甚至可能存在更適合的計算方式 [1, 14, 17]。這對於新手來說，提示了即使是看似基礎的核心機制，也仍然是研究和探索的領域 [1, 14, 17]。</p>
+                        <p><strong>Position Encoding (位置編碼)</strong></p>
+                        <p>由於 Self-Attention 機制在計算時是並行的，它本身不包含詞語的序列順序資訊 [1, 14, 18]。為了讓模型能夠區分「蘋果比香蕉好吃」和「香蕉比蘋果好吃」這樣順序不同但詞語相同的句子，需要額外引入位置資訊，這就是 Position Encoding 的作用 [1, 2, 11, 14, 18]。Transformer 和 QANet 使用公式來計算 Position Encoding [1, 14, 18]。然而，這種公式計算的位置編碼通常假設了單向的 Attention (如在 Decoder 部分或 QANet Encoder 中對未來詞 Masking 的情況) [17, 18]。BERT 由於使用了雙向 Attention（前後詞都參與計算），無法直接使用這種公式，因此改用了可訓練的 Position Embedding [1, 14, 18]。對於新手，理解為什麼需要位置編碼以及不同模型處理順序資訊的方式，是理解基於 Attention 模型的重要環節 [1, 14, 18]。</p>
+                        <p><strong>團隊基於 QANet 的改進模型</strong></p>
+                        <p>由於硬體限制（單張泰坦 X P 顯卡無法跑多個 Multi-Head），團隊對 QANet 進行了改進 [1, 14, 18, 19]。主要改動包括：將 Self-Attention 從 Multi-Head 改為 Single Head [1, 14, 18]。為了彌補 Single Head 可能帶來的資訊不足，他們將 Context-Query Attention (CQ Attention) 的計算步驟重複了兩次 [1, 14, 18]。第一次計算的結果與 Encoding 前的結果通過 Highway Network 疊加 [1, 14, 18]。</p>
+                        <p>這項改進在中文數據上取得了不錯的效果 [1, 14, 18]。相比標準 QANet，團隊模型的訓練時間顯著縮短（在單張泰坦 X P 上僅需約 4 小時），且效果略優 [1, 7, 14, 18]。這證明了即使在資源有限的情況下，通過對現有模型架構進行有針對性的調整，也能達到良好的性能 [1, 14, 18]。此外，通過加入翻譯後的英文 MRC 數據作為額外訓練資料，效果還可以再提升 2-3% [1, 7, 14, 18]。演講者推測，重複疊加 CQ Attention 是為了彌補單頭 Self-Attention 的不足 [1, 14, 18]。這種改動的思路對於新手來說很有啟發，它展示了在實際研究和應用中，常常需要根據實際情況（如計算資源）對模型進行調整和實驗 [1, 14, 18]。</p>
+                        <p><strong>BERT 模型在 MRC 中的應用</strong></p>
+                        <p>BERT (Bidirectional Encoder Representations from Transformers) 模型自 2018 年發布以來對 NLP 領域產生了巨大影響 [1, 15]。它基於 Transformer 的 Encoder 部分，並採用雙向 Attention [2, 19]。演講中提到，BERT 的出現幾乎「通殺」了許多 NLP 任務，尤其是在文本分類等下游任務上表現出色 [1, 3, 6, 8]。</p>
+                        <p>在 MRC 任務中，BERT 的應用方式通常是將問題 (Question) 和文章 (Context/Passage) 拼接起來，中間用一個特殊的 `[SEP]` token 分隔 [1, 2, 20-22]。BERT 模型處理這個拼接後的序列，然後輸出兩個關鍵資訊：文章中答案「開始位置」和「結束位置」的機率分數 [1, 20-22]。模型會選擇機率最高的一個連續區間作為答案 [1, 20]。這與 QANet 等模型通過 Attention 機制輸出答案的 Span 是一致的 [1, 20]。對於新手，理解 BERT 如何通過預訓練和 Fine-tuning 來適應各種下游任務（包括 MRC）是掌握當前主流 NLP 技術的關鍵 [1, 20]。</p>
+
+                        <h3 class="bento-subtitle">Hugging Face Transformers 工具庫 <span class="text-sm font-normal text-slate-500">Hugging Face Transformers Library</span></h3>
+                        <p>演講中大力推薦了 Hugging Face 的 Transformers 開源工具庫，稱其速度快且易於使用 [1, 19, 20]。這個工具庫支援 PyTorch 和 TensorFlow 2.0 等主流深度學習框架 [1, 7, 19-21]。對於新手，Hugging Face 提供了一個便捷的平台，可以輕鬆獲取和使用大量預訓練的 NLP 模型，包括 BERT, GPT, GPT-2 以及社群貢獻的數千種模型 [1, 19-21]。</p>
+                        <p>Transformers 套件提供了多種下游任務 (Downstream Tasks) 的接口和範例，使得在特定任務上使用預訓練模型進行 Fine-tuning 或推論變得簡單 [1, 20-22]。提到的接口包括：</p>
+                        <ul class="bento-list">
+                            <li><code>ForPreTraining</code>: 結合 Masked Language Modeling (MLM) 和 Next Sentence Prediction (NSP)，是 BERT 原始的預訓練任務 [2, 20, 21]。</li>
+                            <li><code>Masked LM</code>: 填補文本中被隨機 Mask 掉的詞 [2, 20, 21]。演講者提到在中文糾錯中的嘗試，發現可能存在過度修正的問題（例如將「父親」錯修正為「父子」） [1, 7, 20, 21]。</li>
+                            <li><code>Next Sentence Prediction</code>: 判斷給定的兩句話是否是上下句關係 [2, 20, 21]。</li>
+                            <li><code>ForSequenceClassification</code>: 用於文本分類任務，對整個序列進行分類 [2, 20, 21]。</li>
+                            <li><code>ForMultipleChoice</code>: 用於多選任務 [2, 20, 21]。</li>
+                            <li><code>ForTokenClassification</code>: 用於對序列中的每個 token 進行分類，最常用的就是命名實體識別 (NER) [1, 2, 20-22]。然而，演講者特別指出，使用這個接口進行 NER 等任務時，需要額外的<strong>前處理步驟</strong>，例如處理特殊的控制字元或確保輸入長度符合模型要求 [1, 20, 22]。這是因為 BERT 的 Tokenizer (分詞器) 處理後的結果可能與原始文本在長度或字元上有所差異 [1, 20, 22]。對於新手，了解即使使用現成的工具包，前處理步驟仍然是不可或缺且需要注意細節的部分 [1, 20, 22]。</li>
+                            <li><code>ForQuestionAnswering</code>: 用於機器閱讀理解 (MRC) 任務 [2, 20-22]。這就是前面提到的將問題和文章拼接後輸入模型，模型輸出答案開始和結束位置機率的接口 [1, 20-22]。</li>
+                        </ul>
+                        <p>總之，Hugging Face Transformers 是一個非常強大的工具，極大地降低了使用和研究基於 Transformer 的 NLP 模型的門檻，對於入門和深入 NLP 研究都非常有幫助 [1, 19-21]。</p>
+
+                        <h3 class="bento-subtitle">中文分詞工具比較 <span class="text-sm font-normal text-slate-500">Chinese Word Segmentation Tools Comparison</span></h3>
+                        <p>在處理中文文本時，分詞 (Word Segmentation) 是很多 NLP 任務的基礎前處理步驟 [1, 20]。演講中額外討論了團隊對不同中文分詞工具的比較經驗 [1, 20, 22]。他們曾比較過中研院 (CKIP) 的斷詞工具、結巴 (Jieba) 以及其他知名工具 [1, 20, 22]。</p>
+                        <p>比較結果顯示，在中研院的斷詞工具在處理繁體中文，特別是專有名詞（如人名、地名）時，效果通常是最好的 [1, 7, 20, 22]。即使將繁體轉簡體再用結巴斷詞，效果也不如直接使用中研院的工具 [22]。這對於處理中文 NLP 的研究者和開發者來說，是一個實用的經驗參考 [1, 20, 22]。對於新手，了解不同的分詞工具及其在特定語言和任務上的表現差異，是進行中文 NLP 專案時需要考慮的重要因素 [1, 20, 22]。</p>
+
+                        <h3 class="bento-subtitle">其他零星重點與觀察 <span class="text-sm font-normal text-slate-500">Miscellaneous Points & Observations</span></h3>
+                        <ul class="bento-list">
+                            <li><strong>「爆甜蜜」飲品機:</strong> 演講中場展示了一台全自動線條飲品機「爆甜蜜」 [3, 5, 15]。據稱這是全台唯一能製作特定茶飲的機器，具有獨家口味管理和一件出餐特色 [5]。原本設計可透過「爆小蜜」機器人語音點餐，但當天改為手動操作 [3, 5, 15]。雖然這與 NLP 技術本身無直接關聯，但展示了將 AI 技術（如語音互動）與硬體結合的可能性 [3, 5, 15]。</li>
+                            <li><strong>直播技術問題:</strong> 分享會當天遇到了多種技術問題，包括 Facebook 刪除公告和直播聲音問題、YouTube 直播延遲 (約 30 秒) 和聲音問題、以及 Google Meet 將講者鎖定在特定網域下 [1, 4, 10, 15, 22]。這導致「三個直播都是失敗的」，但錄影應該是成功的 [1, 10, 22]。這提醒我們在進行線上分享或技術展示時，技術穩定性和備案的重要性 [1, 10]。</li>
+                        </ul>
+                        <p>從整場分享會的內容來看，結合了理論概念、模型架構、實際應用展示、工具使用技巧以及研究經驗分享，對於理解 NLP 領域的實際工作流程和挑戰非常有參考價值，特別是透過講者和研究夥伴的視角，提供了一些寶貴的實務經驗和見解 [1, 23]。對於新手來說，這是一個很好的機會，可以從實際案例中學習 NLP 的基礎知識和應用技巧 [1, 23]。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

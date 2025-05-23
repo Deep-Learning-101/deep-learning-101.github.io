@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>圖形卷積網路之半監督分類 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em { /* For markdown emphasis */
+            font-style: italic;
+            color: #555; /* Slightly darker for emphasis */
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+        .math-notation {
+            font-family: "Computer Modern", "CMU Serif", serif; /* Or any other math-friendly font */
+            /* font-style: italic; */ /* Often math variables are italic */
+            padding: 0 0.1em;
+        }
+
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+            font-weight: 500;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+
+        .bento-box > .motion-div-full-height { /* Ensure this class is used if needed for full height content */
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center; /* Centered text */
+        }
+        .top-info-title {
+            font-size: 2rem; /* 32px */
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong { 
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem; /* Even larger for main Chinese title */
+            font-weight: 700;
+        }
+        .english-subtitle {
+            font-size: 1.5rem; /* Smaller English subtitle */
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                由 <a href="https://www.twman.org/" target="_blank" rel="noopener noreferrer">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
+                </p>
+                <p align="center">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank" rel="noopener noreferrer">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" rel="noopener noreferrer" style="display:inline-block; margin: 5px;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px;">
+                    </a>
+                </p>
+                <p align="center">
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank" rel="noopener noreferrer">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank" rel="noopener noreferrer">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank" rel="noopener noreferrer">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank" rel="noopener noreferrer">Hugging Face Space</a>
+                </p>
+                <p style="margin-top: 1rem;">
+                    <a href="https://www.youtube.com/watch?v=hAr_OHrFXI8" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i><strong>2019/01/11, Bean Yen</strong>: Semi-Supervised Classification with Graph Convolutional Networks</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                圖形卷積網路之半監督分類
+            </h1>
+            <p class="english-subtitle mt-2">
+                Semi-Supervised Classification with Graph Convolutional Networks
+            </p>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3 motion-div">
+                <i class="fas fa-project-diagram icon-large"></i>
+                <h2 class="bento-title-large">圖形卷積網路 (GCN) 核心概念與早期方法</h2>
+                <h3 class="bento-subtitle">GCN 核心概念與重要進展入門 <span class="text-sm font-normal text-slate-500">Core Concepts & Introduction</span></h3>
+                <p class="bento-text">
+                    圖形結構資料，例如社群網路、分子結構或引用網路，具有不規則且非歐幾里德 (Non-Euclidean) 的特性，不像圖像或語音資料那樣具有明確的網格或序列結構 [1-3]。傳統的神經網路，特別是<strong class="highlight-tech">卷積神經網路 (CNN)</strong>，雖然在處理網格狀資料（如 2D 圖像）方面取得了巨大成功，但由於其固定的濾波器尺寸和對規則座標系統的依賴，難以直接應用於圖形資料 [1-3]。這正是<strong class="highlight-tech">圖形卷積網路 (GCN)</strong> 誕生的主要原因：它專門設計用於處理這種非歐幾里德結構資料，並嘗試將類似卷積的操作應用於圖形上，以捕捉節點的局部和結構資訊 [1-3]。
+                </p>
+                <p class="bento-text">
+                    對於新手來說，理解圖形資料與傳統網格資料的根本差異是關鍵的第一步。想像一下一張圖片，每個像素都有固定的位置和固定數量的鄰居（上下左右斜對角）。但在圖形中，每個點（節點）的鄰居數量可能不同，它們之間也沒有固定的空間順序或座標系 [2, 3]。如何在這樣的結構上定義「卷積」，即如何有效地聚合周圍鄰居的資訊來更新當前節點的表示，是 GCN 研究的核心挑戰之一 [1, 3]。
+                </p>
+                <h3 class="bento-subtitle">處理圖形資料的早期方法：基於 Embedding <span class="text-sm font-normal text-slate-500">Early Methods: Embedding-based</span></h3>
+                <p class="bento-text">
+                    在 GCNs 出現之前，處理圖形資料的常見方法是基於<strong class="highlight-tech">節點 Embedding</strong> [1, 4-7]。這類方法的核心思想是將圖中的每個節點映射到一個低維度的連續向量空間（即 Embedding），使得在圖中相似或相關的節點在向量空間中的距離較近 [4, 5, 8]。
+                </p>
+                <ul class="bento-list bento-text">
+                    <li>
+                        <strong>隨機遊走 (Random Walk) 與 Skip-gram</strong>：典型的方法如 <strong class="highlight-tech">DeepWalk</strong> 和 <strong class="highlight-tech">node2vec</strong>，透過在圖上執行隨機遊走生成一系列節點序列 [4, 5, 7, 9]。這些節點序列被視為類似自然語言處理中的「句子」，而圖中的節點則被視為「單詞」[7, 9]。然後，利用類似 <strong class="highlight-tech">Skip-gram</strong> 的技術（word2vec 的一種）來訓練模型，學習每個節點的 Embedding 向量 [4, 7, 9]。Skip-gram 的基本思想是根據中心節點預測其周圍的上下文節點，透過這個過程，節點的 Embedding 向量就包含了其鄰域的資訊 [7, 9]。
+                    </li>
+                    <li>
+                        <strong>Node2Vec 的改進 (BFS/DFS)</strong>：<strong class="highlight-tech">Node2Vec</strong> 在 DeepWalk 的基礎上進行了改進，引入了兩個參數 P 和 Q，用來調整隨機遊走的策略 [2, 4, 7, 9]。這允許模型平衡<strong class="highlight-tech">廣度優先搜索 (BFS)</strong> 和<strong class="highlight-tech">深度優先搜索 (DFS)</strong> 的偏好 [2, 4, 7]。BFS 傾向於停留在當前節點的緊密鄰居附近，捕捉局部的結構資訊；而 DFS 傾向於探索更遠的節點，捕捉更廣泛的圖形結構或同質性資訊 [7, 9]。透過調整這兩個參數，Node2Vec 可以學習到更豐富的節點表示，包含不同尺度的結構資訊 [2, 4, 7]。
+                    </li>
+                </ul>
+                <p class="bento-text">
+                    新手可能好奇，為什麼要 Embedding？這是因為許多下游任務（如分類、聚類）需要固定長度的向量作為輸入。圖形結構本身大小不一， Embedding 提供了一種將圖形結構中的離散節點轉換為固定維度向量的方式，方便後續使用傳統機器學習或神經網路模型進行處理 [4, 8]。
+                </p>
+                <p class="bento-text">
+                    然而，這些傳統 Embedding 方法通常是兩階段的：先計算好 Embedding，然後再將這些 Embedding 用於下游任務 [1, 10, 11]。Embedding 的學習與下游任務的目標是分開的，參數不是聯合訓練的 (<strong class="highlight-tech">non-End-to-End</strong>) [1, 10, 11]。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2 motion-div">
+                <i class="fas fa-wave-square icon-large"></i>
+                <h2 class="bento-title-large">GCN 的頻域發展、挑戰與改進</h2>
+                <h3 class="bento-subtitle">圖形卷積網路 (GCNs) 的發展：頻域方法 <span class="text-sm font-normal text-slate-500">GCN Development: Spectral Domain</span></h3>
+                <p class="bento-text">
+                    GCNs 試圖以更直接的方式在圖形上定義卷積操作。一種主要的思路是利用圖信號處理 (Graph Signal Processing) 中的概念，在<strong>頻率域 (Spectral Domain)</strong> 定義卷積 [1, 4, 5]。
+                </p>
+                <ul class="bento-list bento-text">
+                    <li>
+                        <strong>拉普拉斯矩陣 (Laplacian Matrix) 的角色</strong>：在頻域方法中，<strong class="highlight-tech">圖拉普拉斯矩陣</strong> (Graph Laplacian, 通常定義為 <span class="math-notation">L = D - A</span>，其中 D 是度矩陣，A 是鄰接矩陣) 扮演了核心角色 [4, 5, 12]。從物理意義上，拉普拉斯矩陣可以視為圖上的差分運算元 (difference operator) [5, 12]。將圖信號（節點特徵向量集合）與拉普拉斯矩陣相乘，可以衡量節點特徵與其鄰居特徵之間的差異或平滑度 [5, 12]。更重要的是，透過對拉普拉斯矩陣進行特徵分解 (Eigen-decomposition)，我們可以將圖信號轉換到頻率域 [5, 13-16]。其特徵值 (Eigenvalues) 可以被視為代表圖中不同「頻率」成分的運算元，而特徵向量 (Eigenvectors) 則構成了頻率域的基 [5, 13-16]。
+                    </li>
+                    <li>
+                        <strong>頻域卷積的定義</strong>：在歐幾里德空間，卷積定理告訴我們空間域的卷積等價於頻率域的乘法 [17]。在圖形上，頻域的圖卷積被定義為在頻率域中，圖信號的頻率表示與一個「濾波器函數」的頻率表示進行逐元素相乘，然後再透過逆傅立葉轉換回到空間域 [5, 13, 17]。這個濾波器函數通常定義在拉普拉斯矩陣的特徵值上 [13, 14]。
+                    </li>
+                </ul>
+                <p class="bento-text">
+                    對於新手，可以想像成是把圖上的資料（節點特徵）分解成不同的「頻率」成分（就像聲音可以分解成不同頻率一樣），然後在頻率域對這些成分應用一個「濾波器」（這個濾波器是一個函數，它根據頻率的高低決定如何加權或處理），最後再把處理後的頻率成分組合成新的節點特徵 [13]。
+                </p>
+                <h3 class="bento-subtitle">頻域方法的挑戰與改進 <span class="text-sm font-normal text-slate-500">Challenges & Improvements in Spectral Methods</span></h3>
+                <p class="bento-text">
+                    早期的頻域 GCN 方法雖然在理論上優雅，但存在嚴重的實際應用問題 [1, 18]:
+                </p>
+                <ol class="list-decimal list-inside bento-text pl-4">
+                    <li><strong>計算效率低落</strong>：對大型圖的拉普拉斯矩陣進行完整的特徵分解計算量巨大且非常耗時 (<span class="math-notation">O(N<sup>3</sup>)</span>，其中 N 是節點數) [1, 2, 15, 18]。</li>
+                    <li><strong>計算複雜度高</strong>：拉普拉斯矩陣的特徵向量矩陣通常是密集矩陣 (dense matrix)，將節點特徵向量與特徵向量矩陣相乘的計算量非常大 (<span class="math-notation">O(N<sup>2</sup>)</span>)，難以應用於大規模圖 [2, 15, 18]。</li>
+                    <li><strong>非局部性</strong>：由於濾波器是在全局的頻率域上定義的，導致濾波器缺乏局部性，一個濾波器會作用於整個圖上的所有節點，難以捕捉圖的精確局部結構特徵 [18]。此外，直接對拉普拉斯特徵值進行參數化會導致需要學習的參數數量過多 [14, 15]。</li>
+                </ol>
+                <h3 class="bento-subtitle">2016 年的重大進展：Chebyshev 多項式逼近 <span class="text-sm font-normal text-slate-500">2016 Breakthrough: Chebyshev Polynomial Approximation</span></h3>
+                <p class="bento-text">
+                    為了解決頻域 GCN 的計算效率問題，2016 年的一篇重要論文提出了一個關鍵性的改進 [1, 4, 15, 18]。他們的核心思想是利用 <strong class="highlight-tech">Chebyshev 多項式</strong> 來逼近頻域的濾波器函數 [1, 2, 4, 15, 18]。
+                </p>
+                <ul class="bento-list bento-text">
+                    <li>
+                        <strong>逼近的好處</strong>：使用多項式逼近濾波器函數可以避免對拉普拉斯矩陣進行完整的特徵分解 [2, 4, 15, 18]。由於 Chebyshev 多項式的遞歸定義特性以及拉普拉斯矩陣的稀疏性，原本在頻域的運算（涉及密集特徵向量矩陣的乘法）可以被轉換為僅涉及拉普拉斯矩陣及其冪次的運算 [2, 15, 18, 19]。拉普拉斯矩陣通常是稀疏矩陣，與稀疏矩陣相乘的計算量與邊的數量相關，而非節點數的平方 [18, 19]。這將計算複雜度大大降低到 <span class="math-notation">O(|E|K)</span> 或 <span class="math-notation">O(|E|)</span>，其中 <span class="math-notation">|E|</span> 是邊的數量，K 是多項式的階數 [18, 19]。
+                    </li>
+                    <li>
+                        <strong>效果</strong>：這種方法顯著提高了頻域 GCN 的計算效率，使其能夠應用於更大的圖 [1, 18, 19]。該論文在半監督學習任務上也取得了比當時現有方法更好的效果，並強調使用非常少的標記數據即可獲得不錯的分類結果 [4, 6, 10]。同時，這種基於多項式逼近的方法被認為具有更好的泛化能力，理論上可以應用於不同形態的圖 [4, 12, 19]。
+                    </li>
+                </ul>
+                <p class="bento-text">
+                    對於新手，可以這樣理解：原來的濾波器很複雜，需要在一個特殊的「頻率空間」裡操作，而進入這個空間需要昂貴的計算（特徵分解）。Chebyshev 多項式就像是一個「替身」，它可以在原來的圖結構空間（或與拉普拉斯矩陣直接相關的空間）裡做類似的工作，而且這個替身的操作非常有效率，不需要先跑到那個特殊的頻率空間去 [2, 15, 18]。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-1 motion-div">
+                <i class="fas fa-cogs icon-large"></i>
+                <h2 class="bento-title">簡化 GCN 與 End-to-End 訓練</h2>
+                <h3 class="bento-subtitle">2017 年的簡化 GCN (Kipf & Welling) <span class="text-sm font-normal text-slate-500">Simplified GCN (2017)</span></h3>
+                <p class="bento-text">
+                    在 2016 年的工作基礎上，2017 年 Kipf & Welling 提出了一個更簡潔的 GCN 模型，迅速成為了該領域的熱門方法，有時甚至被視為「標準」的 GCN [1, 4]。
+                </p>
+                <ul class="bento-list bento-text">
+                    <li>
+                        <strong>簡化與近似</strong>：這篇論文對 2016 年的方法進行了一些近似 [4, 20]。它們將 Chebyshev 多項式的階數設為 K=1（即只考慮一階鄰居），並進一步簡化，包括參數共享和對拉普拉斯矩陣進行歸一化處理並加上自連接 (self-loop，相當於在鄰接矩陣 A 上加上單位矩陣 I) [4, 20]。
+                    </li>
+                    <li>
+                        <strong>簡潔的公式</strong>：經過這些近似後，得到的 GCN 層的公式形式非常簡潔 [4, 20]。它可以被解釋為對每個節點及其一階鄰居的特徵進行聚合（通常是加權平均），然後通過一個可學習的權重矩陣進行變換 [11, 20]。
+                    </li>
+                    <li>
+                        <strong>性能與爭議</strong>：儘管理論上進行了較多近似，這個簡潔的 GCN 模型在半監督學習任務上表現出色，尤其是在使用少量標記數據的情況下 [1, 2, 4, 6, 11, 20, 21]。它在速度上也比一些現有方法更快 [4, 11]。然而，該模型的理論推導被一些人認為缺乏嚴謹性，像是在「湊」出公式 [4, 20]。批評者指出，這種一階近似限制了模型的表達能力，其在頻域的濾波器是受限的（例如，可能是對稱且缺乏方向性的）[16, 21, 22]。
+                    </li>
+                </ul>
+                 <p class="bento-text">
+                    對於新手，2017 年的 GCN 公式可能是最常看到的入門公式。它的核心思想非常直觀：一個節點的新特徵是由它自己和它直接相連的鄰居的特徵加權平均（或更複雜的聚合）後，再經過一個神經網路層變換得到的 [6, 20]。通過堆疊多層 GCN，節點的特徵可以逐步整合來自更遠鄰居（二階、三階...）的資訊 [11, 20]。
+                </p>
+                <h3 class="bento-subtitle">End-to-End 訓練的優勢 <span class="text-sm font-normal text-slate-500">Advantages of End-to-End Training</span></h3>
+                <p class="bento-text">
+                    相較於 DeepWalk 或 Node2Vec 等傳統 Embedding 方法先計算好 Embedding 再用於下游任務，GCNs 等基於神經網路的架構是 <strong class="highlight-tech">End-to-End</strong> 可訓練的 [1, 10, 11]。這是一個明確的優勢 [1, 10]。在 GCNs 中，節點 Embedding 的學習（即鄰居資訊的聚合方式和權重）與最終的下游任務（如節點分類）是聯合訓練的 [1, 10]。模型的參數會根據下游任務的損失信號進行端到端的優化，Embedding 的學習直接受到最終任務標記的監督 [1, 10, 11]。這使得學習到的 Embedding 更能服務於特定的任務目標 [1, 10, 11]。
+                </p>
+            </div>
+            
+            <div class="bento-box col-span-lg-1 motion-div">
+                <i class="fas fa-cubes icon-large"></i>
+                <h2 class="bento-title">多樣圖形處理與前瞻應用</h2>
+                <h3 class="bento-subtitle">處理不同圖形結構的挑戰與方案 <span class="text-sm font-normal text-slate-500">Handling Diverse Graph Structures</span></h3>
+                <p class="bento-text">
+                    前面討論的方法（特別是頻域方法，如 2016 和 2017 的原始形式）主要是針對單一張圖進行節點分類 [1, 4, 23, 24]。如果需要處理的是一個包含許多獨立圖形（例如，每個圖代表一個分子結構或一個文件）的集合，並對這些圖進行分類，那麼就需要能夠在批次 (mini-batch) 中處理不同的圖 [1, 4, 23, 24]。
+                </p>
+                <ul class="bento-list bento-text">
+                    <li>
+                        <strong>處理不同圖的問題</strong>：當處理不同的圖時，每個圖的拉普拉斯矩陣是不同的 [1, 23, 24]。原始的頻域方法依賴於對單一圖的拉普拉斯矩陣進行操作或參數化 [23, 24]。簡單地套用在不同的圖上並不直接 [23, 24]。
+                    </li>
+                    <li>
+                        <strong>分子結構辨識的應用</strong>：資料中提到了一種針對分子結構辨識的 GCN 方法 [4, 5, 22-24]。這種方法旨在解決對不同圖形進行分類的問題 [4, 23, 24]。
+                        <ul class="bento-list bento-text">
+                            <li><strong>方法特點</strong>：它採用 mini-batch 的方式進行訓練，對 mini-batch 中的每個圖（每個分子結構）都計算其自己的拉普拉斯矩陣 [23, 24]。</li>
+                            <li><strong>改進鄰接矩陣</strong>：該方法的一個特點是修改了鄰接矩陣的定義 [23, 24]。它不僅僅是表示節點之間是否存在邊，還在邊上加入了節點之間的相似性作為權重 [23-25]。透過計算新的相似性鄰接矩陣，模型能夠更好地捕捉節點之間的關係和特徵，而不僅僅是連接關係 [23-25]。</li>
+                            <li><strong>應用目標</strong>：這種方法最終目標是將相似的分子結構分類到同一群組 [23, 25]。這在藥物篩選等領域有潛在應用，可以根據結構相似性預測化學特性 [23, 25]。</li>
+                        </ul>
+                    </li>
+                </ul>
+                <p class="bento-text">
+                    對於新手，理解「對圖進行分類」和「對圖中的節點進行分類」是不同的任務。前者需要模型能夠學習整個圖的表示，而後者是在給定一個圖的前提下，對其中的點進行標記。處理不同圖形的分類需要模型能夠處理不同大小、不同結構的圖，並學習能夠泛化到未見過圖的特徵表示。
+                </p>
+                <h3 class="bento-subtitle">其他應用方向與未來挑戰 <span class="text-sm font-normal text-slate-500">Other Applications & Future Challenges</span></h3>
+                <p class="bento-text">
+                    GCNs 的潛力不僅限於社群網路或引用網路的節點分類。資料中也提及了一些重要的應用方向和相關挑戰：
+                </p>
+                <ul class="bento-list bento-text">
+                    <li>
+                        <strong>3D 點雲處理與流形 (Manifold)</strong>：GNNs 在處理 <strong class="highlight-tech">3D 點雲數據</strong>方面展現出潛力，特別是在點雲分割 (Semantic Segmentation) 等任務上 [1, 2, 22, 25, 26]。點雲可以被視為一種特殊的圖形結構 [2, 26]。資料提及，目前在 3D 分割領域，一些頂尖的方法使用了基於<strong class="highlight-tech">流形</strong>的概念，雖然不一定是直接的 GNNs，但將 GNN 應用於流形上的參數化方法是未來重要的研究方向，可能成為打開 3D 分割領域突破的關鍵 [1, 2, 22, 25-27]。流形是一種局部看起來像歐幾里德空間的拓撲空間，處理 3D 數據時考慮其潛在的流形結構有助於捕捉幾何資訊 [4, 8, 22, 26]。
+                    </li>
+                    <li>
+                        <strong>NLP 與知識圖譜 (Knowledge Graphs)</strong>：討論中也觸及了 GCN 在<strong class="highlight-tech">自然語言處理 (NLP)</strong> 和<strong class="highlight-tech">知識圖譜</strong>上的應用潛力 [4, 22, 26, 27]。例如，引用網路可以被視為一種特殊的文本相關圖結構 [11]。知識圖譜本身就是圖形結構，GCNs 可以用於知識圖譜的補全、實體分類或關係抽取等任務 [4, 22, 26, 27]。
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bento-box col-span-lg-3 motion-div">
+                <i class="fas fa-microscope icon-large"></i>
+                <h2 class="bento-title-large">進一步討論與研究視角 <span class="text-lg font-normal text-slate-500">Further Discussion & Research Perspectives</span></h2>
+                <p class="bento-text">
+                    從研究角度來看，GCN 領域仍有許多值得探索和深入研究的議題：
+                </p>
+                <ul class="bento-list bento-text">
+                    <li><strong>濾波器的局限性</strong>：特別是 2017 年的簡化 GCN，其一階近似導致濾波器可能具有各向同性 (Isotropic) 或對稱性，難以捕捉具有方向性的圖形結構特徵 [16, 22]。相較之下，2016 年的 K 階 Chebyshev 多項式逼近理論上可以實現更複雜的濾波器形狀，儘管計算成本更高 [22]。</li>
+                    <li><strong>泛化能力 (Generalizability)</strong>：基於頻域特徵分解的方法在處理與訓練時結構差異較大的新圖形時可能面臨泛化困難，因為特徵基是圖形特定的 [16, 22]。如何設計能夠良好泛化到不同圖形結構的 GCN 模型是一個持續的挑戰 [16, 22]。</li>
+                    <li><strong>有向圖 (Directed Graphs) 的處理</strong>：原始的頻域 GCN 主要針對無向圖 [1, 16, 22]。處理有向圖的一種方法是將其轉換為無向圖，例如透過增加節點來表示關係（將一條有向邊拆分為表示「關係」的節點和連接節點與關係節點的無向邊）[1, 4, 21]。然而，這種方法可能會顯著增加圖的大小和複雜性 [21]。</li>
+                    <li><strong>池化 (Pooling)</strong>：在圖像 CNN 中，池化層用於降低空間維度並擴大感受野 [4]。在圖形上進行池化是另一個挑戰，需要考慮如何根據節點特徵或結構相似性來合併或選擇節點，同時保留重要資訊 [4, 19, 28]。</li>
+                    <li><strong>理論與實踐的鴻溝</strong>：2017 年 GCN 的巨大成功與其理論推導的爭議形成了鮮明對比 [4, 20]。這也促使研究者深入探討其成功的真正原因，以及更嚴謹的理論基礎 [4, 20]。</li>
+                </ul>
+                <p class="bento-text">
+                    對於新手研究者，這些挑戰正是未來研究的機會所在。理解現有方法的優勢和局限性，是開展創新工作的重要基礎。
+                </p>
+            </div>
+
+            <div class="bento-box col-span-lg-3 motion-div">
+                <i class="fas fa-flag-checkered icon-large"></i>
+                <h2 class="bento-title-large">總結 <span class="text-lg font-normal text-slate-500">Conclusion</span></h2>
+                <p class="bento-text">
+                    總結而言，圖形卷積網路為處理非歐幾里德資料提供了一個強大的框架。從早期的 Embedding 方法，到基於頻域並透過多項式逼近提高效率，再到簡潔而有效的 GCN 模型，以及針對不同圖形和任務的特定設計，GCN 領域在不斷演進。理解其核心概念（如拉普拉斯矩陣、頻域操作、鄰居聚合、End-to-End 訓練）以及不同方法的演進脈絡和權衡（如效率與表達能力、單圖與多圖處理），是入門並深入該領域的關鍵。未來的研究將繼續探索更有效、更通用、理論更堅實的圖形表示學習方法，並將 GCNs 應用於更多複雜的實際問題中。
+                </p>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div) => {
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: 0.1, ease: "easeOut" });
+                // return () => animate(div, { opacity: 0, y: -20, scale: 0.95 }, { duration: 0.3 }); // Optional: animate out
+            }, { amount: 0.1 }); // Trigger when 10% of the element is in view
+        });
+    });
+    </script>
+</body>
+</html>

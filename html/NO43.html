@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>幾何深度學習概論 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+        .bento-text ol.list-decimal ul.bento-list { /* Nested ul inside ol */
+            padding-left: 1rem; /* Indent nested ul further */
+            margin-top: 0.5rem;
+        }
+        .bento-text ol.list-decimal ul.bento-list li {
+            font-size: 0.95rem; /* Slightly smaller for nested items if desired */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=fatrgy2lo0k" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2020/03/20, 杜岳華, 幾何深度學習是在幾何什麼的？</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                幾何深度學習是在幾何什麼的？
+                 <a href="https://www.youtube.com/watch?v=fatrgy2lo0k" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                What is Geometric in Geometric Deep Learning?
+            </p>
+            <p class="text-slate-500 mt-1">2020/03/20 杜岳華</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-compass-drafting icon-large"></i>
+                    <h2 class="bento-title-large">高維資料的降維演算法與視覺化：以 t-SNE 與 UMAP 為例 <span class="text-lg font-normal text-slate-500">Dimensionality Reduction & Visualization: t-SNE & UMAP as Examples</span></h2>
+                    <div class="bento-text">
+                        <p>各位研究夥伴、對高維資料分析有興趣的新手朋友大家好。本次我們將深入探討高維資料處理中的兩個核心技術：降維演算法與視覺化，並特別聚焦於近年來在學術界和應用領域都非常熱門的兩種非線性降維方法：t-SNE (t-Distributed Stochastic Neighbor Embedding) 和 UMAP (Uniform Manifold Approximation and Projection)。同時，我們也會觸及這些方法與圖神經網路 (Graph Neural Network, GNN) 之間概念上的關聯。身為研究人員，我們經常面對資料維度過高的挑戰，這使得直接分析與理解資料變得異常困難 [1-3]。因此，學習如何有效地將高維資料投影到低維空間，並進行視覺化，是我們進行後續分析不可或缺的一步 [1-3]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-cubes icon-large"></i>
+                    <h2 class="bento-title-large">1. 幾何深度學習的範疇與核心概念 <span class="text-lg font-normal text-slate-500">Scope & Core Concepts of Geometric Deep Learning</span></h2>
+                    <div class="bento-text">
+                        <p>首先，Geometric Learning (幾何深度學習) 是這個領域的直接翻譯名詞 [1-4]。它並非單指某個特定的模型，而是一個涵蓋了基於圖 (Graph) 和基於流形 (Manifold) 的深度學習方法的「架構」或「範疇」[1-4]。在討論 GDL 時，我們經常會聽到像是 Machine Learning on Graph (圖上的機器學習) 或 Machine Learning on Manifold (流形上的機器學習) 這些術語 [1, 2]。雖然廣義上 GDL 的「geometric part」主要指的是 Manifold，但在實際應用中，圖 (Graph) 常常被用來作為流形 (Manifold) 的離散近似 (Discrete Approximation) [1, 2, 5-7]。因此，圖理論 (Graph Theory) 在 GDL 中扮演著極為核心的角色 [1, 2, 5]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-project-diagram icon-large"></i>
+                    <h2 class="bento-title-large">2. 從圖分割問題到譜聚類：經典的圖學習模型 <span class="text-lg font-normal text-slate-500">From Graph Partitioning to Spectral Clustering</span></h2>
+                    <div class="bento-text">
+                        <p>要理解 GDL 的基礎，我們可以從圖論中的一個經典問題——圖分割問題 (Graph Partition Problem) 開始 [1, 2, 5, 8, 9]。這個問題的目標是將圖的節點 (nodes) 分割成數個互斥的子集 [1, 2, 5, 8]。雖然任何分割方式都可以視為一個解，但通常我們會設定一些條件來定義「好的」分割，例如最小化被切割的邊的數量 (minimal cut) [1, 2, 8-10]。</p>
+                        <p>然而，圖分割問題在一般情況下是一個 NP-hard 問題 [1, 2, 8, 9, 11]，這意味著在合理的時間內找到最佳解是非常困難的 [2, 8, 9]。因此，研究人員會對圖分割問題進行「鬆弛化」(Relaxation) [1, 2, 8, 9, 11]，將其轉化為一個可以在多項式時間內求解、但找到的是近似解的問題 [2, 8]。</p>
+                        <p>這種鬆弛化的圖分割問題與圖聚類問題 (Graph Clustering Problem) 密切相關，進而對應到譜聚類 (Spectral Clustering) [1, 8, 11]。譜聚類是 Machine Learning on Graph 中的一個經典且重要的模型 [1, 2, 5, 8]。它的核心思想是利用圖的拉普拉斯矩陣 (Graph Laplacian) 的譜 (eigenvalues and eigenvectors) 來進行資料的降維和聚類 [1, 2, 8, 12]。</p>
+                        <h3 class="bento-subtitle">新手入門關鍵點：譜聚類流程 <span class="text-sm font-normal text-slate-500">Beginner's Guide: Spectral Clustering Workflow</span></h3>
+                        <p>對於初學者來說，理解譜聚類的基本流程很有幫助 [1, 12]:</p>
+                        <ol class="list-decimal">
+                            <li><strong>建構相似度圖 (Similarity Graph):</strong> 從原始資料點出發，根據點與點之間的相似度來建構一個圖 [1, 2, 12, 13]。這一步至關重要，圖的結構直接影響後續的結果 [1, 14-17]。圖的建構方式有很多種，例如稀疏圖中的 ε-neighborhood graph 或 K-nearest neighbor graph [1, 2, 13]。邊的權重 (edge weight) 可以簡單設為二元權重 (Binary Weight) (有連線為 1，無連線為 0)，也可以使用高斯核 (Gaussian Kernel) 或高斯指數核 (GEL) 等方法計算資料點距離並正規化作為權重，距離越近權重越高，表示越相似 [1, 2, 13]。這類加權方式也常被稱為 Metric matrix [1]。</li>
+                            <li><strong>計算圖拉普拉斯算子 (Graph Laplacian):</strong> 根據建構好的圖計算其圖拉普拉斯算子 [1, 2, 12, 13]。通常使用正規化的圖拉普拉斯算子，因為它與 Normalized Cut 的鬆弛問題解法直接對應 [1, 2]。未正規化的譜聚類則對應 Ratio Cut 的鬆弛 [1, 2, 11]。</li>
+                            <li><strong>特徵分解 (Eigen-decomposition):</strong> 對圖拉普拉斯算子進行特徵分解，得到特徵值和特徵向量 [1, 2, 12, 13]。</li>
+                            <li><strong>選取特徵向量並映射:</strong> 取出與最小的非零特徵值對應的前 K 個特徵向量 [1, 12, 13]。這些特徵向量可以被視為資料在「譜空間」(Spectral Space) 中的新表示或轉換關係 [1, 2, 12, 13]。這一步類似於主成分分析 (PCA) 的降維概念，將高維、可能非線性的資料結構映射到低維的線性空間 [1, 12]。</li>
+                            <li><strong>在譜空間中聚類:</strong> 在由選取特徵向量構成的譜空間中，使用傳統的聚類演算法 (例如 K-means) 對資料點進行聚類 [1, 12, 13]。</li>
+                            <li><strong>將結果對應回原圖:</strong> 將譜空間中的聚類結果對應回原始圖上的節點，完成圖聚類 [1, 12]。</li>
+                        </ol>
+                        <p>譜聚類之所以重要，是因為它揭示了圖結構如何影響數據的表示，並為後續的圖卷積神經網絡 (GCN) 奠定了數學基礎 [1, 2, 12, 16]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-wave-square icon-large"></i>
+                    <h2 class="bento-title-large">3. 圖拉普拉斯算子：連接不同領域的核心 <span class="text-lg font-normal text-slate-500">Graph Laplacian: A Core Concept</span></h2>
+                    <div class="bento-text">
+                        <p>图拉普拉斯算子 (Graph Laplacian, L) 是 GDL 中一个极为关键的概念 [1, 2, 12, 18]。它不仅是图论中的一个矩阵 (定义为度矩阵 D 减去邻接矩阵 A，即 L = D - A) [2, 12]，更在物理学和数学（特别是微分几何）中扮演着类似的角色 [1, 2, 12, 18-21]。</p>
+                        <p>在物理学中，连续空间的拉普拉斯算子用于描述像热传导过程 (Heat Diffusion Process) 这样的扩散现象 [1, 2, 20, 22, 23]。有趣的是，通过从牛顿冷却定律 (Newton's law of cooling) 出发，推导图上的热扩散公式，你会发现它的数学形式与图拉普拉斯算子密切相关 [1, 22, 23]。这表明图拉普拉斯算子是连续空间拉普拉斯算子在离散空间 (图) 上的自然类比，能够捕捉图上的扩散或平滑性质 [1, 19, 23]。</p>
+                        <p>在数学的微分几何 (Differential Geometry) 中，拉普拉斯算子是在流形 (Manifold) 上定义的重要微分算子 [1, 2, 6, 18, 20, 21]。流形是一种在局部看起来像欧几里得空间 (Euclidean space)，但在整体上可能有复杂弯曲的几何对象 (例如地球表面) [1, 2, 18, 21]。在流形上一点的邻居可以通过其切空间 (Tangent Space) 来近似为欧几里得空间 [1, 2, 18, 21]。微分几何定义了流形上的导数、梯度 (Gradient)、散度 (Divergence) 和拉普拉斯算子 [1, 2, 6, 18, 21]。正如前面提到的，图可以视为流形的一种离散近似 [1, 2, 6, 7]。研究人员发现在图上也可以定义类比于连续空间的微分算子，例如 Graph Gradient、Graph Divergence 和 Graph Laplacian [1, 6, 7]。Graph Gradient 可以定义为相邻节点信号的差异 [1, 6, 7]。Graph Divergence 则考虑边上的信号乘以边权重并求和 [1, 7]。通过组合 Graph Gradient 和 Graph Divergence，可以定义出 Graph Laplacian [1, 7]。</p>
+                        <p>Graph Laplacian 编码了图的拓扑结构信息，其特征值和特征向量提供了分析图结构和节点信号的重要工具，例如作为图傅立叶变换 (Graph Fourier Transform) 的基础 [12]。它在连接图论、物理学和微分几何的过程中，凸显了图结构所携带的丰富几何讯息 [1, 2, 7, 12, 18-21, 24]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-link icon-large"></i>
+                    <h2 class="bento-title-large">4. 圖卷積與譜聚類的聯繫 <span class="text-lg font-normal text-slate-500">Graph Convolution & Spectral Clustering Link</span></h2>
+                    <div class="bento-text">
+                        <p>圖卷積層 (Graph Convolutional Layer) 是圖神經網絡 (GNNs) 中的核心計算單元 [1, 2]。譜聚類建立的是從圖到譜空間的單向轉換關係 [1, 16]。圖卷積更進一步，它在譜空間中對映射後的特徵向量乘以一個權重，這個權重可以類比於傳統卷積神經網絡中的卷積濾波器 (Filter)，然後再將結果轉換回原始圖空間 [1, 2, 16]。這種操作結合了節點自身的特徵以及其鄰居節點的特徵，並利用圖的連接結構來聚合資訊，實現了在不規則圖結構上的「卷積」效果 [2, 12]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-draw-polygon icon-large"></i>
+                    <h2 class="bento-title-large">5. 圖作為幾何結構的重要性 <span class="text-lg font-normal text-slate-500">Importance of Graphs as Geometric Structures</span></h2>
+                    <div class="bento-text">
+                        <p>為什麼要在深度學習中引入圖的概念？因為圖可以有效地建模數據點之間的複雜關係和結構 [3, 14]。許多現實世界的數據本身就具有非網格化的結構，例如社交網絡中的用戶關係、分子結構中的原子和化學鍵、推薦系統中的用戶與物品互動 [14, 22, 25]。</p>
+                        <p>圖不僅是一種資料結構，它本身就可以被視為一種幾何結構 [1, 15]。在 GNN 中，訊號或特徵 (Feature) 通常是放在節點 (Nodes) 上 [1, 16, 24]。即使節點的特徵和數量保持不變，但如果圖的拓撲結構 (Topology) 不同 (即節點之間的連接方式不同)，計算出來的結果 (例如圖拉普拉斯的特徵值分佈) 也會不同 [1, 16, 26]。這強烈表明，圖的連接方式對於模型結果至關重要，因為它編碼了數據空間的幾何訊息 (geometry information) [1, 15-17, 23, 26]。你可以把圖想成是建模原始數據空間 (dataspace) 的一種方式，通過圖的拓撲結構，我們可以提取並利用這些數據空間的幾何資訊 [1, 7, 15, 17, 23]。</p>
+                        <p>UMAP (Uniform Manifold Approximation and Projection) 這個降維演算法也印證了圖結構的重要性 [1, 12, 20, 26]。UMAP 在其計算過程中也會先建構一個圖 (通常是 K-nearest neighbor graph)，並計算邊權重來表示相似度 [1, 12, 26]。接著，它會利用圖結構和類似於譜分解的結果來進行初始化 (initialization) [1, 12, 26]。UMAP 的研究者認為，圖在其中扮演著骨架的角色，幫助保留數據的整體結構，而不同於僅僅記憶鄰居之間相對關係的 Neighbour Embedding 算法 (如 t-SNE)，後者可能導致整體結構失真 [1, 12, 23, 26]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-random icon-large"></i>
+                     <h2 class="bento-title-large">6. 排列不變性問題 (Permutation Invariance Problem) <span class="text-lg font-normal text-slate-500">Permutation Invariance Problem</span></h2>
+                     <div class="bento-text">
+                        <p>在處理圖結構數據時，一個重要的挑戰是排列不變性 (Permutation Invariance) 或等變性 (Equivariance) 問題 [1, 2, 12, 14, 15, 20, 27, 28]。同一個圖，即使節點的排列順序不同，其拓撲結構是相同的 [1, 14, 27]。一個理想的 Graph Learning 模型應該對輸入圖的節點順序變化不敏感 [15]。也就是說，只要圖的拓撲結構和節點特徵不變，模型的輸出結果應該是一樣的 (儘管對應的順序可能會不同) [1, 27]。</p>
+                        <p>這個問題與圖同構問題 (Graph Isomorphism) 有關 [14, 15, 28]，判斷兩個圖是否同構本身也是一個 NP-hard 問題 [14, 15, 28]。這給基於圖的深度學習模型帶來了挑戰：如何設計模型，使其在處理具有相同拓撲但節點排列不同或特徵不同的圖時，能夠產生一致或有意義的結果？通常需要設計特定的層或操作 (如基於鄰居聚合、共享權重等) 來實現這種不變性或等變性 [15]。</p>
+                     </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-laptop-code icon-large"></i>
+                    <h2 class="bento-title-large">7. 應用案例：從形狀對應到推薦系統 <span class="text-lg font-normal text-slate-500">Application Cases: Shape Correspondence to Recommender Systems</span></h2>
+                    <div class="bento-text">
+                        <p>Geometric Deep Learning 在處理具有結構化數據的任務中展現出巨大潛力 [1, 2, 12, 19, 20, 22, 25]。</p>
+                        <p>一個有趣的應用案例是形狀對應問題 (Shape Correspondence Problem) [1, 2, 12, 14, 20, 28, 29]。當同一個物體 (例如一個人) 擺出不同的姿勢時，我們可以將不同姿勢下的物體視為不同的圖或底層流形的不同表現 [1, 12, 14, 17, 30]。在這些圖上定義節點訊號 (例如顏色或紋理) [1, 14, 17]。目標是找到不同姿勢下同一物體上對應位置之間的對應關係 (correspondence) [1, 12, 14, 28, 29]。GNN 模型可以接收不同姿勢的圖和特徵作為輸入，並預測在一個參考圖上的對應位置 [1, 12, 28, 29]。這有助於區分物體本身的內在特性 (intrinsic) 與外部變化 (extrinsic，如姿勢) [1, 12, 29, 31]。這類問題與傳統基於表面相似度的方法不同，後者判斷兩個物體有多像，而形狀對應問題旨在建立不同物體上的對應關係，從而判斷這兩個物體是否是同一個 [1, 14, 29]。</p>
+                        <p>另一個廣泛的應用是推薦系統 (Recommendation System) [1, 2, 12, 20, 22]。推薦系統常常面臨矩陣補全問題 (Matrix Completion Problem) [1, 2, 20, 22, 30]，例如填補用戶對電影評分的稀疏矩陣 [1, 22, 30]。傳統方法包括協同過濾 (Collaborative Filtering) 和內容過濾 (Content Filtering) [1, 2, 20, 22, 30]。GDL 的思路是將用戶與物品之間的互動建模為圖 (例如二分圖)，並在矩陣分解等過程中，同時考慮物品相似度圖和用戶相似度圖的幾何結構 [1, 2, 22, 27, 30]。這也是一種形式的 GNN 模型應用，需要利用圖結構信息（如圖拉普拉斯算子）來提升推薦效果 [1, 2, 27]。</p>
+                        <p>此外，GDL 的應用還包括分子結構分析和藥物發現 (Molecular Structure Analysis and Drug Discovery) (將分子表示為圖) [2, 20, 22, 24, 25], 社交網絡分析 (Social Network Analysis) [22], 點雲處理 (Point Cloud Processing) [22], 物理模擬與科學計算 (Physics Simulation and Scientific Computing) [22] 等等 [25]。這些領域的共同點在於數據具有非歐幾里得結構，而 GDL 能夠有效地處理這些結構化的數據 [25]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                     <i class="fas fa-search-plus icon-large"></i>
+                    <h2 class="bento-title-large">8. 可解釋性 (Interpretability) <span class="text-lg font-normal text-slate-500">Interpretability</span></h2>
+                    <div class="bento-text">
+                        <p>將圖結構納入深度學習模型中，在某些情況下可以增強模型的可解釋性 (Interpretability) [1, 2, 4, 12, 27]。對於規模較小或結構相對簡單的圖，其拓撲結構是直觀且易於理解的 [1, 12, 27]。利用圖的這種可解釋性，我們可以更好地理解模型為何做出某些預測或決策 [1, 12, 27]。然而，當圖變得非常龐大和複雜時，其可解釋性也會隨之減弱 [1, 12, 27]。這是一個在實際應用中需要權衡的問題。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-flag-checkered icon-large"></i>
+                    <h2 class="bento-title-large">總結與展望 <span class="text-lg font-normal text-slate-500">Conclusion & Outlook</span></h2>
+                    <div class="bento-text">
+                        <p>總之，幾何深度學習為處理非歐幾里得結構數據提供了一個強大的框架 [1, 3, 25]。通過結合圖論、微分幾何和深度學習的概念，它能夠有效地捕捉並利用數據中的結構資訊，從而解決許多傳統深度學習模型難以處理的問題 [1, 3, 19, 25]。譜聚類、圖拉普拉斯算子、圖卷積以及流形離散近似的概念構成了這個領域的基石，而形狀對應、推薦系統等應用則展示了其廣闊的應用前景 [1, 2, 12, 18, 19, 22, 25]。雖然存在排列不變性等挑戰，但 GDL 無疑是當前機器學習領域一個非常活躍且重要的研究方向 [2, 15]。</p>
+                        <p>希望這些詳細的介紹和入門重點，能幫助大家更好地理解幾何深度學習的核心概念和價值。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

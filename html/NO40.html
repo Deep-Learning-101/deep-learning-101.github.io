@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>實例分割詳解 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=tXnzUd6sZz4" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2020/05/01, 顏志翰 (Bean), Instance Segmentation</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                實例分割
+                 <a href="https://www.youtube.com/watch?v=tXnzUd6sZz4" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Instance Segmentation
+            </p>
+            <p class="text-slate-500 mt-1">2020/05/01 顏志翰 (Bean)</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-object-group icon-large"></i>
+                    <h2 class="bento-title-large">實例分割與語義分割的區別 <span class="text-lg font-normal text-slate-500">Instance vs. Semantic Segmentation</span></h2>
+                    <div class="bento-text">
+                        <p>語義分割的目標是將圖像中的每個像素分類到預定義的語義類別之一 [2, 3, 5]。簡單來說，它只關心「這是什麼類別」[2, 4]。例如，在一張照片中，語義分割會把所有的牛都標記為「牛」這個類別，不論是哪一隻個體 [4]。換句話說，語義分割將同一類別的所有像素標記為一個整體，不區分個體 [3]。</p>
+                        <p>實例分割則更進一步 [2, 4]。它不僅要識別物體的類別，還要區分屬於同一類別的不同個體，並為每個個體生成獨立的像素級掩膜（Mask）[2, 3, 6]。用牛的例子來說，實例分割不僅知道圖中有牛，還能區分出「第一隻牛」、「第二隻牛」等等，並為每一隻牛生成一個專屬的分割 Mask [4]。這點是實例分割與語義分割最主要的差異 [2]。</p>
+                        <p>實例分割的主要挑戰包括物體之間的疊合、遮蔽、顏色相似以及空間上的奇異性（例如一個物體被另一個物體包圍）[2, 4]。在有物體疊合的情況下，要精確地分割出每一個獨立的個體，難度會顯著增加 [2, 7]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-stream icon-large"></i>
+                    <h2 class="bento-title-large">實例分割的主要方法 <span class="text-lg font-normal text-slate-500">Main Approaches to Instance Segmentation</span></h2>
+                    <div class="bento-text">
+                        <p>目前實例分割的方法大致可分為兩大類：Two-stage（兩階段）方法和 One-stage（一階段）方法 [2, 4, 8]。對於新手而言，理解這兩種方法的流程是入門的第一步。</p>
+                        <h3 class="bento-subtitle">Two-stage (兩階段) 方法 <span class="text-sm font-normal text-slate-500">Two-stage Methods</span></h3>
+                        <ul class="bento-list">
+                            <li><strong>流程：</strong> 這類方法遵循一個「先檢測後分割」的思路 [2, 3]。首先，它會進行物體檢測（Object Detection），在圖像中找到可能包含物體的區域，這些區域被稱為物體提案（Proposal）或候選區域（Region Proposal）[2-4, 8-10]。接著，對於每一個被檢測到的物體提案，模型會再對其進行實例 Mask 的分割 [2, 4, 8]。</li>
+                            <li><strong>代表性方法：</strong> Mask R-CNN (MCNN) 是 Two-stage 方法中最具代表性且影響力最大的模型 [2, 4, 6, 10]。它是在 Fast R-CNN 物體檢測模型的基礎上發展而來，並增加了一個用於預測每個候選區域物體 Mask 的分支 [2, 6]。</li>
+                            <li><strong>優缺點：</strong> Two-stage 方法的優點通常是精準度較高 [2, 4]。因為它有一個明確的物體檢測階段，為後續的分割提供了良好的基礎 [2]。尤其在 COCO 排行榜上，大多數高性能方法都是基於 Mask R-CNN 進行改進的 [2]。然而，它的缺點是速度通常較慢，因為需要分兩個階段處理 [2, 4]。有資料提到，去年的 HPCK 方法在 COCO test-dev 上的 MAP 達到 43.9，但速度非常慢 [2]。研究顯示，從 2019 年到 2020 年間，Two-stage 方法的發展似乎進入瓶頸，沒有顯著突破 [11]。</li>
+                            <li><strong>關鍵點：</strong> 核心在於「先找框（Proposal），再在框裡切 Mask」[2-4, 8]。</li>
+                        </ul>
+                        <h3 class="bento-subtitle">One-stage (一階段) 方法 <span class="text-sm font-normal text-slate-500">One-stage Methods</span></h3>
+                        <ul class="bento-list">
+                            <li><strong>流程：</strong> 與 Two-stage 方法不同，One-stage 方法沒有單獨的物體提案階段 [2-4, 8]。它試圖直接從圖像中同時輸出物體的類別、位置（或相關資訊）和實例 Mask [2-4, 12]。流程更為精簡 [4]。</li>
+                            <li><strong>代表性方法：</strong> SOLO 是一種重要的 One-stage 實例分割方法 [2, 4, 6, 11]。它直接進行分類和實例 Mask 的切割，不依賴 Region Proposal [2, 11]。</li>
+                            <li><strong>優缺點：</strong> One-stage 方法的優點是速度通常比 Two-stage 方法快，因為處理流程更精簡 [2, 4, 13]。傳統上認為 One-stage 方法在精準度上較 Two-stage 方法差 [2, 4, 10]。然而，近期的 SOLO 等方法似乎顛覆了這種觀念 [2, 4, 10]。Solo 在 test 資料集上的 FPS 可達 31，MAP 達到 37.1，已經與 Mask R-CNN 相當甚至更高 [2]。改進後的 SOLO V2 速度更快（31.3 FPS），且 MAP 逼近最高精度方法 [2, 10]。講者認為 One-stage 方法，特別是 SOLO 這種方式，具有很大潛力 [2, 4, 10]。</li>
+                            <li><strong>關鍵點：</strong> 核心在於「直接預測 Mask，不需要單獨找框」[2-4, 12]。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-layer-group icon-large"></i>
+                    <h2 class="bento-title-large">Bottom-up (自下而上) 方法 <span class="text-lg font-normal text-slate-500">Bottom-up Approaches</span></h2>
+                    <div class="bento-text">
+                        <p>除了主流的 Two-stage 和 One-stage，還有 Bottom-up 方法 [2, 4, 8]。對新手來說，這種方法思路比較特別。</p>
+                        <ul class="bento-list">
+                            <li><strong>概念與流程：</strong> Bottom-up 方法的核心思想是先進行語義分割 [2-4, 7]。它會將同一類別的所有像素都分割出來 [2-4, 7]。然後，再將這些屬於同一語義類別的像素點投影到一個多維空間（例如 N 維的特徵空間）[2, 4, 7, 14]。最後，在這個多維空間中進行聚類（Clustering），以區分屬於同一類別的不同實例 [2-4, 7, 9]。這方法的思路是基於 CPPR 2017 的一篇論文 [2, 8, 11]。</li>
+                            <li><strong>實現：</strong> 實現上，首先進行語義分割 [2, 7]。然後訓練一個網路（例如 pre-trained 的 ResNet-38）將每個同一語義類別的像素點映射到一個 N 維的特徵空間 [2, 7]。訓練目標是讓同一實例的點在特徵空間中距離接近（拉力 Loss），不同實例的中心點距離較遠（推力 Loss）[2, 7, 9, 14]。</li>
+                            <li><strong>優缺點：</strong> Bottom-up 方法的優點是可能更能保留一些低階特徵（如顏色和位置）[2, 4, 9]。然而，其缺點也很明顯：它嚴重依賴語義分割的質量，如果語義分割做不好，後續的實例區分就很難成功 [2, 4, 9]。對於複雜場景（物體種類多）效果較差，因為一開始的語義分割可能就難以處理 [2, 4, 9]。此外，它需要後處理步驟（聚類），不是一個端到端的訓練（End-to-End）[2, 4, 9]。</li>
+                            <li><strong>現狀：</strong> 目前 Bottom-up 方法並非主流 [2, 8, 11]。但在結合 Top-down 方法（如 Two-stage）後，其混合方法在排行榜上曾達到第五名，顯示其思想仍有潛力 [2, 8]。講者認為其思路（先語義分割，再將點投影到多維空間進行分群）有趣且有潛力 [8, 11]。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-crosshairs icon-large"></i>
+                    <h2 class="bento-title-large">Mask R-CNN 的核心：ROI Align <span class="text-lg font-normal text-slate-500">Core of Mask R-CNN: ROI Align</span></h2>
+                    <div class="bento-text">
+                        <p>作為 Two-stage 方法的代表，Mask R-CNN 的成功很大程度上歸功於其引入的 ROI Align [2, 5, 6, 10, 11]。理解 ROI Align 對於理解 Mask R-CNN 的精度提升至關重要，也是新手需要掌握的一個重點。</p>
+                        <h3 class="bento-subtitle">背景：ROI Pooling 的問題 <span class="text-sm font-normal text-slate-500">Background: Issues with ROI Pooling</span></h3>
+                        <p>在 Mask R-CNN 之前，物體檢測或實例分割方法常使用 ROI Pooling 將不同大小的物體候選區域（Proposal）或感興趣區域（Region of Interest, ROI）對應到固定大小的 Feature Map 上，以便後續的分類或回歸網路處理 [2, 5, 6, 11, 16]。例如，將一個大小不一的 ROI 對應到 7x7 的 Feature Map [2, 16]。問題在於，ROI Pooling 在計算過程中使用了整數運算進行量化（Quantization）[2, 5, 15]。比如，將 ROI 的座標除以 Feature Map 的步長（stride），通常會四捨五入到最近的整數像素位置 [2, 11, 15, 16]。這種量化誤差會導致原始圖像中的位置資訊失真 [2, 5]。當我們將在 Feature Map 上預測的 Mask 反算回原始圖像時，由於這些誤差，邊界可能會不夠精確，影響實例分割的邊界準確度 [2, 3, 5, 15]。</p>
+                        <h3 class="bento-subtitle">ROI Align 的解決方案 <span class="text-sm font-normal text-slate-500">ROI Align's Solution</span></h3>
+                        <p>Mask R-CNN 提出了 ROI Align 來解決這個問題 [2, 5, 6, 11]。其核心思想是盡可能在整個網路管線（Pipeline）中都使用浮點數來表示位置資訊 [2, 5, 16, 17]。即使計算出的座標是浮點數，也保留浮點數 [2, 17]。在 Pooling 時，對於浮點數座標對應的像素值，ROI Align 不會簡單地取最近的整數點值 [2, 17]。而是使用雙線性插值（Bilinear Interpolation）[2, 5, 6, 17]。雙線性插值會根據周圍最近的四個像素點的像素值，按比例內插出該浮點數座標對應的精確像素值 [2, 5, 17]。這樣，得到的 Feature Map 更精確，反算回原圖時也能保持位置精確，減少邊緣誤差 [2, 17]。</p>
+                        <h3 class="bento-subtitle">影響 <span class="text-sm font-normal text-slate-500">Impact</span></h3>
+                        <p>儘管 Mask R-CNN 在結構上改動不大，但 ROI Align 的引入顯著提升了實例分割的精度 [2, 6, 11]。Mask R-CNN 的總損失函數包含了分類損失、邊界框回歸損失和掩碼損失 [2, 17]。有資料提到，人們可能會說 Mask R-CNN 沒做什麼「太大」的貢獻，但其效果卻極好 [2, 11, 17]。</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-map-marker-alt icon-large"></i>
+                    <h2 class="bento-title-large">SOLO 方法的機制 <span class="text-lg font-normal text-slate-500">SOLO Method Mechanism</span></h2>
+                    <div class="bento-text">
+                        <p>SOLO (Segmenting Objects by Locations) 作為 One-stage 方法的代表，其思路也值得新手學習 [2, 4, 6, 11]。</p>
+                        <ul class="bento-list">
+                            <li><strong>核心思想：</strong> SOLO 方法將實例分割問題視為預測像素位置與實例掩膜之間的關係 [6]。它不依賴於 Region Proposal [11]。其核心思想是將圖像切分成一個網格（Grid），例如 5x5 [2, 12]。根據物體的質心（Centroid）將其對應到某個網格單元（Grid Cell）[2, 6, 12, 18]。</li>
+                            <li><strong>實現：</strong> 模型會訓練一個分支來預測每個網格中是否存在物體質心，以及該物體所屬的類別 [12, 18]。同時，另一個分支會為每個網格生成一個對應的 Mask Channel [12, 18]。這個 Mask Channel 的數量等於網格數量的平方（S x S）[10, 12]。例如，如果是 5x5 的網格，就會有 25 個 Mask Channel [12]。如果在某個網格中檢測到物體質心，那麼與該網格對應的 Mask Channel 就會被用來生成該物體的實例 Mask [12, 18]。訓練時的目標就是讓對應於物體質心所在網格的 Mask Channel 能夠學習到該物體的精確 Mask [12]。</li>
+                            <li><strong>特點：</strong> 這是一種直接的切割方式 [2]。SOLO 也被提及會將 X 和 Y 的位置資訊加入到 Feature Map 的 Channel 中一起訓練 [10]。</li>
+                            <li><strong>潛力：</strong> Solo 方法在速度和精度上都取得了不錯的表現 [2, 4, 10]。SOLO V2 更是在速度上有了進一步加強，其精度也逼近當時的頂尖方法 [2, 4, 10, 11]。這使得 One-stage 方法顯示出很大的潛力，挑戰了傳統上 Two-stage 方法在精度上的壟斷地位 [2, 4, 10, 11]。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                     <i class="fas fa-level-up-alt icon-large"></i>
+                    <h2 class="bento-title-large">高性能實例分割的改進策略 <span class="text-lg font-normal text-slate-500">High-Performance Improvement Strategies</span></h2>
+                    <div class="bento-text">
+                        <p>僅僅依靠單一的核心思想往往不足以達到最佳性能 [2]。目前 COCO 排行榜上的一些頂尖方法，特別是基於 Mask R-CNN 改進的方法，通常會融合多種技術策略來提升精度 [2, 6, 11, 17, 19-21]。對於希望深入研究實例分割的朋友，了解這些進階策略非常重要。</p>
+                        <h3 class="bento-subtitle">迭代式精煉 (Iterative Refinement) 或 Cascading <span class="text-sm font-normal text-slate-500">Iterative Refinement/Cascading</span></h3>
+                        <ul class="bento-list">
+                            <li><strong>概念：</strong> 將多個網路級聯（Cascade）起來，前一個網路階段的輸出作為後一個網路階段的輸入，逐步改進結果 [2, 6, 20]。這種思路可以應用於物體提案的精煉或 Mask 的改進 [2]。</li>
+                            <li><strong>應用：</strong> 一種應用是利用前一個階段調整後的更精確的邊界框來幫助後一個階段的 Mask 預測 [2, 20]。另一種思路是利用前一個階段預測的 Mask 來幫助後一個階段的 Mask 預測，這有點類似於殘差網路（Residual Network）的概念，將前一個階段的 Mask 加入到 Feature Map 中，以幫助下一個階段做出更好的改進 [2, 6, 19-21]。這種方法通過多次迭代或串聯處理，逐步提高預測的準確度 [3, 6, 20]。</li>
+                        </ul>
+                        <h3 class="bento-subtitle">融合語義分割資訊 <span class="text-sm font-normal text-slate-500">Fusing Semantic Segmentation</span></h3>
+                        <ul class="bento-list">
+                            <li><strong>概念：</strong> 將語義分割的輸出或 Feature Map 整合到實例分割的流程中 [1, 2, 6, 19, 21]。</li>
+                            <li><strong>應用：</strong> 語義分割的輸出通常包含前景/背景資訊和類別資訊 [2, 3, 5, 21]。將這些資訊整合到實例分割的 Mask 分支中，可以幫助模型更好地理解物體的輪廓和類別歸屬，從而提升 Mask 的精準度 [2, 19, 21]。最高精度的某些方法就融合了多種 cascading 策略，並將 semantic segmentation 的 Feature Map 加入到 Mask 分支中 [2, 19, 21]。</li>
+                        </ul>
+                         <h3 class="bento-subtitle">融合其他技術 <span class="text-sm font-normal text-slate-500">Fusing Other Techniques</span></h3>
+                        <p>除了上述兩種，高性能方法還可能融合其他多種方法 [2, 11, 19]。例如，迭代式地改進 Bounding Box 和 Mask [11]。最高精度的 CatC 方法就被提及融合了多種方法來達到當時最高的 AP (43.2)，這可能是指 COCO 資料集上的 AP [2, 11, 17, 19]。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-database icon-large"></i>
+                    <h2 class="bento-title-large">訓練資料與評估指標 <span class="text-lg font-normal text-slate-500">Training Data & Metrics</span></h2>
+                    <div class="bento-text">
+                         <p>對於新手來說，了解訓練資料是什麼樣子也很重要 [18]。</p>
+                         <ul class="bento-list">
+                            <li><strong>訓練資料：</strong> 訓練實例分割模型需要標記好的資料集，其中包含圖像以及對應的實例 Mask 標註 [18]。對於圖像中的每個物體實例，需要標記出其所屬的類別以及精確的像素級別 Mask [18]。這意味著需要記錄每個物體的 2D 像素點，並且區分屬於同一類別的不同個體，給予不同的實例 ID [14, 18]。例如，第五類中的第一個實例標記為 5.1，第二個標記為 5.2 [14, 18]。資料集需要包含每個物體的 2D 像素點以及它們所屬的實例 ID 和類別 ID [18]。常用的資料集是 COCO 資料集 [8, 22]。</li>
+                            <li><strong>評估指標：</strong> 實例分割常用的評估指標是 AP (Average Precision) [2, 6, 11]。速度則常用 FPS (Frames Per Second) 來衡量 [2, 6]。在 COCO test-dev 資料集上獲得好的 AP 是衡量模型性能的重要標準 [8, 22]。</li>
+                         </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-users icon-large"></i>
+                    <h2 class="bento-title-large">人物提及 <span class="text-lg font-normal text-slate-500">People Mentioned</span></h2>
+                    <div class="bento-text">
+                        <p>資料中還提到了幾位人物 [23]。</p>
+                        <ul class="bento-list">
+                            <li><strong>講者 (Speaker):</strong> 來源影片中的主要發言人，詳細介紹了實例分割的各種方法和進展 [23]。</li>
+                            <li><strong>提問者 (Questioner):</strong> 在影片中向講者提問，問題涵蓋資料標記和網路架構 [14, 23]。</li>
+                            <li><strong>凱和凱明 (Kai and Kaiming):</strong> 在影片中被提及，他們在去年（可能指 2019 或 2020 年初）提出了一種對邊界處理更好的 P 方法，據說對 Mask R-CNN 的邊界處理有幫助 [11, 21, 23]。</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-flag-checkered icon-large"></i>
+                    <h2 class="bento-title-large">總結與展望 <span class="text-lg font-normal text-slate-500">Conclusion & Outlook</span></h2>
+                    <div class="bento-text">
+                        <p>目前來看，Two-stage 方法在精度上仍有優勢，但速度較慢 [2, 24]。Mask R-CNN 及其改進版本在排行榜上佔據前列 [2, 11]。Mask R-CNN 的 ROI Align 解決了量化誤差問題，是精度提升的關鍵 [2, 24]。高性能方法通過級聯、迭代精煉以及融合語義分割等資訊來進一步提升精度 [2, 3, 6, 19, 21, 24]。</p>
+                        <p>One-stage 方法，特別是 SOLO，在速度和精度上取得了顯著進展，具有很大的潛力，可能會顛覆傳統觀念 [2-4, 10, 24]。儘管在概念上更精簡，但實際實現也可能複雜 [13]。</p>
+                        <p>Bottom-up 方法目前非主流，但其先分割再聚類的思想可能仍有潛力，尤其在與 Top-down 方法結合時 [2, 4, 8, 24]。</p>
+                        <p>對於未來，講者對 3D 實例分割感興趣，希望 2D 的最新方法（如 Two-stage vs One-stage, 邊界處理, 特徵融合等）能有所啟發 [2, 6, 21, 24]。將這些概念應用於 3D 點雲或體素數據的實例分割任務，是一個值得探索的方向 [6, 24]。</p>
+                        <p>這就是根據提供的資料，針對實例分割領域的一些核心概念、主要方法及其代表模型、關鍵技術以及最新進展的匯整介紹。希望這些內容能幫助剛入門的朋友們對實例分割有一個全面且深入的了解。後續可以針對感興趣的部分，進一步閱讀相關論文來深入研究 [24]。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.08 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1; // Slower stagger for single column
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>

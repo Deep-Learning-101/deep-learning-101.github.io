@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>可解釋性人工智慧 (XAI) - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+        }
+        .bento-title-large { /* Used for main section titles in bento boxes (H2) */
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle { /* Used for H3 level subtitles within a bento box */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p {
+            margin-bottom: 1rem;
+        }
+        .bento-text p:last-child {
+            margin-bottom: 0;
+        }
+        .bento-text ul, .bento-text ol {
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        /* Styling for ul with Font Awesome bullets */
+        .bento-list {
+            list-style-type: none; /* Remove default bullets */
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem; /* Increased padding for icon and text */
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900; /* Ensure solid icon */
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem; /* Position icon before text */
+            top: 0.5em; /* Align icon with text */
+        }
+         /* For ol (numbered lists) */
+        .bento-text ol.list-decimal { /* More specific selector for ol */
+            list-style-type: decimal;
+            list-style-position: outside;
+            padding-left: 1.75rem; /* Consistent padding */
+        }
+        .bento-text ol.list-decimal li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem; /* Space after number */
+        }
+
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem;
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        /* Specific override for single column focus pages */
+        .grid-container.single-column-focus .bento-box {
+             grid-column: span 1 / -1 !important; /* Makes all boxes full width */
+        }
+
+        .bento-box > .motion-div-full-height {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title { /* Page H1 */
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+        .english-subtitle { /* Page English subtitle */
+            font-size: 1.5rem;
+            color: #666;
+            font-weight: 400;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                  AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                  衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                  由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。
+                </p>
+                <p>
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px; margin: 5px;">
+                    </a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/watch?v=1Mu0Wm_X1DQ" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2019/12/13, 何宗諭 (Jiero), Explainable Artificial Intelligence</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                可解釋性人工智慧
+                 <a href="https://www.youtube.com/watch?v=1Mu0Wm_X1DQ" target="_blank" rel="noopener noreferrer" class="text-2xl text-blue-500 hover:text-blue-700 align-middle ml-2"><i class="fab fa-youtube"></i></a>
+            </h1>
+            <p class="english-subtitle mt-2">
+                Explainable Artificial Intelligence (XAI)
+            </p>
+            <p class="text-slate-500 mt-1">2019/12/13 何宗諭 (Jiero)</p>
+        </header>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-layer-group icon-large"></i>
+                    <h2 class="bento-title-large">Layer-wise Relevance Propagation (LRP) <span class="text-lg font-normal text-slate-500">Understanding LRP</span></h2>
+                    <div class="bento-text">
+                        <p>LRP 是一種模型歸因解釋方法，它的基本思想是將模型的最終預測相關性分數從輸出層反向傳播到輸入層 [1, 6, 7, 9]. 想像一下，模型的最後一層輸出一個分數（例如預測類別的機率），LRP 的目標是將這個分數的重要性或「相關性」一步步地分配回前一層的神經元，直到輸入層的每個特徵（例如圖片中的每個像素或文字中的每個詞）都獲得一個相關性分數 [7, 9]. 這個分數的大小代表了該輸入特徵對最終預測的貢獻程度 [7, 9].</p>
+                        <p>LRP 的計算過程是層層回推的，需要知道模型的架構和權重 [6, 9]. 概念上是利用一個反向傳播的規則，將後一層的神經元相關性分配給前一層與其相連的神經元 [9, 12, 13]. 這個分配規則有多種變形，不同的規則會影響最終的解釋效果 [12-14]. 例如，它可以計算每個像素的貢獻值，並將其顯示在圖片上，通常用熱力圖 (heatmap) 的形式呈現，紅色表示正相關性（支持該預測），藍色表示負相關性（反對該預測），綠色或接近零的值表示影響較小 [7, 13].</p>
+                        <p>然而，LRP 作為較早的方法，也存在一些限制。它對模型的架構比較敏感，有些非線性啟動函數可能會影響其反向傳播的計算 [9, 12]. 此外，如同 Sensitivity Analysis (SA) 這類基於梯度的早期方法一樣，LRP 的解釋效果也可能受到輸入雜訊的影響，有時生成的熱力圖可能比較分散或不夠聚焦 [7]. 儘管如此，LRP 在某些結構化的模型（如 CNN）上的應用已被證明是有效的 [9].</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-search-location icon-large"></i>
+                    <h2 class="bento-title-large">Local Interpretable Model-agnostic Explanations (LIME) <span class="text-lg font-normal text-slate-500">Understanding LIME</span></h2>
+                    <div class="bento-text">
+                        <p>LIME 是一種非常重要的後設解釋方法 [1, 6, 8, 15]. 它的核心思想是「局部近似」[1, 15]. 由於複雜模型在全域範圍內可能難以解釋，但 LIME 認為在一個特定預測的局部區域內，複雜模型的行為可以用一個簡單、可解釋的模型（如線性迴歸）來近似 [1, 15].</p>
+                        <p>LIME 的工作原理如下：針對我們要解釋的特定輸入樣本和該樣本的預測結果，LIME 會在該樣本的「附近」生成一系列擾動過的樣本 [1, 15]. 例如，對於圖片，它可以將圖片分割成不同的區域（segments），然後隨機隱藏或保留這些區域來生成新的圖片 [10, 15]. 對於文本，它可以隨機移除或替換一些單詞或詞組 [1, 10]. 然後，將這些擾動後的樣本輸入到原始的「黑箱」模型中，獲取它們的預測結果 [15]. 接著，LIME 利用這些擾動樣本及其對應的預測結果，並根據擾動樣本與原始樣本的相似度給予不同的權重，來訓練一個簡單的可解釋模型（例如，一個基於少量特徵的線性模型）[1, 15]. 這個簡單模型學到的特徵權重就代表了原始模型在該局部區域內對該特定預測的決策邏輯 [1, 15].</p>
+                        <p>LIME 的最大優點是它是模型無關的 (model-agnostic)，可以用於解釋任何能夠給出預測概率或分數的模型 [1, 6, 15]. 並且它提供的是針對「單一預測」的「局部解釋」[3, 6, 15]. 這點非常重要，因為不同的輸入樣本即使被歸為同一類別，模型判斷的理由可能完全不同 [3, 16]. 例如，在 URL 惡意偵測案例中，LIME 可以幫助我們看到模型是基於 URL 中的哪些特定詞語或字串判斷其為惡意的 [5, 17, 18]. 這對於偵測資料集中的偏差尤其有效 [5, 8, 17-19]. 如果模型總是基於與惡意行為無關的詞語（如「login」）來判斷，我們就知道資料集中存在偏差，需要進行清洗或重新採樣 [5, 17, 18]. LIME 的視覺化通常會把對預測貢獻大的部分標示出來 [5, 15].</p>
+                        <p>LIME 在應用於不同類型資料時，生成擾動樣本的方式是關鍵 [10]. 例如圖像分割 (segmentation) 的策略會影響解釋的結果 [15]. 對於結構化較弱或難以有意義地「擾動」的數據，LIME 的效果可能會受到影響 [10, 20].</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-gamepad icon-large"></i>
+                    <h2 class="bento-title-large">SHapley Additive exPlanations (SHAP) <span class="text-lg font-normal text-slate-500">Understanding SHAP</span></h2>
+                    <div class="bento-text">
+                        <p>SHAP 是另一種強大的後設解釋方法 [1, 6, 8]. 它的理論基礎來自賽局理論中的 Shapley 值 (Shapley value) [1, 6, 20]. Shapley 值的概念源於合作賽局，用於公平地分配合作成果給每個參與者 [1]. 在 SHAP 中，模型對單一預測的總輸出被視為「合作成果」，而輸入特徵則被視為「參與者」[1]. SHAP 的目標是計算每個特徵對該預測的「邊際貢獻」或 Shapley 值，這個值代表了該特徵在考慮所有可能的特徵組合順序下，對預測結果的平均貢獻 [1, 20].</p>
+                        <p>SHAP 也提供針對特定輸入樣本的個性化解釋 [6]. 它的優點在於其堅實的理論基礎，並且能夠反映特徵之間的交互作用 [1, 20]. SHAP 計算出的 Shapley 值可以量化每個特徵對預測結果的正面或負面影響 [1]. SHAP 與 LIME 一樣，也是模型無關的 [6]. 在實務應用中，SHAP 也常用來生成類似 LIME 的視覺化解釋，標示出對預測最重要的特徵 [5]. 例如，在 URL 惡意偵測中，SHAP 也能指出哪些詞語對惡意判斷的貢獻最大 [5].</p>
+                        <p>與 LIME 類似，SHAP 的計算也可能涉及到對輸入特徵的處理（如對圖像進行分組或對文本進行詞語分割），並需要進行大量的模型預測來計算 Shapley 值，這在計算效率上可能是一個挑戰，特別是對於即時應用 [8, 10, 21]. 資料來源中提到 SHAP 在選擇特徵 (feature) 時會做一些設計，例如用 Shapley 的方式去選 [5, 10]，這可能是指利用 Shapley 值來評估特徵的重要性以便進行處理或視覺化。</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-cogs icon-large"></i>
+                    <h2 class="bento-title-large">XAI 的應用與價值 <span class="text-lg font-normal text-slate-500">Applications and Value of XAI</span></h2>
+                    <div class="bento-text">
+                        <p>從研究和實務應用角度來看，XAI 的價值體現在多個方面：</p>
+                        <ol class="list-decimal">
+                            <li><strong>模型除錯 (Debugging):</strong> 如同 URL 惡意偵測案例所示，XAI 可以幫助我們發現模型不是基於我們期望的特徵進行判斷，而是學到了資料中存在的偏差或 spurious correlation [1, 5, 6, 8, 17-19]. 這有助於我們理解模型犯錯的原因 [5, 17, 22].</li>
+                            <li><strong>資料集改善 (Dataset Improvement):</strong> 透過 XAI 揭示的偏差，我們可以回頭審視訓練資料集，進行清洗、過濾或重新採樣，以消除這些偏差或增加缺乏的數據多樣性 [1, 8, 17-19, 23]. 例如，如果發現模型過度依賴「login」這個詞來判斷惡意 URL，就可以分析資料集中帶有「login」的惡意和非惡意 URL 的分佈，並調整資料集 [17, 18].</li>
+                            <li><strong>建立使用者信任 (Building Trust):</strong> 對於終端使用者或領域專家，能夠理解模型決策的理由，即使模型偶爾出錯，也能提升對系統的信任度 [2, 8, 15, 22]. 在某些高風險應用（如醫療、金融）中，解釋性甚至是必須的 [2].</li>
+                            <li><strong>模型開發與優化 (Model Development and Optimization):</strong> XAI 工具可以作為模型開發者的輔助手段，幫助他們理解模型的學習行為，選擇合適的模型架構或超參數，甚至比較不同模型的決策邏輯 [8, 22]. 選擇一個解釋起來邏輯清晰、行為符合預期的模型，可能比僅僅追求最高準確率更重要 [5, 17, 22].</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-tasks icon-large"></i>
+                     <h2 class="bento-title-large">評估 XAI 方法的挑戰 <span class="text-lg font-normal text-slate-500">Challenges in Evaluating XAI Methods</span></h2>
+                     <div class="bento-text">
+                        <p>評估一個可解釋性模型本身的好壞並不像評估預測模型那樣有標準的客觀指標 [20]. 我們無法簡單地計算一個「解釋的準確率」 [20]. 評估通常需要綜合考量多個因素 [20]:</p>
+                        <ul class="bento-list">
+                            <li><strong>直觀性/易理解性 (Intuitiveness/Understandability):</strong> 解釋是否容易被人類理解和信任 [20]. 這往往比較主觀。</li>
+                            <li><strong>準確性 (Accuracy):</strong> 解釋是否真實地反映了模型實際的決策過程 [20]. 這點在黑箱模型中很難直接驗證。</li>
+                            <li><strong>穩定性/一致性 (Stability/Consistency):</strong> 對於相似的輸入或相似的模型，產生的解釋是否相似和穩定 [20].</li>
+                            <li><strong>完整性 (Completeness):</strong> 解釋是否涵蓋了對預測結果有顯著影響的所有關鍵因素 [20].</li>
+                            <li><strong>理論性質 (Theoretical Properties):</strong> 一些研究提出了理想的可解釋性方法應滿足的公理或屬性，例如「敏感性 (Sensitivity)」和「實現不變性 (Implementation Invariance)」[1, 5, 11, 20]. 敏感性要求當輸入特徵發生微小變化時，解釋也應該相應地有變化；實現不變性要求對於實現細節不同但功能相同的兩個模型，它們對同一個輸入的解釋應該是一致的 [1, 5, 11, 20]. 雖然一些方法試圖滿足這些公理 [5, 11]，但在實際應用中驗證或確保這些性質可能很困難 [5, 11].</li>
+                        </ul>
+                        <p>此外，XAI 在處理複雜或「無意義」的輸入資料時會面臨挑戰 [20]. 例如，惡意 URL 可能由一堆隨機或難以理解的字元組成 [17, 20]. 即使解釋性模型標出了其中某個部分的重要性，如果人類無法從中獲得有意義的見解，那麼解釋的價值也會降低 [17, 20].</p>
+                     </div>
+                </div>
+            </div>
+
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-shield-alt icon-large"></i>
+                    <h2 class="bento-title-large">實務應用中的考量與挑戰 <span class="text-lg font-normal text-slate-500">Practical Considerations and Challenges in XAI</span></h2>
+                    <div class="bento-text">
+                        <p>在實際應用中部署 XAI 工具時，需要考慮多個因素 [1, 8, 24]:</p>
+                        <ul class="bento-list">
+                            <li><strong>模型類型與資料類型 (Model and Data Type):</strong> 不同的 XAI 方法可能更適合特定的模型或資料類型 [1, 9, 24].</li>
+                            <li><strong>解釋的目的 (Purpose of Explanation):</strong> 是為了除錯模型、改善資料集，還是為了向最終使用者解釋 [1, 24]? 不同的目的會影響我們選擇哪種方法以及解釋的呈現方式。</li>
+                            <li><strong>計算效率 (Computational Efficiency):</strong> 尤其對於需要即時解釋的線上系統，解釋生成的速度和效率至關重要 [8, 21, 24]. LIME 和 SHAP 在生成解釋時可能需要多次運行原始模型，這可能對性能產生較大影響 [8, 10, 21].</li>
+                            <li><strong>解釋的可靠性 (Reliability of Explanation):</strong> 即使生成了解釋，如何確定這個解釋是準確反映模型實際決策邏輯的，而非產生誤導性的解釋 [8, 20].</li>
+                        </ul>
+                        <p>特別是在資安領域的 URL 惡意偵測這類應用中，誤報 (False Positive) 的嚴重性非常高 [5, 25]. 即使模型準確率很高，微小的偏差或對無關特徵的依賴都可能導致正常的 URL 被誤判為惡意，造成嚴重的後果 [5, 25]. 在這種場景下，XAI 作為一個診斷工具，幫助我們發現模型訓練數據中的隱藏偏差，從而改善模型和數據，是其核心價值所在 [5, 8, 17, 18, 23]. 這也是為什麼即使 XAI 在即時應用中可能存在效率問題，它在離線的模型開發、驗證和資料優化階段仍然是不可或缺的工具 [8, 21, 26].</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const topInfoBox = document.querySelector('.top-info-box');
+        if (topInfoBox) {
+            animate(topInfoBox, { opacity: [0, 1], y: [-30, 0] }, { duration: 0.7, ease: 'easeOut' });
+        }
+
+        const headerH1 = document.querySelector('header h1.chinese-main-title');
+        if (headerH1) {
+            animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut', delay: 0.2 });
+        }
+        const headerP = document.querySelector('header p.english-subtitle');
+        if (headerP) {
+            animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.4, ease: 'easeOut' });
+        }
+        const headerSpeaker = document.querySelector('header p.text-slate-500');
+        if (headerSpeaker) {
+            animate(headerSpeaker, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.5, ease: 'easeOut' });
+        }
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        let delayCounter = 0;
+        motionDivs.forEach((div) => {
+            const isSingleColumn = div.closest('.grid-container.single-column-focus') !== null;
+            const animationDelay = isSingleColumn ? delayCounter * 0.1 : (Array.from(div.parentNode.children).indexOf(div) % 3) * 0.1;
+            delayCounter++;
+
+            inView(div, (info) => {
+                animate(div, { opacity: [0, 1], y: [20, 0], scale: [0.95, 1] }, { duration: 0.5, delay: animationDelay + 0.1, ease: "easeOut" });
+            }, { amount: 0.05 }); 
+        });
+    });
+    </script>
+</body>
+</html>
