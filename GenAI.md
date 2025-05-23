@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
