@@ -94,6 +94,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ## 🎙️ 語音識別 / 合成平台價格比較
 ~2025/04
+
 | 名稱 | 功能 | 網址 | 說明 |
 |------|------|------|------|
 | [Whisper (開源)](https://github.com/openai/whisper) | 語音識別、翻譯 | 每分鐘150字 × 10分鐘 = 1500字 |
@@ -105,60 +106,25 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 | [Google Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/pricing?hl=zh-tw#gemini-models) | 大型語言模型 | Gemini/Claude 定價頁 |
 | [Google Cloud VM](https://cloud.google.com/compute/vm-instance-pricing?hl=zh-tw#sharedcore_machine_types) | 虛擬機器 | VM 執行個體定價頁面 |
 
-<details close>
-<summary>手把手帶你一起踩 AI 坑</summary>
-
-<h3><a href="https://blog.twman.org/p/deeplearning101.html">手把手帶你一起踩 AI 坑</a>：<a href="https://www.twman.org/AI">https://www.twman.org/AI</a></h3>
-
-<ul>
-  <li>
-    <b><a href="https://blog.twman.org/2025/03/AIAgent.html">避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案</a></b>：<a href="https://deep-learning-101.github.io/agent">探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2024/08/LLM.html">白話文手把手帶你科普 GenAI</a></b>：<a href="https://deep-learning-101.github.io/GenAI">淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2024/09/LLM.html">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2024/07/RAG.html">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2024/02/LLM.html">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2023/04/GPT.html">什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2024/11/diffusion.html">Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)</a></b>；<a href="https://deep-learning-101.github.io/diffusion">深入探討影像生成與分割技術的應用，強調硬體資源的重要性。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2024/02/asr-tts.html">ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策</a></b>：<a href="https://deep-learning-101.github.io/asr-tts">探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2021/04/NLP.html">那些 NLP 踩的坑</a></b>：<a href="https://deep-learning-101.github.io/nlp">分享 NLP 領域的實踐經驗，強調數據質量對模型效果的影響。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2021/04/ASR.html">那些語音處理踩的坑</a></b>：<a href="https://deep-learning-101.github.io/speech">分享語音處理領域的實務經驗，強調資料品質對模型效果的影響。</a>
-  </li>
-  <li>
-    <b><a href="https://blog.twman.org/2020/05/DeepLearning.html">手把手學深度學習安裝環境</a></b>：<a href="https://deep-learning-101.github.io/101">詳細介紹在 Ubuntu 上安裝深度學習環境的步驟，分享實際操作經驗。</a>
-  </li>
-</ul>
-
-</details>
 
 # Speech Processing (語音處理)
 
-- [音視頻開發基礎入門｜聲音的採集與量化、音頻數字信號質量、音頻碼率](https://zhuanlan.zhihu.com/p/577850804)
+- 2025-05-14：[ten-turn-detection](https://deepwiki.com/TEN-framework/ten-turn-detection)；[ten-vad](https://deepwiki.com/TEN-framework/ten-vad)
 - 2025-01-19：[小米語音首席科學家Daniel Povey：語音辨識捲完了，下一個機會在哪裡？](https://www.jiqizhixin.com/articles/2025-01-19-4?)
+-  [ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策](https://blog.twman.org/2024/02/asr-tts.html)；[探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性](https://deep-learning-101.github.io/asr-tts)
+-  [那些語音處理踩的坑](https://blog.twman.org/2021/04/ASR.html)；[分享語音處理領域的實務經驗，強調資料品質對模型效果的影響](https://deep-learning-101.github.io/speech)
+- [音視頻開發基礎入門｜聲音的採集與量化、音頻數字信號質量、音頻碼率](https://zhuanlan.zhihu.com/p/577850804)
 - [一文總覽萬字語音合成系列基礎與論文總結](https://mp.weixin.qq.com/s/S9T9fk9THUF3JQRnNuOM7Q)
-- [語音識別資料匯總：常見庫和特徵對比](https://zhuanlan.zhihu.com/p/616020595)
 - [Mozilla Common Voice Datasets - zhTW](https://huggingface.co/datasets/mozilla-foundation/common_voice_11_0/viewer/zh-TW)
+- [語音識別資料匯總：常見庫和特徵對比](https://zhuanlan.zhihu.com/p/616020595)
 - [語音合成,語音辨識常見資料集](https://mp.weixin.qq.com/s/xGAEzuT5x7BkTRH6DCJFhA)
 
 
 # 中文語音識別 (Chinese Speech Recognition)
+
+[https://www.twman.org/AI/ASR](https://www.twman.org/AI/ASR)
+
+通過語音信號處理和模式識別讓機器自動識別和理解人類的口述
 
 * 2024/05/01：[使用Hugging Face 推理終端建立強大的「語音辨識+ 說話者分割+ 投機解碼」工作流程](https://huggingface.co/blog/zh/asr-diarization)
 * **Whisper**
@@ -194,10 +160,10 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 * 2025-04-28：[FireRedASR](https://github.com/FireRedTeam/FireRedASR)：[AI語音助理語音轉文字FireRedASR轉API](https://mp.weixin.qq.com/s/FUC-rSkItxEQJIWUbU4Cpw)；[如何使用](https://deepwiki.com/search/_ca59f67a-33b7-4008-8ac0-296d135051ea)
 * 2024/07/03：[SenseVoice](https://funaudiollm.github.io/)：[阿里開源語音大模型：語音辨識效果與表現強於Whisper，還能偵測掌聲、笑聲、咳嗽等！](https://mp.weixin.qq.com/s/q-DyyAQikz8nSNm6qMwZKQ)  
 
-
-### **2020/03-2021/01 開發心得：**
+<details>
+<summary>2020/03-2021/01 開發心得</summary>
 語音辨識（speech recognition）技術，也被稱為自動語音辨識（英語：Automatic Speech Recognition, ASR）、電腦語音識別（英語：Computer Speech Recognition）或是語音轉文字識別（英語：Speech To Text, STT），其目標是以電腦自動將人類的語音內容轉換為相應的文字；跟小夥伴們一起嘗試過NEMO還有Kaldi、MASR、VOSK，wav2vec以及Google、Azure等API，更別說後來陸續又出現SpeechBrain、出門問問的WeNet跟騰訊PIKA等。目前已知可訓練聲學模型(AM)中文語音(中國發音/用語，可惜還沒臺灣較靠譜的)公開數據如：Magic-Data_Mandarin-Chinese-Read-Speech-Corpus、aidatatang、aishell-1 、aishell-2等約2000多小時(aishell目前已到4，但想商用至少得破萬小時較靠譜)；再搭配語言模型(LM)，然後基於各種演算法架構優化各有優缺點，效果也各有優劣。與說話人辨識及說話人確認不同，後者嘗試辨識或確認發出語音的說話人而非其中所包含的詞彙內容。 語音辨識技術的應用包括語音撥號、語音導航、室內裝置控制、語音文件檢索、簡單的聽寫資料錄入等。語音辨識技術與其他自然語言處理技術如機器翻譯及語音合成技術相結合，可以構建出更加複雜的應用，例如語音到語音的翻譯。語音辨識技術所涉及的領域包括：訊號處理、圖型識別、概率論和資訊理論、發聲機理和聽覺機理、人工智慧等等。
-
+</details>
 
 
 # 中文語者(聲紋)識別 (Chinese Speaker Recognition)
@@ -220,7 +186,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 * [提高聲紋辨識正確率 更添防疫新利器](https://www.nchc.org.tw/Message/MessageView/3731?mid=43)
 * [CN-Celeb-AV: 多場景視聽多模態數據集發布](https://zhuanlan.zhihu.com/p/647786644)
 
-### **2020/03/08-2020/08/29 開發心得：**
+<details>
+<summary>2020/03/08-2020/08/29 開發心得</summary>
 投入約150天。通常我們是怎樣開始項目的研究與開發？首先會先盡可能的把3年內的學術論文或比賽等SOTA都查到，然後分工閱讀找到相關的數據集和論文及相關實作；同時會找到目前已有相關產品的公司(含新創)及他們提交的專利，這部份通常再花約30天的時間；通常就是透過 Google patens、paper with codes、arxiv等等。
 
 聲紋識別這塊在對岸查到非常多的新創公司，例如: 國音智能在我們研究開發過程就是一直被當做目標的新創公司。可以先看一下上方的DEMO影片效果；然後介紹相關實驗結果前，避免之後有人還陸續踩到我們踩過的坑；需注意的是上述很多數據集都是放在對岸像是百度雲盤等，百度是直接封鎖台灣的IP，所以你打不開是很正常的；另外像是voxcelab是切成7份，下載完再合起來也要花上不少時間，aishell、CMDS, TIMIT 比起來相對好處理就是。
@@ -237,9 +204,9 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 Real Time Factor 實時比:衡量提取時間跟音頻時長的關係，ex:1秒可以處理80s的音頻，實時比=1:80；驗證比對速度：平均每秒能進行的聲紋比對次數
 ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 閥值：當分數超過閥值才做出接受決定。<br><br>  
+</details>
 
-
-# 中文語音增強(去噪) Chinese Speech Enhancement
+# 中文語音增強(去噪) (Chinese Speech Enhancement)
 
 [https://www.twman.org/AI/ASR/SpeechEnhancement](https://www.twman.org/AI/ASR/SpeechEnhancement)
 
@@ -255,12 +222,12 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 * https://github.com/facebookresearch/denoiser
 * https://www.youtube.com/watch?v=77cm_MVtLfk
 
-### **2020/08/30-2021/01/25 開發心得：**
+<details>
+<summary>2020/08/30-2021/01/25 開發心得</summary>
 分組投入約150天；說到會做語音增強(去噪音)，這一切真的只是因為那有一面之緣的圖靈獎大神在FB發文介紹FAIR的最新成果；而噪音去除你可以跟另外一個聲音分離做聯想，基本概念其實差不多，只是噪音去除是把非人聲給去除 (記得注意一下是不是多通道)；而做這個項目時，一樣也是匯整準備了相當多的學術論文和實驗結果 (如下所附) ；做語音感覺上數據也是很重要，但噪音去除相對的數據集就比較好處理，網路上都可以找到，只要進行前後調整合併，就可以產出數量頗大的數據集，唯一需要考量的就是你的 GPU 夠不夠大整個吃下了，還有你這些數據集裡的人聲是不是一樣是英文，或者是你想要中文的效果？順道一提最後我們的模型大小是經過優化的9 MB，而 RTF 是 0.08。
+</details>
 
-
-
-# 中文語者分離(分割) Chinese Speech Separation (Speaker Separation)
+# 中文語者分離(分割) (Chinese Speaker Separation)
 
 https://www.twman.org/AI/ASR/SpeechSeparation
 
@@ -288,15 +255,16 @@ https://huggingface.co/spaces/DeepLearning101/Speech-Separation
 * [ICASSP2023論文代碼開源｜TOLD能對混疊語音建模的說話人日誌框架](https://zhuanlan.zhihu.com/p/650346578)
 * [ICASSP 2023論文模型開源｜語音分離Mossformer](https://zhuanlan.zhihu.com/p/609728122)
 
-### **2020/08/30-2021/01/25 開發心得：**
 
+<details>
+<summary>2020/08/30-2021/01/25 開發心得</summary>
 投入約150天。如同語音踩的坑來說，比較常碰到因為網路架構在做參數調整時導致loss壞掉等等，而因數據集造成的問題少很多，網路上也比較容易找到更多的數據集，然後也有非常多的比賽有各種模型架構的結果可以參考，但是一樣是英文數據，而語音坑最好的就是只要有了像是 aishell 等的數據集，你想要切割或合併成一個語音，都不是太大的問題；例如我們就是把數據集打散混合，再從中隨機挑選兩個人，然後再從中分別挑出語音做混合；如是長度不同，選擇短者為參考，將長者切到與短者相同；最後產出約 train： 5萬多筆，約 32小時、val：1萬多筆語音，約10小時、test：9,千多筆語音，約 6小時，而這個數據集是兩兩完全重疊，後來為了處理兩兩互不完全重疊，再次另外產出了這樣的數據集：train：9萬多筆語音，計112小時、val：2萬多筆語音，計 26.3 小時、test：2萬多筆語音，計 29.4 小時。
 
 中間也意外發現了Google brain 的 wavesplit，在有噪音及兩個人同時講話情形下，感覺效果還不差，但沒找到相關的code，未能進一步驗證或是嘗試更改數據集。還有又是那位有一起用餐之緣的深度學習大神 Yann LeCun繼發文介紹 完去噪後，又發文介紹了語音分離；後來還有像是最早應用在NLP的Transformer等Dual-path RNN (DP-RNN) 或 DPT-NET (Dual-path transformer) 等應用在語音增強/分割，另外VoiceFilter、TasNet 跟 Conv-TasNet還有sudo-rm等等也是語音分割相關，當然更不能錯過臺大電機李宏毅老師一篇SSL-pretraining-separation的論文 (務必看完臺大電機李宏毅老師的影片)，最後也是多虧李老師及第一作者黃同學的解惑，然後小夥伴們才又更深入的確認並且解決問題。
 這裡做數據時相對簡單一點，直接打散混合，再從中隨機挑選兩個人，然後分別挑出語音做混合，若長度不同，選擇短者為參考，將長者切到與短者相同，兩兩完全重疊或者兩兩互不完全重疊等都對效果有不小的影響；同時也研究了Data Parallel 跟 Distributed Data Parallel 的差異，但是如何才能在 CPU 上跑得又快又準才是落地的關鍵
+</details>
 
-
-# 中文語音合成 Chinese Speech Synthesis
+# 中文語音合成 (Chinese Speech Synthesis)
 
 ### **相關連結**
 
