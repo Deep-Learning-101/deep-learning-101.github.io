@@ -185,19 +185,16 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   - 2024-11-21： [IBM開源一站式文件解析工具！輕鬆解析PDF、PPT、圖片及網頁等多種格式文檔](https://mp.weixin.qq.com/s/jTqFm5WzmitaxpyKowiBSA)
      - [Docling](https://github.com/DS4SD/docling)：[IBM 最新開源文件處理利器，完美整合 LLM 應用](https://most.tw/posts/ainews/introducedocling202411/)
 
+
  **[AI Agent 開源框架](https://blog.twman.org/2025/03/AIAgent.html)**
 
-|  Agent 名稱 | 功能範疇 | 集成能力 | 適用場景 | 建議選擇 |
-|------------------|----------|----------|----------|----------|
-| **[AutoGPT](https://github.com/Significant-Gravitas/AutoGPT)** | 自主 AI 代理構建與運行 | 使用 OpenAI 的 GPT-4 和 GPT-3.5 大型語言模型，允許為各種個人和商業項目構建代理 | 適合需要自動化完成多目標複雜任務的用戶 | 適合希望利用 GPT 模型自動執行任務的開發者 |
-| **[MetaGPT](https://github.com/geekan/MetaGPT)** | 多智能體協作框架，專注於軟體開發 | 採用多智能體框架，模擬人類軟體開發團隊，包括產品經理、架構師、項目經理、工程師等角色 | 適合需要模擬軟體開發流程，提高開發效率和質量的場景 | 適合希望利用 AI 模擬軟體開發流程的團隊或企業 |
-| **[AgentGPT](https://github.com/reworkd/AgentGPT)** | 基於網頁的自主 AI 代理配置與部署 | 支持在瀏覽器中配置和部署自主 AI 代理，並讓其完成任何目標 | 適合需要快速構建和部署自主 AI 代理的用戶 | 適合希望在瀏覽器中快速配置 AI 代理的開發者 |
-| **[HuggingGPT](https://github.com/microsoft/JARVIS)** | 多模型協作的 AI 系統 | 包含一個大型語言模型作為控制器和許多專家模型作為協作執行者 | 適合需要多模型協作處理複雜任務的場景 | 適合希望利用多模型協作提高任務處理能力的團隊或企業 |
 
   - [從AI Agent到Agent工作流程，一文詳細了解代理程式工作流程](https://zhuanlan.zhihu.com/p/32491596217)
   - [萬字長文，帶你綜觀大模型Agent，涉及研究痛點、應用場景、發展方向](https://zhuanlan.zhihu.com/p/29833831482)
   - [什麼是「Agentic 工作流程」？](https://zhuanlan.zhihu.com/p/32709535995)
   - [什麼是Agentic AI？什麼是Agentic Workflow？與AI Agent有什麼區別和關聯？](https://zhuanlan.zhihu.com/p/705935464)
+  - [FinRobot](https://www.alphaxiv.org/zh/overview/2405.14767)；[DeepWiki](https://deepwiki.com/AI4Finance-Foundation/FinRobot)；可支援 Gemini-2.5-Pro-preview-05-06，基於 AutoGen    
+  - [Jupyter-AI](https://deepwiki.com/jupyterlab/jupyter-ai)；可支援 Gemini-2.5-Pro-preview-05-06
   - 2025-05-22：[Magentic-UI](https://deepwiki.com/microsoft/magentic-ui)。。。暫不支援使用 Gemini
   - 2025-05-20：[NLWeb](https://deepwiki.com/microsoft/NLWeb)。。。暫不支援使用 Gemini
   - 2025-05-20：[Qwen Web Dev](https://chat.qwen.ai/?inputFeature=web_dev)
