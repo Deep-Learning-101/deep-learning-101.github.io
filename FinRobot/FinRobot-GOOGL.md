@@ -31,6 +31,13 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 - 🛠️ [FinRobot toolkit](https://github.com/AI4Finance-Foundation/FinRobot)  
 - 🤖 Model: `gemini-2.5-pro-preview-05-06`
 
+**Generated files:**
+- 📄 [English version PDF](./GOOGL_annual_report_2023_EN.pdf) — Full annual report in English
+- 📄 [Income Summarization Guide](./income_summarization_guide.txt) — Summary of income data
+- 📄 [Segment Analysis Guide](./segment_analysis_guide.txt) — Analysis of business segments
+- 📄 [Income Statement Analysis Guide](./income_statement_analysis_guide.txt) — Detailed income statement review
+- 📄 [Risk Assessment Analysis Guide](./risk_assessment_analysis_guide.txt) — Evaluation of risk factors
+
 ---
 
 # Google (GOOGL) 2023 年度報告
