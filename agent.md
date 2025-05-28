@@ -109,7 +109,7 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
 ## 前言
 
 <p align="center">
-  <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio> 
+  🎵 <audio controls style="width:200px; height:20px;"><source src="notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio> 🎵
 </p>
 
 AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 **AI 代理 (AI Agents，以下簡稱「AI Agents」)** 與 **代理式人工智慧 (Agentic AI，以下簡稱「Agentic AI」)** 真正落地的障礙。
