@@ -96,7 +96,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過的坑、常見問題、挑戰與解決方案_
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2025年[🎂🎉**05月29日**🥳🎁](https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/agent.md?plain=1#L100) <!-- 生日快樂！Prof. LeeCS --> 更新
+**日期**：2025年[🎂🎉**05月29日**🥳🎁](https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/agent.md?plain=1#L99) <!-- 生日快樂！Prof. LeeCS --> 更新
 
 - [**Blog 版**](https://blog.twman.org/2025/03/AIAgent.html) | [**網頁 版**](https://deep-learning-101.github.io/html/AI-Agents_Agentic-AI.html) | [**Skywork-PPT**](https://deep-learning-101.github.io/pdf/AI-Agents_Agentic-AI_Skywork-ppt.pdf)
 - 參考文獻
@@ -109,12 +109,12 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
 ## 前言
 
 <p align="center">
-  🎵 <audio controls style="width:200px; height:20px;"><source src="notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio> 🎵
+  🎵 Google NotebookLM <audio controls style="width:200px; height:20px;"><source src="notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio> Podcast 🎵
 </p>
 
 AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 **AI 代理 (AI Agents，以下簡稱「AI Agents」)** 與 **代理式人工智慧 (Agentic AI，以下簡稱「Agentic AI」)** 真正落地的障礙。
 
-本文將探討多種AI Agents 與 Agentic AI 工具的應用經驗與挑戰，分享實用經驗、避坑指南與工具推薦，更針對會碰上的資安問題，提出解決辦法，希望幫助開發者更高效、正確地建構 AI Agents 與 Agentic AI 系統的落地。
+本文將探討多種AI Agents 與 Agentic AI 工具 (含 MCP) 的應用、經驗與挑戰，分享避坑指南與推薦，更針對可能會碰上的資安問題，提出解決方向，希望更高效、正確地建構 AI Agents 與 Agentic AI 系統的落地。
 
 ---
 
@@ -138,7 +138,7 @@ AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許�
 
 ---
 
-## **AI Agents** 與 **Agentic AI** 概論：從基礎到、實戰應用與安全挑戰
+## **AI Agents** 與 **Agentic AI** 概論：從基礎到實戰應用與安全挑戰 (含 MCP)
 
 人工智慧領域正經歷典範轉移，從被動的生成式模型邁向更具自主性、能執行複雜任務的 AI Agents 和 Agentic AI。這股趨勢自 2022 年底 ChatGPT 問世後，在 Google 全球搜尋趨勢上呈現顯著上升。傳統搜尋引擎主要作為中介，引導使用者至原始內容來源，而新興的生成式搜尋工具則自行解析並重新包裝資訊，這可能導致原內容來源的流量減少。
 
@@ -253,10 +253,10 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
 
 新的攻擊向量主要集中在代理的**記憶**和**工具整合**，容易受到記憶中毒和工具濫用的攻擊。此外，由於 Agentic AI 系統通常使用**非人類身份 (Non-Human Identities, NHI)** 進行操作，缺乏傳統的使用者會話監督，增加了特權濫用或令牌濫用的風險。Agentic AI 也重新定義了權限洩漏，它不僅限於預定義的行動，還會利用動態訪問中的任何錯誤配置或漏洞。
 
-🔹 GenAI → AI Agents → Agentic AI
-🔹 傳統安全模型 → LLM 十大風險（LLM10）→ Agentic AI 專屬威脅（OWASP ASI）
-🔹 傳統威脅重點：資料外洩、提示注入
-🔹 Agentic 威脅重點：目標操控、記憶中毒、多代理失控
+- GenAI → AI Agents → Agentic AI
+- 傳統安全模型 → LLM 十大風險（LLM10）→ Agentic AI 專屬威脅（OWASP ASI）
+- 傳統威脅重點：資料外洩、提示注入
+- Agentic 威脅重點：目標操控、記憶中毒、多代理失控
 
 若你是安全研究員：可深入研究 OWASP ASI Playbook 原始文件與實作樣本
 若你是企業決策者：可從導入記憶監控、代理日誌紀錄等低干擾措施開始
@@ -348,3 +348,107 @@ Agentic AI 代表了 AI 發展的一個重要方向，它將單一 AI Agents 的
 然而，隨之而來的安全挑戰是巨大的，從針對單一代理的記憶中毒和工具濫用，到多代理系統中的通訊中毒和流氓代理。OWASP ASI 等倡議為理解這些威脅並制定緩解策略提供了寶貴的框架。同時，現實應用中的「自信地提供錯誤答案」和引用問題也提醒我們，AI Agents 的穩定性和可靠性仍是當前開發的關鍵挑戰。
 
 對初學者而言，理解從生成式 AI 到 AI 代理再到 Agentic AI 的發展歷程，並掌握其核心能力、工具與安全挑戰，是切入這一領域的關鍵起點。這是一個需要持續研究和實踐來應對其複雜性和挑戰的領域，特別是為了確保未來自主系統的安全、可靠和負責任的部署。選擇穩定可靠、社群活躍的工具（如 **Suna**、**OpenManus**）至關重要，但同時也需警覺 **錯誤引用**、**安裝困難**、**不穩定輸出** 等陷阱，謹慎測試與驗證來源，才是 AI Agent 成功落地的關鍵。
+
+
+## Model Context Protocol (MCP) 核心概念解析
+
+Model Context Protocol (MCP) 是一種開放協議，旨在讓 AI 模型能更輕鬆、標準化地連接並使用外部數據和工具。您可以將它想像成 **AI 世界的「USB」**，提供一個統一的接口，讓不同的數據源、應用程式或工具都能無縫對接，無需為每個組合單獨開發整合方案。MCP 由 Anthropic 於 2024 年 11 月開源。
+
+**核心目標：** 讓 AI 獲取更豐富的上下文資訊，提升理解能力，使回應更準確、更相關，並能執行更複雜的任務。
+
+### MCP 的關鍵重點
+
+1.  **標準化連接 (Standardized Connection):**
+    *   基於 JSON-RPC 2.0，提供統一的接口規則。
+    *   AI 模型可以用標準方式與各種外部系統（數據庫、API、文件系統等）互動，大幅降低整合的複雜性。
+
+2.  **即時數據訪問 (Real-time Data Access):**
+    *   AI 能透過 MCP 即時獲取最新資訊，確保決策和回應基於最新數據。
+    *   支持動態通知機制，當數據源變更時可主動通知 AI。
+
+3.  **賦能 AI 使用外部工具 (AI Using External Tools):**
+    *   允許應用程式將特定功能（如 API 呼叫、文件讀寫、數據庫查詢）「開放」給 AI。
+    *   AI 可以直接操作這些工具來完成更複雜的任務，而不僅僅是文本生成。
+
+4.  **靈活的工作流整合 (Flexible Workflow Integration):**
+    *   開發者可以將 MCP 作為橋樑，把不同的服務或組件串聯起來，讓 AI 參與到更廣泛的自動化工作流程中。
+
+5.  **安全與隱私 (Security & Privacy):**
+    *   MCP Server 通常在本地或受信任的環境中運行。
+    *   敏感數據不必傳輸到雲端或第三方 AI 模型服務，增強數據安全性。
+    *   內建能力協商與權限控制機制。
+
+### MCP Server 與 MCP Client
+
+MCP 採用客戶端-伺服器 (Client-Server) 架構：
+
+*   **MCP Server (伺服器端):**
+    *   **職責：** 扮演「資源管理者」和「守門人」。它管理對外部數據源（如資料庫、API、文件）和工具的訪問。
+    *   **功能：** 處理來自 Client 的請求，執行操作（如讀取文件、調用 API），返回結果給 Client，並可主動推送數據更新。它也負責認證、權限控制等安全機制。
+    *   **優勢：** 集中管理資源和安全，隱藏底層複雜性，使 Client 端更輕量。
+
+*   **MCP Client (客戶端):**
+    *   **職責：** 通常是 AI 模型或基於 AI 的應用程式。
+    *   **功能：** 向 MCP Server 發送請求，以獲取數據或要求操作工具來完成特定任務。它依照 MCP 協議與 Server 溝通。
+
+**為什麼是 Server/Client 架構？**
+
+1.  **資源管理：** Server 集中管理數據和工具，確保統一和安全。
+2.  **靈活擴展：** Client 可按需請求，Server 可獨立擴展數據源和工具，AI 模型本身不必臃腫。
+3.  **安全隔離：** Server 運行在受信任環境，作為 AI 與敏感數據/系統之間的安全屏障。
+4.  **標準化溝通：** 統一協議確保不同 Client 能與各種 Server 無縫對接。
+
+**交互流程簡例：**
+1.  Client (AI 模型) 需要讀取 `/data/report.txt` 文件。
+2.  Client 向 MCP Server 發送一個符合 MCP 格式的「讀取文件」請求，指明路徑。
+3.  MCP Server 驗證 Client 權限，然後讀取該文件。
+4.  MCP Server 將文件內容返回給 Client。
+5.  (可選) 若 `report.txt` 後續被修改，Server 可主動通知 Client 文件已更新。
+
+### MCP 與傳統 API 的差異
+
+MCP **並非要取代 API**，而是作為 AI 模型與多個外部系統（這些系統可能本身就提供 API）之間的**中介層或協調層**。
+
+| 特性             | Model Context Protocol (MCP)                       | 傳統 API (如 RESTful API)                      |
+| :--------------- | :------------------------------------------------- | :--------------------------------------------- |
+| **核心定位**     | AI 與外部系統的**標準化中介層**                     | 應用程式間直接的**點對點接口**                   |
+| **標準化**       | 基於 JSON-RPC 2.0，提供統一接口與能力描述          | 各自設計，格式、認證方式、錯誤處理等可能各異     |
+| **AI 整合複雜度** | **低**。AI 只需學會與 MCP Server 溝通               | **高**。AI 需為每個不同 API 單獨適配             |
+| **安全性**       | 內建能力協商、權限控制；Server 集中管理敏感操作    | 需各自實現身份驗證、授權、加密等安全措施         |
+| **數據源管理**   | MCP Server 可管理多個異構數據源 (API, DB, 文件等)   | 通常一個 API 端點對應一個特定資源或服務          |
+| **動態性**       | 支持 Server 主動向 Client 推送數據變更通知         | 多為 Client 主動請求-回應模式，即時同步較複雜    |
+| **變更適應性**   | 外部 API 變更時，主要修改 MCP Server，Client 端影響小 | API 變更可能需要修改所有調用該 API 的 Client 端 |
+| **生態與工具**   | 逐漸形成 (如 Anthropic, Spring AI 支持)，強調 AI 易用性 | 成熟，但需自行整合不同 API 的客戶端庫            |
+
+**一句話總結差異：**
+*   **直接用 API：** AI 模型需要自己處理每個 API 的不同格式、認證和錯誤邏輯。
+*   **用 MCP：** AI 模型只需要和 MCP Server 溝通，MCP Server 負責處理與各種後端 API 或數據源的複雜交互，並以標準化方式提供給 AI。
+
+**MCP Server 的價值（為何不是多此一舉？）：**
+
+*   **簡化 AI 開發：** MCP Server 隱藏了底層 API 的細節，AI 模型只需使用統一的 MCP 格式請求。
+*   **集中管理認證與安全：** API Key、OAuth Token、權限控制等可以由 MCP Server 統一處理，降低 AI 模型直接處理這些敏感資訊的風險。
+*   **適應後端變更：** 如果某個外部 API 升級或更換，理論上只需修改 MCP Server 的適配邏輯，AI 模型的請求方式無需改變。
+*   **抽象化數據源：** 無論數據來自 REST API、GraphQL、資料庫還是本地文件，MCP Server 都能提供統一的接口給 AI。
+
+**何時選擇 MCP vs 直接用 API？**
+
+*   **單一、簡單、穩定的外部 API：** 如果 AI 只需要與一個非常簡單且不常變動的 API 互動，直接調用該 API 可能更直接。
+*   **整合多個異構數據源/工具：** 當 AI 需要與多個不同來源的數據或多種工具互動時，MCP 的標準化和抽象化優勢非常明顯，能大幅降低開發和維護成本。
+*   **需要增強安全性與控制：** MCP Server 可以作為一個安全代理，對 AI 的訪問進行細粒度控制。
+*   **追求 AI 應用開發的敏捷性：** MCP 可以讓 AI 開發者更專注於 AI 邏輯，而非底層數據整合。
+
+**使用現成的外部 API 時：** MCP Server 依然有價值，它會負責調用這些現成的 API，並將其返回的數據轉換成 MCP 標準格式供 AI 使用，AI 無需關心這些外部 API 的具體細節。
+
+### 已知的 MCP "Hub" 或實現列表
+
+目前 MCP 生態仍在發展中。所謂的 "Hub" 更接近於一個**資源集散地或社群維護的列表**，用於發現可用的 MCP Server 實現、工具和相關資源。最重要的參考點是：
+
+*   **GitHub - `modelcontextprotocol` organization:** [https://github.com/modelcontextprotocol](https://github.com/modelcontextprotocol)
+    *   這是 MCP 協議本身的官方組織，包含協議規範等核心內容。
+*   **GitHub - `awesome-mcp-servers`:** [https://github.com/punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)
+    *   這是一個社群維護的列表，收集了已知的 MCP Server 實現。您可以從這裡找到或貢獻不同的 MCP Server 項目。
+    *   **一些已知的實現或整合案例（可能出現在此列表或相關討論中）：**
+        *   **Cline:** 提到的文章中，Cline 是一個與 MCP 整合的例子，它本身可能提供或計劃提供 MCP Server 功能，或者作為 MCP Client 與其他 MCP Server 互動。
+        *   **Spring AI:** Spring 框架的 AI 模塊也宣布了對 MCP 的支持，可能會提供 MCP Server/Client 的實現。
+
