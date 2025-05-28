@@ -104,6 +104,10 @@ _那些 AI Agent 實戰踩過的坑_
 
 ## 前言
 
+- [AI Search Has A Citation Problem](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)
+- [AI Agents vs. Agentic AI: A Conceptual Taxonomy, Applications and Challenges](https://www.alphaxiv.org/abs/2505.10468)
+- [OWASP Agentic AI – Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)
+  
 AI Agent 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 AI Agent 真正落地的障礙。
 
 本文將探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗、避坑指南與工具推薦，幫助開發者更高效、正確地建構 AI Agent 系統。
