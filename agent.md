@@ -96,8 +96,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過的坑、常見問題、挑戰與解決方案_
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2025年**05月29日**更新
-[🎂🎉🥳🎁](https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/agent.md?plain=1#L99) <!-- 生日快樂！Prof. LeeCS -->  
+**日期**：2025年[🎂🎉**05月29日**🥳🎁](https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/agent.md?plain=1#L100) <!-- 生日快樂！Prof. LeeCS --> 更新
 
 - [**Blog 版**](https://blog.twman.org/2025/03/AIAgent.html) | [**網頁 版**](https://deep-learning-101.github.io/html/AI-Agents_Agentic-AI.html) | [**Skywork-PPT**](https://deep-learning-101.github.io/pdf/AI-Agents_Agentic-AI_Skywork-ppt.pdf)
 - 參考文獻
@@ -197,12 +196,8 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
             
 *   **🧠 OpenManus，2025-03：[一文讀懂：OpenManus](https://zhuanlan.zhihu.com/p/30090038284)**
     *   GitHub：[https://openmanus.github.io](https://openmanus.github.io)
-    *   **背景：** MetaGPT 團隊於 Manus 發布後僅用 3 小時復刻。
+    *   **背景：** MetaGPT 團隊 (DeepWisdom) 於 Manus 發布後僅用 3 小時復刻。
     *   **特點：** 開源、可擴展，屬於輕量級多智能體框架。適合有 Python 基礎的使用者快速上手。
-      
-    **🧬 MetaGPT**
-    *   **背景：** 由 DeepWisdom（深度賦智）開發。
-    *   **特點：** 支援流程導向與角色分工的智能體設計。開發企業級多智能體解決方案的首選框架之一。      
 
 *   **🔧 DeepSite，2025-04：[基於DeepSeek的網頁開發智能體](https://zhuanlan.zhihu.com/p/1890332067411243826)**
     *   HuggingFace：[https://huggingface.co/spaces/enzostvs/deepsite](https://huggingface.co/spaces/enzostvs/deepsite)
