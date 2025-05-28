@@ -104,6 +104,10 @@ _那些 AI Agent 實戰踩過的坑_
 
 ## 前言
 
+<p align="center">
+    <img src="./img/AI Agents+Agentic AI.jpg?raw=true" alt="Deep Learning 101" width="600"></a>
+</p>
+
 - [AI Search Has A Citation Problem](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)
 - [AI Agents vs. Agentic AI: A Conceptual Taxonomy, Applications and Challenges](https://www.alphaxiv.org/abs/2505.10468)
 - [OWASP Agentic AI – Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)
