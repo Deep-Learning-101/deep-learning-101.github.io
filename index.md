@@ -17,11 +17,12 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
 </p>
 <p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">去 YouTube 訂閱</a> |
   <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
   <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+  <a href="https://github.com/Deep-Learning-101"> 到 GitHub 點星</a> |  
   <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
-  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">到 Hugging Face Space 按愛心</a>
 </p>
 
 ---
