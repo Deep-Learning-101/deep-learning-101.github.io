@@ -17,11 +17,12 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important;" ></a>
 </p>
 <p align="center">
-  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
+  <a href="https://www.youtube.com/@DeepLearning101" target="_blank">去 YouTube 訂閱</a> |
   <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
   <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+  <a href="https://github.com/Deep-Learning-101"> 到 GitHub 點星</a> |  
   <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
-  <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
+  <a href="https://huggingface.co/DeepLearning101" target="_blank">到 Hugging Face Space 按愛心</a>
 </p>
 
 ---
@@ -96,20 +97,21 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過的坑、常見問題、挑戰與解決方案_
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2025年[🎂🎉**05月29日**🥳🎁](https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/agent.md?plain=1#L99) <!-- 生日快樂！Prof. LeeCS --> 更新
+**日期**：2025年06月02日更新
 
 - [**Blog 版**](https://blog.twman.org/2025/03/AIAgent.html) | [**網頁 版**](https://deep-learning-101.github.io/html/AI-Agents_Agentic-AI.html) | [**Skywork-PPT**](https://deep-learning-101.github.io/pdf/AI-Agents_Agentic-AI_Skywork-ppt.pdf)
 - 參考文獻
-  - [AI Search Has A Citation Problem](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)：揭示生成式 AI 在知識引用上的嚴重信任斷裂問題。
-  - [AI Agents vs. Agentic AI: A Conceptual Taxonomy, Applications and Challenges](https://www.alphaxiv.org/abs/2505.10468)：AI Agents 與 Agentic AI 概念上的差異與連結。
+  - [AI Search Has A Citation Problem, (Columbia Journalism Review, May 2025)](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)：生成式 AI 在知識引用上的嚴重信任斷裂問題。
+  - [AI Agents vs. Agentic AI, (Cornell University, May 2025)](https://www.alphaxiv.org/abs/2505.10468)：AI Agents 與 Agentic AI 概念上的差異與連結。
   - [OWASP Agentic AI – Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)：系統性揭露 Agentic AI 面臨的新型威脅，並提供實務對策。
+  - [Andrew Ng: State of AI Agents | LangChain Interrupt](https://www.youtube.com/watch?v=4pYzYmSdSH4)：一場 LangChain CEO Harrison Chase與Andrew Ng的爐邊對話
 
 ---
 
 ## 前言
 
 <p align="center">
-  🎵 Google NotebookLM <audio controls style="width:200px; height:20px;"><source src="notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio> Podcast 🎵
+  🎵 不聽可惜的 NotebookLM <audio controls style="width:200px; height:20px;"><source src="notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio> Podcast @ Google 🎵
 </p>
 
 AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 **AI 代理 (AI Agents，以下簡稱「AI Agents」)** 與 **代理式人工智慧 (Agentic AI，以下簡稱「Agentic AI」)** 真正落地的障礙。
@@ -139,6 +141,10 @@ AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許�
 ---
 
 ## **AI Agents** 與 **Agentic AI** 概論：從基礎到實戰應用與安全挑戰 (含 MCP)
+
+### **從定義之爭到「特性程度」：吳恩達對「Agent」與「Agentic」的務實觀點**
+
+在探討 AI Agents 與 Agentic AI 的細節之前，值得借鑒吳恩達與 LangChain CEO Harrison Chase 對話中的一個核心觀點。吳恩達認為，與其糾結一個系統「是不是」Agent，不如接受「智能體特性」（agenticness）的程度差異。他回憶道，過去許多人熱衷於爭論某個系統「是不是真正的 agent」、「是否足夠自主」，但他認為這種爭論意義不大。他提倡使用「智能體化系統」（agentic systems）來描述具有不同自主程度的應用，無論是少量自主性還是大量自主性，都無需浪費時間爭論其是否「真正」是一個 agent。這一提法有助於減少不必要的爭論，讓大家更專註於建構本身，為我們理解和應用後續概念提供了務實的基礎。
 
 人工智慧領域正經歷典範轉移，從被動的生成式模型邁向更具自主性、能執行複雜任務的 AI Agents 和 Agentic AI。這股趨勢自 2022 年底 ChatGPT 問世後，在 Google 全球搜尋趨勢上呈現顯著上升。傳統搜尋引擎主要作為中介，引導使用者至原始內容來源，而新興的生成式搜尋工具則自行解析並重新包裝資訊，這可能導致原內容來源的流量減少。
 
@@ -181,6 +187,18 @@ Agentic AI 展現出更高層次的自主性，能夠管理需要協調的複雜
 ### AI Agents 與 Agentic AI 的實際應用與工具生態
 
 AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開源與商用工具應運而生，旨在降低開發門檻並提供豐富的功能。
+
+#### 線性工作流的潛力：吳恩達眼中的「低垂果實」
+吳恩達在與 Harrison Chase 的對話中指出，儘管他的團隊會使用 LangGraph 這類工具處理具有複雜流程的高難度問題，但他同時看到了大量商業機會潛藏在相對線性的工作流程中。「許多商業場景中，現有的流程是這樣的：員工查看網站表單，進行網站搜索，檢查其他數據庫以確認合規性或客戶風險，然後複製粘貼信息，可能再進行一次網頁搜索，最後粘貼到另一個表單中。」吳恩達描述道。他認為，這些商業流程中存在大量相當線性的工作流，或只是偶爾帶有分支的線性流程。將現有業務流程有效地轉化為智能體工作流是一大挑戰，包含如何確定任務分解的粒度、原型效果不佳時如何改進等，這種審視、分解、評估的整體技能目前仍然「非常稀缺」。
+
+#### AI Agent 開發的「樂高」心法：組合與迭代
+談及智能體構建者應掌握的技能，吳恩達提出了「樂高積木」的比喻。他認為，過去幾年 AI 公司創造了大量優秀的 AI 工具，如 LangGraph 等編排工具，以及 RAG（檢索增強生成）、聊天機器人構建方法、多種記憶系統、評估（evals）和護欄（guardrails）等。成功的智能體構建者應像樂高積木的組裝者，能夠快速組合這些專業工具，而不是一切從零開始。掌握並熟練運用這些「積木塊」，能夠極大提升開發效率和決策速度。吳恩達也提到，隨著 LLM 上下文窗口擴大，一些最佳實踐（如 RAG 的調校）也在演變，RAG 依然重要，但其超參數調整變得更容易。
+
+#### 被低估的機遇：評估、語音與全民程式設計
+吳恩達點名了幾個他認為被低估或應用不足的關鍵領域：
+*   **Evals（評估系統）：** 儘管人們常談論評估，但許多團隊在項目中引入系統性評估的速度遠慢於理想狀態，過於依賴人工評估。他建議評估可以從簡單開始，逐步迭代改進，以有效補充人工評估並針對特定回歸問題進行檢查。
+*   **語音應用 (Voice Stack)：** 吳恩達認為語音應用被「嚴重低估」，因其能降低使用者門檻，「用戶只需開口說話」。他指出語音應用對延遲 (latency) 要求極高（通常需 1 秒內回應），並分享了如「預錄製插入語」（如「哦，有意思」）或在客服場景播放呼叫中心背景噪音以掩蓋延遲、提升容忍度的技巧。
+*   **AI 輔助程式設計與「人人都應學習程式設計」：** 吳恩達觀察到，使用 AI 輔助程式設計的開發者效率遠高於不使用者。他堅信 AI 輔助程式設計將創造更多而非更少開發者，如同歷史上程式設計工具的進步一樣。他甚至透露，在 AI Fund，包括前台、CFO 和法務總顧問在內的每個人都會程式設計，這能讓他們更好地告訴計算機自己想做什麼，從而在各自崗位上實現顯著的生產力提升。對於近期流行的「Vibe Coding」（氛圍編程），吳恩達認為名稱具誤導性，讓人以為僅憑感覺編程，但實則是一項深度智力活動；AI 輔助編程使得更多人能夠編程，未來最重要的技能之一就是「準確告訴電腦你想要什麼」。
 
 #### 實測與經驗分享
 
@@ -341,20 +359,29 @@ OWASP ASI 文件提供了一系列結構化的緩解策略，並組織成六個�
 
 未來的 Agentic AI 將朝著更強大的**多代理擴展**、**統一協調**、**持久記憶**和**模擬規劃**發展。同時，**倫理治理**框架和針對特定領域的**領域特定系統**將變得至關重要。一些研究方向如 Absolute Zero 框架甚至探索了無需外部資料集的自主學習可能性。
 
+### AI 創業成功秘訣：速度與技術深度 (吳恩達觀察)
+吳恩達在與 Harrison Chase 的對話中，分享了 AI Fund 觀察到的 AI 創業成功兩大關鍵預測指標：
+1.  **速度：** 「我從未見過一個技術嫻熟的團隊所能達到的執行速度。它比那些較慢的企業所知道的任何做事方式都要快得多。」
+2.  **技術深度：** 「市場營銷、銷售、定價等知識固然重要，但這些知識相對普及。真正稀缺的是對技術如何運作的深刻理解，尤其是在技術飛速發展的今天。」吳恩達強調，AI Fund 非常樂於與那些擁有良好技術直覺和理解力的深度技術人才合作。
+
 ### 總結
 
-Agentic AI 代表了 AI 發展的一個重要方向，它將單一 AI Agents 的能力擴展到協作、自主的系統級別。這為解決複雜問題和自動化廣泛任務帶來巨大機遇。從底層的生成式 AI 到具備感知與行動能力的 AI Agents，再到由多個協作代理組成的 Agentic AI，技術正不斷演進。
+Agentic AI 代表了 AI 發展的一個重要方向，它將單一 AI Agents 的能力擴展到協作、自主的系統級別。這為解決複雜問題和自動化廣泛任務帶來巨大機遇。從底層的生成式 AI 到具備感知與行動能力的 AI Agents，再到由多個協作代理組成的 Agentic AI，技術正不斷演進。吳恩達與 Harrison Chase 的對話進一步釐清了「agentic systems」的彈性定義、線性工作流的即時價值、以及「樂高積木」式的開發哲學，並點出了評估、語音、全民程式設計等領域的潛力。
 
 然而，隨之而來的安全挑戰是巨大的，從針對單一代理的記憶中毒和工具濫用，到多代理系統中的通訊中毒和流氓代理。OWASP ASI 等倡議為理解這些威脅並制定緩解策略提供了寶貴的框架。同時，現實應用中的「自信地提供錯誤答案」和引用問題也提醒我們，AI Agents 的穩定性和可靠性仍是當前開發的關鍵挑戰。
 
 對初學者而言，理解從生成式 AI 到 AI 代理再到 Agentic AI 的發展歷程，並掌握其核心能力、工具與安全挑戰，是切入這一領域的關鍵起點。這是一個需要持續研究和實踐來應對其複雜性和挑戰的領域，特別是為了確保未來自主系統的安全、可靠和負責任的部署。選擇穩定可靠、社群活躍的工具（如 **Suna**、**OpenManus**）至關重要，但同時也需警覺 **錯誤引用**、**安裝困難**、**不穩定輸出** 等陷阱，謹慎測試與驗證來源，才是 AI Agent 成功落地的關鍵。
-
 
 ## Model Context Protocol (MCP) 核心概念解析
 
 Model Context Protocol (MCP) 是一種開放協議，旨在讓 AI 模型能更輕鬆、標準化地連接並使用外部數據和工具。您可以將它想像成 **AI 世界的「USB」**，提供一個統一的接口，讓不同的數據源、應用程式或工具都能無縫對接，無需為每個組合單獨開發整合方案。MCP 由 Anthropic 於 2024 年 11 月開源。
 
 **核心目標：** 讓 AI 獲取更豐富的上下文資訊，提升理解能力，使回應更準確、更相關，並能執行更複雜的任務。
+
+### MCP 的變革與挑戰：吳恩達的觀點
+對於近期備受關注的 MCP（Model Context Protocol，模型上下文協議），吳恩達給予了積極評價，認為它填補了市場的明顯空白，旨在實現 N 個模型/智能體與 M 個數據源集成時，付出 N+M 而非 N\*M 的努力。OpenAI 的採用也證明了其重要性，DeepLearning.AI 也與 Anthropic 合作推出了相關課程。吳恩達指出：「我們花費了大量時間在『管道』上，也就是數據集成，以便將正確的上下文信息提供給 LLM。」MCP 是一個嘗試標準化接口的「奇妙方式」。
+
+但他同時坦言，MCP 及其服務目前尚处于早期阶段。「很多網上的 MCP 服務並不可用，認證系統也有些笨拙。」協議本身也需要進化，例如，當 LangGraph 這樣的工具擁有大量 API 調用時，簡單的列表式資源呈現難以滿足需求，未來可能需要層級化的發現機制。
 
 ### MCP 的關鍵重點
 
@@ -451,4 +478,14 @@ MCP **並非要取代 API**，而是作為 AI 模型與多個外部系統（這�
     *   **一些已知的實現或整合案例（可能出現在此列表或相關討論中）：**
         *   **Cline:** 提到的文章中，Cline 是一個與 MCP 整合的例子，它本身可能提供或計劃提供 MCP Server 功能，或者作為 MCP Client 與其他 MCP Server 互動。
         *   **Spring AI:** Spring 框架的 AI 模塊也宣布了對 MCP 的支持，可能會提供 MCP Server/Client 的實現。
+
+
+
+
+---
+
+
+
+
+
 
