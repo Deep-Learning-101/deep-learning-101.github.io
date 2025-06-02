@@ -104,7 +104,7 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
   - [AI Search Has A Citation Problem, (Columbia Journalism Review, May 2025)](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)：生成式 AI 在知識引用上的嚴重信任斷裂問題。
   - [AI Agents vs. Agentic AI, (Cornell University, May 2025)](https://www.alphaxiv.org/abs/2505.10468)：AI Agents 與 Agentic AI 概念上的差異與連結。
   - [OWASP Agentic AI – Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)：系統性揭露 Agentic AI 面臨的新型威脅，並提供實務對策。
-  - [Andrew Ng: State of AI Agents | LangChain Interrupt](https://www.youtube.com/watch?v=4pYzYmSdSH4)：一場 LangChain CEO Harrison Chase與Andrew Ng的爐邊對話
+  - [Andrew Ng: State of AI Agents, LangChain Interrupt](https://www.youtube.com/watch?v=4pYzYmSdSH4)：一場 LangChain CEO Harrison Chase與Andrew Ng的爐邊對話
 
 ---
 
