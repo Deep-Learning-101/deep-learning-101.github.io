@@ -105,7 +105,10 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
   - [AI Agents vs. Agentic AI, (Cornell University, May 2025)](https://www.alphaxiv.org/abs/2505.10468)：AI Agents 與 Agentic AI 概念上的差異與連結。
   - [OWASP Agentic AI – Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)：系統性揭露 Agentic AI 面臨的新型威脅，並提供實務對策。
   - [Andrew Ng: State of AI Agents, LangChain Interrupt](https://www.youtube.com/watch?v=4pYzYmSdSH4)：一場 LangChain CEO Harrison Chase與Andrew Ng的爐邊對話
-  - **2025-06-05**：[Get started with building Fullstack Agents using Gemini 2.5 and LangGraph](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart)：**[台灣金融業在GenAI的現況和未來可能發展](https://deep-learning-101.github.io/gemini-fullstack-langgraph/gemini-fullstack-langgraph#google_vignette)**
+  - **2025-06-05**：[Get started with building Fullstack Agents using Gemini 2.5 and LangGraph](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart)
+- DEMO  
+  - **[台灣金融業在GenAI的現況和未來可能發展](https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI)**
+  - [FinRobot](https://www.alphaxiv.org/zh/overview/2405.14767)；[DeepWiki](https://deepwiki.com/AI4Finance-Foundation/FinRobot)；可支援 Gemini-2.5-Pro-preview-05-06，**[基於 AutoGen](https://deep-learning-101.github.io/FinRobot/FinRobot-GOOGL)**
 
 ---
 
