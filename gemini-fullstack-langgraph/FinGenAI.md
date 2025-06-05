@@ -112,8 +112,8 @@ _台灣金融業在GenAI的現況和未來可能發展_
 
 <p align="center">
   <a href="https://deep-learning-101.github.io/agent" target="_blank">
-    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/gemini-fullstack-langgraph-001.png?raw=true" alt="gemini-fullstack-langgraph" width="400"></a>
-    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/gemini-fullstack-langgraph-002.gif?raw=true" alt="gemini-fullstack-langgraph" width="600">
+    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/gemini-fullstack-langgraph-001.png?raw=true" alt="gemini-fullstack-langgraph" width="300"></a>
+    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/gemini-fullstack-langgraph-002.gif?raw=true" alt="gemini-fullstack-langgraph" width="500">
 </p>
 
 台灣金融業在生成式AI (GenAI) 的應用正迅速發展，不僅提升營運效率與客戶服務，也在積極應對相關挑戰。以下將詳述其現況與未來可能的發展方向：
