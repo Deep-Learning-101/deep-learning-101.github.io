@@ -93,16 +93,23 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
-# https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart
-_台灣金融業在GenAI的現況和未來可能發展_
+## <a href="https://deep-learning-101.github.io/agent" target="_blank">探討多種 AI Agentss工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
 
-**Agent**: gemini-fullstack-langgraph-quickstart
+## https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart
+_台灣金融業在GenAI的現況和未來可能發展_ 
+
+**Agent**：gemini-fullstack-langgraph-quickstart
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 
 **日期**：2025年06月05日更新
 
 ---
+
+<p align="center">
+  <a href="https://deep-learning-101.github.io/agent" target="_blank">
+    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/gemini-fullstack-langgraph-001.png?raw=true" alt="gemini-fullstack-langgraph" width="400"></a>
+</p>
 
 台灣金融業在生成式AI (GenAI) 的應用正迅速發展，不僅提升營運效率與客戶服務，也在積極應對相關挑戰。以下將詳述其現況與未來可能的發展方向：
 
