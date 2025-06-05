@@ -95,6 +95,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ## <a href="https://deep-learning-101.github.io/agent" target="_blank">探討多種 AI Agentss工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
 
+## [GenAI 與 LLM 在金融產業的應用分析](https://www.twman.org/AI/Finance)
+
 ## https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart
 _台灣金融業在GenAI的現況和未來可能發展_ 
 
