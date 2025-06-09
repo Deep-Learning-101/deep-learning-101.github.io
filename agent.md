@@ -120,12 +120,12 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
 
 AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 **AI 代理 (AI Agents，以下簡稱「AI Agents」)** 與 **代理式人工智慧 (Agentic AI，以下簡稱「Agentic AI」)** 真正落地的障礙。
 
-本文將探討多種AI Agents 與 Agentic AI 工具 (含 MCP) 的應用、經驗與挑戰，分享避坑指南與推薦，更針對可能會碰上的資安問題，提出解決方向，希望更高效、正確地建構 AI Agents 與 Agentic AI 系統的落地。
+本文將探討多種AI Agents 與 Agentic AI 工具 (含 MCP) 的應用、經驗與挑戰，分享避坑指南與推薦，並結合台灣產業的宏觀趨勢與挑戰，提出解決方向，希望更高效、正確地建構 AI Agents 與 Agentic AI 系統的落地；是一份兼具技術深度與戰略廣度的全方位產業報告，提供了「How」（如何構建和避坑），以及「What」（市場現況）、「Where」（應用場景）和「Why」（戰略重要性）的文件。
 
 ---
 
 <p align="center">
-  <img src="./img/AI Agents+Agentic AI.jpg?raw=true" alt="Deep Learning 101" width="800"></a>
+  <img src="./img/AI Agents+Agentic AI.jpg?raw=true" alt="Deep Learning 101" width="800">
 </p>
 
 關於 **AI 代理 (AI Agents，以下簡稱「AI Agents」)** 與 **代理式人工智慧 (Agentic AI，以下簡稱「Agentic AI」)**，全球趨勢呈現了概念從基礎到進階的自然演進與普及過程；而台灣的趨勢則更多地受到語言習慣、特定事件和小眾專業社群對前沿英文術語直接採用的影響，導致與全球趨勢有顯著差異。
@@ -142,8 +142,17 @@ AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許�
 2.  「Agentic AI」的熱度則呈現由特定事件或專業社群驅動的尖峰，這些群體可能直接採用此外來的前沿術語進行討論。
 3.  此現象反映了資訊傳播的集中性，以及對特定新興技術點的跳躍式關注，而非如全球般呈現漸進式的術語普及。
 
----
+### 台灣AI產業發展現況與企業成熟度分析
 
+台灣作為全球科技產業的重要樞紐，AI平台市場正經歷強勁成長期。根據IDC預測，台灣人工智慧平台市場規模將從2024年的8390萬美元，成長至2025年的8830萬美元，年成長率達25.4%[^30]。這股成長動能主要來自於生成式AI技術的全面產業化應用，以及企業對AI導入需求的快速提升[^27][^30]。
+
+然而，台灣企業在AI應用方面呈現明顯的發展階段差異。根據人工智慧科技基金會(AIF) 2025年產業AI化大調查，仍有七成企業無法跨過AI化門檻[^54][^62]。調查顯示，40%企業處於「知AI」階段，僅了解AI概念但尚未實際應用；30%企業仍在「不知AI」階段，缺乏基本AI認知[^54][^62]。值得注意的是，僅有5%企業達到「精AI」水準，能夠熟練運用AI技術創造商業價值[^11][^54]。
+
+<p align="center">
+    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-001.png?raw=true" alt="台灣企業AI成熟度分佈顯示40%企業處於「知AI」階段，30%仍在「不知AI」階段，僅5%企業達到「精AI」水準" width="800">
+</p>
+
+---
 
 ## **AI Agents** 與 **Agentic AI** 概論：從基礎到實戰應用與安全挑戰 (含 MCP)
 
@@ -252,6 +261,37 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
     *   **體驗**： 介面直觀，操作簡便，適合初學者快速上手。提供探索模式與規劃模式，滿足不同層次的使用需求。
     *   **優勢**： 整合多種工具與資源，支援多平台部署，適合個人創作者與企業用戶進行 AI 應用開發。      
 
+<p align="center">
+    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-002.png?raw=true" alt="主要AI Agents平台與工具比較" width="800">
+</p>
+
+當前AI Agents開發呈現多元化工具生態，從Suna、OpenManus等新興平台到LangChain、Skywork等成熟框架。Suna以高自由度和任務自動化見長，OpenManus提供輕量級多智能體框架，Skywork在GAIA榜單排名全球第一，LangChain則擁有最強的社群支持。企業在選擇AI Agents平台時，需要考量技術成熟度、易用性、安全性、擴展性、社群支持和企業採用率等六大維度。不同平台在各維度表現存在差異，需要根據具體應用場景和組織能力進行選擇 [[findit](https://findit.org.tw/researchPageV2.aspx?pageId=2441)]。
+
+### 台灣產業實際導入案例與應用領域
+
+台灣AI技術應用呈現多元化發展趨勢，其中智慧製造、智慧醫療和智慧零售為三大主力領域[^12][^51]。
+
+<p align="center">
+    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-004.png?raw=true" alt="台灣AI技術應用以智慧製造為主導(28%)，智慧醫療次之(22%)，智慧零售佔18%" width="800">
+</p>
+
+#### 製造業AI化輔導
+製造業作為台灣AI應用的主力領域(佔28%)，反映了其深厚的產業基礎和強烈的數位轉型需求[^51][^55]。AI Agent的應用聚焦於智慧製造解決方案，例如：
+*   **數位雙生與模擬**：協助企業建立產線的數位雙生模型，透過AI Agent進行參數校正與優化，並發展虛實場景融合的3D疊合模擬技術[^56]。
+*   **產線優化與預測維護**：在金屬加工、塑膠製造、智慧鞋業等傳統優勢產業，導入AI Agent進行生產排程優化、設備預測性維護，提升生產效率與良率[^56]。
+*   **一站式整合服務**：透過國科會的「台灣智慧系統整合製造平台」，提供從需求分析、AI模型開發到少量試製的完整服務，加速AI在製造業的落地[^56]。
+
+#### 醫療健康產業服務
+智慧醫療(佔22%)是另一個快速發展的領域，AI Agent在此扮演關鍵角色，提升醫療效率和品質[^28][^53]：
+*   **輔助診斷與影像判讀**：開發AI Agent輔助醫師進行醫療影像（如X光、CT）的判讀，標示潛在病灶，提高診斷的準確性與速度[^56]。
+*   **個人化與遠距醫療**：推動個人化醫療方案，AI Agent可根據病患的基因、生活習慣等數據提供個人化建議。同時，在遠距醫療中，AI Agent可作為第一線的健康諮詢與監測工具[^28][^56]。
+*   **主動預防與數據治理**：協助醫療機構導入AI Agent進行疾病預測分析，實現從被動治療到主動預防的轉型。同時建立完善的醫療數據治理體系，確保AI應用的安全與合規[^37]。
+
+#### 零售服務業數位化
+智慧零售(佔18%)領域的AI應用需求快速增長，特別是在提升客戶體驗和營運效率方面[^56]：
+*   **銷售預測與庫存管理**：建立由AI Agent驅動的銷售預測系統，自動分析市場趨勢、季節性因素與促銷活動，優化庫存管理，減少浪費[^56]。
+*   **虛擬店員與智慧客服**：導入虛擬店員技術，提供24/7的即時多語言服務，解答顧客疑問、提供產品推薦。例如，餐飲住宿業導入AI客服，成功處理大量訂單與客戶諮詢，大幅提升服務效率[^28]。
+
 #### 參考文章
 
   - [從AI Agent到Agent工作流程，一文詳細了解代理程式工作流程](https://zhuanlan.zhihu.com/p/32491596217)
@@ -295,6 +335,7 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
     *   **Open Deep Search (ODS) by Sentient Foundation:** 作為 Perplexity 和 ChatGPT Search 的替代方案，使 LLM 能夠使用推理代理和網路搜尋。
     *   **Hugging Face's Open DeepResearch:** 在24小時內複製了 OpenAI Deep Research 的成果。
     *   **Open Deep Research by Firecrawl:** 利用 Firecrawl 的搜尋和提取功能。
+    *   **Gemini-Fullstack-Langgraph:** [開源版 Perplexity](https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI)
 
 #### 比較維度
 
@@ -363,14 +404,9 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
 | **生態系** | 擁有龐大且活躍的社群，工具和整合方案豐富 | 整合通常限制在供應商自身的生態系統內，但整合度高 |
 | **易用性** | 學習曲線較陡，需要較強的技術能力 | 通常提供圖形化介面和低程式碼工具，上手較快 |
 
-#### 2025 年趨勢
+---
 
-*   **從輔助型 AI (Copilots) 到完全自主的代理：** 趨勢正轉向能夠獨立啟動和管理工作的自主代理。
-*   **治理至關重要：** 隨著代理自主性增強，對其行為的可觀測性、可控制性和安全性要求也越來越高。
-*   **多代理協作：** 平台越來越重視讓多個專門的代理協同工作，以解決更複雜的問題。
-*   **企業級整合：** AI 代理平台正成為企業大規模建構智慧自主系統的基礎設施，與現有系統的無縫整合是關鍵。
-
-### 新穎的安全與威脅 (OWASP, Agentic Security Initiative, OWASP ASI)
+## 新穎的安全與威脅 (OWASP, Agentic Security Initiative, OWASP ASI)
 
 隨著 Agentic AI 能力的持續擴展，伴隨而來的是全新且更為複雜的安全風險。OWASP 的 Agentic Security Initiative（ASI）聚焦於由基於大型語言模型（LLM）的代理所引入的新型威脅。威脅建模是一個結構化的過程，用於識別和緩解系統中的安全風險。OWASP ASI 發布的文件提供了一個以威脅建模為基礎的參考資料，涵蓋新興的 Agentic AI 威脅。
 
@@ -428,28 +464,37 @@ OWASP ASI 文件提供了一系列結構化的緩解策略，並組織成六個�
 
 實施這些緩解措施時，基礎的安全措施（如軟體安全、LLM 保護和訪問控制）也應該一併實施。
 
-### Agentic AI 的挑戰、限制與未來方向
+---
 
-儘管 Agentic AI 展現巨大潛力，但它仍面臨顯著的挑戰與限制。這些挑戰部分繼承自底層的 LLM，部分源於多代理系統本身的複雜性。
+## Agentic AI 的挑戰、限制與未來方向
 
-**AI Agents 的限制包括**:
+儘管 Agentic AI 展現巨大潛力，但它仍面臨顯著的挑戰與限制。這些挑戰部分繼承自底層的 LLM，部分源於多代理系統本身的複雜性，同時也反映在產業實際導入的困境中。
+
+### 技術層面的挑戰與限制
 *   **缺乏因果理解 (Lack of Causal Understanding):** 當前的 LLMs 善於識別統計相關性，但缺乏因果建模的能力，難以區分相關性和因果關係。這使得代理在分佈轉移下表現脆弱，難以在未知或高風險場景中可靠運行。
 *   **繼承自 LLMs 的限制 (Inherited Limitations from LLMs):** 包括產生幻覺（事實不正確的輸出）、對提示的敏感性（微小措辭變化導致行為差異）和高計算成本/延遲。這些問題影響了代理的可靠性和可信度。
 *   **不完整的 Agentic 屬性 (Incomplete Agentic Properties):** 當前的 AI Agents 未能完全滿足自主性、前瞻性（主動發起任務）、反應性和社交能力等規範屬性。它們通常仍需明確指令才能行動，缺乏根據環境變化動態調整目標的能力。
 *   **有限的長時規劃與恢復 (Limited Long-Horizon Planning and Recovery):** AI Agents 在複雜、多步驟任務中進行魯棒的長時規劃能力有限。這源於它們對無狀態提示-響應模式的依賴，缺乏對先前推理步驟的內在記憶。
 *   **可靠性與安全性問題 (Reliability and Safety Concerns):** 由於缺乏因果推理能力和難以驗證代理的規劃正確性，AI Agents 尚未足夠安全或可驗證，無法在關鍵基礎設施中部署。
+*   **Agentic AI 的放大挑戰:** 多代理系統中複雜的代理間互動放大了因果、通訊、可預測性、可擴展性、信任與安全等挑戰。
 
-**Agentic AI 的挑戰則更為放大且新穎**:
-*   **放大的因果挑戰 (Amplified Causality Challenges):** 多代理系統中複雜的代理間互動放大了因果理解的挑戰。一個代理的錯誤或幻覺輸出可能在系統中傳播，導致錯誤級聯。
-*   **通訊與協調瓶頸 (Communication and Coordination Bottlenecks):** 實現多個自主代理之間高效的通訊與協調是一大挑戰。包括目標對齊、共享上下文、協議限制（模糊的自然語言交換）和資源爭奪等問題。
-*   **新興行為與可預測性 (Emergent behavior and Predictability):** 代理間的互動可能產生未明確程式設計或預見的複雜系統級行為，這帶來顯著的不可預測性和安全風險。隨著代理數量和互動複雜性增加，系統不穩定性風險也會提高。
-*   **可擴展性與偵錯複雜性 (Scalability and Debugging Complexity):** 隨著 Agentic AI 系統擴展，由於代理推理過程的黑箱特性和系統的非組合性，維護系統可靠性和可解釋性變得異常複雜。追蹤故障原因需要解析多個代理互動和工具調用的嵌套序列。
-*   **信任、可解釋性與驗證 (Trust, Explainability, and Verification):** 分布式、多代理架構使得 Agentic AI 在可解釋性和可驗證性方面面臨更高的挑戰。缺乏跨代理的共享、透明日誌或可解釋推理路徑，使得追蹤最終決策或故障的因果鏈條極為困難。目前尚無廣泛採用的方法來驗證多代理 LLM 系統在所有情況下都能可靠運行。
-*   **安全與對抗性風險 (Security and Adversarial Risks):** Agentic AI 架構擴大了攻擊面。單一代理的妥協可能導致惡意輸出或損壞狀態在整個系統中傳播。代理間的動態性也容易被利用，攻擊者可能操縱協調邏輯。
-*   **倫理與治理挑戰 (Ethical and Governance Challenges):** Agentic AI 的自主性帶來深刻的倫理與治理問題，尤其是在問責制、公平性和價值對齊方面。多代理環境中出現問責制空白，難以歸屬錯誤責任。偏見可能在代理互動中傳播和放大。
-*   **不成熟的基礎與研究空白 (Immature Foundations and Research Gaps):** Agentic AI 仍處於早期研究階段，缺乏標準架構和魯棒的因果基礎。這限制了其可擴展性、可靠性和理論基礎。
+### 台灣產業導入的挑戰與機會
 
-**潛在解決方案與未來方向**:
+除了技術限制，台灣企業在導入AI時還面臨多重實際挑戰[^46][^54]。
+
+<p align="center">
+    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-005.png?raw=true" alt="台灣AI發展面臨的主要挑戰中，人才短缺問題最為嚴重(85%)，其次是資料基礎建設不足(75%)" width="800">
+</p>
+
+*   **人才短缺 (85%):** 最嚴峻的挑戰，特別是缺乏能結合產業專業知識與AI技術開發能力的複合型人才[^46][^54]。
+*   **資料基礎建設不足 (75%):** 限制了AI模型的訓練效果與應用廣度。
+*   **找對問題困難 (70%):** 反映出企業在制定AI應用策略時的迷茫，不知如何將AI技術與業務痛點有效結合[^46][^54]。
+*   **組織文化轉型 (65%):** AI導入不僅是技術升級，更是思維模式的轉變，需要克服組織內部的慣性與抗拒[^46]。
+*   **技術門檻高 (60%) 與成本考量 (55%):** 對於資源有限的中小企業而言，是導入AI的現實阻礙[^46][^64]。
+
+儘管挑戰重重，台灣AI產業仍擁有巨大發展機會。AI需求的爆發將成為台灣下半年經濟成長的重要支柱[^53]。台灣在全球半導體產業的領先地位為AI晶片發展提供了堅實基礎[^12][^44]，而政府推動的「主權AI」(Sovereign AI)，如TAIDE模型的成功，也為本土AI技術生態奠定了良好基礎[^66]。
+
+### 潛在解決方案與未來方向
 研究人員正積極探索解決這些挑戰的方法，包括：
 *   **檢索增強生成 (RAG):** 通過將輸出 grounding 在外部知識源（如向量資料庫）中，減少幻覺並擴展知識。
 *   **工具增強推理 (Tool-Augmented Reasoning):** 使代理能夠調用外部 API 和工具，與現實世界系統互動。
@@ -457,12 +502,26 @@ OWASP ASI 文件提供了一系列結構化的緩解策略，並組織成六個�
 *   **記憶架構 (Memory Architectures):** 利用情節記憶、語義記憶和向量記憶來實現跨任務或跨會話的資訊持久化。
 *   **多代理協調與角色專業化 (Multi-Agent Orchestration with Role Specialization):** 透過元代理或協調器管理和協調多個專門代理，增強可解釋性、可擴展性性和故障隔離。
 *   **反思與自我批判機制 (Reflexive and Self-Critique Mechanisms):** 使代理能夠評估自身輸出或相互評估，提高魯棒性。
-*   **程式化提示工程流程 (Programmatic Prompt Engineering Pipelines):** 自動化提示的生成和結構化，提高可重現性和泛化性。
 *   **因果建模與基於模擬的規劃 (Causal Modeling and Simulation-Based Planning):** 使代理能夠理解因果關係，進行更魯棒的規劃和模擬假設情境。
-*   **監控、審計與可解釋性流程 (Monitoring, Auditing, and Explainability Pipelines):** 記錄代理的活動，提供事後分析和偵錯能力，特別是在多代理系統中追蹤因果鏈條。
 *   **治理感知架構 (Governance-Aware Architectures):** 內置角色訪問控制、沙箱和身份解決機制，確保代理在範圍內運行並可被追究責任。
 
-未來的 Agentic AI 將朝著更強大的**多代理擴展**、**統一協調**、**持久記憶**和**模擬規劃**發展。同時，**倫理治理**框架和針對特定領域的**領域特定系統**將變得至關重要。一些研究方向如 Absolute Zero 框架甚至探索了無需外部資料集的自主學習可能性。
+---
+
+## 台灣AI發展策略與未來展望
+
+### 2025年下半年關鍵技術與市場趨勢
+2025年下半年將是生成式AI技術全面突破的關鍵時期，台灣產業應關注以下趨勢[^27][^29]：
+*   **多模態AI成為主流**：企業將偏好採用能同時處理圖片、影像與文字的模型[^27]。
+*   **小語言模型(SLM)興起**：為中小企業提供更經濟、高效的AI解決方案，降低導入門檻[^27][^66]。
+*   **Agentic AI引領變革**：其自主決策和行動能力將重新定義人機協作模式，特別是在軟體開發、藥物研發、交通監控等專業領域帶來顯著效率提升[^29]。
+*   **邊緣AI與GenAI結合**：AI PC和AI手機的普及將加速此趨勢。預計2025年台灣GenAI手機佔有率將達50.7%，AI筆電將佔41.2%[^27]。這將推動更即時、敏捷且具隱私保護的AI推論服務[^27][^52]。
+*   **大型語言模型本土化**：持續投資TAIDE等主權AI模型，開發更符合台灣特有語言、文化和商業環境的精準應用[^45][^66]。
+
+### 政策建議與產業生態建構
+為應對挑戰並把握機遇，需要政府與產業的協同努力：
+*   **政府政策優化**：強化「台灣AI行動計畫2.0」的執行力，確保157億元預算的有效運用[^43][^44]。同時，加速推動「促進資料創新利用發展條例」等AI友善法規的立法，並完善AI訓練語料資料庫[^45]。
+*   **產業生態建構**：建立AI產業聯盟，促進大企業（如緯創、仁寶）與中小企業的合作，構建完整的AI供應鏈生態系統[^44][^56]。推動AI與台灣具優勢的半導體、精密製造等六大核心戰略產業深度融合[^12][^47]。
+*   **人才培育體系**：建立產學研一體的人才培養機制，推動大專院校AI課程共享，並建立如「AI應用規劃師」的認證體系，培養兼具產業知識與AI技術的複合型人才[^45][^48][^54]。
 
 ### AI 創業成功秘訣：速度與技術深度 (吳恩達觀察)
 吳恩達在與 Harrison Chase 的對話中，分享了 AI Fund 觀察到的 AI 創業成功兩大關鍵預測指標：
@@ -473,9 +532,11 @@ OWASP ASI 文件提供了一系列結構化的緩解策略，並組織成六個�
 
 Agentic AI 代表了 AI 發展的一個重要方向，它將單一 AI Agents 的能力擴展到協作、自主的系統級別。這為解決複雜問題和自動化廣泛任務帶來巨大機遇。從底層的生成式 AI 到具備感知與行動能力的 AI Agents，再到由多個協作代理組成的 Agentic AI，技術正不斷演進。吳恩達與 Harrison Chase 的對話進一步釐清了「agentic systems」的彈性定義、線性工作流的即時價值、以及「樂高積木」式的開發哲學，並點出了評估、語音、全民程式設計等領域的潛力。
 
-然而，隨之而來的安全挑戰是巨大的，從針對單一代理的記憶中毒和工具濫用，到多代理系統中的通訊中毒和流氓代理。OWASP ASI 等倡議為理解這些威脅並制定緩解策略提供了寶貴的框架。同時，現實應用中的「自信地提供錯誤答案」和引用問題也提醒我們，AI Agents 的穩定性和可靠性仍是當前開發的關鍵挑戰。
+然而，隨之而來的安全挑戰是巨大的，從針對單一代理的記憶中毒和工具濫用，到多代理系統中的通訊中毒和流氓代理。OWASP ASI 等倡議為理解這些威脅並制定緩解策略提供了寶貴的框架。同時，現實應用中的「自信地提供錯誤答案」、引用問題，以及產業導入面臨的人才、數據、文化等挑戰，都提醒我們AI的落地是一項系統性工程。
 
-對初學者而言，理解從生成式 AI 到 AI 代理再到 Agentic AI 的發展歷程，並掌握其核心能力、工具與安全挑戰，是切入這一領域的關鍵起點。這是一個需要持續研究和實踐來應對其複雜性和挑戰的領域，特別是為了確保未來自主系統的安全、可靠和負責任的部署。選擇穩定可靠、社群活躍的工具（如 **Suna**、**OpenManus**）至關重要，但同時也需警覺 **錯誤引用**、**安裝困難**、**不穩定輸出** 等陷阱，謹慎測試與驗證來源，才是 AI Agent 成功落地的關鍵。
+對開發者而言，選擇穩定可靠、社群活躍的工具（如 **Suna**、**OpenManus**）至關重要。對企業決策者而言，理解台灣產業的宏觀趨勢，克服導入挑戰，並制定清晰的AI戰略是成功的關鍵。台灣擁有全球領先的半導體產業基礎和政府的大力支持，若能有效整合資源、加速人才培育、完善基礎設施，必能在全球AI競爭中佔據有利地位，實現「AI之島」的願景[^14][^45]。
+
+---
 
 ## Model Context Protocol (MCP) 核心概念解析
 
@@ -530,13 +591,6 @@ MCP 採用客戶端-伺服器 (Client-Server) 架構：
 3.  **安全隔離：** Server 運行在受信任環境，作為 AI 與敏感數據/系統之間的安全屏障。
 4.  **標準化溝通：** 統一協議確保不同 Client 能與各種 Server 無縫對接。
 
-**交互流程簡例：**
-1.  Client (AI 模型) 需要讀取 `/data/report.txt` 文件。
-2.  Client 向 MCP Server 發送一個符合 MCP 格式的「讀取文件」請求，指明路徑。
-3.  MCP Server 驗證 Client 權限，然後讀取該文件。
-4.  MCP Server 將文件內容返回給 Client。
-5.  (可選) 若 `report.txt` 後續被修改，Server 可主動通知 Client 文件已更新。
-
 ### MCP 與傳統 API 的差異
 
 MCP **並非要取代 API**，而是作為 AI 模型與多個外部系統（這些系統可能本身就提供 API）之間的**中介層或協調層**。
@@ -552,34 +606,33 @@ MCP **並非要取代 API**，而是作為 AI 模型與多個外部系統（這�
 | **變更適應性**   | 外部 API 變更時，主要修改 MCP Server，Client 端影響小 | API 變更可能需要修改所有調用該 API 的 Client 端 |
 | **生態與工具**   | 逐漸形成 (如 Anthropic, Spring AI 支持)，強調 AI 易用性 | 成熟，但需自行整合不同 API 的客戶端庫            |
 
-**一句話總結差異：**
-*   **直接用 API：** AI 模型需要自己處理每個 API 的不同格式、認證和錯誤邏輯。
-*   **用 MCP：** AI 模型只需要和 MCP Server 溝通，MCP Server 負責處理與各種後端 API 或數據源的複雜交互，並以標準化方式提供給 AI。
-
-**MCP Server 的價值（為何不是多此一舉？）：**
-
-*   **簡化 AI 開發：** MCP Server 隱藏了底層 API 的細節，AI 模型只需使用統一的 MCP 格式請求。
-*   **集中管理認證與安全：** API Key、OAuth Token、權限控制等可以由 MCP Server 統一處理，降低 AI 模型直接處理這些敏感資訊的風險。
-*   **適應後端變更：** 如果某個外部 API 升級或更換，理論上只需修改 MCP Server 的適配邏輯，AI 模型的請求方式無需改變。
-*   **抽象化數據源：** 無論數據來自 REST API、GraphQL、資料庫還是本地文件，MCP Server 都能提供統一的接口給 AI。
-
-**何時選擇 MCP vs 直接用 API？**
-
-*   **單一、簡單、穩定的外部 API：** 如果 AI 只需要與一個非常簡單且不常變動的 API 互動，直接調用該 API 可能更直接。
-*   **整合多個異構數據源/工具：** 當 AI 需要與多個不同來源的數據或多種工具互動時，MCP 的標準化和抽象化優勢非常明顯，能大幅降低開發和維護成本。
-*   **需要增強安全性與控制：** MCP Server 可以作為一個安全代理，對 AI 的訪問進行細粒度控制。
-*   **追求 AI 應用開發的敏捷性：** MCP 可以讓 AI 開發者更專注於 AI 邏輯，而非底層數據整合。
-
-**使用現成的外部 API 時：** MCP Server 依然有價值，它會負責調用這些現成的 API，並將其返回的數據轉換成 MCP 標準格式供 AI 使用，AI 無需關心這些外部 API 的具體細節。
-
 ### 已知的 MCP "Hub" 或實現列表
 
-目前 MCP 生態仍在發展中。所謂的 "Hub" 更接近於一個**資源集散地或社群維護的列表**，用於發現可用的 MCP Server 實現、工具和相關資源。最重要的參考點是：
-
 *   **GitHub - `modelcontextprotocol` organization:** [https://github.com/modelcontextprotocol](https://github.com/modelcontextprotocol)
-    *   這是 MCP 協議本身的官方組織，包含協議規範等核心內容。
 *   **GitHub - `awesome-mcp-servers`:** [https://github.com/punkpeye/awesome-mcp-servers](https://github.com/punkpeye/awesome-mcp-servers)
-    *   這是一個社群維護的列表，收集了已知的 MCP Server 實現。您可以從這裡找到或貢獻不同的 MCP Server 項目。
-    *   **一些已知的實現或整合案例（可能出現在此列表或相關討論中）：**
-        *   **Cline:** 提到的文章中，Cline 是一個與 MCP 整合的例子，它本身可能提供或計劃提供 MCP Server 功能，或者作為 MCP Client 與其他 MCP Server 互動。
-        *   **Spring AI:** Spring 框架的 AI 模塊也宣布了對 MCP 的支持，可能會提供 MCP Server/Client 的實現。
+
+---
+### 參考文獻
+[^11]: https://aif.tw/event/ai-research/file/2025 台灣產業 AI 化大調查暨 AI 落地指引.pdf
+[^12]: https://investtaiwan.nat.gov.tw/intelNewsPage202501240001cht?lang=cht\&search=202501240001
+[^14]: https://www.president.gov.tw/News/38985
+[^27]: https://my.idc.com/getdoc.jsp?containerId=prAP52836824
+[^28]: https://blog.no8.io/ai-agent-solutions-recommend-0
+[^29]: https://www.cio.com.tw/84215/
+[^30]: https://www.teema.org.tw/industry-information-detail.aspx?infoid=44652
+[^37]: http://www.hyread.com.tw/doi/10.53106/240996512025031201004
+[^43]: https://www.ly.gov.tw/Pages/Detail.aspx?nodeid=55648\&pid=243271
+[^44]: https://www.cxcxc.io/2025/02/07/台灣ai行動計畫/
+[^45]: https://moda.gov.tw/press/press-releases/15428
+[^46]: https://edge.aif.tw/2024-taiwan-ai-challenge/
+[^47]: https://digi.nstc.gov.tw/File/E8BE929F910C30CA
+[^48]: https://content.peaker.com.tw/ai-talent-development-program/
+[^51]: https://udn.com/news/story/7240/8720564
+[^52]: https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=486df375-ed78-49e1-971b-a47083997d83
+[^53]: https://money.udn.com/money/story/5607/8753302
+[^54]: https://edge.aif.tw/2025-ai-survey-report-lu-zheng-hua-interview/
+[^55]: https://www.chanchao.com.tw/expoDetail.asp?id=DPCS2025
+[^56]: https://www.cna.com.tw/news/afe/202506010021.aspx
+[^62]: https://aif.tw/event/ai-research/
+[^64]: https://naipnews.naipo.com/6207
+[^66]: https://naipnews.naipo.com/1563
