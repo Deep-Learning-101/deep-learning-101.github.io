@@ -117,12 +117,18 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 - [**AlpacaEval Leaderboard**](https://tatsu-lab.github.io/alpaca_eval/)
 - [**Open LLM Leaderboard**](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)
 - [**Big Code Models Leaderboard**](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard)
+
 ---
+
 - [**Awesome-Chinese-LLM**](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM)
+
 ---
+
 - [大模型所需GPU 記憶體筆記](https://mp.weixin.qq.com/s/M_hdtR7mVq14MnaaL0MAUw)
 - [不同參數規模大語言模型在不同微調方法下所需的顯存總結](https://www.datalearner.com/blog/1051703254378255)  
+
 ---
+
 - [人工智慧大語言模型微調技術：SFT 監督微調、LoRA 微調方法、P-tuning v2 微調方法、Freeze 監督微調方法](https://zhuanlan.zhihu.com/p/643941480)
 - [LoRA、完全微調到底有何不同？ MIT 21頁論文講懂了](https://www.jiqizhixin.com/articles/2024-11-11-5)  
 - [大模型微調（Fine-tuning）全解，需要了解的都在這裡](https://www.53ai.com/news/finetuning/2025022604125.html)
@@ -137,13 +143,17 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 - torchtune：[https://github.com/pytorch/torchtune](https://github.com/pytorch/torchtune)
    - [https://pytorch.dev.org.tw/torchtune/stable/index.html](https://pytorch.dev.org.tw/torchtune/stable/index.html)
    - [使用知識蒸餾將Llama3.1 8B 蒸餾到Llama3.2 1B](https://pytorch.ac.cn/torchtune/stable/tutorials/llama_kd_tutorial.html)  
+
 ---
+
 - [微調特定領域的大模型，資料集究竟要怎麼搞？](https://zhuanlan.zhihu.com/p/29522986573)
 - [LLaMA Factory 微調教學：如何建立高品質資料集](https://zhuanlan.zhihu.com/p/1916489160333714285)
 - [大模型微調資料集生產工具 Easy Dataset](https://zhuanlan.zhihu.com/p/1908313086064042177)
 - [開源DeepWiki版支援根據現有檔案產生微調資料集](https://zhuanlan.zhihu.com/p/1908831694879985815)
 - [零一萬物發布COIG-CQIA：高品質且符合人類互動行為的中文指令微調數據](https://zhuanlan.zhihu.com/p/694434197)
+
 ---
+
 - [AI Search Has A Citation Problem](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)
 - [AI Agents vs. Agentic AI: A Conceptual Taxonomy, Applications and Challenges](https://www.alphaxiv.org/abs/2505.10468)
 - [OWASP Agentic AI – Threats and Mitigations](https://genai.owasp.org/resource/agentic-ai-threats-and-mitigations/)
@@ -164,8 +174,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 | **[Coze](https://github.com/cozeshow/coze)** | AI 智能體開發平台 | 整合插件、長短期記憶、工作流、卡片等功能，支持多平台發布 | 低門檻快速搭建個性化或具備商業價值的智能體 | 適合無需編程即可創建智能體的用戶 | 自研分佈式索引、電商數據結構 |
 
 **工具**
-
 ---
+
 - MCP
    - 2025-04-15：[automcp](https://github.com/NapthaAI/automcp)：[將任何代理、工具或編排器秒設定 MCP 伺服器](https://mp.weixin.qq.com/s/x-aZEhtnRYPFno81Fb9ttw)
    - 2025-04-10：[line-bot-mcp-server](https://github.com/line/line-bot-mcp-server)
@@ -176,7 +186,9 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
    - 2025-03-28：[browser-use-webui](https://github.com/browser-use/web-ui)
    - 2025-02-16：[browser use webui部署（實現瀏覽器自動化）](https://zhuanlan.zhihu.com/p/24116360552)
    - 2025-01-23：[Browser Use – 讓AI 像人類一樣使用瀏覽器](https://zhuanlan.zhihu.com/p/20038156945)
+
 ---     
+
 - 2025-06-10：[Agentic-Doc](https://github.com/landing-ai/agentic-doc)；[LandingAI開源神器，這個Python庫讓百頁文檔秒變結構化資料！](https://zhuanlan.zhihu.com/p/1914259475306612709)
 - 2025-06-06：[daily-arXiv-ai-enhanced](https://github.com/dw-dengwei/daily-arXiv-ai-enhanced)：每日自動爬取arXiv論文並以LLM產生中文摘要
 - 2025-05-22：[AingDesk](https://deepwiki.com/aingdesk/AingDesk)；[AingDesk：零门槛本地 AI 部署](https://zhuanlan.zhihu.com/p/29773848356)       
@@ -200,15 +212,17 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 
 **[AI Agent 開源框架](https://deep-learning-101.github.io/agent)**
-
 ---
+
 - [從AI Agent到Agent工作流程，一文詳細了解代理程式工作流程](https://zhuanlan.zhihu.com/p/32491596217)
 - [萬字長文，帶你綜觀大模型Agent，涉及研究痛點、應用場景、發展方向](https://zhuanlan.zhihu.com/p/29833831482)
 - [什麼是「Agentic 工作流程」？](https://zhuanlan.zhihu.com/p/32709535995)
 - [什麼是Agentic AI？什麼是Agentic Workflow？與AI Agent有什麼區別和關聯？](https://zhuanlan.zhihu.com/p/705935464)
 - [FinRobot](https://www.alphaxiv.org/zh/overview/2405.14767)；[DeepWiki](https://deepwiki.com/AI4Finance-Foundation/FinRobot)；可支援 Gemini-2.5-Pro-preview-05-06，基於 AutoGen    
 - [Jupyter-AI](https://deepwiki.com/jupyterlab/jupyter-ai)；可支援 Gemini-2.5-Pro-preview-05-06
+
 ---
+
 - 2025-06-03：[Gemini Fullstack LangGraph](https://deepwiki.com/google-gemini/gemini-fullstack-langgraph-quickstart)；[DEMO](https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI)；[以為Google只是簡單放個Demo，哪想到是」開源版”Perplexity！](https://www.53ai.com/news/OpenSourceLLM/2025060431620.html)
 - 2025-05-30：[WebDancer @ Alibaba](https://www.alphaxiv.org/zh/overview/2505.22648)；[DeepWiki](https://deepwiki.com/Alibaba-NLP/WebAgent)
 - 2025-05-22：[Magentic-UI](https://deepwiki.com/microsoft/magentic-ui)。。。暫不支援使用 Gemini
