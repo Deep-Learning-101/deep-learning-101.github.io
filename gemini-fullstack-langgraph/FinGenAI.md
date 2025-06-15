@@ -48,6 +48,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
+# 技術分享
+
 <details>
 <summary>手把手帶你一起踩 AI 坑</summary>
 
@@ -55,7 +57,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 <ul>
   <li>
-    <b><a href="https://blog.twman.org/2025/03/AIAgent.html" target="_blank">避開 AI Agents 開發陷阱：常見問題、挑戰與解決方案</a></b>：<a href="https://deep-learning-101.github.io/agent" target="_blank">探討多種 AI Agentss工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
+    <b><a href="https://blog.twman.org/2025/03/AIAgent.html" target="_blank">避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案</a></b>：<a href="https://deep-learning-101.github.io/agent" target="_blank">探討多種 AI 代理人工具的應用經驗與挑戰，分享實用經驗與工具推薦。</a>
   </li>
   <li>
     <b><a href="https://blog.twman.org/2024/08/LLM.html" target="_blank">白話文手把手帶你科普 GenAI</a></b>：<a href="https://deep-learning-101.github.io/GenAI" target="_blank">淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。</a>
@@ -70,7 +72,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
     <b><a href="https://blog.twman.org/2024/02/LLM.html" target="_blank">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM" target="_blank">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
   </li>
   <li>
-    <b><a href="https://blog.twman.org/2023/04/GPT.html" target="_blank">什麼是大語言模型，它是什麼？想要嗎？(Large Language Model，LLM)</a></b>：<a href="https://deep-learning-101.github.io/GPU" target="_blank">探討 LLM 的發展與應用，強調硬體資源在開發中的關鍵作用。</a>
+    <b><a href="https://blog.twman.org/2023/04/GPT.html" target="_blank">解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算</a></b>：<a href="https://deep-learning-101.github.io/GPU" target="_blank">探討 LLM 的發展與應用，硬體資源在開發中的作用。</a>
   </li>
   <li>
     <b><a href="https://blog.twman.org/2024/11/diffusion.html" target="_blank">Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)</a></b>；<a href="https://deep-learning-101.github.io/diffusion" target="_blank">深入探討影像生成與分割技術的應用，強調硬體資源的重要性。</a>
@@ -89,6 +91,23 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   </li>
 </ul>
 
+</details>
+
+---
+
+<details>
+<summary>試用體驗</summary>
+<ul>
+  <li>
+    <b><a href="https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI" target="_blank">gemini-fullstack-langgraph體驗</a></b>
+  </li>
+  <li>
+    <b><a href="https://deep-learning-101.github.io/FinRobot/FinRobot-GOOGL" target="_blank">基於 AutoGen的FinRobot體驗</a></b>
+  </li>  
+  <li>
+    <b><a href="https://deep-learning-101.github.io/Blog/Cloudflared-Tunnel" target="_blank">用 Cloudflared 實作 SSH / HTTP / RDP Tunnel</a></b>
+  </li>    
+</ul>
 </details>
 
 ---
