@@ -48,7 +48,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
-# Tech-Report
+# 技術分享
 
 <details>
 <summary>手把手帶你一起踩 AI 坑</summary>
@@ -96,7 +96,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 ---
 
 <details>
-<summary>最新試用體驗分享</summary>
+<summary>試用體驗</summary>
 <ul>
   <li>
     <b><a href="https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI" target="_blank">gemini-fullstack-langgraph體驗</a></b>
