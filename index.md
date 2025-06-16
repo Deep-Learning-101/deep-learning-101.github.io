@@ -48,8 +48,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
-# AI-Tech-Share
-
 {% include ai-share.html %}
 
 ---
