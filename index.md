@@ -114,16 +114,23 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # Deep Learning 101 Meetup
 
+---
 
-<iframe width="560" height="315" 
-  src="https://www.youtube.com/embed/Nl3IaN_zrt8" 
-  frameborder="0" 
-  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-  allowfullscreen>
-</iframe>
+<div style="display: flex; justify-content: center;">
+  <div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/Nl3IaN_zrt8"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
 
+---
 
-Deep Learning 101 Meetup 歷年活動 (摘要及逐字稿皆由 Gemini 2.5 Pro Preview 05-06 及 NotebookLM 所生成，處理好會陸續補上)
+#### Deep Learning 101 Meetup 歷年活動 (摘要逐字稿及語音皆由 Gemini 2.5 Pro Preview 05-06 及 NotebookLM 所生成，處理好會陸續補上)
 
 | No. | 主題 (網頁) | 日期 (YT) | 講者 (摘要) | 語音 |
 |-----|------|------|------|------|
