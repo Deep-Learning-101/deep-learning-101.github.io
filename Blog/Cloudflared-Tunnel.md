@@ -60,7 +60,7 @@ Zero Trust 的四個核心：身份驗證、最小權限、動態評估、全程
 # cloudflared tunnel --url http://localhost:80
 ```
 
-有自己網域且能自己設定DNS
+有自己網域且能自己設定DNS (Ubuntu)
 ```bash
 # Add cloudflare gpg key，先把 cloudflare的gpg key 安裝
 sudo mkdir -p --mode=0755 /usr/share/keyrings
@@ -71,6 +71,25 @@ echo 'deb [signed-by=/usr/share/keyrings/cloudflare-main.gpg] https://pkg.cloudf
 
 # install cloudflared，直接安裝
 sudo apt-get update && sudo apt-get install cloudflared
+```
+
+有自己網域且能自己設定DNS (CentOS)
+```bash
+#直接下載，不用 gpgkey 方式下載安裝
+wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-x86_64.rpm -O cloudflared.rpm
+
+# 可能會碰上CentOS 7 已進入 EOL（終止支援） 的狀況，造成預設 yum repository 鏡像站已失效（404 或 503），導致 yum 嘗試從無效的源下載 metadata 檔案。 這 與 cloudflared rpm 本身無關，而是整個 yum 系統快掛掉了 😅
+sudo cp -a /etc/yum.repos.d /etc/yum.repos.d.bak
+sudo yum clean all
+sudo yum makecache
+
+sudo yum localinstall --nogpgcheck cloudflared.rpm -y
+
+# 可能會找不到執行路徑
+sudo ln -s /usr/bin/cloudflared /usr/local/bin/cloudflared
+
+cloudflared --version
+cloudflared version 2025.6.0 (built 2025-06-11-1108 UTC)
 ```
 
 ## 2️⃣ Cloudflared Tunnel 是什麼？如何協助實踐 Zero Trust
@@ -85,8 +104,8 @@ sudo apt-get update && sudo apt-get install cloudflared
 
 接著就是要登入，然後創建相關設定檔，我是在主機端設定，也可以在網頁端設定就是
 ```bash
-# cloudflared login
-# cloudflared tunnel create XXXXX
+cloudflared login
+cloudflared tunnel create XXXXX
 ```
 沒意外的話這時會取得 `xxxxx.pem` 還有 一串字串的 tunnel ID 的 json 檔
 `credentials-file: /home/user/.cloudflared/XXXX-XXXX-XXXX-XXXX-XXXX.json`
@@ -118,14 +137,16 @@ ingress:
       service: ssh://localhost:22
 ```
 
-同時也要在 terminal 下這樣的指令，第一個 xxx 就是前述的 `cloudflared tunnel create XXXXX`
-```bash
-cloudflared tunnel route dns xxxxx xxx.twman.org
-```
-第二個就是你的子網域，以上都是在欲做為 tunnel 主機的設定，接著是要從你要連線至這主機的windows等機器上執行
+同時也要在 terminal 下這樣的指令，第一個 xxxxx 就是前述的 `cloudflared tunnel create XXXXX`，第二個 xxx 就是你的子網域，就是前述的 `- hostname: xxx.twman.org` 到這都是在欲做為 tunnel 主機的設定
 
 ```bash
-# cloudflared access tcp --hostname xxx.twman.org --url localhost:22222
+cloudflared tunnel route dns xxxxx xxx.twman.org
+cloudflared tunnel run xxxxx
+```
+接著是要從你要連線至這主機的windows等機器上執行
+
+```bash
+cloudflared access tcp --hostname xxx.twman.org --url localhost:22222
 ```
 會出現像這樣
 ```
@@ -154,12 +175,14 @@ ingress:
       service: http://localhost:80
 ```
 
-一樣也要在 terminal 下這樣的指令，第一個 xxx 就是前述的 `cloudflared tunnel create XXXXX`
+一樣也要在 terminal 下這樣的指令，第一個 xxx 就是前述的 `cloudflared tunnel create XXXXX`，第二個 xxx 就是你的子網域，就是前述的 `- hostname: xxx.twman.org` 到這都是在欲做為 tunnel 主機的設定
+
 ```bash
 cloudflared tunnel route dns xxxxx xxx.twman.org
+cloudflared tunnel run xxxxx
 ```
 
-網頁不用像 ssh 還要在本機執行，只要 DNS 生效，基本就可以使用了 !
+網頁不用像 ssh 還要在要連線的本機端執行，只要 DNS 生效，基本就可以使用了 !
 
 ## 5️⃣🔧 Cloudflared Tunnel 實作教學 ▶️ RDP 遠端桌面
 
@@ -181,15 +204,17 @@ ingress:
       service: rdp://xxx.xxx.xxx.xx:3389
 ```
 
-一樣也要在 terminal 下這樣的指令，第一個 xxx 就是前述的 `cloudflared tunnel create XXXXX`
+一樣也要在 terminal 下這樣的指令，第一個 xxx 就是前述的 `cloudflared tunnel create XXXXX`，第二個 xxx 就是你的子網域，就是前述的 `- hostname: xxx.twman.org` 到這都是在欲做為 tunnel 主機的設定
+
 ```bash
 cloudflared tunnel route dns xxxxx xxx.twman.org
+cloudflared tunnel run xxxxx
 ```
 
 接著是要從你要連線至這主機的windows等機器上執行
 
 ```bash
-# cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
+cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
 ```
 會出現像這樣
 ```
