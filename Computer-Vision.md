@@ -23,6 +23,8 @@ Computer Vision (電腦視覺)
 
 ## Object Detection (目標偵測)
 - [AAAI2025, Multi-clue Consistency Learning to Bridge Gaps Between General and Oriented Object in Semi-supervised Detection](https://www.alphaxiv.org/abs/2407.05909)；[Github](https://github.com/facias914/sood-mcl)；[AAAI2025 一個遙感半監督目標偵測（半監督旋轉目標偵測）方法](https://zhuanlan.zhihu.com/p/26788012528)
+- 2025-06-15：[GeoPix](https://github.com/Norman-Ou/GeoPix)；[像素級遙感多模態大模型](https://3slab.pku.edu.cn/info/1026/2121.htm)
+- 2025-05-23：[VisionReasoner](https://github.com/dvlab-research/VisionReasoner)；[偵測、分割、計數、問答全拿下？對標Qwen2.5-VL！ VisionReasoner用強化學習統一視覺感知與推理](https://mp.weixin.qq.com/s/vECz3i_-dzvlDr3BdRLPWQ)
 - 2025-03-14：[Falcon: A Remote Sensing Vision-Language Foundation Model](https://www.alphaxiv.org/abs/2503.11070)；[DeepWiki](https://deepwiki.com/TianHuiLab/Falcon)
  
 
@@ -46,7 +48,9 @@ Computer Vision (電腦視覺)
 - [SAM2Point](https://github.com/ZiyuGuo99/SAM2Point)：[可提示3D 分割研究里程碑！ SAM2Point：SAM2加持可泛化任3D場景、任意提示！](https://mp.weixin.qq.com/s/TnTK5UE7O_hcrNzloxBmAw)
 
 ## Diffusion model (擴散模型)
-- 2025-05-23：[HivisionIDPhotos －智慧證件照產生神器](https://deepwiki.com/Zeyi-Lin/HivisionIDPhotos)；[AI證件照，摳圖、換背景、任意尺寸](https://zhuanlan.zhihu.com/p/718725351)
+- 2025-05-28：[視覺理解&生成大一統模型 Jodi](https://vipl-genun.github.io/Project-Jodi/)；[alphaXiv](https://www.alphaxiv.org/zh/overview/2505.19084)
+- 2025-05-27：[AnomalyAny](https://hansunhayden.github.io/AnomalyAny.github.io/)；[CVPR2025｜突破資料瓶頸！ Stable Diffusion 協助視覺異常檢測，無需訓練即可產生真實多樣異常樣本](https://zhuanlan.zhihu.com/p/1910284073231942689)
+- 2025-05-23：[HivisionIDPhotos，智慧證件照產生神器](https://deepwiki.com/Zeyi-Lin/HivisionIDPhotos)；[AI證件照，摳圖、換背景、任意尺寸](https://zhuanlan.zhihu.com/p/718725351)
 - 2025-05-19：[Index-AniSora](https://deepwiki.com/bilibili/Index-anisora)；[Aligning Anime Video Generation with Human Feedback](https://www.alphaxiv.org/overview/2504.10044)；[B站開源SOTA動畫影片生成模型Index-AniSora！](https://zhuanlan.zhihu.com/p/1908150671540224717)
 - 2025-04-26：[Insert Anything](https://www.alphaxiv.org/zh/overview/2504.15009)；[DeepWiki](https://deepwiki.com/song-wensong/insert-anything)  
 - 2025-04-24：[字節Phantom](https://github.com/Phantom-video/Phantom)：[1280x720影片生成革命！位元組Phantom模型實測：10G顯存效果不輸某靈付費版](https://zhuanlan.zhihu.com/p/1898688574477545694)
