@@ -27,7 +27,7 @@ _金融服務中 GenAI 與 LLM 的變革潛力_
 ---
 
 <div style="display: flex; justify-content: center;">
-  <div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9;">
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
     <iframe
       src="https://www.youtube.com/embed/2oqlyjNVsM8"
       style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
@@ -36,6 +36,15 @@ _金融服務中 GenAI 與 LLM 的變革潛力_
       allowfullscreen>
     </iframe>
   </div>
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/P9BEreqRKGc"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>  
 </div>
 
 ---
