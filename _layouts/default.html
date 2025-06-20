@@ -1,32 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+
+  <!-- GitHub markdown-style CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+
 <style>
-  html {
-    /* 確保 html 元素沒有意外的邊距或內邊距影響 body */
-    margin: 0;
-    padding: 0;
-  }
-
-  body {
+  html, body {
+    /* 你的原始 color 設置，既然之前 .markdown-body 內部文字正確，先保留它 */
+    color: CanvasText;
     font-family: system-ui;
-    margin: 0; /* body 填滿 html */
-    padding: 2rem; /* 在 body 周圍留出內邊距 */
+    padding: 2rem;
+    margin: 0;
 
-    /* 默認 (亮色模式) */
-    background-color: #ffffff; /* 或者使用 Canvas 如果你確定它在亮色模式下是白色 */
-    color: #000000;       /* 或者使用 CanvasText */
+    /* 替換 background-color: Canvas; */
+    /* 設置默認亮色背景 */
+    background-color: #ffffff; /* 或者一個你喜歡的亮色 */
   }
 
   /* 暗黑模式 */
   @media (prefers-color-scheme: dark) {
-    body {
+    html, body {
       background-color: #0d1117; /* GitHub 暗黑模式常用的背景色，或者你喜歡的任何暗色 */
-      color: #c9d1d9;       /* GitHub 暗黑模式常用的文字顏色 */
+      /* color: CanvasText; 會在這裡繼續生效，理論上暗黑模式下 CanvasText 是亮色 */
     }
   }
 
   .markdown-body {
     max-width: 1024px;
-    margin: auto; /* 這會讓 markdown-body 在 body 的 padding 內部居中 */
-    /* .markdown-body 自身的背景和顏色會由 github-markdown.css 控制 */
-    /* 如果 github-markdown.css 沒有正確應用背景，這裡可以考慮也設置一下，但通常不需要 */
+    margin: auto;
+    /* github-markdown.css 負責這裡的背景和文字顏色，
+       它應該能正確處理亮暗主題切換。*/
   }
 </style>
+  
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHE1PH854B"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DHE1PH854B');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4046615879480582"
+     crossorigin="anonymous"></script>
+  <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+</head>
+<body>
+  <amp-auto-ads type="adsense"
+        data-ad-client="ca-pub-4046615879480582">
+</amp-auto-ads>
+  <article class="markdown-body">
+    {{ content }}
+  </article>
+</body>
+</html>
+  
