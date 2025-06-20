@@ -1,66 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }}</title>
+
+  <!-- GitHub markdown-style CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+
 <style>
   body {
     padding: 2rem;
+    background-color: Canvas;
+    color: CanvasText;
     font-family: system-ui;
-    background-color: #fff; /* 預設白底 */
-    color: #000;
   }
 
   .markdown-body {
     max-width: 1024px;
     margin: auto;
-    color: inherit;
-  }
-
-  /* 深色模式設定 */
-  @media (prefers-color-scheme: dark) {
-    body {
-      background-color: #000;
-      color: #fff;
-    }
-
-    .markdown-body {
-      color: #fff;
-    }
-
-    /* 修正 GitHub markdown 套件的強制黑字問題 */
-    .markdown-body h1,
-    .markdown-body h2,
-    .markdown-body h3,
-    .markdown-body h4,
-    .markdown-body h5,
-    .markdown-body h6,
-    .markdown-body p,
-    .markdown-body li,
-    .markdown-body blockquote,
-    .markdown-body pre,
-    .markdown-body code,
-    .markdown-body table,
-    .markdown-body strong,
-    .markdown-body em,
-    .markdown-body td,
-    .markdown-body th {
-      color: #fff !important;
-    }
-
-    .markdown-body a {
-      color: #9ecbff;
-    }
-
-    .markdown-body code {
-      background-color: #222;
-    }
-
-    .markdown-body pre {
-      background-color: #111;
-    }
-
-    .markdown-body table {
-      border-color: #555;
-    }
-
-    .markdown-body hr {
-      border-color: #333;
-    }
   }
 </style>
+
+  <!-- Google Analytics GA4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DHE1PH854B"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-DHE1PH854B');
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4046615879480582"
+     crossorigin="anonymous"></script>  
+  <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+</script>
+</head>
+<body>
+  <amp-auto-ads type="adsense"
+        data-ad-client="ca-pub-4046615879480582">
+</amp-auto-ads>
+  <article class="markdown-body">
+    {{ content }}
+  </article>
+</body>
+</html>
