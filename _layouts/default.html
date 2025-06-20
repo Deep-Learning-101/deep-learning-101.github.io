@@ -2,28 +2,65 @@
   body {
     padding: 2rem;
     font-family: system-ui;
-    background-color: #fff; /* 預設白色 */
+    background-color: #fff; /* 預設白底 */
     color: #000;
   }
 
   .markdown-body {
-    max-width: 960px;
+    max-width: 1024px;
     margin: auto;
+    color: inherit;
   }
 
-  /* 如果使用者使用的是黑暗模式 */
+  /* 深色模式設定 */
   @media (prefers-color-scheme: dark) {
     body {
-      background-color: #000; /* 全黑 */
-      color: #fff;            /* 文字白 */
+      background-color: #000;
+      color: #fff;
     }
 
-    a {
-      color: #9ecbff;         /* 調整連結顏色以避免太亮 */
+    .markdown-body {
+      color: #fff;
     }
 
-    code {
-      background-color: #222; /* 讓 code block 看得清楚 */
+    /* 修正 GitHub markdown 套件的強制黑字問題 */
+    .markdown-body h1,
+    .markdown-body h2,
+    .markdown-body h3,
+    .markdown-body h4,
+    .markdown-body h5,
+    .markdown-body h6,
+    .markdown-body p,
+    .markdown-body li,
+    .markdown-body blockquote,
+    .markdown-body pre,
+    .markdown-body code,
+    .markdown-body table,
+    .markdown-body strong,
+    .markdown-body em,
+    .markdown-body td,
+    .markdown-body th {
+      color: #fff !important;
+    }
+
+    .markdown-body a {
+      color: #9ecbff;
+    }
+
+    .markdown-body code {
+      background-color: #222;
+    }
+
+    .markdown-body pre {
+      background-color: #111;
+    }
+
+    .markdown-body table {
+      border-color: #555;
+    }
+
+    .markdown-body hr {
+      border-color: #333;
     }
   }
 </style>
