@@ -38,7 +38,7 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
 ---
 
 <div style="display: flex; justify-content: center;">
-  <div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9;">
+  <div style="position: relative; width: 100%; max-width: 460px; aspect-ratio: 16 / 9;">
     <iframe
       src="https://www.youtube.com/embed/aWDhQV1n29w"
       style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
@@ -47,6 +47,15 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
       allowfullscreen>
     </iframe>
   </div>
+  <div style="position: relative; width: 100%; max-width: 460px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/DjpENcFYYK0"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>  
 </div>
 
 ---
