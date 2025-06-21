@@ -16,7 +16,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 _AI 陪伴機器人：2025 趨勢分析：技術突破、市場潛力與未來展望_
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2025年06月16日更新
+**日期**：2025年06月21日更新
 
 ---
 
@@ -27,7 +27,7 @@ _AI 陪伴機器人：2025 趨勢分析：技術突破、市場潛力與未來�
 ---
 
 <div style="display: flex; justify-content: center;">
-  <div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9;">
+  <div style="position: relative; width: 100%; max-width: 450px; aspect-ratio: 16 / 9;">
     <iframe
       src="https://www.youtube.com/embed/oiIgoll_nNM"
       style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
@@ -36,6 +36,15 @@ _AI 陪伴機器人：2025 趨勢分析：技術突破、市場潛力與未來�
       allowfullscreen>
     </iframe>
   </div>
+  <div style="position: relative; width: 100%; max-width: 450px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/3-ID0vf8Hyk"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>  
 </div>
 
 ---
