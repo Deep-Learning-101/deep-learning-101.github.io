@@ -21,6 +21,7 @@
             overflow: hidden; /* Ensures content respects border radius */
             display: flex;
             flex-direction: column;
+            margin-bottom: 1.5rem;
         }
         .bento-title {
             font-size: 1.75rem; /* 28px */
@@ -171,6 +172,8 @@
             font-weight: 400;
         }
     </style>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4046615879480582"
+     crossorigin="anonymous"></script>
 </head>
 <body>
     <div id="app" class="content-wrapper">
@@ -195,13 +198,14 @@
                         <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px;">
                     </a>
                 </p>
-            <p align="center">
-            <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube</a> |
-            <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
-            <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
-            <a href="http://DeepLearning101.TWMAN.ORG" target="_blank">網站</a> |
-            <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space</a>
-            </p>
+                <p align="center">
+                <a href="https://www.youtube.com/@DeepLearning101" target="_blank">去 YouTube 訂閱</a> |
+                <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                <a href="https://github.com/Deep-Learning-101" target="_blank"> 到 GitHub 點星</a> |
+                <a href="https://www.twman.org/DeepLearning101" target="_blank">網站</a> |
+                <a href="https://huggingface.co/DeepLearning101" target="_blank">到 Hugging Face Space 按愛心</a>
+                </p>
 
                 <p>
                     <a href="https://www.youtube.com/watch?v=q1XhbjnFICc" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i>2018/05/11, Mark Chang, Towards Principled Methods for Training Generative Adversarial Networks</a><br>
@@ -211,12 +215,36 @@
 
         <header class="text-center my-12">
             <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
-                邁向更有理論基礎的生成對抗網路訓練方法
+                邁向更有理論基礎的生成對抗網路訓練方法，集合的可數性、不可數性與測度，及其在神經網絡理論中的應用
             </h1>
-            <p class="english-subtitle mt-2">
-                集合的可數性、不可數性與測度，及其在神經網絡理論中的應用
-            </p>
+
+            <!-- 👆 Emoji 版 Markdown 連結 -->
+            <div class="mt-4">
+                <a href="https://deep-learning-101.github.io/notebooklm/NO19" target="_blank"
+                class="inline-block text-blue-500 hover:text-blue-700 text-lg font-medium"
+                title="點我查看 Markdown 完整版 ">
+                    👆 點我查看 Markdown 完整版 👆
+                </a>
+            </div>
         </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3" style="display: flex; flex-direction: column; align-items: center;">
+                <div style="text-align: center;">
+                    🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵<br>
+                    <audio controls style="width: 400px; height: 30px; margin-top: 20px;"><source src="../notebooklm-mp3/NO19.mp3" type="audio/mpeg"></audio>
+                </div>
+            <!-- 包住兩個影片的 flex 容器 -->
+             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                <!-- 第 1 個影片 -->
+                 <iframe width="400" height="225" src="https://www.youtube.com/embed/Ahb9zcWaoqI" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+                <!-- 第 2 個影片 -->
+                 <iframe width="400" height="225" src="https://www.youtube.com/embed/7_lyjNljMf0" frameborder="0" allow="accelerometer; autoplay; lipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
 
         <div class="grid-container">
             <div class="bento-box col-span-lg-3 motion-div">
@@ -276,7 +304,7 @@
                 </div>
             </div>
 
-            <div class="bento-box col-span-lg-1 row-span-lg-2 motion-div">
+            <div class="bento-box col-span-lg-3 motion-div">
                 <div class="motion-div-full-height">
                     <i class="fas fa-ruler-combined icon-large"></i>
                     <h2 class="bento-title">2. 測度 <span class="text-base font-normal text-slate-500">Measure</span></h2>
