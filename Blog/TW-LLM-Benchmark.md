@@ -395,29 +395,29 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 
 **參考文獻**
-*   [1]: Galileo.ai Blog. *MMLU Benchmark: Everything you need to know*. (對應 MMLU 介紹)
-*   [2]: https://arxiv.org/abs/2502.16428. MMLU 相關論文
-*   [3]: arXiv:2403.20180v1 *TMLU: A Benchmark for Traditional Chinese Language Understanding in Taiwan*. (TMLU 主要論文)
-*   [4]: https://arxiv.org/abs/2403.20180. TMLU 相關，可能與[3]重複，確認是否需要兩個
-*   [5]: Hugging Face. *lianghsun/Llama-3.2-Taiwan-3B*. (TMMLU+ 相關模型)
-*   [6]: LinkedIn post by Liang-Hsun Huang. *lianghsun/Llama-3.2-Taiwan-3B-Instruct*. (TMMLU+ 及 Llama-3.2-Taiwan MMLU 分數)
-*   [7]: GitHub. *MiuLab/Taiwan-LLM*. (Open TW LLM Leaderboard 及臺灣特化評測數據來源)
-*   [8]: PromptLayer. *Llama-3-Taiwan-8B-Instruct Model Card*.
-*   [9]: Hugging Face. *yentinglin/Llama-3-Taiwan-70B-Instruct* (及其系列模型頁面，包含各項臺灣評測數據).
-*   [10]: Taipei Times. *Academics develop AI model for legal queries*. (TW Legal Eval 相關新聞)
-*   [11]: Hugging Face Spaces. *yentinglin/open-tw-llm-leaderboard*. (Open TW LLM Leaderboard)
-*   [12]: QwenLM Blog. *Qwen2.5: A new generation of large language models*. (Qwen2.5, Qwen3 MMLU/MMLU-Pro 分數)
-*   [13]: Hugging Face. *Qwen/Qwen2-72B*. (Qwen2-72B 官方數據及 TMLU 分數)
-*   [14]: arXiv:2407.07796. *Llama 4 Series*. (Llama 4 and Llama 3.1 MMLU/MMLU-Pro scores)
-*   [15]: DataCamp Blog. *Llama 3.3 70B: Meta’s Latest Open LLM*. (Llama 3.3 MMLU-Pro 分數)
-*   [16]: https://arxiv.org/html/2403.01858v1. 可能指 Llama 3 早期報告或 MMLU 5-shot Leaderboard 相關
-*   [17]: Semantic Scholar. Paper 0a39c40528b4604bfb7ef9b18c354af2e7eb4366. (GPT-4o MMLU-Pro 數據可能來源)
-*   [18]: ITHome News. *Anthropic釋出Claude 3.5 Sonnet，比肩GPT-4o、Gemini 1.5 Pro*. (Claude-3-Opus TMMLU+ 及 Qwen 系列新聞)
-*   [19]: NTU CSIE Announcement. *Yenting Lin - Taiwan LLM Development, Evaluation, and Insights*.
-*   [20]: TAIDE Official Website. *TAIDE Project*. (TAIDE 計畫官方網站及 Llama-3.1-TAIDE-LX-8B-Chat 資訊)
-*   [21]: arXiv:2403.01858v3. *The Llama 3 Series of Models*. (Llama 3.1 報告)
-*   [22]: MediaTek Tek Talk Blogs. *MediaTek Research Breeze 7B: A Highly Efficient LLM*.
-*   [23]: https://arxiv.org/html/2403.02712v1. Breeze 相關論文
-*   [24]: MediaTek Taiwan Blog. *聯發創新基地全面開源 Breeze2*. (Breeze2 官方發布及資訊)
-*   [25]: https://arxiv.org/html/2501.13921v1. Breeze2 相關論文
+[1]: Galileo.ai Blog. *MMLU Benchmark: Everything you need to know*. (對應 MMLU 介紹)
+[2]: https://arxiv.org/abs/2502.16428. MMLU 相關論文
+[3]: arXiv:2403.20180v1 *TMLU: A Benchmark for Traditional Chinese Language Understanding in Taiwan*. (TMLU 主要論文)
+[4]: https://arxiv.org/abs/2403.20180. TMLU 相關，可能與[3]重複，確認是否需要兩個
+[5]: Hugging Face. *lianghsun/Llama-3.2-Taiwan-3B*. (TMMLU+ 相關模型)
+[6]: LinkedIn post by Liang-Hsun Huang. *lianghsun/Llama-3.2-Taiwan-3B-Instruct*. (TMMLU+ 及 Llama-3.2-Taiwan MMLU 分數)
+[7]: GitHub. *MiuLab/Taiwan-LLM*. (Open TW LLM Leaderboard 及臺灣特化評測數據來源)
+[8]: PromptLayer. *Llama-3-Taiwan-8B-Instruct Model Card*.
+[9]: Hugging Face. *yentinglin/Llama-3-Taiwan-70B-Instruct* (及其系列模型頁面，包含各項臺灣評測數據).
+[10]: Taipei Times. *Academics develop AI model for legal queries*. (TW Legal Eval 相關新聞)
+[11]: Hugging Face Spaces. *yentinglin/open-tw-llm-leaderboard*. (Open TW LLM Leaderboard)
+[12]: QwenLM Blog. *Qwen2.5: A new generation of large language models*. (Qwen2.5, Qwen3 MMLU/MMLU-Pro 分數)
+[13]: Hugging Face. *Qwen/Qwen2-72B*. (Qwen2-72B 官方數據及 TMLU 分數)
+[14]: arXiv:2407.07796. *Llama 4 Series*. (Llama 4 and Llama 3.1 MMLU/MMLU-Pro scores)
+[15]: DataCamp Blog. *Llama 3.3 70B: Meta’s Latest Open LLM*. (Llama 3.3 MMLU-Pro 分數)
+[16]: https://arxiv.org/html/2403.01858v1. 可能指 Llama 3 早期報告或 MMLU 5-shot Leaderboard 相關
+[17]: Semantic Scholar. Paper 0a39c40528b4604bfb7ef9b18c354af2e7eb4366. (GPT-4o MMLU-Pro 數據可能來源)
+[18]: ITHome News. *Anthropic釋出Claude 3.5 Sonnet，比肩GPT-4o、Gemini 1.5 Pro*. (Claude-3-Opus TMMLU+ 及 Qwen 系列新聞)
+[19]: NTU CSIE Announcement. *Yenting Lin - Taiwan LLM Development, Evaluation, and Insights*.
+[20]: TAIDE Official Website. *TAIDE Project*. (TAIDE 計畫官方網站及 Llama-3.1-TAIDE-LX-8B-Chat 資訊)
+[21]: arXiv:2403.01858v3. *The Llama 3 Series of Models*. (Llama 3.1 報告)
+[22]: MediaTek Tek Talk Blogs. *MediaTek Research Breeze 7B: A Highly Efficient LLM*.
+[23]: https://arxiv.org/html/2403.02712v1. Breeze 相關論文
+[24]: MediaTek Taiwan Blog. *聯發創新基地全面開源 Breeze2*. (Breeze2 官方發布及資訊)
+[25]: https://arxiv.org/html/2501.13921v1. Breeze2 相關論文
 
