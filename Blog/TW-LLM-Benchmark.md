@@ -392,7 +392,7 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 嵌入模型和重排序模型是 RAG 系統中不可或缺的組成部分，它們共同確保了提供給 LLM 的資訊的相關性和準確性。雖然有通用的基準測試（如 MTEB、C-MTEB）和評估方法（如 NDCG@10、Hit Rate、MRR）來評估這些模型，且已證明它們對 RAG 系統性能的關鍵影響，但針對特定 LLM（如臺灣本土模型、Qwen、Llama 3.x 系列）作為獨立嵌入/重排序組件的詳細評比數據，在當前資料中尚不充分。這類數據通常會是更專門化的 RAG 系統組件性能評估研究的範疇，並且需要根據具體的應用場景、知識庫特性（如語言、長度）和系統資源限制（如延遲、計算成本）來進行細緻的選擇與優化。
 
----
+
 **參考文獻** 
 [^1]: Galileo.ai Blog. *MMLU Benchmark: Everything you need to know*. (對應 MMLU 介紹)
 [^2]: arXiv:2502.16428. (MMLU 相關論文)
