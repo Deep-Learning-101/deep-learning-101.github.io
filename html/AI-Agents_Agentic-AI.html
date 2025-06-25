@@ -21,6 +21,7 @@
             overflow: hidden; /* Ensures content respects border radius */
             display: flex;
             flex-direction: column;
+            margin-bottom: 1.5rem;
         }
         .bento-title-large { /* Used for main section titles in bento boxes (H2) */
             font-size: 2.2rem;
@@ -318,16 +319,38 @@
             <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400">
                 避開 AI Agents 與 Agentic AI 開發陷阱
             </h1>
-            <p class="page-author-date">作者：<a href="https://www.twman.org/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">TonTon Huang Ph.D.</a> | 日期：2025年06月02日更新</p>
+            <p class="page-author-date">作者：<a href="https://www.twman.org/" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">TonTon Huang Ph.D.</a> | 日期：2025年06月26日更新</p>
             <p class="english-subtitle mt-2">
                 那些實戰踩過的坑、常見問題、挑戰與解決方案
             </p>
             <div class="page-version-links">
                 <a href="https://blog.twman.org/2025/03/AIAgent.html" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Blog 版</a> |
-                <a href="https://deep-learning-101.github.io/agent" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Markdown 版</a> |
+                <a href="https://deep-learning-101.github.io/agent" target="_TOP"
+                class="inline-block text-blue-500 hover:text-blue-700 text-lg font-medium"
+                title="點我查看 Markdown 完整版 ">
+                    👉 點我查看 Markdown 完整版 👈
+                </a>                |
                 <a href="https://deep-learning-101.github.io/pdf/AI-Agents_Agentic-AI_Skywork-ppt.pdf" target="_blank" rel="noopener noreferrer" class="text-blue-600 hover:underline">Skywork-PPT</a>
             </div>
         </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3" style="display: flex; flex-direction: column; align-items: center;">
+                <div style="text-align: center;">
+                    🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵<br>
+                    <audio controls style="width: 400px; height: 30px; margin-top: 20px;"><source src="../notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio>
+                </div>
+            <!-- 包住兩個影片的 flex 容器 -->
+             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                <!-- 第 1 個影片 -->
+                 <iframe width="400" height="225" src="https://www.youtube.com/embed/aWDhQV1n29w" frameborder="0" allow="accelerometer; autoplay; lipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+                <!-- 第 2 個影片 -->
+                 <iframe width="400" height="225" src="https://www.youtube.com/embed/DjpENcFYYK0" frameborder="0" allow="accelerometer; autoplay; lipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
 
         <div class="grid-container single-column-focus">
             <div class="bento-box motion-div">
@@ -335,9 +358,6 @@
                     <i class="fas fa-lightbulb icon-large"></i>
                     <h2 class="bento-title-large">前言 <span class="english-auxiliary-title">Introduction</span></h2>
                     <div class="bento-text">
-                        <p class="text-center mb-4">
-                          🎵 不聽可惜的 NotebookLM <audio controls class="inline-block align-middle mx-2" style="width:200px; height:30px;"><source src="../notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio> Podcast @ Google 🎵
-                        </p>
                         <p>AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 <strong class="highlight-tech">AI 代理 (AI Agents，以下簡稱「AI Agents」)</strong> 與 <strong class="highlight-tech">代理式人工智慧 (Agentic AI，以下簡稱「Agentic AI」)</strong> 真正落地的障礙。</p>
                         <p>本文將探討多種AI Agents 與 Agentic AI 工具 (含 MCP) 的應用、經驗與挑戰，分享避坑指南與推薦，更針對可能會碰上的資安問題，提出解決方向，希望更高效、正確地建構 AI Agents 與 Agentic AI 系統的落地。</p>
                         
