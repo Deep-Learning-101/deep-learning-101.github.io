@@ -14,6 +14,9 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 <p align="center">
   🎵 不聽可惜的 NotebookLM <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/CH7.mp3" type="audio/mpeg"></audio> Podcast @ Google 🎵
 </p>
+<p align="center">
+  A 跟 B 那個影片比較適合呢 ?
+</p>
 
 ---
 
@@ -29,7 +32,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   </div>
   <div style="position: relative; width: 100%; max-width: 460px; aspect-ratio: 16 / 9;">
     <iframe
-      src="https://www.youtube.com/embed/gSymqOhKW8o"
+      src="https://www.youtube.com/embed/3vN-aXDvKGg"
       style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
       frameborder="0"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
