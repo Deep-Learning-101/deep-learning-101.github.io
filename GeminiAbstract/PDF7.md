@@ -11,6 +11,35 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
+<p align="center">
+  🎵 不聽可惜的 NotebookLM <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/CH7.mp3" type="audio/mpeg"></audio> Podcast @ Google 🎵
+</p>
+
+---
+
+<div style="display: flex; justify-content: center;">
+  <div style="position: relative; width: 100%; max-width: 460px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/9MnQmcqSzak"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div style="position: relative; width: 100%; max-width: 460px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/gSymqOhKW8o"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>  
+</div>
+
+---
+
 # 第七章 深度學習中的正則化
 
 <a href="https://www.youtube.com/watch?v=gSymqOhKW8o" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i><strong>2017/02/10, Regularization for Deep Learning @ Deep Learning Book Chapter 7</strong></a><br>
