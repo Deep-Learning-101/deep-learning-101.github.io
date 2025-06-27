@@ -15,7 +15,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   🎵 不聽可惜的 NotebookLM <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/CH7.mp3" type="audio/mpeg"></audio> Podcast @ Google 🎵
 </p>
 <p align="center">
-  A 跟 B 那個影片比較適合呢 ?
+  A、B、C 那個影片比較適合呢 ?
 </p>
 
 ---
