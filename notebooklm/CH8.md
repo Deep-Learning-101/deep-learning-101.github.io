@@ -21,7 +21,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 ---
 
 <div style="display: flex; justify-content: center;">
-  <div style="position: relative; width: 100%; max-width: 310px; aspect-ratio: 16 / 9;">
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
     <iframe
       src="https://www.youtube.com/embed/DeXH5IMHfcs"
       style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
@@ -30,7 +30,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
       allowfullscreen>
     </iframe>
   </div>
-  <div style="position: relative; width: 100%; max-width: 310px; aspect-ratio: 16 / 9;">
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
     <iframe
       src="https://www.youtube.com/embed/oL_ExudIBtU"
       style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
