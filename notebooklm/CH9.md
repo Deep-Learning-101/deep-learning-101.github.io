@@ -11,6 +11,38 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
+<p align="center">
+  🎵 不聽可惜的 NotebookLM <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/CH9.mp3" type="audio/mpeg"></audio> Podcast @ Google 🎵
+</p>
+<p align="center">
+  A、B 那個影片比較適合呢 ?
+</p>
+
+---
+
+<div style="display: flex; justify-content: center;">
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/51cO6Kv37p4"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/D-XoUulXh98"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>  
+</div>
+
+---
+
 # 第九章 卷積網路
 
 <a href="https://www.youtube.com/watch?v=51cO6Kv37p4" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube mr-1"></i> <strong>2017/04/14, Convolutional Neural Networks @ Deep Learning Book Chapter 9</strong></a><br>
