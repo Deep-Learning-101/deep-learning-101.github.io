@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>代理式推理：深度研究型大型語言模型的增強框架 - Deep Learning 101</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7; /* Apple-like light grey */
+            color: #1d1d1f; /* Apple-like dark grey for text */
+        }
+        .bento-box {
+            background-color: #ffffff; /* White boxes */
+            border-radius: 1.5rem; /* Generous rounding */
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden; /* Ensures content respects border radius */
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+        .bento-title {
+            font-size: 1.75rem; /* 28px */
+            line-height: 2.25rem; /* 36px */
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1d1d1f;
+        }
+        .bento-title-large {
+            font-size: 2.5rem; /* 40px */
+            line-height: 3rem; /* 48px */
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+        .bento-subtitle {
+            font-size: 1.125rem; /* 18px */
+            font-weight: 600;
+            color: #0071e3; /* Apple blue for subtitles/accents */
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .bento-text {
+            font-size: 1rem; /* 16px */
+            line-height: 1.75; /* More spacing for readability */
+            color: #333333; /* Slightly lighter than main text */
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text em {
+            font-style: italic;
+            color: #555;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-list {
+            list-style-position: inside;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111"; /* Font Awesome circle icon */
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3; /* Apple blue */
+            font-size: 0.5rem;
+            position: absolute;
+            left: -0.25rem;
+            top: 0.5em;
+        }
+        .highlight-tech {
+            background: linear-gradient(90deg, rgba(0, 113, 227, 0.15) 0%, rgba(0, 113, 227, 0.05) 100%);
+            padding: 0.1rem 0.5rem;
+            border-radius: 0.5rem;
+            display: inline-block;
+        }
+        .icon-large {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #0071e3; /* Apple blue for icons */
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .grid-container {
+            display: grid;
+            gap: 1.5rem; /* Spacing between boxes */
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .newbie-focus-box {
+            background-color: #f0f8ff; /* AliceBlue, a very light blue */
+            border-left: 4px solid #0071e3; /* Apple blue left border */
+            padding: 1rem 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 0.75rem;
+            font-size: 0.95rem;
+        }
+        .newbie-focus-box .title {
+            font-weight: 700;
+            color: #0056b3; /* Darker blue for title */
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-container {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+        @media (min-width: 1024px) { /* lg */
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+            .col-span-lg-1 { grid-column: span 1 / span 1; }
+            .col-span-lg-2 { grid-column: span 2 / span 2; }
+            .col-span-lg-3 { grid-column: span 3 / span 3; }
+            .row-span-lg-1 { grid-row: span 1 / span 1; }
+            .row-span-lg-2 { grid-row: span 2 / span 2; }
+        }
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p align="center">
+                    <strong>Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p align="center">
+                    AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                    衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                    由 <a href="https://www.twman.org/" target="_blank">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
+                </p>
+                <p align="center">
+                    <a href="https://huggingface.co/spaces/DeepLearning101/Deep-Learning-101-FAQ" target="_blank">
+                        <img src="https://github.com/Deep-Learning-101/.github/blob/main/images/DeepLearning101.JPG?raw=true" alt="Deep Learning 101" width="180" style="display:inline-block; border-radius: 10px;">
+                    </a>
+                     <a href="https://www.buymeacoffee.com/DeepLearning101" target="_blank" style="display:inline-block;">
+                        <img src="https://cdn.buymeacoffee.com/buttons/v2/default-red.png" alt="Buy Me A Coffee" style="height: 100px !important;width: 180px !important; display:inline-block; border-radius: 10px;">
+                    </a>
+                </p>
+                <p align="center">
+                    <a href="https://www.youtube.com/@DeepLearning101" target="_blank">去 YouTube 訂閱</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/"> 回 GitHub Pages</a> |
+                    <a href="https://github.com/Deep-Learning-101" target="_blank"> 到 GitHub 點星</a> |
+                    <a href="https://www.twman.org/DeepLearning101" target="_blank">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">到 Hugging Face Space 按愛心</a>
+                </p>
+            </div>
+        </div>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-sky-400">
+                代理式推理：深度研究型大型語言模型的增強框架 <br>
+            </h1>
+            Agentic Reasoning: Reasoning LLMs with Tools for the Deep Research<br>
+            Junde Wu, Jiayuan Zhu, Yuyuan Liu<br>
+            University of Oxford<br>
+            <!-- 👆 Emoji 版 Markdown 連結 -->
+            <div class="mt-4">
+                <a href="https://arxiv.org/pdf/2502.04644" target="_TOP"
+                class="inline-block text-blue-500 hover:text-blue-700 text-lg font-medium"
+                title="點我查看原版論文">
+                    👉 點我查看原版論文 👈
+                </a>
+            </div>
+                <p align="center">
+                   歡迎 <a href="https://www.youtube.com/@DeepLearning101" target="_blank">YouTube 按👍訂閱</a>，
+                    <a href="https://github.com/Deep-Learning-101" target="_blank"> GitHub 點🌟</a>，
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank">Hugging Face Space 按💗</a>；支持我們持續分享優質 AI 教學與研究內容！
+                </p>
+
+        </header>
+
+       <div class="grid-container">
+            <div class="bento-box col-span-lg-3" style="display: flex; flex-direction: column; align-items: center;">
+                <div style="text-align: center;">
+                    🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵<br>
+                    <audio controls style="width: 400px; height: 30px; margin-top: 20px;"><source src="../notebooklm-mp3/2502.04644_Oxford_Agentic-Reasoning.mp3" type="audio/mpeg"></audio>
+                </div>
+             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                 <iframe width="400" height="240" src="https://www.youtube.com/embed/ko-gWM3Kie0" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+        <div class="grid-container">
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-brain icon-large"></i>
+                <h2 class="bento-title-large">核心概念與傳統 LLM 的局限性 <span class="text-lg font-normal text-slate-500">Core Concepts & Limitations</span></h2>
+                
+                <h3 class="bento-subtitle">什麼是代理式推理？</h3>
+                <p class="bento-text">
+                    代理式推理是一種創新的框架，旨在透過整合外部工具使用代理來顯著增強大型語言模型的推理能力。不同於傳統 LLM 主要依賴其內部推斷，代理式推理能夠動態地運用<strong class="highlight-tech">網路搜尋</strong>、<strong class="highlight-tech">程式碼執行</strong>，以及一個結構化的推理上下文記憶（我們稱之為「心智圖」），以解決需要深度研究和多步驟邏輯推導的複雜問題。
+                </p>
+                <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>想像一下，傳統的 LLM 就像一個擁有豐富知識但只能「閉門造車」的學者。代理式推理框架，正是賦予 LLM 「上網搜尋資料」、「動手做實驗計算」、甚至「畫出思考導圖來整理思路」的能力，讓它不再是孤立的智慧體，而是能像人類研究員一樣，靈活運用各種資源。</p>
+                </div>
+
+                <h3 class="bento-subtitle mt-6">傳統 LLM 推理的局限性</h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>單一內部推斷的限制：</strong> 難以處理需要外部即時資訊、重複驗證、複雜計算或跨領域知識整合的問題。</li>
+                    <li><strong>解釋性與非結構化任務的挑戰：</strong> 在非結構化領域（如社會科學、倫理學）容易產生有缺陷或過於僵化的結果。</li>
+                    <li><strong>開源與閉源 RAG 模型的性能鴻溝：</strong> 開源模型通常只專注於單純檢索，與功能整合的閉源模型存在顯著性能差距。</li>
+                </ul>
+                 <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>當你看到 LLM 在一個需要「判斷」或「細微理解」的問題上顯得力不從心時，很可能是因為它缺乏從外部世界獲取動態資訊或以更彈性方式組織思緒的能力。這個框架旨在提供一個更透明、開源且功能全面的路徑，讓 AI 學會「使用工具」。</p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-sitemap icon-large"></i>
+                <h2 class="bento-title-large">框架核心組件與運作流程 <span class="text-lg font-normal text-slate-500">Framework Components & Workflow</span></h2>
+                <p class="bento-text">
+                    代理式推理框架的核心思想是透過部署外部基於 LLM 的代理作為工具來增強模型推理。當主要推理 LLM 需要外部資訊時，它會主動嵌入特定的<strong class="highlight-tech">「工具調用代幣」</strong>並生成查詢，發送到相應的外部代理，形成一個動態的「檢索與推理」循環。
+                </p>
+            </div>
+            
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-project-diagram icon-large"></i>
+                <h2 class="bento-title">心智圖代理 <span class="text-base font-normal text-slate-500">Mind Map</span></h2>
+                <p class="bento-text">
+                    作為框架的關鍵記憶組件，它將推理鏈轉換為結構化的<strong class="highlight-tech">知識圖譜</strong>，以追蹤複雜邏輯關係，改善演繹推理能力。
+                </p>
+                <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>把它看作 LLM 的「思考輔助工具」或「私人筆記本」，幫助它在複雜邏輯或策略遊戲（如狼人殺）中整理混亂資訊，避免邏輯錯誤。</p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-globe icon-large"></i>
+                <h2 class="bento-title">網路搜尋代理 <span class="text-base font-normal text-slate-500">Web Search</span></h2>
+                <p class="bento-text">
+                    負責從網路檢索相關資訊。它會使用 LLM 處理原始網頁，根據當前推理上下文提取<strong class="highlight-tech">簡潔、重新措辭的摘要</strong>，而非直接注入原始內容。
+                </p>
+                <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>這更像是個專業的「資訊篩選官」，不僅找到資料，還會讀懂你的思考脈絡，只提取最有用的部分，大大提高了資訊的「可用性」。</p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-1">
+                <i class="fas fa-code icon-large"></i>
+                <h2 class="bento-title">程式碼代理 <span class="text-base font-normal text-slate-500">Coding</span></h2>
+                <p class="bento-text">
+                    專門負責執行計算分析和程式碼編寫。主推理模型僅需委託任務，由<strong class="highlight-tech">專門的程式碼 LLM</strong> 編寫、執行並返回結果。
+                </p>
+                <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>這是一個「專業分工」的體現。讓專精於程式的 LLM 處理計算，主推理 LLM 就能專注於核心的邏輯推導，效率更高，錯誤更少。</p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-2 row-span-lg-2">
+                <i class="fas fa-chart-line icon-large"></i>
+                <h2 class="bento-title-large">主要研究發現 <span class="text-lg font-normal text-slate-500">Key Findings</span></h2>
+                
+                <h3 class="bento-subtitle">卓越的性能表現</h3>
+                <ul class="bento-list bento-text">
+                    <li><strong>博士級科學推理 (GPQA)：</strong> 在 GPQA 資料集上取得極高準確性 (化學 58%, 物理 88%, 生物 79%)，與頂級閉源模型如 OpenAI o1 旗鼓相當，甚至在擴展集上超越人類專家。</li>
+                    <li><strong>領域特定深度研究：</strong> 在金融、醫學、法律等專業問答中，報告合格率顯著優於 Gemini Deep Research。</li>
+                    <li><strong>案例研究印證：</strong> 在複雜醫療決策和策略遊戲「狼人殺」中，證明了其處理實際問題和動態邏輯推導的強大能力。</li>
+                </ul>
+
+                <h3 class="bento-subtitle mt-6">設計原則：「少即是多」與「委託任務」</h3>
+                 <ul class="bento-list bento-text">
+                    <li><strong>少即是多 (Less is More)：</strong> 研究發現，僅<strong class="highlight-tech">網路搜尋</strong>和<strong class="highlight-tech">程式碼</strong>兩個工具就已足夠應對多數任務。過多工具反而可能降低性能。</li>
+                    <li><strong>委託任務給 LLM 驅動的代理：</strong> 將計算工作負載分配給專門代理，可以最小化干擾，並利用不同 LLM 的專業化優勢，實現更高的整體性能。</li>
+                </ul>
+                <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>這就像一個高效的團隊分工。主 LLM 是總指揮，負責規劃整合；其他代理 LLM 是各領域專家，負責執行具體任務。這樣既能發揮各自專長，又能保持整體流程的流暢。</p>
+                </div>
+            </div>
+            
+            <div class="bento-box col-span-lg-1 row-span-lg-2">
+                <i class="fas fa-expand-arrows-alt icon-large"></i>
+                <h2 class="bento-title">測試時擴展 <span class="text-base font-normal text-slate-500">Test-time Scaling</span></h2>
+                <p class="bento-text">
+                    研究發現，對於同一問題，使用更多工具調用的推理鏈往往會產生更好的結果。這一洞察可用作測試時的驗證器。
+                </p>
+                <h3 class="bento-subtitle">機制</h3>
+                <p class="bento-text">
+                    在多次運行同一問題時，可將<strong class="highlight-tech">工具調用頻率</strong>作為啟發式方法，透過「最佳-N 選一」來選擇更優的響應，此方法甚至優於「LLM 作為評審」。
+                </p>
+                <h3 class="bento-subtitle mt-4">對偶觀察</h3>
+                <p class="bento-text">
+                    然而，若一個問題需要「過度」使用工具，往往暗示問題本身存在模糊性或初始推理不準確，反而可能導致準確率下降。
+                </p>
+                <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>這是一個實用技巧：當 LLM 多次回答同一問題時，那個更頻繁使用工具的答案往往更可靠。但要小心，如果問題本身讓 LLM 不停使用工具，可能意味著問題太模糊，答案反而不準確。</p>
+                </div>
+            </div>
+
+            <div class="bento-box col-span-lg-3">
+                <i class="fas fa-rocket icon-large"></i>
+                <h2 class="bento-title-large">未來展望 <span class="text-lg font-normal text-slate-500">Future Outlook</span></h2>
+                <p class="bento-text">
+                    代理式推理框架展示了巨大的潛力，未來的研究將進一步探索：
+                </p>
+                <ul class="bento-list bento-text mt-4">
+                    <li><strong>多模態數據的擴展：</strong> 將框架擴展到處理非文本模態數據，如金融數據、醫學圖像、基因數據。</li>
+                    <li><strong>增強實時適應性：</strong> 提高模型在動態、變化環境中的適應能力。</li>
+                    <li><strong>作為強化學習的獎勵模型：</strong> 利用代理工具使用作為一種隱含的獎勵信號，進一步優化推理模型。</li>
+                </ul>
+                <div class="newbie-focus-box">
+                    <span class="title"><i class="fas fa-seedling mr-2"></i>新手入門重點</span>
+                    <p>代理式推理的理念是讓 LLM 變得更像一個全面的研究夥伴，未來它不僅能「讀書寫字」，還能「看圖分析」和「聽聲辨位」，成為真正的多面手，這將徹底改變我們對 AI 系統能力的想像。</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const { animate, inView } = motion;
+
+            const headerH1 = document.querySelector('header h1');
+            if (headerH1) {
+                animate(headerH1, { opacity: [0, 1], y: [-50, 0] }, { duration: 0.8, ease: 'easeOut' });
+            }
+            const headerP = document.querySelector('header p');
+            if (headerP) {
+                animate(headerP, { opacity: [0, 1], y: [50, 0] }, { duration: 0.8, delay: 0.2, ease: 'easeOut' });
+            }
+
+            const topInfoBox = document.querySelector('.top-info-box');
+            if (topInfoBox) {
+                topInfoBox.style.opacity = 0;
+                topInfoBox.style.transform = 'translateY(-30px)';
+                animate(topInfoBox, { opacity: 1, y: 0 }, { duration: 0.7, ease: 'easeOut' });
+            }
+
+            const bentoBoxes = document.querySelectorAll('.bento-box');
+            bentoBoxes.forEach((box, index) => {
+                box.style.opacity = 0;
+                box.style.transform = 'translateY(20px) scale(0.95)';
+                inView(box, () => {
+                    animate(box, { opacity: 1, y: 0, scale: 1 }, 
+                        { duration: 0.5, delay: (index % Math.min(bentoBoxes.length, 3)) * 0.08, ease: 'easeOut' });
+                }, { amount: 0.1 });
+            });
+        });
+    </script>
+</body>
+</html>
+```
