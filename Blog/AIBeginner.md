@@ -1,4 +1,3 @@
-
 ---
 layout: default
 title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
@@ -13,8 +12,31 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
+<p align="center">
+  🎵 不聽可惜的 NotebookLM <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/AIBeginner.mp3" type="audio/mpeg"></audio> Podcast @ Google 🎵
+</p>
+<p align="center">
+  企業導入 AI 的聽君一席話，如聽一席話入門全攻略
+</p>
+
+---
+
+<div style="display: flex; justify-content: center;">
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/IZGqfbj5AF4"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+---
+
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2025年06月26日更新
+**日期**：2025年07月06日更新
 
 ---
 
