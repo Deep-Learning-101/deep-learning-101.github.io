@@ -11,6 +11,20 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
+<div style="display: flex; justify-content: center;">
+  <div style="position: relative; width: 100%; max-width: 480px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/P9BEreqRKGc"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>  
+</div>
+
+---
+
 ## [本文是使用 gemini-fullstack-langgraph 生成](https://github.com/google-gemini/gemini-fullstack-langgraph-quickstart)
 _台灣金融業在GenAI的現況和未來可能發展_ 
 
