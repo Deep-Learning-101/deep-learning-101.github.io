@@ -64,6 +64,7 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 ## ✨LLM API Platform Price Comparison
 
 ### **總體戰略比較：三大公有雲 AI 平台**
+
 | 特性 | **Google Cloud (GCP)** | **Microsoft Azure** | **Amazon Web Services (AWS)** |
 | :--- | :--- | :--- | :--- |
 | **主要 GenAI 平台** | **Vertex AI** | **Azure OpenAI Service** | **Amazon Bedrock** |
