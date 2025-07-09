@@ -84,10 +84,11 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 
 | GPU 型號 | **[Google Cloud (GCP)](https://cloud.google.com/compute/gpus-pricing?hl=zh_tw)** | **Microsoft Azure** | **Amazon Web Services (AWS)** |
 | :--- | :--- | :--- | :--- |
-| **NVIDIA V100** | **實例:** `n1-standard-8` (1x V100)<br>**時薪:** **~$2.48** | **實例:** `Standard_NC6s_v3` (1x V100)<br>**時薪:** **~$3.07** | **實例:** `p3.2xlarge` (1x V100)<br>**時薪:** **~$3.06** |
-| **NVIDIA A100** | **實例:** `a2-highgpu-1g` (1x A100)<br>**時薪:** **~$4.45** | **實例:** `Standard_ND96asr_v4` (8x A100)<br>**時薪/每顆:** **~$4.21**<br>(整機 ~$33.68/hr) | **實例:** `p4d.24xlarge` (8x A100)<br>**薪/每顆:** **~$4.09**<br>(整機 ~$32.77/hr) |
-| **NVIDIA H100** | **實例:** `a3-highgpu-8g` (8x H100)<br>**時薪/每顆:** **~$8.37**<br>(整機 ~$66.95/hr) | **實例:** `Standard_ND H100 v5` (8x H100)<br>**時薪/每顆:** **~$8.59**<br>(整機 ~$68.75/hr) | **實例:** `p5.48xlarge` (8x H100)<br>**時薪/每顆:** **~$12.26**<br>(整機 ~$98.08/hr) |
-
+| **[NVIDIA T4](https://cloud.google.com/compute/gpus-pricing?hl=zh_tw#section-1)** | **每小時:** **$0.35**<br>**每個月:** **$255.5**<br>承諾1年:**$0.22/$160.60** |  |  |
+| **NVIDIA P4** | **每小時:** **$0.60**<br>**每個月:** **$438.00**<br>承諾1年:**$0.378/$275.94**  |  |  |
+| **NVIDIA V100** | **每小時:** **$2.48**<br>**每個月:** **$1810.40**<br>承諾1年:**$1.562/$1140.26**  | **每小時:** **~$3.07** | **每小時:** **~$3.06** |
+| **[NVIDIA A100](https://cloud.google.com/compute/docs/accelerator-optimized-machines?hl=zh-tw#a2-vms)** | **實例:** `a2-highgpu-1g` (1x A100)<br>**每小時:** **~$4.45** | **實例:** `Standard_ND96asr_v4` (8x A100)<br>**每小時/每顆:** **~$4.21**<br>(整機 ~$33.68/hr) | **實例:** `p4d.24xlarge` (8x A100)<br>**每小時/每顆:** **~$4.09**<br>(整機 ~$32.77/hr) |
+| **[NVIDIA H100](https://cloud.google.com/compute/docs/accelerator-optimized-machines?hl=zh-tw#a3-vms)** | **實例:** `a3-highgpu-8g` (8x H100)<br>**每小時/每顆:** **~$8.37**<br>(整機 ~$66.95/hr) | **實例:** `Standard_ND H100 v5` (8x H100)<br>**每小時/每顆:** **~$8.59**<br>(整機 ~$68.75/hr) | **實例:** `p5.48xlarge` (8x H100)<br>**每小時/每顆:** **~$12.26**<br>(整機 ~$98.08/hr) |
 
 
 ### **大型語言模型API平台價格比較 ~2025/07**
