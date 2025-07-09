@@ -82,11 +82,11 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 * **定價模式：** 均採用 **「按需 (On-Demand)」** 定價，不包含任何預留或長期承諾折扣。
 * **幣別：** 均為**美元 (USD, $)**。
 
-| GPU 型號 | **Google Cloud (GCP)** | **Microsoft Azure** | **Amazon Web Services (AWS)** |
+| GPU 型號 | **[Google Cloud (GCP)](https://cloud.google.com/compute/gpus-pricing?hl=zh_tw)** | **Microsoft Azure** | **Amazon Web Services (AWS)** |
 | :--- | :--- | :--- | :--- |
-| **NVIDIA V100** | **實例:** `n1-standard-8` (1x V100)<br>**時薪:** **~$2.48**<br><br>**查價連結:**<br>[GCP 定價計算機](https://cloud.google.com/products/calculator) (需手動選擇 `N1` series CPU 與 `V100` GPU) | **實例:** `Standard_NC6s_v3` (1x V100)<br>**時薪:** **~$3.07**<br><br>**查價連結:**<br>[Azure VM 定價頁](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) (請篩選 `NCv3-series`) | **實例:** `p3.2xlarge` (1x V100)<br>**時薪:** **~$3.06**<br><br>**查價連結:**<br>[Amazon EC2 按需定價](https://aws.amazon.com/ec2/instance-types/p3/) |
-| **NVIDIA A100** | **實例:** `a2-highgpu-1g` (1x A100)<br>**時薪:** **~$4.45**<br><br>**查價連結:**<br>[GCP 定價計算機](https://cloud.google.com/products/calculator) (請選擇 `A2` series) | **實例:** `Standard_ND96asr_v4` (8x A100)<br>**時薪/每顆:** **~$4.21**<br>(整機 ~$33.68/hr)<br><br>**查價連結:**<br>[Azure VM 定價頁](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) (請篩選 `ND A100 v4-series`) | **實例:** `p4d.24xlarge` (8x A100)<br>**薪/每顆:** **~$4.09**<br>(整機 ~$32.77/hr)<br><br>**查價連結:**<br>[Amazon EC2 按需定價](https://aws.amazon.com/ec2/instance-types/p4/) |
-| **NVIDIA H100** | **實例:** `a3-highgpu-8g` (8x H100)<br>**時薪/每顆:** **~$8.37**<br>(整機 ~$66.95/hr)<br><br>**查價連結:**<br>[GCP 定價計算機](https://cloud.google.com/products/calculator) (請選擇 `A3` series) | **實例:** `Standard_ND H100 v5` (8x H100)<br>**更新後時薪/每顆:** **~$8.59**<br>(整機 ~$68.75/hr)<br><br>**查價連結:**<br>[Azure VM 定價頁](https://azure.microsoft.com/en-us/pricing/details/virtual-machines/linux/) (請篩選 `ND H100 v5-series`) | **實例:** `p5.48xlarge` (8x H100)<br>**更新後時薪/每顆:** **~$12.26**<br>(整機 ~$98.08/hr)<br><br>**查價連結:**<br>[Amazon EC2 按需定價](https://aws.amazon.com/ec2/instance-types/p5/) |
+| **NVIDIA V100** | **實例:** `n1-standard-8` (1x V100)<br>**時薪:** **~$2.48** | **實例:** `Standard_NC6s_v3` (1x V100)<br>**時薪:** **~$3.07** | **實例:** `p3.2xlarge` (1x V100)<br>**時薪:** **~$3.06** |
+| **NVIDIA A100** | **實例:** `a2-highgpu-1g` (1x A100)<br>**時薪:** **~$4.45** | **實例:** `Standard_ND96asr_v4` (8x A100)<br>**時薪/每顆:** **~$4.21**<br>(整機 ~$33.68/hr) | **實例:** `p4d.24xlarge` (8x A100)<br>**薪/每顆:** **~$4.09**<br>(整機 ~$32.77/hr) |
+| **NVIDIA H100** | **實例:** `a3-highgpu-8g` (8x H100)<br>**時薪/每顆:** **~$8.37**<br>(整機 ~$66.95/hr) | **實例:** `Standard_ND H100 v5` (8x H100)<br>**時薪/每顆:** **~$8.59**<br>(整機 ~$68.75/hr) | **實例:** `p5.48xlarge` (8x H100)<br>**時薪/每顆:** **~$12.26**<br>(整機 ~$98.08/hr) |
 
 
 
