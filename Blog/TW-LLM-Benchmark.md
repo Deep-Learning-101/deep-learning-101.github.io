@@ -12,17 +12,46 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
-# 臺灣大型語言模型性能評測與在地化策略分析報告
-_Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct-128k、Llama-3-Taiwan-8B-Instruct-DPO、Llama-3-Taiwan-8B-Instruct、Llama-3-Taiwan-70B-Instruct-128k、Llama-3.1-TAIDE-LX-8B-Chat、Llama-Breeze2-3B-Instruct、Llama-Breeze2-8B-Instruct_
+# 臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告
+_Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct-128k、Llama-3-Taiwan-8B-Instruct-DPO、Llama-3-Taiwan-8B-Instruct、Llama-3-Taiwan-70B-Instruct-128k、Llama-3.1-TAIDE-LX-8B-Chat、Llama-Breeze2-3B-Instruct、Llama-Breeze2-8B-Instruct、gemini-embedding-001、Qwen3-Embedding、Qwen3-Reranker_
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2025年07月07日更新
+**日期**：2025年07月16日更新
 
 **相關文章參考**：
 * <b><a href="https://blog.twman.org/2024/09/LLM.html" target="_blank">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
 * <b><a href="https://blog.twman.org/2024/07/RAG.html" target="_blank">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
 * <b><a href="https://blog.twman.org/2024/02/LLM.html" target="_blank">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
 * <b><a href="https://blog.twman.org/2023/04/GPT.html" target="_blank">解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，硬體資源在開發中的作用。</a>
+* <b><a href="https://www.facebook.com/cnanewstaiwan/posts/pfbid02CCrFhyvCcoTmjJaX4aHaSMHmCgnPd1SG21Gbpb4Wo9bgs7QmQArTmhbVPZSLyjrdl" target="_blank">中央社繁體中文預訓練資料集案</a></b>
+
+---
+
+### **文章目錄**
+
+- [引言](#引言)
+- [✨LLM-API-Platform-Price-Comparison](#llm-api-platform-price-comparison)
+  - [總體戰略比較三大公有雲-ai-平台](#總體戰略比較三大公有雲-ai-平台)
+  - [自行架設-gpu-vm-每小時預估費用](#自行架設-gpu-vm-每小時預估費用)
+  - [大型語言模型api平台價格比較-202507](#大型語言模型api平台價格比較-202507)
+  - [大型語言模型與agent安全工具比較-202507](#大型語言模型與agent安全工具比較-202507)
+- [臺灣大型語言模型性能評測與在地化策略分析](#臺灣大型語言模型性能評測與在地化策略分析)
+  - [i-目的與核心發現](#i-目的與核心發現)
+  - [ii-繁體中文大型語言模型評測基準深度解析](#ii-繁體中文大型語言模型評測基準深度解析)
+  - [iii-模型綜合性能評測分析](#iii-模型綜合性能評測分析)
+  - [iv-核心洞察與策略意涵](#iv-核心洞察與策略意涵)
+  - [v-建議與展望](#v-建議與展望)
+  - [vi-結論與洞見](#vi-結論與洞見)
+- [Appendix-附錄Embedding-與-Reranking-模型在-RAG-應用中的關鍵角色與評估](#appendix-附錄embedding-與-reranking-模型在-rag-應用中的關鍵角色與評估)
+  - [a-embedding-與-reranking-的角色](#a-embedding-與-reranking-的角色)
+  - [b-檢索階段embedding-模型效能深度剖析](#b-檢索階段embedding-模型效能深度剖析)
+  - [c-主流-embedding-模型分析與表現](#c-主流-embedding-模型分析與表現)
+  - [d-對於文件檢索的策略性啟示](#d-對於文件檢索的策略性啟示)
+  - [e-精煉階段reranker-模型效能的量化評估](#e-精煉階段reranker-模型效能的量化評估)
+  - [f-常見-reranker-模型及表現](#f-常見-reranker-模型及表現)
+  - [g-重排序的必要性與挑戰](#g-重排序的必要性與挑戰)
+  - [h-臺灣本土模型與國際模型的嵌入重排序評比](#h-臺灣本土模型與國際模型的嵌入重排序評比)
+  - [總結](#總結)
 
 ---
 
@@ -348,53 +377,51 @@ RAG 流程引入了兩個關鍵階段：Embedding 向量檢索與 Reranking 重�
 
 評估嵌入模型品質的標準基準測試是 MTEB (Massive Text Embedding Benchmark)。
 
-*   **MTEB (Massive Text Embedding Benchmark)**: MTEB 是一個大規模、多任務、多語言的 embedding 模型評測基準，已成為業界標準。它涵蓋8種嵌入任務，包括位元組挖掘、分類、聚類、配對分類、重排序、檢索、語義文本相似度（STS）和摘要，橫跨181個數據集、多個領域、文本長度和語言。
+*   **[MTEB (Massive Text Embedding Benchmark)](https://huggingface.co/spaces/mteb/leaderboard)**: MTEB 是一個大規模、多任務、多語言的 embedding 模型評測基準，已成為業界標準。它涵蓋8種嵌入任務，包括位元組挖掘、分類、聚類、配對分類、重排序、檢索、語義文本相似度（STS）和摘要，橫跨181個數據集、多個領域、文本長度和語言。
     *   **檢索 (Retrieval)**: 評估模型為給定查詢找到相關文件的能力，是 RAG 應用中最關鍵的指標。一個廣泛使用的指標是 **NDCG@10 (Normalized Discounted Cumulative Gain @ 10)**，它評估前10個檢索結果的品質，考慮到結果的相關性及其在列表中的位置，值介於0到1之間，1表示完美匹配。
     *   **語義文本相似度 (Semantic Textual Similarity, STS)**: 衡量模型判斷兩個句子語義相似度的能力，使用斯皮爾曼等級相關係數（Spearman correlation）評分。
     *   **分類 (Classification)**: 測試模型提取的特徵向量是否適用於下游的分類任務，通常使用 F1 分數作為指標。
     *   **聚類 (Clustering)**: 評估模型將相似文件分組的能力，使用 v-measure 評分。
 
-*   **C-MTEB (Chinese MTEB)**: 儘管 MTEB 涵蓋多種語言，但要精準評估模型在特定語言文化下的表現，仍需本地化的評測集。C-MTEB 正是為此而生，它是一個專門針對中文 embedding 模型的評測基準，包含了 35 個中文數據集，涵蓋了與 MTEB 類似的任務類型。C-MTEB 的推出及其被整合至主流排行榜，凸顯了本地化評測對於開發高水準區域語言模型的重要性。
+*   **[C-MTEB (Chinese MTEB)](https://pypi.org/project/C-MTEB/#leaderboard:~:text=(model)-,Leaderboard,-1.%20Reranker)**: 儘管 MTEB 涵蓋多種語言，但要精準評估模型在特定語言文化下的表現，仍需本地化的評測集。C-MTEB 正是為此而生，它是一個專門針對中文 embedding 模型的評測基準，包含了 35 個中文數據集，涵蓋了與 MTEB 類似的任務類型。C-MTEB 的推出及其被整合至主流排行榜，凸顯了本地化評測對於開發高水準區域語言模型的重要性。
 
 ### C. 主流 Embedding 模型分析與表現
 
-多種嵌入模型被廣泛用於RAG系統。在中文 embedding 領域，由北京智源人工智能研究院（BAAI）開發的 BGE 系列模型表現尤為突出。
+多種嵌入模型被廣泛用於RAG系統。截至2025年中，此領域的競爭已進入白熱化階段，MTEB 全球排行榜的頂端由 Google 和阿里巴巴的最新模型佔據，過去的領先者如 BAAI 的 BGE 系列等則面臨激烈挑戰。
 
-*   **BAAI 的 BGE 系列模型**:
-    *   `BAAI/bge-large-zh`: 此模型是專為中文設計的 embedding 模型，曾在 C-MTEB 排行榜上取得第一的優異成績。
-    *   `BAAI/bge-m3`: 作為 BGE 系列的最新旗艦模型，bge-m3 是一款功能強大的多語言、多功能、多粒度模型。其核心優勢在於：支援超過 100 種語言，具備處理長達 8192 tokens 的長文本能力，並同時支援密集檢索、稀疏檢索與多向量檢索等多種模式。在一項獨立的第三方評測中，bge-m3 在多語言場景下的表現超越了 OpenAI 的模型。
+1.  **[Google Gemini Embedding (當前榜首)](https://ai.google.dev/gemini-api/docs/embeddings?hl=zh-tw)**:
+    * **gemini-embedding-001**: Google 推出的此模型在發布後迅速登上 MTEB 排行榜首位，展現了其最先進（State-of-the-Art）的文本表徵能力。作為一個閉源商用模型，它在各項評測中（檢索、分類、聚類等）取得了極高的綜合平均分，使其成為追求極致性能、且在 Google Cloud 生態內的開發者的首選。
 
-*   **其他常見嵌入模型**:
-    *   **BERT (Bidirectional Encoder Representations from Transformers)**：以其上下文理解能力而聞名。
-    *   **Sentence Transformers**：針對生成句子嵌入進行優化，適用於語義搜索。
-    *   **Universal Sentence Encoder**：為語義相似性等任務提供有效的嵌入。
-    *   **OpenAI**: `text-embedding-ada-002` 和 `text-embedding-3-small`。
-    *   **Cohere**: `Embed v3`。
-    *   **開源模型**: 如 `e5-base-v2`。
-    *   **Google Gemini embedding**：在對LLM的基準測試中顯示出最高的平均準確度。
-    *   **JinaAI-v2-base-en**。
-    *   **Voyage**。
-    *   `embed-multilingual-v3.0`：在跨語言（如英文和義大利文）檢索任務中表現出色，NDCG@10得分在英文為0.90，義大利文為0.86。
-    *   `all-MiniLM-L6-v2`：用於文本嵌入的Transformer模型。
+2.  **[Alibaba Qwen3 Embedding (開源領頭羊)](https://qwenlm.github.io/zh/blog/qwen3-embedding/)**:
+    * **Qwen3-Embedding 系列 (0.6B, 4B, 8B)**: 這是由 Qwen 團隊基於強大的 Qwen3 基礎模型訓練的新一代 Embedding 系列。根據其官方報告，**`Qwen3-Embedding-8B`** 模型在發布時曾一度登頂 MTEB 多語言榜單，目前也以微弱差距緊隨 `gemini-embedding-001` 之後，位居第二，是**開源模型中的 undisputed champion (無可爭議的冠軍)**。
+    * **核心優勢**:
+        * **卓越性能與泛化性**: 繼承了 Qwen3 的多語言理解能力（支援超過100種語言），在 MTEB 和 C-MTEB 上均表現頂尖。
+        * **靈活架構**: 提供從 0.6B 到 8B 的多種尺寸，並支援**自訂輸出維度 (MRL Support)** 和 **指令微調 (Instruction Aware)**，讓開發者能根據成本和效能需求進行客製化，極具彈性。
+        * **先進的訓練方法**: 採用了創新的三階段訓練範式，特別是利用 Qwen3 自身生成能力來建構大規模弱監督訓練資料，突破了傳統方法的限制。
 
-針對特定領域（例如表格數據）的應用，即使是最先進的通用嵌入模型也可能表現不佳，這時需要對嵌入模型進行微調。
+3.  **昔日強者與現存勁旅**:
+    * **BAAI/bge-m3 & JinaAI-v2-base-en**: 這些模型曾經是 MTEB 排行榜上的佼佼者，但隨著新模型的推出，其排名已有所下滑。儘管如此，`bge-m3` 憑藉其獨特的多向量檢索能力和長文本支援，在特定場景下依然有其價值。它們的存在證明了這個領域技術迭代的速度之快。
+    * **Voyage AI & NV-Embed**: 這些同樣是性能非常強勁的（商用）模型，雖然被最新的 Gemini 和 Qwen3 超越，但依然處於排行榜的頂級梯隊中，是特定需求下的可靠選項。
 
 ### D. 對於文件檢索的策略性啟示
 
-模型選擇並非單純追求最高分，而是需要根據具體應用場景進行權衡。對於專注於繁體中文的 RAG 系統，特化模型與通用多語言模型之間存在策略取捨。
+模型選擇的決策比以往任何時候都更加關鍵，需要綜合考量性能、成本、開源與否以及特定場景需求。
 
-*   若 RAG 系統**僅需處理繁體中文文件**，選擇如 `BAAI/bge-large-zh-v1.5` 這類中文特化模型，可能在檢索的精準度上獲得最佳效果。
-*   若知識庫**同時包含中文和英文內容**，或者需要處理超過標準長度的文件（例如學術論文、法律文件），那麼 `BAAI/bge-m3` 的多語言能力和長上下文視窗將帶來無可替代的戰略價值。
+* **追求極致性能的閉源方案**: 若預算充足且追求當前最高性能，`google/gemini-embedding-001` 是 MTEB 榜單上的冠軍選擇。
+* **追求頂級性能的開源方案**: `Alibaba-NLP/Qwen3-Embedding-8B` 是目前開源社群的性能天花板，尤其適合需要處理中、英文及多語言混合內容的 RAG 系統。其靈活的架構（可調維度、指令適配）也為進階優化提供了可能。
+* **專注於中文的應用**: 根據 C-MTEB 排行榜，`Qwen3` 系列在中文任務上同樣表現優異。與 `BAAI/bge-large-zh-v1.5` 這類專為中文設計的經典模型相比，`Qwen3` 提供了更強的綜合性能和多語言兼容性，可能是更現代的選擇。
+* **考量特定功能的舊有模型**: 如果 RAG 系統有特殊需求，例如 `BAAI/bge-m3` 的多向量（密集+稀疏）檢索能力，那麼即便其綜合排名下滑，仍可能因其獨特功能而入選。
 
 **表 關鍵 Embedding 模型特性比較**
 
-| 模型名稱                 | 主要語言        | 最大上下文長度 (Tokens) | 關鍵優勢                               | MTEB/C-MTEB 相關表現                      |
-| :----------------------- | :-------------- | :---------------------- | :------------------------------------- | :---------------------------------------- |
-| `BAAI/bge-large-zh-v1.5` | 中文            | 512                     | 中文特化，性能卓越                     | 曾於 C-MTEB 排名第一                      |
-| `BAAI/bge-m3`            | 多語言 (100+)   | 8192                    | 多語言、多功能、長文本處理               | 多語言場景下性能頂尖，超越 OpenAI 模型      |
-| `gte-Qwen2-7B-instruct`  | 多語言          | 未明確 (基礎模型支援長)   | MTEB 排行榜頂尖模型之一                  | 在 MTEB 排行榜上名列前茅                  |
-| `NV-Embed-v2`            | 英文為主        | 未明確                  | 曾登頂 MTEB 檢索類別榜首，適合 RAG       | 曾於 MTEB 排行榜排名第一                  |
-
+| 模型名稱 | 主要語言 | 最大上下文長度 (Tokens) | 關鍵優勢 | MTEB/C-MTEB 相關表現 |
+| :--- | :--- | :--- | :--- | :--- |
+| **google/gemini-embedding-001** | 多語言 | 8192 | 閉源商用，性能頂尖，生態整合 | **MTEB 全球排行榜當前 #1** |
+| **Alibaba-NLP/Qwen3-Embedding-8B** | 多語言 (100+) | 32768 | 開源，性能頂尖，架構靈活，可調維度 | **MTEB 全球排行榜 #2，開源模型 #1** |
+| **Alibaba-NLP/Qwen3-Embedding-4B** | 多語言 (100+) | 32768 | Qwen3 系列中型模型，高效能 | MTEB 排名頂尖，具備成本效益 |
+| **voyage-ai/voyage-large-2-instruct** | 多語言 | 16384 | 閉源商用，檢索性能強勁 | 曾為 MTEB 榜首，現仍居頂級梯隊 |
+| **BAAI/bge-m3** | 多語言 (100+) | 8192 | 多向量檢索，長文本處理，多功能 | 排名已下滑，但在特定功能上仍具優勢 |
+| **JinaAI/jina-embeddings-v2-base-en** | 英文為主 | 8192 | 曾是強力的開源選項 | 排名已下滑，被新模型大幅超越 |
 ### E. 精煉階段：Reranker 模型效能的量化評估
 
 在初步檢索之後，Reranker 模型是提升 RAG 系統回應品質的第二道關鍵防線。
@@ -409,33 +436,23 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 ### F. 常見 Reranker 模型及表現
 
-*   `bge-reranker-large` 和 `CohereRerank`：被認為是增強RAG性能的傑出選擇。
-    *   例如，結合 `JinaAI-v2-base-en` 嵌入模型，`bge-reranker-large` 可以達到0.938202的命中率和0.868539的MRR。
-    *   `CohereRerank` 結合 `JinaAI-v2-base-en` 能達到0.932584的命中率和0.873689的MRR。
-    *   對於 Cohere 自身的嵌入模型，結合 `CohereRerank` 可以達到0.88764的命中率和0.836049的MRR。
-    *   `llm-embedder` 和 `Voyage` 等嵌入模型也從 `CohereRerank` 中獲得了顯著的性能提升。
-    *   即使是 `Google-PaLM` 嵌入模型，搭配 `CohereRerank` 也能獲得0.910112的命中率和0.855712的MRR。
-*   `NV-RerankQA-Mistral-4B-v3`：此模型在問題回答任務的文本檢索方面實現了約14%的顯著準確度提升，成為最先進的重排序模型之一。
+在精煉階段，Reranker 模型的角色至關重要。近年來，[`Alibaba-NLP/Qwen3-Reranker`](https://qwenlm.github.io/zh/blog/qwen3-embedding/) 系列的發布，**幾乎重新定義了 Reranker 模型的性能標竿**。
 
-對 Reranker 模型的評測數據進行分析後，可以發現其性能並非單一維度，而是與特定語言和任務高度相關。
+數據評測（如下表所示）清晰地揭示了 `Qwen3-Reranker` 的統治力。無論是在英文檢索（MTEB-R）、中文檢索（CMTEB-R）、多語言檢索（MMTEB-R），甚至是程式碼檢索（MTEB-Code）任務上，`Qwen3-Reranker` 的 4B 和 8B 版本都取得了遠超 `BGE-reranker-v2-m3`、`Jina-reranker` 等前代模型的成績。
 
-數據顯示，不同模型在不同語言的檢索任務上表現出明顯的專業化傾向。
-*   在中文檢索評測（CMTEB-R）中，`gte-multilingual-reranker-base` 和 `Qwen3-Reranker-8B` 表現最為突出。
-*   在英文檢索評測（MTEB-R）中，`Qwen3-Reranker` 的 4B 和 8B 版本則佔據絕對優勢。
-*   `BGE-reranker-v2-m3` 雖然在各項評測中都展現了穩健且均衡的性能，但在單一語言的評測中並未拔得頭籌。
+特別是 `Qwen3-Reranker-4B` 和 `Qwen3-Reranker-8B` 模型，它們不僅在傳統文本檢索上表現優異，在程式碼相關的檢索任務上也大幅領先，這顯示了 Qwen3 基礎模型強大的通用語義理解能力。對於任何希望將 RAG 系統檢索精度推向極致的應用，`Qwen3-Reranker` 系列已成為不二之選。
 
-這一現象清楚地表明，Reranker 模型的選擇必須与知識庫的語言構成精準匹配，才能最大化其提升檢索精準度的效益。
+| Model | Param | MTEB-R | CMTEB-R | MMTEB-R | MLDR | MTEB-Code | FollowIR |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| Qwen3-Embedding-0.6B | 0.6B | 61.82 | 71.02 | 64.64 | 50.26 | 75.41 | 5.09 |
+| Jina-multilingual-reranker-v2-base | 0.3B | 58.22 | 63.37 | 63.73 | 39.66 | 58.98 | -0.68 |
+| gte-multilingual-reranker-base | 0.3B | 59.51 | 74.08 | 59.44 | 66.33 | 54.18 | -1.64 |
+| BGE-reranker-v2-m3 | 0.6B | 57.03 | 72.16 | 58.36 | 59.51 | 41.38 | -0.01 |
+| **Qwen3-Reranker-0.6B** | **0.6B** | **65.80** | **71.31** | **66.36** | **67.28** | **73.42** | **5.41** |
+| **Qwen3-Reranker-4B** | **4B** | **69.76** | **75.94** | **72.74** | **69.97** | **81.20** | **14.84** |
+| **Qwen3-Reranker-8B** | **8B** | **69.02** | **77.45** | **72.94** | **70.19** | **81.22** | **8.05** |
 
-**表 關鍵 Reranker 模型在檢索評測上的性能比較**
-
-| 模型名稱                        | 參數規模 | MTEB-R (英文) | CMTEB-R (中文) | MMTEB-R (多語言) | MLDR (長文本) |
-| :------------------------------ | :------- | :------------ | :------------- | :--------------- | :------------ |
-| `Qwen3-Reranker-8B`             | 8B       | 69.02         | 77.45          | 72.94            | 70.19         |
-| `Qwen3-Reranker-4B`             | 4B       | 69.76         | 75.94          | 72.74            | 69.97         |
-| `gte-multilingual-reranker-base`| 0.3B     | 59.51         | 74.08          | 59.44            | 66.33         |
-| `BGE-reranker-v2-m3`            | 0.6B     | 57.03         | 72.16          | 58.36            | 59.51         |
-| `Qwen3-Reranker-0.6B`           | 0.6B     | 65.80         | 71.31          | 66.36            | 67.28         |
-| `Jina-multilingual-reranker-v2-base` | 0.3B     | 58.22         | 63.37          | 63.73            | 39.66         |
+*(註：排序結果基於Qwen3-Embedding-0.6B的top-100向量召回結果進行排序)*
 
 ### G. 重排序的必要性與挑戰
 
@@ -457,6 +474,9 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 嵌入模型和重排序模型是 RAG 系統中不可或缺的組成部分，它們共同確保了提供給 LLM 的資訊的相關性和準確性。雖然有通用的基準測試（如 MTEB、C-MTEB）和評估方法（如 NDCG@10、Hit Rate、MRR）來評估這些模型，且已證明它們對 RAG 系統性能的關鍵影響，但針對特定 LLM（如臺灣本土模型、Qwen、Llama 3.x 系列）作為獨立嵌入/重排序組件的詳細評比數據，在當前資料中尚不充分。這類數據通常會是更專門化的 RAG 系統組件性能評估研究的範疇，並且需要根據具體的應用場景、知識庫特性（如語言、長度）和系統資源限制（如延遲、計算成本）來進行細緻的選擇與優化。
 
+嵌入模型和重排序模型是 RAG 系統中不可或缺的組成部分... 隨著 `Qwen 3` 系列 和 `Google Gemini` 等新一代模型的出現，MTEB 和相關評測的榜單正在被不斷刷新。這表明模型的能力邊界在持續擴展，但也對開發者提出了更高的要求。
+
+最終，成功的 RAG 系統不再僅僅是選擇某個「最好」的模型，而是一個持續評估、測試和權衡的過程。開發者需要根據具體的應用場景、知識庫特性（語言、領域、長度）、以及系統資源限制（延遲、計算成本），動態地選擇最適合的 Embedding 和 Reranker 組合，才能在資訊檢索的「召回」與「精煉」兩個戰場上都取得勝利。
 
 **參考文獻**
 
