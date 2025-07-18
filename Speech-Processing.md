@@ -135,9 +135,11 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 * [Real Time Speech Enhancement in the Waveform Domain](https://arxiv.org/pdf/2006.12847.pdf)
 
 ### **相關連結**
-* 2024-12-07：[ClearVoice: Speech Enhancement](https://github.com/modelscope/ClearerVoice-Studio)：[阿里巴巴開源超強語音處理神器，語音分離、音訊視訊說話者擷取等功能一站式解決。](https://juejin.cn/post/7445237715863093275)，[HuggingFace Space Demo](https://huggingface.co/spaces/alibabasglab/ClearVoice)
-* https://github.com/facebookresearch/denoiser
-* https://www.youtube.com/watch?v=77cm_MVtLfk
+* 2024-12-07：[ClearVoice: Speech Enhancement](https://github.com/modelscope/ClearerVoice-Studio)
+    * [阿里巴巴開源超強語音處理神器，語音分離、音訊視訊說話者擷取等功能一站式解決。](https://juejin.cn/post/7445237715863093275)
+    * [HuggingFace Space Demo](https://huggingface.co/spaces/alibabasglab/ClearVoice)
+    * https://github.com/facebookresearch/denoiser
+    * https://www.youtube.com/watch?v=77cm_MVtLfk
 
 <details>
 <summary>2020/08/30-2021/01/25 開發心得</summary>
@@ -146,25 +148,25 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 
 # 中文語者分離(分割) (Chinese Speaker Separation)
 
-https://www.twman.org/AI/ASR/SpeechSeparation
+[https://www.twman.org/AI/ASR/SpeechSeparation](https://www.twman.org/AI/ASR/SpeechSeparation)
 
-https://huggingface.co/spaces/DeepLearning101/Speech-Separation
+[https://huggingface.co/spaces/DeepLearning101/Speech-Separation](https://huggingface.co/spaces/DeepLearning101/Speech-Separation)
 
 從多個聲音信號中提取出目標信號；多個說話人情況的語音辨識問題，比如雞尾酒會上很多人講話
 
 ### **相關論文**
 
-* Stabilizing Label Assignment for Speech Separation by Self-supervised Pre-training：https://arxiv.org/abs/2010.15366
-    * https://github.com/SungFeng-Huang/SSL-pretraining-separation
-* Self-supervised Pre-training Reduces Label Permutation Instability of Speech Separation：https://arxiv.org/pdf/2010.15366v1.pdf
-    * https://github.com/SungFeng-Huang/SSL-pretraining-separation
-* Sudo rm -rf: Efficient Networks for Universal Audio Source Separation：https://arxiv.org/abs/2007.06833
-    * https://github.com/asteroid-team/asteroid/blob/master/asteroid/models/sudormrf.py 
-    * https://github.com/etzinis/sudo_rm_rf   
-* Dual-Path Transformer Network: Direct Context-Aware Modeling for End-to-End Monaural Speech Separation：https://arxiv.org/pdf/2007.13975v3.pdf
-* Dual-path RNN: efficient long sequence modeling for time-domain single-channel speech separation：https://arxiv.org/pdf/1910.06379.pdf
-    * https://github.com/JusperLee/Dual-path-RNN-Pytorch
-    * [閱讀筆記”Dual-path RNN for Speech Separation“](https://zhuanlan.zhihu.com/p/104606356)
+* [Stabilizing Label Assignment for Speech Separation by Self-supervised Pre-training](https://arxiv.org/abs/2010.15366)
+    * [https://github.com/SungFeng-Huang/SSL-pretraining-separation](https://github.com/SungFeng-Huang/SSL-pretraining-separation)
+* [Self-supervised Pre-training Reduces Label Permutation Instability of Speech Separation](https://arxiv.org/pdf/2010.15366v1.pdf)
+    * [https://github.com/SungFeng-Huang/SSL-pretraining-separation](https://github.com/SungFeng-Huang/SSL-pretraining-separation)
+* [Sudo rm -rf: Efficient Networks for Universal Audio Source Separation](https://arxiv.org/abs/2007.06833)
+    * [https://github.com/asteroid-team/asteroid/blob/master/asteroid/models/sudormrf.py](https://github.com/asteroid-team/asteroid/blob/master/asteroid/models/sudormrf.py )
+    * [https://github.com/etzinis/sudo_rm_rf](https://github.com/etzinis/sudo_rm_rf)
+* [Dual-Path Transformer Network: Direct Context-Aware Modeling for End-to-End Monaural Speech Separation](https://arxiv.org/pdf/2007.13975v3.pdf)
+* [Dual-path RNN: efficient long sequence modeling for time-domain single-channel speech separation](https://arxiv.org/pdf/1910.06379.pdf)
+    * [https://github.com/JusperLee/Dual-path-RNN-Pytorch](https://github.com/JusperLee/Dual-path-RNN-Pytorch)
+    * [Dual-path RNN for Speech Separation 閱讀筆記](https://zhuanlan.zhihu.com/p/104606356)
 
 ### **相關連結**
 
