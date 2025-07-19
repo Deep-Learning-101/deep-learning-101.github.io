@@ -23,6 +23,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 **其它中文參考**：[Bengio親手戳穿CoT神話！ LLM推理是假象，25％頂會論文遭打臉](https://zhuanlan.zhihu.com/p/1923792976229954144)
 
+**[整合Chain of Thought Monitorability: A New and Fragile Opportunity for AI Safety](https://deep-learning-101.github.io/Paper/Chain-of-Thought)**
+
 ---
 
 <p align="center">
