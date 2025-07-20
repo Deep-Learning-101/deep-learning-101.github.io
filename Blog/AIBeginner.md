@@ -26,7 +26,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
     <audio controls>
       <source src="../notebooklm-mp3/AIBeginnerMistakes.mp3" type="audio/mpeg">
     </audio>
-    <p>企業導入 AI 認真全攻略</p>
+    <p>認真 企業導入 AI 全攻略</p>
   </div>
 
   <div class="podcast-cell">
@@ -64,10 +64,10 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 第一波夯起來的時間估計是 2016年 Google DeepMind 的 Alpha Go 吧，但深度學習確實很難實際的被應用到各行各業，特別是台灣，在那幾年，做個規則式的聊天機器人，或者廣告點擊，可能就會先用新聞稿把自己吹成 AI 大神或新創了。第二波就是 Open AI 橫空出世的ChatGPT了，然後四處都能看到大家都說自己有GenAI，可惜可能連個幾張消費型的4090等級的GPU都沒有，更別說已屬上世代的V100 或者連 GCP、AWS跟Azure的GPU都沒啟用設定過吧？就目前體驗，雖然已有不少國外的新聞或資訊報導可能碰上的問題。  
 
 但這裡是**『台灣』**，通常更可能發生：
-- 高層心血來潮的玻璃心：
-- 昂貴設備的高風險投資：
-- 必要性的業務優化需求：
-- 低薪資卻高回報的人力：
+- 高層心血來潮的玻璃心：因為新聞都在報 GenAI，所以不跟著 Gen 一下好像都對不起自己的職級；BUT，高層完全不懂也不想懂更不想花錢，就是做就對了 !
+- 昂貴設備的高風險投資：據記憶，曾處理過 A100*4 以及 RTX 6000 Ada * 8 (皆約$330萬新台幣)，這是地端自建價格；至於[雲端API請參考這](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark#%E7%B8%BD%E9%AB%94%E6%88%B0%E7%95%A5%E6%AF%94%E8%BC%83%E4%B8%89%E5%A4%A7%E5%85%AC%E6%9C%89%E9%9B%B2-ai-%E5%B9%B3%E5%8F%B0)
+- 必要性的業務優化需求：千萬不要為了 AI 而 AI，而是要有專業人員先參與評估可以優化那些內部業務需求，如果不知道，也不想找人評估，那行政單據OCR應該會是最容易讓高層看到效果的試金石了。
+- 低薪資但高回報的人力：全台都在喊需要AI人才，特別讓人懷念所謂的資安即國安的口號；無奈，不說所謂只給的出香蕉來請猴子，現在是怕給了也找不到猴子啊。
 
 ## 導論
 
