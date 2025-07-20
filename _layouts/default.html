@@ -34,6 +34,46 @@
     /* github-markdown.css 負責這裡的背景和文字顏色，
        它應該能正確處理亮暗主題切換。*/
   }
+
+.podcast-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  max-width: 900px;
+  margin: 3rem auto;
+  text-align: center;
+}
+
+.podcast-cell {
+  padding: 1rem;
+}
+
+audio {
+  width: 200px;
+  height: 20px;
+  margin: 0.5rem 0;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.video-container iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+}
+
+/* 響應式設計：手機時變成單欄 */
+@media (max-width: 768px) {
+  .podcast-grid {
+    grid-template-columns: 1fr;
+  }
+}
 </style>
   
   <!-- Google Analytics GA4 -->
