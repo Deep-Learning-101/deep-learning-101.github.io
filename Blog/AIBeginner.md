@@ -43,7 +43,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   <div class="podcast-cell">
     <div class="video-container">
       <iframe
-        src="https://www.youtube.com/embed/IZGqfbj5AF4"
+        src="https://www.youtube.com/embed/59ojQx_dLFo"
         frameborder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
