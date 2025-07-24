@@ -120,21 +120,18 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 | **[NVIDIA H100](https://cloud.google.com/compute/docs/accelerator-optimized-machines?hl=zh-tw#a3-vms)** | **實例:** `a3-highgpu-8g` (8x H100)<br>**每小時/每顆:** **~$8.37**<br>(整機 ~$66.95/hr) | **實例:** `Standard_ND H100 v5` (8x H100)<br>**每小時/每顆:** **~$8.59**<br>(整機 ~$68.75/hr) | **實例:** `p5.48xlarge` (8x H100)<br>**每小時/每顆:** **~$12.26**<br>(整機 ~$98.08/hr) |
 
 
-### **大型語言模型API平台價格比較 ~2025/07**
+### **大型語言模型API平台價格比較 ~2025/07/21 (不定期更新確認)**
 
-| 平台 | 模型 | **存取平台** | 輸入費用<br>(USD/1M Tokens) | 輸出費用<br>(USD/1M Tokens) | 上下文窗口 | 免費層級 | 最大速率限制 (RPM / TPM) | 多模態能力 | 特點 / 說明 | 定價連結 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Google** | **Gemini 2.5 Pro** | **Vertex AI** | $1.25 (≤200k)<br>$2.50 (>200k) | $10.00 (≤200k)<br>$15.00 (>200k) | 1M | ✅ (適用 GCP 免費額度) | **高，可申請提高** | ✅ (文/圖/影/音) | **企業生產級**，整合 GCP 安全與 MLOps 工具鏈 | [Vertex AI Pricing](https://cloud.google.com/vertex-ai/pricing) |
-| **Google** | **Gemini 2.5 Pro** | **Google AI Studio** | **免費** (在限制內)<br>或 Pay-as-you-go | **免費** (在限制內)<br>或 Pay-as-you-go | 1M | ✅ **(60 RPM)** | **固定速率限制** (60 RPM) | ✅ (文/圖/影/音) | **開發者優先**，適合快速原型驗證，免費層級慷慨 | [Google AI Studio Pricing](https://ai.google.dev/pricing) |
-| **Anthropic** | **Claude 4 Opus** | **Amazon Bedrock, Vertex AI** | **$15.00** | **$75.00** | **200K** | 依附於雲端平台免費額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖) | **最新頂級旗艦**，專為最複雜任務設計，推理能力極強 | [Anthropic Pricing](https://www.anthropic.com/pricing) |
-| **Anthropic** | **Claude 4 Sonnet** | **Amazon Bedrock, Vertex AI** | **$3.00** | **$15.00** | **200K** | 依附於雲端平台免費額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖) | **最新主力模型**，在智慧與速度間取得最佳平衡 | 同上 |
-| **Anthropic** | **Claude 3.7 Sonnet** | **Amazon Bedrock, Vertex AI** | $3.00 | $15.00 | **200K** | 依附於雲端平台免費額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖) | 具備「擴展思維」模式，適合深度分析與程式碼生成 | 同上 |
-| **OpenAI** | **GPT-4o** | **Azure OpenAI,** OpenAI API | $5.00 | $15.00 | 128K | ✅ (新戶免費額度) | 依帳戶等級 (可申請提高) | ✅ (文/圖/音) | Frontier 模型，支援 Vision/Tools/結構化輸出 | [OpenAI Pricing](https://openai.com/api/pricing/) |
-| **Meta** | **Llama 3 (70B)** | **Amazon Bedrock, Vertex AI** | ~$0.79 | ~$2.70 | 8K | 依附於雲端平台免費額度 | 依帳戶等級 (可申請提高) | ❌ | 最強大的開源模型之一，適合通用對話與內容生成 | [Bedrock Pricing](https://aws.amazon.com/bedrock/pricing/) |
-| **xAI** | **Grok-3** | **Grok API,** X Premium+ | $3.00 | $15.00 | **128K** | ✅ (新戶免費額度) | 不公開 (受邀制) | ✅ (文字) | **即時資訊存取**，具備獨特風格。Grok-4 即將推出 | [xAI API](https://x.ai/api) |
-| **DeepSeek** | **deepseek-chat (V2)** | DeepSeek API | $0.14 | $0.28 | 128K | ✅ (新戶 5M Tokens) | 不公開 | ❌ | 高性价比，編碼與數學能力強 | [DeepSeek Pricing](https://platform.deepseek.com/api-docs/pricing/) |
-| **Qwen** | **qwen-turbo** | 阿里雲, Qwen API | ~$0.0011 | ~$0.0022 | 32K | ✅ (新戶免費額度) | 不公開 | ✅ (文/圖) | 阿里通義千問，經濟高效型 | [Qwen Pricing](https://help.aliyun.com/document_detail/2591823.html) |
-| **百度** | **ERNIE 4.0** | 百度千帆大模型平台 | ~$16.50 | ~$16.50 | ~128K | ✅ (新戶免費額度) | 不公開 | ✅ (文/圖) | 中文原生，支援多種中國特色應用與知識 | [Baidu Pricing](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Jlk3504vl) |
+| 平台 | 模型 | API 輸入費用<br>(USD/1M Tokens) | API 輸出費用<br>(USD/1M Tokens) | 上下文窗口 | 免費層級 | 最大速率限制 (RPM / TPM) | 多模態能力 | 特點 / 說明 | 定價連結 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **Google** | **Gemini 2.5 Pro** | $1.25 (≤200k)<br>$2.5 (>200k) | $10 (≤200k)<br>$15 (>200k) | 1M | ❓ | 依費率速率限制 | 文/圖/影/音 | 企業生產級，整合 GCP | [Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/pricing?hl=zh-tw#gemini-models-2.5) |
+| **Google** | **Gemini 2.5 Pro** | $1.25 (≤200k)<br>$2.5 (>200k) | $10 (≤200k)<br>$15 (>200k) | 1M | 150 RPM / 2,000,000 TPM | 依費率速率限制 | 文/圖/影/音 | 適合快速原型驗證 | [Google AI Studio](https://ai.google.dev/gemini-api/docs/pricing?hl=zh-tw) |
+| **Google** | **Gemini 2.5 Flash** | $0.3 (≤200k)<br>$1 (>200k) | $0.3 (≤200k)<br>$1 (>200k) | 1M | 150 RPM / 2,000,000 TPM | 依費率速率限制 | 文/圖/影/音 | 開發者優先 | [Google AI Studio](https://ai.google.dev/gemini-api/docs/pricing?hl=zh-tw) |
+| **Azure OpenAI** | **GPT-4.5** | $75 | $150 | 128K | ❓ | 以可預測成本配置 | 文/圖/音 | 支援 Vision/Tools/結構化輸出 | [Azure OpenAI](https://azure.microsoft.com/zh-tw/pricing/details/cognitive-services/openai-service/#pricing) |
+| **Amazon Bedrock** | **Claude Opus 4** | $15 | $75 | 200K | ❓ | ❓ | 文/圖 | 專為最複雜任務設計，推理能力極強 | [Amazon Bedrock](https://aws.amazon.com/tw/bedrock/pricing/) |
+| **Amazon Bedrock** | **Claude Sonnet 4** | $3.00 | $15 | 200K | ❓ | ❓ | 文 | 適合通用對話與內容生成 | [Amazon Bedrock](https://aws.amazon.com/tw/bedrock/pricing/) |
+| **xAI** | **Grok-4** | $3 | $15 | 256K | ❓ | 480 RPM / 2M TPM | 文 | 具獨特風格 | [xAI](https://x.ai/api) |
+
 
 ### **大型語言模型與Agent安全工具比較 ~2025/07**
 
