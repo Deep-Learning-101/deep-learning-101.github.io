@@ -26,29 +26,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
-- [為何 RAG？](#為何-rag)
-- [一：基礎環境部署](#一基礎環境部署)
-  - [選擇本地端推理框架](#選擇本地端推理框架)
-- [二：RAG 優化核心流程](#二rag-優化核心流程)
-  - [資料準備與嵌入 (Data Preparation & Embedding)](#資料準備與嵌入-data-preparation--embedding)
-  - [資料檢索 (Data Retrieval)](#資料檢索-data-retrieval)
-  - [檢索後處理 (Post-Retrieval Processing)](#檢索後處理-post-retrieval-processing)
-  - [LLM 生成優化 (LLM Generation)](#llm-生成優化-llm-generation)
-  - [迭代優化與評估 (Iterative Optimization & Evaluation)](#迭代優化與評估-iterative-optimization--evaluation)
-- [總結](#總結)
-- [Embedding-與-Reranking-模型在-RAG-應用中的關鍵角色與評估](#Appendix-Embedding-Reranking-RAG)
-  - [a-embedding-與-reranking-的角色](#a-embedding-與-reranking-的角色)
-  - [b-檢索階段embedding-模型效能深度剖析](#b-檢索階段embedding-模型效能深度剖析)
-  - [c-主流-embedding-模型分析與表現](#c-主流-embedding-模型分析與表現)
-  - [d-對於文件檢索的策略性啟示](#d-對於文件檢索的策略性啟示)
-  - [e-精煉階段reranker-模型效能的量化評估](#e-精煉階段reranker-模型效能的量化評估)
-  - [f-常見-reranker-模型及表現](#f-常見-reranker-模型及表現)
-  - [g-重排序的必要性與挑戰](#g-重排序的必要性與挑戰)
-  - [h-臺灣本土模型與國際模型的嵌入重排序評比](#h-臺灣本土模型與國際模型的嵌入重排序評比)
-  - [總結](#總結)
-
----
-
 ## 為何 RAG？
 
 - **聚焦私有資料**：RAG 能專注於私有資料的檢索與生成，提升回應的相關性。
