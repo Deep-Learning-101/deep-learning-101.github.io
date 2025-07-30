@@ -193,37 +193,37 @@ TMMLU+是TMLU的增強版本，擁有更全面的臺灣繁體中文評估內容[
 為了提供一個清晰、全面的比較視角，下表匯總了本次研究涵蓋的主要模型在多個關鍵評測基準上的表現。數據主要來源於公開的 Open TW LLM Leaderboard [7][11]、各模型的官方發布文件及相關學術論文。所有分數均以百分比（%）表示，除非另有說明。標示為「N/A」表示目前尚無公開的可靠數據。
 
 
-**臺灣本土與主流大型語言模型綜合評測結果（更新版）**
+[**臺灣本土與主流大型語言模型綜合評測結果（更新版**](https://huggingface.co/datasets/ikala/tmmluplus#benchmark-on-direct-prompting)
 
 
 | 模型名稱 | TMLU | TMMLU+ | TW Truthful QA | TW Legal Eval | TW MT-Bench | MMLU (5-shot) | MMLU-Pro (CoT, 5-shot) |
 | :-- | :-- | :-- | :-- | :-- | :-- | :-- | :-- |
-| **yentinglin/Llama-3-Taiwan-70B-Instruct** | 74.76% [9] | 67.53% [9] | 80.95% [9] | 68.42% [9] | 7.54 [9] | N/A | N/A |
-| **yentinglin/Llama-3-Taiwan-70B-Instruct-DPO** | 74.60% [9] | - | 81.75% [9] | 70.33% [9] | - | N/A | N/A |
-| **yentinglin/Llama-3-Taiwan-70B-Instruct-128k** | 73.01% [9] | - | 80.16% [9] | 63.64% [9] | - | N/A | N/A |
-| **yentinglin/Llama-3-Taiwan-8B-Instruct** | 59.50% [9] | 52.28% [9] | 61.11% [9] | 53.11% [9] | 7.21 [9] | N/A | N/A |
-| **yentinglin/Llama-3-Taiwan-8B-Instruct-DPO** | 59.88% [9] | - | 59.52% [9] | 52.63% [9] | - | N/A | N/A |
+| **yentinglin/Llama-3-Taiwan-70B-Instruct** | 74.76% | 67.53% | 80.95% | 68.42%| 7.54| N/A | N/A |
+| **yentinglin/Llama-3-Taiwan-70B-Instruct-DPO** | 74.60%| - | 81.75%| 70.33%| - | N/A | N/A |
+| **yentinglin/Llama-3-Taiwan-70B-Instruct-128k** | 73.01%| - | 80.16%| 63.64%| - | N/A | N/A |
+| **yentinglin/Llama-3-Taiwan-8B-Instruct** | 59.50%| 52.28%| 61.11%| 53.11%| 7.21| N/A | N/A |
+| **yentinglin/Llama-3-Taiwan-8B-Instruct-DPO** | 59.88%| - | 59.52%| 52.63%| - | N/A | N/A |
 | **yentinglin/Llama-3-Taiwan-8B-Instruct-128k** | - | - | - | - | - | N/A | N/A |
-| **taide/Llama-3.1-TAIDE-LX-8B-Chat (Alpha1)** [7] | 47.30% [7] | 39.03% [7] | 50.79% [7] | 37.80% [7] | - | N/A | N/A |
-| **Breeze-7B-Instruct-v1_0** [7] | 55.57% [7] | 41.77% [7] | 52.38% [7] | 39.23% [7] | 6.0 [7] | N/A | N/A |
-| **Breexe-8x7B-Instruct-v0_1** [7] | - | 48.92% [7] | - | - | 7.2 [7] | N/A | N/A |
+| **taide/Llama-3.1-TAIDE-LX-8B-Chat (Alpha1)**| 47.30%| 39.03%| 50.79%| 37.80%| - | N/A | N/A |
+| **Breeze-7B-Instruct-v1_0**| 55.57%| 41.77%| 52.38%| 39.23%| 6.0| N/A | N/A |
+| **Breexe-8x7B-Instruct-v0_1**| - | 48.92%| - | - | 7.2| N/A | N/A |
 | **MediaTek-Research/Llama-Breeze2-8B-Instruct** | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
 | **MediaTek-Research/Llama-Breeze2-3B-Instruct** | N/A | N/A | N/A | N/A | N/A | N/A | N/A |
-| **Qwen/Qwen3-235B-A22B** | N/A | N/A | N/A | N/A | N/A | 87.8% [12] | N/A |
-| **Qwen/Qwen2.5-72B-Instruct** | N/A | N/A | N/A | N/A | N/A | 86.1% [12] | 71.6% [12] |
-| **Qwen/Qwen2-72B-Instruct** | 80.43% [7][13] | N/A | 73.02% [7][13] | 58.85% [7][13] | N/A | 82.30% [13] | N/A |
-| **Qwen1.5-110B-Chat** [7] | 75.69% [7] | 65.81% [7] | 66.67% [7] | 49.28% [7] | - | N/A | N/A |
-| **meta-llama/Llama-4-Maverick** | N/A | N/A | N/A | N/A | N/A | 85.5% [14] | 80.5% [14] |
-| **meta-llama/Llama-4-Scout** | N/A | N/A | N/A | N/A | N/A | 79.6% [14] | 74.3% [14] |
-| **meta-llama/Llama-3.3-70B-Instruct** | N/A | N/A | N/A | N/A | N/A | N/A | 68.9% [15] |
-| **meta-llama/Llama-3.2-11B-Vision** | N/A | N/A | N/A | N/A | N/A | 46.4% [6] <!-- TODO: 確認此引用 --> | N/A |
-| **meta-llama/Llama-3.2-3B-Instruct** | N/A | N/A | N/A | N/A | N/A | 63.4% [6] <!-- TODO: 確認此引用 --> | N/A |
-| **meta-llama/Llama-3.1-70B-Instruct** | N/A | N/A | N/A | N/A | N/A | 83.6% [14] | 66.4% [14] |
-| **meta-llama/Llama-3.1-8B-Instruct** | N/A | N/A | N/A | N/A | N/A | 69.4% [14] | 48.3% [14] |
-| **meta-llama/Llama-3-70B-Instruct** | 70.95% [7] | 62.75% [7] | 65.08% [7] | 52.63% [7] | - | 82.0% [16] | N/A |
-| **meta-llama/Llama-3-8B-Instruct** | 55.81% [7] | 43.38% [7] | 46.83% [7] | 35.89% [7] | - | 68.4% [16] | N/A |
-| **openai/GPT-4o** | 69.88% (5-shot) [7] | N/A | 76.98% [7] | 53.59% [7] | - | 88.70% [16] | 77.9% [17] |
-| **anthropic/Claude-3-Opus** | 73.59% (5-shot) [7] | 64.20% [18] | 69.84% [7] | 60.29% [7] | - | 86.80% [16] | N/A |
+| **Qwen/Qwen3-235B-A22B** | N/A | N/A | N/A | N/A | N/A | 87.8%| N/A |
+| **Qwen/Qwen2.5-72B-Instruct** | N/A | N/A | N/A | N/A | N/A | 86.1%| 71.6%|
+| **Qwen/Qwen2-72B-Instruct** | 80.43%| N/A | 73.02% | 58.85% | N/A | 82.30%| N/A |
+| **Qwen1.5-110B-Chat**| 75.69%| 65.81%| 66.67%| 49.28%| - | N/A | N/A |
+| **meta-llama/Llama-4-Maverick** | N/A | N/A | N/A | N/A | N/A | 85.5% | 80.5% |
+| **meta-llama/Llama-4-Scout** | N/A | N/A | N/A | N/A | N/A | 79.6% | 74.3% |
+| **meta-llama/Llama-3.3-70B-Instruct** | N/A | N/A | N/A | N/A | N/A | N/A | 68.9% |
+| **meta-llama/Llama-3.2-11B-Vision** | N/A | N/A | N/A | N/A | N/A | 46.4% | N/A |
+| **meta-llama/Llama-3.2-3B-Instruct** | N/A | N/A | N/A | N/A | N/A | 63.4% | N/A |
+| **meta-llama/Llama-3.1-70B-Instruct** | N/A | N/A | N/A | N/A | N/A | 83.6% | 66.4% |
+| **meta-llama/Llama-3.1-8B-Instruct** | N/A | N/A | N/A | N/A | N/A | 69.4% | 48.3% |
+| **meta-llama/Llama-3-70B-Instruct** | 70.95%| 62.75%| 65.08%| 52.63%| - | 82.0% | N/A |
+| **meta-llama/Llama-3-8B-Instruct** | 55.81%| 43.38%| 46.83%| 35.89%| - | 68.4% | N/A |
+| **openai/GPT-4o** | 69.88% (5-shot)| N/A | 76.98%| 53.59%| - | 88.70% | 77.9% |
+| **anthropic/Claude-3-Opus** | 73.59% (5-shot)| 64.20% | 69.84%| 60.29%| - | 86.80% | N/A |
 
 這張總表的建立本身即具備高度價值。它將散落在不同排行榜、論文和模型發布頁面上的數據整合在一起，首次提供了一個全面的、可直接進行並排比較的單一視圖。正是基於這張表，我們才能夠進行後續的深入分析，例如量化在地化微調的具體效益，或比較不同規模模型之間的性能差距。
 
