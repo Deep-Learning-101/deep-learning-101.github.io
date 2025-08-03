@@ -155,6 +155,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 ---
 
 - 2025-07-26：[presenton](https://github.com/presenton/presenton)；[一款可本地部署的開源AI PPT項目，一鍵生成精美PPT](https://mp.weixin.qq.com/s/QTMVGD_aP41qrwtbjLxV8Q)
+- 2025-07-03：[MultiAgentPPT](https://github.com/johnson7788/MultiAgentPPT)；[A2A+ADK+MCP多智能體並發系統產生(可線上編輯）的PPT（含原始碼）](https://zhuanlan.zhihu.com/p/1920611446007497267)
 - 2025-06-28：[docext](https://github.com/NanoNets/docext)：[基於Qwen2.5VL的文檔解析工具](https://zhuanlan.zhihu.com/p/1919760450024879687)
 - 2025-06-10：[Agentic-Doc](https://github.com/landing-ai/agentic-doc)；[LandingAI開源神器，這個Python庫讓百頁文檔秒變結構化資料！](https://zhuanlan.zhihu.com/p/1914259475306612709)
 - 2025-06-06：[daily-arXiv-ai-enhanced](https://github.com/dw-dengwei/daily-arXiv-ai-enhanced)：每日自動爬取arXiv論文並以LLM產生中文摘要
@@ -192,9 +193,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 ---
 
 - 2025-07-03：[multi-modal-researcher](https://github.com/langchain-ai/multi-modal-researcher)
-- 2025-07-03：[MultiAgentPPT](https://github.com/johnson7788/MultiAgentPPT)；[A2A+ADK+MCP多智能體並發系統產生(可線上編輯）的PPT（含原始碼）](https://zhuanlan.zhihu.com/p/1920611446007497267)
 - 2025-06-25：[Gemini CLI](https://github.com/google-gemini/gemini-cli)：[Gemini CLI：你的開源 AI 代理](https://blog.google/intl/zh-tw/products/cloud/gemini-cli-your-open-source-ai-agent/)
-- 2025-06-23：[MultiAgentPPT](https://github.com/johnson7788/MultiAgentPPT)：整合了 A2A+MCP+ADK架構的動畫簡報產生系統，支援多智能體協作和串流運行機制
 - 2025-06-06：[PandaWiki](https://github.com/chaitin/PandaWiki)；[新一代AI 大模型驅動的開源知識庫建立系統](https://zhuanlan.zhihu.com/p/1916981702733039060)
 - 2025-06-03：[**Gemini Fullstack LangGraph**](https://deepwiki.com/google-gemini/gemini-fullstack-langgraph-quickstart)；[DEMO](https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI)；[以為Google只是簡單放個Demo，哪想到是」開源版”Perplexity！](https://www.53ai.com/news/OpenSourceLLM/2025060431620.html)
 - 2025-06-03：[Perplexica](https://github.com/ItzCrazyKns/Perplexica)；[Perplexity AI，開源替代品](https://www.53ai.com/news/qianyanjishu/2394.html)
@@ -242,6 +241,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 **推理模型**
    
+  - 2025-07-29：[Llama Nemotron Super v1.5](https://huggingface.co/nvidia/Llama-3_3-Nemotron-Super-49B-v1_5)；[英偉達全新開源模型：三倍吞吐、單卡可跑，還拿下推理SOTA](https://zhuanlan.zhihu.com/p/1933514869279274584)
+  - 2025-07-27：[OpenReasoning-Nemotron](https://huggingface.co/nvidia/OpenReasoning-Nemotron-1.5B)；[英偉達突然開源「數學核武」！ 1.5B 參數秒殺 o3，OpenReasoning-Nemotron 真有這麼猛？](https://mp.weixin.qq.com/s/o7RhRAFzAKkHj2T0y3GVzA)
   - 2025-05-06：[Llama-Nemotron](https://www.alphaxiv.org/zh/overview/2505.00949)；[DeepWiki](https://deepwiki.com/NVIDIA/NeMo)；[英偉達發布Llama-Nemotron系列大模型，實現高效推理](https://zhuanlan.zhihu.com/p/1903012593033012833)
   - 2025-04-16：[Video-R1: Reinforcing Video Reasoning in MLLMs ](https://www.alphaxiv.org/zh/overview/2503.21776)；[Github](https://github.com/tulerfeng/Video-R1)；[影片推理R1時刻，7B模型反超GPT-4o，港中文清華推出首款Video-R1](https://www.36kr.com/p/3252742390655489)
 
