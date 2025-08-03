@@ -199,6 +199,7 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 * [fish-speech](https://huggingface.co/fishaudio/fish-speech-1.5)
   * [性能超過F5、CosySense，一文帶你理論+實操多種語言克隆效果](https://mp.weixin.qq.com/s/z8L3lpEbQ1-bkD7MM6oLsw)
   * [fish-speech-gui](https://github.com/AnyaCoder/fish-speech-gui)；[Github](https://github.com/fishaudio/fish-speech/blob/main/docs/README.zh.md)；[Document](https://speech.fish.audio/zh/)
+  * 2025-07-25：[Higgs Audio V2](https://github.com/boson-ai/higgs-audio)；[李沐B站更新了！教你手搓語音大模型，程式碼全開源還能在線上試玩](https://zhuanlan.zhihu.com/p/1931365847840069074)
   * 2025-06-05：[OpenAudio S1](https://huggingface.co/fishaudio/openaudio-s1-mini)；[重新定義文字轉語音，釋放聲音的無限潛能](https://zhuanlan.zhihu.com/p/1913864308212863691)；[全球唯一高可控多語言TTS-OpenAudio-S1，並開源mini版](https://zhuanlan.zhihu.com/p/1913736328702592271)
 * 2025-03-30：[MegaTTS3](https://huggingface.co/spaces/ByteDance/MegaTTS3)：[字節跳動MegaTTS3 開源：0.45B 參數實現高品質中英雙語TTS 與語音克隆](https://zhuanlan.zhihu.com/p/1889796359344857240)
 * 2025-03-21：[Orpheus TTS](https://github.com/canopyai/Orpheus-TTS)
