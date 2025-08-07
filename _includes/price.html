@@ -1,6 +1,6 @@
-## ✨LLM API Platform Price Comparison  ~2025年08月08日
+## ✨LLM API Platform Price Comparison
 
-### **總體戰略比較：三大公有雲 AI 平台**
+### **總體戰略比較：三大公有雲 AI 平台**  ~ 2025年08月08日
 
 | 特性 | **Google Cloud (GCP)** | **Microsoft Azure** | **Amazon Web Services (AWS)** |
 | :--- | :--- | :--- | :--- |
@@ -11,7 +11,7 @@
 | **計費模式 (安全性)** | **服務啟用免費** | **端點按小時計費** + **數據按 GB 計費** | **端點按小時計費** + **數據按 GB 計費** |
 | **個人體驗** | **Gemin無敵+Cloude等模型** | **只有Open AI** | **就是少了 Gemini** |
 
-### **自行架設 GPU VM 每小時預估費用**
+### **自行架設 GPU VM 每小時預估費用**  ~ 2025年08月08日
 
 * **台灣計價：** (美元費用 x 當期匯率) + 5% 營業稅
 * **基準：** 以下價格均以**美國東部 (US East) 或美國中部 (US Central)** 的主要資料中心為基準，這是行業內最常用於比較定價的區域。
@@ -26,25 +26,25 @@
 | **[NVIDIA A100](https://cloud.google.com/compute/docs/accelerator-optimized-machines?hl=zh-tw#a2-vms)** | **實例:** `a2-highgpu-1g` (1x A100)<br>**每小時:** **~$4.45** | **實例:** `Standard_ND96asr_v4` (8x A100)<br>**每小時/每顆:** **~$4.21**<br>(整機 ~$33.68/hr) | **實例:** `p4d.24xlarge` (8x A100)<br>**每小時/每顆:** **~$4.09**<br>(整機 ~$32.77/hr) |
 | **[NVIDIA H100](https://cloud.google.com/compute/docs/accelerator-optimized-machines?hl=zh-tw#a3-vms)** | **實例:** `a3-highgpu-8g` (8x H100)<br>**每小時/每顆:** **~$8.37**<br>(整機 ~$66.95/hr) | **實例:** `Standard_ND H100 v5` (8x H100)<br>**每小時/每顆:** **~$8.59**<br>(整機 ~$68.75/hr) | **實例:** `p5.48xlarge` (8x H100)<br>**每小時/每顆:** **~$12.26**<br>(整機 ~$98.08/hr) |
 
-### **大型語言模型API平台價格比較 ~2025/07**
+### **大型語言模型API平台價格比較**  ~ 2025年08月08日
 
-| 平台 | 模型 | **存取平台** | 輸入費用<br>(USD/1M Tokens) | 輸出費用<br>(USD/1M Tokens) | 上下文窗口 | 免費層級 | 最大速率限制 (RPM / TPM) | 多模態能力 | 特點 / 說明 | 定價連結 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| 平台 | 模型 | **存取平台** | 輸入費用<br>(USD/1M Tokens) | 輸出費用<br>(USD/1M Tokens) | 上下文窗口 | 免費層級 | 最大速率限制 (RPM / TPM) | 多模態能力 | 定價連結 |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
 | **Google** | **Gemini 2.5 Pro** | **Vertex AI** | $1.25 (≤200k)<br>$2.50 (>200k) | $10.00 (≤200k)<br>$15.00 (>200k) | 1M | ✅ (適用 GCP 免費額度) | **高，可申請提高** | ✅ (文/圖/影/音) | [Vertex AI Pricing](https://cloud.google.com/vertex-ai/pricing) |
-| **Google** | **Gemini 2.5 Pro** | **Google AI Studio** | **免費** (在限制內)<br>或 Pay-as-you-go | **免費** (在限制內)<br>或 Pay-as-you-go | 1M | ✅ **(60 RPM)** | **固定速率限制** (60 RPM) | ✅ (文/圖/影/音) | [Google AI Studio Pricing](https://ai.google.dev/pricing) |
-| **Anthropic** | **Claude 4 Opus** | **Amazon Bedrock, Vertex AI** | **$15.00** | **$75.00** | **200K** | 依雲端平台額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖) | [Anthropic Pricing](https://www.anthropic.com/pricing) |
-| **Anthropic** | **Claude 4 Sonnet** | **Amazon Bedrock, Vertex AI** | **$3.00** | **$15.00** | **200K** | 依雲端平台額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖) | 同上 |
-| **Anthropic** | **Claude 3.7 Sonnet** | **Amazon Bedrock, Vertex AI** | $3.00 | $15.00 | **200K** | 依雲端平台額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖) | 同上 |
-| **OpenAI** | **GPT-5/Mini/Nano** | **Azure OpenAI,** OpenAI API | $1.25/0.25/0.05 | $10.0/2.0/0.4 | ❓ | ✅ 依帳戶額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖/音) | [OpenAI Pricing](https://openai.com/api/pricing/) |
-| **OpenAI** | **GPT-4.1/Mini/Nano** | **Azure OpenAI,** OpenAI API | $2/0.4/0.1 | $8.0/1.6/0.4 | ❓ | ✅ 依帳戶額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖/音) | [OpenAI Pricing](https://openai.com/api/pricing/) |
-| **OpenAI** | **GPT-4o** | **Azure OpenAI,** OpenAI API | $5.00 | $15.00 | ❓ | ✅ 依帳戶額度 | 依帳戶等級 (可申請提高) | ✅ (文/圖/音) | [OpenAI Pricing](https://openai.com/api/pricing/) |
-| **Meta** | **Llama 3 (70B)** | **Amazon Bedrock, Vertex AI** | ~$0.79 | ~$2.70 | 8K | 依附於雲端平台免費額度 | 依帳戶等級 (可申請提高) | ❌ | [Bedrock Pricing](https://aws.amazon.com/bedrock/pricing/) |
+| **Google** | **Gemini 2.5 Pro** | **Google AI Studio** | **免費額度** <br>或 Pay-as-you-go | **免費額度** <br>或 Pay-as-you-go | 1M | ✅ **(60 RPM)** | **固定速率限制** (60 RPM) | ✅ (文/圖/影/音) | [Google AI Studio Pricing](https://ai.google.dev/pricing) |
+| **Anthropic** | **Claude Opus 4.1** | **Anthropic API** | **$15.00** | **$75.00** | ❓ | ❓ | ❓ | ❓  | [Anthropic Pricing](https://www.anthropic.com/pricing#api) |
+| **Anthropic** | **Claude Sonnet 4** | **Anthropic API** | **$3.00** | **$15.00** | ❓ | ❓ | ❓ | ❓ | 同上 |
+| **Anthropic** | **Claude Haiku 3.5** | **Anthropic API** | $0.8 | $4.00 | ❓ | ❓ | ❓ | ❓ | 同上 |
+| **OpenAI** | **GPT-5/Mini/Nano** | **OpenAI API** | $1.25/0.25/0.05 | $10.0/2.0/0.4 | ❓ | ❓ | ❓ | ✅ (文/圖/音) | [OpenAI Pricing](https://openai.com/api/pricing/) |
+| **OpenAI** | **GPT-4.1/Mini/Nano** | **OpenAI API** | $2/0.4/0.1 | $8.0/1.6/0.4 | ❓ | ❓ | ❓ | ✅ (文/圖/音) | 同上 |
+| **OpenAI** | **GPT-4o** | **OpenAI API** | $5.00 | $15.00 | ❓ | ❓ | ❓ | ✅ (文/圖/音) | 同上 |
+| **Meta** | **Llama 3 (70B)** | **Amazon Bedrock, Vertex AI** | ~$0.79 | ~$2.70 | 8K | ❓ | ❓ | ❌ | ❌ |
 | **xAI** | **Grok-3** | **Grok API,** X Premium+ | $3.00 | $15.00 | **128K** | ✅ 依帳戶額度 | 不公開 (受邀制) | ✅ (文字) | [xAI API](https://x.ai/api) |
-| **DeepSeek** | **deepseek-chat (V2)** | DeepSeek API | $0.14 | $0.28 | 128K | ✅ (新戶 5M Tokens) | 不公開 | ❌ | DeepSeek Pricing](https://platform.deepseek.com/api-docs/pricing/) |
+| **DeepSeek** | **deepseek-chat (V2)** | DeepSeek API | $0.14 | $0.28 | 128K | ❓ | 不公開 | ❌ | [DeepSeek Pricing](https://platform.deepseek.com/api-docs/pricing/) |
 | **Qwen** | **qwen-turbo** | 阿里雲, Qwen API | ~$0.0011 | ~$0.0022 | 32K | ✅ 依帳戶額度 | 不公開 | ✅ (文/圖) | [Qwen Pricing](https://help.aliyun.com/document_detail/2591823.html) |
 | **百度** | **ERNIE 4.0** | 百度千帆大模型平台 | ~$16.50 | ~$16.50 | ~128K | ✅ 依帳戶額度 | 不公開 | ✅ (文/圖) | [Baidu Pricing](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Jlk3504vl) |
 
-### **大型語言模型與Agent安全工具比較 ~2025/07**
+### **大型語言模型與Agent安全工具比較**  ~ 2025年08月08日
 
 | 工具/資源名稱 | 開發者/來源 | 核心本質 | 主要用途/功能 | 運作方式 | 適用情境 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
