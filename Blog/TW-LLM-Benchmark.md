@@ -158,7 +158,7 @@ Artificial Analysis 測試顯示，gpt-oss 系列雖在純智慧水準上落後�
 
 ---
 
-{% include ai-share.html %}
+{% include price.html %}
 
 ---
 
