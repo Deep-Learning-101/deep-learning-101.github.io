@@ -13,8 +13,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # Deep Learning 101 Meetup
 
----
-
 <div style="display: flex; justify-content: center;">
   <div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9;">
     <iframe

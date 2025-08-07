@@ -1,0 +1,6 @@
+# 加上你的網站網址，這對產生正確的 sitemap 路徑很重要
+url: "https://deep-learning-101.github.io"
+
+# 啟用 sitemap 外掛
+plugins:
+  - jekyll-sitemap
