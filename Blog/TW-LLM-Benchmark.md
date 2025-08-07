@@ -158,64 +158,9 @@ Artificial Analysis 測試顯示，gpt-oss 系列雖在純智慧水準上落後�
 
 ---
 
-## ✨LLM API Platform Price Comparison
+{% include ai-share.html %}
 
-### **總體戰略比較：三大公有雲 AI 平台**
-
-| 特性 | **Google Cloud (GCP)** | **Microsoft Azure** | **Amazon Web Services (AWS)** |
-| :--- | :--- | :--- | :--- |
-| **主要 GenAI 平台** | **Vertex AI** | **Azure OpenAI Service** | **Amazon Bedrock** |
-| **平台核心理念** | **AI 技術創新者** | **企業服務整合者** | **中立的雲端市集** |
-| **旗艦/代表性模型** | **Gemini 系列 (2.5 Pro)** | **OpenAI 模型系列 (GPT-4o)** | **Anthropic Claude 系列** |
-| **"私有通道"安全技術** | **VPC Service Controls** | **Private Endpoint** | **Interface VPC Endpoint** |
-| **計費模式 (安全性)** | **服務啟用免費** | **端點按小時計費** + **數據按 GB 計費** | **端點按小時計費** + **數據按 GB 計費** |
-| **個人體驗** | **Gemin無敵+Cloude等模型** | **只有Open AI** | **就是少了 Gemini** |
-
-
-### **自行架設 GPU VM 每小時預估費用**
-
-* **台灣計價：** (美元費用 x 當期匯率) + 5% 營業稅
-* **基準：** 以下價格均以**美國東部 (US East) 或美國中部 (US Central)** 的主要資料中心為基準，這是行業內最常用於比較定價的區域。
-* **定價模式：** 均採用 **「按需 (On-Demand)」** 定價，不包含任何預留或長期承諾折扣。
-* **幣別：** 均為**美元 (USD, $)**。
-
-| GPU 型號 | **[Google Cloud (GCP)](https://cloud.google.com/compute/gpus-pricing?hl=zh_tw)** | **Microsoft Azure** | **Amazon Web Services (AWS)** |
-| :--- | :--- | :--- | :--- |
-| **[NVIDIA T4](https://cloud.google.com/compute/gpus-pricing?hl=zh_tw#section-1)** | **每小時:** **$0.35**<br>**每個月:** **$255.5**<br>承諾1年:**$0.22/$160.60** |  |  |
-| **NVIDIA P4** | **每小時:** **$0.60**<br>**每個月:** **$438.00**<br>承諾1年:**$0.378/$275.94**  |  |  |
-| **NVIDIA V100** | **每小時:** **$2.48**<br>**每個月:** **$1810.40**<br>承諾1年:**$1.562/$1140.26**  | **每小時:** **~$3.07** | **每小時:** **~$3.06** |
-| **[NVIDIA A100](https://cloud.google.com/compute/docs/accelerator-optimized-machines?hl=zh-tw#a2-vms)** | **實例:** `a2-highgpu-1g` (1x A100)<br>**每小時:** **~$4.45** | **實例:** `Standard_ND96asr_v4` (8x A100)<br>**每小時/每顆:** **~$4.21**<br>(整機 ~$33.68/hr) | **實例:** `p4d.24xlarge` (8x A100)<br>**每小時/每顆:** **~$4.09**<br>(整機 ~$32.77/hr) |
-| **[NVIDIA H100](https://cloud.google.com/compute/docs/accelerator-optimized-machines?hl=zh-tw#a3-vms)** | **實例:** `a3-highgpu-8g` (8x H100)<br>**每小時/每顆:** **~$8.37**<br>(整機 ~$66.95/hr) | **實例:** `Standard_ND H100 v5` (8x H100)<br>**每小時/每顆:** **~$8.59**<br>(整機 ~$68.75/hr) | **實例:** `p5.48xlarge` (8x H100)<br>**每小時/每顆:** **~$12.26**<br>(整機 ~$98.08/hr) |
-
-
-### **大型語言模型API平台價格比較 ~2025/07/21 (不定期更新確認)**
-
-| 平台 | 模型 | API 輸入費用<br>(USD/1M Tokens) | API 輸出費用<br>(USD/1M Tokens) | 上下文窗口 | 免費層級 | 最大速率限制 (RPM / TPM) | 多模態能力 | 特點 / 說明 | 定價連結 |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Google** | **Gemini 2.5 Pro** | $1.25 (≤200k)<br>$2.5 (>200k) | $10 (≤200k)<br>$15 (>200k) | 1M | ❓ | 依費率速率限制 | 文/圖/影/音 | 企業生產級，整合 GCP | [Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/pricing?hl=zh-tw#gemini-models-2.5) |
-| **Google** | **Gemini 2.5 Pro** | $1.25 (≤200k)<br>$2.5 (>200k) | $10 (≤200k)<br>$15 (>200k) | 1M | 150 RPM / 2,000,000 TPM | 依費率速率限制 | 文/圖/影/音 | 適合快速原型驗證 | [Google AI Studio](https://ai.google.dev/gemini-api/docs/pricing?hl=zh-tw) |
-| **Google** | **Gemini 2.5 Flash** | $0.3 (≤200k)<br>$1 (>200k) | $0.3 (≤200k)<br>$1 (>200k) | 1M | 150 RPM / 2,000,000 TPM | 依費率速率限制 | 文/圖/影/音 | 開發者優先 | [Google AI Studio](https://ai.google.dev/gemini-api/docs/pricing?hl=zh-tw) |
-| **Azure OpenAI** | **GPT-4.5** | $75 | $150 | 128K | ❓ | 以可預測成本配置 | 文/圖/音 | 支援 Vision/Tools/結構化輸出 | [Azure OpenAI](https://azure.microsoft.com/zh-tw/pricing/details/cognitive-services/openai-service/#pricing) |
-| **Amazon Bedrock** | **Claude Opus 4** | $15 | $75 | 200K | ❓ | ❓ | 文/圖 | 專為最複雜任務設計，推理能力極強 | [Amazon Bedrock](https://aws.amazon.com/tw/bedrock/pricing/) |
-| **Amazon Bedrock** | **Claude Sonnet 4** | $3.00 | $15 | 200K | ❓ | ❓ | 文 | 適合通用對話與內容生成 | [Amazon Bedrock](https://aws.amazon.com/tw/bedrock/pricing/) |
-| **xAI** | **Grok-4** | $3 | $15 | 256K | ❓ | 480 RPM / 2M TPM | 文 | 具獨特風格 | [xAI](https://x.ai/api) |
-
-
-### **大型語言模型與Agent安全工具比較 ~2025/07**
-
-| 工具/資源名稱 | 開發者/來源 | 核心本質 | 主要用途/功能 | 運作方式 | 適用情境 |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **[agentic-radar](https://github.com/splx-ai/agentic-radar)** | `splx-ai` | **綜合性安全套件**<br>(靜態+動態) | 分析代理 (Agent) 的工作流程、組件，並進行動態測試與提示詞強化。 | 靜態掃描原始碼以繪製工作流程圖；動態測試則實際運行代理以測試其行為。 | 開發早期進行架構審查，並在同一個工具中完成初步的動態測試。 |
-| **[agentic_security](https://github.com/msoedov/agentic_security)** | `msoedov` | **動態模糊測試工具**<br>(Dynamic Fuzzer) | 攻擊運作中的 LLM API，以發現提示詞注入等運行時漏洞。 | 向指定的 HTTP 端點發送大量預設的攻擊提示詞。 | 對任何 LLM API 進行快速、靈活的黑箱滲透測試。 |
-| **[garak](https://github.com/NVIDIA/garak)** | NVIDIA | **自動化紅隊演練工具**<br>(Automated Red Teaming) | 系統性地、全面地掃描 LLM 的各種漏洞（偏見、洩漏、注入等）。 | 使用「探針 (Probes)」發動攻擊，並用「偵測器 (Detectors)」評估結果。 | 模型部署前的全面安全評估、基準測試、以及定期的安全審計。 |
-| **[llm-guard](https://github.com/protectai/llm-guard)** | `protectai` | **防禦性函式庫/防火牆**<br>(Defensive Firewall) | 作為應用程式的安全層，過濾和淨化進出 LLM 的數據。 | 使用可插拔的「掃描器 (Scanners)」管道來檢查和修改輸入/輸出內容（如匿名化個資）。 | 在應用程式程式碼中建立即時的、可客製化的執行時期安全防護。 |
-| **[ShieldGemma 2](https://deepmind.google/models/gemma/shieldgemma-2/)** | Google DeepMind | **專家級安全分類模型**<br>(Specialist Safety Model) | 判斷文字內容是否違反多項安全策略（如仇恨言論、騷擾等）。 | 一個經過微調的 LLM，對輸入文字進行深度語意理解並輸出安全標籤。 | 作為一個強大的分類器，對需要精準語意判斷的內容進行安全審核。 |
-| **[JailBreakV-28k](https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k)** | Hugging Face | **資料集 (Dataset)** | 提供大量用於測試和研究 LLM 越獄漏洞的「提示詞-圖片-模型-回應」數據。 | 一個包含 28,000+ 筆紀錄的資料庫，用於訓練和評估安全模型。 | 學術研究、訓練自訂的攻擊檢測模型、或評估模型的安全性。 |
-
-- **攻擊方 (矛)**：`garak` 和 `agentic_security` 是主動的攻擊工具，用來在部署前後找出系統的弱點。`garak` 更像一個全面、系統化的掃描器，而 `agentic_security` 則像一個靈活的模糊測試工具。
-- **防守方 (盾)**：`llm-guard` 和 `ShieldGemma` 是被動的防禦工具，用來在應用程式運行時即時阻擋攻擊和過濾內容。`llm-guard` 是一個高度客製化的「工具箱」，而 `ShieldGemma` 則是一個專注於語意理解的「專家」。
-- **綜合與特定框架工具**：`agentic-radar` 是一個結合了靜態分析（看藍圖）和動態分析（實地測試）的綜合性工具，特別適合審查使用特定代理框架的專案。
-
+---
 
 
 # 臺灣大型語言模型性能評測與在地化策略分析
