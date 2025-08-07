@@ -3,12 +3,15 @@ layout: default
 title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
 ---
 
-
 {% include header.html %}
 
 ---
 
 {% include ai-share.html %}
+
+---
+
+{% include price.html %}
 
 ---
 
@@ -157,11 +160,6 @@ Artificial Analysis 測試顯示，gpt-oss 系列雖在純智慧水準上落後�
 </div>
 
 ---
-
-{% include price.html %}
-
----
-
 
 # 臺灣大型語言模型性能評測與在地化策略分析
 
