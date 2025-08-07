@@ -59,6 +59,8 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 
 #### **[OpenAI 的 gpt-oss 開源系列](https://openai.com/zh-Hant/index/introducing-gpt-oss/)**
 
+The gpt-oss models, including the 120b version rivaling o4-mini in reasoning benchmarks on a single 80GB GPU and the 20b version matching o3-mini with just 16GB memory, enable efficient deployment for edge computing and local inference applications.
+
 OpenAI 首次發布開源模型系列，打破了其一貫的閉源策略：[OpenAI重新開源！深夜連發兩個推理模型，o4-mini水平](https://www.jiqizhixin.com/articles/2025-08-06-2)
 
 | 模型 | 參數規模 | 核心特點 | 硬體需求 | 性能比較 | 技術挑戰 |
@@ -74,6 +76,8 @@ OpenAI 首次發布開源模型系列，打破了其一貫的閉源策略：[Ope
 #### **Google DeepMind 的 Genie 3 世界模型**
 
 [震撼，世界模型第一次超真實地模擬了真實世界：GoogleGenie 3昨晚搶了OpenAI風頭](https://www.jiqizhixin.com/articles/2025-08-06-5)
+
+Genie 3 is an advanced world model capable of building coherent, interactive worlds over extended periods, simulating physical properties, natural ecosystems, animations, novels, and diverse locations or historical settings through breakthroughs in controllable real-time interactions.
 
 Genie 3 代表了世界模型技術的重大突破，具備構建完整、連貫且可互動世界的能力：
 
@@ -92,6 +96,8 @@ Genie 3 代表了世界模型技術的重大突破，具備構建完整、連貫
 #### **Anthropic 的 Claude Opus 4.1**
 
 [阻擊OpenAI，Claude搶先數十分鐘發布Claude Opus 4.1](https://www.jiqizhixin.com/articles/2025-08-06-4)
+
+Claude Opus 4.1 offers hybrid reasoning modes for instant responses or visible processes, with fine-tuned thinking budgets for cost-efficiency, excelling in advanced programming on SWE-bench and long-term agent-based research across diverse data sources.
 
 Claude Opus 4.1 在推理能力和實用性方面取得顯著進展：
 
