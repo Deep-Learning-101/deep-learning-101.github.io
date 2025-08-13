@@ -26,7 +26,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 | [Google Cloud VM](https://cloud.google.com/compute/vm-instance-pricing?hl=zh-tw#sharedcore_machine_types) | 虛擬機器 | VM 執行個體定價頁面 |
 
 
-# Speech Processing (語音處理)
+# 語音處理 (Speech Processing)
+## Speech-Processing
 
 - 2025-05-14：[ten-turn-detection](https://deepwiki.com/TEN-framework/ten-turn-detection)；[ten-vad](https://deepwiki.com/TEN-framework/ten-vad)
 - 2025-01-19：[小米語音首席科學家Daniel Povey：語音辨識捲完了，下一個機會在哪裡？](https://www.jiqizhixin.com/articles/2025-01-19-4?)
@@ -40,6 +41,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 
 # 中文語音識別 (Chinese Speech Recognition)
+## Chinese-Speech-Recognition
 
 [https://www.twman.org/AI/ASR](https://www.twman.org/AI/ASR)
 
@@ -90,6 +92,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 <br><br>
 
 # 中文語者(聲紋)識別 (Chinese Speaker Recognition)
+## Chinese-Speaker-Recognition
 
 [https://www.twman.org/AI/ASR/SpeakerRecognition](https://www.twman.org/AI/ASR/SpeakerRecognition)
 
@@ -129,6 +132,7 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 <br><br>
 
 # 中文語音增強(去噪) (Chinese Speech Enhancement)
+## Chinese-Speech-Enhancement
 
 [https://www.twman.org/AI/ASR/SpeechEnhancement](https://www.twman.org/AI/ASR/SpeechEnhancement)
 
@@ -154,6 +158,7 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 <br><br>
 
 # 中文語者分離(分割) (Chinese Speaker Separation)
+## Chinese-Speaker-Separation
 
 [https://www.twman.org/AI/ASR/SpeechSeparation](https://www.twman.org/AI/ASR/SpeechSeparation)
 
