@@ -192,8 +192,8 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 <br><br>
 
 # 中文語音合成 (Chinese Speech Synthesis)
-
-### **相關連結**
+## Chinese-Speech-Synthesis
+### **external links**
 
 * [OpenAI-Edge-TTS](https://github.com/travisvn/openai-edge-tts)：[開源的免費文字轉語音API接口，託管在GitHub上](https://mp.weixin.qq.com/s/lt9Vr0hR7wwyhqTh68gTkA)
 * [fish-speech](https://huggingface.co/fishaudio/fish-speech-1.5)
