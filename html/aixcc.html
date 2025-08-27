@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIxCC 參賽隊伍關鍵技術與作法分析</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystem-Font, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.75rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .top-info-box table {
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+            width: auto;
+        }
+        .top-info-box th, .top-info-box td {
+            border: 1px solid #ccc;
+            padding: 0.5rem 1rem;
+            text-align: center;
+        }
+        .top-info-box th {
+            background-color: #e0e0e0;
+        }
+        .bento-box {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+        .bento-title-large {
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p { margin-bottom: 1rem; }
+        .bento-text p:last-child { margin-bottom: 0; }
+        .bento-list {
+            list-style-type: none;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3;
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem;
+            top: 0.5em;
+        }
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0e7ff; /* indigo-100 */
+            color: #3730a3; /* indigo-800 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div id="app" class="content-wrapper">
+
+        <div class="top-info-box">
+            <h1 class="top-info-title">Deep Learning 101</h1>
+            <div class="top-info-text">
+                <p>
+                  <strong>Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</strong>
+                </p>
+                <p>
+                AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+                衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+                由 <a href="https://twman.org/" target="_blank" rel="noopener noreferrer">TonTon Huang Ph.D.</a> 發起，及其當時任職公司(台灣雪豹科技)無償贊助場地及茶水點心。<br>
+                Deep Learning 101 創立初衷，是為了普及與分享深度學習及AI領域的尖端知識，深信AI的價值在於解決真實世界的商業問題。<br>
+                </p>
+                <p>
+                    <a href="https://www.youtube.com/@TaiwanDeepLearningMeetup" target="_blank" rel="noopener noreferrer">去 YouTube 訂閱</a> |
+                    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank" rel="noopener noreferrer">Facebook</a> |
+                    <a href="https://deep-learning-101.github.io/" target="_blank" rel="noopener noreferrer">回 GitHub Pages</a> |
+                    <a href="https://github.com/Deep-Learning-101" target="_blank" rel="noopener noreferrer">到 GitHub 點星</a> |
+                    <a href="http://DeepLearning101.TWMAN.ORG" target="_blank" rel="noopener noreferrer">網站</a> |
+                    <a href="https://huggingface.co/DeepLearning101" target="_blank" rel="noopener noreferrer">到 Hugging Face Space 按愛心</a>
+                </p>
+                 <table>
+                  <tr>
+                    <th align="center"><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型</a></th>
+                    <th align="center"><a href="https://deep-learning-101.github.io/Speech-Processing">語音處理</a></th>
+                    <th align="center"><a href="https://deep-learning-101.github.io/Natural-Language-Processing">自然語言處理</a></th>
+                    <th align="center"><a href="https://deep-learning-101.github.io/Computer-Vision">電腦視覺</a></th>
+                  </tr>
+                  <tr>
+                    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm">Large Language Model</a></td>
+                    <td><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper">Speech Processing</a></td>
+                    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper">Natural Language Processing, NLP</a></td>
+                    <td><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper">Computer Vision</a></td>
+                  </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400">
+                AIxCC 參賽隊伍關鍵技術與作法分析
+            </h1>
+        </header>
+
+        <div class="grid-container">
+            <div class="bento-box col-span-lg-3" style="display: flex; flex-direction: column; align-items: center;">
+                <div style="text-align: center;">
+                    🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵<br>
+                    <audio controls style="width: 400px; height: 30px; margin-top: 20px;"><source src="../notebooklm-mp3/AIxCC.mp3" type="audio/mpeg"></audio>
+                </div>
+            <!-- 包住兩個影片的 flex 容器 -->
+             <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                <!-- 第 1 個影片 -->
+                 <iframe width="400" height="225" src="https://www.youtube.com/embed/46zw8aBKKGc" frameborder="0" allow="accelerometer; autoplay; lipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+    </div>
+
+        <div class="bento-box motion-div">
+            <i class="fas fa-trophy icon-large" style="color: #FFD700;"></i>
+            <h2 class="bento-title-large">冠軍：亞特蘭大團隊 (Team-Atlanta/aixcc-afc-atlantis)</h2>
+            <div class="bento-text">
+                <p><strong>系統名稱：</strong> Team-Atlanta/aixcc-afc-atlantis，被稱為「PCB 智慧化代碼漏洞檢測平台」[2-5]。</p>
+                
+                <p class="bento-subtitle">關鍵技術</p>
+                <ul class="bento-list">
+                    <li><strong>強化學習 (Reinforcement Learning, RL)：</strong> 核心採用 GRPO (Gradient-based Reinforcement Policy Optimization) 訓練框架，用於訓練 AI 代理以自主發現漏洞 [2, 4, 6-8]。</li>
+                    <li><strong>課程學習 (Curriculum Learning)：</strong> 實作複雜的課程學習訓練器，能根據學習進度自動調整訓練難度和資料集，提高學習效率和泛化能力 [2, 4, 6-8]。</li>
+                    <li><strong>模糊測試 (Fuzzing)：</strong> 結合模糊測試技術，能生成結構化測試輸入並監控程式行為，針對網路協議、檔案格式和 API 介面進行優化 [6, 7, 9, 10]。</li>
+                    <li><strong>神經網路處理：</strong> 整合 Hugging Face Transformers 和 VLLM 加速引擎，優化長序列提示處理 [3, 7, 9-12]。</li>
+                </ul>
+
+                <p class="bento-subtitle">作法分析</p>
+                <ul class="bento-list">
+                    <li><strong>融合傳統與 AI：</strong> 冠軍團隊的金泰洙教授明確指出，其系統將「傳統威脅搜尋工具」與人工智慧結合，而非完全依賴 AI。他們認為過去十年使用的傳統軟體分析工具仍具巨大價值，AI 可以利用這些工具來導航原始碼 [13-17]。</li>
+                    <li><strong>整合開源工具：</strong> 深度整合多個成熟的開源工具作為其訓練目標和分析組件，包括 Mongoose (網路庫)、Wireshark (網路協議分析)、GNU Binutils (含 GDB 調試器)、Mosquitto (MQTT 代理) 和 SleuthKit (數位鑑識工具) [2, 4, 18-21]。AI 代理透過 Python 或 Lua 腳本與這些工具互動，執行複雜的分析任務 [22-24]。</li>
+                    <li><strong>模組化微服務架構：</strong> 系統分為訓練層、環境層、政策層和資料層，各層協同運作以實現強化學習和自動化漏洞發現 [5, 19, 25, 26]。</li>
+                    <li><strong>多輪對話訓練模式：</strong> GRPO 演算法採用多輪對話模式，AI 代理根據觀察生成提示、執行環境行動並收集回報，不斷優化其漏洞發現策略 [6-8, 27]。</li>
+                </ul>
+
+                <p class="bento-subtitle">成效與限制</p>
+                <ul class="bento-list">
+                    <li><strong>競賽表現：</strong> 在漏洞發現、驗證、產生修補程式及漏洞與修補程式匹配方面表現最佳，獲得最高的提交準確率和高品質提交率 [16, 28]。</li>
+                    <li><strong>效率：</strong> 能夠以傳統方法一小部分成本創建有價值的漏洞報告和補丁，平均每項競賽任務成本約 152 美元 [14, 15, 29, 30]。</li>
+                    <li><strong>挑戰：</strong> 專案中整合的開源工具（如 Mosquitto 和 GDB）存在已知安全漏洞和性能限制，AI 模型訓練需大量 GPU 資源和 API 認證 [9, 11, 12, 31-36]。</li>
+                </ul>
+            </div>
+            <div class="mt-4">
+                <span class="tag">Reinforcement Learning</span> <span class="tag">Curriculum Learning</span> <span class="tag">Fuzzing</span> <span class="tag">GRPO</span> <span class="tag">Hugging Face</span> <span class="tag">VLLM</span> <span class="tag">Microservices</span>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <i class="fas fa-medal icon-large" style="color: #C0C0C0;"></i>
+            <h2 class="bento-title-large">亞軍：Trail of Bits (AFC-Buttercup)</h2>
+            <div class="bento-text">
+                 <p><strong>系統名稱：</strong> AFC-Buttercup，是一個端到端的 AI 驅動安全工具鏈 [37-41]。</p>
+                <p class="bento-subtitle">關鍵技術</p>
+                <ul class="bento-list">
+                    <li><strong>多代理 AI 架構：</strong> 包含 RootCauseAgent, ContextRetrieverAgent, SWEAgent, QEAgent 和 ReflectionAgent 等專門 AI 代理 [37, 38, 40, 42-51]。</li>
+                    <li><strong>大型語言模型 (LLM) 整合：</strong> 支援 GPT-4、Claude-3.5-Sonnet 等多個 LLM [38, 42, 45, 48]。使用 LiteLLM 作為代理層整合多種 LLM API [52-54]。</li>
+                    <li><strong>LangGraph 狀態機架構：</strong> 用於實現複雜的多代理協作流程，透過定義代理間的狀態轉換和互動來完成漏洞修補 [43, 44, 46, 49, 51, 52, 55, 56]。</li>
+                    <li><strong>模糊測試與程式分析：</strong> 整合模糊測試基礎設施和程式結構分析，將程式索引到 JanusGraph 圖資料庫中 [42, 45, 54, 57-62]。</li>
+                </ul>
+
+                <p class="bento-subtitle">作法分析</p>
+                <ul class="bento-list">
+                    <li><strong>端到端自動化：</strong> 從漏洞發現、智能生成補丁到自動驗證的完整流程 [37, 38, 40, 45, 48]。</li>
+                    <li><strong>智能反思機制：</strong> ReflectionAgent 能從失敗中學習並調整策略，分析補丁失敗原因、檢測循環並指導下一步行動 [38, 42-45, 47, 48, 51, 55, 63]。</li>
+                    <li><strong>微服務與消息隊列：</strong> 採用微服務架構，透過 Redis 消息隊列實現服務間的鬆耦合通信，確保高可擴展性 [42, 44, 54, 56-62, 64]。</li>
+                    <li><strong>狀態管理：</strong> 使用 PatcherAgentState 追蹤整個修補過程中的上下文、相關代碼片段、補丁嘗試歷史和執行信息 [51, 52, 56, 63, 65]。</li>
+                </ul>
+                
+                <p class="bento-subtitle">成效與限制</p>
+                <ul class="bento-list">
+                    <li><strong>競賽表現：</strong> 獲得亞軍，系統具備「競賽級性能」[16, 28, 38, 42, 48]。</li>
+                    <li><strong>效率：</strong> 能夠快速生成補丁和報告 [14, 15, 29, 30]。</li>
+                    <li><strong>限制：</strong> ReflectionAgent 的循環檢測邏輯可能過於簡單，依賴硬編碼閾值，狀態記憶有限 [66-69]。高度依賴外部 LLM 服務，受 API 限制、成本和離線能力影響 [66-69]。CodeQuery 系統僅支援 C/C++ 和 Java，語言支持有限 [66-69]。</li>
+                </ul>
+            </div>
+            <div class="mt-4">
+                <span class="tag">Multi-agent</span> <span class="tag">LLM</span> <span class="tag">GPT-4</span> <span class="tag">LangGraph</span> <span class="tag">Fuzzing</span> <span class="tag">JanusGraph</span> <span class="tag">Redis</span>
+            </div>
+        </div>
+        
+        <div class="bento-box motion-div">
+            <i class="fas fa-award icon-large" style="color: #CD7F32;"></i>
+            <h2 class="bento-title-large">季軍：Theori (Robo Duck CRS)</h2>
+            <div class="bento-text">
+                <p><strong>系統名稱：</strong> Robo Duck CRS (Cyber Reasoning System)，用於自動分析、利用和修補軟體中的安全漏洞 [70-73]。</p>
+                
+                <p class="bento-subtitle">關鍵技術</p>
+                <ul class="bento-list">
+                    <li><strong>多代理協作架構：</strong> 包含 15+ 個專門化 AI 代理，如漏洞分析、程式碼修補、調試分析等代理 [70-72, 74, 75]。</li>
+                    <li><strong>LLM 整合與靈活配置：</strong> 支援多種語言模型配置，可根據成本和性能需求靈活調整，包括 Anthropic 和 OpenAI 模型 [70, 75-82]。</li>
+                    <li><strong>Python FastAPI 與 Rust Core：</strong> 使用 Python FastAPI 作為核心 REST API 服務器，並整合 Rust Core 模組處理高效能任務 [70, 75, 77, 83-85]。</li>
+                    <li><strong>外部工具整合：</strong> 整合 Infer 靜態分析、LLVM 編譯器工具鏈和 Kaitai 解析器 [70, 77, 79, 83, 84, 86]。</li>
+                </ul>
+
+                <p class="bento-subtitle">作法分析</p>
+                <ul class="bento-list">
+                    <li><strong>任務驅動異步處理：</strong> 核心是基於多代理協作的工作流編排系統，採用任務驅動的異步處理架構 [87-89]。</li>
+                    <li><strong>端到端自動化：</strong> 實現漏洞發現、漏洞利用 (生成 PoV) 和漏洞修補的自動化全流程 [70-73, 82]。</li>
+                    <li><strong>多模式分析：</strong> 支援完整模式 (分析整個程式碼庫) 和增量模式 (僅分析程式碼變更) [70-72, 90, 91]。</li>
+                    <li><strong>容器化微服務架構：</strong> 透過 Docker 容器化部署，支援本地開發和 Azure 雲端擴展 [70, 76, 84, 85]。</li>
+                </ul>
+
+                <p class="bento-subtitle">成效與限制</p>
+                <ul class="bento-list">
+                    <li><strong>競賽表現：</strong> 獲得季軍 [16, 28]。系統能夠以傳統方法一小部分成本創建有價值的漏洞報告和補丁 [14, 15, 29, 30]。</li>
+                    <li><strong>高成本運行：</strong> 系統專為大預算競賽環境設計，運行成本極高（每小時可能超過 1,000 美元的 API 費用）[79, 92-95]。</li>
+                    <li><strong>存檔狀態：</strong> 儲存庫僅用於存檔，不提供持續支持或更新 [79, 92-95]。</li>
+                    <li><strong>已知限制：</strong> 存在多個 TODO 和未完成功能，如分析模組限制、項目格式支持不完整、漏洞分析器失敗等問題 [36, 92, 93]。</li>
+                </ul>
+            </div>
+            <div class="mt-4">
+                <span class="tag">Multi-agent</span> <span class="tag">LLM</span> <span class="tag">FastAPI</span> <span class="tag">Rust</span> <span class="tag">LLVM</span> <span class="tag">Docker</span> <span class="tag">Azure</span>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <i class="fas fa-users icon-large"></i>
+            <h2 class="bento-title-large">其他參賽隊伍</h2>
+            <div class="bento-text">
+                <ul class="bento-list">
+                    <li><strong>Shellphish：</strong> 在 2016 年的 CGC 比賽中獲得第三名 (Mechanical Phish)，參與了 AIxCC 的小型企業賽道 [96, 97]。CGC 啟發了模糊測試等自動化測試技術的興起 [98, 99]。</li>
+                    <li><strong>Zellic：</strong> 由前全球頂級 CTF 戰隊 Perfect Blue 成員創辦，專注於漏洞發現 [97]。</li>
+                    <li><strong>LACROSSE (Smart Information Flow Technologies, SIFT)：</strong> 在人工智慧、軟體工程、控制理論、網路安全等領域有專業知識 [100]。</li>
+                    <li><strong>42-b3yond-6ug (Net Shield LLC)：</strong> 公開訊息顯示有多個美國高校研究人員參與 [100]。</li>
+                    <li><strong>VERSATIL (GrammaTech, Inc.)：</strong> 康乃爾大學孵化的公司，其產品 Proteus 聲稱能自動發現並修復漏洞，深耕此領域三十餘年 [100]。</li>
+                    <li><strong>all_you_need_is_a_fuzzing_brain：</strong> 隊伍名稱暗示其可能專注於模糊測試技術 [28]。</li>
+                </ul>
+                <p class="mt-4 italic text-slate-600">
+                    這些小型企業賽道的隊伍也為競賽注入了創新活力，雖然具體技術細節在資料中未詳述，但其參與凸顯了 DARPA 鼓勵多樣化技術方案的策略 [96, 101, 102]。
+                </p>
+            </div>
+            <div class="mt-4">
+                <span class="tag">Small Business</span> <span class="tag">Fuzzing</span> <span class="tag">CTF</span> <span class="tag">Innovation</span> <span class="tag">DARPA</span>
+            </div>
+        </div>
+
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        const headerElements = [
+            document.querySelector('header h1.chinese-main-title')
+        ];
+
+        let headerDelay = 0.2;
+        headerElements.forEach(el => {
+            if (el) {
+                animate(el, { opacity: [0, 1], y: [-20, 0] }, { duration: 0.6, ease: 'easeOut', delay: headerDelay });
+                headerDelay += 0.15;
+            }
+        });
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div) => {
+            inView(div, () => {
+                animate(div, 
+                    { opacity: [0, 1], y: [30, 0], scale: [0.98, 1] },
+                    { duration: 0.65, delay: 0.1, ease: "easeOut" }
+                );
+            }, { once: true, amount: 0.1 });
+        });
+    });
+    </script>
+</body>
+</html>
