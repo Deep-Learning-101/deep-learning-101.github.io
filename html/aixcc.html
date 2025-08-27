@@ -238,6 +238,27 @@
                     <li><strong>效率：</strong> 能夠以傳統方法一小部分成本創建有價值的漏洞報告和補丁，平均每項競賽任務成本約 152 美元 [14, 15, 29, 30]。</li>
                     <li><strong>挑戰：</strong> 專案中整合的開源工具（如 Mosquitto 和 GDB）存在已知安全漏洞和性能限制，AI 模型訓練需大量 GPU 資源和 API 認證 [9, 11, 12, 31-36]。</li>
                 </ul>
+
+                <p class="bento-subtitle">Introduction</p>
+                <ul class="bento-list">
+                    <li>分散式自動化漏洞發現系統，解決大規模程式碼安全分析的部署與管理問題。</li>
+                    <li>整合傳統工具 (如 GDB、Wireshark、Mosquitto MQTT、SleuthKit) 和 LLM，平均 45 分鐘提交補丁，成本約 152 美元/任務。</li>
+                    <li>部署複雜性高，但支援動態資源調整；在尋找和驗證漏洞、生成修補程式以最高的提交準確率和高品質提交率獲得冠軍。</li>
+                </ul>
+
+                <p class="bento-subtitle">Solution</p>
+                <ul class="bento-list">
+                    <li>模糊測試 (Fuzzing) 技術、靜態分析與動態模糊測試結合、大型語言模型 輔助篩選與深度分析。</li>
+                    <li>具備模組化架構，能支援用戶程式、Linux 內核及 Java 專案的漏洞分析，將傳統威脅搜尋工具與 LLM 結合運用，實現了高效且穩定的自動化漏洞修復。</li>
+                    <li>LLM 分三層：增強傳統工具、提供建議提示 和 全自主導航。</li>
+                </ul>
+
+                <p class="bento-subtitle">Value</p>
+                <ul class="bento-list">
+                    <li>透過其分層架構模式與事件驅動設計，以及插件系統、工廠模式、觀察者模式等多種設計模式，確保系統的模組化、可擴展性及可維護性，間接提升了系統的魯棒性。</li>
+                    <li>採用的多階段安全分析工作流程，結合了原始碼靜態分析、動態模糊測試及行為模式識別，能夠有效發現並驗證漏洞，並生成針對性測試案例。這使其具備應用於真實關鍵基礎設施安全分析的潛力。</li>
+                </ul>
+
             </div>
             <div class="mt-4">
                 <span class="tag">Reinforcement Learning</span> <span class="tag">Curriculum Learning</span> <span class="tag">Fuzzing</span> <span class="tag">GRPO</span> <span class="tag">Hugging Face</span> <span class="tag">VLLM</span> <span class="tag">Microservices</span>
@@ -271,6 +292,27 @@
                     <li><strong>效率：</strong> 能夠快速生成補丁和報告 [14, 15, 29, 30]。</li>
                     <li><strong>限制：</strong> ReflectionAgent 的循環檢測邏輯可能過於簡單，依賴硬編碼閾值，狀態記憶有限 [66-69]。高度依賴外部 LLM 服務，受 API 限制、成本和離線能力影響 [66-69]。CodeQuery 系統僅支援 C/C++ 和 Java，語言支持有限 [66-69]。</li>
                 </ul>
+
+                <p class="bento-subtitle">Introduction</p>
+                <ul class="bento-list">
+                    <li>端到端的混合 AI 驅動自動化漏洞修補系統，結合傳統安全技術解決大規模漏洞發現和修補問題。</li>
+                    <li>整合模糊測試、靜態分析和 LiteLLM 網關，支持多 LLM。</li>
+                    <li>容器化微服務架構。</li>
+                </ul>
+
+                <p class="bento-subtitle">Solution</p>
+                <ul class="bento-list">
+                    <li>採用多代理 AI 架構 (包含根因分析、軟體工程和反思代理等 7 個代理)，透過 LangGraph 狀態機協同工作，並整合基於 OSS-Fuzz 的模糊測試、tree-sitter 靜態分析工具以及 SigNoz 遙測監控。</li>
+                    <li>此系統獨特的智能反思機制使其能從失敗中學習並調整策略，提升修補成功率。</li>
+                </ul>
+
+                <p class="bento-subtitle">Value</p>
+                <ul class="bento-list">
+                    <li>展示 AI 從錯誤學習的潛力，提升整體修補準確率。</li>
+                    <li>系統已開源，適用於企業級漏洞管理。</li>
+                    <li>團隊強調計分機制的遊戲化元素，未來可擴展到更廣泛的軟體安全自動化，如支援多語言和分佈式部署。</li>
+                </ul>
+
             </div>
             <div class="mt-4">
                 <span class="tag">Multi-agent</span> <span class="tag">LLM</span> <span class="tag">GPT-4</span> <span class="tag">LangGraph</span> <span class="tag">Fuzzing</span> <span class="tag">JanusGraph</span> <span class="tag">Redis</span>
@@ -306,6 +348,28 @@
                     <li><strong>存檔狀態：</strong> 儲存庫僅用於存檔，不提供持續支持或更新 [79, 92-95]。</li>
                     <li><strong>已知限制：</strong> 存在多個 TODO 和未完成功能，如分析模組限制、項目格式支持不完整、漏洞分析器失敗等問題 [36, 92, 93]。</li>
                 </ul>
+
+
+                <p class="bento-subtitle">Introduction</p>
+                <ul class="bento-list">
+                    <li>多代理協作架構，包含 15+ 專業化 AI 代理 (如漏洞分析、修補和調試代理)；如「自動化的網絡安全專家團隊」般協同工作，各司其職。</li>
+                    <li>整合 Infer 靜態分析、模糊測試和 LLVM 工具鏈，支持 Anthropic 和 OpenAI LLM，但運行成本較高。</li>
+                </ul>
+
+                <p class="bento-subtitle">Solution</p>
+                <ul class="bento-list">
+                    <li>自動分析、利用和修補軟體中的安全漏洞。</li>
+                    <li>運行成本較高 (每小時可能超過 $1,000 美元 API 費用)，官方不提供持續支援或更新，但作為開源系統，可透過社區貢獻提供持續更新和支援。</li>
+                    <li>其核心優勢在於多代理協作架構，強調靜態分析導向方法，能生成修補而不需運行驗證，提升效率。</li>
+                </ul>
+
+                <p class="bento-subtitle">Value</p>
+                <ul class="bento-list">
+                    <li>證明 LLM 能理解程式碼語義，生成正確修補而不需運行驗證。</li>
+                    <li>成本高，展示 AI 「自動化駭客」的潛力。</li>
+                    <li>公開代理人追蹤日誌有助研究，系統適用於高價值基礎設施的安全分析，並可擴展到企業級自動化安全測試。</li>
+                </ul>
+
             </div>
             <div class="mt-4">
                 <span class="tag">Multi-agent</span> <span class="tag">LLM</span> <span class="tag">FastAPI</span> <span class="tag">Rust</span> <span class="tag">LLVM</span> <span class="tag">Docker</span> <span class="tag">Azure</span>
