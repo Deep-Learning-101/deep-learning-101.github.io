@@ -12,6 +12,23 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
+## 目錄
+
+- [前言](#前言)
+- [台灣AI產業發展現況與企業成熟度分析](#台灣ai產業發展現況與企業成熟度分析)
+- [AI Agents 與 Agentic AI 概論：從基礎到實戰應用與安全挑戰](#ai-agents-與-agentic-ai-概論從基礎到實戰應用與安全挑戰)
+  - [從定義之爭到「特性程度」：吳恩達對「Agent」與「Agentic」的務實觀點](#從定義之爭到特性程度吳恩達對agent與agentic的務實觀點)
+  - [什麼是 AI 代理 (AI Agents)？它們與生成式 AI 有何不同？](#什麼是-ai-代理-ai-agents它們與生成式-ai-有何不同)
+  - [什麼是 代理式人工智慧 (Agentic AI)？它如何超越單一 AI Agents？](#什麼是-代理式人工智慧-agentic-ai它如何超越單一-ai-agents)
+  - [AI Agents 與 Agentic AI 的實際應用與工具生態](#ai-agents-與-agentic-ai-的實際應用與工具生態)
+- [開源與閉源產品比較：從 DeepResearch 到通用代理框架](#開源與閉源產品比較從-deepresearch-到通用代理框架)
+- [新穎的安全與威脅 (OWASP, Agentic Security Initiative, OWASP ASI)](#新穎的安全與威脅-owasp-agentic-security-initiative-owasp-asi)
+- [Agentic AI 的挑戰、限制與未來方向](#agentic-ai-的挑戰限制與未來方向)
+- [台灣AI發展策略與未來展望](#台灣ai發展策略與未來展望)
+- [Model Context Protocol (MCP) 核心概念解析](#model-context-protocol-mcp-核心概念解析)
+
+
+
 # [避開 AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 開發陷阱](https://deep-learning-101.github.io/)
 _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過的坑、常見問題、挑戰與解決方案_
 
@@ -98,7 +115,7 @@ AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許�
 
 ---
 
-## **AI Agents** 與 **Agentic AI** 概論：從基礎到實戰應用與安全挑戰 (含 MCP)
+## **AI Agents** 與 **Agentic AI** 概論：從基礎到實戰應用與安全挑戰
 
 ### **從定義之爭到「特性程度」：吳恩達對「Agent」與「Agentic」的務實觀點**
 
@@ -500,6 +517,13 @@ Agentic AI 代表了 AI 發展的一個重要方向，它將單一 AI Agents 的
 
 ## Model Context Protocol (MCP) 核心概念解析
 
+**白話快速說**：
+- 傳統 API（比如 RESTful API）是程式間的直接連接規則，但 MCP 更像是 AI 專用的「中間人」，專門解決 AI 整合多種資源的麻煩。
+    - 用傳統 API，你得寫兩個程式連 SQLite 和 MySQL；各自的端點設計都不一樣。
+- MCP：像 AI 的「個人助理」，幫單一 AI 連資料庫或工具（model-to-context）。重點在精準操作，比如 AI 用 MCP 讀 SQLite。MCP 是單一代理的「工具箱」（連外部資源）
+    - 用 MCP，MCP Client (AI Model) 只發標準請求，一個 Server 搞定。
+- A2A：是另一個開放協議，專注在 AI 代理（agents）之間的溝通，像「團隊會議室」，讓多個 AI 代理聊天、分享結果（agent-to-agent）。重點在協作，比如第一個代理用 MCP 抓完資料，透過 A2A 傳給第二個代理，讓它用另一個 MCP 寫到 MySQL。A2A 是多代理的「通訊橋樑」（代理間傳資料、委派任務）。
+
 Model Context Protocol (MCP) 是一種開放協議，旨在讓 AI 模型能更輕鬆、標準化地連接並使用外部數據和工具。您可以將它想像成 **AI 世界的「USB」**，提供一個統一的接口，讓不同的數據源、應用程式或工具都能無縫對接，無需為每個組合單獨開發整合方案。MCP 由 Anthropic 於 2024 年 11 月開源。
 
 **核心目標：** 讓 AI 獲取更豐富的上下文資訊，提升理解能力，使回應更準確、更相關，並能執行更複雜的任務。
@@ -507,7 +531,7 @@ Model Context Protocol (MCP) 是一種開放協議，旨在讓 AI 模型能更�
 ### MCP 的變革與挑戰：吳恩達的觀點
 對於近期備受關注的 MCP（Model Context Protocol，模型上下文協議），吳恩達給予了積極評價，認為它填補了市場的明顯空白，旨在實現 N 個模型/智能體與 M 個數據源集成時，付出 N+M 而非 N\*M 的努力。OpenAI 的採用也證明了其重要性，DeepLearning.AI 也與 Anthropic 合作推出了相關課程。吳恩達指出：「我們花費了大量時間在『管道』上，也就是數據集成，以便將正確的上下文信息提供給 LLM。」MCP 是一個嘗試標準化接口的「奇妙方式」。
 
-但他同時坦言，MCP 及其服務目前尚处于早期阶段。「很多網上的 MCP 服務並不可用，認證系統也有些笨拙。」協議本身也需要進化，例如，當 LangGraph 這樣的工具擁有大量 API 調用時，簡單的列表式資源呈現難以滿足需求，未來可能需要層級化的發現機制。
+但他同時坦言，MCP 及其服務目前尚處於早期。「**很多網上的 MCP 服務並不可用，認證系統也有些笨拙。**」協議本身也需要進化，例如，當 LangGraph 這樣的工具擁有大量 API 調用時，簡單的列表式資源呈現難以滿足需求，未來可能需要層級化的發現機制。
 
 ### MCP 的關鍵重點
 
@@ -551,9 +575,9 @@ MCP 採用客戶端-伺服器 (Client-Server) 架構：
 3.  **安全隔離：** Server 運行在受信任環境，作為 AI 與敏感數據/系統之間的安全屏障。
 4.  **標準化溝通：** 統一協議確保不同 Client 能與各種 Server 無縫對接。
 
-### MCP 與傳統 API 的差異
+### MCP 與傳統 API 的差異 (如果會寫API就會很有感 !)
 
-MCP **並非要取代 API**，而是作為 AI 模型與多個外部系統（這些系統可能本身就提供 API）之間的**中介層或協調層**。
+MCP **並非要取代 API**，而是作為 AI 模型與多個外部系統（這些系統可能本身就提供 API）之間的**中介層或協調層**。它不像傳統 API 那樣是**點對點**的直接接口，而是提供一個標準化協議，讓 AI 能統一存取多種資源，減少整合努力（N 個 AI + M 個資源 = N+M 次努力，而非 N*M）。這特別適合 AI 場景，因為 MCP 支持動態通知（如數據變更時主動推送給 AI）和能力發現（AI 先查詢 Server 能做什麼），而傳統 API 通常是靜態的請求-回應模式。
 
 | 特性             | Model Context Protocol (MCP)                       | 傳統 API (如 RESTful API)                      |
 | :--------------- | :------------------------------------------------- | :--------------------------------------------- |
@@ -565,6 +589,178 @@ MCP **並非要取代 API**，而是作為 AI 模型與多個外部系統（這�
 | **動態性**       | 支持 Server 主動向 Client 推送數據變更通知         | 多為 Client 主動請求-回應模式，即時同步較複雜    |
 | **變更適應性**   | 外部 API 變更時，主要修改 MCP Server，Client 端影響小 | API 變更可能需要修改所有調用該 API 的 Client 端 |
 | **生態與工具**   | 逐漸形成 (如 Anthropic, Spring AI 支持)，強調 AI 易用性 | 成熟，但需自行整合不同 API 的客戶端庫            |
+
+#### 操作 SQL 的實際作法比較
+
+用操作 SQL 資料庫（SQLite 和 MySQL）的例子來示範。MCP 作為 AI 導向的中介層，能統一處理多種後端資源，讓 AI Client 只需一套標準協議；傳統 API 則需為每個後端設計特定端點和客戶端代碼。
+
+傳統 API 通常是點對點：為每個資料庫寫專屬 API 伺服器和客戶端。SQLite 和 MySQL 需要分開處理，因為它們的驅動和連接不同。如果系統本來沒有 API，你得從頭建一個（e.g., 用 Flask 包裝）。
+
+- 步驟：
+    - 建置 API 伺服器：為每個資料庫寫一個 RESTful API。
+    - 客戶端呼叫：AI 需用 HTTP 請求特定端點。
+    - 如果沒有 API：你必須手動包裝系統成 API（e.g., 寫腳本連資料庫並暴露 HTTP 端點），這增加開發成本。
+- 缺點：
+    - 每個資料庫需獨立 API 和端口，AI 需記住多個端點/格式。
+    - 如果系統無 API（如舊資料庫），你得全寫（連接邏輯、錯誤處理、安全）。
+    - 擴展時，每加一個後端（如 PostgreSQL），就多一個 API 伺服器。
+
+**範例代碼（用 Flask 建兩個 API 伺服器）：**
+
+```
+# SQLite API 伺服器 (sqlite_api.py)
+from flask import Flask, request, jsonify
+import sqlite3
+
+app = Flask(__name__)
+
+@app.route('/query', methods=['POST'])
+def query_sqlite():
+    sql = request.json.get('sql')
+    conn = sqlite3.connect('example.db')  # SQLite 連接
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    conn.close()
+    return jsonify(result)
+
+if __name__ == '__main__':
+    app.run(port=5001)  # 跑在端口 5001
+```
+```
+# MySQL API 伺服器 (mysql_api.py) - 需要 pip install mysql-connector-python
+from flask import Flask, request, jsonify
+import mysql.connector
+
+app = Flask(__name__)
+
+@app.route('/query', methods=['POST'])
+def query_mysql():
+    sql = request.json.get('sql')
+    conn = mysql.connector.connect(user='root', password='pass', host='localhost', database='example')  # MySQL 連接
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    result = cursor.fetchall()
+    conn.close()
+    return jsonify(result)
+
+if __name__ == '__main__':
+    app.run(port=5002)  # 跑在端口 5002
+```
+
+**AI Client 呼叫（e.g., 用 requests）：**
+```
+import requests
+
+# 查 SQLite
+response = requests.post('http://localhost:5001/query', json={'sql': 'SELECT * FROM users WHERE id=1'})
+print(response.json())
+
+# 查 MySQL - 需換端點
+response = requests.post('http://localhost:5002/query', json={'sql': 'SELECT * FROM users WHERE id=1'})
+print(response.json())
+```
+
+MCP 用單一 Server 統一包裝多種後端，AI Client 只發標準 JSON-RPC 請求（無需換端點）。這減少碎片化，讓 AI 更容易整合。如果系統無 API，MCP Server 能直接包裝它（e.g., 用 driver 連資料庫），成為「萬能中介」。
+
+- 步驟：
+    - 建置單一 MCP Server：註冊方法處理不同資料庫（用連線字串區分）。
+    - 客戶端呼叫：AI 用統一協議發請求。
+    - 如果沒有 API：MCP Server 內部用 driver 或腳本直接操作系統，暴露成標準方法。
+
+範例代碼（單一 MCP Server，用簡化 JSON-RPC - 需要 pip install json-rpc 和相關 DB 庫）：
+```
+# mcp_server.py (單一 Server 處理 SQLite 和 MySQL)
+from jsonrpcserver import method, serve
+import sqlite3
+import mysql.connector
+
+@method
+def db_query(context, conn_str, sql):  # 統一方法，用 conn_str 區分 DB
+    if conn_str.startswith('sqlite:'):
+        conn = sqlite3.connect(conn_str.split('://')[1])
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        conn.close()
+    elif conn_str.startswith('mysql:'):
+        parts = conn_str.split('://')[1].split('@')
+        user_pass, host_db = parts[0].split(':'), parts[1].split('/')
+        conn = mysql.connector.connect(user=user_pass[0], password=user_pass[1], host=host_db[0], database=host_db[1])
+        cursor = conn.cursor()
+        cursor.execute(sql)
+        result = cursor.fetchall()
+        conn.close()
+    else:
+        return {"error": "Unsupported DB"}
+    return result
+
+if __name__ == "__main__":
+    serve(db_query, "0.0.0.0", 5000)  # 單一端口 5000
+
+```
+AI Client 呼叫（用 jsonrpcclient）：
+```
+from jsonrpcclient import request, parse, Ok
+
+# 查 SQLite - 統一端點和格式
+response = request("http://localhost:5000", "db_query", conn_str="sqlite:///example.db", sql="SELECT * FROM users WHERE id=1")
+print(parse(response))  # 輸出: Ok([...])
+
+# 查 MySQL - 同端點，只換 conn_str
+response = request("http://localhost:5000", "db_query", conn_str="mysql://root:pass@localhost/example", sql="SELECT * FROM users WHERE id=1")
+print(parse(response))  # 輸出: Ok([...])
+
+```
+- 優點：
+    - 單一 Server/端點處理多 DB，AI 只學一套協議。
+    - 如果無 API，Server 內部包裝（e.g., 直接用 driver 連舊系統），AI 無感。
+    - 擴展易：加 PostgreSQL 只改 Server 方法，不動 Client。
+
+**如果本來系統沒有 API 要怎麼辦？**
+傳統 API：需從零建（寫伺服器暴露端點），成本高、碎片化。
+MCP：Server 直接「包裝」系統（e.g., 用 driver/腳本連資料庫或呼叫命令列），轉成標準方法。文章中 MCP 被比喻為「AI 的 USB」，正因它能橋接無 API 系統，讓 AI 統一存取。
+
+
+### 額外加碼：MCP (Model Context Protocol) v.s. A2A (Agent2Agent)
+
+A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通性（interoperability），允許它們跨平台、跨模型或跨供應商進行通訊、分享資料或委派任務，而不需要暴露內部細節（如工具或狀態）。它基於 JSON-RPC 2.0，強調安全性和靈活性，適合用在 Agentic AI 系統中，讓多個 agents 像「團隊成員」一樣合作。就像「流水線」：A2A 負責 agents 之間的「交棒」，而 MCP 負責每個 agent 與外部資源的「連接」。如果沒有 A2A，agents 可能需要自訂通訊邏輯，導致系統孤島（silos）；A2A 解決了這個問題，讓整合更簡單。
+
+- 第一個 agent：假設它負責資料提取，使用 MCP 連接到一個 SQLite 伺服器（MCP Server），執行查詢或操作（如 SELECT 資料）。MCP 在這裡扮演「中介層」，讓 agent 能標準化地存取 SQLite，而不需要 agent 自己處理底層連接細節。
+- 傳遞資料：agent 完成後，透過 A2A 協議將結果（例如提取的資料）傳送到第二個 agent。這裡 A2A 處理代理間的通訊，包括身份驗證、資料加密和能力發現（e.g., 第一個 agent 查詢第二個 agent 的「代理卡片」來確認它能處理什麼任務）。
+- 第二個 agent：接收資料後，進行匯整（aggregation），然後使用另一個 MCP 連接到 MySQL 伺服器，執行寫入操作（如 INSERT）。同樣，MCP 確保 agent 能安全存取 MySQL，而 A2A 則負責整個跨代理的協調。
+
+### 互補性
+
+- A2A 的焦點：代理間通訊（agent-to-agent），強調高層次協作，如任務委派、資料共享或同步。它不直接處理資料存取，而是讓 agents 能「對話」來完成複雜工作流。優點是可擴展到企業級，例如一個 agent 處理資料提取，另一個處理分析和儲存。
+- MCP 的焦點：模型與外部上下文的連接（model-to-context），專注於低層次操作，如讀寫資料庫或呼叫 API。它是單一 agent 的「工具箱」，但不處理代理間互動。
+- 結合使用：你的情境正是兩者的理想組合。A2A 可以整合 MCP，例如 Google 的 Agent Development Kit (ADK) 就支援將 MCP 伺服器嵌入 A2A 代理中，讓系統更高效。潛在挑戰是通訊延遲或安全（e.g., 資料傳輸需加密），但這能透過 A2A 的內建機制緩解。
+
+
+#### 實際範例與建議
+
+- 第一個 agent 使用 MCP Client 查 SQLite，得到資料。
+- 透過 A2A 發送 JSON-RPC 請求給第二個 agent（e.g., {"method": "aggregateData", "params": {data: [...]}}）。
+- 第二個 agent 接收後，用 MCP 寫入 MySQL。
+
+## MCP 的安全考量與最佳實踐
+
+雖然 MCP 提供標準化接口來簡化 AI 與資源的整合，但作為開放協議，如果實作不當，可能引入安全風險（如未授權存取或注入攻擊）。MCP 的設計強調私有部署和內建機制，但需結合 OWASP ASI 的威脅模型來強化。以下是關鍵風險與緩解策略：
+
+- **暴露風險**：若 Server 公開在網路上，未設認證，任何人可發請求。
+  - **緩解**：預設私有部署（本地或 VPC），使用防火牆限制 IP；強制 API 金鑰或 OAuth 驗證。
+
+- **注入與濫用攻擊**：惡意輸入導致 SQL Injection 或工具濫用（參考 OWASP ASI 的 T2: Tool Misuse）。
+  - **緩解**：實施輸入驗證、參數化查詢；使用沙箱隔離操作；啟用速率限制防 DoS。
+
+- **資料洩漏**：共享資源導致敏感資訊外洩。
+  - **緩解**：採用多租戶設計，每 Client 有獨立會話；加密傳輸（TLS）；定期審核日誌。
+
+- **與 OWASP ASI 連結**：MCP Server 易受記憶中毒（T1）或權限洩漏（T3）影響。建議遵循 Playbook 3（保護工具執行）：記錄所有互動、檢測異常命令。
+
+最佳實踐：從私有起步，審核開源實現（如 awesome-mcp-servers），並整合監控工具（如 ELK）。吳恩達也提到 MCP 尚在早期，認證系統需改進，建議開發者優先測試安全配置。
+
+
 
 ### 已知的 MCP "Hub" 或實現列表
 
