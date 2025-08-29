@@ -25,7 +25,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 - [新穎的安全與威脅 (OWASP, Agentic Security Initiative, OWASP ASI)](#新穎的安全與威脅-owasp-agentic-security-initiative-owasp-asi)
 - [Agentic AI 的挑戰、限制與未來方向](#agentic-ai-的挑戰限制與未來方向)
 - [台灣AI發展策略與未來展望](#台灣ai發展策略與未來展望)
-- [Model Context Protocol (MCP) 核心概念解析](#model-context-protocol-mcp-核心概念解析)
+- [Model Context Protocol (MCP) 核心概念解析](#model-context-protocol-mcp)
 
 
 
@@ -515,7 +515,7 @@ Agentic AI 代表了 AI 發展的一個重要方向，它將單一 AI Agents 的
 
 ---
 
-## Model Context Protocol (MCP) 核心概念解析
+## Model Context Protocol (MCP)
 
 **白話快速說**：
 - 傳統 API（比如 RESTful API）是程式間的直接連接規則，但 MCP 更像是 AI 專用的「中間人」，專門解決 AI 整合多種資源的麻煩。
