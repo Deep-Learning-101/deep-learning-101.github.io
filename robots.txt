@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Delay 可視需要加入以保護站點
+# Crawl-delay: 2
+
+# 宣告 Sitemap 絕對路徑
+Sitemap: https://deep-learning-101.github.io/sitemap.xml
