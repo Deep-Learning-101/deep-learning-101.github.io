@@ -1,0 +1,24 @@
+{%- if page.schema_type == "service" -%}
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"Service",
+  "name":"{{ page.title }}",
+  "serviceType":"{{ page.service_type | default: page.title }}",
+  "provider":{"@type":"Organization","name":"{{ site.title }}"},
+  "areaServed":"TW",
+  "url":"{{ page.url | absolute_url }}"
+}
+</script>
+{%- elsif page.schema_type == "article" -%}
+<script type="application/ld+json">
+{
+  "@context":"https://schema.org",
+  "@type":"BlogPosting",
+  "headline":"{{ page.title }}",
+  "mainEntityOfPage":"{{ page.url | absolute_url }}",
+  "author":{"@type":"Person","name":"TonTon Huang"},
+  "inLanguage":"{{ page.lang | default: site.lang }}"
+}
+</script>
+{%- endif -%}

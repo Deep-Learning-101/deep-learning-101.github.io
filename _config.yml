@@ -3,4 +3,5 @@ url: "https://deep-learning-101.github.io"
 
 # 啟用 sitemap 外掛
 plugins:
+  - jekyll-seo-tag
   - jekyll-sitemap

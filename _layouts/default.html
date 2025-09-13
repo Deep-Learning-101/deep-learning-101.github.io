@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="{{ page.lang | default: site.lang }}">
+  <head>
   <meta charset="UTF-8">
   <title>{{ page.title }}</title>
 
@@ -89,6 +89,16 @@ audio {
   <script async custom-element="amp-auto-ads"
         src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
 </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  {%- if page.hreflang -%}
+    <link rel="alternate" hreflang="{{ page.hreflang }}" href="{{ page.url | absolute_url }}">
+  {%- endif -%}
+  {%- include jsonld-switch.html -%}
+
 </head>
 <body>
   <amp-auto-ads type="adsense"
