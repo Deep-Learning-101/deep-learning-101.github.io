@@ -170,6 +170,10 @@ service_type: GenAI Consulting
 - 2024-09-23：[**STORM**](https://github.com/stanford-oval/storm)；[STORM：一个基于LLM的知识整理系统](https://mp.weixin.qq.com/s/x72eW958UbhrscvKghO6og)
 - 2024-10-26：[OmniParser](https://github.com/microsoft/OmniParser)；[控制電腦手機的智慧體人人都能造，微軟開源OmniParser](https://zhuanlan.zhihu.com/p/3343331861)
 
+**世界模型**
+
+- 2025-09-25：[Code World Model](https://zread.ai/facebookresearch/cwm/1-overview)：[程式碼生成要變天了？被質疑架空後，Yann LeCun攜320億參數開源世界模型“殺回來了”](https://t.cj.sina.com.cn/articles/view/1746173800/68147f6801901e2wa)
+
 **混合專家(Mixture of Experts, MoE)模型**
 
   - 2024-12-13：[DeepSeek-VL2](https://github.com/deepseek-ai/DeepSeek-VL2)：[DeepSeek-VL2開源，VLM邁入MoE時代](https://mp.weixin.qq.com/s/s832KUgixNuX4GUkvY7_Ag)，[DeepSeek-VL2 先進視覺語言模型，在多模態理解方面取得了顯著進展](https://mp.weixin.qq.com/s/p6r_b-k4UnSJED5cBTedZg)
