@@ -12,6 +12,8 @@ service_type: AI Consulting
 
 ---
 
+# CV Computer Vision (電腦視覺)
+
 {% include ai-share.html %}
 
 ---
@@ -23,10 +25,6 @@ service_type: AI Consulting
 - [OCR](#ocr)
 - [Diffusion model (擴散模型)](#diffusion-model-擴散模型)
 - [Digital Human (虛擬數字人)](#digital-human-虛擬數字人)
-
-
-# CV
-Computer Vision (電腦視覺)
 
 ## AnomalyDetection
 **Anomaly Detection，異常檢測**
