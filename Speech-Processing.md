@@ -12,8 +12,21 @@ service_type: AI Consulting
 
 ---
 
+# 語音處理 (Speech Processing)
+
 {% include ai-share.html %}
 
+---
+
+https://github.com/Deep-Learning-101/Speech-Processing-Paper
+
+### **文章目錄**
+- [Speech Processing (語音處理)](#speech-processing)
+- [Speech Recognition (語音識別)](#speech-recognition)
+- [Speaker Recognition (語者識別)](#speaker-recognition)
+- [Speech Enhancement (語音增強)](#speech-enhancement)
+- [Speaker Separation (語者分離)](#speaker-separation)
+- [Speech Synthesis (語音合成)](#speech-synthesis)
 
 
 ## 🎙️ 語音識別 / 合成平台價格比較
@@ -31,10 +44,10 @@ service_type: AI Consulting
 | [Google Cloud VM](https://cloud.google.com/compute/vm-instance-pricing?hl=zh-tw#sharedcore_machine_types) | 虛擬機器 | VM 執行個體定價頁面 |
 
 
-# 語音處理 (Speech Processing)
 ## Speech-Processing
+**語音處理 (Speech Processing)**
 
-- 2025-05-14：[ten-turn-detection](https://deepwiki.com/TEN-framework/ten-turn-detection)；[ten-vad](https://deepwiki.com/TEN-framework/ten-vad)
+- 2025-05-14：[ten-turn-detection](https://zread.ai/TEN-framework/ten-turn-detection)；[ten-vad](https://zread.ai/TEN-framework/ten-vad)
 - 2025-01-19：[小米語音首席科學家Daniel Povey：語音辨識捲完了，下一個機會在哪裡？](https://www.jiqizhixin.com/articles/2025-01-19-4?)
 -  [ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策](https://blog.twman.org/2024/02/asr-tts.html)；[探討 ASR 和 TTS 技術應用中的問題，強調數據質量的重要性](https://deep-learning-101.github.io/asr-tts)
 -  [那些語音處理踩的坑](https://blog.twman.org/2021/04/ASR.html)；[分享語音處理領域的實務經驗，強調資料品質對模型效果的影響](https://deep-learning-101.github.io/speech)
@@ -45,8 +58,8 @@ service_type: AI Consulting
 - [語音合成,語音辨識常見資料集](https://mp.weixin.qq.com/s/xGAEzuT5x7BkTRH6DCJFhA)
 
 
-# 中文語音識別 (Chinese Speech Recognition)
-## Chinese-Speech-Recognition
+## Speech-Recognition
+**中文語音識別 (Chinese Speech Recognition)**
 
 [https://www.twman.org/AI/ASR](https://www.twman.org/AI/ASR)
 
@@ -95,16 +108,17 @@ service_type: AI Consulting
 </details>  
 <br><br>
 
-# 中文語者(聲紋)識別 (Chinese Speaker Recognition)
-## Chinese-Speaker-Recognition
+
+## Speaker-Recognition
+**中文語者(聲紋)識別 (Chinese Speaker Recognition)**
 
 [https://www.twman.org/AI/ASR/SpeakerRecognition](https://www.twman.org/AI/ASR/SpeakerRecognition)
 
 找到描述特定對象的聲紋特徵，通過聲音判別說話人身份的技術；借助不同人的聲音，在語譜圖的分佈情況不同這一特徵，去對比兩個人的聲音，來判斷是否同人。
 
 ### **相關論文**
-* [Wespeaker: A Research and Production oriented Speaker Embedding Learning Toolkit](https://arxiv.org/pdf/2210.17016.pdf)
-* [SincNet：Speaker Recognition from Raw Waveform with SincNet](https://arxiv.org/abs/1808.00158)
+* [Wespeaker: A Research and Production oriented Speaker Embedding Learning Toolkit](https://www.alphaxiv.org/zh/overview/2210.17016v2)
+* [SincNet：Speaker Recognition from Raw Waveform with SincNet](https://www.alphaxiv.org/zh/overview/1808.00158v3)
 
 ### **相關連結**
 * [Wespeaker v1.2.0 發布：新增SSL Recipe，NIST SRE 數據集支持, PLDA 及自適應代碼等](https://zhuanlan.zhihu.com/p/645726183)
@@ -135,8 +149,8 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 </details>
 <br><br>
 
+## Speech-Enhancement
 # 中文語音增強(去噪) (Chinese Speech Enhancement)
-## Chinese-Speech-Enhancement
 
 [https://www.twman.org/AI/ASR/SpeechEnhancement](https://www.twman.org/AI/ASR/SpeechEnhancement)
 
@@ -145,7 +159,7 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 找到描述特定聲音特徵，並將其去除以提高質量；從含雜訊的語音信號中提取出純淨語音的過程
 
 ### **相關論文**
-* [Real Time Speech Enhancement in the Waveform Domain](https://arxiv.org/pdf/2006.12847.pdf)
+* [Real Time Speech Enhancement in the Waveform Domain](https://www.alphaxiv.org/abs/2006.12847v3)
 
 ### **相關連結**
 * 2024-12-07：[ClearVoice: Speech Enhancement](https://github.com/modelscope/ClearerVoice-Studio)
@@ -161,8 +175,8 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 </details>
 <br><br>
 
+## Speaker-Separation
 # 中文語者分離(分割) (Chinese Speaker Separation)
-## Chinese-Speaker-Separation
 
 [https://www.twman.org/AI/ASR/SpeechSeparation](https://www.twman.org/AI/ASR/SpeechSeparation)
 
@@ -200,8 +214,9 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 </details>
 <br><br>
 
+## Speech-Synthesis
 # 中文語音合成 (Chinese Speech Synthesis)
-## Chinese-Speech-Synthesis
+
 ### **相關連結**
 
 * [OpenAI-Edge-TTS](https://github.com/travisvn/openai-edge-tts)：[開源的免費文字轉語音API接口，託管在GitHub上](https://mp.weixin.qq.com/s/lt9Vr0hR7wwyhqTh68gTkA)
