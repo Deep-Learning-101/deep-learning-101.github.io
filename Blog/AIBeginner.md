@@ -184,3 +184,33 @@ GenAI 帶來了巨大的機遇，但也埋下了全新的、更隱蔽的地雷�
 ## 結論：成功的 AI 遠征需要一張好地圖
 
 企業導入 AI 的成功，取決於是否能在每個階段都做出正確的決策。這份路線圖與其中的錯誤警示，就是幫助您規劃路徑、避開陷阱的地圖。謹慎、有策略且治理良好的方法，是通往可持續成功的唯一途徑。
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/AIBeginner"
+  },
+  "headline": "企業 AI新賽局 入門策略實踐路線圖：從策略到治理，避開致命陷阱",
+  "description": "一份提供給企業的 AI 入門策略與實踐路線圖，內容涵蓋從 AI 概念釐清、戰略規劃、數據基礎建設到團隊治理的關鍵階段，並指出各階段常見的致命錯誤與應對 GenAI 挑戰的建議。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2025-07-21",
+  "dateModified": "2025-07-21",
+  "keywords": "Enterprise AI, AI Strategy, GenAI, Machine Learning, Deep Learning, AI Adoption, 企業 AI, 人工智慧導入, 數位轉型"
+}
+</script>

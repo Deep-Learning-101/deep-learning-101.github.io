@@ -140,3 +140,33 @@ _深度解析四大主流熱門LLM服務框架_
 ***
 
 你計劃服務的硬體環境（GPU 型號/數量或僅 CPU）、目標上下文長度、P99 延遲與 QPS 指標、以及是否需要代理式多步工作流或嚴格 JSON/語法輸出？告訴我後我可給出更精準的架構與參數建議。
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/vLLM-Ollama-SGLang-LLaMAcpp"
+  },
+  "headline": "vLLM、Ollama、SGLang、LLaMA.cpp：深度解析四大主流熱門LLM服務框架",
+  "description": "深度解析並比較 vLLM, Ollama, SGLang, LLaMA.cpp 等四種主流大型語言模型（LLM）服務框架，內容涵蓋架構原理、性能優化、特性比較、部署運維及選型決策指南。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2025-09-30",
+  "dateModified": "2025-09-30",
+  "keywords": "vLLM, Ollama, SGLang, LLaMA.cpp, LLM Serving, PagedAttention, GGUF, Inference, 高吞吐, 推理引擎"
+}
+</script>

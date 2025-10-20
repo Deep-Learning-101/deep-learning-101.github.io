@@ -15,7 +15,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。
 
-**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
+**作者**：[TonTon Huang Ph.D.](https://twman.org/)  
 **日期**：2024年10月10日  
 **原文網址**：[https://blog.twman.org/2024/08/LLM.html](https://blog.twman.org/2024/08/LLM.html)
 
@@ -131,3 +131,33 @@ LLM 是 GenAI 的基礎，能理解與生成自然語言。
 ---
 
 > 想學 GenAI，別只學怎麼用 GPT，從 Prompt 到 Agent，一步步理解背後的技術與原理，才是真正的升級之道！
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/GenAI"
+  },
+  "headline": "白話文手把手帶你科普 GenAI",
+  "description": "淺顯易懂地介紹生成式人工智慧（GenAI）的核心概念，內容涵蓋硬體成本、大型語言模型（LLM）、提示詞設計（Prompt）、RAG、微調、功能調用（Function Calling）與代理人（Agentic）等技術。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2024-10-10",
+  "dateModified": "2024-10-10",
+  "keywords": "Generative AI, GenAI, LLM, RAG, Fine-Tuning, Prompt, Function Calling, Agentic, 多模態"
+}
+</script>

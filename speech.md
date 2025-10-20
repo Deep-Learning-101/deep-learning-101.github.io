@@ -13,7 +13,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # [那些語音處理 (Speech Processing) 踩的坑](https://deep-learning-101.github.io/)
 
-**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
+**作者**：[TonTon Huang Ph.D.](https://twman.org/)  
 **日期**：2021年4月26日  
 **原文網址**：[https://blog.twman.org/2021/04/ASR.html](https://blog.twman.org/2021/04/ASR.html)
 
@@ -77,3 +77,33 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 > 📖 如需進一步了解，請參閱原文：  
 > [https://blog.twman.org/2021/04/ASR.html](https://blog.twman.org/2021/04/ASR.html)
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/speech"
+  },
+  "headline": "那些語音處理 (Speech Processing) 踩的坑",
+  "description": "分享語音處理領域的實務經驗與挑戰，內容涵蓋聲紋（語者）識別、語音識別（ASR）、語音增強（去噪）、語者分離，以及模型壓縮與加速推論的開發心得。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2021-04-26",
+  "dateModified": "2021-04-26",
+  "keywords": "Speech Processing, 語音處理, Speaker Recognition, Speech Recognition, ASR, Speech Enhancement, Speaker Separation, Kaldi"
+}
+</script>

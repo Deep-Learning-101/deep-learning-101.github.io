@@ -13,7 +13,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # [解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算](https://deep-learning-101.github.io/)
 
-**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
+**作者**：[TonTon Huang Ph.D.](https://twman.org/)
 **日期**：2023年4月12日  
 **原文網址**：[https://blog.twman.org/2023/04/GPT.html](https://blog.twman.org/2023/04/GPT.html)
 
@@ -82,3 +82,33 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 > 📖 如需進一步了解，請參閱原文：  
 > [https://blog.twman.org/2023/04/GPT.html](https://blog.twman.org/2023/04/GPT.html)
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/GPU"
+  },
+  "headline": "解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算",
+  "description": "深入探討大型語言模型（LLM）的發展、訓練與微調技術，並提供在不同精度（FP32, FP16, INT8）與訓練策略（全參數微調, LoRA）下，所需 GPU VRAM 的詳細估算方法。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2023-04-12",
+  "dateModified": "2023-04-12",
+  "keywords": "Large Language Model, LLM, GPU, VRAM, Fine-Tuning, LoRA, Model Training, 深度學習, 顯示卡記憶體"
+}
+</script>

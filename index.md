@@ -74,3 +74,34 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 | 05  | [Optimization for Training Deep Models](https://deep-learning-101.github.io/html/CH8.html) @ [Deep Learning Book Chapter 8](https://deep-learning-101.github.io/GeminiAbstract/PDF8) | [2017/03/10](https://www.youtube.com/watch?v=DeXH5IMHfcs) | [文字摘要](https://deep-learning-101.github.io/notebooklm/CH8) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH8.mp3" type="audio/mpeg"></audio> | 
 | 04  | [Regularization for Deep Learning](https://deep-learning-101.github.io/html/CH7.html) @ [Deep Learning Book Chapter 7](https://deep-learning-101.github.io/GeminiAbstract/PDF7) | [2017/02/10](https://www.youtube.com/watch?v=gSymqOhKW8o) | [文字摘要](https://deep-learning-101.github.io/notebooklm/CH7) | <audio controls style="width:100px; height:12px;"><source src="notebooklm-mp3/CH7.mp3" type="audio/mpeg"></audio>   | 
 | 03  | Deep Feedforward Networks @ [Deep Learning Book Chapter 6](https://deep-learning-101.github.io/GeminiAbstract/PDF6) |   |   |   |
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebPage",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/"
+  },
+  "name": "Deep Learning 101 Meetup",
+  "description": "Deep Learning 101 是臺灣領先的深度學習同好會，自 2016 年 11 月 11 日起在台北 101 舉辦活動。此頁面彙整了歷年來的技術分享主題、講者資訊、影片連結與活動摘要。",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "about": {
+    "@type": "EventSeries",
+    "name": "Deep Learning 101 Meetup",
+    "startDate": "2016-11-11",
+    "location": {
+      "@type": "Place",
+      "name": "Taipei 101",
+      "address": "Taipei, Taiwan"
+    }
+  }
+}
+</script>

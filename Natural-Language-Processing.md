@@ -130,3 +130,32 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
   <li><a href="https://www.twman.org/AI/NLP/Similarity">中文文本相似度</a></li>
 </ul> 
 </details>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/Natural-Language-Processing"
+  },
+  "headline": "自然語言處理 (Natural Language Processing, NLP) 資源與開發心得",
+  "description": "彙整自然語言處理（NLP）的核心技術與開發經驗，涵蓋資訊擷取、機器閱讀理解（MRC）、命名實體識別（NER）、文本糾錯、分類與相似度分析，並分享從業心得與挑戰。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2020-02-29",
+  "keywords": "Natural Language Processing, NLP, Machine Reading Comprehension, Named Entity Recognition, Text Correction, Text Classification, Transformer, BERT, HuggingFace"
+}
+</script>

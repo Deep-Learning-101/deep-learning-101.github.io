@@ -13,7 +13,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # [ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策；那些ASR和TTS可能會踩的坑](https://deep-learning-101.github.io/)
 
-**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
+**作者**：[TonTon Huang Ph.D.](https://twman.org/)
 **日期**：2024年2月25日  
 **原文網址**：[https://blog.twman.org/2024/02/asr-tts.html](https://blog.twman.org/2024/02/asr-tts.html)
 
@@ -71,3 +71,33 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 > 📖 如需進一步了解，請參閱原文：  
 > [https://blog.twman.org/2024/02/asr-tts.html](https://blog.twman.org/2024/02/asr-tts.html)
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/asr-tts"
+  },
+  "headline": "ASR/TTS 開發避坑指南：語音辨識與合成的常見挑戰與對策",
+  "description": "一份關於自動語音辨識（ASR）與文字轉語音（TTS）開發的避坑指南，內容涵蓋 Whisper 模型的應用、開源工具介紹、語音資料處理、以及 ASR 錯誤修正的策略與實務經驗。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2024-02-25",
+  "dateModified": "2024-02-25",
+  "keywords": "ASR, TTS, 語音辨識, 語音合成, Whisper, FunASR, pycorrector, 開發指南"
+}
+</script>

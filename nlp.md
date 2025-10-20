@@ -13,7 +13,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # [那些自然語言處理 (Natural Language Processing, NLP) 踩的坑](https://deep-learning-101.github.io/)
 
-**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
+**作者**：[TonTon Huang Ph.D.](https://twman.org/)
 **日期**：2021年4月17日  
 **原文網址**：[https://blog.twman.org/2021/04/NLP.html](https://blog.twman.org/2021/04/NLP.html)
 
@@ -104,3 +104,33 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 > 📖 如需進一步了解，請參閱原文：  
 > [https://blog.twman.org/2021/04/NLP.html](https://blog.twman.org/2021/04/NLP.html)
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/nlp"
+  },
+  "headline": "那些自然語言處理 (Natural Language Processing, NLP) 踩的坑",
+  "description": "分享在中文自然語言處理（NLP）專案中遇到的常見挑戰與解決方案，內容涵蓋數據問題、模型選擇、機器閱讀理解（MRC）、文本糾錯、文本分類與命名實體識別（NER）的實務經驗。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2021-04-17",
+  "dateModified": "2021-04-17",
+  "keywords": "NLP, 中文NLP, 機器閱讀理解, 文本糾錯, 文本分類, 命名實體識別, BERT, Hugging Face"
+}
+</script>

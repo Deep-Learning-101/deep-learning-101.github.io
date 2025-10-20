@@ -275,3 +275,33 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
 *   Cloudflared 是快速實現 Zero Trust 的實用工具
 *   適合中小型企業或大型企業中的獨立專案團隊部署
 *   若未來你要開放 AI 工具存取資料，這些設計將成為關鍵防線
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/Cloudflared-Tunnel"
+  },
+  "headline": "用 Cloudflared 實作 SSH / HTTP / RDP Tunnel",
+  "description": "一篇關於如何使用 Cloudflared Tunnel 實踐零信任（Zero Trust）架構的技術教學，內容涵蓋在不開放公網 IP 的情況下，安全地實現對 SSH、HTTP 與 RDP 服務的遠端連線。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2025-06-23",
+  "dateModified": "2025-06-23",
+  "keywords": "Cloudflared, Zero Trust, Tunnel, SSH, RDP, HTTP, Cloudflare, 零信任, 網路安全, 遠端連線"
+}
+</script>

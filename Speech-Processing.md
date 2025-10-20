@@ -256,3 +256,43 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
    * [多語言即時文字轉語音的高品質工具！無GPU也可靈活使用！](https://mp.weixin.qq.com/s/DSHabmduaUX5_aBedDhEFg)
 * [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)：Github 獲得 35.2k star的開源聲音克隆項目，1分鐘語音訓練TTS模型
 * [Deepgram](https://deepgram.com/)
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/Speech-Processing"
+  },
+  "headline": "語音處理 (Speech Processing) 資源彙整",
+  "description": "一份關於語音處理（Speech Processing）的詳盡資源清單，內容涵蓋語音識別(ASR)、語者識別、語音增強、語者分離與語音合成(TTS)等領域的最新研究與開源工具，由台灣深度學習同好會（Deep Learning 101）提供。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "url": "https://deep-learning-101.github.io/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2016-11-11",
+  "dateModified": "2025-10-21",
+  "keywords": "Speech Processing, Speech Recognition, Speaker Recognition, Speech Enhancement, Speaker Separation, Speech Synthesis, ASR, TTS, 語音處理, 語音識別, 語者識別, 語音增強, 語音合成",
+  "about": {
+    "@type": "Service",
+    "serviceType": "AI Consulting",
+    "provider": {
+      "@type": "Organization",
+      "name": "Deep Learning 101, Taiwan"
+    },
+    "name": "人工智慧顧問服務 (AI Consulting)",
+    "description": "提供關於語音處理（Speech Processing）領域的專業顧問服務，包含語音識別（ASR）、語音合成（TTS）、模型開發與技術導入。"
+  }
+}
+</script>

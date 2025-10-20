@@ -13,7 +13,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # [Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)；ComfyUI + Stable Diffusion + FLUX](https://deep-learning-101.github.io/)
 
-**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)   
+**作者**：[TonTon Huang Ph.D.](https://twman.org/)
 **日期**：2024年11月1日  
 **原文網址**：[https://blog.twman.org/2024/11/diffusion.html](https://blog.twman.org/2024/11/diffusion.html)
 
@@ -85,3 +85,33 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 > 📖 如需進一步了解，請參閱原文：  
 > [https://blog.twman.org/2024/11/diffusion.html](https://blog.twman.org/2024/11/diffusion.html)
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/diffusion"
+  },
+  "headline": "Diffusion Model 完全解析：從原理、應用到實作 (AI 圖像生成)",
+  "description": "深入探討擴散模型（Diffusion Model）的原理、應用與實作，並介紹 ComfyUI、Stable Diffusion、FLUX、Wan2.1 等相關工具與模型，提供 AI 圖像與影片生成的實務指南。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2024-11-01",
+  "dateModified": "2024-11-01",
+  "keywords": "Diffusion Model, AI圖像生成, ComfyUI, Stable Diffusion, FLUX, Wan2.1, HunyuanVideo, Text-to-Image, 擴散模型"
+}
+</script>

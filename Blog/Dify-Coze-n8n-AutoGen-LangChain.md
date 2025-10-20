@@ -136,3 +136,33 @@ _快速梳理理解熱門 Agent 框架_
 - MCP/A2A：多框架正增加對模型上下文協議與代理間協作協議的支援（以工具適配器或中介層實現），有助於標準化工具接入與跨平台組裝。
 - 結構化輸出與約束編解碼：逐步成為生產必需（JSON 模式/語法約束/結構化評測）。
 - 長期記憶與知識治理：企業從「能檢索」轉向「可治理/可追溯/可版本化」。
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/Dify-Coze-n8n-AutoGen-LangChain"
+  },
+  "headline": "Dify、Coze、n8n、AutoGen、LangChain 等熱門 Agent 框架快速梳理與理解",
+  "description": "深度梳理並比較 Dify, Coze, n8n, AutoGen, LangChain, CrewAI 等六大主流 AI Agent 框架，內容涵蓋架構定位、核心能力、協作模式、安全性、部署建議與選型決策指南。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2025-09-30",
+  "dateModified": "2025-09-30",
+  "keywords": "AI Agent, Dify, Coze, n8n, AutoGen, LangChain, CrewAI, LangGraph, LLM, RAG"
+}
+</script>

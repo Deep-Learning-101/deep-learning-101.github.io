@@ -417,3 +417,32 @@ Qwen2和Qwen2.5系列進一步提升了多語言能力，在MMLU等國際基準�
 
 [25]: https://arxiv.org/html/2501.13921v1. Breeze2 相關論文
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/TW-LLM-Benchmark"
+  },
+  "headline": "臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告",
+  "description": "一份針對臺灣大型語言模型（LLM）的深度評測與分析報告，內容涵蓋 TMLU, TMMLU+, TW Truthful QA 等在地化基準測試，並比較 Llama-3-Taiwan, TAIDE, Breeze2 與國際主流模型的性能表現。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2025-07-16",
+  "dateModified": "2025-07-16",
+  "keywords": "LLM, TMLU, TMMLU+, Llama-3-Taiwan, TAIDE, Breeze2, Qwen, Benchmark, RAG, 臺灣大型語言模型"
+}
+</script>

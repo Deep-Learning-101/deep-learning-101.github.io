@@ -213,3 +213,33 @@ AI 陪伴型機器人的發展也反映了社會發展的趨勢。全球人口�
 - 鼓勵開發針對不同人群（如失智長者、青少年、兒童）做專門功能和外型客製化。
 
 未來，AI 陪伴型機器人將在人類生活中扮演越來越重要的角色。專家預測，到了 2030 年，AI 將更深入地融入人類社會，成為人類的夥伴和助手。AI 陪伴型機器人的發展，將為人類社會帶來 profound 的影響。
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/robot"
+  },
+  "headline": "AI 陪伴機器人：2025 趨勢分析技術突破、市場潛力與未來展望",
+  "description": "一份針對 AI 陪伴型機器人的深度趨勢分析報告，內容涵蓋技術突破、市場潛力、應用場景、技術挑戰，並包含 ASR、TTS、LLM 等關鍵技術與競品價格分析。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2025-06-21",
+  "dateModified": "2025-06-21",
+  "keywords": "AI Companion Robot, Service Robot, CES 2025, ASR, TTS, LLM, Artificial Intelligence, 陪伴機器人, 服務型機器人"
+}
+</script>

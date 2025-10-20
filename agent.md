@@ -32,7 +32,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 # [避開 AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 開發陷阱](https://deep-learning-101.github.io/)
 _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過的坑、常見問題、挑戰與解決方案_
 
-**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
+**作者**：[TonTon Huang Ph.D.](https://twman.org/)  
 **日期**：2025年06月03日更新
 
 - [**Blog 版**](https://blog.twman.org/2025/03/AIAgent.html) | [**網頁 版**](https://deep-learning-101.github.io/html/AI-Agents_Agentic-AI.html) | [**Skywork-PPT**](https://deep-learning-101.github.io/pdf/AI-Agents_Agentic-AI_Skywork-ppt.pdf)
@@ -792,3 +792,33 @@ A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通�
 [^62]: https://aif.tw/event/ai-research/
 [^64]: https://naipnews.naipo.com/6207
 [^66]: https://naipnews.naipo.com/1563
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/agent"
+  },
+  "headline": "避開 AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 開發陷阱",
+  "description": "一份關於 AI 代理 (AI Agents) 與代理式人工智慧 (Agentic AI) 的深度解析，內容涵蓋實戰經驗、常見陷阱、開發挑戰、解決方案、安全性（OWASP ASI）及 Model Context Protocol (MCP) 的探討。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2025-06-03",
+  "dateModified": "2025-06-03",
+  "keywords": "AI Agents, Agentic AI, OWASP, Model Context Protocol, MCP, LangGraph, Deep Research, 生成式AI, 人工智慧代理"
+}
+</script>

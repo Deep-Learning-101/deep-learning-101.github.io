@@ -254,3 +254,42 @@ service_type: GenAI Consulting
    - 2024-09-06：[MiniCPM 3.0 開源！ 4B參數超GPT3.5性能，無限長文本，超強RAG三件套！模型推理、微調實戰來啦！](https://53ai.com/news/OpenSourceLLM/2024090659871.html)：[https://github.com/OpenBMB/MiniCPM](https://github.com/OpenBMB/MiniCPM)
   - 2024-09-05：[零碼基礎都敢去魔改MiniCPM-V了？是我飄了，也是Cursor 太強了](https://mp.weixin.qq.com/s/DjDznmtKZoJNKXYz0X4zog)：[https://github.com/OpenBMB/MiniCPM-V/](https://github.com/OpenBMB/MiniCPM-V/)
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/Large-Language-Model"
+  },
+  "headline": "大語言模型 (Large Language Model) 資源彙整",
+  "description": "一份詳盡的大語言模型（LLM）資源清單，涵蓋模型排行榜、中文LLM資源、微調技術、開源工具、AI Agent 框架以及最新的模型發布，由台灣深度學習同好會（Deep Learning 101）提供。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg", // 建議您換成一個代表性的圖片 URL
+  "author": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "url": "https://deep-learning-101.github.io/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg" // 建議您換成 LOGO 圖片 URL
+    }
+  },
+  "datePublished": "2016-11-11", // 根據 front matter 的資訊，您也可以更新為內容的最後更新日期
+  "dateModified": "2025-10-21", // 建議填寫您最後修改此文件的日期
+  "keywords": "Large Language Model, LLM, AI Agent, Fine-tuning, RAG, Deep Learning, 生成式AI, 大語言模型, 微調, 開源工具",
+  "about": {
+    "@type": "Service",
+    "serviceType": "GenAI Consulting",
+    "provider": {
+      "@type": "Organization",
+      "name": "Deep Learning 101, Taiwan"
+    },
+    "name": "生成式 AI 諮詢 (GenAI Consulting)",
+    "description": "提供關於大語言模型（LLM）的專業諮詢服務，包含模型微調、應用開發、框架選擇與技術導入。"
+  }
+}
+</script>

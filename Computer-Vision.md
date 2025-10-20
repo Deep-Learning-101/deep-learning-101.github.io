@@ -148,3 +148,43 @@ service_type: AI Consulting
 - [JoyGen](https://github.com/JOY-MM/JoyGen)：Audio-Driven 3D Depth-Aware Talking-Face Video Editing
 - [Latentsync](https://github.com/bytedance/LatentSync)
 - [MuseTalk](https://github.com/TMElyralab/MuseTalk)
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/Computer-Vision"
+  },
+  "headline": "電腦視覺 (Computer Vision) 資源彙整",
+  "description": "一份關於電腦視覺（Computer Vision）的詳盡資源清單，內容涵蓋異常檢測、物件偵測、圖像分割、OCR、擴散模型與虛擬數字人等領域的最新研究與開源工具，由台灣深度學習同好會（Deep Learning 101）提供。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "url": "https://deep-learning-101.github.io/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2016-11-11",
+  "dateModified": "2025-10-21",
+  "keywords": "Computer Vision, Anomaly Detection, Object Detection, Segmentation, OCR, Diffusion Model, Digital Human, 電腦視覺, 異常檢測, 物件偵測, 圖像分割, 擴散模型, 虛擬數字人",
+  "about": {
+    "@type": "Service",
+    "serviceType": "AI Consulting",
+    "provider": {
+      "@type": "Organization",
+      "name": "Deep Learning 101, Taiwan"
+    },
+    "name": "人工智慧顧問服務 (AI Consulting)",
+    "description": "提供關於電腦視覺（Computer Vision）領域的專業顧問服務，包含演算法開發、模型選擇、應用落地與技術導入。"
+  }
+}
+</script>
