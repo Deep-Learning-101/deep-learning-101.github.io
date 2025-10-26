@@ -1,6 +1,15 @@
 ---
 layout: default
-title: TonTon Huang Ph.D., Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+---
+
+
+{% include header.html %}
+
+---
+
+{% include ai-share.html %}
+
 ---
 
 >參考工具如下：  
@@ -16,9 +25,9 @@ title: TonTon Huang Ph.D., Deep Learning 101, Taiwan’s pioneering and highest 
 # 你所需要的只是 MCP - LLMs 解決 DEF CON CTF 決賽挑戰
 
 > 翻譯整理自 [All You Need Is MCP - LLMs Solving a DEF CON CTF Finals Challenge](https://wilgibbs.com/blog/defcon-finals-mcp/)  
-> 同步匯整自 [https://github.com/shellphish/artiphishell](https://github.com/shellphish/artiphishell)  
-> [TonTon Huang Ph.D.](https://twman.org)  
-> 2025/09/03
+> 同步匯整自 [https://github.com/shellphish/artiphishell](https://github.com/shellphish/artiphishell)
+> 同步匯整自 [你所需要的只是一個模糊測試大腦：一個由LLM驅動的自動漏洞檢測和修補系統](https://mp.weixin.qq.com/s/jlYk8q7CUol69_c-UJ40tQ)
+
 
 ## 目錄
 - [DEF CON CTF](#def-con-ctf)
