@@ -13,7 +13,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 ---
 
 **作者**：[TonTon Huang Ph.D.](https://twman.org)  
-**Blog**：[2025年09月30日，Dify、Coze、n8n、AutoGen、LangChain等熱門 Agent 框架](https://blog.twman.org/2025/09/Dify-Coze-n8n-AutoGen-LangChain.html)
 
 ---
 
