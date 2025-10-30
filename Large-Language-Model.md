@@ -87,6 +87,7 @@ service_type: GenAI Consulting
 ---
 
 - MCP
+   - 2025-08-20：[FastAPI-MCP](https://zread.ai/tadata-org/fastapi_mcp)；[幾行程式碼即可將FastAPI 介面升級為MCP 工具服務](https://mp.weixin.qq.com/s/L568EP2tl2zwmC8vxz8s7w)
    - 2025-04-15：[automcp](https://github.com/NapthaAI/automcp)：[將任何代理、工具或編排器秒設定 MCP 伺服器](https://mp.weixin.qq.com/s/x-aZEhtnRYPFno81Fb9ttw)
    - 2025-04-10：[line-bot-mcp-server](https://github.com/line/line-bot-mcp-server)
    - 2025-04-05：[GitMCP](https://github.com/idosal/git-mcp)：[GitMCP 太神了！一行URL 讓AI 秒懂你的GitHub 項目](https://www.53ai.com/news/RAG/2025040590146.html)
@@ -100,6 +101,7 @@ service_type: GenAI Consulting
 
 ---
 
+- 2025-09-11：[DeepMCPAgent](https://zread.ai/cryxnet/DeepMCPAgent)；[DeepMCPAgent 教你如何讓模型自己「找工具」！](https://mp.weixin.qq.com/s/Sj_7i1mTJ9WYaTlCzIqCFA)
 - 2025-07-30：[langextract](https://github.com/google/langextract)；[隆重推出 LangExtract：由 Gemini 驅動的資訊擷取庫](https://developers.googleblog.com/zh-hans/introducing-langextract-a-gemini-powered-information-extraction-library/)
 - 2025-07-26：[presenton](https://github.com/presenton/presenton)；[一款可本地部署的開源AI PPT項目，一鍵生成精美PPT](https://mp.weixin.qq.com/s/QTMVGD_aP41qrwtbjLxV8Q)
 - 2025-07-03：[MultiAgentPPT](https://github.com/johnson7788/MultiAgentPPT)；[A2A+ADK+MCP多智能體並發系統產生(可線上編輯）的PPT（含原始碼）](https://zhuanlan.zhihu.com/p/1920611446007497267)
@@ -140,6 +142,10 @@ service_type: GenAI Consulting
 
 ---
 
+- 2025-10-28：[Tongyi DeepResearch](https://zread.ai/Alibaba-NLP/DeepResearch)；[通義DeepResearch全面開源，超越openai deep research閉源框架](https://zhuanlan.zhihu.com/p/1951785880655209261)
+- 2025-10-28：[DeepAgent](https://zread.ai/RUC-NLPIR/DeepAgent)；[DeepAgent: 首個全自主的深度推理智能體，可擴展大規模工具集](https://zhuanlan.zhihu.com/p/1966457879335798713)
+- 2025-10-19：[Gemini Computer Use](https://ai.google.dev/gemini-api/docs/computer-use)；[Google推出Gemini 2.5 Computer Use讓AI代理能操作網頁介面](https://www.ithome.com.tw/news/171579)
+- 2025-10-10：[SurfSense](https://zread.ai/MODSetter/SurfSense)；[GitHub 萬星新王炸，把你的Slack、Notion、Jira全餵給AI](https://mp.weixin.qq.com/s/za_ZQ7OWuvYaN2f0Ml0AgA)
 - 2025-07-03：[multi-modal-researcher](https://github.com/langchain-ai/multi-modal-researcher)
 - 2025-06-25：[Gemini CLI](https://github.com/google-gemini/gemini-cli)：[Gemini CLI：你的開源 AI 代理](https://blog.google/intl/zh-tw/products/cloud/gemini-cli-your-open-source-ai-agent/)
 - 2025-06-06：[PandaWiki](https://github.com/chaitin/PandaWiki)；[新一代AI 大模型驅動的開源知識庫建立系統](https://zhuanlan.zhihu.com/p/1916981702733039060)
@@ -162,6 +168,7 @@ service_type: GenAI Consulting
 - 2025-04-03：[**Deepsite**](https://huggingface.co/spaces/enzostvs/deepsite)；[DeepSite基於DeepSeek的網頁開發智能體，效果非常不錯](https://zhuanlan.zhihu.com/p/1890332067411243826)
 - 2025-03-30：[DeepGemini](https://github.com/sligter/DeepGemini)：[AI界的'搭積木'神器，10分鐘打造你的專屬智慧團隊！](https://mp.weixin.qq.com/s/F2U7rWOMvfTyiRai-kfL_A)
 - 2025-03-24：[**AgenticSeek**](https://github.com/Fosowl/agenticSeek)：[又一個“Manus”開源，完全本地化替代品AgenticSeek](https://mp.weixin.qq.com/s/tRZNgG2trzRxScP_fJ29JQ)
+- 2025-03-20：[DeepSearcher](https://zread.ai/zilliztech/deep-searcher)；[DeepSearcher開源：告別傳統RAG，私有資料+Deepseek，打造本地版Deep Research](https://zhuanlan.zhihu.com/p/24273636289)
 - 2025-03-11：[autoMate](https://github.com/yuruotong1/autoMate)：[autoMate:基於OmniParser 所建構的革命性AI自動化助手](https://mp.weixin.qq.com/s/7W0xL3EBJM9mmNZbdZCiiQ)
 - 2025-03-10：[**OpenManus**](https://github.com/mannaandpoem/OpenManus)：[一文讀懂：OpenManus](https://zhuanlan.zhihu.com/p/30090038284)
 - 2025-02-28：[**MoneyPrinterTurbo**](https://github.com/harry0703/MoneyPrinterTurbo)；[Al自動生成高清短視頻](https://zhuanlan.zhihu.com/p/27043978423)
