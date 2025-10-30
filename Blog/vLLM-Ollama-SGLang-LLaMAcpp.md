@@ -13,7 +13,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 ---
 
 **作者**：[TonTon Huang Ph.D.](https://twman.org)  
-**Blog**：[2025年09月30日，vLLM、Ollama、SGLang、 LLaMA.cpp等四大主流熱門LLM服務框架](https://blog.twman.org/2025/09/vLLM-Ollama-SGLang-LLaMAcpp.html)
 
 ---
 
@@ -22,43 +21,7 @@ _深度解析四大主流熱門LLM服務框架_
 
 生產環境高吞吐與低延遲選 vLLM；本地快速上手與多模型管理選 Ollama；複雜代理/結構化工作流選 SGLang；極致輕量與可攜性選 LLaMA.cpp Server。以下從架構原理、性能優化、特性矩陣、部署與運維到選型決策提供完整分析。
 
-### 框架總覽
-- Ollama
-  - 定位：本地多模型管理與即用即啟的服務層，重視易用性與跨平台。
-  - 基礎：以 llama.cpp/ggml/gguf 生態為底，支援 CPU、Apple Silicon GPU，也可用 CUDA。
-  - 強項：Modelfile 自定義、模型管理、OpenAI 兼容 API、單機體驗流暢、離線與隱私。
-- vLLM
-  - 定位：GPU 伺服器上的高吞吐 LLM 推理引擎。
-  - 基礎：PyTorch + 自研高效 kernel，OpenAI 兼容 API，企業級佈署與擴展。
-  - 強項：PagedAttention、連續批次、多 GPU 擴展、LoRA 多適配、JSON/函式工具輸出支持。
-- SGLang
-  - 定位：面向複雜、多步驟、可結構化的 LLM 程式化工作流引擎。
-  - 基礎：LMSYS 團隊，提供前端 DSL 與高效後端（RadixAttention 等），深度整合 PyTorch。
-  - 強項：跨請求 KV 重用、推測解碼、張量並行、結構化/約束輸出與多輪協調。
-- LLaMA.cpp Server
-  - 定位：極致輕量、單一二進位、可在任何硬體上跑的本地服務。
-  - 基礎：純 C/C++ 高效實作，GGUF 量化格式；支援 CPU、CUDA、Apple Metal，甚至 WASM。
-  - 強項：超輕依賴、安裝簡單、離線可用、Grammar/GBNF 約束、嵌入生成。
-
-### 核心機制與性能優化
-- 記憶體/快取
-  - vLLM：PagedAttention 將 KV Cache 做成頁式虛擬記憶體，減少碎片與過度配置，顯著提升 VRAM 利用率與吞吐。
-  - SGLang：RadixAttention 以字首樹共享 KV，適合多分支/多步驟代理流程的跨請求快取復用；並結合連續批次、零開銷排程。
-  - Ollama / LLaMA.cpp：以量化縮小權重與 KV 記憶體需求，在 CPU/Metal 上仍可運作，適合長上下文但吞吐較低。
-- 計算與排程
-  - vLLM：連續批次動態插入新請求，保持 GPU 忙碌；支援張量/流水線並行與多 GPU。
-  - SGLang：推測解碼、Chunked Prefill、張量並行；在多步驟/多路徑程式下維持高效。
-  - LLaMA.cpp：C++/SIMD/Metal/CUDA 核心優化；新增推測解碼、Embedding、語法約束等功能。
-- 量化與精度
-  - Ollama/LLaMA.cpp：主打 4/5/8-bit（GGUF），顯著降低記憶體占用；精度受模型與量化方案影響。
-  - vLLM/SGLang：支援 FP16/BF16，並逐步支援 INT4/FP8/各類 GPTQ/AWQ 等；更適合高端 GPU 場景。
-- 結構化/工具調用
-  - SGLang：DSL 驅動的結構化/約束生成、一致性控制與多步協調最強。
-  - vLLM：支援 OpenAI 風格 JSON 模式/函式（tool）呼叫輸出協議，便於應用遷移。
-  - LLaMA.cpp：GBNF/grammar 約束輸出成熟，對邊緣/離線結構化任務很實用。
-  - Ollama：Modelfile 可預置系統提示與參數，便捷但對多步編排不著力。
-
-### 四大框架特性矩陣（修正版）
+### 四大框架特性矩陣
 
 | 維度 | Ollama | vLLM | SGLang | LLaMA.cpp Server |
 |---|---|---|---|---|
@@ -82,61 +45,115 @@ _深度解析四大主流熱門LLM服務框架_
 | 社群成熟度 | 高 | 高 | 中高（增長快） | **極高** |
 | 代表用例 | 私有助手 / 離線 / PoC | 生產級 API 服務 | 代理 / 工具協作 / 多步任務 | 邊緣 / 離線 / 受限環境 |
 
-### 性能與資源配置要點
-- GPU 記憶體預估
-  - 權重占用約為參數量乘每參數位元組；KV Cache 隨序列長與批次線性增長，長上下文場景請預留富餘 VRAM。
-  - 量化可大幅降低權重體積，但 KV Cache 多以高精度儲存，仍是長對話瓶頸。
-- 典型觀測
-  - vLLM：在並發高且上下文中長時維持高 QPS 與低 P99 延遲，TTFT/TPOT 表現佳。
-  - SGLang：多步/分支代理吞吐顯著優於通用引擎，純生成任務亦具競爭力。
-  - Ollama/LLaMA.cpp：單機體驗流暢、tokens/s 對中小模型尚可；高併發不如 GPU 引擎。
-- 取捨
-  - 量化提升吞吐與可部署性，但可能犧牲部分精度與對齊品質。
-  - 推測解碼在輸出熵較低時收益更大；結構化/強約束輸出會降低純生成吞吐。
+## 核心技術機制對比
 
-### 部署與運維實務
-- 權重與格式
-  - vLLM/SGLang：偏好 HF safetensors；若來源為 GGUF 需回轉換或改用對應模型。
-  - Ollama/LLaMA.cpp：偏好 GGUF；可用轉換工具從 HF 權重導出。
-- 擴展與高可用
-  - vLLM/SGLang：建議以容器化 + Kubernetes 水平擴展，前置一層 OpenAI 兼容閘道；支援多卡與模型分片。
-  - 模型預熱與熱切換：規劃模型快取與權重上傳帶寬，降低載入抖動。
-- 可觀測與治理
-  - 指標：TTFT、TPOT、TPOT/P50/P99、QPS、OOM 次數、上下文長度分佈、Cost/token。
-  - 控流：速率限制、輸入長度上限、並發窗口、最大批次與排程策略。
-  - 安全：日誌脫敏、模型切換權限、多租戶隔離、提示註入防護在應用層實作。
-- 成本優化
-  - 長上下文與高併發混部：使用多池化（短上下文池/長上下文池），或使用專用草稿模型做推測解碼。
-  - LoRA 多適配：vLLM/SGLang 可共用基座模型，減少多版本常駐成本。
+| 維度 | vLLM | SGLang | Ollama / LLaMA.cpp | TensorRT-LLM |
+|---|---|---|---|---|
+| **記憶體/快取** | **PagedAttention** (分頁虛擬記憶體) | **RadixAttention** (字首樹共享) | **量化** (GGUF, 權重壓縮) | 核心級優化 |
+| **批次/排程** | **連續批次** (動態插入) | **連續批次** + 零開銷排程 | 單隊列為主 (Ollama) | 優化的批次處理 |
+| **量化支援** | FP16/BF16 (外掛 GPTQ/AWQ) | FP16/BF16/INT4/FP8 | **GGUF** (4/5/8-bit) | **FP8 / FP4 / INT4** (原生) |
+| **結構化輸出** | JSON / 函式工具模式 | **DSL 驅動** (最強) | **GBNF** (LLaMA.cpp) / 基礎 (Ollama) | 支援有限 |
 
-### 常見情境與建議
-- 個人/小型團隊、離線與隱私優先
-  - 選 Ollama 或 LLaMA.cpp Server。以 4/5-bit 量化跑 7B/13B，VS Code/本地助手最省事。
-- 企業級 API、生產高併發
-  - 選 vLLM。規劃多卡與連續批次，設定 KV 頁面大小、Pin Memory、FlashAttention 後端，並做 P99 目標導向的壓測調參。
-- 代理/工具編排、結構化輸出
-  - 選 SGLang。用 DSL 管控格式、步驟與外部工具呼叫；RadixAttention 降低多分支成本。
-- 邊緣/非 NVIDIA、極低依賴
-  - 選 LLaMA.cpp Server。單一二進位、Metal/WASM 便利；GBNF 輕鬆產出結構化資料。
+## 框架選型總覽表
 
-### 基準測試方法（實務可比性）
-- 工作負載
-  - 純生成（短/中/長輸入）、長上下文（≥32k）、代理式多步/分支、JSON/GBNF 約束輸出。
-- 指標
-  - TTFT、TPOT、整體 tokens/s、QPS@P99、VRAM 佔用、OOM 次數、成本/千 tokens。
-- 程式化測試
-  - 以 OpenAI 兼容 API 發壓，控制溫度、top-p、一致的停止詞與格式要求；同一模型/同一權重/同一精度比對。
+| 框架 | 核心技術/優勢 | 典型適用場景 |
+|---|---|---|
+| **vLLM** | PagedAttention, 連續批次, TTFT優異 | 企業級高併發, 生產級 API 服務 |
+| **SGLang** | RadixAttention (前綴複用), 結構化 DSL | 複雜工作流, 代理/多步驟任務, 高吞吐多輪對話 |
+| **Ollama** | 易用, 本地部署, 多模型管理 (GGUF) | 個人開發, 快速原型, 隱私/離線場景 (Apple Silicon/CPU) |
+| **LLaMA.cpp Server** | C++ 實現, 極致輕量, GBNF 語法約束 | 邊緣設備, 硬體受限環境, 跨平台 (WASM) |
+| **TensorRT-LLM** | NVIDIA 深度優化, 強大量化 (FP8/FP4), 延遲最低 | 對延遲要求極苛刻的應用 (如高頻交易) |
+| **XInference** | 分離式部署 (Prefill/Decode), K8s 分布式 | 大規模分布式部署, 快速驗證 |
+| **LightLLM** | 三進程異步, TokenAttention, 輕量級 | 邊緣設備部署 (手機, IoT) |
+| **LMDeploy** | 國產硬體 (昇騰) 深度優化, 多模態 | 國產硬體部署, 視覺語言混合任務 |
+| **MindSpore Inference** | 昇騰達芬奇架構, CBQ 量化 | 昇騰硬體生態 |
 
-### 與其他選項的關係
-- Text Generation Inference（TGI）：生產級 API 伺服器，管理功能齊全，吞吐不及 vLLM 的場景逐步被替代，但在企業治理與 Triton 集成上仍具價值。
-- TensorRT-LLM/LMDeploy：更偏底層或針對 NVIDIA 最優化的路徑，極致延遲/吞吐可期，但開發/維運門檻較高。
-- MLC LLM：強調跨裝置/瀏覽器部署與可攜性，與 LLaMA.cpp 取向相近。
+# 主流大模型推理部署框架全面梳理
+本文系統性地梳理了當前主流的大模型推理部署框架，深度解析 vLLM、Ollama、SGLang、LLaMA.cpp 及 TensorRT-LLM 等框架的核心技術、架構設計、性能優化與適用場景，並提供完整的選型決策分析。
 
-### 選型決策建議（實操版）
-- 你需要 GPU 上的生產級高吞吐與低延遲 → vLLM（首選），若工作流複雜或需嚴格結構化 → SGLang。
-- 你需要最快落地的本地體驗與模型管理 → Ollama；若硬體極受限或需極致可攜 → LLaMA.cpp Server。
-- 長上下文/多租戶/多 LoRA → vLLM 或 SGLang；JSON/GBNF 嚴格格式 → SGLang 或 LLaMA.cpp。
-- 非 NVIDIA 或離線邊緣 → LLaMA.cpp 或 Ollama；Apple Silicon → Ollama/LLaMA.cpp（Metal）。
+## 核心框架深度解析
+
+以下我們將深入探討幾個最受關注的框架，並補充其他重要的專業框架。
+
+### 1. vLLM：基於 PyTorch 的高性能推理引擎
+vLLM 專為 GPU 伺服器上的高吞吐 LLM 推理而設計，是企業級部署的首選之一。
+
+* **核心技術**：
+    * **PagedAttention（分頁注意力）**：借鑒作業系統的分頁機制，將 KV Cache 儲存在非連續的顯存空間（頁式虛擬記憶體）。這有效解決了顯存碎片問題，將顯存利用率從 60% 提升至 95% 以上，顯著減少了因記憶體過度配置導致的浪費。
+    * **Continuous Batching（連續批處理）**：允許在批次處理過程中動態插入新的請求，確保 GPU 保持持續忙碌狀態，大幅提升吞吐量。
+* **其他特性**：支援多 GPU 擴展、LoRA 多適配器、以及 OpenAI 風格的 JSON 模式與函式（Tool）呼叫。
+* **適用場景**：企業級高併發應用，如線上客服、生產級 API 服務等對延遲與吞吐量要求極高的場景。
+
+### 2. SGLang：面向複雜工作流的程式化引擎
+SGLang (Structured Generation Language) 由 LMSYS 團隊開發，定位為面向複雜、多步驟、可結構化的 LLM 程式化工作流引擎。
+
+* **核心技術**：
+    * **RadixAttention（基數注意力）**：利用 Radix 樹（字首樹）來管理和共享 KV 快取的前綴。這使得在多分支、多步驟的代理（Agent）流程中，能高效地跨請求複用快取，顯著提升複雜任務的吞吐量（在多輪對話場景下可達 vLLM 的數倍）。
+    * **結構化輸出 (DSL)**：提供前端 DSL（領域特定語言），可強力約束模型生成 JSON、函式呼叫或自定義格式，在多步驟協調上表現最強。
+* **其他特性**：支援推測解碼、張量並行、零開銷排程等。
+* **適用場景**：需要高吞吐量的複雜工作流，如代理（Agent）應用、工具協作、多步驟任務、或需要嚴格結構化輸出的場景。
+
+### 3. Ollama：輕量級本地推理與管理平台
+Ollama 注重本地部署的易用性與跨平台體驗，是個人開發者與快速原型的首選。
+
+* **核心技術**：
+    * **Go 語言封裝**：底層整合 llama.cpp/ggml/gguf 生態，並以 Go 語言封裝，提供一鍵部署的流暢體驗（冷啟動僅需 12 秒左右）。
+    * **多模型管理**：支援 `Modelfile` 來自定義模型、系統提示與參數，便於管理和切換本地的多個模型。
+* **其他特性**：支援 CPU、Apple Silicon (Metal GPU) 及 NVIDIA CUDA。支援完全離線運行，確保數據安全與隱私。
+* **適用場景**：個人開發者、教育展示、本地隱私要求高、或在 Apple Silicon 上運行的場景。
+
+### 4. LLaMA.cpp Server：極致輕量的本地伺服器
+LLaMA.cpp 是以純 C/C++ 實現的高效推理實作，其 `server` 模式提供了極致輕量級的部署方案。
+
+* **核心技術**：
+    * **純 C/C++ 實作**：依賴極低，可編譯為單一二進位檔案，具備極高的可攜性。
+    * **GGUF 格式與量化**：深度支援 4/5/8-bit 的 GGUF 量化格式，極大降低記憶體占用。
+    * **GBNF 語法約束**：支援 `Grammar/GBNF` 約束，可嚴格控制模型輸出格式，在邊緣端生成結構化資料時非常實用。
+* **其他特性**：支援 CPU、CUDA、Apple Metal，甚至 WASM (WebAssembly)。
+* **適用場景**：硬體資源極受限的環境、邊緣設備、需要極致可攜性或離線運行的應用。
+
+### 5. TensorRT-LLM：NVIDIA 深度優化推理引擎
+這是 NVIDIA 官方推出的深度優化框架，專注於挖掘 NVIDIA GPU 的極致性能。
+
+* **核心技術**：
+    * **預編譯與核心級優化**：通過 TensorRT 進行全鏈路優化，生成高度優化的引擎檔案，延遲表現通常是最佳的。
+    * **強大量化支援**：支援 FP8、FP4 和 INT4 等多種低精度量化方案，顯存占用可減少 40% 以上。
+* **適用場景**：對響應延遲要求極度苛刻的企業級應用，如即時客服系統、金融高頻交易等。
+
+### 6. XInference：分布式推理框架
+XInference 專為企業級大規模部署設計，特別強調其分布式能力。
+
+* **核心技術**：
+    * **分離式部署**：架構上支援將 Prefill（提示處理）和 Decode（生成）階段分配到不同的 GPU 上運行，優化資源利用。
+    * **K8s 擴展**：支援 Kubernetes 集群擴展，並結合 vLLM 的連續批處理技術優化請求調度。
+* **適用場景**：企業級大規模部署、智能客服系統、知識庫問答，或需要快速驗證的分布式場景。
+
+### 7. LightLLM：輕量級高性能框架
+此框架專為輕量化和邊緣部署設計。
+
+* **核心技術**：
+    * **三進程異步協作**：獨特的架構設計，平衡吞吐量和延遲。
+    * **TokenAttention**：針對 KV Cache 的優化機制。
+* **適用場景**：邊緣設備部署，如智能手機和 IoT 設備。
+
+## 總結與選型建議
+
+大模型推理部署框架的選擇應基於 **業務需求、硬體資源和未來擴展規劃** 綜合考慮：
+
+1.  **企業級高併發與低延遲 (NVIDIA GPU)**：
+    * **vLLM** 是高吞吐 API 服務的首選。
+    * **TensorRT-LLM** 適用於對 P99 延遲要求最為苛刻的場景。
+
+2.  **複雜工作流與高吞吐 (NVIDIA GPU)**：
+    * **SGLang** 在代理（Agent）、工具編排或需要嚴格結構化輸出的多步驟任務上具有明顯優勢。
+
+3.  **個人開發/本地/隱私優先**：
+    * **Ollama** 提供最佳的易用性、模型管理和跨平台（尤其是 Apple Silicon）體驗。
+    * **LLaMA.cpp Server** 適用於需要極致輕量、低依賴或 GBNF 語法約束的本地場景。
+
+4.  **邊緣/硬體受限/跨平台**：
+    * **LLaMA.cpp Server** 憑藉其 C++ 核心和 GGUF 格式，是資源受限環境的首選。
+    * **LightLLM** 專為手機、IoT 等邊緣設備設計。
 
 
 <script type="application/ld+json">
