@@ -19,8 +19,6 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 # Dify、Coze、n8n、AutoGen、LangChain
 _快速梳理理解熱門 Agent 框架_
 
-最簡易上手與企業級可視化選 Dify/Coze/n8n；深度可編程、多智能體與可控狀態機選 LangChain/AutoGen/CrewAI。以下從架構、能力、限制、場景與選型決策全面梳理六大主流智能體框架。
-
 ### 核心能力橫向對比
 
 | 維度 | Dify | Coze | n8n | AutoGen | LangChain / LangGraph | CrewAI |
@@ -36,13 +34,11 @@ _快速梳理理解熱門 Agent 框架_
 | 生態與社群 | 高 (企業導向) | 高 (平台導向) | 高 (自動化社群) | 學研 / 高階工程 | **極高 (連接器最豐、生態廣)** | 中高 (社群成長快速) |
 | 代表強項 | 企業可視化 + RAG 全家桶 | 0→1 快速上線 | 系統整合王者 | 對話式多 Agent | 工程化 / 狀態機 / 生態整合 | 角色分工式協作 |
 
-這是一份為您匯整兩篇文章內容後，產出的繁體中文 Markdown 報告：
-
 ---
 
 # 主流智能體 (Agent) 框架全面梳理與對比分析
 
-本文系統性地梳理了當前六大主流的智能體 (Agent) 框架：**Dify、Coze (扣子)、n8n、AutoGen、LangChain (含 LangGraph) 及 CrewAI**。我們將從架構定位、核心能力、多智能體協作、安全治理、部署整合及適用場景等多個維度進行深入對比與分析。
+系統性地梳理了當前六大主流的智能體 (Agent) 框架：**Dify、Coze (扣子)、n8n、AutoGen、LangChain (含 LangGraph) 及 CrewAI**。從架構定位、核心能力、多智能體協作、安全治理、部署整合及適用場景等多個維度進行深入對比與分析。
 
 ## 智能體 (Agent) 框架基本概念
 

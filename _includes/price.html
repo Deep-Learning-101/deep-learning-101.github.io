@@ -42,17 +42,3 @@
 | **阿里** | **通義千問 Max** | $0.33 | $1.34 | 131072 | 文/圖 | [Qwen Pricing](https://help.aliyun.com/zh/model-studio/models) |
 | **百度** | **文心大模型4.5/X1** | $0.56/0.26 | $2.23/1.11 | ❓ | 文/圖 | [Baidu Pricing](https://cloud.baidu.com/doc/WENXINWORKSHOP/s/Jlk3504vl) |
 
-### **大型語言模型與Agent安全工具比較**  ~ 2025年08月08日
-
-| 工具/資源名稱 | 開發者/來源 | 核心本質 | 主要用途/功能 | 運作方式 | 適用情境 |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **[agentic-radar](https://github.com/splx-ai/agentic-radar)** | `splx-ai` | **綜合性安全套件**<br>(靜態+動態) | 分析代理 (Agent) 的工作流程、組件，並進行動態測試與提示詞強化。 | 靜態掃描原始碼以繪製工作流程圖；動態測試則實際運行代理以測試其行為。 | 開發早期進行架構審查，並在同一個工具中完成初步的動態測試。 |
-| **[agentic_security](https://github.com/msoedov/agentic_security)** | `msoedov` | **動態模糊測試工具**<br>(Dynamic Fuzzer) | 攻擊運作中的 LLM API，以發現提示詞注入等運行時漏洞。 | 向指定的 HTTP 端點發送大量預設的攻擊提示詞。 | 對任何 LLM API 進行快速、靈活的黑箱滲透測試。 |
-| **[garak](https://github.com/NVIDIA/garak)** | NVIDIA | **自動化紅隊演練工具**<br>(Automated Red Teaming) | 系統性地、全面地掃描 LLM 的各種漏洞（偏見、洩漏、注入等）。 | 使用「探針 (Probes)」發動攻擊，並用「偵測器 (Detectors)」評估結果。 | 模型部署前的全面安全評估、基準測試、以及定期的安全審計。 |
-| **[llm-guard](https://github.com/protectai/llm-guard)** | `protectai` | **防禦性函式庫/防火牆**<br>(Defensive Firewall) | 作為應用程式的安全層，過濾和淨化進出 LLM 的數據。 | 使用可插拔的「掃描器 (Scanners)」管道來檢查和修改輸入/輸出內容（如匿名化個資）。 | 在應用程式程式碼中建立即時的、可客製化的執行時期安全防護。 |
-| **[ShieldGemma 2](https://deepmind.google/models/gemma/shieldgemma-2/)** | Google DeepMind | **專家級安全分類模型**<br>(Specialist Safety Model) | 判斷文字內容是否違反多項安全策略（如仇恨言論、騷擾等）。 | 一個經過微調的 LLM，對輸入文字進行深度語意理解並輸出安全標籤。 | 作為一個強大的分類器，對需要精準語意判斷的內容進行安全審核。 |
-| **[JailBreakV-28k](https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k)** | Hugging Face | **資料集 (Dataset)** | 提供大量用於測試和研究 LLM 越獄漏洞的「提示詞-圖片-模型-回應」數據。 | 一個包含 28,000+ 筆紀錄的資料庫，用於訓練和評估安全模型。 | 學術研究、訓練自訂的攻擊檢測模型、或評估模型的安全性。 |
-
-- **攻擊方 (矛)**：`garak` 和 `agentic_security` 是主動的攻擊工具，用來在部署前後找出系統的弱點。`garak` 更像一個全面、系統化的掃描器，而 `agentic_security` 則像一個靈活的模糊測試工具。
-- **防守方 (盾)**：`llm-guard` 和 `ShieldGemma` 是被動的防禦工具，用來在應用程式運行時即時阻擋攻擊和過濾內容。`llm-guard` 是一個高度客製化的「工具箱」，而 `ShieldGemma` 則是一個專注於語意理解的「專家」。
-- **綜合與特定框架工具**：`agentic-radar` 是一個結合了靜態分析（看藍圖）和動態分析（實地測試）的綜合性工具，特別適合審查使用特定代理框架的專案。
