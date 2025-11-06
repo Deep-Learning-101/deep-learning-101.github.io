@@ -14,9 +14,9 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # AIxCC 冠軍 Atlanta 團隊「ATLANTIS」系統關鍵重點解析
 
-> 同步匯整自 [https://zread.ai/Team-Atlanta/aixcc-afc-atlantis](https://zread.ai/Team-Atlanta/aixcc-afc-atlantis)
-> 同步匯整自 [`Team-Atlanta/aixcc-afc-atlantis`](https://github.com/Team-Atlanta/aixcc-afc-atlantis)：包含 AIxCC 總決賽中提交的原始程式碼
-> 同步匯整自 [AIxCC狀元探秘](https://mp.weixin.qq.com/s/Ffy1e6ojxj1VhrigQvtgHw)
+> 同步匯整自 [https://zread.ai/Team-Atlanta/aixcc-afc-atlantis](https://zread.ai/Team-Atlanta/aixcc-afc-atlantis)  
+> 同步匯整自 [`Team-Atlanta/aixcc-afc-atlantis`](https://github.com/Team-Atlanta/aixcc-afc-atlantis)：包含 AIxCC 總決賽中提交的原始程式碼  
+> 同步匯整自 [AIxCC狀元探秘](https://mp.weixin.qq.com/s/Ffy1e6ojxj1VhrigQvtgHw)  
 
 針對 DARPA AI 網路挑戰賽（AIxCC）解析冠軍團隊 Team-Atlanta 所開發的網路推理系統（CRS）——「ATLANTIS」的關鍵技術、架構和核心策略。
 
