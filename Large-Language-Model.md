@@ -142,6 +142,7 @@ service_type: GenAI Consulting
 
 ---
 
+- 2025-11-15：[Agno](https://zread.ai/agno-agi/agno/)；[Agno 架構介紹：高性Multi-agent 系統框架深度解析](https://zhuanlan.zhihu.com/p/1945395802844410466)
 - 2025-10-28：[Tongyi DeepResearch](https://zread.ai/Alibaba-NLP/DeepResearch)；[通義DeepResearch全面開源，超越openai deep research閉源框架](https://zhuanlan.zhihu.com/p/1951785880655209261)
 - 2025-10-28：[DeepAgent](https://zread.ai/RUC-NLPIR/DeepAgent)；[DeepAgent: 首個全自主的深度推理智能體，可擴展大規模工具集](https://zhuanlan.zhihu.com/p/1966457879335798713)
 - 2025-10-19：[Gemini Computer Use](https://ai.google.dev/gemini-api/docs/computer-use)；[Google推出Gemini 2.5 Computer Use讓AI代理能操作網頁介面](https://www.ithome.com.tw/news/171579)
