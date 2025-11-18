@@ -117,14 +117,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 | 產業類別 | 公司名稱 | 落地應用 / 平台名稱 | 具體流程優化 (實際案例) | 開發模式 (推測) |
 | :--- | :--- | :--- | :--- | :--- |
-| **金融業** | 玉山金控 (E.Sun FHC) | [內部 "GENIE" 平台](https://www.ithome.com.tw/news/162551) | • 輔助 IT 撰寫程式碼<br>• 輔助法遵比對法規文件<br>• 輔助業務撰寫 KYC 報告 | **In-House 主導** (串接 Azure OpenAI) |
-| **金融業** | 國泰金控 (Cathay FHC) | [GAIA 2.0](https://www.cathayholdings.com/holdings/lastest_news/news_archive/newsarticle?newsID=8-0C1qzaP0aGC2qHopqJCg) | • 升級版智能助理阿發<br>• Agent Workspace可控環境<br>• 升級智能客服 "阿發" | **In-House 主導** (串接 Azure OpenAI) |
-| **金融業** | 富邦金控 (Fubon FHC) | [導入保險核心業務](https://www.wealth.com.tw/articles/523ae02c-79a9-4cf4-86cd-3d8ac41886c4) | • 【核保】自動摘要體檢報告<br>• 【理賠】自動分析診斷書與單據 | **In-House / 混合** |
-| **電信業** | 中華電信 (Chunghwa) | [DeepVoice 分析平台](https://www.cht.com.tw/home/enterprise/news/latest-news/2024/0727-1400) | • 客服全量通話進行情緒與意圖分析<br>• AI 輔助 5G 基地台選址 | **In-House / 混合** |
-| **電信業** | 台灣大哥大 (TWM) | [智能客服 小麥](https://www.cio.com.tw/taiwans-big-brother-corporate-services-join-hands-to-help-business-use-generative-ai-to-strengthen-competitiveness/) | • 支援更複雜的多輪對話<br>• 提供個性化行銷與產品推薦 | **In-House + PaaS** |
 | **科技業** | 聯發科 (MediaTek) | [晶片產品 (如 T930)](https://www.compotechasia.com/a/press/2025/0514/60698.html) | • 將 GenAI 功能落地到終端 (Edge AI)<br>• (非內部流程，而是核心產品) | **產品整合** |
 | **科技業** | 華碩 (ASUS) | [ASUS AI Assistant](https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000737026_71U1LXM51QRSZD7G0HKXG) | • 內部 AI 知識庫<br>• IT 營運維護助手 | **混合 (共同開發)** (與 Microsoft 合作) |
-| **智慧製造** | 鴻海 (Foxconn) | [AI 工廠](https://www.cio.com.tw/91467/) | • 學習老師傅經驗 (如注塑)<br>• 數位孿生與物流模擬 | **In-House / 混合** |
 | **零售電商** | PChome 網路家庭 | [提升搜尋與消費者體驗](https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=2c58fe2d-92b6-4537-8266-ae574e08f11a) | • 優化站內「語意搜尋」的理解力<br>• 自動化生成「商品文案」 | **雲平台 (PaaS)** (與 Google Cloud 合作) |
 | **零售電商** | 富邦媒體 (momo) | [商品內容檢測](https://www.ithome.com.tw/news/171279) | • "AI 虛擬主播" (直播帶貨)<br>• "AI 智慧選品" (輔助生成文案) | **混合 (In-House + PaaS)** |
 | **傳統產業** | 台塑集團 (FPG) | [導入工安、ESG](https://esg.businesstoday.com.tw/article/category/180689/post/202502260030) | • 輔助撰寫 ESG 報告書草稿<br>• 工安事件分析與通報建議 | **In-House** (透過台塑網) |
@@ -134,7 +128,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 <h2 id="introduction">導論</h2>
 
-企業導入 AI 的旅程，就如同在充滿潛在回報但也遍布陷阱的挑戰。多數專案的沒有然，並非因為 AI 技術本身，而是因為某個關鍵階段迷失了方向。本本將根據自身體驗以及相關文章提供的指南，供一份實踐路線圖，提供企業從「如何開始」出發，走過戰略、基礎建設、人員治理等關鍵階段，並特別標示出在每個階段最容易犯下的錯誤，以及如何應對生成式 AI（GenAI）帶來的全新挑戰。
+企業導入 AI 的旅程，就如同在充滿潛在回報但也遍布陷阱的挑戰。多數專案的然後沒有然後，並非因為 AI 技術本身，而是因為某個關鍵階段迷失了方向。本本將根據自身體驗以及相關文章提供的指南，供一份實踐路線圖，提供企業從「如何開始」出發，走過戰略、基礎建設、人員治理等關鍵階段，並特別標示出在每個階段最容易犯下的錯誤，以及如何應對生成式 AI（GenAI）帶來的全新挑戰。
 
 <h2 id="prologue-why-now">序：為何是現在？</h2>
 
