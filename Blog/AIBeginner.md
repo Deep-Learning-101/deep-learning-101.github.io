@@ -124,7 +124,64 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 | **傳統產業** | 台塑集團 (FPG) | [導入工安、ESG](https://esg.businesstoday.com.tw/article/category/180689/post/202502260030) | • 輔助撰寫 ESG 報告書草稿<br>• 工安事件分析與通報建議 | **In-House** (透過台塑網) |
 | **運輸服務** | 華航 | [AI客服](https://www.china-airlines.com/cn/zh/discover/news/press-release/20250522) | • AI 客服處理複雜票務 (改票、差價)<br>• 輔助分析師「生成」動態定價建議 | **顧問/SI 導入** |
 
------
+---
+
+Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何做」到「如何做」的全球趨勢：
+* [1,001 real-world gen AI use cases from the world's leading organizations](https://blog.google/products/google-cloud/gen-ai-business-use-cases/) - Oct 09, 2025
+    * 文章中，Google 揭示了全球企業的 GenAI 案例在 1.5 年內從 101 個激增至 1,001 個。這傳達了一個明確的訊號：**GenAI 已是主流，而非實驗**。
+    * 文中更直接亮出可證明的商業回報，例如 **Mercari** 預期 500% ROI 並減少 20% 工作量，**Virgin Voyages** 一次生成數千個廣告。這旨在向企業 C 級主管證明，GenAI 是可帶來真實利潤的商業決策。  
+* [101 gen AI use cases with technical blueprints](https://cloud.google.com/blog/u/2/products/ai-machine-learning/real-world-gen-ai-use-cases-with-technical-blueprints) - August 22, 2025
+    * 文章中，Google 接著提供了「技術藍圖」。這是在回應企業的下一個問題：「我們沒有人才，該怎麼辦？」
+    * Google 的答案是提供可複製的「架構食譜」和工具（如 Vertex AI, Gemini），讓企業**不必重新發明輪子**，大幅降低導入的技術門檻和人才依賴。
+
+---
+
+#### Google 的六大 AI 代理類型 (The "Agents")
+
+**1. 客戶代理 (Customer Agents)：**
+
+* **目的：** 專注於優化外部客戶體驗、客服與互動。
+* **實際案例：**
+    * **汽車業：** **MercedesBenz** 正在打造能與駕駛自然對話的汽車；**Volkswagen** 在其 app 中建置了虛擬助理，讓車主能用語音詢問手冊問題，甚至用相機拍攝儀表板燈號來獲取資訊。
+    * **電信/科技業：** 台灣的 **LUXGEN (納智捷)** 使用 Vertex AI 驅動其 LINE 官方帳號的 AI 客服，減少了 30% 的真人客服工作量。
+
+**2. 員工代理 (Employee Agents)：**
+
+* **目的：** 專注於提升內部員工的生產力。
+* **實際案例：**
+    * **金融業：** 全球銀行 **BBVA** 的員工使用 Gemini 總結郵件、查找資訊，平均每週節省近三小時；**Commerzbank (德國商業銀行)** 利用 Gemini 1.5 Pro 自動記錄客戶通話，釋放了財務顧問的時間。
+    * **製造業：** **Geotab** (全球最大車載資通訊公司之一) 的員工使用 Google Workspace 中的 Gemini 來進行研究、文件摘要、審查法律文件等。
+
+**3. 創意代理 (Creative Agents)：**
+
+* **目的：** 專注於加速與規模化內容的生成。
+* **實際案例：**
+    * **媒體/廣告業：** **PODS** (搬家與儲存公司) 利用 Gemini 打造了「世界上最智能的廣告看板」，能在紐約市 299 個社區即時生成超過 6,000 個獨特標語。
+    * **設計業：** **Figma** 讓任何組織都能在幾秒鐘內創建高品質、符合品牌規範的圖片和資產。
+
+**4. 程式碼代理 (Code Agents)：**
+
+* **目的：** 專注於提升 IT 與開發者的效率。
+* **實際案例：**
+    * **科技業：** **SAP** 正在其業務技術平台中使用 Vertex AI 和 Gemini，讓開發者能更快建構應用。
+    * **金融業：** **FinQuery** (金融科技公司) 的工程師團隊使用 Gemini 來協助偵錯程式碼和評估新的監控工具。
+
+**5. 數據代理 (Data Agents)：**
+
+* **目的：** 專注於簡化數據分析與洞察。
+* **實際案例：**
+    * **金融業：** **Deutsche Bank (德意志銀行)** 創建了 "DB Lumina"，一個 AI 研究工具，能將過去需要數小時甚至數天的分析報告時間縮短到幾分鐘。
+    * **科技業：** **Temporal** (開發平台) 利用 Vertex AI 自動將 80% 的工單 (support tickets) 分類，以洞察客戶需求趨勢。
+
+**6. 安全代理 (Security Agents)：**
+
+* **目的：** 專注於強化企業的資安防禦。
+* **實際案例：**
+    * **資安業：** **Rubrik** (網路安全公司) 正在利用 Agentspace 中的知識代理來發展更深的客戶洞察，並為銷售互動做準備。
+    * **運輸業：** **704 Apps** (運輸 App) 在行程中利用 Gemini 分析車內對話的音訊，以偵測「搶劫」、「綁架」等敵意詞彙，即時產生警報以預防風險。
+
+**分析結論：**
+這種「(1) 案例創造需求」->「(2) 藍圖降低門檻」->「(3) 代理定義場景」的策略，清楚地表明了 GenAI 正在進入**規模化導入**的階段。這也為台灣企業提供了明確的訊號：即使內部缺乏頂尖 AI 人才，也能透過善用雲端服務商的工具和藍圖，從最成熟的「客戶代理」(如您表格中的中華電信、華航) 或「員工代理」(如玉山金控) 開始，快速啟動轉型。
 
 <h2 id="introduction">導論</h2>
 
