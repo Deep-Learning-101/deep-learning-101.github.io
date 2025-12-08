@@ -101,6 +101,7 @@ service_type: GenAI Consulting
 
 ---
 
+- 2025-11-20：[LinearRAG](GitHub：https://github.com/DEEP-PolyU/LinearRAG)；[全新RAG框架LinearRAG:無需關係抽取，高效又精準！超越GraphRAG和LightRAG](https://zhuanlan.zhihu.com/p/1975321777342260763)
 - 2025-09-11：[DeepMCPAgent](https://zread.ai/cryxnet/DeepMCPAgent)；[DeepMCPAgent 教你如何讓模型自己「找工具」！](https://mp.weixin.qq.com/s/Sj_7i1mTJ9WYaTlCzIqCFA)
 - 2025-07-30：[langextract](https://github.com/google/langextract)；[隆重推出 LangExtract：由 Gemini 驅動的資訊擷取庫](https://developers.googleblog.com/zh-hans/introducing-langextract-a-gemini-powered-information-extraction-library/)
 - 2025-07-26：[presenton](https://github.com/presenton/presenton)；[一款可本地部署的開源AI PPT項目，一鍵生成精美PPT](https://mp.weixin.qq.com/s/QTMVGD_aP41qrwtbjLxV8Q)
@@ -127,6 +128,7 @@ service_type: GenAI Consulting
 - 2025-01-13：[DocAligner](https://github.com/ZZZHANG-jx/DocAligner)：[拍照文件復原：校正扭曲、光照陰暗、版面定位](https://mp.weixin.qq.com/s/Bra9h3ExddB5NiH1g4uk1g)
 - 2025-01-13：[PPTAgent](https://github.com/icip-cas/PPTAgent)；[中科院開源AI工具，自動將文件轉化為高品質PPT](https://zhuanlan.zhihu.com/p/18105237248)
 - 2025-01-07：[activepieces](https://github.com/activepieces/activepieces)：[一個開源的AI自動化工作流程工具](https://mp.weixin.qq.com/s/Z17KtGyAH5YI4R-VY1fgng)
+- 2024-12-19：[LightRAG](https://github.com/HKUDS/LightRAG)；[LightRAG技術框架解讀](https://zhuanlan.zhihu.com/p/13261291813)
 - 2024-12-15：[markitdown](https://github.com/microsoft/markitdown)
 
 
@@ -229,6 +231,7 @@ service_type: GenAI Consulting
    - [TEN Framework 入坑记](https://mp.weixin.qq.com/s/ZVZHNP0XPwzGapWWqTk1kw)
    - [使用 TEN Agent 搭建 Conversation AI Agent](https://uy6npdpeoi.feishu.cn/docx/EAWYdWWO7ormNPxUhyVcO3GSnUc)
 - [pipecat](https://github.com/pipecat-ai/pipecat)：[OpenAI工程師親自修訂：用ChatGPT即時語音API建立應用](https://www.jiqizhixin.com/articles/2025-01-10-4)
+- 2025-11-03：[LongCat-Flash-Omni](https://huggingface.co/meituan-longcat/LongCat-Flash-Omni)；[LongCat-Flash-Omni正式發布並開源：開啟全模態即時互動時代](https://zhuanlan.zhihu.com/p/1968699530762491165)
 - 2025-07-21：[Audio Flamingo 3 @ NVIDIA](https://github.com/NVIDIA/audio-flamingo)；[NVIDIA 開源多模態音訊模型Audio Flamingo 3](https://www.oschina.net/news/361477/nvidia-audio-flamingo-3)
 - 2025-05-08：[Voila](https://github.com/maitrix-org/Voila)；[新型開源端對端AI 語音模型！ Voila：195ms 超低延遲引領全雙工對話！](https://zhuanlan.zhihu.com/p/1903776373765547954)
 - [HuggingFace Speech-to-Speech](https://github.com/huggingface/speech-to-speech)
