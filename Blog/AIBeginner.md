@@ -104,6 +104,7 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 | **4. 內部知識與支援** | • 內部知識庫 / AI Agent<br>• IT / 營運維護助手 | 華碩（科技） | ASUS AI Assistant：內部知識庫、IT 營運維護助手 | [ASUS AI](https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000737026_71U1LXM51QRSZD7G0HKXG) | 混合 (共同開發, 與 Microsoft 合作) |
 | **5. IT 與研發 (R&D) 效能** | • 程式碼輔助<br>• 研發流程加速 | 聯發科（科技） | 晶片產品 (如 T930)：GenAI 功能落地到終端 (Edge AI) | [MediaTek](https://www.compotechasia.com/a/press/2025/0514/60698.html) | 產品整合 |
 
+![台灣上市櫃公司 GenAI 落地應用整合總表（2024–2025，可查證公開資料）](genai2025-notebookLM.png)
 
 ---
 
@@ -158,6 +159,8 @@ Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何
 ---
 
 #### 三、 Google 的六大 AI 代理類型 (The "Agents")
+
+![Google 的六大 AI 代理類型 (The "Agents")](google101-notebookLM.png)
 
 為了讓這個「組合拳」策略更有體感，Google 進一步將應用分為六種 AI 代理類型，作為企業思考 Gen AI 導入策略時的絕佳切入點：
 
