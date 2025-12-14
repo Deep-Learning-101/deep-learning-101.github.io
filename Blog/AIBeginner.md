@@ -59,8 +59,8 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
-* [GenAI 落地應用核心領域統計表](#genai)
 * [台灣上市櫃公司 GenAI 實際落地案例總表 (2024-2025)](#genai2025)
+* [Gen AI 落地實戰：Google 的「從靈感到食譜」全球策略](#google101)
 * [企業 AI新賽局 入門策略實踐路線圖：從策略到治理，避開致命陷阱](#AIBeginner)
 * [Introduction (導論)](#introduction)
 * [Prologue: Why Now? (序：為何是現在？)](#prologue-why-now)
@@ -80,58 +80,36 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
     * [Mistake 10: IP Risk (致命錯誤10：智財權風險)](#c4-mistake-10-ip-risk)
 * [Conclusion (結論)](#conclusion)
 
----
-
-<h2 id="AIBeginner">企業 AI新賽局 入門策略實踐路線圖：從策略到治理，避開致命陷阱</h2>
-
-
-第一波夯起來的時間估計是 2016年 Google DeepMind 的 Alpha Go 吧，但深度學習確實很難實際的被應用到各行各業，特別是台灣，在那幾年，做個規則式的聊天機器人，或者廣告點擊，可能就會先用新聞稿把自己吹成 AI 大神或新創了。第二波就是 Open AI 橫空出世的ChatGPT了，然後四處都能看到大家都說自己有GenAI，可惜可能連個幾張消費型的4090等級的GPU都沒有，更別說已屬上世代的V100 或者連 GCP、AWS跟Azure的GPU都沒啟用設定過吧？就目前體驗，雖然已有不少國外的新聞或資訊報導可能碰上的問題。  
-
-但這裡是 **『台灣』**，通常更可能發生：
-- 高層心血來潮的玻璃心：因為新聞都在報 GenAI，所以不跟著 Gen 一下好像都對不起自己的職級；BUT，高層完全不懂也不想懂更不想花錢，就是做就對了 !
-- 昂貴設備的高風險投資：據記憶，曾處理過 A100*4 以及 RTX 6000 Ada * 8 (皆約$330萬新台幣)，這是地端自建價格；至於[雲端API請參考這](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark#%E7%B8%BD%E9%AB%94%E6%88%B0%E7%95%A5%E6%AF%94%E8%BC%83%E4%B8%89%E5%A4%A7%E5%85%AC%E6%9C%89%E9%9B%B2-ai-%E5%B9%B3%E5%8F%B0)
-- 必要性的業務優化需求：千萬不要為了 AI 而 AI，而是要有專業人員先參與評估可以優化那些內部業務需求，如果不知道，也不想找人評估，那行政單據OCR應該會是最容易讓高層看到效果的試金石了。
-- 低薪資但高回報的人力：全台都在喊需要AI人才，特別讓人懷念所謂的資安即國安的口號；無奈，不說所謂只給的出香蕉來請猴子，現在是怕給了也找不到猴子啊。
-
-儘管如前所述，台灣企業在導入 AI 的過程中，確實存在高層心態、成本投入 與人才 等多重挑戰；然而，這並不代表所有企業都只是停滯不前高大上；在金融、電信、製造與半導體龍頭，已陸續發布了具體的 GenAI 落地產品或內部流程優化案例可以參考。
-
------
-
-<h2 id="genai">GenAI 落地應用核心領域統計表</h2>
-
-*(僅基於 2024-2025 年可查證之公開新聞)*
-
-| 應用領域分類 | 核心應用類型 (具體案例) | 主要案例公司 (產業代表) | 分析與洞察 |
-| :--- | :--- | :--- | :--- |
-| **1. 客戶互動與服務** | • **客服全量分析：** 分析所有通話的情緒與意圖 (DeepVoice)<br>• **智能客服升級：** 導入 GenAI 進行語意分析，處理複雜問題<br>• **提升消費者體驗：** 利用 AI 優化搜尋或使用者需求 | • 中華電信 (電信)<br>• 中華航空 (運輸)<br>• 台灣大哥大 (電信)<br>• PChome (電商) | • **最成熟的應用**<br>• 這是公開案例最多的領域。GenAI 能立即優化成本（客服）和體驗（搜尋），ROI 明確。 |
-| **2. 法遵、風控與合規** | • **KYC/法遵：** 輔助 KYC 調查、法規文件比對<br>• **核保：** AI 輔助職業代碼推薦，提升核保效率<br>• **商品合規：** GenAI 偵測違規商品內容（圖片/文字）<br>• **工安合規：** AI 影像辨識人員防護穿戴 | • 玉山金控 (金融)<br>• 富邦金控 (金融)<br>• 富邦媒體 momo (電商)<br>• 台塑集團 (傳產) | • **剛性需求**<br>• 金融、電商、傳產都面臨高度監管。利用 AI 處理合規性與風控是關鍵痛點。 |
-| **3. 智慧製造與營運** | • **專家知識傳承：** 捕捉專家知識，處理 80% 標準化工作 (AI Factory)<br>• **營運優化：** AI 優化鍋爐，減少燃煤，提升效率 | • 鴻海 (製造)<br>• 台塑集團 (傳產) | • **內部核心機密**<br>• 這是「最少被公開報導」的領域。鴻海的分享相對罕見，多數製造業將此視為競爭機密。 |
-| **4. 內部知識與支援** | • **內部知識庫：** AI Agent 即時回應產品規格、保固等複雜查詢<br>• **內部營運分析：** 平台分析顧客情緒 (GENIE) | • 華碩 (科技)<br>• 玉山金控 (金融) | • **提升效率**<br>• 旨在賦能員工。華碩與微軟的合作是明確的落地案例，取代過去的 FAQ 查詢。 |
-| **5. IT 與研發 (R\&D) 效能** | • (無公開可查證的具體案例) | • (N/A) | • **高度機密 / 尚無新聞**<br>• 雖然「程式碼輔助」是 GenAI 最常見的應用，但企業**鮮少會為此發布新聞稿**。 |
-
-如上表格所呈現，可以注意到兩大主流，應用最廣的是「對外」的客戶互動 (第1類) 和「對內」的 IT/研發 (第2類)；產業特性明顯： 金融/電信業 集中在「客服」和「法遵/IT」。 製造/半導體 則全力投入「研發」和「工廠製造 (第3類)」。模式清晰： 企業並非為了 AI 而 AI，而是將 GenAI 明確地應用於其最關鍵的成本中心（如客服、製造）或價值中心（如研發、行銷）。
-
 -----
 
 <h2 id="genai2025">台灣上市櫃公司 GenAI 實際落地案例總表 (2024-2025)</h2>
 
-| 產業類別 | 公司名稱 | 落地應用 / 平台名稱 | 具體流程優化 (實際案例) | 開發模式 (推測) |
-| :--- | :--- | :--- | :--- | :--- |
-| **金融業** | 玉山金控 (E.Sun FHC) | [內部 "GENIE" 平台](https://www.ithome.com.tw/news/162551) | • 輔助 IT 撰寫程式碼<br>• 輔助法遵比對法規文件<br>• 輔助業務撰寫 KYC 報告 | **In-House 主導** (串接 Azure OpenAI) |
-| **金融業** | 國泰金控 (Cathay FHC) | [GAIA 2.0](https://www.cathayholdings.com/holdings/lastest_news/news_archive/newsarticle?newsID=8-0C1qzaP0aGC2qHopqJCg) | • 升級版智能助理阿發<br>• Agent Workspace可控環境<br>• 升級智能客服 "阿發" | **In-House 主導** (串接 Azure OpenAI) |
-| **金融業** | 富邦金控 (Fubon FHC) | [導入保險核心業務](https://www.wealth.com.tw/articles/523ae02c-79a9-4cf4-86cd-3d8ac41886c4) | • 【核保】自動摘要體檢報告<br>• 【理賠】自動分析診斷書與單據 | **In-House / 混合** |
-| **電信業** | 中華電信 (Chunghwa) | [DeepVoice 分析平台](https://www.cht.com.tw/home/enterprise/news/latest-news/2024/0727-1400) | • 客服全量通話進行情緒與意圖分析<br>• AI 輔助 5G 基地台選址 | **In-House / 混合** |
-| **電信業** | 台灣大哥大 (TWM) | [智能客服 小麥](https://www.cio.com.tw/taiwans-big-brother-corporate-services-join-hands-to-help-business-use-generative-ai-to-strengthen-competitiveness/) | • 支援更複雜的多輪對話<br>• 提供個性化行銷與產品推薦 | **In-House + PaaS** |
-| **科技業** | 聯發科 (MediaTek) | [晶片產品 (如 T930)](https://www.compotechasia.com/a/press/2025/0514/60698.html) | • 將 GenAI 功能落地到終端 (Edge AI)<br>• (非內部流程，而是核心產品) | **產品整合** |
-| **科技業** | 華碩 (ASUS) | [ASUS AI Assistant](https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000737026_71U1LXM51QRSZD7G0HKXG) | • 內部 AI 知識庫<br>• IT 營運維護助手 | **混合 (共同開發)** (與 Microsoft 合作) |
-| **智慧製造** | 鴻海 (Foxconn) | [AI 工廠](https://www.cio.com.tw/91467/) | • 學習老師傅經驗 (如注塑)<br>• 數位孿生與物流模擬 | **In-House / 混合** |
-| **零售電商** | PChome 網路家庭 | [提升搜尋與消費者體驗](https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=2c58fe2d-92b6-4537-8266-ae574e08f11a) | • 優化站內「語意搜尋」的理解力<br>• 自動化生成「商品文案」 | **雲平台 (PaaS)** (與 Google Cloud 合作) |
-| **零售電商** | 富邦媒體 (momo) | [商品內容檢測](https://www.ithome.com.tw/news/171279) | • "AI 虛擬主播" (直播帶貨)<br>• "AI 智慧選品" (輔助生成文案) | **混合 (In-House + PaaS)** |
-| **傳統產業** | 台塑集團 (FPG) | [導入工安、ESG](https://esg.businesstoday.com.tw/article/category/180689/post/202502260030) | • 輔助撰寫 ESG 報告書草稿<br>• 工安事件分析與通報建議 | **In-House** (透過台塑網) |
+*(僅基於 2024-2025 年可查證之公開新聞)*
+
+如表格所呈現，可以注意到兩大主流，應用最廣的是「對外」的客戶互動 (第1類) 和「對內」的 IT/研發 (第2類)；產業特性明顯： 金融/電信業 集中在「客服」和「法遵/IT」。 製造/半導體 則全力投入「研發」和「工廠製造 (第3類)」。模式清晰： 企業並非為了 AI 而 AI，而是將 GenAI 明確地應用於其最關鍵的成本中心（如客服、製造）或價值中心（如研發、行銷）。
+
+## 台灣上市櫃公司 GenAI 落地應用整合總表（2024–2025，可查證公開資料）
+
+| 核心應用領域 | 核心應用類型 | 公司（產業代表） | 實際落地案例 / 平台名稱 | 參考鏈結 | 開發模式 |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **1. 客戶互動與服務** | • 客服全量分析<br>• 智能客服<br>• 搜尋 / 消費者體驗優化 | 中華電信（電信） | DeepVoice 分析平台：客服全量通話情緒與意圖分析，AI 輔助 5G 基地台選址 | [DeepVoice](https://www.cht.com.tw/home/enterprise/news/latest-news/2024/0727-1400) | In-House / 混合 |
+|  |  | 台灣大哥大（電信） | 智能客服「小麥」：支援多輪對話，個性化行銷與產品推薦 | [智能客服 小麥](https://www.cio.com.tw/taiwans-big-brother-corporate-services-join-hands-to-help-business-use-generative-ai-to-strengthen-competitiveness/) | In-House + PaaS |
+|  |  | PChome 網路家庭（電商） | 提升搜尋與消費者體驗：語意搜尋理解力提升，自動生成商品文案 | [PChome](https://www.moneydj.com/kmdj/news/newsviewer.aspx?a=2c58fe2d-92b6-4537-8266-ae574e08f11a) | 雲平台 (PaaS, Google Cloud) |
+|  |  | 富邦媒體 (momo) | 商品內容檢測：AI 虛擬主播、智慧選品輔助文案生成 | [momo](https://www.ithome.com.tw/news/171279) | 混合 (In-House + PaaS) |
+| **2. 法遵、風控與合規** | • KYC / 法規比對<br>• 核保 / 理賠摘要<br>• 內容合規偵測 | 玉山金控（金融） | GENIE 平台：輔助 IT 程式碼、法遵文件比對、KYC 報告生成 | [GENIE](https://www.ithome.com.tw/news/162551) | In-House 主導 (串接 Azure OpenAI) |
+|  |  | 國泰金控（金融） | GAIA 2.0 升級版智能助理「阿發」 | [GAIA 2.0](https://www.cathayholdings.com/holdings/lastest_news/news_archive/newsarticle?newsID=8-0C1qzaP0aGC2qHopqJCg) | In-House 主導 |
+|  |  | 富邦金控（金融） | 導入保險核心業務：核保自動摘要體檢報告、理賠診斷書分析 | [富邦保險](https://www.wealth.com.tw/articles/523ae02c-79a9-4cf4-86cd-3d8ac41886c4) | In-House / 混合 |
+| **3. 智慧製造與營運** | • 專家知識數位化<br>• 製程 / 能效優化 | 鴻海（製造） | AI 工廠：學習老師傅經驗、數位孿生與物流模擬 | [AI 工廠](https://www.cio.com.tw/91467/) | In-House / 混合 |
+|  |  | 台塑集團（傳產） | 工安、ESG 導入：輔助撰寫 ESG 報告書草稿、工安事件分析與通報 | [台塑 ESG](https://esg.businesstoday.com.tw/article/category/180689/post/202502260030) | In-House (透過台塑網) |
+| **4. 內部知識與支援** | • 內部知識庫 / AI Agent<br>• IT / 營運維護助手 | 華碩（科技） | ASUS AI Assistant：內部知識庫、IT 營運維護助手 | [ASUS AI](https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000737026_71U1LXM51QRSZD7G0HKXG) | 混合 (共同開發, 與 Microsoft 合作) |
+| **5. IT 與研發 (R&D) 效能** | • 程式碼輔助<br>• 研發流程加速 | 聯發科（科技） | 晶片產品 (如 T930)：GenAI 功能落地到終端 (Edge AI) | [MediaTek](https://www.compotechasia.com/a/press/2025/0514/60698.html) | 產品整合 |
+
 
 ---
 
-Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何做」到「如何做」的全球趨勢：
+<h2 id="google101">Gen AI 落地實戰：Google 的「從靈感到食譜」全球策略</h2>
+
+Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何做 (Why)」到「如何做 (How)」的全球趨勢：
 * [1,001 real-world gen AI use cases from the world's leading organizations](https://blog.google/products/google-cloud/gen-ai-business-use-cases/) - Oct 09, 2025
     * 文章中，Google 揭示了全球企業的 GenAI 案例在 1.5 年內從 101 個激增至 1,001 個。這傳達了一個明確的訊號：**GenAI 已是主流，而非實驗**。
     * 文中更直接亮出可證明的商業回報，例如 **Mercari** 預期 500% ROI 並減少 20% 工作量，**Virgin Voyages** 一次生成數千個廣告。這旨在向企業 C 級主管證明，GenAI 是可帶來真實利潤的商業決策。  
@@ -141,7 +119,47 @@ Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何
 
 ---
 
-#### Google 的六大 AI 代理類型 (The "Agents")
+#### 一、 趨勢解讀：從 101 到 1,001 的爆炸式增長 (The "Why/What")
+
+在文章 "[1,001 real-world gen AI use cases from the world's leading organizations](https://blog.google/products/google-cloud/gen-ai-business-use-cases/)" 中，Google 揭示了全球企業的 Gen AI 案例在短短不到一年半的時間內，從 101 個激增至 1,001 個（10 倍增長）。這種「前所未有的速度」證明了 Gen AI 不再是實驗性的技術，而是各行各業正在快速採納的主流工具。
+
+量化回報：Gen AI 帶來真實利潤
+這份清單明確指出 Gen AI 帶來的商業價值，並非僅是技術炫技。這旨在向企業 C 級主管證明，Gen AI 是可帶來真實利潤的商業決策。
+
+| 應用案例（Industry） | 成果與回報（Impact & ROI） |
+|----------------------|----------------------------|
+| 零售 / 電商（Mercari） | 預期投資報酬率（ROI）高達 500%，同時客服工作量減少 20%。 |
+| 旅遊 / 行銷（Virgin Voyages） | 利用 Veo 的文本轉影片功能，一次性創建數千個超個性化廣告和電子郵件。 |
+| 金融服務（United Wholesale Mortgage） | 在九個月內，將承保人員的生產力提高一倍以上。 |
+| 零售 / 搜尋（Toolstation） | 將無結果搜索從 2% 降至 0.1%，搜索相關收入增加 5.5%。 |
+| 電信 / 客服（Bell Canada） | 透過 AI 驅動的客服代理和 Agent Assist，為客戶運營節省了 2,000 萬美元。 |
+| 製造 / 稽核（AES） | 自動化能源安全稽核，稽核成本降低 99%，時間從 14 天縮短到 1 小時。 |
+
+---
+
+#### 二、 落地指南：Google 推薦的「食譜」策略 (The "How")
+
+當企業問到：「我們沒有足夠的 AI 專家，該怎麼落地？」Google 在另一篇文章 "[101 gen AI use cases with technical blueprints](https://cloud.google.com/blog/u/2/products/ai-machine-learning/real-world-gen-ai-use-cases-with-technical-blueprints)" 中提供了答案：提供 101 個架構藍圖（architectural blueprints），作為實戰的啟動點。
+
+1. 藍圖的意義：降低技術門檻
+這些藍圖提供了技術性的補充說明，讓企業可以不必重新發明輪子，大幅降低導入的技術門檻和人才依賴。每個藍圖都包含解決特定業務挑戰的設計模式 (Design Pattern) 和所需使用的技術堆棧 (Tech Stack)。
+
+2. Gen AI 落地核心技術堆棧
+無論應用在何種產業，成功的 Gen AI 落地都離不開以下幾個核心組件：
+
+| 技術組件（Component） | 核心功能說明（Core Functionality） |
+|----------------------|----------------------------------|
+| Gemini（Flash / Pro / Nano） | 最智慧的模型，用於對話、摘要、代碼生成、多模態理解。 |
+| Vertex AI | 統一的 AI / ML 平台，用於模型訓練、部署、監管，確保模型安全運行。 |
+| Vertex AI Search | 企業級智能搜索工具，將非結構化數據索引，以便使用自然語言提問。 |
+| BigQuery | 數據分析的核心，用於統一所有數據，為 AI 模型提供基礎數據集。 |
+| Document AI | 自動化文件處理，從 PDF、發票、合約中提取並結構化數據。 |
+
+---
+
+#### 三、 Google 的六大 AI 代理類型 (The "Agents")
+
+為了讓這個「組合拳」策略更有體感，Google 進一步將應用分為六種 AI 代理類型，作為企業思考 Gen AI 導入策略時的絕佳切入點：
 
 **1. 客戶代理 (Customer Agents)：**
 
@@ -185,8 +203,36 @@ Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何
     * **資安業：** **Rubrik** (網路安全公司) 正在利用 Agentspace 中的知識代理來發展更深的客戶洞察，並為銷售互動做準備。
     * **運輸業：** **704 Apps** (運輸 App) 在行程中利用 Gemini 分析車內對話的音訊，以偵測「搶劫」、「綁架」等敵意詞彙，即時產生警報以預防風險。
 
+---
+
+#### 四、 總結：AI 落地的兩大保障與策略啟示
+
+這兩份來源共同展示了 Gen AI 成功的秘訣：快速（Fast）和可複製（Reproducible）。
+
+速度與規模： 10 倍的案例增長和可證明的 ROI（如 Mercari 的 500%）證明等待觀望已無優勢。
+
+降低門檻： 101 個技術藍圖提供了明確的「食譜」，讓企業能利用現有工具大幅減少人才依賴。
+
 **分析結論：**
-這種「(1) 案例創造需求」->「(2) 藍圖降低門檻」->「(3) 代理定義場景」的策略，清楚地表明了 GenAI 正在進入**規模化導入**的階段。這也為台灣企業提供了明確的訊號：即使內部缺乏頂尖 AI 人才，也能透過善用雲端服務商的工具和藍圖，從最成熟的「客戶代理」(如您表格中的中華電信、華航) 或「員工代理」(如玉山金控) 開始，快速啟動轉型。
+
+這種「(1) 案例創造需求」->「(2) 藍圖降低門檻」->「(3) 代理定義場景」的策略，清楚地表明了 Gen AI 正在進入**規模化導入**的階段。這也為台灣企業提供了明確的訊號：即使內部缺乏頂尖 AI 人才，也能透過善用雲端服務商的工具和藍圖，從最成熟的「客戶代理」(如表格中的中華電信、華航) 或「員工代理」(如玉山金控) 開始，快速啟動轉型。AI 真正的價值不在於取代人類，而在於增強我們的能力，讓我們更有效率、更有洞察力。
+
+---
+
+<h2 id="AIBeginner">企業 AI新賽局 入門策略實踐路線圖：從策略到治理，避開致命陷阱</h2>
+
+
+第一波夯起來的時間估計是 2016年 Google DeepMind 的 Alpha Go 吧，但深度學習確實很難實際的被應用到各行各業，特別是台灣，在那幾年，做個規則式的聊天機器人，或者廣告點擊，可能就會先用新聞稿把自己吹成 AI 大神或新創了。第二波就是 Open AI 橫空出世的ChatGPT了，然後四處都能看到大家都說自己有GenAI，可惜可能連個幾張消費型的4090等級的GPU都沒有，更別說已屬上世代的V100 或者連 GCP、AWS跟Azure的GPU都沒啟用設定過吧？就目前體驗，雖然已有不少國外的新聞或資訊報導可能碰上的問題。  
+
+但這裡是 **『台灣』**，通常更可能發生：
+- 高層心血來潮的玻璃心：因為新聞都在報 GenAI，所以不跟著 Gen 一下好像都對不起自己的職級；BUT，高層完全不懂也不想懂更不想花錢，就是做就對了 !
+- 昂貴設備的高風險投資：據記憶，曾處理過 A100*4 以及 RTX 6000 Ada * 8 (皆約$330萬新台幣)，這是地端自建價格；至於[雲端API請參考這](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark#%E7%B8%BD%E9%AB%94%E6%88%B0%E7%95%A5%E6%AF%94%E8%BC%83%E4%B8%89%E5%A4%A7%E5%85%AC%E6%9C%89%E9%9B%B2-ai-%E5%B9%B3%E5%8F%B0)
+- 必要性的業務優化需求：千萬不要為了 AI 而 AI，而是要有專業人員先參與評估可以優化那些內部業務需求，如果不知道，也不想找人評估，那行政單據OCR應該會是最容易讓高層看到效果的試金石了。
+- 低薪資但高回報的人力：全台都在喊需要AI人才，特別讓人懷念所謂的資安即國安的口號；無奈，不說所謂只給的出香蕉來請猴子，現在是怕給了也找不到猴子啊。
+
+儘管如前所述，台灣企業在導入 AI 的過程中，確實存在高層心態、成本投入 與人才 等多重挑戰；然而，這並不代表所有企業都只是停滯不前高大上；在金融、電信、製造與半導體龍頭，已陸續發布了具體的 GenAI 落地產品或內部流程優化案例可以參考。
+
+---
 
 <h2 id="introduction">導論</h2>
 
