@@ -66,6 +66,8 @@ https://github.com/Deep-Learning-101/Speech-Processing-Paper
 
 通過語音信號處理和模式識別讓機器自動識別和理解人類的口述
 
+* 2025-12-23：[MedASR](https://huggingface.co/google/medasr)
+* 2025-12-16：[](https://github.com/FunAudioLLM/Fun-ASR)；[[阿里開源0.8B語音辨識模型fun-asr，效能直逼12B巨頭](https://zhuanlan.zhihu.com/p/1984310683358217029)]
 * 2025-11-15：[Omnilingual-ASR](https://github.com/facebookresearch/omnilingual-asr)；[DEMO](https://aidemos.atmeta.com/omnilingualasr/language-globe)
 * 2025-09-19：[Canary-1b-v2_NVIDIA](https://huggingface.co/nvidia/canary-1b-v2)；[推動語音AI 創新：NVIDIA 發布多語種語音AI 開放資料集與模型](https://zhuanlan.zhihu.com/p/1952436345222993067)
 * 2025-08-29：[WhisperLiveKit](http://github.com/QuentinFuxa/WhisperLiveKit)；[別再裸跑Whisper 了！這個開源神器，讓即時語音轉寫絲滑得不像話](https://zhuanlan.zhihu.com/p/1944712252512010607)
@@ -226,6 +228,8 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 * [fish-speech](https://huggingface.co/fishaudio/fish-speech-1.5)
   * [性能超過F5、CosySense，一文帶你理論+實操多種語言克隆效果](https://mp.weixin.qq.com/s/z8L3lpEbQ1-bkD7MM6oLsw)
   * [fish-speech-gui](https://github.com/AnyaCoder/fish-speech-gui)；[Github](https://github.com/fishaudio/fish-speech/blob/main/docs/README.zh.md)；[Document](https://speech.fish.audio/zh/)
+* 2025-12-24：[Qwen3-TTS-VD、Qwen3-TTS-VC](https://link.zhihu.com/?target=https%3A//www.alibabacloud.com/help/zh/model-studio/qwen-tts-voice-design%3Fspm%3Da2ty_o06.30285417.0.0.56a0c9216Ey6VM)；[音色創造 Qwen3-TTS-VD (VoiceDesign) 和音色克隆Qwen3-TTS-VC (VoiceClone)](https://zhuanlan.zhihu.com/p/1987225312841445557)  
+* 2025-12-16：[Fun-CosyVoice3](https://github.com/FunAudioLLM/CosyVoice)；[阿里通義百聆推出語音模型新版本：3 秒錄音即可「複製」9 種語言、18 種方言](https://finance.sina.com.cn/tech/digi/2025-12-15/doc-inhawpkf1938223.shtml)
 * 2025-08-15：[ZipVoice：CPU is all you need!](https://github.com/k2-fsa/ZipVoice)
 * 2025-08-08：[KittenTTS](https://github.com/KittenML/KittenTTS)；[超迷你 TTS 模型（小於 25 MB）](https://www.reddit.com/r/LocalLLaMA/comments/1mhyzp7/kitten_tts_sota_supertiny_tts_model_less_than_25/?tl=zh-hant)
 * 2025-07-30：[Microsoft DragonV2.1](https://techcommunity.microsoft.com/blog/azure-ai-foundry-blog/personal-voice-upgraded-to-v2-1-in-azure-ai-speech-more-expressive-than-ever-bef/4435233)
