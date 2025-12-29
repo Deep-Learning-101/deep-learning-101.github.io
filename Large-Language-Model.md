@@ -1,14 +1,20 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
-description: 大語言模型 (Large Language Model)。
+title: LLM 大語言模型資源懶人包 | Leaderboard, Tools & Papers | Deep Learning 101
+description: 2025 最新 LLM 大語言模型資源彙整。包含 Open LLM Leaderboard、Ollama/vLLM 部署工具、Llama 3/Mistral 等必讀論文，以及中文 LLM 微調資源。
 permalink: /Large-Language-Model
 lang: zh-Hant
-schema_type: service
-service_type: GenAI Consulting
+schema_type: article
 ---
 
 {% include header.html %}
+
+# 📚 LLM 大語言模型・必讀資源總整理
+
+> **編者按：** 本頁面彙整了目前最主流的 LLM 排行榜、開源模型（Llama, Mistral, Gemma）、推論與微調工具（Ollama, vLLM），以及相關學術論文。
+> 
+> 如果您想尋找更詳細的論文筆記與實作代碼，歡迎訪問我們的 **GitHub Repository**：
+> 👉 [**GitHub: Natural-Language-Processing-Paper**](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper) (歡迎 Star ⭐)
 
 ---
 

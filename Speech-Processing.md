@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
-description: 語音處理
+title: 語音處理資源懶人包 (Speech Processing) | ASR, TTS & Voice Conversion | Deep Learning 101
+description: 2025 最新語音處理 (Speech AI) 資源彙整。涵蓋自動語音辨識 (ASR)、語音合成 (TTS)、語音轉換 (VC) 等技術，收錄 Whisper, VITS, HuBERT 等經典論文與開源專案。
 permalink: /Speech-Processing
 lang: zh-Hant
 schema_type: service
@@ -12,13 +12,13 @@ service_type: AI Consulting
 
 ---
 
-# 語音處理 (Speech Processing)
-
 {% include ai-share.html %}
 
 ---
 
-https://github.com/Deep-Learning-101/Speech-Processing-Paper
+# 語音處理 (Speech Processing)
+
+[https://github.com/Deep-Learning-101/Speech-Processing-Paper](https://github.com/Deep-Learning-101/Speech-Processing-Paper)
 
 ### **文章目錄**
 - [Speech Processing (語音處理)](#speech-processing)

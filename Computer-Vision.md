@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
-description: 電腦視覺
+title: 電腦視覺資源懶人包 (Computer Vision) | YOLO, Diffusion & OCR | Deep Learning 101
+description: 2025 最新電腦視覺 (CV) 技術資源。包含物件偵測 (YOLO系列)、生成式 AI (Stable Diffusion)、影像分割 (Segmentation) 與 OCR 相關論文與實作教學。
 permalink: /Computer-Vision
 lang: zh-Hant
 schema_type: service

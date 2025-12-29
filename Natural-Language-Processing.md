@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: NLP 自然語言處理資源懶人包 | Transformers, BERT & RAG | Deep Learning 101
+description: 2025 NLP 技術與論文資源彙整。從基礎的 Transformers、BERT 到最新的 RAG (檢索增強生成) 技術架構解析，提供研究人員與開發者最紮實的自然語言處理指南。
+permalink: /Natural-Language-Processing
+lang: zh-Hant
+schema_type: service
+service_type: AI Consulting
 ---
 
 {% include header.html %}

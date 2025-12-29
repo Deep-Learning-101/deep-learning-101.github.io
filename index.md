@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: Deep Learning 101 | 台灣首個深度學習社群 | LLM, CV, NLP & Speech 技術資源站
+description: 台灣最早的深度學習社群 (Since 2016)。提供 2025 最新 AI 技術資源，包含 LLM 大語言模型、電腦視覺 (CV)、自然語言處理 (NLP) 與語音處理 (Speech) 的論文筆記與實作教學。
+permalink: /
+lang: zh-Hant
+schema_type: service
+service_type: AI Consulting
 ---
 
 {% include header.html %}

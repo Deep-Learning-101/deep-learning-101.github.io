@@ -22,21 +22,64 @@
 
 ---
 
-<div align="center">
+<nav style="background: #f8f9fa; padding: 20px; border-radius: 12px; margin: 20px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+  <div style="text-align: center; margin-bottom: 15px; font-weight: bold; color: #333;">🚀 探索 AI 領域 (Tech Hub)：</div>
+  
+  <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
+    
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io/Large-Language-Model" class="nav-btn" style="background: #007bff; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: transform 0.2s;">
+          🤖 大語言模型
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
 
-<table>
-  <tr>
-    <td align="center"><a href="https://deep-learning-101.github.io/Large-Language-Model">大語言模型</a></td>
-    <td align="center"><a href="https://deep-learning-101.github.io/Speech-Processing">語音處理</a></td>
-    <td align="center"><a href="https://deep-learning-101.github.io/Natural-Language-Processing">自然語言處理</a></td>
-    <td align="center"><a href="https://deep-learning-101.github.io//Computer-Vision">電腦視覺</a></td>
-  </tr>
-  <tr>
-    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm" target="_blank">Large Language Model</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper" target="_blank">Speech Processing</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper" target="_blank">Natural Language Processing, NLP</a></td>
-    <td><a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper" target="_blank">Computer Vision</a></td>
-  </tr>
-</table>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io/Natural-Language-Processing" class="nav-btn" style="background: #28a745; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(40,167,69,0.2); transition: transform 0.2s;">
+          📝 自然語言處理
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
 
-</div>
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io//Computer-Vision" class="nav-btn" style="background: #17a2b8; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(23,162,184,0.2); transition: transform 0.2s;">
+          👁️ 電腦視覺
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io/Speech-Processing" class="nav-btn" style="background: #6f42c1; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(111,66,193,0.2); transition: transform 0.2s;">
+          🎤 語音處理
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
+
+  </div>
+</nav>
+
+<hr style="border: 0; height: 1px; background: #eee; margin: 30px 0;">
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    var currentPath = window.location.pathname;
+    var links = document.querySelectorAll('.nav-btn');
+    links.forEach(function(link) {
+      // 簡單判斷：如果當前網址包含按鈕的 href 關鍵字，就高亮
+      // 注意：因為您的 href 是完整網址，這裡做個簡單處理抓最後一段
+      var hrefPath = link.getAttribute('href').split('/').pop(); 
+      if (currentPath.includes(hrefPath) && hrefPath !== '') {
+        link.style.boxShadow = "0 0 0 3px rgba(0,0,0,0.1) inset"; 
+        link.style.filter = "brightness(0.9)"; 
+      }
+    });
+  });
+</script>
