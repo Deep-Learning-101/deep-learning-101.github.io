@@ -10,6 +10,13 @@ service_type: AI Consulting
 
 {% include header.html %}
 
+# 📝 NLP 自然語言處理・必讀資源總整理
+
+> **編者按：** 本頁面專注於自然語言處理的核心技術架構。從基礎的 Transformers、BERT 模型，到進階的檢索增強生成、命名實體識別與文本分類技術，提供開發者紮實的理論與實戰資源。
+>
+> 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
+> 👉 [**GitHub: Natural-Language-Processing-Paper**](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper) (歡迎 Star ⭐)
+
 ---
 
 {% include ai-share.html %}

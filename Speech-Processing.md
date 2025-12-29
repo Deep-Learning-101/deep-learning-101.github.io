@@ -10,6 +10,13 @@ service_type: AI Consulting
 
 {% include header.html %}
 
+# 🎤 語音處理 (Speech)・必讀資源總整理
+
+> **編者按：** 本頁面彙整了語音處理領域的前沿技術。包含自動語音辨識、語音合成、語者識別與語音轉換的經典論文與開源工具。
+>
+> 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
+> 👉 [**GitHub: Speech-Processing-Paper**](https://github.com/Deep-Learning-101/Speech-Processing-Paper) (歡迎 Star ⭐)
+
 ---
 
 {% include ai-share.html %}

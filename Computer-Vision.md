@@ -12,7 +12,13 @@ service_type: AI Consulting
 
 ---
 
-# Computer Vision (CV, 電腦視覺)
+# 👁️ 電腦視覺 (CV)・必讀資源總整理
+
+> **編者按：** 本頁面彙整了電腦視覺領域的關鍵技術資源，涵蓋物件偵測、生成式 AI、影像分割以及文字識別（OCR）等最新論文與實作。
+>
+> 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
+> 👉 [**GitHub: Computer-Vision-Paper**](https://github.com/Deep-Learning-101/Computer-Vision-Paper) (歡迎 Star ⭐)
+
 
 {% include ai-share.html %}
 

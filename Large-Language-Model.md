@@ -11,9 +11,9 @@ schema_type: article
 
 # 📚 LLM 大語言模型・必讀資源總整理
 
-> **編者按：** 本頁面彙整了目前最主流的 LLM 排行榜、開源模型（Llama, Mistral, Gemma）、推論與微調工具（Ollama, vLLM），以及相關學術論文。
-> 
-> 如果您想尋找更詳細的論文筆記與實作代碼，歡迎訪問我們的 **GitHub Repository**：
+> **編者按：** 本頁面彙整目前最主流的 LLM 排行榜、開源模型、推論與微調工具，以及相關學術論文。
+>
+> 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
 > 👉 [**GitHub: Natural-Language-Processing-Paper**](https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper) (歡迎 Star ⭐)
 
 ---
