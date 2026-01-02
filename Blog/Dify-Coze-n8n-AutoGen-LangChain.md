@@ -4,14 +4,7 @@ title: "Dify, Coze, n8n, AutoGen, LangChain | 2025 熱門 Agent 框架比較"
 description: "快速梳理 5 大熱門 AI Agent 框架。比較 Dify/Coze (No-code)、n8n (工作流)、AutoGen (多智能體) 與 LangChain 的適用場景。"
 permalink: /Dify-Coze-n8n-AutoGen-LangChain
 lang: zh-Hant
-keywords: 
-  - Dify
-  - Coze
-  - n8n
-  - AutoGen
-  - LangChain
-  - AI Agent 框架
-last_modified_at: "2025-01-01"
+keywords: ["Dify", "Coze", "n8n", "AutoGen", "LangChain", "AI Agent 框架"]
 ---
 
 

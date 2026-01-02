@@ -4,14 +4,7 @@ title: "檢索增強生成 RAG LLM 資源懶人包 | Leaderboard, Tools & Papers
 description: "2025 最新 RAG 技術需知 LLM 大語言模型資源彙整。包含環境部署、數據處理、混合檢索與 Rerank 等必讀資源。"
 permalink: /RAG
 lang: zh-Hant
-schema_type: article
-keywords: 
-  - RAG
-  - 檢索增強生成
-  - LLM
-  - LangChain
-  - Rerank
-last_modified_at: "2025-07-30"
+keywords: ["RAG", "檢索增強生成", "LLM", "LangChain", "Rerank"]
 ---
 
 {% include header.html %}

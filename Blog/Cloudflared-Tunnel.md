@@ -4,13 +4,7 @@ title: "用 Cloudflared 實作 SSH / HTTP / RDP Tunnel | 零信任架構教學"
 description: "免開公網 IP！教你使用 Cloudflare Tunnel 實作 Zero Trust 架構，安全穿透 SSH、HTTP 與 RDP 遠端桌面。"
 permalink: /Cloudflared-Tunnel
 lang: zh-Hant
-keywords: 
-  - Cloudflare Tunnel
-  - Zero Trust
-  - SSH Tunnel
-  - RDP
-  - 內網穿透
-last_modified_at: "2025-06-23"
+keywords: ["Cloudflare Tunnel", "Zero Trust", "SSH Tunnel", "RDP", "內網穿透"]
 ---
 
 
