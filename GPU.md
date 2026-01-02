@@ -105,7 +105,7 @@ last_modified_at: "2026-01-02"
 * 優化器狀態: **8 bytes** (Momentum + Variance)
 * **總計**: **16 bytes / parameter** (還沒算 Activation!)
 
-$$\text{訓練 VRAM} \approx \text{參數數量} \times 16$$
+`Total VRAM = Model Weights + KV Cache + Activation Buffer`
 
 #### 🏛️ 經典案例分析：Llama 2 的訓練成本
 這是我在 2023 年整理的數據，至今仍極具參考價值，讓你明白為什麼「自己從頭訓練」是夢想：
@@ -134,7 +134,7 @@ LoRA 凍結了預訓練模型權重，只訓練極小的 Rank 矩陣。
 <h2 id="inference">4. 推論 (Inference) 與 KV Cache</h2>
 
 推論相對簡單，公式為：
-$$\text{Total VRAM} = \text{Model Weights} + \text{KV Cache} + \text{Buffer}$$
+`訓練 VRAM (GB) ≈ 參數數量 (B) × 16`
 
 ### 實戰推論需求表 (含 OS overhead)
 
@@ -152,7 +152,7 @@ $$\text{Total VRAM} = \text{Model Weights} + \text{KV Cache} + \text{Buffer}$$
 <h2 id="data">5. 數據需求 (Data Scaling Laws)</h2>
 
 訓練模型不只看 GPU，還看數據量。根據 **Chinchilla Scaling Laws**：
-$$\text{最佳 Token 數量} \approx 20 \times \text{模型參數量}$$
+`最佳 Token 數量 ≈ 20 × 模型參數量`
 
 * **訓練 1B 模型**：需 200 億 (20B) Tokens。
 * **訓練 8B 模型**：需 1600 億 (160B) Tokens。
