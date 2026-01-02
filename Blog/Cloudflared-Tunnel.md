@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: 用 Cloudflared 實作 SSH / HTTP / RDP Tunnel | 零信任架構教學
+description: 免開公網 IP！教你使用 Cloudflare Tunnel 實作 Zero Trust 架構，安全穿透 SSH、HTTP 與 RDP 遠端桌面。
+permalink: /Cloudflared-Tunnel
+lang: zh-Hant
+keywords: [Cloudflare Tunnel, Zero Trust, SSH Tunnel, RDP, 內網穿透, 資安教學]
+last_modified_at: 2025-06-23
 ---
 
 
@@ -19,6 +24,10 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # 用 Cloudflared 實作 SSH / HTTP / RDP Tunnel
 _Cloudflared Tunnel：不裸奔全面穿透 HTTP、SSH、RDP_
+
+> **🚀 本文重點摘要 (TL;DR)：**
+> 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。
+> 本教學詳細解說如何配置 **SSH**、**HTTP** 及 **Windows RDP** 的遠端連線，並結合 Zero Trust 驗證機制保護企業資產。
 
 傳統雲端主機的遠端連線方式，如開啟 GCP 公網固定 IP 並設防火牆 port（如 22、3389、443 等），雖然快速直接，但也潛藏著不少諸如被掃 port、暴力破解、VPN 管理不易、身份控管與審計困難等風險。隨著資安攻擊手法日益進化，Zero Trust (零信任) 架構逐漸成為企業資安標準，其核心理念是「永不信任，持續驗證」：不論內外部網路來源，都必須經過身份驗證與存取政策評估才能進入系統。
 
@@ -301,7 +310,7 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
     }
   },
   "datePublished": "2025-06-23",
-  "dateModified": "2025-06-23",
+  "dateModified": "2026-01-02"
   "keywords": "Cloudflared, Zero Trust, Tunnel, SSH, RDP, HTTP, Cloudflare, 零信任, 網路安全, 遠端連線"
 }
 </script>

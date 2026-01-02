@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: 2025 AI Agent 完整指南：Agentic AI 定義、框架比較與資安風險 | Deep Learning 101
+description: 深度解析 AI Agent 與 Agentic AI 差異，比較熱門框架 (AutoGen, LangChain) 並探討 OWASP 資安風險與 MCP 協定。
+permalink: /agent
+lang: zh-Hant
+keywords: [AI Agent, Agentic AI, 代理式人工智慧, AutoGen, MCP, OWASP, LLM Agent]
+last_modified_at: 2026-01-02
 ---
 
 
@@ -31,6 +36,10 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # [避開 AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 開發陷阱](https://deep-learning-101.github.io/)
 _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過的坑、常見問題、挑戰與解決方案_
+
+> **🚀 本文重點摘要 (TL;DR)：**
+> **AI Agent (人工智慧代理)** 指的是具備感知、規劃與行動能力的 AI 系統；而 **Agentic AI** 強調其自主性與工作流協作。
+> 本文深入探討 Agent 的核心定義、**MCP (Model Context Protocol)** 標準、**OWASP 安全性**挑戰，並比較開源框架與閉源產品的差異。
 
 **作者**：[TonTon Huang Ph.D.](https://twman.org/)  
 **日期**：2025年06月03日更新
@@ -818,7 +827,7 @@ A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通�
     }
   },
   "datePublished": "2025-06-03",
-  "dateModified": "2025-06-03",
+  "dateModified": "2026-01-02",
   "keywords": "AI Agents, Agentic AI, OWASP, Model Context Protocol, MCP, LangGraph, Deep Research, 生成式AI, 人工智慧代理"
 }
 </script>

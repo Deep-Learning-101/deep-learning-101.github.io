@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: vLLM, Ollama, SGLang, LLaMA.cpp 深度評測 | LLM 推論框架選型指南
+description: 深度解析四大主流 LLM 推論框架。vLLM 適合高吞吐生產環境，Ollama 適合本地開發，SGLang 專攻複雜 Agent 工作流，LLaMA.cpp 主打邊緣計算。
+permalink: /vLLM-Ollama-SGLang-LLaMAcpp
+lang: zh-Hant
+keywords: [vLLM, Ollama, SGLang, LLaMA.cpp, LLM 推論, 模型部署, GPU 加速]
+last_modified_at: 2025-01-01
 ---
 
 
@@ -18,6 +23,13 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # vLLM、Ollama、SGLang、 LLaMA.cpp
 _深度解析四大主流熱門LLM服務框架_
+
+> **🚀 本文重點摘要 (TL;DR)：**
+> 如何選擇 LLM 推論框架？
+> * **vLLM**：生產環境首選，高吞吐量與低延遲。
+> * **Ollama**：開發者首選，安裝最簡單，支援 Mac。
+> * **SGLang**：Agent 應用首選，優化複雜結構化輸出。
+> * **LLaMA.cpp**：邊緣設備首選，支援純 CPU 與低資源環境。
 
 生產環境高吞吐與低延遲選 vLLM；本地快速上手與多模型管理選 Ollama；複雜代理/結構化工作流選 SGLang；極致輕量與可攜性選 LLaMA.cpp Server。以下從架構原理、性能優化、特性矩陣、部署與運維到選型決策提供完整分析。
 

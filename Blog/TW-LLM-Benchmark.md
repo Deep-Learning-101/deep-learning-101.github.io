@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: 臺灣大型語言模型 (LLM) 性能評測報告 | TMLU & TMMLU+ Benchmark
+description: 2025 最新臺灣在地化 LLM 評測報告。深度比較 Llama-3-Taiwan, TAIDE, Breeze2 等模型在繁體中文理解、RAG 應用上的性能表現。
+permalink: /TW-LLM-Benchmark
+lang: zh-Hant
+keywords: [LLM Benchmark, 臺灣大模型, Llama-3-Taiwan, TAIDE, TMMLU, 模型評測, 繁體中文 LLM]
+last_modified_at: 2026-01-02
 ---
 
 {% include header.html %}
@@ -17,6 +22,10 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # 臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告
 _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct-128k、Llama-3-Taiwan-8B-Instruct-DPO、Llama-3-Taiwan-8B-Instruct、Llama-3-Taiwan-70B-Instruct-128k、Llama-3.1-TAIDE-LX-8B-Chat、Llama-Breeze2-3B-Instruct、Llama-Breeze2-8B-Instruct、gemini-embedding-001、Qwen3-Embedding、Qwen3-Reranker_
+
+> **🚀 本文重點摘要 (TL;DR)：**
+> 針對 **Llama-3-Taiwan**、**TAIDE**、**Breeze2** 等臺灣在地化大模型進行的深度評測。
+> 報告涵蓋 **TMLU**、**TMMLU+** 及 **Truthful QA** 等基準測試。結果顯示，針對繁體中文語境優化的模型，在 RAG 與在地知識問答上顯著優於通用模型。
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2025年07月16日更新

@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: GenAI 與 LLM 在金融產業的應用分析 | 風險管理與合規策略
+description: 探討生成式 AI (GenAI) 在金融科技 (FinTech) 的應用場景，包含風險管理、演算法交易、合規挑戰與未來策略建議。
+permalink: /AIFinTech
+lang: zh-Hant
+keywords: [FinTech, GenAI, 金融科技, 風險管理, 演算法交易, LLM 合規, 數位轉型]
+last_modified_at: 2025-06-18
 ---
 
 
@@ -14,6 +19,10 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # [GenAI 與 LLM 在金融產業的應用分析](https://www.twman.org/AI/Finance)
 _金融服務中 GenAI 與 LLM 的變革潛力_
+
+> **🚀 本文重點摘要 (TL;DR)：**
+> 生成式 AI (GenAI) 正在重塑金融業，從**智慧客服**、**詐欺偵測**到**演算法交易**皆有應用。
+> 本文分析 LLM 在金融領域的變革潛力，並特別針對 **數據隱私**、**合規風險 (Compliance)** 及 **幻覺問題** 提供具體的導入策略建議。
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2025年06月18日更新

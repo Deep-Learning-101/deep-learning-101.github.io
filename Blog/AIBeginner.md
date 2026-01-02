@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: 企業 AI 新賽局入門策略指南 | 10 大常見錯誤與解決方案
+description: 專為企業決策者設計的 AI 導入指南。解析生成式 AI (GenAI) 的商業價值，並揭露企業在 AI 轉型過程中常犯的 10 個致命錯誤。
+permalink: /AIBeginner
+lang: zh-Hant
+keywords: [企業 AI 導入, AI 策略, 數位轉型, GenAI 應用, AI 落地, 商業模式]
+last_modified_at: 2026-01-01
 ---
 
 
@@ -85,6 +90,10 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 <h2 id="genai2025">台灣上市櫃公司 GenAI 實際落地案例總表 (2024-2025)</h2>
 
 *(僅基於 2024-2025 年可查證之公開新聞)*
+
+> **🚀 本文重點摘要 (TL;DR)：**
+> 企業導入 AI 不僅是技術升級，更是商業模式的重構。
+> 本文整理了企業在 **AI 新賽局** 中應具備的策略思維，並詳細列出 **10 大常見致命錯誤**（如數據外洩、缺乏評估指標），幫助決策者避開轉型陷阱。
 
 如表格所呈現，可以注意到兩大主流，應用最廣的是「對外」的客戶互動 (第1類) 和「對內」的 IT/研發 (第2類)；產業特性明顯： 金融/電信業 集中在「客服」和「法遵/IT」。 製造/半導體 則全力投入「研發」和「工廠製造 (第3類)」。模式清晰： 企業並非為了 AI 而 AI，而是將 GenAI 明確地應用於其最關鍵的成本中心（如客服、製造）或價值中心（如研發、行銷）。
 
@@ -392,7 +401,7 @@ GenAI 帶來了巨大的機遇，但也埋下了全新的、更隱蔽的地雷�
     }
   },
   "datePublished": "2025-07-21",
-  "dateModified": "2025-07-21",
+  "dateModified": "2026-01-02",
   "keywords": "Enterprise AI, AI Strategy, GenAI, Machine Learning, Deep Learning, AI Adoption, 企業 AI, 人工智慧導入, 數位轉型"
 }
 </script>

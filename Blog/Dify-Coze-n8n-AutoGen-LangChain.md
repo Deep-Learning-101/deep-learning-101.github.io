@@ -1,6 +1,11 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: Dify, Coze, n8n, AutoGen, LangChain | 2025 熱門 Agent 框架比較
+description: 快速梳理 5 大熱門 AI Agent 框架。比較 Dify/Coze (No-code)、n8n (工作流)、AutoGen (多智能體) 與 LangChain (開發者) 的適用場景與優缺點。
+permalink: /Dify-Coze-n8n-AutoGen-LangChain
+lang: zh-Hant
+keywords: [Dify, Coze, n8n, AutoGen, LangChain, AI Agent 框架, No-code AI, LangGraph]
+last_modified_at: 2025-01-01
 ---
 
 
@@ -18,6 +23,12 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 # Dify、Coze、n8n、AutoGen、LangChain
 _快速梳理理解熱門 Agent 框架_
+
+> **🚀 本文重點摘要 (TL;DR)：**
+> Agent 框架選型指南：
+> * **Dify / Coze**：適合快速落地的 **No-code/Low-code** 應用開發。
+> * **n8n**：適合自動化工作流程 (Workflow) 串接。
+> * **AutoGen / LangGraph**：適合開發者建構複雜的 **多智能體 (Multi-Agent)** 協作系統。
 
 ### 核心能力橫向對比
 
