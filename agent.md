@@ -1,11 +1,16 @@
 ---
 layout: default
-title: 2025 AI Agent 完整指南：Agentic AI 定義、框架比較與資安風險 | Deep Learning 101
-description: 深度解析 AI Agent 與 Agentic AI 差異，比較熱門框架 (AutoGen, LangChain) 並探討 OWASP 資安風險與 MCP 協定。
+title: "2025 AI Agent 完整指南：Agentic AI 定義、框架比較與資安風險"
+description: "深度解析 AI Agent 與 Agentic AI 差異，比較熱門框架 (AutoGen, LangChain) 並探討 OWASP 資安風險與 MCP 協定。"
 permalink: /agent
 lang: zh-Hant
-keywords: [AI Agent, Agentic AI, 代理式人工智慧, AutoGen, MCP, OWASP, LLM Agent]
-last_modified_at: 2026-01-02
+keywords: 
+  - AI Agent
+  - Agentic AI
+  - 代理式人工智慧
+  - AutoGen
+  - MCP
+last_modified_at: "2025-06-01"
 ---
 
 

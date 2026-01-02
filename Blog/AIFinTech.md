@@ -1,11 +1,16 @@
 ---
 layout: default
-title: GenAI 與 LLM 在金融產業的應用分析 | 風險管理與合規策略
-description: 探討生成式 AI (GenAI) 在金融科技 (FinTech) 的應用場景，包含風險管理、演算法交易、合規挑戰與未來策略建議。
+title: "GenAI 與 LLM 在金融產業的應用分析 | 風險管理與合規策略"
+description: "探討生成式 AI (GenAI) 在金融科技 (FinTech) 的應用場景，包含風險管理、演算法交易、合規挑戰與未來策略建議。"
 permalink: /AIFinTech
 lang: zh-Hant
-keywords: [FinTech, GenAI, 金融科技, 風險管理, 演算法交易, LLM 合規, 數位轉型]
-last_modified_at: 2025-06-18
+keywords: 
+  - FinTech
+  - GenAI
+  - 金融科技
+  - 風險管理
+  - 演算法交易
+last_modified_at: "2025-06-18"
 ---
 
 
