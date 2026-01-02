@@ -19,10 +19,10 @@ keywords: ["RAG", "檢索增強生成", "LLM", "LangChain", "Rerank"]
 
 > **🚀 本文重點摘要 (TL;DR)：**
 > **RAG (檢索增強生成)** 是一種結合外部知識庫檢索與生成式 AI 的技術，能有效解決 LLM 的幻覺問題。
-> 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧。
+> 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵優化技巧。
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
+**日期**：2025年07月30日 <> 2024年7月7日  
 **相關文章 I**：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
 **相關文章 II**：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)
 
@@ -264,20 +264,3 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 > 📖 如需進一步了解，請參閱原文：  
 > [https://blog.twman.org/2024/07/RAG.html](https://blog.twman.org/2024/07/RAG.html)
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
-  "description": "2025 最新 RAG 技術實戰指南，涵蓋環境部署、數據處理、混合檢索與 Rerank 優化技巧。",
-  "keywords": "RAG, Retrieval-Augmented Generation, LLM, 檢索增強生成",
-  "datePublished": "2024-07-07",
-  "dateModified": "2026-01-02",
-  "author": {
-    "@type": "Person",
-    "name": "TonTon Huang Ph.D.",
-    "url": "https://twman.org/"
-  },
-}
-</script>
