@@ -2,7 +2,7 @@
 layout: default
 title: "GenAI 與 LLM 在金融產業的應用分析 | 風險管理與合規策略"
 description: "探討生成式 AI (GenAI) 在金融科技 (FinTech) 的應用場景，包含風險管理、演算法交易、合規挑戰與未來策略建議。"
-permalink: /AIFinTech
+permalink: /Blog/AIFinTech
 lang: zh-Hant
 keywords: ["FinTech", "GenAI", "金融科技", "風險管理", "演算法交易"]
 ---

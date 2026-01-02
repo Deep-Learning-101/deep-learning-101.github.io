@@ -2,7 +2,7 @@
 layout: default
 title: "vLLM, Ollama, SGLang, LLaMA.cpp 深度評測 | LLM 推論框架選型指南"
 description: "深度解析四大主流 LLM 推論框架。vLLM 適合高吞吐生產環境，Ollama 適合本地開發，SGLang 專攻複雜 Agent 工作流。"
-permalink: /vLLM-Ollama-SGLang-LLaMAcpp
+permalink: /Blog/vLLM-Ollama-SGLang-LLaMAcpp
 lang: zh-Hant
 keywords: ["vLLM", "Ollama", "SGLang", "LLM 推論", "GPU 加速"]
 ---

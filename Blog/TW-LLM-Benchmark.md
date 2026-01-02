@@ -2,7 +2,7 @@
 layout: default
 title: "臺灣大型語言模型 (LLM) 性能評測報告 | TMLU & TMMLU+ Benchmark"
 description: "2025 最新臺灣在地化 LLM 評測報告。深度比較 Llama-3-Taiwan, TAIDE, Breeze2 等模型在繁體中文理解上的表現。"
-permalink: /TW-LLM-Benchmark
+permalink: /Blog/TW-LLM-Benchmark
 lang: zh-Hant
 keywords: ["LLM Benchmark", "臺灣大模型", "Llama-3-Taiwan", "TAIDE", "模型評測"]
 ---

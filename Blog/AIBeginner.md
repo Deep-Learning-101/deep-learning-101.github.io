@@ -2,7 +2,7 @@
 layout: default
 title: "企業 AI 新賽局入門策略指南 | 10 大常見錯誤與解決方案"
 description: "專為企業決策者設計的 AI 導入指南。解析生成式 AI (GenAI) 的商業價值，並揭露企業在 AI 轉型過程中常犯的 10 個致命錯誤。"
-permalink: /AIBeginner
+permalink: /Blog/AIBeginner
 lang: zh-Hant
 keywords: ["企業 AI 導入", "AI 策略", "數位轉型", "GenAI 應用", "AI 落地"]
 ---
