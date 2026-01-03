@@ -158,7 +158,7 @@ schema_type: article
 
 - 2025-10-19｜**Gemini Computer Use**
   - 說明：Google 推出讓 AI 代理操作網頁介面
-  - 資源：[📖 官方文件](https://ai.google.dev/gemini-api/docs/computer-use) | [📝 iThome 報導](https://www.ithome.com.tw/news/171579)
+  - 資源：[📖 官方文件](https://ai.google.dev/gemini-api/docs/computer-use) | [📝 iThome 報導](https://www.ithome.com.tw/news/171579) | [🐙 GitHub](https://github.com/google-gemini/computer-use-preview)
 
 - 2025-10-10｜**SurfSense**
   - 說明：GitHub 萬星王炸，整合 Slack/Notion/Jira
