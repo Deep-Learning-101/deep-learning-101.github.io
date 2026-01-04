@@ -96,6 +96,10 @@ service_type: AI Consulting
   - 說明：讓即時語音轉寫絲滑得不像話的神器
   - 資源：[🐙 GitHub](http://github.com/QuentinFuxa/WhisperLiveKit) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/1944712252512010607)
 
+- 2025-08-27｜**CarelessWhisper**
+  - 說明：微調Whisper實現低延遲串流識別，效果接近非串流式
+  - 資源：[🐙 GitHub](https://github.com/tomer9080/CarelessWhisper-streaming) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/1977136140139141051)
+
 - 2025-08-10｜**Canary-1b-v2**
   - 說明：NVIDIA 發布多語種語音 AI 開放資料集與模型
   - 資源：[🤗 HuggingFace](https://huggingface.co/nvidia/canary-1b-v2) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/1952436345222993067)
