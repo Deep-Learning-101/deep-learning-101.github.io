@@ -3,11 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TonTon H.-D. Huang Ph.D. | AI × Cyber-Security | 痛 痛</title>
+    <title>TonTon H.-D. Huang Ph.D. | AI × Cyber-Security | 痛痛</title>
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4046615879480582"
+     crossorigin="anonymous"></script>
     <script src="https://cdn.tailwindcss.com/3.4.3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <style>
+
+  /* 容器樣式 - 這裡做了置中修改 */
+  .sidebar-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    overflow: hidden;
+
+    /* 置中關鍵設定 */
+    margin: 30px auto;      /* 上下30px，左右自動(置中) */
+    max-width: 800px;       /* 限制最大寬度，像是一張卡片 */
+    width: 95%;             /* 手機版左右留一點縫隙 */
+
+    border: 1px solid #eee;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .sidebar-header {
+    background: #f8f9fa;
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    text-align: center;
+  }
+
+  .sidebar-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+    color: #333;
+  }
+
+  /* 區塊樣式 */
+  .sidebar-section {
+    border-bottom: 1px solid #eee;
+  }
+  
+  .sidebar-section:last-child {
+    border-bottom: none;
+  }
+
+  /* 置頂區塊標題 */
+  .section-title {
+    padding: 12px 15px;
+    font-weight: bold;
+    color: #d63384; 
+    background: #fff0f6;
+    display: flex;
+    align-items: center;
+  }
+  
+  .section-title .icon {
+    margin-right: 8px;
+  }
+
+  /* 折疊區塊標題 */
+  .section-summary {
+    padding: 12px 15px;
+    cursor: pointer;
+    font-weight: bold;
+    color: #444;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    background: #fff;
+    transition: background 0.2s;
+  }
+  
+  .section-summary:hover {
+    background: #f8f9fa;
+    color: #007bff;
+  }
+  
+  .section-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .section-summary .arrow {
+    margin-left: auto;
+    font-size: 0.8em;
+    color: #999;
+    transition: transform 0.2s;
+  }
+
+  details[open] .arrow {
+    transform: rotate(180deg);
+  }
+
+  /* 內容區域 */
+  .section-content {
+    padding: 5px 10px 15px 10px;
+  }
+
+  /* 連結樣式 */
+  .sidebar-link {
+    display: block;
+    padding: 8px 10px;
+    text-decoration: none;
+    color: #555;
+    border-radius: 6px;
+    font-size: 0.95em;
+    margin-bottom: 4px;
+    transition: all 0.2s;
+    line-height: 1.4;
+    text-align: left; /* 連結內容保持靠左閱讀比較舒服 */
+  }
+
+  .sidebar-link:hover {
+    background-color: #f1f3f5;
+    color: #007bff;
+    transform: translateX(3px);
+  }
+
+  /* 重點文章樣式 */
+  .featured-link {
+    font-weight: 500;
+    color: #222;
+    border-left: 3px solid #d63384;
+    background: #fdfdfd;
+    margin-bottom: 8px;
+  }
+  
+  .featured-link:hover {
+    background: #fff0f6;
+    border-left-color: #a61e4d;
+  }
+
+  /* Badge 樣式 */
+  [class^="badge-"] {
+    display: inline-block;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.75em;
+    font-weight: bold;
+    color: white;
+    margin-right: 5px;
+    vertical-align: text-bottom;
+  }
+
+  .badge-strategy { background-color: #6610f2; }
+  .badge-report { background-color: #0d6efd; }
+  .badge-tech { background-color: #198754; }
+  .badge-warning { background-color: #fd7e14; }
+
         body {
             font-family: -apple-system, BlinkMacSystem-Font, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
             background-color: #f5f5f7;
@@ -126,113 +270,260 @@
 
         <header class="text-center my-12">
             <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400">
-                <a href="https://www.twman.org" target="_blank">TonTon (痛 痛) H.-D. Huang Ph.D.</a>
+                <a href="https://www.twman.org" target="_blank">TonTon (痛痛) H.-D. Huang Ph.D.</a>
             </h1>
         </header>
 
-        <div class="top-info-box motion-div">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
-                <div class="flex-shrink-0 flex items-center gap-4">
-                    <a href="https://blog.twman.org" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon.jpg" class="w-32 h-32 rounded-full object-cover shadow-lg"></img></a>
-                    <a href="https://deep-learning-101.github.io/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg" class="w-32 h-32 rounded-lg object-cover shadow-lg"></img></a>
-                </div>
-                <div class="text-center md:text-center">
-                    <p class="text-lg font-medium text-slate-700"><a href="https://TWMAN.ORG" target="_blank">https://TWMAN.ORG</a> | AI × Cyber-Security | TonTon (at) TWMAN.ORG</p>
-                    <p class="mt-2 text-slate-600">
-                        感謝天、感謝地；未接種新冠疫苗，健康且未曾確診。<br>
-                        人生短短幾個秋，不醉不罷休；從高中大學流浪退學拼到博士。<br>
-                        從文科社會組斜槓轉資工領域；從南部流浪英法，再北漂回台北。<br>
-                        從科技業跨領域體驗金融業山頭政治，轉角踩坑電信業浮誇新聞稿。<br>
-                        <a href="https://deep-learning-101.github.io/" target="_blank">Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</a></br>
-                    </p>
-                     <div class="mt-4 flex justify-center items-center gap-4">
-                        <a href="https://github.com/Deep-Learning-101" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/github.png" class="h-10 transition-transform hover:scale-110"></a>
-                        <a href="https://www.linkedin.com/in/tontonhuang/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/linkedin.png" class="h-8 transition-transform hover:scale-110"></a>
-                        <a href="https://huggingface.co/DeepLearning101" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/hugging%20face.png" class="h-10 transition-transform hover:scale-110"></a>
-                        <a href="https://www.youtube.com/@DeepLearning101" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/ytlogo.jpg" width="120" height="auto"></img></a>
-                    </div>
-                </div>
-            </div>
-        </div>
+<div class="top-info-box motion-div">
+  <!-- 外層容器：限制寬度、水平置中、提供舒適左右內距與上下留白 -->
+  <div class="container mx-auto px-[clamp(8px,2vw,16px)] py-2">
+    <!-- 內容列：中間對齊、元素間距用 gap 控制 -->
+    <div class="flex flex-col md:flex-row items-center justify-center gap-2">
+      
+      <!-- 左側大圖 -->
+      <a href="https://blog.twman.org/" target="_blank" class="flex-shrink-0">
+        <img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon.jpg"
+             class="w-60 h-72 object-cover object-center rounded-lg shadow-lg">
+      </a>
 
-        <div class="bento-box motion-div">
-            <i class="fas fa-user-circle icon-large"></i>
-            <h2 class="bento-title-large">關於我 (About Me)</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 bento-text text-justify">
-                <div>
-                    <p>TonTon has over a decade of experience at the intersection of AI and cybersecurity, specializing in computer vision, natural language processing, speech processing, and x86/Android malware analysis. He has led the adoption of AI solutions and the deployment of cybersecurity R&D in the financial insurance and telecommunications sectors, strengthening operational intelligence and cyber resilience. He has also presented his work at international conferences such as DEF CON, OWASP AppSec USA, RuxCon, and HITCON, and authored multiple academic publications.</p>
-                    <p>He earned his Ph.D. in Computer Science and Information Engineering from National Cheng Kung University, with a dissertation titled “Deep Learning-based Anomaly Analysis in Cyber Threats.” During his doctoral studies, he participated in Taiwan–France and Taiwan–UK collaborative research programs, conducting research at Inria (France) and the University of Essex (UK). He is the founder of Taiwan’s early AI communities, Deep Learning 101 and the Taiwan AI Society, fostering industry–academia collaboration and knowledge sharing in AI and cybersecurity.</p>
-                </div>
-                <div>
-                    <p>TonTon 長期投入人工智慧與網路安全領域，擁有多年的研發與跨域整合經驗，專長涵蓋圖像識別、自然語言處理、語音處理，以及x86/Android惡意程式分析等AI與資安整合應用。他於金融壽險與電信等產業推動AI導入與資安研發落地，強化產業智慧化與資安韌性；並陸續於DEF CON、OWASP AppSec USA、RuxCon與HITCON等國際研討會發表技術研究，亦發表多篇學術論文。</p>
-                    <p>TonTon 畢業於國立成功大學資訊工程學系，博士論文主題為「基於深度學習的網路威脅異常分析」；期間參與「台法聯合團隊交流計畫」及「台灣與英國頂尖大學前期合作研究計畫」，先後赴法國國家信息與自動化研究所與英國艾賽克斯大學進行學術研究合作。他亦為台灣早期人工智慧社群Deep Learning 101與台灣人工智慧社團之發起人，推動AI與資安領域的產學交流與技術推廣。</p>
-                </div>
-            </div>
+      <!-- 中間文字：在各斷點維持置中 -->
+      <div class="text-center">
+        <p class="text-lg font-medium text-slate-700">
+          <a href="https://TWMAN.ORG" target="_blank">AI (LLM/ASR/NLP/CV) × Cyber-Security</a>
+        </p>
+        <a href="https://deep-learning-101.github.io/" target="_blank">
+          Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+        </a>
+        <p class="mt-2 text-slate-600">
+          謝天謝地；新冠未打疫苗未確診。<br>
+          人生短短幾個秋，不醉不罷休；<br>高中大學流浪退學拼到博士。<br>
+          文科社會組斜槓轉資工領域；<br>南部流浪英法，再北漂台北。<br>
+          科技業跨域體驗金融業山頭，<br>轉角踩坑電信業浮誇新聞稿。<br>
+        </p>
+                     <div class="mt-4 flex justify-center items-center gap-4">
+                        <a href="https://github.com/Deep-Learning-101" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/github.png" class="h-12 transition-transform hover:scale-110"></a>
+                        <a href="https://www.youtube.com/@DeepLearning101" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/ytlogo.jpg" class="h-12 transition-transform hover:scale-110"></img></a>
+                        <a href="https://huggingface.co/DeepLearning101" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/hugging%20face.png" class="h-12 transition-transform hover:scale-110"></a>
+                        <a href="https://deep-learning-101.github.io/" target="_blank">
+                            <img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg" class="h-12 transition-transform hover:scale-110"></img>
+                        </a>
+                    </div>
+        <!-- icon 列：置中與間距 -->
+        <div class="mt-4 flex justify-center items-center gap-4">
+          <!-- icons ... -->
         </div>
+      </div>
+
+      <!-- 右側大圖 -->
+      <a href="https://www.twman.org/" target="_blank" class="flex-shrink-0">
+        <img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon.png"
+             class="w-60 h-72 object-cover object-center rounded-lg shadow-lg">
+      </a>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="bento-box motion-div">
+  <i class="fas fa-user-circle icon-large"></i>
+  <h2 class="bento-title-large text-balance">關於痛痛 (About TonTon)</h2>
+
+  <!-- 等高兩欄 + 左右對齊 -->
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+
+    <!-- EN column -->
+    <div class="space-y-4">
+      <p class="bento-text text-justify hyphens-auto break-words text-base leading-relaxed line-clamp-9">
+        TonTon has over a decade of experience at the intersection of AI and cybersecurity, specializing in computer vision, natural language processing, speech processing, and x86/Android malware analysis. He has led the adoption of AI solutions and the deployment of cybersecurity R&D in the financial insurance and telecommunications sectors, strengthening operational intelligence and cyber resilience. He has also presented his work at international conferences such as <a href="https://www.twman.org/research" target="_blank" class="flex-shrink-0">DEF CON, OWASP AppSec USA, RuxCon, and HITCON</a>, and authored multiple academic publications.
+      </p>
+      <p class="bento-text text-justify hyphens-auto break-words text-base leading-relaxed line-clamp-9">
+        He earned his Ph.D. in Computer Science and Information Engineering from National Cheng Kung University, with a dissertation titled “Deep Learning-based Anomaly Analysis in Cyber Threats.” During his doctoral studies, he participated in Taiwan–France and Taiwan–UK collaborative research programs, conducting research at Inria (France) and the University of Essex (UK). He is the founder of Taiwan’s early AI communities, <a href="https://deep-learning-101.github.io/" target="_blank" class="flex-shrink-0">Deep Learning 101</a> and <a href="https://www.facebook.com/groups/525579498272187" target="_blank" class="flex-shrink-0">the Taiwan AI Society</a>, fostering industry–academia collaboration and knowledge sharing in AI and cybersecurity.
+      </p>
+    </div>
+
+    <!-- ZH column：中文字稍大＋行距微調，並鎖相同行數 -->
+    <div class="space-y-4">
+      <p class="bento-text text-justify text-[15.5px]/[1.7] md:text-[19px]/relaxed line-clamp-9">
+        TonTon 長期投入人工智慧與網路安全領域，擁有多年的研發與跨域整合經驗，專長涵蓋圖像識別、自然語言處理、語音處理，以及x86/Android惡意程式分析等AI與資安整合應用。他於金融壽險與電信等產業推動AI導入與資安研發落地，強化產業智慧化與資安韌性；並陸續於<a href="https://www.twman.org/research" target="_blank" class="flex-shrink-0">DEFCON、OWASP AppSec USA、RuxCon與HITCON等</a>國際研討會發表技術研究，亦發表多篇學術論文。
+      </p>
+      <p class="bento-text text-justify text-[15.5px]/[1.7] md:text-[19px]/relaxed line-clamp-9">
+        TonTon 畢業於國立成功大學資訊工程學系，博士論文主題為「基於深度學習的網路威脅異常分析」；期間參與「台法聯合團隊交流計畫」及「台灣與英國頂尖大學前期合作研究計畫」，先後赴法國國家信息與自動化研究所與英國艾賽克斯大學進行學術研究合作。他亦為台灣早期人工智慧社群<a href="https://deep-learning-101.github.io/" target="_blank" class="flex-shrink-0">Deep Learning 101</a>與<a href="https://www.facebook.com/groups/525579498272187" target="_blank" class="flex-shrink-0">台灣人工智慧社團</a>之發起人，推動AI與資安領域的產學交流與技術推廣。
+      </p>
+    </div>
+  </div>
+</div>
+
         
         <div class="bento-box motion-div">
-            <i class="fas fa-feather-alt icon-large"></i>
-            <h2 class="bento-title-large">AI 精選文章 (Featured AI Articles)</h2>
-            <div class="bento-text">
-                <details close>
-                    <summary class="bento-subtitle cursor-pointer">用 AI 懂 AI (Understanding AI with AI)</summary>
-                    <ul class="bento-list mt-4">
-                        <li><b><a href="https://deep-learning-101.github.io/Paper/Chain-of-Thought">Chain-of-Thought is not explainability</a></b></li>
-                        <li><b><a href="https://deep-learning-101.github.io/Paper/2506.21521_Potemkin-Understanding">arXiv 2506.21521 (Potemkin Understanding in Large Language Models)</a></b></li>
-                        <li><b><a href="https://deep-learning-101.github.io/Paper/2502.04644_Oxford_Agentic-Reasoning.html">arXiv 2502.04644 (Agentic Reasoning)</a></b></li>
-                        <li><b><a href="https://deep-learning-101.github.io/Blog/AIBeginner">AI新賽局：企業的入門策略指南</a></b></li>
-                        <li><b><a href="https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark">臺灣大型語言模型性能評測與在地化策略分析報告</a></b></li>
-                        <li><b><a href="https://www.twman.org/AI/Finance" target="_blank">GenAI 與 LLM 在金融產業的應用分析</a></b></li>
-                        <li><b><a href="https://blog.twman.org/2025/03/AIAgent.html" target="_blank">避開 AI Agent 開發陷阱：常見問題、挑戰與解決方案</a></b></li>
-                    </ul>
-                </details>
-                <details>
-                     <summary class="bento-subtitle cursor-pointer">AI 技術 體驗/分享 (AI Tech Deep Dive)</summary>
-                     <ul class="bento-list mt-4">
-                        <li><b><a href="https://blog.twman.org/2024/08/LLM.html" target="_blank">白話文手把手帶你科普 GenAI</a></b></li>
-                        <li><b><a href="https://blog.twman.org/2024/09/LLM.html" target="_blank">大型語言模型直接就打完收工？</a></b></li>
-                        <li><b><a href="https://blog.twman.org/2024/07/RAG.html" target="_blank">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b></li>
-                     </ul>
-                </details>
-                 <details>
-                    <summary class="bento-subtitle cursor-pointer">AI 技術 開源/試用 (Open Source / Demos)</summary>
-                    <ul class="bento-list mt-4">
-                      <li><b><a href="https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI">gemini-fullstack-langgraph體驗</a></b></li>
-                      <li><b><a href="https://deep-learning-101.github.io/FinRobot/FinRobot-GOOGL">基於 AutoGen的FinRobot體驗</a></b></li>
-                    </ul>
-                </details>
-            </div>
-        </div>
+            <i class="fas fa-feather-alt icon-large">探索 AI 領域 🚀</i>
+    <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io/Large-Language-Model" class="nav-btn" style="background: #007bff; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(0,123,255,0.2); transition: transform 0.2s;">
+          🤖 大語言模型
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper?tab=readme-ov-file#llm" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io/Natural-Language-Processing" class="nav-btn" style="background: #28a745; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(40,167,69,0.2); transition: transform 0.2s;">
+          📝 自然語言處理
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io//Computer-Vision" class="nav-btn" style="background: #17a2b8; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(23,162,184,0.2); transition: transform 0.2s;">
+          👁️ 電腦視覺
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
+
+    <div style="display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 140px;">
+        <a href="https://deep-learning-101.github.io/Speech-Processing" class="nav-btn" style="background: #6f42c1; color: white; padding: 8px 16px; border-radius: 50px; text-decoration: none; font-weight: 500; width: 100%; text-align: center; box-shadow: 0 2px 4px rgba(111,66,193,0.2); transition: transform 0.2s;">
+          🎤 語音處理
+        </a>
+        <a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper" target="_blank" style="font-size: 0.85em; color: #666; text-decoration: none; display: flex; align-items: center; gap: 4px;">
+          <span style="font-size: 1.1em;">🔗</span> GitHub Papers
+        </a>
+    </div>
+如果您想尋找更詳細的筆記 ☝️ GitHub Repository 👆 歡迎 Star ⭐
+<div class="sidebar-container">
+  <div class="sidebar-section featured-section">
+    <div class="section-title">
+      <span class="icon">🔥</span> 嚴選 (必讀)
+    </div>
+    <div class="section-content">
+
+      <a href="https://deep-learning-101.github.io/Blog/AIBeginner" class="sidebar-link featured-link">
+        <span class="badge-strategy">策略</span>
+        AI新賽局：企業的入門策略指南
+      </a>
+
+      <a href="https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark" class="sidebar-link featured-link">
+        <span class="badge-report">評測</span>
+        臺灣 LLM 性能評測與在地化分析
+      </a>
+
+      <a href="https://deep-learning-101.github.io/RAG" class="sidebar-link featured-link">
+        <span class="badge-tech">實戰</span>
+        從零到一：打造高精準度 RAG 系統
+      </a>
+
+      <a href="https://deep-learning-101.github.io/agent" class="sidebar-link featured-link">
+        <span class="badge-warning">避坑</span>
+        避開 AI Agent 開發陷阱與解決方案
+      </a>
+
+      <a href="https://deep-learning-101.github.io/Blog/Cloudflared-Tunnel" class="sidebar-link featured-link">
+        <span class="badge-warning">手把手</span>
+        Cloudflared 實作內網穿透 (Tunnel)
+      </a>
+    </div>
+  </div>
+
+  <details class="sidebar-section">
+    <summary class="section-summary">
+      <span>🛠️ 實戰工具 & Agent 框架</span>
+      <span class="arrow">▼</span>
+    </summary>
+    <div class="section-content">
+      <a href="https://deep-learning-101.github.io/Blog/Dify-Coze-n8n-AutoGen-LangChain" class="sidebar-link">Dify, Coze, n8n, AutoGen 熱門框架比較</a>
+      <a href="https://deep-learning-101.github.io/Blog/vLLM-Ollama-SGLang-LLaMAcpp" class="sidebar-link">推論加速：vLLM, Ollama, SGLang</a>
+      <a href="https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI" class="sidebar-link">Gemini + LangGraph 全端實戰</a>
+      <a href="https://deep-learning-101.github.io/FinRobot/FinRobot-GOOGL" class="sidebar-link">基於 AutoGen 的 FinRobot 體驗</a>
+    </div>
+  </details>
+
+  <details class="sidebar-section">
+    <summary class="section-summary">
+      <span>🛡️ AI 資安與 AIxCC 競賽</span>
+      <span class="arrow">▼</span>
+    </summary>
+    <div class="section-content">
+      <a href="https://deep-learning-101.github.io/cyber/AIxCC-Atlanta" class="sidebar-link">🏆 冠軍團隊：亞特蘭大 (Team-Atlanta) 解析</a>
+      <a href="https://deep-learning-101.github.io/cyber/AIxCC-Buttercup" class="sidebar-link">🥈 亞軍團隊：Trail of Bits 解析</a>
+      <a href="https://deep-learning-101.github.io/cyber/AIxCC-shellphish" class="sidebar-link">🐚 Shellphish：用 LLMs 解決 CTF 挑戰</a>
+      <a href="https://deep-learning-101.github.io/cyber/LLM-Guard" class="sidebar-link">🛡️ AI 大模型安全護欄綜合報告</a>
+      <a href="https://deep-learning-101.github.io/cyber/LLM-Offense" class="sidebar-link">⚔️ LLM 安全攻防策略深度解析</a>
+    </div>
+  </details>
+
+  <details class="sidebar-section">
+    <summary class="section-summary">
+      <span>📝 論文快遞 & 產業趨勢</span>
+      <span class="arrow">▼</span>
+    </summary>
+    <div class="section-content">
+      <a href="https://deep-learning-101.github.io/Paper/Chain-of-Thought" class="sidebar-link">CoT (思维鏈) is not explainability</a>
+      <a href="https://deep-learning-101.github.io/Paper/2506.21521_Potemkin-Understanding" class="sidebar-link">arXiv: Potemkin Understanding in LLMs</a>
+      <a href="https://deep-learning-101.github.io/Paper/2502.04644_Oxford_Agentic-Reasoning.html" class="sidebar-link">arXiv: Agentic Reasoning</a>
+      <a href="https://deep-learning-101.github.io/Blog/AIFinTech" class="sidebar-link">💰 GenAI 在金融產業的應用分析</a>
+      <a href="https://deep-learning-101.github.io/Blog/robot" class="sidebar-link">🤖 2025 趨勢：AI Robot 陪伴型機器人</a>
+    </div>
+  </details>
+
+  <details class="sidebar-section">
+    <summary class="section-summary">
+      <span>🚧 踩坑指南 & 科普入門</span>
+      <span class="arrow">▼</span>
+    </summary>
+    <div class="section-content">
+      <a href="https://deep-learning-101.github.io/GenAI" class="sidebar-link">🎓 白話文科普 GenAI (硬體/數據)</a>
+      <a href="https://deep-learning-101.github.io/1010LLM" class="sidebar-link">🛑 LLM 打完收工？硬體升級重要性</a>
+      <a href="https://deep-learning-101.github.io/0204LLM" class="sidebar-link">📘 LLM 入門完整指南：原理與應用</a>
+      <a href="https://deep-learning-101.github.io/diffusion" class="sidebar-link">🎨 Diffusion Model 圖像生成解析</a>
+      <a href="https://deep-learning-101.github.io/GPU" class="sidebar-link">💻 訓練微調 VRAM 估算指南</a>
+      <a href="https://deep-learning-101.github.io/asr-tts" class="sidebar-link">🎙️ ASR/TTS 語音開發避坑</a>
+      <a href="https://deep-learning-101.github.io/nlp" class="sidebar-link">📝 NLP 自然語言開發避坑</a>
+      <a href="https://deep-learning-101.github.io/101" class="sidebar-link">🐧 Ubuntu 深度學習環境安裝教學</a>
+    </div>
+  </details>
+
+</div>
+
+</div>
+</div>
 
         <h2 class="bento-title-large text-center my-12"><i class="fas fa-briefcase"></i> 工作經歷 & <i class="fas fa-graduation-cap"></i> 學術/教育背景 </h2>
         <h2 class="bento-title-large text-center my-12">Work Experience & Acacemic / Education </h2>
         
         <div class="bento-box motion-div">
-            <h3 class="bento-subtitle">Senior Manager (協理)</h3>
-            <div class="meta-info">Technology & Transformation - Cyber</div>
+            <a href="https://www.deloitte.com/tw/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/deloitte.png" width="90" height="auto" class="mb-4"></img></a>
+            <h3 class="bento-subtitle">🛡️ Senior Manager (協理)</h3>
+            <div class="meta-info">Technology & Transformation - Cyber / 科技與轉型 - 網路安全服務</div>
+            <div class="meta-info">Deloitte Touche Tohmatsu Ltd. (勤業眾信聯合會計師事務所)</div>
             <div class="meta-info">2025/07/07 ~ Now | Taipei, Taiwan</div>
             <div class="bento-text">
                 <ul class="bento-list">
-                    <li>Intelligent Regulatory Compliance</li>
+                    <li>TBD</li>
                 </ul>
             </div>
             <div class="mt-4">
-                <span class="tag">RegTech</span> <span class="tag">LLM/GenAI</span> <span class="tag">Cyber Risk</span> <span class="tag">Threat Modeling</span>
+                <span class="tag">LLM/GenAI</span> <span class="tag">Cyber</span> <span class="tag">AI-Read-Team</span>
             </div>
         </div>
 
         <div class="bento-box motion-div">
+            <a href="https://www.taiwanmobile.com/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TWM.png" width="80" height="auto" class="mb-4"></img></a>
             <h3 class="bento-subtitle">📱 Manager / Department Head (部經理)</h3>
-            <div class="meta-info">Telecommunications Service Provider</div>
+            <div class="meta-info">Data Analytics Technology (DAT) / 資料分析技術處</div>
+            <div class="meta-info">Taiwan Mobile Co., Ltd. (台灣大哥大股份有限公司)</div>
             <div class="meta-info">2023/12/11 ~ 2024/07/05 | Taipei, Taiwan</div>
             <div class="bento-text">
                 <p>Responsible for developing information systems tailored for AI and cybersecurity, spanning machine learning, deep learning, and other advanced computational techniques. Projects include dark web threat intelligence platforms, ASR error correction, accounting document OCR, large language & multimodal models, and multi-agent workflow automation systems.</p>
                 <p>開發專為人工智慧與資安領域量身打造的資訊系統，涵蓋機器學習、深度學習及其他先進運算技術。專案包括暗網威脅情報平台、自動語音辨識錯誤校正、會計憑證 OCR、大型語言與多模態模型，以及多智能體與流程自動化系統。</p>
                 <ul class="bento-list">
                     <li><b>威脅情報 / Threat Intelligence:</b> 暗網監控與分析平台 / Dark web monitoring and threat intelligence platform.</li>
-                    <li><b>ASR 錯誤校正 / ASR Error Correction:</b> 提升語音辨識準確度 / Improved ASR accuracy.</li>
+                    <li><b><a href="https://huggingface.co/spaces/DeepLearning101/Corrector101zhTW" target="_blank">ASR 錯誤校正 / ASR Error Correction:</b> 提升語音辨識準確度 / Improved ASR accuracy.</a></li>
                     <li><b>會計憑證 OCR / Accounting OCR:</b> 自動化財務單據辨識 / Automated document recognition.</li>
-                    <li><b>大型語言與多模態模型 / LLM & Multimodal Models:</b> 應用於多元商業場景 / Applied to diverse business use cases.</li>
+                    <li><b><a href="https://huggingface.co/spaces/DeepLearning101/High-Entropy-Alloys-FAQ" target="_blank">大型語言與多模態模型 / LLM & Multimodal Models:</b> 應用於多元商業場景 / Applied to diverse business use cases.</a></li>
                     <li><b>多智能體與工作流程系統 / Multi-agent & Workflow Systems:</b> 流程自動化設計 / Workflow automation design.</li>
                 </ul>
             </div>
@@ -251,9 +542,9 @@
                 <p>AI architecture and solution development focusing on natural language processing, OCR, and speech recognition.</p>
                 <p>人工智慧架構與解決方案開發，專注於自然語言處理、光學字元辨識與語音識別。</p>
                 <ul class="bento-list">
-                    <li><b>命名實體識別與事件擷取 / NER & Event Extraction:</b> 醫療診斷書分析與日期擷取 / Medical diagnosis analysis & time extraction.</li>
+                    <li><b><a href="https://huggingface.co/spaces/DeepLearning101/IE101TW" target="_blank">命名實體識別與事件擷取 / NER & Event Extraction:</b> 醫療診斷書分析與日期擷取 / Medical diagnosis analysis & time extraction.</a></li>
                     <li><b>OCR / OCR:</b> 文本、表格偵測與關鍵資訊擷取 / Text, table detection, and key information extraction.</li>
-                    <li><b>語音識別與去噪 / Speech Recognition & Noise Reduction:</b> 遠距投保與客服語音質檢工具 / QA tools for remote insurance and customer service speech interactions.</li>
+                    <li><b><a href="https://huggingface.co/spaces/DeepLearning101/Speech-Quality-Inspection_Meta-Denoiser" target="_blank">語音識別與去噪 / Speech Recognition & Noise Reduction:</b> 遠距投保與客服語音質檢工具 / QA tools for remote insurance and customer service speech interactions.</a></li>
                     <li><b>bbc.com 專訪:</b> <a href="https://www.bbc.com/news/business-63075729#:~:text=Taiwanese%20cyber%20security%20expert%20TonTon%20Huang%20says%20that%20once%20such%20a%20person%20has%20been%20found%2C%20scammers%20call%20back." target="_blank">Taiwan's front-line battle against mobile phone fraud.</a></li>
                 </ul>
             </div>
@@ -266,26 +557,38 @@
                  <a href="https://web.ncku.edu.tw/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/ncku.jfif" class="h-16 w-auto rounded-md"></a>
                  <a href="https://www.csie.ncku.edu.tw/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/csie.png" class="h-16 w-auto"></a>
             </div>
-            <h3 class="bento-subtitle">博士 — 國立成功大學 資訊工程學系 (Ph.D., NCKU CSIE)</h3>
+            <h3 class="bento-subtitle">博士 — <a href="https://web.ncku.edu.tw/" target="_blank">國立成功大學</a> <a href="https://www.csie.ncku.edu.tw/" target="_blank">資訊工程學系</a> (Ph.D., NCKU CSIE)</h3>
+            <div class="meta-info">Ph.D., Dept. Computer Science and Information Engineering, National Cheng Kung University</div>
             <div class="meta-info">2010/09/15 ~ 2019/01</div>
             <div class="bento-text">
                 <p><a href="https://hdl.handle.net/11296/m2awfx" target="_blank">論文：基於深度學習的網路威脅異常分析 (Deep learning based anomaly analysis in cyber threats)</a></p>
                 <p><strong>指導教授：高宏宇博士（<a href="https://ikmlab.cs.nthu.edu.tw/">IKM Lab</a>）</strong></p>
                 <details class="mt-4">
-                    <summary class="font-semibold text-slate-700 cursor-pointer"><a href="https://scholargps.com/scholars/20316010606475/tonton-hsien-de-huang">ScholarGPS</a> | 學術發表 (Publications) | <a href="https://scholar.google.com.tw/citations?user=bgCj0ykAAAAJ">Google Scholar</a> </summary>
+                    <summary class="font-semibold text-slate-700 cursor-pointer"><a href="https://scholargps.com/scholars/20316010606475/tonton-hsien-de-huang" target="_blank">ScholarGPS</a> | 學術發表 (Publications) | <a href="https://scholar.google.com.tw/citations?user=bgCj0ykAAAAJ" target="_blank">Google Scholar</a> </summary>
                     <ul class="bento-list mt-4 text-sm">
-                        <li>TonTon H.-D. Huang* and Hung-Yu Kao, "C-3PO: Click-sequence-aware DeeP Neural Network (DNN)-based Pop-uPs RecOmmendation", Soft Computing, Vol. 23, no. 22, pp. 11793–11799, 2019. </li>
-                        <li>TonTon H.-D. Huang* and Hung-Yu Kao, "R2-D2: Color-inspired Convolutional Neural Network (CNN)-based Android Malware Detections", IEEE International Conference on Big Data 2018 (IEEE Big Data 2018), Seattle, WA, USA, Dec 10-13, 2018.</li>
-                        <li>TonTonH.-D. Huang, "Hunting the ethereum smart con-tract:Color-inspired inspection of potential attacks", arXiv preprint, arXiv:1807.01868, 2018.</li>
-                        <li>TonTon H.-D. Huang*, Chia-Mu Yu, and Hung-Yu Kao, "Data-Driven and Deep Learning Methodology for Deceptive Advertising and Phone Scams Detection", 2017 Conference on Technologies and Applications of Artificial  Intelligence (TAAI 2017), Taipei, Taiwan, Dec. 1-3, 2017. </li>
-                        <li>TonTon H.-D. Huang* and Chia-Mu Yu, "Poster: Adaptive Data-Driven and Region-Aware Detection for Deceptive Advertising", IEEE Symposium on Security and Privacy 2016 (IEEE S&P 2016), San Jose, CA, USA, May 23-25, 2016.</li>
-                        <li>TonTon H.-D. Huang*, C.-S. Lee, M.-H. Wang, and  Hung-Yu Kao, "IT2FS-based ontology with soft-computing mechanism for malware behavior analysis," Soft Computing, vol. 18, no. 2, pp. 267-284, 2014.</li>
-                        <li>TonTon H.-D. Huang*, C.-S. Lee, M.-H. Wang, and Hung-Yu Kao, "IT2FLS-based Malware Analysis Mechanism: Malware Analysis Network in Taiwan (MiT)", in Proceeding of the 2013 IEEE International Conference on Systems, Man, and Cybernetics (IEEE SMC 2013), Manchester, United-Kingdom, Oct. 13-16, 2013.</li>
-                        <li>TonTon H.-D. Huang*, C.-S. Lee, H. Hagras, and Hung-Yu Kao, "TWMAN+：A Type-2 Fuzzy Ontology Model for Malware Behavior Analysis," in Proceeding of the 2012 IEEE International Conference on Systems, Man, and Cybernetics (IEEE SMC 2012), COEX, Seoul, Korea, Oct. 14-17, 2012.</li>
+                        <li>TonTon H.-D. Huang* and Hung-Yu Kao, "<a href="https://arxiv.org/pdf/1803.00458" target="_blank">C-3PO: Click-sequence-aware DeeP Neural Network (DNN)-based Pop-uPs RecOmmendation</a>", <a href="https://link.springer.com/article/10.1007/s00500-018-03730-5" target="_blank">Soft Computing</a>, Vol. 23, no. 22, pp. 11793–11799, 2019. (2020 CiteScore: 5.1 / 2021 Impact factor: 3.732；Q2)</li>
+
+                        <li>TonTon H.-D. Huang* and Hung-Yu Kao, "<a href="https://arxiv.org/abs/1705.04448" target="_blank">R2-D2: Color-inspired Convolutional Neural Network (CNN)-based Android Malware Detections</a>", <a href="https://ieeexplore.ieee.org/document/8622324" target="_blank">IEEE International Conference on Big Data 2018 (IEEE Big Data 2018)</a>, <a href="https://blog.twman.org/2018/12/IEEE-BigData-2018.html" target="_blank">Seattle</a>, WA, USA, Dec 10-13, 2018.</li>
+
+                        <li>TonTonH.-D. Huang, "<a href="https://arxiv.org/abs/1807.01868" target="_blank">Hunting the ethereum smart con-tract:Color-inspired inspection of potential attacks</a>", arXiv preprint, arXiv:1807.01868, 2018.</li>
+
+                        <li>TonTon H.-D. Huang*, Chia-Mu Yu, and Hung-Yu Kao, "<a href="https://arxiv.org/abs/1710.05305" target="_blank">Data-Driven and Deep Learning Methodology for Deceptive Advertising and Phone Scams Detection</a>", <a href="https://ieeexplore.ieee.org/document/8356930" target="_blank">2017 Conference on Technologies and Applications of Artificial  Intelligence (TAAI 2017)</a>, <a href="https://blog.twman.org/2017/12/TAAI2017.html" target="_blank">Taipei</a>, Taiwan, Dec. 1-3, 2017. </li>
+
+                        <li>TonTon H.-D. Huang* and Chia-Mu Yu, "Poster: Adaptive Data-Driven and Region-Aware Detection for Deceptive Advertising", <a href="https://www.ieee-security.org/TC/SP2016/poster-abstracts/8-poster_abstract.pdf" target="_blank">IEEE Symposium on Security and Privacy 2016 (IEEE S&P 2016)</a>, <a href="https://blog.twman.org/2016/05/IEEE-SP-2016.html" target="_blank">San Jose</a>, CA, USA, May 23-25, 2016.</li>
+
+                        <li>TonTon H.-D. Huang*, C.-S. Lee, M.-H. Wang, and  Hung-Yu Kao, "<a href="https://link.springer.com/article/10.1007/s00500-013-1056-0" target="_blank">IT2FS-based ontology with soft-computing mechanism for malware behavior analysis</a>," Soft Computing, vol. 18, no. 2, pp. 267-284, 2014.</li>
+
+                        <li>TonTon H.-D. Huang*, C.-S. Lee, M.-H. Wang, and Hung-Yu Kao, "An IT2FLS-based Malware Analysis Mechanism: Malware Analysis Network in Taiwan (MiT)", in Proceeding of the <a href="https://ieeexplore.ieee.org/document/6722547" target="_blank">2013 IEEE International Conference on Systems, Man, and Cybernetics (IEEE SMC 2013)</a>, <a href="https://blog.twman.org/2013/10/IEEE-SMC-2013.html" target="_blank">Manchester</a>, United-Kingdom, Oct. 13-16, 2013.</li>
+
+                        <li>TonTon H.-D. Huang*, C.-S. Lee, H. Hagras, and Hung-Yu Kao, "TWMAN+：A Type-2 Fuzzy Ontology Model for Malware Behavior Analysis," in Proceeding of the <a href="https://ieeexplore.ieee.org/document/6378176" target="_blank">2012 IEEE International Conference on Systems, Man, and Cybernetics (IEEE SMC 2012)</a>, COEX,  <a href="https://blog.twman.org/2012/10/IEEE-SMC-2012.html" target="_blank">Seoul</a>, Korea, Oct. 14-17, 2012.</li>
+
                         <li>TonTon H.-D. Huang*, G. Acampora, V. Loia, C.-S. Lee, H. Hagras, M.-H. Wang, Hung-Yu. Kao, and J.-G. Chang, “Fuzzy markup language for malware behavioral analysis,” in G. Acampora, C. S. Lee, M. H. Wang, and V. Loia (editors), On the Power of Fuzzy Markup Language, Springer-Verlag, Germany, 2012, pp. 113-131.</li>
-                        <li>TonTon H.-D. Huang*, G. Acampora, V. Loia, C.-S. Lee, and Hung-Yu Kao, "Applying FML and Fuzzy Ontologies to Malware Behavioral Analysis," in Proceeding of the 2011 IEEE International Conference on Fuzzy Systems (FUZZ-IEEE 2011), Taipei, Taiwan, June. 27-30, 2011.</li>
-                        <li>TonTon H.-D. Huang*, C.-S. Lee, Hung-Yu Kao, Y.-L. Tsai, and J.-G. Chang, "Malware Behavioral Analysis System: TWMAN," in Proceeding of the 2011 IEEE Symposium on Computational Intelligence for Intelligent Agent (IEEE SSCI 2011), Paris, France, Apr. 11-15, 2011.</li>
-                        <li>TonTon H.-D. Huang*, T.-Y. Chuang, Y.-L. Tsai, and C.-S. Lee, "Ontology-based intelligent system for malware behavioral analysis," in Proceeding of the 2010 IEEE World Congress on Computational Intelligence (WCCI 2010), Barcelona, Spain, Jul. 18-23, 2010.</li>
+
+                        <li>TonTon H.-D. Huang*, G. Acampora, V. Loia, C.-S. Lee, and Hung-Yu Kao, "Applying FML and Fuzzy Ontologies to Malware Behavioral Analysis," in Proceeding of the <a href="https://ieeexplore.ieee.org/document/6007716" target="_blank">2011 IEEE International Conference on Fuzzy Systems (FUZZ-IEEE 2011)</a>, <a href="https://blog.twman.org/2011/06/FUZZ-IEEE-2011.html" target="_blank">Taipei</a>, Taiwan, June. 27-30, 2011.</li>
+
+                        <li>TonTon H.-D. Huang*, C.-S. Lee, Hung-Yu Kao, Y.-L. Tsai, and J.-G. Chang, "Malware Behavioral Analysis System: TWMAN," in Proceeding of the <a href="https://ieeexplore.ieee.org/document/5953604" target="_blank">2011 IEEE Symposium on Computational Intelligence for Intelligent Agent (IEEE SSCI 2011)</a>, <a href="https://blog.twman.org/2011/04/IEEE-SSCI-2011.html" target="_blank">Paris</a>, France, Apr. 11-15, 2011.</li>
+
+                        <li>TonTon H.-D. Huang*, T.-Y. Chuang, Y.-L. Tsai, and C.-S. Lee, "Ontology-based intelligent system for malware behavioral analysis," in Proceeding of the <a href="https://ieeexplore.ieee.org/document/5584325" target="_blank">2010 IEEE World Congress on Computational Intelligence (WCCI 2010)</a>, <a href="https://blog.twman.org/2010/07/IEEE-WCCI-2010.html" target="_blank">Barcelona</a>, Spain, Jul. 18-23, 2010.</li>
                     </ul>
                 </details>
             </div>
@@ -293,7 +596,7 @@
         <div class="bento-box motion-div">
             <a href="https://www.cmcm.com/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/leopard-mobile-cheetah-mobile.avif" width="200" height="auto" class="mb-4"></img></a>
             <h3 class="bento-subtitle">🐆 Senior Technical Expert and Team Lead (資深技術專家 / 資訊安全與人工智慧)</h3>
-            <div class="meta-info">Leopard Mobile (Cheetah Mobile TW Agency) / 台灣雪豹科技</div>
+            <div class="meta-info">Leopard Mobile (Cheetah Mobile TW Agency) / 台灣雪豹科技 (獵豹移動台灣總代理)</div>
             <div class="meta-info">2015/12/28 ~ 2021/03/21 | Taiwan</div>
             <div class="bento-text">
                 <p>Led the design and deployment of machine learning (ML) and deep learning (DL) products, including algorithm development, requirements analysis, architecture design, proprietary dataset creation, model quantization, and optimization, achieving millisecond-level inference latency while reducing model size and enhancing precision.</p>
@@ -364,9 +667,9 @@
                         受媒體專訪，列入<a href="https://4.bp.blogspot.com/-1_SvTnBf95w/WijaARgJq8I/AAAAAAAB2Xs/mpiqL4yT_gQZEuXzZzV8yngqN-XwGGVvwCLcBGAs/s1600/000.jpg">Career「十大熱門人才」</a> 系列報導。<br>
                         <span class="text-sm text-slate-600">Featured in Career’s “Top 10 In-demand Talents” series.</span>
                     </li>
-                    <li><b>DEFCON 26:</b> "<a href="https://reurl.cc/e3DeqM" target="_blank">Hunting the Ethereum Smart Contract</a>"</li>
-                    <li><b>Ruxcon 2017:</b> "<a href="https://ruxcon.org.au/speakers/#Hsien-De%20Huang%20&%20Chia-Mu%20Yu" target="_blank">Large Scale Ransomware Detection with Naked Eye</a>"</li>
-                    <li><b>OWASP AppSec USA 2017:</b> "<a href="https://appsecusa2017.sched.com/speaker/tonton1" target="_blank">R2-D2: CNN-based Android Malware Detection</a>"</li>
+                    <li>TonTon H.-D. Huang, "<a href="https://blog.twman.org/2018/08/Defcon26.html" target="_blank">Hunting the Ethereum Smart Contract: Color-inspired Inspection of Potential Attacks</a>", <a href="https://reurl.cc/e3DeqM" target="_blank">AI Village, DEFCON 26,</a> Las Vegas, Nevada, 2018.</li>
+                    <li>TonTon H.-D. Huang, and Chia-Mu Yu, "<a href="https://blog.twman.org/2017/10/RuxCon.html" target="_blank">Look! Ransomware is there: Large Scale Ransomware Detection with Naked Eye</a>", <a href="https://2017.ruxcon.org/speakers/#Hsien-De%20Huang%20&%20Chia-Mu%20Yu" target="_blank">Ruxcon Security Conference</a>, Melbourne, Australia, 2017.</li>
+                    <li>TonTon H.-D. Huang, Chia-Mu Yu, and Hung-Yu Kao, "<a href="https://blog.twman.org/2017/09/Hollywood-Studios.html" target="_blank">R2-D2: Color-Inspired Convolutional Neural Network (CNN)-based Android Malware Detection</a>", <a href="https://appsecusa2017.sched.com/speaker/tonton1" target="_blank">OWASP AppSec USA</a>, Orlando, Florida, 2017.</li>
                 </ul>
             </div>
             <div class="mt-4">
@@ -377,7 +680,7 @@
         <div class="bento-box motion-div">
             <a href="https://www.verint.com/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/verint.png" width="100" height="auto" class="mb-4"></img></a>
             <h3 class="bento-subtitle">🎯 Senior Security Engineer (資深資安工程師)</h3>
-            <div class="meta-info">Verint Systems (以色列商台灣威瑞特系統)</div>
+            <a href="https://www.ithome.com.tw/news/92824" target="_blank"><div class="meta-info">Verint Systems (以色列商台灣威瑞特系統)</div></a>
             <div class="meta-info">2014/07/07 ~ 2015/12/14 | Taipei, Taiwan</div>
             <div class="bento-text">
                 <p>Developed Android security architecture, specializing in malicious program analysis and detection with in-depth research in cybersecurity. Key achievement: APKProbe — a hybrid Android malware probing system combining semantic-based static analysis to bypass code obfuscation and physical cluster-based dynamic analysis to evade anti-sandboxing techniques. Additional responsibilities included delivering custom training, designing solution architectures, conducting cybersecurity research, providing product education and client support, monitoring security equipment, performing incident analysis and response, and conducting digital forensics.</p>
@@ -403,8 +706,8 @@
                             監控資安設備、分析異常事件並執行數位鑑識作業。
                         </span>
                     </li>
-                    <li>TonTon H.-D. Huang, "New Mindset for Malware Battlefield: Bytecode Analysis and Physical Machine-based for Android", Hacks in Taiwan Conference (HITCON) CMT, Taipei, Taiwan, 2015. <a href="http://hitcon.org/2015/CMT/agenda/#day2" target="_blank">(Keynote Speech, link)</a></li>
-                    <li>TonTon H.-D. Huang, "Building Adaptive Heterogeneous Architecture for Malware Behavior Analysis: MAN in Taiwan", Hacks in Taiwan Conference (HITCON) PLG, Taipei, Taiwan, 2014. <a href="http://hitcon.org/2014/agenda/#day4" target="_blank">(link)</a></li>
+                    <li>TonTon H.-D. Huang, "<a href="https://blog.twman.org/2015/09/hitcon2015.html" target="_blank">New Mindset for Malware Battlefield: Bytecode Analysis and Physical Machine-based for Android</a>", <a href="http://hitcon.org/2015/CMT/agenda/#day2" target="_blank">Hacks in Taiwan Conference (HITCON) CMT</a>, Taipei, Taiwan, 2015. (Keynote Speech, link)</li>
+                    <li>TonTon H.-D. Huang, "<a href="https://blog.twman.org/2014/08/HITCONX.html" target="_blank">Building Adaptive Heterogeneous Architecture for Malware Behavior Analysis: MAN in Taiwan</a>", <a href="http://hitcon.org/2014/agenda/#day4" target="_blank">Hacks in Taiwan Conference (HITCON) PLG</a>, Taipei, Taiwan, 2014.</li>
                 </ul>
             </div>
             <div class="mt-4">
@@ -504,13 +807,12 @@
             </div>
         </div>
 
-
-        
         <div class="bento-box motion-div">
             <h3 class="bento-subtitle">碩士 & 學士 (Master's & Bachelor's)</h3>
             <div class="bento-text">
                  <ul class="bento-list">
-                    <li><b>碩士 — 國立臺南大學 數位學習科技系 (M.S., NUTN)</b><br>
+                    <li><b>碩士 — <a href="https://www.nutn.edu.tw/" target="_blank">國立臺南大學</a> <a href="https://ilt.nutn.edu.tw/" target="_blank">數位學習科技系</a></b><br>
+                        <span class="text-sm text-slate-600">Master, Dept. Information and Learning Technology, National University of Tainan</span><br>
                         <span class="text-sm text-slate-600">2006/09 ~ 2008/06</span><br>
                         <span class="text-sm text-slate-600">指導教授：李健興博士（<a href="https://sites.google.com/site/nutnoaselab/">OASE Lab</a>）, 共同指導教授：莊宗嚴博士</span><br>
                          <a href="https://www.nutn.edu.tw/" target="_blank"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/nutn.png" width="100" class="mt-2"></a>
