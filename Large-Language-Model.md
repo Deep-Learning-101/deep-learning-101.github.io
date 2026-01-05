@@ -124,7 +124,7 @@ schema_type: article
 
 ## AI-Agent
 **🧩 AI Agent 開源框架**
-> 完整列表請見：[Deep Learning 101 - Agent 列表](https://deep-learning-101.github.io/agent)
+> 完整列表請見：[避開 AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 開發陷阱](https://deep-learning-101.github.io/agent)
 
 ### 核心概念與必讀文章
 - **AI Search Has A Citation Problem**
@@ -163,6 +163,10 @@ schema_type: article
 - 2025-10-10｜**SurfSense**
   - 說明：GitHub 萬星王炸，整合 Slack/Notion/Jira
   - 資源：[📝 MODSetter](https://zread.ai/MODSetter/SurfSense) | [📝 中文解讀](https://mp.weixin.qq.com/s/za_ZQ7OWuvYaN2f0Ml0AgA)
+
+- 2025-08-29｜**Microsoft Agent Framework**
+  - 說明：開放原始碼開發套件，用於建置 .NET 和 Python 的 AI 代理程式 和 多代理程式工作流程 。
+  - 資源：[🐙 GitHub](https://github.com/microsoft/agent-framework) | [📝 官方文件](https://learn.microsoft.com/zh-tw/agent-framework/overview/agent-framework-overview)
 
 - 2025-07-03｜**multi-modal-researcher**
   - 資源：[🐙 GitHub](https://github.com/langchain-ai/multi-modal-researcher)
