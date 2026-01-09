@@ -26,6 +26,21 @@ keywords: ["RAG", "檢索增強生成", "LLM", "LangChain", "Rerank"]
 **相關文章 I**：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
 **相關文章 II**：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)
 
+
+| 🔥 技術傳送門 (Tech Stack) | 📚 必讀心法 (Must Read) |
+| :--- | :--- |
+| 🤖 [**大語言模型 (LLM)**](https://deep-learning-101.github.io/Large-Language-Model) | 🏹 [**策略篇：企業入門策略**](https://deep-learning-101.github.io/Blog/AIBeginner) |
+| 📝 [**自然語言處理 (NLP)**](https://deep-learning-101.github.io/Natural-Language-Processing) | 📊 [**評測篇：臺灣 LLM 分析**](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark) |
+| 👁️ [**電腦視覺 (CV)**](https://deep-learning-101.github.io//Computer-Vision) | 🛠️ [**實戰篇：打造高精準 RAG**](https://deep-learning-101.github.io/RAG) |
+| 🎤 [**語音處理 (Speech)**](https://deep-learning-101.github.io/Speech-Processing) | 🕳️ [**避坑篇：AI Agent 開發陷阱**](https://deep-learning-101.github.io/agent) |
+
+**相關文章參考**：
+* <b><a href="https://blog.twman.org/2024/09/LLM.html" target="_blank">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
+* <b><a href="https://blog.twman.org/2024/07/RAG.html" target="_blank">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
+* <b><a href="https://blog.twman.org/2024/02/LLM.html" target="_blank">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
+* <b><a href="https://blog.twman.org/2023/04/GPT.html" target="_blank">解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，硬體資源在開發中的作用。</a>
+* <b><a href="https://www.facebook.com/cnanewstaiwan/posts/pfbid02CCrFhyvCcoTmjJaX4aHaSMHmCgnPd1SG21Gbpb4Wo9bgs7QmQArTmhbVPZSLyjrdl" target="_blank">中央社繁體中文預訓練資料集案</a></b>
+
 ---
 
 ## 文章概述

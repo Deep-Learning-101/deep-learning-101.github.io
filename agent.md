@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "2025 AI Agent 完整指南：Agentic AI 定義、框架比較與資安風險"
-description: "深度解析 AI Agent 與 Agentic AI 差異，比較熱門框架 (AutoGen, LangChain) 並探討 OWASP 資安風險與 MCP 協定。"
+title: "2025 AI Agent 終極指南：Agentic AI 定義、5大框架比較 (AutoGen/LangChain) 與避坑策略"
+description: "還在搞混 Agent 與 Agentic AI？本文深度解析 2025 最新 AI 代理趨勢，實測比較 AutoGen、LangGraph 等框架優缺點，並揭露開發者最常遇到的 3 個資安陷阱與 MCP 實作技巧。"
 permalink: /agent
 lang: zh-Hant
-keywords: ["AI Agent", "Agentic AI", "代理式人工智慧", "AutoGen", "MCP"]
+keywords: ["AI Agent", "Agentic AI", "代理式人工智慧", "AutoGen", "MCP", "LangGraph", "AI資安"]
 ---
 
 
@@ -53,6 +53,23 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
 - DEMO  
   - **[台灣金融業在GenAI的現況和未來可能發展](https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI)**
   - [FinRobot](https://www.alphaxiv.org/zh/overview/2405.14767)；[DeepWiki](https://deepwiki.com/AI4Finance-Foundation/FinRobot)；可支援 Gemini-2.5-Pro-preview-05-06，**[基於 AutoGen](https://deep-learning-101.github.io/FinRobot/FinRobot-GOOGL)**
+
+---
+
+
+| 🔥 技術傳送門 (Tech Stack) | 📚 必讀心法 (Must Read) |
+| :--- | :--- |
+| 🤖 [**大語言模型 (LLM)**](https://deep-learning-101.github.io/Large-Language-Model) | 🏹 [**策略篇：企業入門策略**](https://deep-learning-101.github.io/Blog/AIBeginner) |
+| 📝 [**自然語言處理 (NLP)**](https://deep-learning-101.github.io/Natural-Language-Processing) | 📊 [**評測篇：臺灣 LLM 分析**](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark) |
+| 👁️ [**電腦視覺 (CV)**](https://deep-learning-101.github.io//Computer-Vision) | 🛠️ [**實戰篇：打造高精準 RAG**](https://deep-learning-101.github.io/RAG) |
+| 🎤 [**語音處理 (Speech)**](https://deep-learning-101.github.io/Speech-Processing) | 🕳️ [**避坑篇：AI Agent 開發陷阱**](https://deep-learning-101.github.io/agent) |
+
+**相關文章參考**：
+* <b><a href="https://blog.twman.org/2024/09/LLM.html" target="_blank">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
+* <b><a href="https://blog.twman.org/2024/07/RAG.html" target="_blank">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
+* <b><a href="https://blog.twman.org/2024/02/LLM.html" target="_blank">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
+* <b><a href="https://blog.twman.org/2023/04/GPT.html" target="_blank">解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，硬體資源在開發中的作用。</a>
+* <b><a href="https://www.facebook.com/cnanewstaiwan/posts/pfbid02CCrFhyvCcoTmjJaX4aHaSMHmCgnPd1SG21Gbpb4Wo9bgs7QmQArTmhbVPZSLyjrdl" target="_blank">中央社繁體中文預訓練資料集案</a></b>
 
 ---
 

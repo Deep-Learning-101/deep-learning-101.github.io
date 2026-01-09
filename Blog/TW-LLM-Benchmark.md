@@ -1,8 +1,7 @@
 ---
 layout: default
-title: "臺灣大型語言模型 (LLM) 性能評測報告 | TMLU & TMMLU+ Benchmark"
-description: "2025 最新臺灣在地化 LLM 評測報告。深度比較 Llama-3-Taiwan, TAIDE, Breeze2 等模型在繁體中文理解上的表現。"
-permalink: /Blog/TW-LLM-Benchmark
+title: "2025/02 更新 | 臺灣大型語言模型 (LLM) 性能評測報告：Llama-3-Taiwan vs TAIDE vs Breeze"
+description: "最新臺灣在地化 LLM 評測報告。深度比較 Llama-3-Taiwan, TAIDE, Breeze2 等模型在繁體中文理解、RAG 檢索上的性能表現與 VRAM 需求。"permalink: /Blog/TW-LLM-Benchmark
 lang: zh-Hant
 keywords: ["LLM Benchmark", "臺灣大模型", "Llama-3-Taiwan", "TAIDE", "模型評測"]
 ---
@@ -28,6 +27,13 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2025年07月16日更新
+
+| 🔥 技術傳送門 (Tech Stack) | 📚 必讀心法 (Must Read) |
+| :--- | :--- |
+| 🤖 [**大語言模型 (LLM)**](https://deep-learning-101.github.io/Large-Language-Model) | 🏹 [**策略篇：企業入門策略**](https://deep-learning-101.github.io/Blog/AIBeginner) |
+| 📝 [**自然語言處理 (NLP)**](https://deep-learning-101.github.io/Natural-Language-Processing) | 📊 [**評測篇：臺灣 LLM 分析**](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark) |
+| 👁️ [**電腦視覺 (CV)**](https://deep-learning-101.github.io//Computer-Vision) | 🛠️ [**實戰篇：打造高精準 RAG**](https://deep-learning-101.github.io/RAG) |
+| 🎤 [**語音處理 (Speech)**](https://deep-learning-101.github.io/Speech-Processing) | 🕳️ [**避坑篇：AI Agent 開發陷阱**](https://deep-learning-101.github.io/agent) |
 
 **相關文章參考**：
 * <b><a href="https://blog.twman.org/2024/09/LLM.html" target="_blank">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
