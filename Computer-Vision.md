@@ -204,73 +204,163 @@ service_type: AI Consulting
 
 ---
 
-## Diffusion model (擴散模型)
+
+## Diffusion Model
+**Diffusion Model (擴散模型)**
+
 
 - 2025-05-28｜**Jodi**
   - 說明：視覺理解 & 生成大一統模型
-  - 資源：[🌐 Project](https://vipl-genun.github.io/Project-Jodi/) | [📄 AlphaXiv](https://www.alphaxiv.org/zh/overview/2505.19084)
+  - 資源：[📄 AlphaXiv](https://www.alphaxiv.org/zh/overview/2505.19084) | [🌐 Project](https://vipl-genun.github.io/Project-Jodi/)
 
-- 2025-05-27｜**AnomalyAny**
-  - 說明：(CVPR 2025) Stable Diffusion 協助視覺異常檢測
+- 2025-05-27｜**AnomalyAny (CVPR 2025)**
+  - 說明：Stable Diffusion 協助視覺異常檢測，無需訓練
   - 資源：[🌐 Project](https://hansunhayden.github.io/AnomalyAny.github.io/) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/1910284073231942689)
 
 - 2025-05-23｜**HivisionIDPhotos**
-  - 說明：智慧證件照產生神器 (摳圖、換背景)
-  - 資源：[📚 DeepWiki](https://deepwiki.com/Zeyi-Lin/HivisionIDPhotos) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/718725351)
+  - 說明：智慧證件照生成神器 (摳圖、換背景、任意尺寸)
+  - 資源：[📚 DeepWiki](https://deepwiki.com/Zeyi-Lin/HivisionIDPhotos) | [📝 教學文章](https://zhuanlan.zhihu.com/p/718725351)
 
 - 2025-05-19｜**Index-AniSora**
-  - 說明：B站開源 SOTA 動畫影片生成模型
-  - 資源：[📚 DeepWiki](https://deepwiki.com/bilibili/Index-anisora) | [📄 AlphaXiv](https://www.alphaxiv.org/overview/2504.10044)
+  - 說明：B 站開源 SOTA 動畫影片生成模型
+  - 資源：[📄 AlphaXiv](https://www.alphaxiv.org/overview/2504.10044) | [📚 DeepWiki](https://deepwiki.com/bilibili/Index-anisora) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/1908150671540224717)
 
 - 2025-04-26｜**Insert Anything**
   - 資源：[📄 AlphaXiv](https://www.alphaxiv.org/zh/overview/2504.15009) | [📚 DeepWiki](https://deepwiki.com/song-wensong/insert-anything)
 
+- 2025-04-24｜**Phantom**
+  - 說明：字節跳動 1280x720 影片生成模型，10G 顯存可用
+  - 資源：[🐙 GitHub](https://github.com/Phantom-video/Phantom) | [📝 實測報告](https://zhuanlan.zhihu.com/p/1898688574477545694)
+
+- 2025-04-22｜**MAGI-1**
+  - 說明：Sand AI 全球首個自回歸影片生成大模型
+  - 資源：[🐙 GitHub](https://github.com/SandAI-org/Magi-1) | [📝 性能亮點解析](https://www.zhihu.com/question/1898030232184795448)
+
 - 2025-04-22｜**SkyReels V2**
-  - 說明：全球首個無限時長影片生成
+  - 說明：全球首個無限時長影片生成，電影級理解
   - 資源：[🐙 GitHub](https://github.com/SkyworkAI/SkyReels-V2) | [📝 媒體報導](https://www.qbitai.com/2025/04/275531.html)
 
-- 2025-03-10｜**HunyuanVideo-I2V**
-  - 說明：騰訊開源圖生視訊模型 + LoRA 訓練
-  - 資源：[🐙 GitHub](https://github.com/Tencent/HunyuanVideo-I2V) | [📝 部署實戰](https://zhuanlan.zhihu.com/p/29110060025)
+- 2025-04-14｜**FramePack**
+  - 說明：ComfyUI 插件，6G 顯存跑 13B 模型，支援 1 分鐘影片
+  - 資源：[🐙 GitHub](https://github.com/kijai/ComfyUI-FramePackWrapper) | [📝 性價比分析](https://zhuanlan.zhihu.com/p/1896487969470251546)
 
-- 2025-02-25｜**Wan-Video (萬相)**
-  - 說明：阿里開源全模態、全尺寸影片生成模型
+- 2025-04-14｜**Fantasy-talking**
+  - 說明：基於 Wan2.1 的音訊驅動數字人
+  - 資源：[🌐 Project](https://fantasy-amap.github.io/fantasy-talking/) | [📝 解讀文章](https://zhuanlan.zhihu.com/p/1892895916354148118)
+
+- 2025-04-05｜**SkyReels-A2**
+  - 資源：[📄 AlphaXiv](https://www.alphaxiv.org/zh/overview/2504.02436) | [📚 DeepWiki](https://deepwiki.com/SkyworkAI/SkyReels-A2) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/1892709305301590652)
+
+- 2025-03-10｜**HunyuanVideo-I2V**
+  - 說明：騰訊開源圖生視訊模型 + LoRA 訓練腳本
+  - 資源：[🐙 GitHub](https://github.com/Tencent/HunyuanVideo-I2V) | [📝 實戰教學](https://zhuanlan.zhihu.com/p/29110060025)
+
+- 2025-02-25｜**Wan-Video**
+  - 說明：阿里萬相大模型開源，全模態、全尺寸
   - 資源：[🐙 GitHub](https://github.com/Wan-Video/Wan2.1) | [📝 媒體報導](https://finance.sina.com.cn/jjxw/2025-02-26/doc-inemukxr9127437.shtml)
 
-- 2025-01-28｜**Sana (ICLR 2025)**
-  - 說明：比 FLUX 快 100 倍的生成模型 (NVlabs)
+- 2025-02-14｜**FlashVideo**
+  - 說明：字節跳動視訊增強演算法，102 秒生成 1080P 影片
+  - 資源：[🐙 GitHub](https://github.com/FoundationVision/FlashVideo) | [📝 解讀文章](https://zhuanlan.zhihu.com/p/23702953115)
+
+- 2025-01-28｜**Sana (ICLR 2025 Oral)**
+  - 說明：英偉達/MIT/清華開源，比 FLUX 快 100 倍
   - 資源：[🐙 GitHub](https://github.com/NVlabs/Sana) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/19489214543)
 
-- **Flux Family (Black Forest Labs)**
-  - [Flux.1-canny-dev](https://huggingface.co/black-forest-labs/FLUX.1-Canny-dev/) | [Depth](https://huggingface.co/black-forest-labs/FLUX.1-Depth-dev/) | [Fill](https://huggingface.co/black-forest-labs/FLUX.1-Fill-dev/)
-  - [📝 Flux 官方重繪+擴圖+ControlNet 解讀](https://mp.weixin.qq.com/s/Kj1nyJNTpoZ94JjO4FMw_g)
+- **Flux & Ecosystem**
+  - **Flux Models**: [🤗 Black Forest Labs](https://huggingface.co/black-forest-labs)
+    - [Canny-dev](https://huggingface.co/spaces/black-forest-labs/FLUX.1-Canny-dev) | [Depth-dev](https://huggingface.co/spaces/black-forest-labs/FLUX.1-Depth-dev) | [Fill-dev](https://huggingface.co/spaces/black-forest-labs/FLUX.1-Fill-dev) | [Redux-dev](https://huggingface.co/spaces/black-forest-labs/FLUX.1-Redux-dev)
+  - **PuLID (2024-11-29)**: [🐙 GitHub](https://github.com/ToTheBeginning/PuLID) | [📝 ComfyUI 教學](https://mp.weixin.qq.com/s/07BMFHaSasl7-PFtkN6_Zg)
+  - **Leffa (2024-12-17)**: [🐙 GitHub](https://github.com/franciszzj/Leffa) | [📝 Meta AI 人物特徵保持](https://juejin.cn/post/7449325873725276196)
+  - **MagicQuill (2024-11-26)**: [🐙 GitHub](https://github.com/magic-quill/MagicQuill) | [🤗 Space](https://huggingface.co/spaces/AI4Editing/MagicQuill) | [📝 AI P 圖神器](https://mp.weixin.qq.com/s/Pc3xRP8_9BxkVSRNznkplw)
+
+- **Practical Tools (ComfyUI & Others)**
+  - **OOTDiffusion**: [🐙 GitHub](https://github.com/levihsu/OOTDiffusion) | [📝 AI 換裝神器](https://mp.weixin.qq.com/s/B2rNCjJLo8coYzoHGPnVaw)
+  - **ComfyUI Impact Pack**: [🐙 GitHub](https://github.com/ltdrdata/ComfyUI-Impact-Pack) | [📝 最強臉部修復](https://mp.weixin.qq.com/s/hNQ9BfdGbRQ_Osus-yMJWg)
+  - **OmniGen**: [🐙 GitHub](https://github.com/AIFSH/OmniGen-ComfyUI) | [📝 全能影像生成](https://mp.weixin.qq.com/s/msGK0FmNs3T3jbUBHfR9DA)
 
 ---
 
-## Digital Human (虛擬數字人)
+## Digital Human
+**Digital Human (虛擬數字人)**
 
 - **Open Avatar Chat**
-  - 說明：語音對話 + 即時表情 + 本地部署 AI 分身
-  - 資源：[📝 介紹文章](https://zread.ai/HumanAIGC-Engineering/OpenAvatarChat) | [📝 媒體報導](https://mp.weixin.qq.com/s/eNRbU4lZLgdpe_iNSNcfGA)
+  - 資源：[📝 專案介紹](https://zread.ai/HumanAIGC-Engineering/OpenAvatarChat) | [📝 GitHub 爆火神器，本地部署無套路](https://mp.weixin.qq.com/s/eNRbU4lZLgdpe_iNSNcfGA)
 
 - **HeyGem**
-  - 說明：開源數位人克隆神器
-  - 資源：[🐙 GitHub](https://github.com/GuijiAI/HeyGem.ai) | [📝 中文解讀](https://zhuanlan.zhihu.com/p/29274862393)
+  - 資源：[🐙 GitHub](https://github.com/GuijiAI/HeyGem.ai) | [📝 數字人克隆神器](https://zhuanlan.zhihu.com/p/29274862393)
+
+- **Duix**
+  - 資源：[🐙 GitHub](https://github.com/GuijiAI/duix.ai) | [📝 全球首個真人數字人開源](https://zhuanlan.zhihu.com/p/716583514)
 
 - **Linly-Talker**
-  - 說明：LLM + Visual Models 智慧互動系統
+  - 說明：結合 LLM 與視覺模型的智能交互系統
   - 資源：[🐙 GitHub](https://github.com/Kedreamix/Linly-Talker)
 
-- **EchoMimicV2 (CVPR 2025)**
-  - 說明：Towards Striking, Simplified, and Semi-Body Human Animation
-  - 資源：[🐙 GitHub](https://github.com/antgroup/echomimic_v2)
+- **CVPR 2025 / NeurIPS Resources**
+  - **EchoMimicV2 (CVPR 2025)**: [🐙 GitHub](https://github.com/antgroup/echomimic_v2) - Striking, Simplified Human Animation.
+  - **Hallo3 (CVPR 2025)**: [🐙 GitHub](https://github.com/fudan-generative-vision/hallo3) - Highly Dynamic Portrait Animation.
+  - **MimicTalk (NeurIPS 2024)**: [🐙 GitHub](https://github.com/yerfor/MimicTalk) - 3D talking face.
 
-- **Hallo3 (CVPR 2025)**
-  - 說明：Highly Dynamic and Realistic Portrait Image Animation
-  - 資源：[🐙 GitHub](https://github.com/fudan-generative-vision/hallo3)
+- **Other Tools**
+  - **JoyGen**: [🐙 GitHub](https://github.com/JOY-MM/JoyGen) (Audio-Driven 3D Editing)
+  - **Latentsync**: [🐙 GitHub](https://github.com/bytedance/LatentSync)
+  - **MuseTalk**: [🐙 GitHub](https://github.com/TMElyralab/MuseTalk)
 
-- **Latentsync** & **MuseTalk**
-  - 資源：[🐙 Latentsync](https://github.com/bytedance/LatentSync) | [🐙 MuseTalk](https://github.com/TMElyralab/MuseTalk)
+---
+
+## Image Recognition
+**Image Recognition (圖像識別)**
+
+
+- **ViT (Vision Transformer)**
+  - 資源：[🐙 GitHub](https://github.com/google-research/vision_transformer) | [📝 解析文章](https://zhuanlan.zhihu.com/p/445122996) | [📝 遷移表現分析](https://zhuanlan.zhihu.com/p/463608959)
+
+- **Swin Transformer**
+  - 資源：[🐙 GitHub](https://github.com/microsoft/Swin-Transformer) | [📝 用 CNN 方式打敗 CNN](https://zhuanlan.zhihu.com/p/362690149)
+
+- **EfficientNetV2**
+  - 資源：[🐙 GitHub](https://github.com/d-li14/efficientnetv2.pytorch) | [📝 更小更快的訓練](https://zhuanlan.zhihu.com/p/361873583)
+
+---
+
+## Document AI
+**Document Understanding & OCR (文檔理解與文字識別)**
+
+- **Donut (2022)**: OCR-free Document Understanding Transformer. [📄 arXiv:2111.15664](./donut.md)
+- **LayoutParser (2021)**: Unified toolkit for Deep Learning Based Document Analysis. [📄 arXiv:2103.15348](./LayoutParser.md)
+- **TrOCR (2021)**: Transformer-based OCR with Pre-trained Models. [📄 arXiv:2109.10282](./TrOCR.md)
+- **DiT (2022)**: Self-supervised Pre-training for Document Image Transformer. [📄 arXiv:2203.02378](./DiT.md)
+- **Nougat (2023)**: Neural Optical Understanding for Academic Documents. [📄 arXiv:2308.13418](https://facebookresearch.github.io/nougat/)
+
+<details>
+<summary><strong>📚 LayoutLM Series (點擊展開)</strong></summary>
+
+- **LayoutLM (2020)**: Pre-training of Text and Layout. [📄 arXiv:1912.13318](./LayoutLM.md)
+- **LayoutLMv2 (2021)**: Multi-modal Pre-training. [📄 arXiv:2012.14740](./LayoutLMv2.md)
+- **LayoutXLM (2021)**: Multilingual Visually-rich Document Understanding. [📄 arXiv:2104.08836](./LayoutXLM.md)
+- **LayoutLMv3 (2022)**: Pre-training with Unified Text and Image Masking. [📄 arXiv:2204.08387](./LayoutLMv3.md)
+</details>
+
+- **Scene Text Recognition**
+  - **ABINet (2021)**: Read Like Humans. [📄 arXiv:2103.06495](./ABINet.md)
+  - **ABINet++ (2022)**: Iterative Language Modeling for Text Spotting. [📄 arXiv:2211.10578](./ABINet%2B%2B.md)
+  - **ABCNet v2 (2021)**: Adaptive Bezier-Curve Network. [📄 arXiv:2105.03620](./ABCNet_v2.md)
+  - **SVTR (2022)**: Scene Text Recognition with a Single Visual Model. [📄 arXiv:2205.00159](./SVTR.md)
+
+---
+
+## DeepFake Detection
+**DeepFake Detection (深度偽造偵測)**
+
+- **Multi-attentional Deepfake Detection (CVPR 2021)**
+  - H. Zhao et al., Proceedings of the IEEE/CVF CVPR 2021.
+
+- **Geometric Features (CVPR 2021)**
+  - Improving Efficiency and Robustness through Precise Geometric Features. Sun, Zekun et al.
+
+- **3D Decomposition (CVPR 2021)**
+  - Face Forgery Detection by 3D Decomposition. Xiangyu Zhu et al.
 
 <script type="application/ld+json">
 {
