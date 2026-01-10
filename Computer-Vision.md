@@ -145,9 +145,16 @@ service_type: AI Consulting
 
 ## OCR
 **Optical Character Recognition (光學文字識別)**
+**[針對物件或場景影像進行分析與偵測](https://www.twman.org/AI/CV)**
+
+- [使用開源模型強化您的 OCR 工作流程](https://huggingface.co/blog/zh/ocr-open-models)
+- [12個流行的開源免費OCR項目](https://mp.weixin.qq.com/s/7EuhnQedAX6injBL_Dg_sQ)
 
 - 2025-11-30｜**HunyuanOCR**
   - 資源：[🐙 GitHub](https://github.com/Tencent-Hunyuan/HunyuanOCR) | [📝 騰訊混元 1B 級全能模型](https://zhuanlan.zhihu.com/p/1977498008712131326)
+
+- 2025-10-21 | **Chandra OCR**
+  - 資源：[🐙 GitHub](https://github.com/datalab-to/chandra) | [📝 超越DeepSeek-OCR！ OCR領域的革命性突破：Chandra OCR本地部署+真實評測](https://zhuanlan.zhihu.com/p/1969019468937144099)
 
 - 2025-10-19｜**PaddleOCR-VL**
   - 資源：[🤗 HuggingFace](https://huggingface.co/PaddlePaddle/PaddleOCR-VL) | [📝 圖片辨識轉文字巔峰之作](https://zhuanlan.zhihu.com/p/1964600336103745187)
@@ -165,6 +172,10 @@ service_type: AI Consulting
 - 2025-06-05｜**MonkeyOCR**
   - 資源：[📚 DeepWiki](https://deepwiki.com/Yuliang-Liu/MonkeyOCR) | [📄 AlphaXiv](https://www.alphaxiv.org/overview/2506.05218)
 
+  - 2025-03-05｜**OpenOCR**
+  - 資源：[🐙 GitHub](https://github.com/Topdu/OpenOCR) | [📝 通用OCR工具OpenOCR開源
+](https://zhuanlan.zhihu.com/p/10259507246)
+
 - 2025-03-05｜**PP-DocBee**
   - 資源：[🐙 GitHub](https://github.com/PaddlePaddle/PaddleMIX/tree/develop/deploy/ppdocbee) | [📝 百度文檔影像理解](https://zhuanlan.zhihu.com/p/28715553656)
 
@@ -173,6 +184,23 @@ service_type: AI Consulting
 
 - 2025-02-05｜**MinerU**
   - 資源：[🐙 GitHub](https://github.com/opendatalab/MinerU) | [📝 PDF 轉 Markdown 神器](https://mp.weixin.qq.com/s/ci5wp6gICTCtaRZfn5yWUQ)
+
+- 2024-12-15｜**markitdown**
+  - 資源：[🐙 GitHub](https://github.com/microsoft/markitdown)
+
+- 2024-10-29｜**OmniParser**
+  - 資源：[🐙 GitHub](https://github.com/AlibabaResearch/AdvancedLiterateMachinery/tree/main/OCR/OmniParser) | [📝 Alibaba 出品：通用文檔複雜場景抽取](https://mp.weixin.qq.com/s/_1Aatpna7poIVRhfYk4aAQ)
+
+- 2024-09-11｜**GOT-OCR-2.0**
+  - 資源：[📝 模型開源介紹](https://mp.weixin.qq.com/s/rQL-Q0TGhT6e8Ti4zZalrg) | [📝 OCR 2.0 時代來了](https://mp.weixin.qq.com/s/W-Ult-F3pU6Wvx3fHEN8yA)
+
+- 2024-08-20｜**PDF 轉 MarkDown 工具**
+  - 資源：[📝 萬物皆可 AI 化！12000 人圍觀的開源工具](https://www.53ai.com/news/MultimodalLargeModel/2024082059736.html)
+
+- **其他實用工具與資源**
+  - **RapidOCR**：[🐙 GitHub](https://github.com/RapidAI/RapidOCR/blob/main/docs/README_zh.md)
+  - **TableStructureRec**：[🐙 GitHub](https://github.com/RapidAI/TableStructureRec) | [📝 表格結構辨識推理庫](https://zhuanlan.zhihu.com/p/668484933)
+  - **PaddleOCR 教學**：[📝 用 PPOCRLabel 微調醫療診斷書和收據](https://blog.twman.org/2023/07/wsl.html)
 
 ---
 
