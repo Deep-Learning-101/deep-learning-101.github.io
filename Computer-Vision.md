@@ -29,8 +29,8 @@ service_type: AI Consulting
 - [Object Detection (目標偵測)](#objectdetection)
 - [Segmentation (圖像分割)](#segmentation)
 - [OCR (光學文字識別)](#ocr)
-- [Diffusion Model (擴散模型)](#diffusion-model-擴散模型)
-- [Digital Human (虛擬數字人)](#digital-human-虛擬數字人)
+- [Diffusion Model (擴散模型)](#diffusion-model)
+- [Digital Human (虛擬數字人)](#digital-human)
 
 ---
 
