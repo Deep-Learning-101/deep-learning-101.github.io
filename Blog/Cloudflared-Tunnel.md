@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "用 Cloudflared 實作 SSH / HTTP / RDP Tunnel | 零信任架構教學"
+title: "《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》"
 description: "免開公網 IP！教你使用 Cloudflare Tunnel 實作 Zero Trust 架構，安全穿透 SSH、HTTP 與 RDP 遠端桌面。"
 permalink: /Blog/Cloudflared-Tunnel
 lang: zh-Hant
@@ -39,8 +39,8 @@ keywords: ["Cloudflare Tunnel", "Zero Trust", "SSH Tunnel", "RDP", "內網穿透
 
 ---
 
-# 用 Cloudflared 實作 SSH / HTTP / RDP Tunnel
-_Cloudflared Tunnel：不裸奔全面穿透 HTTP、SSH、RDP_
+# 《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》
+_用 Cloudflared 實作 SSH / HTTP / RDP Tunnel：不裸奔全面穿透 HTTP、SSH、RDP_
 
 > **🚀 本文重點摘要 (TL;DR)：**
 > 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。
