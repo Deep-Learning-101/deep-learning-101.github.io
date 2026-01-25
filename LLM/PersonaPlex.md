@@ -134,14 +134,40 @@ _重塑實時語音交互的 "全雙工" 黑科技_
 <img src="PersonaPlex-012.jpg" alt="PersonaPlex-012" width="600">
 </p>
 
+# 超架構優勢的具體展現：
+    - Turn-taking (輪替平滑度)： 相比於 GPT-4o 使用的 Cascade (串接式) 架構，PersonaPlex 在對話權的轉換上更加平滑，沒有明顯的斷層。
+    - Interruption (打斷反應)： 在處理使用者插話時，PersonaPlex 的反應速度與自然度優於 Gemini Live。
+    - 核心意涵： 這證明了在「互動流暢度」與「打斷處理」這兩個語音互動的關鍵指標上，端到端 (End-to-End) 的全雙工架構具有顯著的性能
+    - 優勢。越業界頂尖模型：在特定架構優勢下，如何勝過現有的主流模型。
+
+
 <p align="center">
 <img src="PersonaPlex-013.jpg" alt="PersonaPlex-013" width="600">
 </p>
+
+# 唯快不破：極致低延遲：強調「速度」對於語音互動體驗的重要性。
+    - 170ms 的極速體驗：
+        - PersonaPlex 實現了 170ms (毫秒) 的端到端延遲。
+        - 這個速度比人類的平均反應速度更快，讓使用者幾乎感覺不到 AI 在「思考」的時間。
+    - 對比傳統架構：
+        - 傳統 Cascade 系統（語音轉文字 -> LLM 思考 -> 文字轉語音）通常需要數秒的等待時間。
+        - PersonaPlex 消除了這種等待，實現了定義上的「即時 (Real-time)」對話，讓與 AI 聊天就像與真人講電話一樣自然。
+
 
 <p align="center">
 <img src="PersonaPlex-014.jpg" alt="PersonaPlex-014" width="600">
 </p>
 
+# 挑戰與限制：列出了採用這種先進架構目前所面臨的三大瓶頸，展現了技術發展的客觀性。
+- 硬體門檻高：非消費級硬體可運行，需要 A100/H100 等數據中心等級的高階 GPU，部署成本極高。
+- 語言限制：目前的訓練主要以英語為主，多語言能力（如中文、西班牙文等）仍有待擴充，限制了全球化的立即應用。
+- 黑盒挑戰 (Black Box)：端到端 (End-to-End) 架構導致除錯困難。當模型出錯時，很難區分是「聽錯了」還是「想錯了」，這增加了開發與優化的難度。
+
+
 <p align="center">
 <img src="PersonaPlex-015.jpg" alt="PersonaPlex-015" width="600">
 </p>
+
+# 開源承諾 & 擁抱全雙工時代：
+    - 透過 MIT / NVIDIA Open Model License 進行開源。這不僅是一個產品，更是提供給開發者的「新基石」，邀請社群共同定義下一代的人機互動。
+    - 強調 "Think while speaking" (邊說邊想) 的概念，將 AI 從單向的回應機器，升級為能進行雙向、即時、動態交流的夥伴，正式宣告語音互動進入了更自然的「全雙工」時代。
