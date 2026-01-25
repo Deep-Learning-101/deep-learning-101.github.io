@@ -1,12 +1,40 @@
 ---
 layout: default
 title: "《NVIDIA PersonaPlex 全雙工語音 AI 深度技術分析報告》"
-description: ""
+description: "NVIDIA 最新全雙工語音模型 PersonaPlex 解析。探討其如何透過預測性生成解決語音延遲，實現真正的人機『插話』與即時互動。"
 permalink: /LLM/PersonaPlex
 lang: zh-Hant
 keywords: ["NVIDIA PersonaPlex", "NVIDIA", "全雙工語音 AI"]
 ---
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/LLM/PersonaPlex"
+  },
+  "headline": "《NVIDIA PersonaPlex 全雙工語音 AI 深度技術分析報告》",
+  "description": "深度解析 NVIDIA 最新 PersonaPlex 全雙工語音 AI 模型。探討其如何達成 170ms 極低延遲、預測性生成與自然打斷 (Turn-taking) 機制，重塑人機語音交互體驗。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "url": "https://deep-learning-101.github.io/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+    }
+  },
+  "datePublished": "2026-01-25",
+  "dateModified": "2026-01-25"
+}
+</script>
 
 {% include header.html %}
 
