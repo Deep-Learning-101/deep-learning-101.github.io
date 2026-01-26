@@ -50,7 +50,7 @@ keywords: ["NVIDIA PersonaPlex", "NVIDIA", "全雙工語音 AI"]
 **擅用AI(NotebookLM)來快速製作相關資訊解說，內容摘要匯整的更完整；方便加快動手實作測試落地**
 
   - 說明：重塑實時語音交互的 "全雙工" 黑科技
-  - 資源：[論文](https://research.nvidia.com/labs/adlr/files/personaplex/personaplex_preprint.pdf) | [🤗 HuggingFace](https://huggingface.co/nvidia/personaplex-7b-v1) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [🌐 Project](https://research.nvidia.com/labs/adlr/personaplex/) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/dyAoh8hIjNw-LI-hb_1e6A)
+  - 資源：[論文](https://research.nvidia.com/labs/adlr/files/personaplex/personaplex_preprint.pdf) | [🤗 HuggingFace](https://huggingface.co/nvidia/personaplex-7b-v1) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [🌐 Project](https://research.nvidia.com/labs/adlr/personaplex/) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/dyAoh8hIjNw-LI-hb_1e6A) | [Zread](https://zread.ai/NVIDIA/personaplex)
   - 🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵 <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/PersonaPlex.mp3" type="audio/mpeg"></audio>
 ---
 
@@ -61,7 +61,7 @@ _重塑實時語音交互的 "全雙工" 黑科技_
 <img src="img/PersonaPlex.jpg" alt="PersonaPlex" width="600">
 </p>
 
-- 核心概念與定位：PersonaPlex 是 NVIDIA ADLR 團隊開發的 70 億參數（7B）全雙工（Full-Duplex）對話模型，建立在 Moshi 架構之上,。 它的核心突破在於解決了傳統語音 AI 的「不可能的抉擇」：既能像傳統級聯系統（ASR+LLM+TTS，如下附之前做的DEMO）那樣自定義角色與聲音，又能像端到端模型那樣保持低延遲與自然互動。
+- 核心概念與定位：PersonaPlex 是 NVIDIA ADLR 團隊開發的 70 億參數（7B）全雙工（Full-Duplex）對話模型，建立在 Moshi 架構之上,。 它的核心突破在於解決了傳統語音 AI 的「不可能的抉擇」：既能像傳統級聯系統（ASR+LLM+TTS，如下附右邊之前做的YT DEMO）那樣自定義角色與聲音，又能像端到端模型那樣保持低延遲與自然互動。
 
 - 關鍵技術架構：混合系統提示 (Hybrid System Prompting)，PersonaPlex 引入了獨特的混合提示機制，使其具備極高的可控性：
     - **聲音提示 (Voice Prompt)**： 輸入一段音訊樣本，模型即可通過零樣本（Zero-shot）方式複製該聲音的音色與語調,。
