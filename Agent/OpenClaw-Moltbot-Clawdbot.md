@@ -53,6 +53,10 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 
 ---
 
+<p align="center">
+<img src="OpenClaw-img/OpenClaw.jpg" alt="PersonaPlex" width="600">
+</p>
+
 # 《焦慮嗎？這麼火的OpenClaw(MoltBot/Clawdbot)，還不部署？手把手帶你體驗一波》  
 _Your assistant. Your machine. Your rules. Turn your local machine into a proactive intelligence agent_  
 _一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。_  
