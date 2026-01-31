@@ -44,8 +44,14 @@ keywords: ["NVIDIA PersonaPlex", "NVIDIA", "全雙工語音 AI"]
 
 ---
 
-**2026年01月25日**
-**作者**：[TonTon Huang Ph.D.](https://twman.org/)  
+
+<p align="center">
+<img src="img/PersonaPlex.jpg" alt="PersonaPlex" width="600">
+</p>
+
+<p align="center">
+2026年01月25日：<a href="https://twman.org">TonTon Huang Ph.D.</a>
+</p>
 
   - 說明：重塑實時語音交互的 "全雙工" 黑科技
   - 資源：[論文](https://research.nvidia.com/labs/adlr/files/personaplex/personaplex_preprint.pdf) | [🤗 HuggingFace](https://huggingface.co/nvidia/personaplex-7b-v1) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [🌐 官網](https://research.nvidia.com/labs/adlr/personaplex/) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/dyAoh8hIjNw-LI-hb_1e6A) | [Zread](https://zread.ai/NVIDIA/personaplex)
@@ -56,9 +62,6 @@ keywords: ["NVIDIA PersonaPlex", "NVIDIA", "全雙工語音 AI"]
 # NVIDIA PersonaPlex 全雙工語音 AI 深度技術分析
 _重塑實時語音交互的 "全雙工" 黑科技_
 
-<p align="center">
-<img src="img/PersonaPlex.jpg" alt="PersonaPlex" width="600">
-</p>
 
 - 核心概念與定位：PersonaPlex 是 NVIDIA ADLR 團隊開發的 70 億參數（7B）全雙工（Full-Duplex）對話模型，建立在 Moshi 架構之上,。 它的核心突破在於解決了傳統語音 AI 的「不可能的抉擇」：既能像傳統級聯系統（ASR+LLM+TTS，如下附右邊之前做的YT DEMO）那樣自定義角色與聲音，又能像端到端模型那樣保持低延遲與自然互動。
 
