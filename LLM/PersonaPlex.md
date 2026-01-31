@@ -47,11 +47,10 @@ keywords: ["NVIDIA PersonaPlex", "NVIDIA", "全雙工語音 AI"]
 **2026年01月25日**
 **作者**：[TonTon Huang Ph.D.](https://twman.org/)  
 
-**擅用AI(NotebookLM)來快速製作相關資訊解說，內容摘要匯整的更完整；方便加快動手實作測試落地**
-
   - 說明：重塑實時語音交互的 "全雙工" 黑科技
-  - 資源：[論文](https://research.nvidia.com/labs/adlr/files/personaplex/personaplex_preprint.pdf) | [🤗 HuggingFace](https://huggingface.co/nvidia/personaplex-7b-v1) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [🌐 Project](https://research.nvidia.com/labs/adlr/personaplex/) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/dyAoh8hIjNw-LI-hb_1e6A) | [Zread](https://zread.ai/NVIDIA/personaplex)
+  - 資源：[論文](https://research.nvidia.com/labs/adlr/files/personaplex/personaplex_preprint.pdf) | [🤗 HuggingFace](https://huggingface.co/nvidia/personaplex-7b-v1) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [🌐 官網](https://research.nvidia.com/labs/adlr/personaplex/) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/dyAoh8hIjNw-LI-hb_1e6A) | [Zread](https://zread.ai/NVIDIA/personaplex)
   - 🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵 <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/PersonaPlex.mp3" type="audio/mpeg"></audio>
+
 ---
 
 # NVIDIA PersonaPlex 全雙工語音 AI 深度技術分析
