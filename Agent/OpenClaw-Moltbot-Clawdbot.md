@@ -74,7 +74,7 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 _Your assistant. Your machine. Your rules. Turn your local machine into a proactive intelligence agent_  
 _一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。_  
 _這篇文章只專注於個人體驗和心得，會提供一些圖片或連結做為參考，但強烈建議自己動手體驗一下哦_  
-_說實話，我也是得參考文件和搭配Gemini 3 Pro，才有辦法整個完成設定跟操作，所以如果真的要問我問題？還請記得說明一下狀況跟細節啊？_
+_說實話，我也是得參考文件和搭配Gemini 3 Pro，才有辦法整個完成設定跟操作，所以如果真的要問我問題？還請記得說明一下狀況跟細節啊？
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="PersonaPlex" width="600">
@@ -228,6 +228,10 @@ OpenClaw 擁有直接操作你電腦的權限（Run Actions），如果設定不
 </p>
 
 最後我是採用 docker 模示來安裝，安裝前再次提醒你注意權限問題。
+
+<p align="center">
+<img src="./OpenClaw-img/001.png" alt="PersonaPlex-006" width="600">
+</p>
 
 ```bash
 git clone https://github.com/openclaw/openclaw.git
@@ -446,7 +450,7 @@ Health check failed: gateway closed (1006 abnormal closure (no close frame)): no
 ◇  Dashboard ready ────────────────────────────────────────────────────────────────╮
 │                                                                                  │
 │  Dashboard link (with token):                                                    │
-│  http://127.0.0.1:18789/?token=  │
+│  http://127.0.0.1:18789/?token=
 │  Copy/paste this URL in a browser on this machine to control OpenClaw.           │
 │  No GUI detected. Open from your computer:                                       │
 │  ssh -N -L 18789:127.0.0.1:18789 user@<host>                                     │
@@ -503,7 +507,7 @@ vi /home/tonton/.openclaw/openclaw.json
 **[《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》](https://deep-learning-101.github.io/Blog/Cloudflared-Tunnel)**  
 這裡需研究一下上方連結文章裡的 🔧 Cloudflared Tunnel 實作教學 ▶️ SSH 遠端管理 這樣裝在遠端才有辦法開啟 Web 頁面哦 !
 
-這時候會看到控制台頁面：
+這時候透過帶 token 的Dashboard 連結，就能看到控制台頁面：
 
 <p align="center"> <img src="./OpenClaw-img/002.png" alt="PersonaPlex-002" width="600"> </p>
 
@@ -569,3 +573,33 @@ OpenClaw 是一款近期爆紅的開源 AI 代理人 (AI Agent)平台，由 PSPD
 
 * 高權限風險： 由於 OpenClaw 擁有直接操作電腦檔案與系統的權限，若遭「提示詞注入攻擊 (Prompt Injection)」，可能導致資料外洩或被惡意指令控制。
 * 建議配置： 強烈建議使用 Docker 進行隔離部署，並設定嚴格的白名單 (Allowlists) 與權限控管，切勿以 Root 身份運行，以確保物理隔離敏感資料。
+
+最後，**嚴格來說，OpenClaw 並不是一個「本機推論」的 AI 模型（Local LLM），而是一個運行在本地端的「AI 自動化執行中樞」（Orchestration Engine）。**
+
+### 1. 那它真的是「跑在本地的 AI」？
+
+其實，OpenClaw 本身並沒有「大腦」。
+
+* **大腦在雲端：** 部署過程中，最關鍵的一步是要求你輸入 **API Key** (Google Gemini, OpenAI, Anthropic)。這意味著所有的邏輯推理、語意理解，其實都是把資料打包傳去 Google 或 OpenAI 的伺服器算完後再傳回來。
+* **缺乏推論能力：** 如果你拔掉網路線，這個「Local Agent」就會瞬間變磚，因為它無法進行任何思考。這與使用 Ollama 或 LM Studio 在本地顯卡上跑 Llama 3 是完全不同的概念。
+
+### 2. 那為什麼還叫它 "Run on your machine"？
+
+OpenClaw 強調的「本地」，是指 **「手」和「耳朵」長在本地，以及「執行權限」在本地**，這也是它與 ChatGPT 網頁版最大的不同：
+
+* **執行環境 (Execution Context)：** ChatGPT 網頁版無法讀取你 D 槽裡的 PDF，也無法幫你在你的 Mac 上跑 Python 腳本。但 OpenClaw 運行在你的 Docker 容器裡，它可以直接存取你的檔案系統（File System）和執行 Shell 指令。
+* **數據主權 (Data Sovereignty)：** 雖然推理是遠端的，但「技能 (Skills)」執行的結果（例如寫好的程式碼、整理好的筆記）是直接存在你電腦硬碟裡，而不是存在雲端服務商的資料庫中。
+
+### 3. 本質就是：MCP + Tool Use 的實作容器
+
+**MCP 和 SKILL** 確實是它的核心靈魂：
+
+* **SKILLs (技能) = Tools：** 它就是一個框架，讓 LLM 懂得如何呼叫你電腦裡的工具（例如：`web_search`、`file_read`、`run_script`）。
+* **整合平台：** 它的價值在於把「通訊軟體 (Line/Slack)」+「大模型 API」+「本地工具」三者串接起來，省去你自己寫 Python 腳本去接 API 和 Webhook 的麻煩。
+
+### 結論
+
+OpenClaw 比較像是一個 **「帶著 AI 大腦的遠端遙控器」**，而不是一個「本地 AI 模型」。
+
+* **如果你要的是「隱私絕對安全、斷網也能用」：** 這不是你要的東西（除非你魔改它去接本地的 Ollama/LocalAI 接口，但官方教學主要引導使用付費 API）。
+* **如果你要的是「能幫我操作電腦做事」：** 那這就是它的強項。
