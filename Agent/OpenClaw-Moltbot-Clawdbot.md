@@ -13,7 +13,7 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
   "@type": "TechArticle",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/LLM/OpenClaw-Moltbot.-Clawdbot"
+    "@id": "https://deep-learning-101.github.io/LLM/OpenClaw-Moltbot-Clawdbot"
   },
   "headline": "《焦慮嗎？這麼火的OpenClaw(MoltBot/Clawdbot)，還不部署？手把手帶你體驗一波》",
   "description": "一個跑在你自己電腦上的 AI 助手平台，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。",
@@ -49,7 +49,7 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 
   - 說明：一個跑在你自己電腦上的 AI 助手平台，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。
   - 資源： [🌐 官網](https://openclaw.ai/) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [📝 官方文件](https://docs.openclaw.ai/) | [DeepWiki](https://deepwiki.com/openclaw/openclaw) | [Zread](https://zread.ai/openclaw/openclaw) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/yFi8lWLWp7NPDO-zD6QW_Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/1ikfiU_eGnL5FRaPRddA2Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/WDEYhOG2tGYau0VAOc_y7A)
-  - 🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵 <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/" type="audio/mpeg"></audio>
+  - 🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵 <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/OpenClaw.mp3" type="audio/mpeg"></audio>
 
 ---
 
@@ -59,6 +59,23 @@ _一個跑在你自己電腦上的 AI 助手平台，可以直接在 Line、What
 _這篇文章只專注於個人體驗和心得，會提供一些圖片或連結做為參考，但強烈建議自己動手體驗一下哦_  
 _說實話，我也是得參考文件搭配問Gemini 3 Pro，才有辦法把整個完成設定跟操作，所以如果真的要問我問題？還請記得說明一下狀況跟細節啊？_
 
+---
+
+<div style="display: flex; justify-content: center;">
+  <div style="position: relative; width: 100%; max-width: 400px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/SjNQz-2C9rk"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
+
+<br>
+
+---
 這個爆火 (有多火？看下方的 Github Star History 就知道) 的專案從 Clawdbot 開始 (被 Anthropic 關切？) --→ 改名 Moltbot (唸起來不順？) --→ 最新已改名 OpenClaw (看起來買下 openclaw.ai 網域，應該不會改了？) 是一個開源的「自動化 AI 代理人」（AI Agent）。它的核心目標是讓你擁有一位能直接操作你電腦、讀取檔案並在通訊軟體中隨時待命的私人的 AI 助手。這個專案由 [Peter Steinberger (PSPDFKit 創辦人)](https://github.com/steipete)開發，定位是 "你的助手，你的機器，你的規則"。
 
 <p align="center">
