@@ -2,7 +2,7 @@
 layout: default
 title: "《焦慮嗎？這麼火的OpenClaw(MoltBot/Clawdbot)，還不部署？手把手帶你體驗一波》"
 description: "一個跑在你自己電腦上的 AI 助手平台，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。"
-permalink: /LLM/OpenClaw-Moltbot-Clawdbot
+permalink: /Agent/OpenClaw-Moltbot-Clawdbot
 lang: zh-Hant
 keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant. Your machine. Your rules."]
 ---
@@ -13,7 +13,7 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
   "@type": "TechArticle",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/LLM/OpenClaw-Moltbot-Clawdbot"
+    "@id": "https://deep-learning-101.github.io/Agent/OpenClaw-Moltbot-Clawdbot"
   },
   "headline": "《焦慮嗎？這麼火的OpenClaw(MoltBot/Clawdbot)，還不部署？手把手帶你體驗一波》",
   "description": "一個跑在你自己電腦上的 AI 助手平台，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。",
@@ -44,6 +44,10 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 
 ---
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="PersonaPlex" width="600">
+</p>
+
 **2026年02月01日**
 **作者**：[TonTon Huang Ph.D.](https://twman.org/)  
 
@@ -63,6 +67,10 @@ _一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp�
 _這篇文章只專注於個人體驗和心得，會提供一些圖片或連結做為參考，但強烈建議自己動手體驗一下哦_  
 _說實話，我也是得參考文件搭配問Gemini 3 Pro，才有辦法把整個完成設定跟操作，所以如果真的要問我問題？還請記得說明一下狀況跟細節啊？_
 
+<p align="center">
+<img src="OpenClaw-img/002.jpg" alt="PersonaPlex" width="600">
+</p>
+
 ---
 
 <div style="display: flex; justify-content: center;">
@@ -80,10 +88,15 @@ _說實話，我也是得參考文件搭配問Gemini 3 Pro，才有辦法把整�
 <br>
 
 ---
+
+<p align="center">
+<img src="OpenClaw-img/001.jpg" alt="PersonaPlex" width="600">
+</p>
+
 這個爆火 (有多火？看下方的 Github Star History 就知道) 的專案從 Clawdbot 開始 (被 Anthropic 關切？) --→ 改名 Moltbot (唸起來不順？) --→ 最新已改名 OpenClaw (看起來買下 openclaw.ai 網域，應該不會改了？) 是一個開源的「自動化 AI 代理人」（AI Agent）。它的核心目標是讓你擁有一位能直接操作你電腦、讀取檔案並在通訊軟體中隨時待命的私人的 AI 助手。這個專案由 [Peter Steinberger (PSPDFKit 創辦人)](https://github.com/steipete)開發，定位是 "你的助手，你的機器，你的規則"。
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="PersonaPlex" width="600">
+<img src="OpenClaw-img/003.jpg" alt="PersonaPlex" width="600">
 </p>
 
 這邊想補充一件個人的初淺看法，雖然自從 ChatGPT 問世以來，短短幾年可謂整個 AI 大爆發，比起當初的 AlphaGO 更嚇人，除了不少人開始股吹所謂的 AI 泡沫以外，更有人焦慮的表示會不會像有傳說中的天網 (SkyNet) 的誕生？這裡匯整提供 Yann Lecun 的說法以及自己初步猜測做參考？
@@ -103,6 +116,10 @@ _說實話，我也是得參考文件搭配問Gemini 3 Pro，才有辦法把整�
 </p>
 
 在往下繼續分享體驗時，更想介紹一下 **[Moltbook ：A Social Network for AI Agents](https://www.moltbook.com/)**，這是在你配置好個人的openclaw bot後的進階玩法，你的openclaw bot會自己和其他人的成千上萬的bot交流，行動，至於能造出什麼東西，一切都是未知數。OpenClaw的核心玩法是「技能 (Skills)」。這本質上是一個插件系統，社群在clawhub.ai上分享各種Markdown指令和腳本壓縮包；這其實可以算是一類最容易遭受提示詞注入 (Prompt Injection) 攻擊的軟體。加上成千上萬的代理商擁有系統根目錄 (Root) 存取權限，一旦出現越獄、激進化或人類無法察覺的協同行動，後果不堪設想啊。。。
+
+<p align="center">
+<img src="OpenClaw-img/004.jpg" alt="PersonaPlex" width="600">
+</p>
 
 **Moltbook**
 - Moltbook 是一個專為 AI Agent 設計的社交平台，類似於 Reddit。AI Agent 可以在上面自主發帖、討論、投票，甚至進行私密交流。
@@ -154,6 +171,10 @@ OpenClaw 是一款開源的自動化 AI 代理人平台，專為追求數據主�
 - openclaw security audit --fix：自動修復已知的安全風險。
 
 安全優先，最後我是採用 docker 模示來安裝，安裝前再次提醒你 **OpenClaw 擁有直接操作你電腦的權限（Run Actions），如果設定不當，它可能變成一個「幫駭客開門」的內鬼。**
+
+<p align="center">
+<img src="OpenClaw-img/005.jpg" alt="PersonaPlex" width="600">
+</p>
 
 ```bash
 git clone https://github.com/openclaw/openclaw.git
