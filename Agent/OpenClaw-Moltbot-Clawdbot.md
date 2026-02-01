@@ -70,12 +70,17 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 
 ---
 
+<p align="center">
+<img src="./OpenClaw-img/line.jpg" alt="PersonaPlex-001" height="600">
+</p>
+
 # 《焦慮嗎？這麼火的OpenClaw(MoltBot/Clawdbot)，還不體驗一波？》  
 _Your assistant. Your machine. Your rules. Turn your local machine into a proactive intelligence agent_  
 _一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。_  
 _這篇文章只專注於個人體驗和心得，會提供一些圖片或連結做為參考，但強烈建議自己動手體驗一下哦_  
 _說實話，我也是得參考文件和搭配Gemini 3 Pro，才有辦法整個完成設定跟操作，所以如果真的要問我問題？還請記得說明一下狀況跟細節啊？_  
 _不要問我為啥不用 Mac Mini，我早就過了全天候開著電腦的衝動，而且我也真的不愛蘋果產品就是_
+_官方看來都是直接安裝在本機端，Linux 或 WSL，我這是用 Docker 裝，我也還在摸索_
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="PersonaPlex" width="600">
@@ -93,8 +98,9 @@ _不要問我為啥不用 Mac Mini，我早就過了全天候開著電腦的衝�
 * [**Part 4：手把手部署教學 (Hands-on)**](#part-4手把手部署教學-hands-on)
     * [安裝核心](#第二步安裝核心-core-installation)
     * [模型與通訊配置](#第三步模型與通訊配置-configuration)
-    * [內網穿透與上線](#第四步內網穿透-breaking-the-wall)
+    * [內網穿透與上線](#第四步內網穿透-Breaking-the-wall)
 * [**總結**](#總結)
+* [**一些可能的操作**](#一些可能的操作)
 
 ---
 
@@ -194,7 +200,7 @@ OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要�
 </p>
 
 在開始動手敲指令前，這張清單列出了四個不可或缺的準備工作，缺一不可：
-* **Docker 環境：** 這是最基礎的運行平台。官方強烈建議使用 Docker 安裝，因為它最為簡單且具備沙盒特性，能避免環境依賴衝突。
+* **Docker 環境：** 這是最基礎的運行平台。因為它最為簡單且具備沙盒特性，能避免環境依賴衝突。
 * **LLM API Keys：** 這是 AI 的「大腦」。OpenClaw 本身不具備推理能力，需要串接外部模型。要注意的是，雖然 OpenClaw 軟體免費，但串接 Google Gemini、OpenAI 或 Anthropic 等高性能模型是**需要付費**的。
 * **開發者帳號：** 這是 AI 的「身份」。若要透過 Line 操作，您必須先申請 Line Developers 帳號並創建一個 Channel，才能獲取必要的 Secret 與 Token。
 * **內網穿透工具：** 這是 AI 的「耳朵」。為了讓本地機器能聽到外部 Line 伺服器傳來的訊息，必須安裝 Cloudflared 或 ngrok 來接收 Webhook。
@@ -522,7 +528,8 @@ docker compose run --rm openclaw-cli config set channels.line.channelSecret "YOU
 
 ```
 
-第四步：內網穿透 (Breaking the Wall)
+### 第四步：內網穿透 (Breaking the Wall)
+
 <p align="center"> <img src="./OpenClaw-img/011.jpg" alt="PersonaPlex-011" width="600"> </p>
 
 這邊要注意的是，也需要幫你這機器設定 webhook，可以試試 CloudFlared Tunnel：
@@ -604,3 +611,48 @@ OpenClaw 比較像是一個 **「帶著 AI 大腦的遠端遙控器」**，而�
 
 * **如果你要的是「隱私絕對安全、斷網也能用」：** 這不是你要的東西（除非你魔改它去接本地的 Ollama/LocalAI 接口，但官方教學主要引導使用付費 API）。
 * **如果你要的是「能幫我操作電腦做事」：** 那這就是它的強項。
+
+
+## 一些可能的操作
+
+```bash
+# 用來找你的 token，你應該會看到類似 "token": "xxxxxx..." 的字串，那就是 Web 介面要求的 Token。
+docker exec openclaw-openclaw-gateway-1 cat /home/node/.openclaw/openclaw.json | grep token
+
+# 看看你的 openclaw-gateway 出啥問題
+docker compose -f /home/你的家目錄/openclaw/docker-compose.yml logs --tail 50 openclaw-gateway
+
+# 把檔案弄到 openclaw-openclaw-gateway-1 裡
+docker cp 你要複製的檔案 openclaw-openclaw-gateway-1:/home/node/
+
+# 執行特定程式
+docker exec -it -u root openclaw-openclaw-gateway-1 bash -c "apt-get update && apt-get install -y"
+
+# 進到 docker 處理執行程式 (gog 的安裝)
+docker exec -it -u root openclaw-openclaw-gateway-1 bash
+curl -L https://github.com/steipete/gogcli/releases/download/v0.9.0/gogcli_0.9.0_linux_amd64.tar.gz | tar -xz -C /usr/local/bin && chmod +x /usr/local/bin/gog
+
+# 安裝 gog 來使用 Gmail 跟 Calendar；Dockfile 裡的這行已經錯囉 !
+https://github.com/openclaw/openclaw/blob/main/docs/platforms/hetzner.md?plain=1#L229
+
+# 正確下載網址是這樣
+https://github.com/steipete/gogcli/releases/tag/v0.9.0
+
+# 或者直接下載，然後放進去 docker 裡，但這樣每次重啟好像就掉了 ?
+docker cp gog openclaw-openclaw-gateway-1:/usr/local/bin/gog
+docker exec -u root openclaw-openclaw-gateway-1 chmod +x /usr/local/bin/gog
+
+# 進到 Docker 裡，看你的 Oauth 的 token 有無放進去
+docker exec -it -u root openclaw-openclaw-gateway-1 bash
+root@74c85ab431b0:/app# ls /home/node/.openclaw/workspace/credentials.json
+/home/node/.openclaw/workspace/credentials.json
+
+root@74c85ab431b0:/app# gog auth credentials /home/node/.openclaw/workspace/credentials.json  
+path    /home/node/.config/gogcli/credentials.json
+client  default
+
+# 點開那網址並把回傳網址貼上，理論上就可以搞定了 !
+gog auth add tonton@twman.org --services gmail,calendar,drive,contacts,docs,sheets  --manual
+Opening browser for authorization…
+If the browser doesn't open, visit this URL:
+```
