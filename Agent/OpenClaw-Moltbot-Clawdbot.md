@@ -510,7 +510,7 @@ Health check failed: gateway closed (1006 abnormal closure (no close frame)): no
 ```bash
 Error: EACCES: permission denied, open '/home/node/.openclaw/openclaw.json.8.6e986ebd-bf35-4f26-8280-c15aeae20dac.tmp'
 
-vi /home/tonton/.openclaw/openclaw.json
+vi /home/你的目錄/.openclaw/openclaw.json
 ```
 
 **[《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》](https://deep-learning-101.github.io/Blog/Cloudflared-Tunnel)**  
@@ -654,7 +654,7 @@ path    /home/node/.config/gogcli/credentials.json
 client  default
 
 # 點開那網址並把回傳網址貼上，理論上就可以搞定了 !
-gog auth add tonton@twman.org --services gmail,calendar,drive,contacts,docs,sheets  --manual
+gog auth add 你的Mail --services gmail,calendar,drive,contacts,docs,sheets  --manual
 Opening browser for authorization…
 If the browser doesn't open, visit this URL:
 ```
