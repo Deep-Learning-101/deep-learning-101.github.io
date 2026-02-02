@@ -72,6 +72,7 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 
 <p align="center">
 <img src="./OpenClaw-img/line.jpg" alt="PersonaPlex-001" height="600">
+<img src="./OpenClaw-img/line2.jpg" alt="PersonaPlex-001" height="600">
 </p>
 
 # 《焦慮嗎？這麼火的OpenClaw(MoltBot/Clawdbot)，還不體驗一波？》  
