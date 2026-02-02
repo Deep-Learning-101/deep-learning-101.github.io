@@ -34,7 +34,7 @@ CURRENT_GID=$(id -g)
 if ! grep -q "^HOST_UID=" "$ENV_FILE"; then echo "HOST_UID=$CURRENT_UID" >> "$ENV_FILE"; fi
 if ! grep -q "^HOST_GID=" "$ENV_FILE"; then echo "HOST_GID=$CURRENT_GID" >> "$ENV_FILE"; fi
 
-# 確保 Token 存在
+# 確保 Token 存在 (你可以手動改成你要的，例如 123)
 if ! grep -q "^OPENCLAW_GATEWAY_TOKEN=" "$ENV_FILE"; then
     echo "Generating new Token..."
     echo "OPENCLAW_GATEWAY_TOKEN=$(openssl rand -hex 32)" >> "$ENV_FILE"
@@ -78,24 +78,38 @@ docker build --no-cache \
 
 echo ""
 echo "==> Onboarding..."
-# 先執行標準 onboard (這會產生隨機 Token 的檔案)
+# 先執行標準 onboard
 docker compose "${COMPOSE_ARGS[@]}" run --rm openclaw-cli onboard --no-install-daemon
 
-# --- [關鍵修正] 強制覆蓋 Token ---
-echo "==> Enforcing Token from .env..."
+# --- [關鍵修正 1] 強制覆蓋 Token ---
+echo "==> Enforcing Config..."
 CONFIG_JSON="$OPENCLAW_CONFIG_DIR/openclaw.json"
 
 if [ -f "$CONFIG_JSON" ]; then
-    echo "Patching $CONFIG_JSON with token from .env..."
-    # 使用 sed 強制替換 json 檔案裡的 token 值
+    # 1. 修正 Token
+    echo "Patching Token..."
     if [[ "$OSTYPE" == "darwin"* ]]; then
         sed -i '' "s/\"token\": \".*\"/\"token\": \"$OPENCLAW_GATEWAY_TOKEN\"/" "$CONFIG_JSON"
     else
         sed -i "s/\"token\": \".*\"/\"token\": \"$OPENCLAW_GATEWAY_TOKEN\"/" "$CONFIG_JSON"
     fi
-    echo "Token has been forcibly updated to match .env"
+    
+    # 2. [關鍵修正 2] 插入 allowInsecureAuth 設定 (解決 pairing required 問題)
+    # 我們檢查有沒有 controlUi 設定，沒有的話就插入到 gateway 區塊內
+    if ! grep -q "controlUi" "$CONFIG_JSON"; then
+        echo "Patching allowInsecureAuth for Ngrok support..."
+        # 使用 sed 在 "bind": "lan", 之後插入 controlUi 設定
+        if [[ "$OSTYPE" == "darwin"* ]]; then
+             sed -i '' '/"bind": "lan",/a\
+             "controlUi": { "allowInsecureAuth": true },' "$CONFIG_JSON"
+        else
+             sed -i '/"bind": "lan",/a \    "controlUi": { "allowInsecureAuth": true },' "$CONFIG_JSON"
+        fi
+    fi
+
+    echo "Config updated successfully."
 else
-    echo "Warning: Config file not found, skipping token patch."
+    echo "Warning: Config file not found, skipping patch."
 fi
 # --------------------------------
 

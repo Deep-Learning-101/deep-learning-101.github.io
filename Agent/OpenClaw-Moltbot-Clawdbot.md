@@ -236,7 +236,7 @@ OpenClaw 擁有直接操作你電腦的權限（Run Actions），如果設定不
 <img src="./OpenClaw-img/009.jpg" alt="PersonaPlex-009" width="600">
 </p>
 
-最後我是採用 docker 模示來安裝，安裝前再次提醒你注意權限問題。[官方有提供說明，但都會出錯](https://docs.openclaw.ai/install/docker)
+最後我是採用 docker 模示來安裝，安裝前再次提醒你注意權限問題。[官方有提供說明，但都會出錯](https://docs.openclaw.ai/install/docker)；另外，就是真的要設定好其實沒那麼簡單啊 !!!
 
 <p align="center">
 <img src="./OpenClaw-img/001.png" alt="PersonaPlex-006" width="600">
@@ -264,7 +264,7 @@ chmod +x docker-setup.sh
 ./docker-setup.sh  
 ```
 
-還有我試成功的[幾個檔案](https://github.com/Deep-Learning-101/deep-learning-101.github.io/tree/main/Agent/OpenClaw-img)：[Dockerfile]()、[docker-setup.sh]() & [docker-compose.yml]() 下載使用
+還有我試成功的[幾個檔案](https://github.com/Deep-Learning-101/deep-learning-101.github.io/tree/main/Agent/OpenClaw-img)：[Dockerfile](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/Dockerfile)、[docker-setup.sh](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/docker-setup.sh) & [docker-compose.yml](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/docker-compose.yml) 下載使用
 
 ```bash
 🦞 OpenClaw 2026.1.30 (f1de88c) — I keep secrets like a vault... unless you print them in debug logs again.
@@ -662,6 +662,15 @@ docker compose run --rm openclaw-cli config set channels.line.channelSecret "YOU
 
 ```
 
+這邊要注意如果是使用Tunnel，記得在 docker openclaw-openclaw-gateway-1 裡的 /home/node/.openclaw/openclaw.json 確認是否有 hook 的設定
+
+```bash
+
+  "hooks": {
+    "enabled": true
+  },
+```
+
 ### 第四步：內網穿透 (Breaking the Wall)
 
 <p align="center"> <img src="./OpenClaw-img/011.jpg" alt="PersonaPlex-011" width="600"> </p>
@@ -689,6 +698,20 @@ ngrok config add-authtoken your_key
 ```
 
 設定正常且完成後就是會看到這樣的畫面，Line 的 Developer 我想很容易在網上找到相關設定說明，不然真的就問問 Gemini 3 Pro 吧 !
+
+```bash
+
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "lan",
+    "controlUi": {
+      "allowInsecureAuth": true
+    },
+
+```
+
+這邊要注意如果是使用Tunnel，記得在 docker openclaw-openclaw-gateway-1 裡的 /home/node/.openclaw/openclaw.json 確認是否有 controlUi。
 
 <p align="center"> <img src="./OpenClaw-img/003.png" alt="PersonaPlex-003" width="600"> </p>
 
@@ -755,6 +778,10 @@ docker exec openclaw-openclaw-gateway-1 cat /home/node/.openclaw/openclaw.json |
 
 # 看看你的 openclaw-gateway 出啥問題
 docker compose -f /home/tonton/openclaw/docker-compose.yml logs --tail 50 openclaw-gateway
+docker compose logs -f openclaw-gateway
+
+# 這是用來看 config 檔內容
+docker exec openclaw-openclaw-gateway-1 cat /home/node/.openclaw/openclaw.json
 
 # 把檔案弄到 openclaw-openclaw-gateway-1 裡
 docker cp 你要複製的檔案 openclaw-openclaw-gateway-1:/home/node/
