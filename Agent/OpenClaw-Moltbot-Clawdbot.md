@@ -49,7 +49,7 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 </p>
 
   - 說明：一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。
-  - 資源： [🌐 官網](https://openclaw.ai/) | [🐙 GitHub](https://github.com/openclaw/openclaw) | [📝 官方文件](https://docs.openclaw.ai/) | [DeepWiki](https://deepwiki.com/openclaw/openclaw) | [Zread](https://zread.ai/openclaw/openclaw) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/yFi8lWLWp7NPDO-zD6QW_Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/1ikfiU_eGnL5FRaPRddA2Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/WDEYhOG2tGYau0VAOc_y7A) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/-vx_zIOgrkC-k39emRN9-Q)
+  - [🌐 官網](https://openclaw.ai/) | [GitHub](https://github.com/openclaw/openclaw) | [官方文件](https://docs.openclaw.ai/) | [DeepWiki](https://deepwiki.com/openclaw/openclaw) | [Zread](https://zread.ai/openclaw/openclaw) | [公眾號解讀](https://mp.weixin.qq.com/s/yFi8lWLWp7NPDO-zD6QW_Q) | [公眾號解讀](https://mp.weixin.qq.com/s/1ikfiU_eGnL5FRaPRddA2Q) | [公眾號解讀](https://mp.weixin.qq.com/s/WDEYhOG2tGYau0VAOc_y7A) | [公眾號解讀](https://mp.weixin.qq.com/s/-vx_zIOgrkC-k39emRN9-Q)
   - 🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵 <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/OpenClaw.mp3" type="audio/mpeg"></audio>
 
 ---
@@ -236,28 +236,83 @@ OpenClaw 擁有直接操作你電腦的權限（Run Actions），如果設定不
 <img src="./OpenClaw-img/009.jpg" alt="PersonaPlex-009" width="600">
 </p>
 
-最後我是採用 docker 模示來安裝，安裝前再次提醒你注意權限問題。
+最後我是採用 docker 模示來安裝，安裝前再次提醒你注意權限問題。[官方有提供說明，但都會出錯](https://docs.openclaw.ai/install/docker)
 
 <p align="center">
 <img src="./OpenClaw-img/001.png" alt="PersonaPlex-006" width="600">
 </p>
 
+一併附上幾個整個砍掉重練時會用到的指令
+
 ```bash
 git clone https://github.com/openclaw/openclaw.git
 cd openclaw/
+
+# 用來停止並移除容器與 Volume (適合整個砍掉重練清理環境時)
+docker compose down -v
+docker rmi openclaw:local
+docker system prune -f
+
+# 強制刪除舊的設定檔 (解決權限問題的根源，適合整個砍掉重練清理環境時)
+sudo rm -rf ~/.openclaw
+
+# 刪除專案內的 .env (如果有的話，我們要重新生成，適合整個砍掉重練清理環境時) 這邊要注意有時會衝突
+rm -f .env
+
+chmod +x docker-setup.sh
+
 ./docker-setup.sh  
+```
+
+還有我試成功的[幾個檔案](https://github.com/Deep-Learning-101/deep-learning-101.github.io/tree/main/Agent/OpenClaw-img)：[Dockerfile]()、[docker-setup.sh]() & [docker-compose.yml]() 下載使用
+
+```bash
+🦞 OpenClaw 2026.1.30 (f1de88c) — I keep secrets like a vault... unless you print them in debug logs again.
+
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░██
+██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██
+██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██
+▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀
+                  🦞 OPENCLAW 🦞
+
+┌  OpenClaw onboarding
+│
+◇  Security ──────────────────────────────────────────────────────────────────────────────╮
+│                                                                                         │
+│  Security warning — please read.                                                        │
+│                                                                                         │
+│  OpenClaw is a hobby project and still in beta. Expect sharp edges.                     │
+│  This bot can read files and run actions if tools are enabled.                          │
+│  A bad prompt can trick it into doing unsafe things.                                    │
+│                                                                                         │
+│  If you’re not comfortable with basic security and access control, don’t run OpenClaw.  │
+│  Ask someone experienced to help before enabling tools or exposing it to the internet.  │
+│                                                                                         │
+│  Recommended baseline:                                                                  │
+│  - Pairing/allowlists + mention gating.                                                 │
+│  - Sandbox + least-privilege tools.                                                     │
+│  - Keep secrets out of the agent’s reachable filesystem.                                │
+│  - Use the strongest available model for any bot with tools or untrusted inboxes.       │
+│                                                                                         │
+│  Run regularly:                                                                         │
+│  openclaw security audit --deep                                                         │
+│  openclaw security audit --fix                                                          │
+│                                                                                         │
+│  Must read: https://docs.openclaw.ai/gateway/security                                   │
+│                                                                                         │
+├─────────────────────────────────────────────────────────────────────────────────────────╯
+│
+◇  I understand this is powerful and inherently risky. Continue?
+│  Yes
 ```
 
 選 YES 後，選 QuickStart
 
 ```bash
-◇  I understand this is powerful and inherently risky. Continue?
-│  Yes
+◇  Onboarding mode
+│  QuickStart
 │
-◆  Onboarding mode
-│  ● QuickStart (Configure details later via openclaw configure.)
-│  ○ Manual
-
 ◇  QuickStart ─────────────────────────╮
 │                                      │
 │  Gateway port: 18789                 │
@@ -266,7 +321,7 @@ cd openclaw/
 │  Tailscale exposure: Off             │
 │  Direct to chat channels.            │
 │                                      │
-├──────────────────────────────────────╯
+├──────────────────────────────────────╯│
 ```
 
 這邊就可以先選好你要用那個大模型了，或者先選 Skip for now。 (建議：對於初次體驗者，系統建議選擇 QuickStart 模式，或先選 "Skip for now" 稍後再手動配置。)
@@ -288,53 +343,61 @@ cd openclaw/
 │  ○ Synthetic
 │  ○ Venice AI
 │  ● Skip for now
-
+│
 ◇  Model/auth provider
-│  Skip for now
+│  Google
+│
+◆  Google auth method
+│  ● Google Gemini API key
+│  ○ Google Antigravity OAuth
+│  ○ Google Gemini CLI OAuth
+│  ○ Back
+└
+◇  Google auth method
+│  Google Gemini API key
+│
+◆  Enter Gemini API key
+│
+
 ```
 
-範例選擇 Google Gemini 的過程
+範例選擇 Google Gemini 的過程：若不 Skip，選 Google -> 選 google/gemini-3-flash-preview
 
 ```bash
-◆  Filter models by provider
-│  ○ All providers
-│  ○ amazon-bedrock
-│  ○ anthropic
-│  ○ azure-openai-responses
-│  ○ cerebras
-│  ○ github-copilot
-│  ● google (21 models)
-│  ○ google-antigravity
-│  ○ google-gemini-cli
-│  ○ google-vertex
-│  ○ groq
-│  ○ huggingface
-
-◇  Filter models by provider
-│  google
-```
-
- (若不 Skip)： 先選 Google -> 先選 google/gemini-3-flash-preview
-
-```bash
+│
+◇  Model configured ─────────────────────────────────╮
+│                                                    │
+│  Default model set to google/gemini-3-pro-preview  │
+│                                                    │
+├────────────────────────────────────────────────────╯
+│
 ◆  Default model
-│  ○ Keep current (default: anthropic/claude-opus-4-5)
+│  ○ Keep current (google/gemini-3-pro-preview)
 │  ○ Enter model manually
+│  ○ google/gemini-1.5-flash
+│  ○ google/gemini-1.5-flash-8b
+│  ○ google/gemini-1.5-pro
+│  ○ google/gemini-2.0-flash
+│  ○ google/gemini-2.0-flash-lite
+│  ○ google/gemini-2.5-flash
+│  ○ google/gemini-2.5-flash-lite
+│  ○ google/gemini-2.5-flash-lite-preview-06-17
+│  ○ google/gemini-2.5-flash-lite-preview-09-2025
+│  ○ google/gemini-2.5-flash-preview-04-17
+│  ○ google/gemini-2.5-flash-preview-05-20
+│  ○ google/gemini-2.5-flash-preview-09-2025
 │  ○ google/gemini-2.5-pro
 │  ○ google/gemini-2.5-pro-preview-05-06
 │  ○ google/gemini-2.5-pro-preview-06-05
-│  ● google/gemini-3-flash-preview (Gemini 3 Flash Preview · ctx 1024k · reasoning · auth missing)
+│  ● google/gemini-3-flash-preview (Gemini 3 Flash Preview · ctx 1024k · reasoning)
 │  ○ google/gemini-3-pro-preview
-
+│  ○ google/gemini-flash-latest
+│  ○ google/gemini-flash-lite-latest
+│  ○ google/gemini-live-2.5-flash
+│  ○ google/gemini-live-2.5-flash-preview-native-audio
+│
 ◇  Default model
 │  google/gemini-3-flash-preview
-│
-◇  Model check ────────────────────────────────────────────────────────────────────────╮
-│                                                                                      │
-│  No auth configured for provider "google". The agent may fail until credentials are  │
-│  added.                                                                              │
-│                                                                                      │
-├──────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
 通訊頻道 (Channels) 也是先跳過，因為 Line 的插件功能就還是之後再手動設定會比較穩一點。
@@ -363,6 +426,35 @@ cd openclaw/
 │                                             │
 ├─────────────────────────────────────────────╯
 │
+◇  How channels work ─────────────────────────────────────────────────────────────────────╮
+│                                                                                         │
+│  DM security: default is pairing; unknown DMs get a pairing code.                       │
+│  Approve with: openclaw pairing approve <channel> <code>                                │
+│  Public DMs require dmPolicy="open" + allowFrom=["*"].                                  │
+│  Multi-user DMs: set session.dmScope="per-channel-peer" (or "per-account-channel-peer"  │
+│  for multi-account channels) to isolate sessions.                                       │
+│  Docs: start/pairing                  │
+│                                                                                         │
+│  Telegram: simplest way to get started — register a bot with @BotFather and get going.  │
+│  WhatsApp: works with your own number; recommend a separate phone + eSIM.               │
+│  Discord: very well supported right now.                                                │
+│  Google Chat: Google Workspace Chat app with HTTP webhook.                              │
+│  Slack: supported (Socket Mode).                                                        │
+│  Signal: signal-cli linked device; more setup (David Reagans: "Hop on Discord.").       │
+│  iMessage: this is still a work in progress.                                            │
+│  Nostr: Decentralized protocol; encrypted DMs via NIP-04.                               │
+│  Microsoft Teams: Bot Framework; enterprise support.                                    │
+│  Mattermost: self-hosted Slack-style chat; install the plugin to enable.                │
+│  Nextcloud Talk: Self-hosted chat via Nextcloud Talk webhook bots.                      │
+│  Matrix: open protocol; install the plugin to enable.                                   │
+│  BlueBubbles: iMessage via the BlueBubbles mac app + REST API.                          │
+│  LINE: LINE Messaging API bot for Japan/Taiwan/Thailand markets.                        │
+│  Zalo: Vietnam-focused messaging platform with Bot API.                                 │
+│  Zalo Personal: Zalo personal account via QR code login.                                │
+│  Tlon: decentralized messaging on Urbit; install the plugin to enable.                  │
+│                                                                                         │
+├─────────────────────────────────────────────────────────────────────────────────────────╯
+│
 ◆  Select channel (QuickStart)
 │  ○ Telegram (Bot API)
 │  ○ WhatsApp (QR link)
@@ -389,26 +481,47 @@ cd openclaw/
 跑完後會看到 Onboarding complete，並提供 Dashboard 連結。
 
 ```bash
+│
+◇  Select channel (QuickStart)
+│  Skip for now
 Updated ~/.openclaw/openclaw.json
 Workspace OK: ~/.openclaw/workspace
 Sessions OK: ~/.openclaw/agents/main/sessions
-
+│
 ◇  Skills status ────────────╮
 │                            │
-│  Eligible: 3               │
-│  Missing requirements: 46  │
+│  Eligible: 4               │
+│  Missing requirements: 45  │
 │  Blocked by allowlist: 0   │
 │                            │
 ├────────────────────────────╯
 │
-◆  Configure skills now? (recommended)
-│  ○ Yes / ● No
-◆  Enable hooks?
-│  ◼ Skip for now
-│  ◻ 🚀 boot-md
-│  ◻ 📝 command-logger
-│  ◻ 💾 session-memory
-
+◇  Configure skills now? (recommended)
+│  No
+│
+◇  Hooks ──────────────────────────────────────────────────────────╮
+│                                                                  │
+│  Hooks let you automate actions when agent commands are issued.  │
+│  Example: Save session context to memory when you issue /new.    │
+│                                                                  │
+│  Learn more: https://docs.openclaw.ai/hooks                      │
+│                                                                  │
+├──────────────────────────────────────────────────────────────────╯
+│
+◇  Enable hooks?
+│  🚀 boot-md, 📝 command-logger, 💾 session-memory
+│
+◇  Hooks Configured ─────────────────────────────────────────╮
+│                                                            │
+│  Enabled 3 hooks: boot-md, command-logger, session-memory  │
+│                                                            │
+│  You can manage hooks later with:                          │
+│    openclaw hooks list                                     │
+│    openclaw hooks enable <name>                            │
+│    openclaw hooks disable <name>                           │
+│                                                            │
+├────────────────────────────────────────────────────────────╯
+│
 ◇  Systemd ───────────────────────────────────────────────────────────────────────────────╮
 │                                                                                         │
 │  Systemd user services are unavailable. Skipping lingering checks and service install.  │
@@ -421,6 +534,15 @@ Health check failed: gateway closed (1006 abnormal closure (no close frame)): no
   Source: local loopback
   Config: /home/node/.openclaw/openclaw.json
   Bind: loopback
+│
+◇  Health check help ────────────────────────────────╮
+│                                                    │
+│  Docs:                                             │
+│  https://docs.openclaw.ai/gateway/health           │
+│  https://docs.openclaw.ai/gateway/troubleshooting  │
+│                                                    │
+├────────────────────────────────────────────────────╯
+│
 ◇  Optional apps ────────────────────────╮
 │                                        │
 │  Add nodes for extra features:         │
@@ -434,7 +556,7 @@ Health check failed: gateway closed (1006 abnormal closure (no close frame)): no
 │                                                                                            │
 │  Web UI: http://127.0.0.1:18789/                                                           │
 │  Web UI (with token):                                                                      │
-│  http://127.0.0.1:18789/?token=
+│  http://127.0.0.1:18789/?token=           │
 │  Gateway WS: ws://127.0.0.1:18789                                                          │
 │  Gateway: not detected (gateway closed (1006 abnormal closure (no close frame)): no close  │
 │  reason)                                                                                   │
@@ -459,13 +581,13 @@ Health check failed: gateway closed (1006 abnormal closure (no close frame)): no
 ◇  Dashboard ready ────────────────────────────────────────────────────────────────╮
 │                                                                                  │
 │  Dashboard link (with token):                                                    │
-│  http://127.0.0.1:18789/?token=
+│  http://127.0.0.1:18789/?token=  │
 │  Copy/paste this URL in a browser on this machine to control OpenClaw.           │
 │  No GUI detected. Open from your computer:                                       │
 │  ssh -N -L 18789:127.0.0.1:18789 user@<host>                                     │
 │  Then open:                                                                      │
 │  http://localhost:18789/                                                         │
-│  http://127.0.0.1:18789/?token=
+│  http://localhost:18789/?token=  │
 │  Docs:                                                                           │
 │  https://docs.openclaw.ai/gateway/remote                                         │
 │  https://docs.openclaw.ai/web/control-ui                                         │
@@ -495,6 +617,16 @@ Health check failed: gateway closed (1006 abnormal closure (no close frame)): no
 ├────────────────────────────────────────────────────────────────────────╯
 │
 └  Onboarding complete. Use the tokenized dashboard link above to control OpenClaw.
+
+│
+◇  Install shell completion script?
+│  Yes
+Completion installed. Restart your shell or run: source /home/node/.zshrc
+
+==> Starting Gateway...
+[+] Running 1/1
+ ✔ Container openclaw-openclaw-gateway-1  Started                                                                                                                                                                           0.5s
+Done.
 ```
 
 ### 第三步：模型與通訊配置 (Configuration)
@@ -622,13 +754,13 @@ OpenClaw 比較像是一個 **「帶著 AI 大腦的遠端遙控器」**，而�
 docker exec openclaw-openclaw-gateway-1 cat /home/node/.openclaw/openclaw.json | grep token
 
 # 看看你的 openclaw-gateway 出啥問題
-docker compose -f /home/你的家目錄/openclaw/docker-compose.yml logs --tail 50 openclaw-gateway
+docker compose -f /home/tonton/openclaw/docker-compose.yml logs --tail 50 openclaw-gateway
 
 # 把檔案弄到 openclaw-openclaw-gateway-1 裡
 docker cp 你要複製的檔案 openclaw-openclaw-gateway-1:/home/node/
 
 # 執行特定程式
-docker exec -it -u root openclaw-openclaw-gateway-1 bash -c "apt-get update && apt-get install -y"
+docker exec -it -u root openclaw-openclaw-gateway-1 bash -c "apt-get update && apt-get install XXX -y"
 
 # 進到 docker 處理執行程式 (gog 的安裝)
 docker exec -it -u root openclaw-openclaw-gateway-1 bash
@@ -640,7 +772,7 @@ https://github.com/openclaw/openclaw/blob/main/docs/platforms/hetzner.md?plain=1
 # 正確下載網址是這樣
 https://github.com/steipete/gogcli/releases/tag/v0.9.0
 
-# 或者直接下載，然後放進去 docker 裡，但這樣每次重啟好像就掉了 ?
+# 或者直接下載，然後放進去 docker 裡，但這樣每次重啟就壞掉得重來了
 docker cp gog openclaw-openclaw-gateway-1:/usr/local/bin/gog
 docker exec -u root openclaw-openclaw-gateway-1 chmod +x /usr/local/bin/gog
 
@@ -656,5 +788,13 @@ client  default
 # 點開那網址並把回傳網址貼上，理論上就可以搞定了 !
 gog auth add 你的Mail --services gmail,calendar,drive,contacts,docs,sheets  --manual
 Opening browser for authorization…
-If the browser doesn't open, visit this URL:
+
+# 在Docker 容器裡沒有全域的 openclaw 指令，正確用法是透過 openclaw-cli 服務執行
+docker compose run --rm openclaw-cli cron runs --id <jobId> --limit 50  
+docker compose run --rm openclaw-cli status  
+docker compose run --rm openclaw-cli doctor
+
+# 確認 TOKEN 值
+docker compose exec openclaw-gateway env | grep OPENCLAW_GATEWAY_TOKEN
+export OPENCLAW_GATEWAY_TOKEN=上面的值
 ```
