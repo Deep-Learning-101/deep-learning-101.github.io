@@ -82,8 +82,8 @@ _Your assistant. Your machine. Your rules. Turn your local machine into a proact
 _這篇文章只專注於個人體驗和心得，會提供一些圖片或連結做為參考，但強烈建議自己動手體驗一下哦_  
 _不要問我為啥不用 Mac Mini，我早就過了全天候開著電腦的衝動，而我也真的不愛蘋果產品就是_  
 _官方看來都是直接安裝在本機端，Linux 或 WSL，我這是用 Docker 裝，我也還在摸索_  
-_雖然開源免費，但 API 成本採「按使用量付費制，建議必須密切監控 API 使用量_  
-_多數非安裝即實現，需要 API 設定、自訂整合開發、反覆測試改良與維護_
+_雖然開源免費，但按使用量付費制 API 仍是成本，建議須密切監控 API 使用量_  
+_多數安裝需設定、自訂整合開發、反覆測試改良與維護，想上手不是那麼容易_
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="PersonaPlex" width="600">
@@ -107,6 +107,12 @@ _多數非安裝即實現，需要 API 設定、自訂整合開發、反覆測�
 
 ---
 
+<p align="center">
+<img src="./OpenClaw-img/google.png" alt="PersonaPlex-001" width="600">
+</p>
+
+---
+
 ## Part 1：觀念與背景 - AI 焦慮與 OpenClaw 的誕生
 
 這邊想補充一件個人的初淺看法，雖然自從 ChatGPT 問世以來，短短幾年可謂整個 AI 大爆發，比起當初的 AlphaGO 更嚇人，除了不少人開始股吹所謂的 AI 泡沫以外，更有人焦慮的表示會不會像有傳說中的天網 (SkyNet) 的誕生？這裡匯整提供 Yann Lecun 的說法以及自己初步猜測做參考？
@@ -115,7 +121,7 @@ _多數非安裝即實現，需要 API 設定、自訂整合開發、反覆測�
 <img src="./OpenClaw-img/001.jpg" alt="PersonaPlex-001" width="600">
 </p>
 
-**當前 生成式 AI (GenAI) / LLM 僅是極其精密的「機率統計接龍機」，其核心缺陷在於 自回歸預測的錯誤累積**。它所產出的精彩論述，僅僅是透過運算找出下一個最符合邏輯的字詞碎片 (Next Token Prediction)。一切都源自於海量的網路文本，它在數位空間裡編織邏輯，卻從未真正「觸碰」過現實；如 LeCun 所言，每步推理的微小誤差會隨步驟呈指數級擴散，導致長程規劃崩潰。這種基於記憶檢索的擬合，本質上缺乏對物理現實的感知。**那麼？AI 是否能產生「意識」的爭議，核心在於機器學習的本質始終是「函數擬合」(Function Fitting)**。它是在既有的資料分佈中尋找規律，而人類或生物的認知系統是數億年來為了在極端環境中「求生」而演化出來的。兩者的運作邏輯從底層代碼就完全不同，AI 缺乏生物性的本能，自然無法跨越到具備自主意志的生命範疇。即便 AI 最後真的產生了敵意，最致命的弱點或許就是物質依賴。比如說要生產製造先進的半導體晶片，是涉及極其複雜且高度集權的全球供應鏈 (護國神山？)；這種真實情況將面對的物理性脆弱，決定了 AI 難以在長期對抗中勝過像「蟑螂」般具備極高韌性與繁衍能力的生物物種 (人類？ XD)；這樣，是不是有比較不那麼焦慮了呢？至少可能知道 AI 叛變後的人類反制策略？？ 而不是準備個 T800 跟造個時光機器？？XD [👉 仍舊很焦慮？👈](https://ciecietaipei.github.io/)
+**當前 生成式 AI (GenAI) / LLM 僅是極其精密的「機率統計接龍機」，其核心缺陷在於 自回歸預測的錯誤累積**。它所產出的精彩論述，僅僅是透過運算找出下一個最符合邏輯的字詞碎片 (Next Token Prediction)。一切都源自於海量的網路文本，它在數位空間裡編織邏輯，卻從未真正「觸碰」過現實；如 LeCun 所言，每步推理的微小誤差會隨步驟呈指數級擴散，導致長程規劃崩潰。這種基於記憶檢索的擬合，本質上缺乏對物理現實的感知。**那麼？AI 是否能產生「意識」的爭議**，即便 AI 最後真的產生了敵意，最致命的弱點或許就是物質依賴。比如說要生產製造先進的半導體晶片，是涉及極其複雜且高度集權的全球供應鏈 (護國神山？)；這種真實情況將面對的物理性脆弱，決定了 AI 難以在長期對抗中勝過像「蟑螂」般具備極高韌性與繁衍能力的生物物種 (人類？ XD)；這樣，是不是有比較不那麼焦慮了呢？至少可能知道 AI 叛變後的人類反制策略？？ 而不是準備個 T800 跟造個時光機器？？XD [👉 仍舊很焦慮？👈](https://ciecietaipei.github.io/)
 
 <p align="center">
 <img src="./OpenClaw-img/002.jpg" alt="PersonaPlex-001" width="600">
@@ -265,7 +271,10 @@ chmod +x docker-setup.sh
 ./docker-setup.sh  
 ```
 
-還有我試成功的[幾個檔案](https://github.com/Deep-Learning-101/deep-learning-101.github.io/tree/main/Agent/OpenClaw-img)：[Dockerfile](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/Dockerfile)、[docker-setup.sh](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/docker-setup.sh) & [docker-compose.yml](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/docker-compose.yml) 下載使用
+還有我試成功的[幾個檔案](https://github.com/Deep-Learning-101/deep-learning-101.github.io/tree/main/Agent/OpenClaw-img)下載使用
+- [Dockerfile](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/Dockerfile)
+- [docker-setup.sh](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/docker-setup.sh)
+- [docker-compose.yml](https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/Agent/OpenClaw-img/docker-compose.yml)
 
 ```bash
 🦞 OpenClaw 2026.1.30 (f1de88c) — I keep secrets like a vault... unless you print them in debug logs again.
@@ -774,21 +783,25 @@ OpenClaw 比較像是一個 **「帶著 AI 大腦的遠端遙控器」**，而�
 ## 一些可能的操作常見問題
 
 ```bash
-# 用來找你的 token，你應該會看到類似 "token": "xxxxxx..." 的字串，那就是 Web 介面要求的 Token。
-docker exec openclaw-openclaw-gateway-1 cat /home/node/.openclaw/openclaw.json | grep token
-
-# 看看你的 openclaw-gateway 出啥問題
-docker compose -f /home/tonton/openclaw/docker-compose.yml logs --tail 50 openclaw-gateway
-docker compose logs -f openclaw-gateway
-
-# 這是用來看 config 檔內容
+# 用來看 config 檔內容
 docker exec openclaw-openclaw-gateway-1 cat /home/node/.openclaw/openclaw.json
 
 # 把檔案弄到 openclaw-openclaw-gateway-1 裡
 docker cp 你要複製的檔案 openclaw-openclaw-gateway-1:/home/node/
 
+# 用來找你的 token，你應該會看到類似 "token": "xxxxxx..." 的字串，那就是 Web 介面要求的 Token。
+docker exec openclaw-openclaw-gateway-1 cat /home/node/.openclaw/openclaw.json | grep token
+
+# 確認 TOKEN 值
+docker compose exec openclaw-gateway env | grep OPENCLAW_GATEWAY_TOKEN
+export OPENCLAW_GATEWAY_TOKEN=上面的值
+
 # 執行特定程式
 docker exec -it -u root openclaw-openclaw-gateway-1 bash -c "apt-get update && apt-get install XXX -y"
+
+# 看看你的 openclaw-gateway 出啥問題
+docker compose -f /home/tonton/openclaw/docker-compose.yml logs --tail 50 openclaw-gateway
+docker compose logs -f openclaw-gateway
 
 # 進到 docker 處理執行程式 (gog 的安裝)
 docker exec -it -u root openclaw-openclaw-gateway-1 bash
@@ -822,7 +835,103 @@ docker compose run --rm openclaw-cli cron runs --id <jobId> --limit 50
 docker compose run --rm openclaw-cli status  
 docker compose run --rm openclaw-cli doctor
 
-# 確認 TOKEN 值
-docker compose exec openclaw-gateway env | grep OPENCLAW_GATEWAY_TOKEN
-export OPENCLAW_GATEWAY_TOKEN=上面的值
+```
+
+最後的最後，補上一個目前個人運作起來最正常的 /home/node/.openclaw/openclaw.json
+
+```bash
+
+{
+  "meta": {
+    "lastTouchedVersion": "2026.1.30",
+    "lastTouchedAt": "2026-02-02T20:55:34.860Z"
+  },
+  "auth": {
+    "profiles": {
+      "google:default": {
+        "provider": "google",
+        "mode": "api_key"
+      }
+    }
+  },
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "google/gemini-3-flash-preview"
+      },
+      "models": {
+        "google/gemini-3-flash-preview": {
+          "alias": "gemini-flash"
+        }
+      },
+      "workspace": "/home/node/.openclaw/workspace",
+      "compaction": {
+        "mode": "safeguard"
+      },
+      "maxConcurrent": 4,
+      "subagents": {
+        "maxConcurrent": 8
+      }
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions"
+  },
+  "commands": {
+    "native": "auto",
+    "nativeSkills": "auto"
+  },
+  "hooks": {
+    "enabled": true
+  },
+  "channels": {
+    "line": {
+      "enabled": true,
+      "channelId": "2007251985",
+      "channelAccessToken": "Line channel AccessToken",
+      "channelSecret": "Line channel Secret",
+      "groupPolicy": "open",
+      "dmPolicy": "open",
+      "allowFrom": [],
+      "accounts": {}
+    }
+  },
+  "gateway": {
+    "port": 18789,
+    "mode": "local",
+    "bind": "lan",
+    "controlUi": {
+      "allowInsecureAuth": true
+    },
+    "auth": {
+      "mode": "token",
+      "token": "token"
+    }
+  },
+  "plugins": {
+    "entries": {
+      "line": {
+        "enabled": true
+      }
+    }
+  },
+  "tools": {
+    "web": {
+      "search": {
+        "enabled": true,
+        "apiKey": "apiKey"
+      },
+      "fetch": {
+        "enabled": true
+      }
+    }
+  },
+  "wizard": {
+    "lastRunAt": "2026-02-02T20:55:34.836Z",
+    "lastRunVersion": "2026.1.30",
+    "lastRunCommand": "configure",
+    "lastRunMode": "local"
+  }
+}
+
 ```
