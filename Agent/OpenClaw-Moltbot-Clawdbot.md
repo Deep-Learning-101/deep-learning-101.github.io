@@ -191,36 +191,55 @@ _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想�
 ### OpenClaw: Your Private AI Command Center
 
 🦞 **「數據歸你，權力歸你，AI 為你。」**
+> 🦞 Your Data, Your Power, AI for You.
 
 **🚀 核心功能 | Core Features**
 - 🌐 私有化佈署，主權回歸 不同於傳統 SaaS 助理，OpenClaw 運行在您的 Mac Mini、家用 PC 或 VPS 上。您的指令與數據不經過第三方伺服器，真正實現隱私安全。
+> 🌐 Private Deployment, Data Sovereignty Restored Unlike traditional SaaS assistants, OpenClaw runs directly on your Mac Mini, home PC, or VPS. Your commands and data never pass through third-party servers, ensuring true privacy and security.
+
 - 📱 全通路互動界面 支援跨平台即時操控，無論是國際主流的 WhatsApp、Telegram、Slack，還是企業級的 釘釘 (DingTalk)、飛書 (Lark)，皆能一鍵串接。
+>📱 Omni-channel Interactive Interface Supports real-time cross-platform control. Whether it’s international favorites like WhatsApp, Telegram, and Slack, or enterprise-grade tools like DingTalk and Lark, connection is just one click away.
 
 
 <p align="center">
 <img src="./OpenClaw-img/003.jpg" alt="PersonaPlex-001" width="600">
 </p>
 
-**🧠 頂尖模型與多模態支援**
+**🧠 頂尖模型與多模態支援 (Cutting-Edge Models & Multimodal Support)**
 - 最新整合：支援 Gemini 3 Pro 等尖端模型。
+> Latest Integration: Supports state-of-the-art models like Gemini 3 Pro.
+
 - 視覺能力：支援圖片識別與互動，AI 能讀懂螢幕截圖與照片 (需模型支援)。
+> Visual Intelligence: Supports image recognition and interaction. The AI can understand screenshots and photos (model dependent).
+
 - 安全加固：核心程式碼歷經多次安全迭代，防範注入攻擊與權限濫用。
+> Security Hardening: The core code has undergone multiple security iterations to prevent injection attacks and privilege abuse.
 
 **🏆 核心優勢 | Key Advantages**
 - 全天候待命：專為低功耗設備優化，24 小時不間斷運行，隨時響應。
+> Always-on Standby: Optimized for low-power devices to run 24/7 non-stop, ready to respond at any time.
+
 - 跨維度操控：手機就是你的遙控器。身在戶外，即可遠端驅動家中電腦進行 自動化編碼、文獻綜述與文件處理。
+> Cross-Dimensional Control: Your phone is your remote. Even when outdoors, you can remotely drive your home computer to perform automated coding, literature reviews, and file processing.
 
 OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要應用場景包含以下四點 (需懂相關設定操作)：
+> OpenClaw is more than just a chatbot; it is an Agent with executive power. Its primary use cases include the following four areas (requires configuration knowledge):
 
 <p align="center">
 <img src="./OpenClaw-img/012.jpg" alt="PersonaPlex-012" width="600">
 </p>
 
 * **遠端遙控：** 這是最核心的功能。您可以在戶外透過手機發送指令，指揮家中電腦執行 Python 腳本、重啟服務或管理檔案，將手機變成了電腦的超級遙控器。
-* **資訊彙整：** 利用 LLM 的長文本能力，可以自動抓取每日新聞或讀取本地的 PDF 論文，生成摘要後發送到您的 Line，實現自動化的資訊獲取。
-* **程式助手：** 它可以直接讀取本地的程式碼檔案，分析 Bug 並提供修復建議，甚至協助進行自動化編碼，是開發者的強力輔助。
-* **圖像辨識：** 支援多模態輸入，您可以截圖發送給它，讓 AI 分析螢幕內容或照片資訊，擴展了互動的維度。
+> Remote Control: The core feature. Send commands from your phone while away to instruct your home computer to execute Python scripts, restart services, or manage files—turning your phone into a super remote for your PC.
 
+* **資訊彙整：** 利用 LLM 的長文本能力，可以自動抓取每日新聞或讀取本地的 PDF 論文，生成摘要後發送到您的 Line，實現自動化的資訊獲取。
+> Information Aggregation: Leveraging LLM's long-context capabilities to automatically scrape daily news or read local PDF papers, generating summaries sent directly to your Line for automated information retrieval.
+
+* **程式助手：** 它可以直接讀取本地的程式碼檔案，分析 Bug 並提供修復建議，甚至協助進行自動化編碼，是開發者的強力輔助。
+> Coding Assistant: It can directly read local code files, analyze bugs, provide fix suggestions, and even assist with automated coding—a powerful aide for developers.
+
+* **圖像辨識：** 支援多模態輸入，您可以截圖發送給它，讓 AI 分析螢幕內容或照片資訊，擴展了互動的維度。
+> Image Recognition: Supports multimodal input. You can send screenshots or photos for the AI to analyze, expanding the dimensions of your interaction.
 ---
 
 ## Part 3：環境準備與安全防線
