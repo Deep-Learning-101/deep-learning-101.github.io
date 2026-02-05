@@ -246,6 +246,7 @@ OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要�
 > Environment Setup & Security Safeguards - Must Read
 
 整個專案支援 macOS、Linux 和 Windows (WSL2)，建議在 24/7 運行的機器（如 Mac Mini 或 VPS）上執行；個人試了 WSL 跟 Windows 的安裝，過程不難，但是部份設定和串接很可能就需要基礎計算機/資訊工程等概念和技巧。
+> The project supports macOS, Linux, and Windows (via WSL2). It is highly recommended to run it on a 24/7 machine, such as a Mac Mini or a VPS. While installing on WSL or Windows is straightforward, configuring the integrations typically requires a foundational understanding of Computer Science and IT concepts.
 
 ### 架構總覽 (Architecture)
 > Architecture Overview
@@ -262,9 +263,16 @@ OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要�
 
 在開始動手敲指令前，這張清單列出了四個不可或缺的準備工作，缺一不可：
 * **Docker 環境：** 這是最基礎的運行平台。因為它最為簡單且具備沙盒特性，能避免環境依賴衝突。
+> Docker Environment: This is the core platform. Using Docker is the simplest approach and provides a sandbox to avoid dependency conflicts.
+
 * **LLM API Keys：** 這是 AI 的「大腦」。OpenClaw 本身不具備推理能力，需要串接外部模型。要注意的是，雖然 OpenClaw 軟體免費，但串接 Google Gemini、OpenAI 或 Anthropic 等高性能模型是**需要付費**的。
+> LLM API Keys: This is the AI's "brain." OpenClaw lacks inherent reasoning capabilities and must be connected to external models. Note that while the OpenClaw software is free, using high-performance models like Google Gemini, OpenAI, or Anthropic requires payment.
+
 * **開發者帳號：** 這是 AI 的「身份」。若要透過 Line 操作，您必須先申請 Line Developers 帳號並創建一個 Channel，才能獲取必要的 Secret 與 Token。
+> Developer Account: This is the AI's "identity." To operate via Line, you must apply for a Line Developers account and create a Channel to obtain the necessary Secret and Token.
+
 * **內網穿透工具：** 這是 AI 的「耳朵」。為了讓本地機器能聽到外部 Line 伺服器傳來的訊息，必須安裝 Cloudflared 或 ngrok 來接收 Webhook。
+> Networking Tunneling Tools: These are the AI's "ears." To allow the local machine to receive Webhook messages from external Line servers, you must install Cloudflared or ngrok.
 
 ### 安全警告：四大安全防線 (Four Lines of Defense)
 > Four Lines of Defense
@@ -276,11 +284,20 @@ OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要�
 OpenClaw 擁有直接操作你電腦的權限（Run Actions），如果設定不當，它可能變成一個「幫駭客開門」的內鬼。必須建立四道防線：
 
 1.  **配對與白名單 (Allowlists)：** 只有你本人或指定的人可以跟機器人對話。
+> Pairing & Allowlists: Ensure only you or authorized users can interact with the bot.
+
 2.  **沙盒化與最小權限 (Sandbox + Least-privilege)：** 只給機器人「剛好夠用」的權限。不要用系統管理員（Root/Admin）身份執行。
+> Sandboxing & Least-Privilege: Grant the bot only the minimum necessary permissions. Never run it as a Root/Admin user.
+
 3.  **物理隔離敏感資料：** 不要把密碼檔、私鑰放在機器人「看得到」的資料夾內。
+> Physical Isolation of Sensitive Data: Do not store password files or private keys in folders accessible to the bot.
+
 4.  **選用最強模型：** LeCun 提過弱模型容易出錯。這裡建議用 GPT-4o 或 Claude 3.5 這種推理能力強的模型，因為它們對惡意指令的辨識力較好，較不容易被「繞過」安全限制。
+> Use High-End Models: As Yann LeCun suggested, weaker models are more prone to errors. I recommend using GPT-4o or Claude 3.5, as their superior reasoning makes them better at identifying malicious prompts and resisting "jailbreaks."
 
 **定期檢查指令** 文字最後提供了兩個維護指令，建議你養成習慣執行：
+> Maintenance Commands: It is good practice to run these periodically:
+
 - `openclaw security audit --deep`：深層掃描目前的權限與設定是否存在漏洞。
 - `openclaw security audit --fix`：自動修復已知的安全風險。
 
