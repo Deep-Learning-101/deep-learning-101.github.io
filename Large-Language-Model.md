@@ -42,6 +42,7 @@ schema_type: article
 
 ### **文章目錄**
 - [🏆 排行榜 (Leaderboards)](#leaderboards)
+- [🖥️ NVIDIA Nemotron](#nvidia-nemotron)
 - [🛠️ 微調技術與資源 (Fine-tuning)](#fine-tuning)
 - [🧩 AI Agent 開源框架](#ai-agent)
 - [🛠️ 開發工具 (Tools & Protocols)](#tools)
@@ -64,6 +65,31 @@ schema_type: article
 - [**Open LLM Leaderboard**](https://huggingface.co/spaces/HuggingFaceH4/open_llm_leaderboard)
 - [**Big Code Models Leaderboard**](https://huggingface.co/spaces/bigcode/bigcode-models-leaderboard)
 - [**Awesome-Chinese-LLM**](https://github.com/HqWu-HITCS/Awesome-Chinese-LLM)
+
+---
+
+## NVIDIA Nemotron
+- 2026-02-04 | **使用Nemotron 為RAG 建立文件處理流程**
+  - [NVIDIA技術部落格](https://developer.nvidia.cn/blog/how-to-build-a-document-processing-pipeline-for-rag-with-nemotron/)
+  - 實戰操作：如何用最新的 Nemotron 模型處理 PDF、表格和圖表，這是企業最常見的需求。
+- 2026-02-04 | **AI 智能體如何將文件轉化為即時商業智能**
+  - [NVIDIA技術部落格](https://blogs.nvidia.cn/blog/ai-agents-intelligent-document-processing/)
+  - 概念與案例：為什麼要用 AI 處理文檔 (IDP)，以及 Docusign、Justt 等公司是怎麼用的；理解應用場景，適合寫提案或規劃架構時參考。
+- 2026-01-05 | **如何使用 RAG 和安全護欄建立語音智能體**
+  - [NVIDIA技術部落格](https://developer.nvidia.cn/blog/how-to-build-a-voice-agent-with-rag-and-safety-guardrails/)
+  - 語音與安全：展示如何將 Nemotron 結合語音技術，並且加上 Guardrails 防止 AI 亂說話。
+- 2025-12-15 | **深入解析 NVIDIA Nemotron 3**
+  - [NVIDIA技術部落格](https://developer.nvidia.cn/blog/inside-nvidia-nemotron-3-techniques-tools-and-data-that-make-it-efficient-and-accurate/)
+  - 了解 Nemotron-3 (Mamba-Transformer 混合架構) 內部原理
+- 2025-12-15 | **使用Unsloth 微調大語言模型(LLM)**
+  - [NVIDIA技術部落格](https://blogs.nvidia.cn/blog/rtx-ai-garage-fine-tuning-unsloth-dgx-spark/)
+  - 低成本微調：如何在本地端 (如 RTX 4090) 使用 Unsloth 工具快速微調模型；如果沒有龐大的算力資源，這篇是首選。
+- 2025-10-28 | **利用NVIDIA Nemotron Vision、RAG 和Guardrail 新模型開發專用AI 智能體**
+  - [NVIDIA技術部落格](https://developer.nvidia.cn/blog/develop-specialized-ai-agents-with-new-nvidia-nemotron-vision-rag-and-guardrail-models/)
+  - 介紹 Nemotron-4 / Llama-Nemotron 時期的視覺與 Guardrail 能力；日期稍早於 Nemotron-3，但其中的 Guardrail (安全護欄) 和 Vision (視覺) 概念依然沿用至今，仍具參考價值。
+- 2025-07-22 | **用NVIDIA NeMo 在一個週末內訓練一個具備推理能力的LLM**
+  - [NVIDIA技術部落格](https://developer.nvidia.cn/blog/train-a-reasoning-capable-llm-in-one-weekend-with-nvidia-nemo/)
+  - 如何用 SFT (監督微調) 讓模型學會「思考鏈 (Chain of Thought)」；方法論極佳。雖然當時可能用的是 Llama 模型，但它教的「數據準備邏輯」和「訓練策略」完全可以套用到現在的 Nemotron-3 上。
 
 ---
 
@@ -97,9 +123,6 @@ schema_type: article
 - **EasyDistill**  
   - 說明：知識蒸餾不再難！阿里開源EasyDistill及DistilQwen模型家族，開源即用、效能強勁！
   - 資源：[🐙 GitHub](https://github.com/modelscope/easydistill) | [📄 AlphaXiv](https://www.alphaxiv.org/abs/2505.20888)  
-- **NVIDIA NeMo**
-  - 說明：模型剪枝和知識蒸餾
-  - 資源：[📝 NVIDIA Blog](https://developer.nvidia.com/zh-cn/blog/llm-model-pruning-and-knowledge-distillation-with-nvidia-nemo-framework/)
 
 ### 微調框架 (Frameworks)
 - **LLaMA Factory**
@@ -148,8 +171,8 @@ schema_type: article
 ### Agent 框架列表 (按時間排序)
 
 - 2026-01-20 | **OpenClaw(MoltBot/Clawdbot)**  
-  - 說明：一個跑在你自己電腦上的 AI 助手平台。 | [👉 點此看深度技術分析 ](https://deep-learning-101.github.io/LLM/OpenClaw-Moltbot-Clawdbot)
-  - 資源： [🌐 官網](https://openclaw.ai/) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [📝 官方文件](https://docs.openclaw.ai/) | [[📝 DeepWiki](https://deepwiki.com/openclaw/openclaw) | [[📝 Zread](https://zread.ai/openclaw/openclaw) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/yFi8lWLWp7NPDO-zD6QW_Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/1ikfiU_eGnL5FRaPRddA2Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/WDEYhOG2tGYau0VAOc_y7A) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1999109634909303005)
+  - 說明：一個跑在你自己電腦上的 AI 助手平台。 | [👉 點此看深度技術分析 ](https://deep-learning-101.github.io/LLM/OpenClaw-Moltbot-Clawdbot) |  [👉 點此看白話文分析 ](https://blog.twman.org/2026/02/OpenClaw.html)
+  - 資源： [🌐 官網](https://openclaw.ai/) | [🐙 GitHub](https://github.com/NVIDIA/personaplex) | [官方簡體中文文件](https://docs.openclaw.ai/zh-CN) | [官方文件](https://docs.openclaw.ai) | [📝 DeepWiki](https://deepwiki.com/openclaw/openclaw) | [[📝 Zread](https://zread.ai/openclaw/openclaw) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/yFi8lWLWp7NPDO-zD6QW_Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/1ikfiU_eGnL5FRaPRddA2Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/WDEYhOG2tGYau0VAOc_y7A) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1999109634909303005)
 
 - 2025-11-15｜**Agno**
   - 說明：高效能 Multi-agent 系統框架
