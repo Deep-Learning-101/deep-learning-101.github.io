@@ -2,7 +2,7 @@
 layout: default
 title: "《Agentic AI 崛起：企業轉型的機會與挑戰》"
 description: "探討 2026 年春節期間 AI 從「對話生成」跨入「代理式執行」的歷史轉折，深入分析 Gemini 3.1、WebMCP 與 Deep Think 的應用場景與治理風險。"
-permalink: /Agent/Agentic-AI-Gemini-3-1_WebMCP
+permalink: /Agent/Gemini-3-1_WebMCP_Deep-Think
 lang: zh-Hant
 keywords: ["Gemini 3.1", "WebMCP", "Deep Think", "Agentic AI", "代理式執行", "AI 治理", "金管會 AI 指引"]
 ---
