@@ -52,7 +52,7 @@ keywords: ["Gemini 3.1", "WebMCP", "Deep Think", "Agentic AI", "代理式執行"
 
   - 2026 年春節期間，AI 迎來了從「對話生成」跨入「代理式執行」的歷史性轉折。分析 Gemini 3.1、WebMCP 協議與 Deep Think 機制如何重塑企業工作流。
   - Analyzing how Gemini 3.1, WebMCP, and Deep Think reshape enterprise workflows as AI transitions from conversational to agentic execution in early 2026.
-  - [👉 點此看深度技術分析 ](https://deep-learning-101.github.io/Agent/Agentic-AI-Gemini-3.1-WebMCP)
+  - [👉 點此看深度技術分析 ](https://deep-learning-101.github.io/Agent/Gemini-3-1_WebMCP_Deep-Think)
   - [👉 點此看白話文分析 ](https://blog.twman.org/2026/02/Agentic-AI-Gemini-3.1-WebMCP.html)
   - [🌐 Gemini 3.1 Pro (預先發布版)](https://ai.google.dev/gemini-api/docs/models/gemini-3.1-pro-preview?hl=zh-tw)
   - [🌐 WebMCP 搶先體驗版現已推出](https://developer.chrome.com/blog/webmcp-epp?hl=zh-tw) |
