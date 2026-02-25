@@ -612,6 +612,10 @@ schema_type: article
   - 說明：刷新開源多模態大模型效能新紀錄
   - 資源：[🐙 GitHub](https://github.com/OpenGVLab/InternVL) | [📄 AlphaXiv](https://www.alphaxiv.org/zh/overview/2504.10479) | [📚 DeepWiki](https://deepwiki.com/OpenGVLab/InternVL) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1897681159359551408)
 
+- 2025-12-20 | **T5Gemma 2**
+  - 說明：首個140語言+多模態+超長上下文，Google開源重磅模型
+  - 資源：[🤗 HuggingFace](https://huggingface.co/collections/google/t5gemma-2) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/dmg4wf4KGt_zByuaOe6qEA)
+
 - 2025-05-24｜**Dolphin**
   - 說明：開源多模態複雜文件解析模型
   - 資源：[📄 AlphaXiv](https://www.alphaxiv.org/zh/overview/2505.14059) | [📚 DeepWiki](https://deepwiki.com/bytedance/Dolphin) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1911355829485045020)
