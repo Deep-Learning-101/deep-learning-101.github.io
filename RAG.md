@@ -317,6 +317,6 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
     "@type": "Person",
     "name": "TonTon Huang Ph.D.",
     "url": "https://twman.org/"
-  },
+  }
 }
 </script>
