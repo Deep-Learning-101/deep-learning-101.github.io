@@ -453,7 +453,7 @@ schema_type: article
   - [DEMO](https://notex.rpcx.io/)
 - 2025-12-06 | **Open NoteBook**
 - 說明：一個開源的、注重隱私的Google Notebook LM 替代方案
-  - 資源：[🐙 GitHub](https://github.com/smallnest/notex) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1980701578559234518) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/Kncslf0XL1ucdPpQX_-a1g)
+  - 資源：[🐙 GitHub](https://github.com/lfnovo/open-notebook) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1980701578559234518) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/Kncslf0XL1ucdPpQX_-a1g)
 - 2025-12-06 | **Auto-Slides**
 - 說明：不只是幫你寫，還能幫你講。它讓論文第一次有機會“開口說話”
   - 資源：[🐙 GitHub](https://github.com/Westlake-AGI-Lab/Auto-Slides) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1953393379334391701)
@@ -544,6 +544,10 @@ schema_type: article
 
 ## Embedding
 **🔎 Embedding & Reranker**
+
+- 2026-02-28 | **pplx-embed-v1 and pplx-embed-context-v1**
+  - 說明：一系列尖端的文本嵌入模型，針對真實世界的 Web 規模檢索任務進行了優化，例如語義搜索和 RAG 系統
+  - 資源：[📝 Perplexity Research](https://research.perplexity.ai/articles/pplx-embed-state-of-the-art-embedding-models-for-web-scale-retrieval) | [🤗 HuggingFace](https://huggingface.co/collections/perplexity-ai/pplx-embed)
 
 - 2025-07-14｜**Gemini Embedding 001**
   - 資源：[☁️ Google Cloud](https://cloud.google.com/vertex-ai/generative-ai/docs/embeddings/get-text-embeddings?hl=zh-tw)
