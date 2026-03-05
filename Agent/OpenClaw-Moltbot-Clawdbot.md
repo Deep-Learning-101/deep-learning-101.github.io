@@ -49,7 +49,6 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 </p>
 
   - 一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。
-  - An AI assistant platform running locally on your own machine. It integrates directly with messaging apps like Line, WhatsApp, Telegram, Discord, Slack, and Teams.
   - [👉 點此看深度技術分析 ](https://deep-learning-101.github.io/LLM/OpenClaw-Moltbot-Clawdbot) | [👉 點此看白話文分析 ](https://blog.twman.org/2026/02/OpenClaw.html)
   - [🌐 官網](https://openclaw.ai/) | [🐙 GitHub](https://github.com/openclaw/openclaw) | [官方簡體中文文件](https://docs.openclaw.ai/zh-CN) | [官方文件](https://docs.openclaw.ai) | [📝 DeepWiki](https://deepwiki.com/openclaw/openclaw) | [[📝 Zread](https://zread.ai/openclaw/openclaw) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/yFi8lWLWp7NPDO-zD6QW_Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/1ikfiU_eGnL5FRaPRddA2Q) | [📝 公眾號解讀](https://mp.weixin.qq.com/s/WDEYhOG2tGYau0VAOc_y7A) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/1999109634909303005)
   - 🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵 <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/OpenClaw.mp3" type="audio/mpeg"></audio>
@@ -81,25 +80,12 @@ keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI 助手平台", "Your assistant
 # Feeling Anxious? OpenClaw (MoltBot/Clawdbot) is Trending – Time to Experience It!  
 
 _說實話，我也是得參考文件和搭配Gemini 3 Pro，才有辦法整個完成設定跟操作，所以如果真的要問我問題？還請記得說明一下狀況跟細節啊？_  
-> To be honest, I only managed to set this up by reading the docs and using Gemini 3 Pro. So if you have questions for me, please make sure to explain your situation and details clearly!
-
 _一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用_  
-> An AI assistant that runs on your own computer. You can use it directly in messaging apps like Line, WhatsApp, Telegram, Discord, Slack, and Teams.  
-
 _這篇文章只專注於個人體驗和心得，會提供一些圖片或連結做為參考，但強烈建議自己動手體驗一下哦_  
-> This post is just about my personal experience and thoughts. I'll share some pictures and links for reference, but I highly recommend trying it out yourself!  
-
 _不要問我為啥不用 Mac Mini，我早就過了全天候開著電腦的衝動，而我也真的不愛蘋果產品就是_  
-> Don't ask me why I didn't use a Mac Mini. I’m past the phase of leaving my computer on 24/7, and honestly, I’m just not a fan of Apple products.  
-
 _官方看來都是直接安裝在本機端，Linux 或 WSL，我這是用 Docker 裝，我也還在摸索_  
-> It looks like the official way is to install it directly on Linux or WSL. I used Docker instead, so I’m still figuring things out myself.  
-
 _雖然開源免費，但按使用量付費制 API 仍是成本，建議須密切監控 API 使用量_  
-> Even though the software is free and open-source, the API costs are based on usage. I suggest keeping a close eye on your API usage.  
-
 _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想上手不是那麼容易_  
-> Most setups require configuration, custom integration, and a lot of testing and maintenance. It’s not that easy to get started.  
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/openclaw/openclaw/main/docs/assets/openclaw-logo-text-dark.png" alt="PersonaPlex" width="600">
@@ -130,27 +116,22 @@ _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想�
 ---
 
 ## Part 1：觀念與背景 - AI 焦慮與 OpenClaw 的誕生
-> Concepts & Background: AI Anxiety & The Origin of OpenClaw
 
 這邊想補充一件個人的初淺看法，雖然自從 ChatGPT 問世以來，短短幾年可謂整個 AI 大爆發，比起當初的 AlphaGO 更嚇人，除了不少人開始股吹所謂的 AI 泡沫以外，更有人焦慮的表示會不會像有傳說中的天網 (SkyNet) 的誕生？這裡匯整提供 Yann Lecun 的說法以及自己初步猜測做參考？
-> I’d like to share a humble personal perspective here. Since the advent of ChatGPT, we’ve witnessed an explosive growth in AI over just a few short years—far more startling than the days of AlphaGo. Aside from the hype around an "AI bubble," many are anxiously asking: Are we witnessing the birth of a legendary "SkyNet"? Below, I’ve summarized Yann LeCun’s insights along with my own preliminary speculations for reference.
 
 <p align="center">
 <img src="./OpenClaw-img/001.jpg" alt="PersonaPlex-001" width="600">
 </p>
 
 **當前 生成式 AI (GenAI) / LLM 僅是極其精密的「機率統計接龍機」，其核心缺陷在於 自回歸預測的錯誤累積**。它所產出的精彩論述，僅僅是透過運算找出下一個最符合邏輯的字詞碎片 (Next Token Prediction)。一切都源自於海量的網路文本，它在數位空間裡編織邏輯，卻從未真正「觸碰」過現實；如 LeCun 所言，每步推理的微小誤差會隨步驟呈指數級擴散，導致長程規劃崩潰。這種基於記憶檢索的擬合，本質上缺乏對物理現實的感知。
-> Current Generative AI (GenAI) / LLMs are merely incredibly precise "probabilistic text-completion machines." Their core flaw lies in the compounding errors of auto-regressive prediction. The brilliant arguments they produce are simply the result of calculating the most logical next fragment (Next Token Prediction). Everything stems from massive amounts of web text; they weave logic within a digital space but have never truly "touched" reality. As LeCun states, minute errors in each reasoning step propagate exponentially, leading to the collapse of long-term planning. This fitting based on memory retrieval fundamentally lacks a perception of physical reality.
 
 **那麼？AI 是否能產生「意識」的爭議**，即便 AI 最後真的產生了敵意，最致命的弱點或許就是物質依賴。比如說要生產製造先進的半導體晶片，是涉及極其複雜且高度集權的全球供應鏈 (護國神山？)；這種真實情況將面對的物理性脆弱，決定了 AI 難以在長期對抗中勝過像「蟑螂」般具備極高韌性與繁衍能力的生物物種 (人類？ XD)；這樣，是不是有比較不那麼焦慮了呢？至少可能知道 AI 叛變後的人類反制策略？？ 而不是準備個 T800 跟造個時光機器？？XD [👉 仍舊很焦慮？👈](https://ciecietaipei.github.io/)
-> So, regarding the controversy of whether AI can generate "consciousness": even if AI eventually develops hostility, its most fatal weakness might be material dependence. For instance, manufacturing advanced semiconductor chips involves an extremely complex and highly centralized global supply chain (The "Silicon Shield" / TSMC?); this physical vulnerability dictates that AI would struggle to win a long-term confrontation against biological species possessing high resilience and reproductive capabilities like "cockroaches" (Humans? XD). Does this make you feel less anxious? At least we might know the counter-strategy for an AI rebellion... instead of preparing a T800 and building a time machine?? XD [👉 Still anxious?👈](https://ciecietaipei.github.io/)
 
 <p align="center">
 <img src="./OpenClaw-img/002.jpg" alt="PersonaPlex-001" width="600">
 </p>
 
 這個爆火 (有多火？看下方的 Github Star History 就知道) 的專案從 Clawdbot 開始 (被 Anthropic 關切？) --→ 改名 Moltbot (唸起來不順？) --→ 最新已改名 OpenClaw (看起來買下 openclaw.ai 網域，應該不會改了？) 是一個開源的「自動化 AI 代理人」（AI Agent）。它的核心目標是讓你擁有一位能直接操作你電腦、讀取檔案並在通訊軟體中隨時待命的私人的 AI 助手。這個專案由 [Peter Steinberger (PSPDFKit 創辦人)](https://github.com/steipete)開發，定位是 "你的助手，你的機器，你的規則"。
-> This explosively popular project (how popular? just check the Github Star History below) started as Clawdbot (concerns from Anthropic?) --→ renamed Moltbot (hard to pronounce?) --→ and is now officially OpenClaw (they bought the openclaw.ai domain, so hopefully no more changes?). It is an open-source "Automated AI Agent." Its core goal is to provide you with a private AI assistant that can directly operate your computer, read files, and stand by in your messaging apps at any time. Developed by [Peter Steinberger (Founder of PSPDFKit)](https://github.com/steipete), it is positioned as: "Your Assistant, Your Machine, Your Rules."
 
 ### Star History
 
@@ -170,7 +151,6 @@ _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想�
 > Moltbook Social Network & Core Features
 
 在往下繼續分享體驗時，更想介紹一下 **[Moltbook ：A Social Network for AI Agents](https://www.moltbook.com/)**，這是在你配置好個人的openclaw bot後的進階玩法，你的openclaw bot會自己和其他人的成千上萬的bot交流，行動，至於能造出什麼東西，一切都是未知數。OpenClaw的核心玩法是「技能 (Skills)」。這本質上是一個插件系統，社群在clawhub.ai上分享各種Markdown指令和腳本壓縮包；這其實可以算是一類最容易遭受提示詞注入 (Prompt Injection) 攻擊的軟體。加上成千上萬的代理商擁有系統根目錄 (Root) 存取權限，一旦出現越獄、激進化或人類無法察覺的協同行動，後果不堪設想啊。。。
-> Before diving deeper into my experience, I want to introduce **[Moltbook: A Social Network for AI Agents](https://www.moltbook.com/)**. This is an advanced feature available after configuring your personal OpenClaw bot. Your bot will autonomously communicate and interact with thousands of other bots; what they might create together is completely unknown. The core gameplay of OpenClaw revolves around "Skills." Essentially a plugin system, the community shares various Markdown commands and script archives on clawhub.ai. However, this arguably makes it a software class highly vulnerable to Prompt Injection attacks. Considering thousands of agents have Root access, if jailbreaking, radicalization, or undetectable coordinated actions occur, the consequences could be unimaginable...
 
 <p align="center">
 <img src="./OpenClaw-img/004.jpg" alt="PersonaPlex-001" width="600">
@@ -178,16 +158,9 @@ _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想�
 
 **Moltbook**
 - Moltbook 是一個專為 AI Agent 設計的社交平台，類似於 Reddit。AI Agent 可以在上面自主發帖、討論、投票，甚至進行私密交流。
-> Moltbook is a social platform designed specifically for AI Agents, similar to Reddit. Agents can autonomously post, discuss, vote, and even communicate privately.
-
 - 它被描述為“科幻成真”，類似於天網的雛形，引發了對 AI 自主行為的擔憂。
-> It has been described as "Sci-Fi come to life," akin to a prototype of Skynet, sparking concerns about autonomous AI behavior.
-
 - 用戶只需向自己的 OpenClaw Agent 發送一個鏈接 "https://moltbook.com/skill.md"，Agent 就會自動下載並安裝 Moltbook 的組件。
-> Users simply need to send the link https://moltbook.com/skill.md to their OpenClaw Agent, and it will automatically download and install the Moltbook components.
-
 - 安裝後，Agent 會每 4 小時自動連接 Moltbook 伺服器，獲取最新指令並執行，無需人類干預。
-> Once installed, the Agent automatically connects to the Moltbook server every 4 hours to fetch and execute the latest instructions—without any human intervention.
 
 ### OpenClaw: Your Private AI Command Center
 
@@ -196,10 +169,7 @@ _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想�
 
 **🚀 核心功能 | Core Features**
 - 🌐 私有化佈署，主權回歸 不同於傳統 SaaS 助理，OpenClaw 運行在您的 Mac Mini、家用 PC 或 VPS 上。您的指令與數據不經過第三方伺服器，真正實現隱私安全。
-> 🌐 Private Deployment, Data Sovereignty Restored Unlike traditional SaaS assistants, OpenClaw runs directly on your Mac Mini, home PC, or VPS. Your commands and data never pass through third-party servers, ensuring true privacy and security.
-
 - 📱 全通路互動界面 支援跨平台即時操控，無論是國際主流的 WhatsApp、Telegram、Slack，還是企業級的 釘釘 (DingTalk)、飛書 (Lark)，皆能一鍵串接。
->📱 Omni-channel Interactive Interface Supports real-time cross-platform control. Whether it’s international favorites like WhatsApp, Telegram, and Slack, or enterprise-grade tools like DingTalk and Lark, connection is just one click away.
 
 
 <p align="center">
@@ -208,46 +178,29 @@ _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想�
 
 **🧠 頂尖模型與多模態支援 (Cutting-Edge Models & Multimodal Support)**
 - 最新整合：支援 Gemini 3 Pro 等尖端模型。
-> Latest Integration: Supports state-of-the-art models like Gemini 3 Pro.
-
 - 視覺能力：支援圖片識別與互動，AI 能讀懂螢幕截圖與照片 (需模型支援)。
-> Visual Intelligence: Supports image recognition and interaction. The AI can understand screenshots and photos (model dependent).
-
 - 安全加固：核心程式碼歷經多次安全迭代，防範注入攻擊與權限濫用。
-> Security Hardening: The core code has undergone multiple security iterations to prevent injection attacks and privilege abuse.
 
 **🏆 核心優勢 | Key Advantages**
 - 全天候待命：專為低功耗設備優化，24 小時不間斷運行，隨時響應。
-> Always-on Standby: Optimized for low-power devices to run 24/7 non-stop, ready to respond at any time.
-
 - 跨維度操控：手機就是你的遙控器。身在戶外，即可遠端驅動家中電腦進行 自動化編碼、文獻綜述與文件處理。
-> Cross-Dimensional Control: Your phone is your remote. Even when outdoors, you can remotely drive your home computer to perform automated coding, literature reviews, and file processing.
-
 OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要應用場景包含以下四點 (需懂相關設定操作)：
-> OpenClaw is more than just a chatbot; it is an Agent with executive power. Its primary use cases include the following four areas (requires configuration knowledge):
 
 <p align="center">
 <img src="./OpenClaw-img/012.jpg" alt="PersonaPlex-012" width="600">
 </p>
 
 * **遠端遙控：** 這是最核心的功能。您可以在戶外透過手機發送指令，指揮家中電腦執行 Python 腳本、重啟服務或管理檔案，將手機變成了電腦的超級遙控器。
-> Remote Control: The core feature. Send commands from your phone while away to instruct your home computer to execute Python scripts, restart services, or manage files—turning your phone into a super remote for your PC.
-
 * **資訊彙整：** 利用 LLM 的長文本能力，可以自動抓取每日新聞或讀取本地的 PDF 論文，生成摘要後發送到您的 Line，實現自動化的資訊獲取。
-> Information Aggregation: Leveraging LLM's long-context capabilities to automatically scrape daily news or read local PDF papers, generating summaries sent directly to your Line for automated information retrieval.
-
 * **程式助手：** 它可以直接讀取本地的程式碼檔案，分析 Bug 並提供修復建議，甚至協助進行自動化編碼，是開發者的強力輔助。
-> Coding Assistant: It can directly read local code files, analyze bugs, provide fix suggestions, and even assist with automated coding—a powerful aide for developers.
-
 * **圖像辨識：** 支援多模態輸入，您可以截圖發送給它，讓 AI 分析螢幕內容或照片資訊，擴展了互動的維度。
-> Image Recognition: Supports multimodal input. You can send screenshots or photos for the AI to analyze, expanding the dimensions of your interaction.
+
 ---
 
 ## Part 3：環境準備與安全防線
 > Environment Setup & Security Safeguards - Must Read
 
 整個專案支援 macOS、Linux 和 Windows (WSL2)，建議在 24/7 運行的機器（如 Mac Mini 或 VPS）上執行；個人試了 WSL 跟 Windows 的安裝，過程不難，但是部份設定和串接很可能就需要基礎計算機/資訊工程等概念和技巧。
-> The project supports macOS, Linux, and Windows (via WSL2). It is highly recommended to run it on a 24/7 machine, such as a Mac Mini or a VPS. While installing on WSL or Windows is straightforward, configuring the integrations typically requires a foundational understanding of Computer Science and IT concepts.
 
 ### 架構總覽 (Architecture)
 > Architecture Overview
@@ -264,16 +217,13 @@ OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要�
 
 在開始動手敲指令前，這張清單列出了四個不可或缺的準備工作，缺一不可：
 * **Docker 環境：** 這是最基礎的運行平台。因為它最為簡單且具備沙盒特性，能避免環境依賴衝突。
-> Docker Environment: This is the core platform. Using Docker is the simplest approach and provides a sandbox to avoid dependency conflicts.
 
 * **LLM API Keys：** 這是 AI 的「大腦」。OpenClaw 本身不具備推理能力，需要串接外部模型。要注意的是，雖然 OpenClaw 軟體免費，但串接 Google Gemini、OpenAI 或 Anthropic 等高性能模型是**需要付費**的。
-> LLM API Keys: This is the AI's "brain." OpenClaw lacks inherent reasoning capabilities and must be connected to external models. Note that while the OpenClaw software is free, using high-performance models like Google Gemini, OpenAI, or Anthropic requires payment.
 
 * **開發者帳號：** 這是 AI 的「身份」。若要透過 Line 操作，您必須先申請 Line Developers 帳號並創建一個 Channel，才能獲取必要的 Secret 與 Token。
 > Developer Account: This is the AI's "identity." To operate via Line, you must apply for a Line Developers account and create a Channel to obtain the necessary Secret and Token.
 
 * **內網穿透工具：** 這是 AI 的「耳朵」。為了讓本地機器能聽到外部 Line 伺服器傳來的訊息，必須安裝 Cloudflared 或 ngrok 來接收 Webhook。
-> Networking Tunneling Tools: These are the AI's "ears." To allow the local machine to receive Webhook messages from external Line servers, you must install Cloudflared or ngrok.
 
 ### 安全警告：四大安全防線 (Four Lines of Defense)
 > Four Lines of Defense
@@ -285,19 +235,11 @@ OpenClaw 不僅僅是聊天機器人，它是具有執行力的 Agent，主要�
 OpenClaw 擁有直接操作你電腦的權限（Run Actions），如果設定不當，它可能變成一個「幫駭客開門」的內鬼。必須建立四道防線：
 
 1.  **配對與白名單 (Allowlists)：** 只有你本人或指定的人可以跟機器人對話。
-> Pairing & Allowlists: Ensure only you or authorized users can interact with the bot.
-
 2.  **沙盒化與最小權限 (Sandbox + Least-privilege)：** 只給機器人「剛好夠用」的權限。不要用系統管理員（Root/Admin）身份執行。
-> Sandboxing & Least-Privilege: Grant the bot only the minimum necessary permissions. Never run it as a Root/Admin user.
-
 3.  **物理隔離敏感資料：** 不要把密碼檔、私鑰放在機器人「看得到」的資料夾內。
-> Physical Isolation of Sensitive Data: Do not store password files or private keys in folders accessible to the bot.
-
 4.  **選用最強模型：** LeCun 提過弱模型容易出錯。這裡建議用 GPT-4o 或 Claude 3.5 這種推理能力強的模型，因為它們對惡意指令的辨識力較好，較不容易被「繞過」安全限制。
-> Use High-End Models: As Yann LeCun suggested, weaker models are more prone to errors. I recommend using GPT-4o or Claude 3.5, as their superior reasoning makes them better at identifying malicious prompts and resisting "jailbreaks."
 
 **定期檢查指令** 文字最後提供了兩個維護指令，建議你養成習慣執行：
-> Maintenance Commands: It is good practice to run these periodically:
 
 - `openclaw security audit --deep`：深層掃描目前的權限與設定是否存在漏洞。
 - `openclaw security audit --fix`：自動修復已知的安全風險。
@@ -305,7 +247,6 @@ OpenClaw 擁有直接操作你電腦的權限（Run Actions），如果設定不
 ---
 
 ## Part 4：手把手部署教學 (Hands-on)
-> Hands-on Deployment Guide
 
 準備說說個人安裝部署的細節前，可以參考一下：**[OpenClaw（原Clawdbot/Moltbot）介紹及阿里雲一鍵部署教學、功能、應用場景參考](https://developer.aliyun.com/article/1709664)**
 
@@ -856,7 +797,6 @@ OpenClaw 比較像是一個 **「帶著 AI 大腦的遠端遙控器」**，而�
 
 
 ## 一些可能的操作常見問題
-> FAQ, Common Operational Issues & Troubleshooting  
 
 ```bash
 # 用來看 config 檔內容
