@@ -56,23 +56,6 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
 
 ---
 
-
-| 🔥 技術傳送門 (Tech Stack) | 📚 必讀心法 (Must Read) |
-| :--- | :--- |
-| 🤖 [**大語言模型 (LLM)**](https://deep-learning-101.github.io/Large-Language-Model) | 🏹 [**策略篇：企業入門策略**](https://deep-learning-101.github.io/Blog/AIBeginner) |
-| 📝 [**自然語言處理 (NLP)**](https://deep-learning-101.github.io/Natural-Language-Processing) | 📊 [**評測篇：臺灣 LLM 分析**](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark) |
-| 👁️ [**電腦視覺 (CV)**](https://deep-learning-101.github.io//Computer-Vision) | 🛠️ [**實戰篇：打造高精準 RAG**](https://deep-learning-101.github.io/RAG) |
-| 🎤 [**語音處理 (Speech)**](https://deep-learning-101.github.io/Speech-Processing) | 🕳️ [**避坑篇：AI Agent 開發陷阱**](https://deep-learning-101.github.io/agent) |
-
-**相關文章參考**：
-* <b><a href="https://blog.twman.org/2024/09/LLM.html" target="_blank">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
-* <b><a href="https://blog.twman.org/2024/07/RAG.html" target="_blank">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
-* <b><a href="https://blog.twman.org/2024/02/LLM.html" target="_blank">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
-* <b><a href="https://blog.twman.org/2023/04/GPT.html" target="_blank">解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，硬體資源在開發中的作用。</a>
-* <b><a href="https://www.facebook.com/cnanewstaiwan/posts/pfbid02CCrFhyvCcoTmjJaX4aHaSMHmCgnPd1SG21Gbpb4Wo9bgs7QmQArTmhbVPZSLyjrdl" target="_blank">中央社繁體中文預訓練資料集案</a></b>
-
----
-
 <p align="center">
   🎵 不聽可惜的 NotebookLM <audio controls style="width:200px; height:20px;"><source src="../notebooklm-mp3/Agents-vs-Agentic_AI-Search_OWASP-Agentic.mp3" type="audio/mpeg"></audio> Podcast @ Google 🎵
 </p>
@@ -109,24 +92,6 @@ AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許�
 本文將探討多種AI Agents 與 Agentic AI 工具 (含 MCP) 的應用、經驗與挑戰，分享避坑指南與推薦，並結合台灣產業的宏觀趨勢與挑戰，提出解決方向，希望更高效、正確地建構 AI Agents 與 Agentic AI 系統的落地；是一份兼具技術深度與戰略廣度的全方位產業報告，提供了「How」（如何構建和避坑），以及「What」（市場現況）、「Where」（應用場景）和「Why」（戰略重要性）的文件。
 
 ---
-
-<p align="center">
-  <img src="./img/AI Agents+Agentic AI.jpg?raw=true" alt="Deep Learning 101" width="800">
-</p>
-
-關於 **AI 代理 (AI Agents，以下簡稱「AI Agents」)** 與 **代理式人工智慧 (Agentic AI，以下簡稱「Agentic AI」)**，全球趨勢呈現了概念從基礎到進階的自然演進與普及過程；而台灣的趨勢則更多地受到語言習慣、特定事件和小眾專業社群對前沿英文術語直接採用的影響，導致與全球趨勢有顯著差異。
-
-**全球趨勢推斷原因：**
-
-1. 「AI Agents」作為基礎且廣泛的術語，較早獲得全球市場的持續關注與穩定成長。
-2.  隨著技術發展與討論深化，「Agentic AI」這一更特定、進階的概念隨後興起，反映了專業度的提升。
-3.  兩者熱度最終趨於一致，顯示市場對 AI Agents 的理解從普遍認知逐漸演進至更精確的專業細分。
-
-**台灣趨勢推斷原因：**
-
-1.  台灣市場因使用者普遍傾向以中文搜尋，導致「AI Agents」此英文術語的整體關注度相對較低。
-2.  「Agentic AI」的熱度則呈現由特定事件或專業社群驅動的尖峰，這些群體可能直接採用此外來的前沿術語進行討論。
-3.  此現象反映了資訊傳播的集中性，以及對特定新興技術點的跳躍式關注，而非如全球般呈現漸進式的術語普及。
 
 ### 台灣AI產業發展現況與企業成熟度分析
 
@@ -284,33 +249,6 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
   - [萬字長文，帶你綜觀大模型Agent，涉及研究痛點、應用場景、發展方向](https://zhuanlan.zhihu.com/p/29833831482)
   - [什麼是「Agentic 工作流程」？](https://zhuanlan.zhihu.com/p/32709535995)
   - [什麼是Agentic AI？什麼是Agentic Workflow？與AI Agent有什麼區別和關聯？](https://zhuanlan.zhihu.com/p/705935464)
-
-#### 其它專案項目
-
-  - [FinRobot](https://www.alphaxiv.org/zh/overview/2405.14767)；[DeepWiki](https://deepwiki.com/AI4Finance-Foundation/FinRobot)；[案例](https://deep-learning-101.github.io/FinRobot/FinRobot-GOOGL)；可支援 Gemini-2.5-Pro-preview-05-06，基於 AutoGen    
-  - [Jupyter-AI](https://deepwiki.com/jupyterlab/jupyter-ai)；可支援 Gemini-2.5-Pro-preview-05-06
-- 2025-06-03：[**Gemini Fullstack LangGraph**](https://deepwiki.com/google-gemini/gemini-fullstack-langgraph-quickstart)；[DEMO](https://deep-learning-101.github.io/gemini-fullstack-langgraph/FinGenAI)；[以為Google只是簡單放個Demo，哪想到是」開源版”Perplexity！](https://www.53ai.com/news/OpenSourceLLM/2025060431620.html)
-- 2025-06-03：[Perplexica](https://github.com/ItzCrazyKns/Perplexica)；[Perplexity AI，開源替代品](https://www.53ai.com/news/qianyanjishu/2394.html)
-- 2025-06-01：[**Agent Zero**](https://github.com/frdel/agent-zero)；[官網](https://agent-zero.ai/)；[這個自動AI代理可以做任何事！ （產生APP、程式碼、RAG 等）](https://cloud.tencent.com/developer/article/2472836)
-- 2025-05-30：[WebDancer @ Alibaba](https://www.alphaxiv.org/zh/overview/2505.22648)；[DeepWiki](https://deepwiki.com/Alibaba-NLP/WebAgent)
-- 2025-05-28：[**Lemon AI**](https://github.com/hexdocom/lemonai)；[全球首款全端開源通用AI Agent，讓人可以單機部署超級智慧體](https://www.53ai.com/news/OpenSourceLLM/2025052883904.html)
-- 2025-05-25：[OpenHands](https://github.com/All-Hands-AI/OpenHands)；[Demo](https://app.all-hands.dev/)
-- 2025-05-22：[Magentic-UI](https://deepwiki.com/microsoft/magentic-ui)。。。暫不支援使用 Gemini
-- 2025-05-20：[NLWeb](https://deepwiki.com/microsoft/NLWeb)。。。暫不支援使用 Gemini
-- 2025-05-18：[Agent-Squad](https://deepwiki.com/awslabs/agent-squad)；[輕量級開源AI多智能體框架！智慧路由+上下文管理，前後端介面支援！](https://mp.weixin.qq.com/s/5Y23EhpHb2_pBOY8XrkMNw)
-- 2025-05-13：[LocalSite-ai](https://deepwiki.com/weise25/LocalSite-ai)
-- 2025-05-10：[FlowGram](https://github.com/bytedance/flowgram.ai)：[字節跳動把Coze核心開源了！視覺化工作流程引擎FlowGram上線](https://mp.weixin.qq.com/s/EOtp8j67G5xd6H0qVfOhcw)；[如何使用](https://deepwiki.com/search/-dify-n8n_a61d08fd-2089-4cf3-9253-3275a54b54fa)
-- 2025-05-10：[**DeerFlow**](https://github.com/bytedance/deer-flow/blob/main/README_zh.md)：[字節跳動DeerFlow深度解析](https://www.53ai.com/news/LargeLanguageModel/2025061552389.html)；[如何使用](https://deepwiki.com/search/_78a54d18-9132-44eb-920a-98618b505c9f)
-- 2025-05-09：[**OpenDeepWiki**](https://github.com/AIDotNet/OpenDeepWiki)：[開源的DeekWiki加入MCP，輕鬆讓AI掌握開源專案使用文件！](https://mp.weixin.qq.com/s/Ux1-cpXdOSnjBrxCslHjtw)；[如何使用](https://deepwiki.com/search/_f9b90674-c6d9-4999-8a72-49cf28a30dca)
-- 2025-05-07：[AI Manus](https://deepwiki.com/Simpleyyt/ai-manus)
-- 2025-04-27：[Rowboat](https://deepwiki.com/rowboatlabs/rowboat)
-- 2025-04-08：[CortexON](https://github.com/TheAgenticAI/CortexON)：[CortexON：開源通用AI Agent，另一個取代Manus產品](https://mp.weixin.qq.com/s/G4gzlzpwlnfGD4AdbYBwjQ) **(只支援 Anthropic ?)**
-- 2025-04-08：[oliva](https://github.com/Deluxer/oliva)：[Oliva：一個多智能體，開源語音RAG 助手](https://mp.weixin.qq.com/s/hzhsPz8pdwngysg2YxDs-w)
-- 2025-04-03：[AutoAgent](https://github.com/HKUDS/AutoAgent)：[一句話全自動創建AI智能體，港大AutoAgent打造開源最強Deep Research](https://mp.weixin.qq.com/s/oATCuzI4BJ6JcwJkazinCA)
-- 2025-04-03：[Agent Development Kit (ADK)](https://github.com/google/adk-python)：[谷歌發表「智能體開發工具包」ADK，來嚐個鮮](https://www.53ai.com/news/OpenSourceLLM/2025041012369.html)
-- 2025-04-03：[**Deepsite**](https://huggingface.co/spaces/enzostvs/deepsite)；[DeepSite基於DeepSeek的網頁開發智能體，效果非常不錯](https://zhuanlan.zhihu.com/p/1890332067411243826)
-- 2025-03-30：[DeepGemini](https://github.com/sligter/DeepGemini)：[AI界的'搭積木'神器，10分鐘打造你的專屬智慧團隊！](https://mp.weixin.qq.com/s/F2U7rWOMvfTyiRai-kfL_A)
-- 2025-03-24：[**AgenticSeek**](https://github.com/Fosowl/agenticSeek)：[又一個“Manus”開源，完全本地化替代品AgenticSeek](https://mp.weixin.qq.com/s/tRZNgG2trzRxScP_fJ29JQ)
 
 ## 開源與閉源產品比較：從 DeepResearch 到通用代理框架
 
