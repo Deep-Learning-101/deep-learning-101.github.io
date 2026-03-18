@@ -779,8 +779,8 @@ schema_type: article
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg" // 建議您換成 LOGO 圖片 URL
     }
   },
-  "datePublished": "2016-11-11", // 根據 front matter 的資訊，您也可以更新為內容的最後更新日期
-  "dateModified": "2025-10-21", // 建議填寫您最後修改此文件的日期
+  "datePublished": "2026-03-15", // 根據 front matter 的資訊，您也可以更新為內容的最後更新日期
+  "dateModified": "2026-03-15", // 建議填寫您最後修改此文件的日期
   "keywords": "Large Language Model, LLM, AI Agent, Fine-tuning, RAG, Deep Learning, 生成式AI, 大語言模型, 微調, 開源工具",
   "about": {
     "@type": "Service",

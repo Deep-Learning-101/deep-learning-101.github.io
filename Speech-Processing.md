@@ -590,8 +590,8 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2016-11-11",
-  "dateModified": "2025-10-21",
+  "datePublished": "2026-03-15",
+  "dateModified": "2026-03-15",
   "keywords": "Speech Processing, Speech Recognition, Speaker Recognition, Speech Enhancement, Speaker Separation, Speech Synthesis, ASR, TTS, 語音處理, 語音識別, 語者識別, 語音增強, 語音合成",
   "about": {
     "@type": "Service",

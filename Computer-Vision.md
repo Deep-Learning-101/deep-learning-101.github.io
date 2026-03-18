@@ -461,8 +461,8 @@ service_type: AI Consulting
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2016-11-11",
-  "dateModified": "2025-10-21",
+  "datePublished": "2026-03-15",
+  "dateModified": "2026-03-15",
   "keywords": "Computer Vision, Anomaly Detection, Object Detection, Segmentation, OCR, Diffusion Model, Digital Human, 電腦視覺, 異常檢測, 物件偵測, 圖像分割, 擴散模型, 虛擬數字人",
   "about": {
     "@type": "Service",
