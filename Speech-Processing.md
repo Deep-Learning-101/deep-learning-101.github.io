@@ -1,7 +1,7 @@
 ---
 layout: default
-title: 語音處理資源懶人包 (Speech Processing) | ASR, TTS & Voice Conversion | Deep Learning 101
-description: 2025 最新語音處理 (Speech AI) 資源彙整。涵蓋自動語音辨識 (ASR)、語音合成 (TTS)、語音轉換 (VC) 等技術，收錄 Whisper, VITS, HuBERT 等經典論文與開源專案。
+title: 2026 語音處理資源懶人包 (Speech AI) | ASR, TTS & 聲紋辨識 | Deep Learning 101
+description: 2026 最新開源語音處理 (Speech AI) 資源與模型比較。涵蓋免切片語音辨識 (ASR)、極速人聲克隆 (TTS)、語音增強去噪等技術，收錄 Whisper 魔改版與 VibeVoice 等企業級落地解決方案。
 permalink: /Speech-Processing
 lang: zh-Hant
 schema_type: service
@@ -40,6 +40,8 @@ service_type: AI Consulting
 | [Google WaveNet](https://cloud.google.com/text-to-speech/pricing) | 語音合成 | TTS：英文 $0.024，中文 $0.072 |
 | [Google Vertex AI](https://cloud.google.com/vertex-ai/generative-ai/pricing?hl=zh-tw#gemini-models) | 大型語言模型 | Gemini/Claude 定價頁 |
 | [Google Cloud VM](https://cloud.google.com/compute/vm-instance-pricing?hl=zh-tw#sharedcore_machine_types) | 虛擬機器 | VM 執行個體定價頁面 |
+
+---
 
 ### **文章目錄**
 - [Speech Processing (語音處理)](#speech-processing)
@@ -574,8 +576,8 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
     "@type": "WebPage",
     "@id": "https://deep-learning-101.github.io/Speech-Processing"
   },
-  "headline": "語音處理 (Speech Processing) 資源彙整",
-  "description": "一份關於語音處理（Speech Processing）的詳盡資源清單，內容涵蓋語音識別(ASR)、語者識別、語音增強、語者分離與語音合成(TTS)等領域的最新研究與開源工具，由台灣深度學習同好會（Deep Learning 101）提供。",
+  "headline": "2026 語音處理 (Speech Processing) 資源與模型大全",
+  "description": "一份詳盡的語音處理（Speech Processing）資源清單，涵蓋語音識別(ASR)、語者識別、語音增強、語者分離與語音合成(TTS)等領域的最新研究與開源工具，解決Podcast逐字稿、邊緣運算與即時語音對話痛點。",
   "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
     "@type": "Organization",
@@ -590,9 +592,9 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2026-03-15",
-  "dateModified": "2026-03-15",
-  "keywords": "Speech Processing, Speech Recognition, Speaker Recognition, Speech Enhancement, Speaker Separation, Speech Synthesis, ASR, TTS, 語音處理, 語音識別, 語者識別, 語音增強, 語音合成",
+  "datePublished": "2026-03-19",
+  "dateModified": "2026-03-19",
+  "keywords": "語音處理, Speech Processing, ASR, TTS, 語音辨識, 語音合成, 語者分離, 聲音克隆, Whisper, 本地部署, 逐字稿生成, AI客服, 邊緣運算",
   "about": {
     "@type": "Service",
     "serviceType": "AI Consulting",

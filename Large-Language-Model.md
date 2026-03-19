@@ -1,7 +1,7 @@
 ---
 layout: default
-title: LLM 大語言模型資源懶人包 | Leaderboard, Tools & Papers | Deep Learning 101
-description: 2025 最新 LLM 大語言模型資源彙整。包含 Open LLM Leaderboard、Ollama/vLLM 部署工具、Llama 3/Mistral 等必讀論文，以及中文 LLM 微調資源。
+title: 2026 LLM 大語言模型資源懶人包 | Agent, RAG & Fine-tuning | Deep Learning 101
+description: 2026 最強大語言模型 (LLM) 與 AI Agent 開發指南。彙整 RAG 防幻覺實作、Deep Research 框架、Manus 開源平替、SLM 端側小模型與 LLaMA Factory 零程式碼微調資源。
 permalink: /Large-Language-Model
 lang: zh-Hant
 schema_type: article
@@ -128,11 +128,12 @@ schema_type: article
         [📝 微信公眾號-LLaMA Factory 微調教學（三）：微調參數設置，顯存估算與最佳化](https://mp.weixin.qq.com/s/AbyWaTaPOp9sr5mz5SOVwg)
         [📝 微信公眾號-LLaMA Factory 微調教學（四）：如何觀測模型的微調過程？微調後的模型如何合併匯出和部署？](https://mp.weixin.qq.com/s/6sNGvqLktPk6AP7kPs9JyA)
 - **EasyDistill**  
-  - 說明：知識蒸餾不再難！阿里開源EasyDistill及DistilQwen模型家族，開源即用、效能強勁！
+  - 說明：解決大模型落地時「算力成本過高」的致命痛點。阿里開源的這套知識蒸餾管線，能將千億參數巨獸的能力，無損轉移到能在手機或邊緣設備 (Edge AI) 運行的微型模型上，是企業大幅壓縮雲端推論成本、實現端側 AI 部署的必備開源工具。
   - 資源：[🐙 GitHub](https://github.com/modelscope/easydistill) | [📄 AlphaXiv](https://www.alphaxiv.org/abs/2505.20888)  
 
 ### 微調框架 (Frameworks)
 - **LLaMA Factory**
+  - 說明：目前地表最強大、最易用的開源大模型微調大殺器。提供直覺的 WebUI 介面，讓開發者甚至企業業務人員都能透過「零程式碼」操作，輕鬆完成 LoRA、SFT 與 RLHF 微調。支援海量開源模型與多卡平行運算，是企業打造領域專屬大模型的標配工具。
   - 資源：[🐙 GitHub](https://github.com/hiyouga/LLaMA-Factory) | [🤗 Demo](https://huggingface.co/spaces/hiyouga/LLaMA-Board)
   - 延伸：[📝 中文文檔](https://github.com/hiyouga/LLaMA-Factory/blob/main/README_zh.md) | [📝 架構解析 (2024-09-13)](https://mp.weixin.qq.com/s/eJqKc_2nHBYzDFAp2AYdWQ) | [📝 單卡訓練 Agent 實戰](https://zhuanlan.zhihu.com/p/678989191)
 
@@ -249,6 +250,7 @@ schema_type: article
   - 資源：[🐙 GitHub](https://github.com/hexdocom/lemonai) | [📝 53AI 報導](https://www.53ai.com/news/OpenSourceLLM/2025052883904.html)
 
 - 2025-05-25｜**OpenHands**
+  - 說明：目前最強大的開源 AI 軟體工程師 (Devin 平替)。具備完整的沙盒環境執行能力，能自主編寫程式碼、修復 Bug、操作終端機與瀏覽器。適合開發團隊用來打造全自動化的 CI/CD 測試流程，或是輔助工程師進行大規模的舊有程式碼重構。
   - 資源：[🐙 GitHub](https://github.com/All-Hands-AI/OpenHands) | [🌐 Demo](https://app.all-hands.dev/)
 
 - 2025-05-18｜**Agent-Squad**
@@ -318,7 +320,7 @@ schema_type: article
   - 資源：[🐙 GitHub](https://github.com/X-PLUG/MobileAgent/blob/main/README_zh.md) | [📝 知乎解讀](https://zhuanlan.zhihu.com/p/680871671)
 
 - 2025-01-03｜**smolagents**
-  - 說明：Hugging Face 開源 Agent 框架
+  - 說明：Hugging Face 官方推出的極簡 Agent 框架。主打「程式碼即工具 (Code-as-tools)」理念，僅需極少量的 Python 程式碼，就能將任何開源 LLM 轉化為能呼叫外部 API 的智能體。非常適合想要快速打造個人自動化助理、且算力有限的 Python 開發者。
   - 資源：[🐙 GitHub](https://github.com/huggingface/smolagents) | [📝 CSDN 介紹](https://blog.csdn.net/m0_59163425/article/details/144917058)
 
 - 2024-10-26｜**OmniParser**
@@ -446,7 +448,7 @@ schema_type: article
   - 資源：[🐙 GitHub](https://github.com/jimmc414/onefilellm) | [📝 公眾號推薦](https://mp.weixin.qq.com/s/qNYX65fw-IWzEBLZpuaY6Q)
 
 - 2025-04-16｜**ScrapeGraphAI**
-  - 說明：自然語言驅動的智慧爬蟲
+  - 說明：顛覆傳統爬蟲的痛點！透過 LLM 解析網頁結構，只需輸入自然語言提示（Prompt），就能自動適應網站改版，精準抓取所需資料。非常適合開發用來監控競品電商價格、自動化收集產業新聞，或建立 AI 訓練語料庫的高彈性爬蟲管線。
   - 資源：[🐙 GitHub](https://github.com/ScrapeGraphAI/Scrapegraph-ai) | [📝 公眾號推薦](https://mp.weixin.qq.com/s/lQukAy12V5K1cH6rTkqxaA)
 
 - 2025-04-11｜**nanobrowser**
@@ -477,6 +479,9 @@ schema_type: article
   - 資源：[🐙 GitHub](https://github.com/ZZZHANG-jx/DocAligner) | [📝 公眾號推薦](https://mp.weixin.qq.com/s/Bra9h3ExddB5NiH1g4uk1g)
 
 - 2024-12-19｜**LightRAG**
+  - 說明：解決傳統 RAG 檢索碎片化與缺乏全局語意理解的痛點。結合圖結構 (Graph) 與雙層檢索機制，能精準提取文件中的實體關聯。極度適合用於建構企業級法律合規知識庫、醫療文獻問答系統等需要高度準確性與防幻覺 (Hallucination) 的場景。
+  - [EMNLP2025 "LightRAG: Simple and Fast Retrieval-Augmented Generation"](https://arxiv.org/pdf/2410.05779)
+  - Beijing University of Posts and Telecommunications、University of Hong Kong
   - 資源：[🐙 GitHub](https://github.com/HKUDS/LightRAG) | [📝 技術框架解讀](https://zhuanlan.zhihu.com/p/13261291813)
 
 - 2024-12-15｜**markitdown**
@@ -763,9 +768,9 @@ schema_type: article
     "@type": "WebPage",
     "@id": "https://deep-learning-101.github.io/Large-Language-Model"
   },
-  "headline": "大語言模型 (Large Language Model) 資源彙整",
-  "description": "一份詳盡的大語言模型（LLM）資源清單，涵蓋模型排行榜、中文LLM資源、微調技術、開源工具、AI Agent 框架以及最新的模型發布，由台灣深度學習同好會（Deep Learning 101）提供。",
-  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg", // 建議您換成一個代表性的圖片 URL
+  "headline": "2026 大語言模型 (LLM) 與 AI Agent 開源資源大全",
+  "description": "一份詳盡的大語言模型（LLM）資源清單，涵蓋端側推理模型(SLM)、微調技術(Fine-tuning)、RAG架構優化、AI Agent多智能體框架與Manus開源平替工具，助你掌握最新生成式AI技術。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
     "@type": "Organization",
     "name": "Deep Learning 101, Taiwan",
@@ -776,12 +781,12 @@ schema_type: article
     "name": "Deep Learning 101, Taiwan",
     "logo": {
       "@type": "ImageObject",
-      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg" // 建議您換成 LOGO 圖片 URL
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2026-03-15", // 根據 front matter 的資訊，您也可以更新為內容的最後更新日期
-  "dateModified": "2026-03-15", // 建議填寫您最後修改此文件的日期
-  "keywords": "Large Language Model, LLM, AI Agent, Fine-tuning, RAG, Deep Learning, 生成式AI, 大語言模型, 微調, 開源工具",
+  "datePublished": "2026-03-19",
+  "dateModified": "2026-03-19",
+  "keywords": "大語言模型, LLM, AI Agent, RAG, 微調, Fine-tuning, Deep Research, 知識庫, 推理模型, Reasoning, SLM, LLaMA, AI 自動化, Manus 平替",
   "about": {
     "@type": "Service",
     "serviceType": "GenAI Consulting",
