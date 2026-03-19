@@ -1,10 +1,10 @@
 ---
 layout: default
 title: "《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》"
-description: "免開公網 IP！教你使用 Cloudflare Tunnel 實作 Zero Trust 架構，安全穿透 SSH、HTTP 與 RDP 遠端桌面。"
+description: "免開公網 IP！教你使用 Cloudflare Tunnel 實作 Zero Trust 架構，安全穿透 SSH、HTTP 與 RDP 遠端桌面，並加碼附上「無對外 IP」的 SSH 反向隧道自動重連解法。"
 permalink: /Blog/Cloudflared-Tunnel
 lang: zh-Hant
-keywords: ["Cloudflare Tunnel", "Zero Trust", "SSH Tunnel", "RDP", "內網穿透"]
+keywords: ["Cloudflare Tunnel", "Zero Trust", "SSH Tunnel", "RDP", "內網穿透", "Reverse SSH", "無固定IP"]
 ---
 
 
@@ -17,25 +17,7 @@ keywords: ["Cloudflare Tunnel", "Zero Trust", "SSH Tunnel", "RDP", "內網穿透
 ---
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**Blog**：[2025年06月23日，用 Cloudflared 實作 SSH / HTTP / RDP Tunnel](https://blog.twman.org/2025/06/zero-trust-genai.html)
-
----
-
-
-| 🔥 技術傳送門 (Tech Stack) | 📚 必讀心法 (Must Read) |
-| :--- | :--- |
-| 🤖 [**大語言模型 (LLM)**](https://deep-learning-101.github.io/Large-Language-Model) | 🏹 [**策略篇：企業入門策略**](https://deep-learning-101.github.io/Blog/AIBeginner) |
-| 📝 [**自然語言處理 (NLP)**](https://deep-learning-101.github.io/Natural-Language-Processing) | 📊 [**評測篇：臺灣 LLM 分析**](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark) |
-| 👁️ [**電腦視覺 (CV)**](https://deep-learning-101.github.io//Computer-Vision) | 🛠️ [**實戰篇：打造高精準 RAG**](https://deep-learning-101.github.io/RAG) |
-| 🎤 [**語音處理 (Speech)**](https://deep-learning-101.github.io/Speech-Processing) | 🕳️ [**避坑篇：AI Agent 開發陷阱**](https://deep-learning-101.github.io/agent) |
-
-**相關文章參考**：
-* <b><a href="https://blog.twman.org/2024/09/LLM.html" target="_blank">大型語言模型直接就打完收工？</a></b>：<a href="https://deep-learning-101.github.io/1010LLM">回顧 LLM 領域探索歷程，討論硬體升級對 AI 開發的重要性。</a>
-* <b><a href="https://blog.twman.org/2024/07/RAG.html" target="_blank">檢索增強生成(RAG)不是萬靈丹之優化挑戰技巧</a></b>：<a href="https://deep-learning-101.github.io/RAG">探討 RAG 技術應用與挑戰，提供實用經驗分享和工具建議。</a>
-* <b><a href="https://blog.twman.org/2024/02/LLM.html" target="_blank">大型語言模型 (LLM) 入門完整指南：原理、應用與未來</a></b>：<a href="https://deep-learning-101.github.io/0204LLM">探討多種 LLM 工具的應用與挑戰，強調硬體資源的重要性。</a>
-* <b><a href="https://blog.twman.org/2023/04/GPT.html" target="_blank">解析探索大型語言模型：模型發展歷史、訓練及微調技術的 VRAM 估算</a></b>：<a href="https://deep-learning-101.github.io/GPU">探討 LLM 的發展與應用，硬體資源在開發中的作用。</a>
-* <b><a href="https://www.facebook.com/cnanewstaiwan/posts/pfbid02CCrFhyvCcoTmjJaX4aHaSMHmCgnPd1SG21Gbpb4Wo9bgs7QmQArTmhbVPZSLyjrdl" target="_blank">中央社繁體中文預訓練資料集案</a></b>
-
+**Blog**：[2026年03月19日更新，用 Cloudflared 實作 SSH / HTTP / RDP Tunnel](https://blog.twman.org/2025/06/zero-trust-genai.html)
 
 ---
 
@@ -45,6 +27,16 @@ _用 Cloudflared 實作 SSH / HTTP / RDP Tunnel：不裸奔全面穿透 HTTP、S
 > **🚀 本文重點摘要 (TL;DR)：**
 > 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。
 > 本教學詳細解說如何配置 **SSH**、**HTTP** 及 **Windows RDP** 的遠端連線，並結合 Zero Trust 驗證機制保護企業資產。
+
+## 📑 目錄 (Table of Contents)
+* [1️⃣ 零信任為什麼重要？尤其在 AI 應用場景](#zero-trust)
+* [2️⃣ Cloudflared Tunnel 是什麼？如何協助實踐 Zero Trust](#what-is-tunnel)
+* [3️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ SSH 遠端管理](#ssh-tunnel)
+* [4️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ HTTP 服務（網站 / API）](#http-tunnel)
+* [5️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ RDP 遠端桌面 (含無固定 IP 解決方案)](#rdp-tunnel)
+  * [🚧 如果該Windows機器沒有對外的固定IP要怎辦？ ▶️ SSH 反向隧道（Reverse SSH Tunnel）](#reverse-ssh-tunnel)
+* [6️⃣ 💡 這些設定如何支撐 AI 應用的安全](#ai-security)
+* [7️⃣ ✨ 小結與實務建議](#conclusion)
 
 傳統雲端主機的遠端連線方式，如開啟 GCP 公網固定 IP 並設防火牆 port（如 22、3389、443 等），雖然快速直接，但也潛藏著不少諸如被掃 port、暴力破解、VPN 管理不易、身份控管與審計困難等風險。隨著資安攻擊手法日益進化，Zero Trust (零信任) 架構逐漸成為企業資安標準，其核心理念是「永不信任，持續驗證」：不論內外部網路來源，都必須經過身份驗證與存取政策評估才能進入系統。
 
@@ -73,6 +65,8 @@ ngrok http 11434 --host-header="localhost:11434"
 *   ✅ 支援 SSO、MFA，強化身份驗證
 *   ✅ 審計與存取記錄集中化，方便追蹤與合規
 *   ✅ 彈性政策控管，例如限制特定群組才能登入 SSH 或 RDP
+
+<a id="zero-trust"></a>
 
 ## 1️⃣ 零信任為什麼重要？尤其在 AI 應用場景
 
@@ -123,6 +117,8 @@ cloudflared --version
 cloudflared version 2025.6.0 (built 2025-06-11-1108 UTC)
 ```
 
+<a id="what-is-tunnel"></a>
+
 ## 2️⃣ Cloudflared Tunnel 是什麼？如何協助實踐 Zero Trust
 
 *   簡介架構：Tunnel client -> Cloudflare Edge -> Access 控管 -> 後端服務
@@ -148,6 +144,8 @@ cloudflared tunnel create XXXXX
 tunnel: XXXX-XXXX-XXXX-XXXX-XXXX
 credentials-file: /home/user/.cloudflared/XXXX-XXXX-XXXX-XXXX-XXXX.json
 ```
+
+<a id="ssh-tunnel"></a>
 
 ## 3️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ SSH 遠端管理
 
@@ -188,6 +186,9 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:22222
 
 這時你就能從 vscode 的 remote ssh 連線到 `localhost:22222` 然後其實是連到你設定的 service 了
 
+
+<a id="http-tunnel"></a>
+
 ## 4️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ HTTP 服務（網站 / API）
 
 *   設定 `cloudflared tunnel`
@@ -217,6 +218,8 @@ cloudflared tunnel run xxxxx
 ```
 
 網頁不用像 ssh 還要在要連線的本機端執行，只要 DNS 生效，基本就可以使用了 !
+
+<a id="rdp-tunnel"></a>
 
 ## 5️⃣🔧 Cloudflared Tunnel 實作教學 ▶️ RDP 遠端桌面
 
@@ -264,37 +267,57 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
 *   ✅ 加上 Cloudflare Zero Trust，可以限制誰能用 SSH / RDP / HTTP 登入，並整合 SSO、MFA。
 *   ✅ 可記錄所有連線行為（審計）、控制不同帳號不同權限（最小權限原則）。
 
+<a id="reverse-ssh-tunnel"></a>
+
 🚧 但是就是這個BUT，**如果該Windows機器沒有對外的固定IP要怎辦？**，這時就得用上 **SSH 反向隧道（Reverse SSH Tunnel）**
 
 *   🔧 步驟 1：下載 [plink.exe](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html#:~:text=plink.exe%20(a%20command%2Dline%20interface%20to%20the%20PuTTY%20back%20ends))
+
 *   🔧 步驟 2：如果不確定自己 key 跑那去，可以在 Ubuntu 上執行 `ssh-keygen -t rsa -b 2048 -f ~/.ssh/rdp_key` 取得
-    *   ~/.ssh/rdp_key（私鑰
+    *   ~/.ssh/rdp_key (私鑰)
     *   ~/.ssh/rdp_key.pub（公鑰）
     *   `cat ~/.ssh/rdp_key.pub >> ~/.ssh/authorized_keys`
     *   `chmod 600 ~/.ssh/authorized_keys`
     *   `puttygen ~/.ssh/rdp_key -o ~/rdp_key.ppk` 把這個 ppk 放到 Windows 機器上
-*   🔧 步驟 3：在 Windows 機器的 cmd 上執行 `plink.exe -batch -ssh ubuntu@your-ubuntu-ip -i C:\rdp_key.ppk -N -R 0.0.0.0:3390:localhost:3389`
-    *   -batch：避免錯誤交互提示
-    *   -ssh：SSH 模式
-    *   ubuntu@...：Ubuntu 登入帳號
-    *   -i id_rsa.ppk：使用的金鑰（你要用 PuTTYgen 轉成 .ppk）
-    *   -N：不開 shell（只建立 tunnel）
-    *   -R：反向轉發：把 Ubuntu 的 localhost:3390 → Windows 的 3389
-*   🔧 步驟 4：修改 Ubuntu 上的 SSH server 配置 `/etc/ssh/sshd_config`
-    *   找到或修改這行 `GatewayPorts yes`
-    *   重新啟動 `sudo systemctl restart sshd`
+
+* 🔧 **步驟 3：在 Windows 機器上建立「自動重連」的雙通道 SSH 反向隧道**
+    傳統直接執行 `plink` 遇到網路閃斷就會永久斷線。建議寫成 `.bat` 批次檔，加入「無限迴圈」與「斷線倒數重連」機制。
+    另外，`plink` 支援一次轉發多個 Port！範例只轉發 RDP (3389)：
+
+    請建立一個 `AutoTunnel.bat` 檔案，貼入以下內容：
+    ```bat
+    @echo off
+    :loop
+    echo [%date% %time%] 正在建立 SSH 隧道...
+    "C:\plink.exe" -ssh ubuntu@your-ubuntu-ip -i C:\rdp_key.ppk -N -batch -R 0.0.0.0:3390:localhost:3389
+
+    echo [%date% %time%] 隧道已斷線！等待 10 秒後重新連線...
+    REM 利用 ping 本機來製造約 10 秒的穩定延遲 (適用於各版本 Windows)
+    ping 127.0.0.1 -n 11 > nul
+    goto loop
+    ```
+    > **💡 進階技巧 (隱藏黑視窗)**：可將此 `.bat` 檔丟入 Windows 內建的「工作排程器 (Task Scheduler)」，觸發條件設為「當電腦啟動時」，並勾選「不論使用者登入與否均執行」。這樣隧道就會變成打死不退的隱藏背景服務！
+
+* 🔧 **步驟 4：修改 Ubuntu 上的 SSH server 配置 `/etc/ssh/sshd_config`**
+    * 找到或新增這行 `GatewayPorts yes`
+    * 如果你有加開 KMS 轉發，記得在 Ubuntu 防火牆放行：`sudo ufw allow 1688/tcp`
+    * 重新啟動 `sudo systemctl restart sshd`
     *   這時，Ubuntu 上執行 `sudo netstat -tnlp | grep 3390`
-    *   應該就能看到已監聽所有介面 `tcp        0      0 0.0.0.0:3390           0.0.0.0:*               LISTEN      xxxx/sshd: ubuntu`
+    *   應該就能看到已監聽所有介面  
+    `tcp        0      0 0.0.0.0:3390           0.0.0.0:*               LISTEN      xxxx/sshd: ubuntu`
 
-如果你只是想快速「從外網 RDP 連進 Windows」，用這 **SSH 反向隧道（Reverse SSH Tunnel）** 方案是可行的。
-如果你想要利用 Cloudflare Access、Zero Trust 等功能，再搭配 Cloudflare Tunnel 會更完整安全。
+如果你只是想快速「從外網 RDP 連進無公網 IP 的 Windows」，或需要代理內網的 KMS 認證服務，這個強化的 **SSH 反向隧道（Reverse SSH Tunnel）** 方案極度穩定且實用。
+但如果環境允許安裝新版系統，利用 Cloudflare Access、Zero Trust 等功能搭配 Cloudflare Tunnel 依然是管理上最安全完整的最終目標。
 
+<a id="ai-security"></a>
 
 ## 6️⃣💡 這些設定如何支撐 AI 應用的安全
 
 *   將 AI 工具接入內部資料時，仍經過 Access 驗證與稽核
 *   可用 Zero Trust 控管 AI Agent、plugin 或用戶行為
 *   未來與 RAG、內部 API 查詢、資料倉接入等都能建立防線
+
+<a id="conclusion"></a>
 
 ## 7️⃣✨ 小結與實務建議
 
@@ -310,8 +333,8 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
     "@type": "WebPage",
     "@id": "https://deep-learning-101.github.io/Cloudflared-Tunnel"
   },
-  "headline": "用 Cloudflared 實作 SSH / HTTP / RDP Tunnel",
-  "description": "一篇關於如何使用 Cloudflared Tunnel 實踐零信任（Zero Trust）架構的技術教學，內容涵蓋在不開放公網 IP 的情況下，安全地實現對 SSH、HTTP 與 RDP 服務的遠端連線。",
+  "headline": "Cloudflare Tunnel 教學：免公網 IP 架設內網穿透 (SSH/HTTP/RDP)",
+  "description": "這篇技術教學探討如何使用 Cloudflared Tunnel 實踐 Zero Trust 零信任架構，在不開放公網 IP 的情況下安全實現 SSH、HTTP 與 RDP 遠端連線。內文加碼收錄針對無對外 IP 舊系統的 SSH 反向隧道 (Reverse SSH) 自動重連與多埠口轉發解決方案。",
   "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
     "@type": "Person",
@@ -327,7 +350,7 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
     }
   },
   "datePublished": "2025-06-23",
-  "dateModified": "2026-01-02",
-  "keywords": "Cloudflared, Zero Trust, Tunnel, SSH, RDP, HTTP, Cloudflare, 零信任, 網路安全, 遠端連線"
+  "dateModified": "2026-03-19",
+  "keywords": "Cloudflared, Zero Trust, Tunnel, SSH, RDP, HTTP, Cloudflare, 零信任, 網路安全, 遠端連線, 內網穿透, Reverse SSH, 反向隧道"
 }
 </script>
