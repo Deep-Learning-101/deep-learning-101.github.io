@@ -31,6 +31,7 @@ _用 Cloudflared 實作 SSH / HTTP / RDP Tunnel：不裸奔全面穿透 HTTP、S
 ## 📑 目錄 (Table of Contents)
 * [1️⃣ 零信任為什麼重要？尤其在 AI 應用場景](#zero-trust)
 * [2️⃣ Cloudflared Tunnel 是什麼？如何協助實踐 Zero Trust](#what-is-tunnel)
+  * [🌟 加碼實戰：將 Cloudflared 註冊為系統背景服務 (開機自動啟動)](#system-service)
 * [3️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ SSH 遠端管理](#ssh-tunnel)
 * [4️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ HTTP 服務（網站 / API）](#http-tunnel)
 * [5️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ RDP 遠端桌面 (含無固定 IP 解決方案)](#rdp-tunnel)
@@ -143,6 +144,114 @@ cloudflared tunnel create XXXXX
 # 這行指定了 Tunnel 的 UUID，
 tunnel: XXXX-XXXX-XXXX-XXXX-XXXX
 credentials-file: /home/user/.cloudflared/XXXX-XXXX-XXXX-XXXX-XXXX.json
+```
+
+<a id="system-service"></a>
+
+## 🌟 加碼實戰：將 Cloudflared 註冊為系統背景服務 (開機自動啟動)
+
+在這篇教學文中，我們都是使用 `cloudflared tunnel run xxxxx` 來啟動隧道。但你會發現，**只要關閉終端機（Terminal），隧道就會斷線**！這在正式環境是不被允許的。
+
+為了解決這個問題，我們必須將 Cloudflared 註冊為 Linux 的背景系統服務（Systemd Service），讓它不僅能常駐於背景，還能在主機重啟時自動連線。
+
+> **⚠️ 重要觀念（路徑陷阱）：** > 當我們手動執行時，設定檔是讀取 `/home/user/.cloudflared/`。
+> 但當轉換為「系統服務」時，程式會以 root 權限執行，並**強制改為讀取 `/etc/cloudflared/` 目錄下的設定檔**。因此我們必須幫設定檔「搬家」。
+
+**🔧 步驟 1：建立系統資料夾並複製設定檔**
+先按 `Ctrl + C` 停止你目前正在跑的 tunnel，然後執行以下指令，將憑證與設定檔搬移到系統目錄：
+
+```bash
+# 建立系統服務預設讀取的目錄
+sudo mkdir -p /etc/cloudflared
+
+# 將憑證、密鑰 (json) 與設定檔全部複製過去 (注意：請將 /home/user 替換為你的實際家目錄)
+sudo cp /home/user/.cloudflared/* /etc/cloudflared/
+```
+
+**🔧 步驟 2：修改 `/etc/cloudflared/config.yml` 裡的路徑**
+這步非常關鍵！請編輯你剛複製過去的 config 檔：
+```bash
+sudo nano /etc/cloudflared/config.yml
+```
+把裡面的 `credentials-file` 路徑，從原本的使用者家目錄改為 `/etc/cloudflared/`：
+```yaml
+tunnel: XXXX-XXXX-XXXX-XXXX-XXXX
+# 記得把這行改成 /etc/cloudflared/ 開頭
+credentials-file: /etc/cloudflared/XXXX-XXXX-XXXX-XXXX-XXXX.json
+
+ingress:
+    - hostname: xxx.twman.org
+      service: http://localhost:80
+```
+
+**🔧 步驟 3：安裝並啟動服務**
+確認設定檔都就位後，執行以下安裝指令：
+
+```bash
+# 安裝系統服務
+sudo cloudflared service install
+
+# 啟動服務
+sudo systemctl start cloudflared
+
+# 設定開機自動啟動
+sudo systemctl enable cloudflared
+```
+
+最後，你可以用 `sudo systemctl status cloudflared` 來檢查狀態。如果看到綠色的 `active (running)`，恭喜你！你的 Zero Trust 隧道已經無堅不摧，就算重開機也會自動連線了！
+
+最後，這邊再補上也同步啟動走 Tunnel 的 Jupyter 吧？
+
+```
+which jupyter
+```
+
+首先確定你的 jupyter 在那 ?
+
+```
+sudo vi /etc/systemd/system/jupyter.service
+```
+
+然後編輯其內容
+
+```
+[Unit]
+Description=Jupyter Notebook/Lab Service
+After=network.target
+
+[Service]
+Type=simple
+# 1. 改成你平常登入 Ubuntu 的帳號名稱（例如 ubuntu 或 pi，絕對不要寫 root）
+User=你的使用者名稱
+
+# 2. 改成你希望 Jupyter 啟動時的預設資料夾路徑（例如你的專案目錄）
+WorkingDirectory=/home/你的使用者名稱/Projects
+
+# 3. 把剛剛 which jupyter 查到的路徑貼到這裡，後面接上啟動參數
+# 如果你習慣用 Jupyter Lab，就把 notebook 改成 lab
+ExecStart=/這裡填入/which/查到的/jupyter/路徑 notebook --no-browser --ip=127.0.0.1 --port=8888
+
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+```
+
+接著是重新載入與啟動服務
+
+```
+# 重新載入 systemd 設定
+sudo systemctl daemon-reload
+
+# 啟動 Jupyter 服務
+sudo systemctl start jupyter
+
+# 設定開機自動啟動
+sudo systemctl enable jupyter
+
+# 確認 Jupyter 是否乖乖運作中
+sudo systemctl status jupyter
 ```
 
 <a id="ssh-tunnel"></a>
