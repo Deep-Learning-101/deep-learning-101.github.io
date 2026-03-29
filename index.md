@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Deep Learning 101 | 台灣首個深度學習社群 | LLM, CV, NLP & Speech 技術資源站
-description: 台灣最早的深度學習社群 (Since 2016)。提供 2025 最新 AI 技術資源，包含 LLM 大語言模型、電腦視覺 (CV)、自然語言處理 (NLP) 與語音處理 (Speech) 的論文筆記與實作教學。
+description: 台灣最早的深度學習社群 (Since 2016)。提供最新 AI 技術資源，包含 LLM 大語言模型、電腦視覺 (CV)、自然語言處理 (NLP) 與語音處理 (Speech) 的論文筆記與實作教學。
 permalink: /
 lang: zh-Hant
 schema_type: service
@@ -17,6 +17,19 @@ service_type: AI Consulting
 ---
 
 # Deep Learning 101 Meetup
+
+Deep Learning 101 於 2016/11/11 在台北 101 大樓 83F 成立，是台灣最具開創性的深度學習同好會。這裡不僅匯集了我們歷年的 Meetup 紀錄，更是社群共同維護的 AI 演算法與開源資源匯整中心。
+
+## 📚 領域知識導覽 (Knowledge Base)
+
+探索我們為開發者與研究員整理的最新技術迭代與論文筆記：
+
+* **[💬 大語言模型 (Large Language Model, LLM)](/Large-Language-Model)**：涵蓋 RAG 防幻覺實作、Agent 多智能體框架、端側模型 (SLM) 與微調技術。
+* **[📝 自然語言處理 (Natural Language Processing, NLP)](/Natural-Language-Processing)**：傳統 NLP 演算法、Transformer 架構與機器閱讀理解。
+* **[👁️ 電腦視覺 (Computer Vision, CV)](/Computer-Vision)**：影像生成、物件偵測、實例分割與幾何深度學習。
+* **[🗣️ 語音處理 (Speech Processing)](/Speech-Processing)**：語音辨識、合成與最新語音模型迭代。
+
+---
 
 <div style="display: flex; justify-content: center;">
   <div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9;">
@@ -98,6 +111,8 @@ service_type: AI Consulting
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
+  "datePublished": "2026-03-29",
+  "dateModified": "2026-03-29",
   "about": {
     "@type": "EventSeries",
     "name": "Deep Learning 101 Meetup",

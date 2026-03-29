@@ -1,6 +1,10 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: 白話文手把手帶你科普 GenAI | LLM, RAG, 微調與多模態核心概念
+description: 淺顯易懂地介紹生成式人工智慧（GenAI）的核心技術名詞，包含大語言模型 (LLM)、提示詞 (Prompt)、檢索增強生成 (RAG)、微調 (Fine-Tuning)、代理人 (Agentic) 與多模態，帶你快速掌握 AI 發展脈絡。
+permalink: /GenAI
+lang: zh-Hant
+schema_type: article
 ---
 
 {% include header.html %}
@@ -11,137 +15,71 @@ title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup
 
 ---
 
-# [白話文手把手帶你科普 GenAI](https://deep-learning-101.github.io/)
+# 🚀 白話文手把手帶你科普 GenAI
 
-淺顯介紹生成式人工智慧核心概念，強調硬體資源和數據的重要性。
+生成式人工智慧（Generative AI）正在改變世界。本頁面以最淺顯易懂的「白話文」，為非工程背景的讀者梳理近一年來最核心的 AI 技術名詞與運作邏輯。
 
-**作者**：[TonTon Huang Ph.D.](https://twman.org/)  
-**日期**：2024年10月10日  
-**原文網址**：[https://blog.twman.org/2024/08/LLM.html](https://blog.twman.org/2024/08/LLM.html)
-
----
-
-## 🌟 生成式人工智慧（GenAI）是什麼？
-
-生成式人工智慧是指能夠根據輸入資料自動產生內容的人工智慧技術，例如：文字、圖像、語音或程式碼等。本文將帶你快速理解 GenAI 的核心技術、應用與挑戰。
+> **作者**：[TonTon Huang Ph.D.](https://twman.org/)  
+> **原文出處**：[白話文手把手帶你科普 GenAI 的 LLM、Prompt... (發布於 2024/08/11)](https://blog.twman.org/2024/08/LLM.html)
 
 ---
 
-## 💸 訓練 GenAI 的硬體成本有多高？
+## 💸 訓練 GenAI 的門檻：算力與資本
 
-以 **Llama 3.1 405** 模型為例：
+在進入技術名詞前，必須先理解 AI 發展背後的巨大硬體資源戰。以 Meta 開源的 **Llama 3.1 405B** 模型為例：
+* **使用硬體**：16,384 張 Nvidia H100 80GB GPU
+* **訓練耗時**：54 天
+* **預估硬體總成本**：高達近 **1 億美金**
 
-- 訓練耗時：**54 天**
-- 使用硬體：**16,384 張 Nvidia H100 80GB GPU**
-- GPU 成本（每小時每卡）：$3
-- 其他硬體成本（CPU、記憶體、磁碟、網路等）：$5/小時
-- 預估總硬體成本：約 **1 億美金**
-
-這顯示出 **硬體與資源** 是 GenAI 發展的重要門檻。
+這顯示出龐大的「算力 (Compute)」與「數據 (Data)」是當今推進 GenAI 極限的最重要護城河。
 
 ---
 
-## 🧠 核心技術概念介紹
+## 🧠 核心技術與名詞解析
 
-### 🔡 大型語言模型（LLM）
+### 1. 大型語言模型（LLM）
+LLM (Large Language Model) 是當代 GenAI 的大腦基礎。它透過閱讀海量文本進行訓練，從而擁有理解與生成自然語言的強大能力。
+* 📌 **延伸資源**：[LLM 中文資源整理 - Awesome List](https://blog.twman.org/2024/08/LLM.html)
 
-> “If you are a student interested in building the next generation of AI systems, don't work on LLMs.”  
-> — Yann LeCun
+### 2. 提示詞工程（Prompt Engineering）
+Prompt 是我們輸入給 LLM 的文字指令或上下文。良好的 Prompt 設計，能引導模型準確收斂，大幅提升輸出品質，是操作 AI 最基礎也最重要的技巧。
 
-LLM 是 GenAI 的基礎，能理解與生成自然語言。
+### 3. 檢索增強生成（RAG）
+RAG (Retrieval-Augmented Generation) 是一種將「資訊檢索」與「文本生成」結合的技術。它允許模型在回答前，先去外部資料庫尋找最新或私有知識，再進行回答。
+* **適用場景**：企業內部知識庫客服、需要即時最新資訊的應用。
+* **優勢對比**：相比於重新訓練模型，RAG 具備實時性強、能有效減少模型「幻覺 (Hallucination)」的優點。
 
-📌 延伸資源：
-- [LLM 中文資源整理 - Awesome List](https://blog.twman.org/2024/08/LLM.html)
+### 4. 模型微調（Fine-Tuning）
+在基礎的預訓練模型上，使用特定的資料集進行二次訓練。這能讓模型專精於某個領域（例如醫療、法律）或特定任務。
+* **成本優勢**：微調開源模型的成本，往往只有每次都呼叫頂級商用 API 的一小部分。
 
----
+### 5. 功能調用（Function Calling）
+模型不再只是單純的聊天機器人，它能根據使用者的語義，判斷是否需要「呼叫外部工具」。
+* **運作邏輯**：接收指令 → 模型決定執行某個函數（如查天氣、撈資料庫） → 回傳結果並生成最終答案。
 
-### ✍️ 提示詞設計（Prompt）
+### 6. 工作流程（Workflow）
+將多個 Function Calling 串聯起來，讓模型能自動規劃步驟與邏輯，完成一系列複雜的連續任務。
 
-- 是輸入給 LLM 的文字指令或上下文。
-- 用來引導模型產生特定輸出。
-- **良好的 prompt 設計可以大幅提升輸出品質與準確性。**
+### 7. 代理人架構（Agentic）
+這是目前 AI 發展的熱門趨勢。Agent 是一個結合了多種工具的系統，它具備**自主決策、任務拆解與規劃**的能力，能像一個真實的數位助理一樣，為你自動完成多步驟的任務。
 
----
-
-### 🔍 檢索增強生成（RAG）
-
-- 將資料檢索與文本生成結合的技術。
-- 允許模型存取原本訓練資料中沒有的知識。
-- 適用於：需要**即時資訊**或**私有/垂直資料**的場景。
-
-**比較：**
-| 技術 | 優點 | 限制 |
-|------|------|------|
-| RAG | 實時性強，可接收外部知識 | 運算架構較複雜 |
-| 微調 | 表現佳，定制化強 | 不擅應對動態或即時資訊 |
+### 8. 多模態（Multimodal）
+打破單一文字的限制，讓 AI 系統能同時處理、理解並生成「文本、圖像、音訊、影片」等多種資料類型，具備跨感官的綜合感知能力。
 
 ---
 
-### 🔧 微調（Fine-Tuning）
-
-- 在原本的預訓練模型基礎上，進一步使用特定資料集訓練。
-- 能讓模型專精某個領域或任務。
-- 據李沐分享，微調模型的成本約為 GPT 系列的 **十分之一**。
-
----
-
-### 🛠️ 功能調用（Function Calling）
-
-- 模型可以根據語義理解決定 **是否需要執行某個函數**。
-- 接收函數名稱與參數 → 執行 → 回傳結果。
-
-📌 適合應用於：
-- 天氣查詢
-- 資料庫查詢
-- 自動化工作流程
-
----
-
-### 🔄 工作流程（Workflow）
-
-- 串連多個 function calling，完成一系列任務。
-- 讓模型能自動規劃步驟、邏輯與任務執行流程。
-
----
-
-### 🧠 代理人（Agentic）
-
-- 結合多個工具與策略，**自主決策、規劃與執行任務的 AI 系統**。
-- 特點：
-  - 多步驟任務處理
-  - 決策能力與執行靈活性
-
----
-
-### 🖼️ 多模態（Multimodal）
-
-- 能理解與生成 **多種資料類型**：
-  - 文本
-  - 圖像
-  - 音訊
-  - 影片等
-- 提升 AI 的綜合感知與交互能力
-
----
-
-## 📚 延伸閱讀
-
-- 🔗 [白話文介紹 LLM、Prompt、RAG、微調與 Function Calling 的完整文章](https://blog.twman.org/2024/08/LLM.html)
-
----
-
-> 想學 GenAI，別只學怎麼用 GPT，從 Prompt 到 Agent，一步步理解背後的技術與原理，才是真正的升級之道！
+> 💡 **結語**：想學好 GenAI，別只停留在「怎麼用 ChatGPT」。從底層的 Prompt 到 RAG，再到未來的 Agent 架構，一步步理解背後的技術脈絡，才是真正的升級之道！
 
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "Article",
+  "@type": "TechArticle",
   "mainEntityOfPage": {
     "@type": "WebPage",
     "@id": "https://deep-learning-101.github.io/GenAI"
   },
-  "headline": "白話文手把手帶你科普 GenAI",
-  "description": "淺顯易懂地介紹生成式人工智慧（GenAI）的核心概念，內容涵蓋硬體成本、大型語言模型（LLM）、提示詞設計（Prompt）、RAG、微調、功能調用（Function Calling）與代理人（Agentic）等技術。",
+  "headline": "白話文手把手帶你科普 GenAI | LLM, RAG, 微調與多模態核心概念",
+  "description": "淺顯易懂地介紹生成式人工智慧（GenAI）的核心技術名詞，包含大語言模型 (LLM)、提示詞 (Prompt)、檢索增強生成 (RAG)、微調 (Fine-Tuning)、代理人 (Agentic) 與多模態。",
   "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
     "@type": "Person",
@@ -156,8 +94,8 @@ LLM 是 GenAI 的基礎，能理解與生成自然語言。
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2024-10-10",
-  "dateModified": "2024-10-10",
-  "keywords": "Generative AI, GenAI, LLM, RAG, Fine-Tuning, Prompt, Function Calling, Agentic, 多模態"
+  "datePublished": "2024-08-11",
+  "dateModified": "2026-03-29",
+  "keywords": "Generative AI, GenAI, LLM, RAG, Fine-Tuning, Prompt, Function Calling, Agentic, 多模態, Multimodal"
 }
 </script>

@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "檢索增強生成 RAG LLM 資源懶人包 | Leaderboard, Tools & Papers"
-description: "2025 最新 RAG 技術需知 LLM 大語言模型資源彙整。包含環境部署、數據處理、混合檢索與 Rerank 等必讀資源。"
+title: 檢索增強生成 (RAG) 實戰指南 | 本地部署、混合檢索與 Rerank
+description: 2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 LLM 推理框架 (xinference)、數據清洗切塊 (Chunking)、混合檢索與 Qwen3/Gemini Rerank 排名優化技巧。
 permalink: /RAG
 lang: zh-Hant
-keywords: ["RAG", "檢索增強生成", "LLM", "LangChain", "Rerank"]
+schema_type: article
 ---
 
 {% include header.html %}
@@ -291,17 +291,30 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
-  "description": "2025 最新 RAG 技術實戰指南，涵蓋環境部署、數據處理、混合檢索與 Rerank 優化技巧。",
-  "keywords": "RAG, Retrieval-Augmented Generation, LLM, 檢索增強生成",
-  "datePublished": "2024-07-07",
-  "dateModified": "2026-01-02",
-  "author": {
-    "@type": "Person",
-    "name": "TonTon Huang Ph.D.",
-    "url": "https://twman.org/"
-  }
+"@context": "https://schema.org",
+"@type": "TechArticle",
+"mainEntityOfPage": {
+"@type": "WebPage",
+"@id": "https://deep-learning-101.github.io/RAG"
+},
+"headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
+"description": "2026 最新 RAG 技術實戰指南，涵蓋環境部署、數據處理、混合檢索與 Rerank 優化技巧。深度解析 Qwen3, Gemini 等最新 Embedding 與重排序模型。",
+"image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+"author": {
+"@type": "Person",
+"name": "TonTon Huang Ph.D.",
+"url": "https://twman.org/"
+},
+"publisher": {
+"@type": "Organization",
+"name": "Deep Learning 101, Taiwan",
+"logo": {
+"@type": "ImageObject",
+"url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+}
+},
+"datePublished": "2024-07-07",
+"dateModified": "2026-03-29",
+"keywords": "RAG, Retrieval-Augmented Generation, LLM, 檢索增強生成, Embedding, Rerank, Qwen3, Gemini, 混合檢索"
 }
 </script>
