@@ -1,7 +1,7 @@
 ---
 layout: default
 title: NLP 自然語言處理資源懶人包 | Transformers, BERT & RAG | Deep Learning 101
-description: 2025 NLP 技術與論文資源彙整。從基礎的 Transformers、BERT 到最新的 RAG (檢索增強生成) 技術架構解析，提供研究人員與開發者最紮實的自然語言處理指南。
+description: 2026 NLP 技術與論文資源彙整。從基礎的 Transformers、BERT 到最新的 RAG (檢索增強生成) 技術架構解析，提供研究人員與開發者最紮實的自然語言處理指南。
 permalink: /Natural-Language-Processing
 lang: zh-Hant
 schema_type: service
@@ -141,7 +141,10 @@ service_type: AI Consulting
 <ul>
   <li><a href="https://www.twman.org/AI/NLP/Similarity">中文文本相似度</a></li>
 </ul> 
-</details>
+</details>  
+
+
+
 
 <script type="application/ld+json">
 {
@@ -149,15 +152,15 @@ service_type: AI Consulting
   "@type": "TechArticle",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/Natural-Language-Processing"
+    "@id": "https://deep-learning-101.github.io/Large-Language-Model"
   },
-  "headline": "自然語言處理 (Natural Language Processing, NLP) 資源與開發心得",
-  "description": "彙整自然語言處理（NLP）的核心技術與開發經驗，涵蓋資訊擷取、機器閱讀理解（MRC）、命名實體識別（NER）、文本糾錯、分類與相似度分析，並分享從業心得與挑戰。",
+  "headline": "從傳統 NLP 到 LLM 2026：機器閱讀理解、文本糾錯、AI Agent 與推理模型全紀錄",
+  "description": "整合 2018 至今的 NLP 開發心得與 2026 最新 LLM 技術。涵蓋機器閱讀理解(MRC)、命名實體識別(NER)、文本糾錯、RAG 架構、AI Agent 框架與 NVIDIA Nemotron 實戰資源。",
   "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
-    "@type": "Person",
-    "name": "TonTon Huang Ph.D.",
-    "url": "https://twman.org/"
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "url": "https://deep-learning-101.github.io/"
   },
   "publisher": {
     "@type": "Organization",
@@ -167,7 +170,18 @@ service_type: AI Consulting
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2020-02-29",
-  "keywords": "Natural Language Processing, NLP, Machine Reading Comprehension, Named Entity Recognition, Text Correction, Text Classification, Transformer, BERT, HuggingFace"
+  "datePublished": "2026-03-29",
+  "dateModified": "2026-03-29",
+  "keywords": "自然語言處理, NLP, LLM, 機器閱讀理解, MRC, 文本糾錯, NER, 命名實體識別, RAG, AI Agent, Reasoning Models, 中文 NLP 數據集, Transformer, BERT, DeepSeek, NVIDIA Nemotron",
+  "about": [
+    {
+      "@type": "Service",
+      "name": "傳統 NLP 技術開發與心得分享"
+    },
+    {
+      "@type": "Service",
+      "name": "大型語言模型 (LLM) 應用與微調"
+    }
+  ]
 }
 </script>
