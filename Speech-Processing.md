@@ -568,6 +568,44 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
 * 資源：[🤗 Hugging Face](https://huggingface.co/datasets/amu-cai/nEMO) | [📄 arXiv](https://arxiv.org/abs/2404.06292)
 
 
+<details 過往資訊 close>
+<summary><strong>過往資訊</strong></summary>
+
+- [GPT-SoVITS](https://github.com/RVC-Boss/GPT-SoVITS)：[GPT-SoVits: 上線兩天獲得了1.4k star的開源聲音克隆項目，1分鐘語音訓練TTS模型](https://zhuanlan.zhihu.com/p/679547903)
+
+- [Retrieval-based-Voice-Conversion-WebUI](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI)
+
+- [Rectified Flow Matching 語音合成，上海交大開源**](https://www.speechhome.com/blogs/news/1712396018944970752)：https://github.com/cantabile-kwok/VoiceFlow-TTS
+
+- [coqui-ai TTS](https://github.com/coqui-ai/TTS)
+    * [XTTS v2線上體驗](https://huggingface.co/spaces/coqui/xtts)
+    * [coqui-ai TTS 簡評](https://www.speechhome.com/blogs/news/1726435660778311680)
+    * [新一代開源語音庫CoQui TTS衝到了GitHub 20.5k Star](https://zhuanlan.zhihu.com/p/661291996)
+- [EmotiVoice](https://github.com/netease-youdao/EmotiVoice)
+    * [正式開源！網路易有道上線「易魔聲」語音合成引擎](https://zhuanlan.zhihu.com/p/666172336)
+
+- Amphion@OpenMMLab：https://github.com/open-mmlab/Amphion
+- Bark：https://github.com/suno-ai/bark
+    * [最強文本轉語音工具：Bark，本地安裝+雲端部署+在線體驗詳細教程](https://zhuanlan.zhihu.com/p/630900585)
+    * [使用Transformers 優化文本轉語音模型Bark](https://zhuanlan.zhihu.com/p/651951136)
+    * [GitHub 開源神器Bark模型，讓文字轉語音更簡單！](https://www.speechhome.com/blogs/news/1724361984838864896)
+- [Bert-VITS2](https://github.com/fishaudio/Bert-VITS2)
+    * [本地訓練,開箱可用,Bert-VITS2 V2.0.2版本本地基於現有資料集訓練](https://zhuanlan.zhihu.com/p/668211415)
+    * [栩栩如生,音色克隆,Bert-vits2文字轉語音打造鬼畜視訊實踐](https://zhuanlan.zhihu.com/p/662885913)
+- [清華大學LightGrad-TTS，且流式實現](https://zhuanlan.zhihu.com/p/656012430)：https://github.com/thuhcsi/LightGrad
+
+- [Wunjo AI: Synthesize & clone voices in English, Russian & Chinese](https://github.com/wladradchenko/wunjo.wladradchenko.ru)：https://huggingface.co/wladradchenko/wunjo.wladradchenko.ru
+
+- [VALL-E：微軟全新語音合成模型可以在3秒內復制任何人的聲音](https://zhuanlan.zhihu.com/p/598473227)
+    * [非官方](https://lifeiteng.github.io/valle/)：To avoid abuse, Well-trained models and services will not be provided.
+- [BLSTM-RNN、Deep Voice、Tacotron…你都掌握了吗？一文总结语音合成必备经典模型（一）](https://new.qq.com/rain/a/20221204A02GIT00)
+
+- [Tacotron2、GST、Glow-TTS、Flow-TTS…你都掌握了吗？一文总结语音合成必备经典模型（二）](https://cloud.tencent.com/developer/article/2250062)
+
+- [出門問問MeetVoice, 讓合成聲音以假亂真](https://zhuanlan.zhihu.com/p/92903377)
+</details>
+
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -592,8 +630,8 @@ ROC曲線：描述FAR和FRR間變化的曲線，X軸為FAR,Y軸為FRR。
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2026-03-19",
-  "dateModified": "2026-03-19",
+  "datePublished": "2026-03-29",
+  "dateModified": "2026-03-29",
   "keywords": "語音處理, Speech Processing, ASR, TTS, 語音辨識, 語音合成, 語者分離, 聲音克隆, Whisper, 本地部署, 逐字稿生成, AI客服, 邊緣運算",
   "about": {
     "@type": "Service",
