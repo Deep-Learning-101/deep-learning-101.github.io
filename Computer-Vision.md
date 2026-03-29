@@ -463,8 +463,8 @@ service_type: AI Consulting
       "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
   },
-  "datePublished": "2026-03-19",
-  "dateModified": "2026-03-19",
+  "datePublished": "2026-03-29",
+  "dateModified": "2026-03-29",
   "keywords": "電腦視覺, Computer Vision, YOLO, 目標偵測, OCR, 異常檢測, AOI, 圖像分割, SAM2, 擴散模型, 影片生成, 數位人, 發票解析, 機器視覺",
   "about": {
     "@type": "Service",
