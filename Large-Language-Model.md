@@ -242,6 +242,10 @@ AI Agent 的強大不在於單打獨鬥，而在於流程設計。以下精選�
 ---
 
 #### 4. 電腦操作與軟體工程師 (Computer Use & Coding)
+* **[[OpAgent]](https://github.com/codefuse-ai/OpAgent)** `[2026-02-20]` 🔥
+  * **核心優勢**：**視覺驅動的 Web 智能體霸主，WebArena 成功率 71.6% 榮登榜首。** 由螞蟻集團研發，打破傳統對 HTML 代碼的過度依賴，改採網頁截圖直接進行空間佈局理解。結合線上強化學習（Online RL）與「規劃、執行、反思、總結」四位一體的協作架構，賦予 AI 像真人一樣在複雜網頁中試錯與導航的能力。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統網頁腳本因 UI 改版就失效、以及無法處理跨頁面複雜邏輯的問題。** 無需預設腳本，僅憑一條指令即可在亞馬遜（Amazon）等真實電商平台自主完成搜尋、識別與加購操作，是建構自動化電商助理與 RPA 流程的頂級引擎。
+  * **資源**：[🐙 GitHub](https://github.com/codefuse-ai/OpAgent) | [🤗 HuggingFace](https://huggingface.co/codefuse-ai/OpAgent-32B) | [📄 Technical Report](https://arxiv.org/pdf/2602.13559) | [🌐 線上 Demo](https://huggingface.co/spaces/exias/OpAgent)
 * **[Gemini Computer Use](https://github.com/google-gemini/computer-use-preview)** `[2025-10]`：Google 預覽版框架，讓 AI 直接操作網頁介面。
 * **[WebDancer](https://www.alphaxiv.org/zh/overview/2505.22648)** `[2025-05-30]`：Alibaba 開源的 WebAgent，專精於網頁資料的自主瀏覽與操作。
 * **[OpenHands (Devin 平替)](https://github.com/All-Hands-AI/OpenHands)** `[2025-05-25]`：具備完整沙盒執行環境，能自主寫 Code、修 Bug。
@@ -442,6 +446,9 @@ Google 的 NotebookLM 改變了我們與長篇文獻互動的方式，但「資�
 * **[LangExtract](https://github.com/google/langextract)** `[2025-07-30]`：Google 開源，由 Gemini 驅動的高效資訊擷取庫。
 
 #### 2. 文檔解析與 OCR (Document Parsing & OCR)
+* **[Logics-Parsing-Omni (阿里通義)](https://github.com/alibaba/Logics-Parsing/tree/main/Logics-Parsing-Omni)** `[2026-03-12]` 🔥
+  * **核心優勢**：阿里最新釋出的「全模態 (Omni)」終極解析框架！打破傳統 OCR 的極限，採用單一模型端對端 (End-to-End) 架構，能將極度複雜的排版、數學公式、甚至是化學結構式 (SMILES)，精準轉化為帶有邏輯標籤的乾淨 HTML。
+  * **解決痛點**：解決傳統 RAG 系統前處理需要串接多個模型的「碎片化」痛點。主打「證據錨定 (Evidence anchoring)」，確保解析出來的結構化知識 100% 溯源，是目前企業對付複雜 STEM (理工科) 文件的最強清洗機。
 * **[Agentic-Doc](https://github.com/landing-ai/agentic-doc)** `[2025-06-10]`
   * **核心優勢**：吳恩達帶領的 LandingAI 團隊開源，主打「百頁文檔秒變結構化資料」，解決企業 PDF 財報難以解析的問題。[📝 知乎解讀](https://zhuanlan.zhihu.com/p/1914259475306612709)
 * **[markitdown](https://github.com/microsoft/markitdown)** `[2024-12-15]`：微軟官方開源的轉換神器，能將各種檔案格式（PDF, Word, Excel）轉化為乾淨的 Markdown。
@@ -452,7 +459,7 @@ Google 的 NotebookLM 改變了我們與長篇文獻互動的方式，但「資�
 
 ---
 
-### 🧰 開發者與個人資訊自動化 (Personal Automation & Dev Tools)
+### 3. 開發者與個人資訊自動化 (Personal Automation & Dev Tools)
 解救你的知識焦慮！這些工具能幫你將四散的資訊聚合，並透過 LLM 轉化為個人生產力。
 
 * **[OneFileLLM](https://github.com/jimmc414/onefilellm)** `[2025-04-16]`
@@ -467,6 +474,16 @@ Google 的 NotebookLM 改變了我們與長篇文獻互動的方式，但「資�
 * **[AingDesk](https://deepwiki.com/aingdesk/AingDesk)** `[2025-05-22]`：主打「零門檻」的本地 AI 模型部署介面。
 
 ---
+
+### 4. 視覺化畫布與 AI 創作引擎 (Visual Canvas & Creation)
+打破傳統 ChatGPT「單線對話框 (Chat UI)」的限制，提供全局鳥瞰的空間思維，適合複雜企劃與長篇寫作。
+
+* **[Refly (畫布式 AI 創作引擎)](https://github.com/refly-ai/refly)** `[持續更新]`
+  * **核心優勢**：一款極具創新力的「無限畫布式 (Canvas)」開源 AI 原生創作引擎。內建整合 13+ 主流大語言模型，提供類似 Miro 結合 Notion AI 的白板工作流。
+  * **解決痛點**：解決使用 AI 進行深度寫作或腦力激盪時「上下文容易丟失、邏輯難以串聯」的痛點。開發者與創作者可以在畫布上自由展開節點、對比多個模型的生成結果，是個人與團隊進行複雜 AI 內容協作的完美開源平替方案。[📖 官方中文文檔](https://docs.refly.ai/zh)
+
+---
+
 ## World Models
 **🌍 World Models (世界模型)**
 
@@ -590,6 +607,10 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
   * **技術亮點**：目前開源界中文能力最強的模型系列。從單張顯卡就能跑的 7B 模型，到超越 GPT-4 基準的 72B 巨獸，甚至包含可以直接聽懂人話的語音多模態版本。
   * **資源連結**：
     * [🌐 官方網站體驗](https://tongyi.aliyun.com/)
+    * **[Qwen3.6-Plus](https://www.aliyun.com/product/tongyi)** `[2026-04-02]` 🔥
+      * **核心優勢**：**定義「代理式編碼 (Agentic Coding)」新高度，支援百萬級超長上下文。** 阿里雲 2026 年旗艦力作，在 SWE-bench 與 Claw-Eval 等權威評測中展現出接近 Claude 的編碼實力，原生多模態推理讓 AI 能真正理解複雜的開發環境。
+      * **解決痛點 / 推薦場景**：**解決了傳統 AI 難以處理「倉庫級」複雜專案與自動化 Debug 的痛點。** 實現了「一句話驅動寫代碼」的氛圍編碼，能自主在虛擬環境中拆解任務、測試並修改至完成，是企業打造「AI 程式設計代理」的理想核心。
+      * **資源**：[🌐 阿里雲百煉控制台](https://help.aliyun.com/zh/model-studio/getting-started/what-is-model-studio) | [📝 技術深度解析：Qwen3.6 代理能力評測](https://zhuanlan.zhihu.com/p/2023033648056649131) | [🚀 立即體驗](https://tongyi.aliyun.com/)
     * [🤗 Qwen3.5-Omni (輸入支持圖、影片、文字。 輸出支援音訊、文字)](https://huggingface.co/spaces/Qwen/Qwen3.5-Omni-Offline-Demo) | [Qwen發表Qwen3.5-Omni，支援最長10小時語音輸入](https://www.ithome.com.tw/news/174791)
     * [🤗 Qwen-72B (企業級推理下載)](https://huggingface.co/Qwen/Qwen-72B)
     * [🐙 Qwen-7B (本地部署首選)](https://github.com/QwenLM/Qwen-7B)
@@ -677,7 +698,8 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 
 ## Multimodal
 **🌌 多模態大模型與語音硬體終端 (Multimodal & Edge AI)**
-2025 至 2026 年，大語言模型正式長出「眼睛」與「嘴巴」。本區塊不僅收錄了能看懂複雜圖表的多模態基礎模型 (Vision-Language Models)，更為創客與物聯網 (IoT) 開發者整理了最齊全的語音硬體開源解決方案。
+
+>2025 至 2026 年，大語言模型正式長出「眼睛」與「嘴巴」。本區塊不僅收錄了能看懂複雜圖表的多模態基礎模型 (Vision-Language Models)，更為創客與物聯網 (IoT) 開發者整理了最齊全的語音硬體開源解決方案。> 隨著模型能力的進化，單一模態（純文字、純視覺）已無法滿足複雜的應用場景。新一代的基礎大模型原生支援視覺、語音與工具呼叫，是開發自動化 AI Agent 的核心大腦。
 
 ### 1. 頂尖多模態與視覺推理 (Vision & Complex Parsing)
 需要讓 AI 看懂工程圖紙、財報表格或進行深度邏輯推理？這些是目前的開源王者：
@@ -702,6 +724,12 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
   * **核心優勢**：端側開源模型的驕傲！最新發布的 MiniCPM-o 2.6 與 3.0 版本，不僅支援 Ollama 一鍵部署，更是少數能真正在手機端流暢運行並具備優秀視覺能力 (MiniCPM-V) 的模型。[📝 魔改教學](https://mp.weixin.qq.com/s/DjDznmtKZoJNKXYz0X4zog)
 
 ### 3. 全球化與泛用生態 (Global & Versatile)
+* **[Gemma 4](https://blog.google/innovation-and-ai/technology/developers-tools/gemma-4/)** `[2026-04-02]`🔥
+  * **說明**：Google DeepMind 重磅發布，號稱目前「每單位參數智力最高」的開源模型家族！這次一口氣推出 E2B、E4B、26B MoE 與 31B Dense 四種規格。其中 31B 版本在 Arena AI 文字排行榜殺入開源前三，甚至「越級打怪」擊敗了參數量大它 20 倍的對手，性價比（CP 值）突破天際。
+  * **核心優勢**：
+    1. **為 Agent 工作流而生**：不再只是純聊天機器人！它原生支援 Function Calling（工具呼叫）、結構化 JSON 輸出與系統指令，讓開發者能輕鬆打造自主呼叫 API 的 AI Agent。
+    2. **全能多模態輸入**：直接吃下影像、影片甚至「語音」輸入。具備高達 256K 的超大上下文窗口，並涵蓋全球 140+ 種語言。
+  * **資源**：[🤗 HuggingFace Collections](https://huggingface.co/collections/google/gemma-4)
 * **[T5Gemma 2 (Google)](https://huggingface.co/collections/google/t5gemma-2)** `[2025-12-20]`：Google 開源的重磅模型，首創「140種語言 + 多模態 + 超長上下文」三位一體，是開發跨國多語系應用的殺手鐧。
 * **[Gemma 3n Preview](https://deepmind.google/models/gemma/?hl=zh-tw)** `[2025-05-21]`：Google DeepMind 的次世代輕量模型預覽版。
 
