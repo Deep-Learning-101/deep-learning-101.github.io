@@ -10,22 +10,22 @@
     </div>
     <div class="section-content">
 
-      <a href="/Blog/AIBeginner" class="sidebar-link featured-link" title="了解企業導入 AI 的核心策略與入門指南">
+      <a href="/Blog/AIBeginner" class="sidebar-link featured-link">
         <span class="badge-strategy">策略</span>
         AI新賽局：企業的入門策略指南
       </a>
 
-      <a href="/Blog/TW-LLM-Benchmark" class="sidebar-link featured-link" title="檢視臺灣在地化大語言模型的評測與表現">
+      <a href="/Blog/TW-LLM-Benchmark" class="sidebar-link featured-link">
         <span class="badge-report">評測</span>
         臺灣 LLM 性能評測與在地化分析
       </a>
 
-      <a href="/RAG" class="sidebar-link featured-link" title="從零開始建構高精準度的 RAG 檢索增強生成系統">
+      <a href="/RAG" class="sidebar-link featured-link">
         <span class="badge-tech">實戰</span>
         從零到一：打造高精準度 RAG 系統
       </a>
 
-      <a href="/agent" class="sidebar-link featured-link" title="解析 AI Agent 開發時常見的陷阱與解決方法">
+      <a href="/agent" class="sidebar-link featured-link">
         <span class="badge-warning">避坑</span>
         避開 AI Agent 開發陷阱與解決方案
       </a>
@@ -40,7 +40,7 @@
         OpenClaw(MoltBot/Clawdbot)讓您焦慮嗎？
       </a>
 
-      <a href="https://deep-learning-101.github.io/SHIELD/" class="sidebar-link featured-link" target="_blank" rel="noopener noreferrer">
+      <a href="https://deep-learning-101.github.io/SHIELD/" class="sidebar-link featured-link">
         <span class="badge-warning">實戰</span>
         S.H.I.E.L.D. (主權啟發式情資與企業邏輯防禦系統)
       </a>
@@ -57,8 +57,6 @@
       <a href="/Blog/vLLM-Ollama-SGLang-LLaMAcpp" class="sidebar-link">推論加速：vLLM, Ollama, SGLang</a>
       <a href="/gemini-fullstack-langgraph/FinGenAI" class="sidebar-link">Gemini + LangGraph 全端實戰</a>
       <a href="/FinRobot/FinRobot-GOOGL" class="sidebar-link">基於 AutoGen 的 FinRobot 體驗</a>
-      <a href="https://ciecietaipei.github.io/HuggingFace-Booking.html" class="sidebar-link" target="_blank" rel="noopener noreferrer">餐飲數位轉型 3.0：LINE LIFF + 混合雲端訂位</a>
-      <a href="https://ciecietaipei.github.io/AppsScripts-Booking.html" class="sidebar-link" target="_blank" rel="noopener noreferrer">餐飲數位轉型 2.0：AppScripts + 混合雲端訂位</a>
     </div>
   </details>
 
@@ -76,7 +74,7 @@
     </div>
   </details>
 
-  <details class="sidebar-section">
+    <details class="sidebar-section">
     <summary class="section-summary">
       <span>📝 產業趨勢</span>
       <span class="arrow">▼</span>
@@ -105,7 +103,7 @@
     </div>
   </details>
 
-  <details class="sidebar-section">
+    <details class="sidebar-section">
     <summary class="section-summary">
       <span>🛡️ AI 資安與 AIxCC 競賽</span>
       <span class="arrow">▼</span>
@@ -121,15 +119,18 @@
 </div>
 
 <style>
-  /* 容器樣式 */
+  /* 容器樣式 - 這裡做了置中修改 */
   .sidebar-container {
     background: white;
     border-radius: 12px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.05);
     overflow: hidden;
-    margin: 30px auto;      
-    max-width: 800px;       
-    width: 95%;             
+    
+    /* 置中關鍵設定 */
+    margin: 30px auto;      /* 上下30px，左右自動(置中) */
+    max-width: 800px;       /* 限制最大寬度，像是一張卡片 */
+    width: 95%;             /* 手機版左右留一點縫隙 */
+    
     border: 1px solid #eee;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   }
@@ -145,7 +146,6 @@
     margin: 0;
     font-size: 1.1em;
     color: #333;
-    letter-spacing: 0.5px; /* 稍微增加字距，提升標題質感 */
   }
 
   /* 區塊樣式 */
@@ -160,7 +160,7 @@
   /* 置頂區塊標題 */
   .section-title {
     padding: 12px 15px;
-    font-weight: 600; /* 統一字重 */
+    font-weight: bold;
     color: #d63384; 
     background: #fff0f6;
     display: flex;
@@ -175,14 +175,13 @@
   .section-summary {
     padding: 12px 15px;
     cursor: pointer;
-    font-weight: 600;
+    font-weight: bold;
     color: #444;
     list-style: none;
     display: flex;
     align-items: center;
     background: #fff;
-    transition: background 0.2s ease;
-    user-select: none; /* 防止點擊時文字反白 */
+    transition: background 0.2s;
   }
   
   .section-summary:hover {
@@ -198,7 +197,7 @@
     margin-left: auto;
     font-size: 0.8em;
     color: #999;
-    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* 讓箭頭旋轉更滑順 */
+    transition: transform 0.2s;
   }
 
   details[open] .arrow {
@@ -208,32 +207,26 @@
   /* 內容區域 */
   .section-content {
     padding: 5px 10px 15px 10px;
-    animation: fadeIn 0.3s ease-in-out; /* 展開時的微動畫 */
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-5px); }
-    to { opacity: 1; transform: translateY(0); }
   }
 
   /* 連結樣式 */
   .sidebar-link {
     display: block;
-    padding: 10px 12px; /* 稍微加大 padding，提升行動裝置點擊體驗 */
+    padding: 8px 10px;
     text-decoration: none;
     color: #555;
     border-radius: 6px;
     font-size: 0.95em;
     margin-bottom: 4px;
-    transition: all 0.2s ease;
-    line-height: 1.5;
-    text-align: left; 
+    transition: all 0.2s;
+    line-height: 1.4;
+    text-align: left; /* 連結內容保持靠左閱讀比較舒服 */
   }
 
   .sidebar-link:hover {
     background-color: #f1f3f5;
     color: #007bff;
-    transform: translateX(4px); /* 滑動感稍微明顯一點點 */
+    transform: translateX(3px);
   }
 
   /* 重點文章樣式 */
@@ -253,14 +246,13 @@
   /* Badge 樣式 */
   [class^="badge-"] {
     display: inline-block;
-    padding: 3px 6px;
+    padding: 2px 6px;
     border-radius: 4px;
     font-size: 0.75em;
-    font-weight: 600;
+    font-weight: bold;
     color: white;
-    margin-right: 6px;
+    margin-right: 5px;
     vertical-align: text-bottom;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.1); /* 增加立體感 */
   }
 
   .badge-strategy { background-color: #6610f2; }
