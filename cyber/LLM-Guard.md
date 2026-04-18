@@ -2,7 +2,7 @@
 layout: default
 title: 2026 AI 大模型安全護欄綜合報告 | 防禦框架、紅隊演練與評測分類器
 description: 深入解析 LLM 與 AI Agent 的安全防禦機制。完整收錄 NVIDIA NeMo、Llama Guard、ShieldGemma、Qwen3Guard 及 Garak 等開源工具的架構與實戰程式碼。
-permalink: /LLM-Guard
+permalink: /cyber/LLM-Guard
 lang: zh-Hant
 schema_type: article
 ---
@@ -300,7 +300,7 @@ messages = [
   * **解決痛點 / 推薦場景**：完美解決了傳統規則過濾過於僵硬、無法適應跨文化安全標準的痛點。適合需要快速通過中國大模型備案、或需符合歐盟《EU AI Act》與《GDPR》等國際合規標準的企業級全球化應用。
 
   * **資源**：[🐙 GitHub](https://github.com/openguardrails/openguardrails) | [🤗 HuggingFace](https://huggingface.co/openguardrails) | [📄 論文](https://arxiv.org/abs/2510.19169)
-  
+
 -----
 
 <h2 id="red-teaming">⚔️ 紅隊演練與動態滲透測試 (Red Teaming)</h2>

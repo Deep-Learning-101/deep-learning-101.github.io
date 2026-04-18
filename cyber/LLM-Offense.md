@@ -2,7 +2,7 @@
 layout: default
 title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
 description: 深入解析 LLM 與 Agent 的安全攻防策略。完整收錄提示詞注入、六大越獄攻擊手法、Payload 實例，以及 PyRIT、DeepTeam 等紅隊測試工具與微軟、Meta 的縱深防禦框架。
-permalink: /LLM-Offense
+permalink: /cyber/LLM-Offense
 lang: zh-Hant
 schema_type: article
 ---
