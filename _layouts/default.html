@@ -111,34 +111,61 @@ audio {
     {{ content }}
   </article>
 
-  <div id="ai-chat-btn" onclick="toggleChat()" style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #2196F3; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 9999; font-size: 28px; transition: transform 0.2s;">
-    🤖
-</div>
+<style>
+    /* 桌機版預設尺寸 */
+    #ai-chat-btn-dl {
+        position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; 
+        background-color: #2196F3; color: white; border-radius: 50%; 
+        display: flex; justify-content: center; align-items: center; cursor: pointer; 
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 9999; font-size: 28px; 
+        transition: transform 0.2s;
+    }
+    #ai-chat-window-dl {
+        display: none; position: fixed; bottom: 100px; right: 30px; 
+        width: 420px; height: 650px; 
+        /* 🚀 最大寬度與高度動態計算 */
+        max-width: calc(100vw - 40px); 
+        max-height: calc(100vh - 120px); 
+        background-color: white; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); 
+        z-index: 9998; overflow: hidden; border: 1px solid #ddd;
+    }
+    
+    /* 🚀 手機版專屬微調 */
+    @media (max-width: 480px) {
+        #ai-chat-btn-dl { bottom: 20px; right: 15px; width: 50px; height: 50px; font-size: 24px; }
+        #ai-chat-window-dl {
+            bottom: 80px; right: 15px;
+            width: calc(100vw - 30px);
+            max-height: calc(100vh - 100px);
+        }
+    }
+</style>
 
-<div id="ai-chat-window" style="display: none; position: fixed; bottom: 100px; right: 30px; width: 420px; height: 650px; background-color: white; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); z-index: 9998; overflow: hidden; border: 1px solid #ddd;">
+<div id="ai-chat-btn-dl" onclick="toggleChatDL()">🤖</div>
 
+<div id="ai-chat-window-dl">
     <div style="background-color: #2196F3; color: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; font-weight: bold;">
-        <span>Deep Learning 101 小助手</span>
-        <span onclick="toggleChat()" style="cursor: pointer; font-size: 18px;">✖</span>
+        <span style="font-size: 15px;">Deep Learning 101 小助手</span>
+        <span onclick="toggleChatDL()" style="cursor: pointer; font-size: 18px; padding: 0 5px;">✖</span>
     </div>
     <iframe
         src="https://deeplearning101-deeplearning101.hf.space"
-        style="width: 100%; height: calc(100% - 40px); border: none; display: block;">
+        style="width: 100%; height: calc(100% - 40px); border: none; display: block; background-color: #ffffff;">
     </iframe>
 </div>
 
 <script>
-    function toggleChat() {
-        var chatWindow = document.getElementById("ai-chat-window");
-        var chatBtn = document.getElementById("ai-chat-btn");
+    function toggleChatDL() {
+        var chatWindow = document.getElementById("ai-chat-window-dl");
+        var chatBtn = document.getElementById("ai-chat-btn-dl");
 
         if (chatWindow.style.display === "none") {
             chatWindow.style.display = "block";
-            chatBtn.innerHTML = "✖"; // 打開時按鈕變成叉叉
+            chatBtn.innerHTML = "✖";
             chatBtn.style.transform = "scale(0.9)";
         } else {
             chatWindow.style.display = "none";
-            chatBtn.innerHTML = "🤖"; // 關閉時按鈕變回機器人
+            chatBtn.innerHTML = "🤖";
             chatBtn.style.transform = "scale(1)";
         }
     }
