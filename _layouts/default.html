@@ -110,6 +110,43 @@ audio {
   <article class="markdown-body">
     {{ content }}
   </article>
+<div id="ai-chat-btn" onclick="toggleChat()" style="position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px; background-color: #2196F3; color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; box-shadow: 0 4px 8px rgba(0,0,0,0.3); z-index: 9999; font-size: 28px; transition: transform 0.2s;">
+    🤖
+</div>
+
+<div id="ai-chat-window" style="display: none; position: fixed; bottom: 100px; right: 30px; width: 380px; height: 600px; background-color: white; border-radius: 12px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); z-index: 9998; overflow: hidden; border: 1px solid #ddd;">
+    
+    <div style="background-color: #2196F3; color: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; font-weight: bold;">
+        <span>Deep Learning 101 小助手</span>
+        <span onclick="toggleChat()" style="cursor: pointer; font-size: 18px;">✖</span>
+    </div>
+
+    <iframe 
+        src="https://deeplearning101-deeplearning101.hf.space/?embed=true"
+        width="100%" 
+        height="calc(100% - 40px)" 
+        frameborder="0" 
+        style="display: block;">
+    </iframe>
+
+</div>
+
+<script>
+    function toggleChat() {
+        var chatWindow = document.getElementById("ai-chat-window");
+        var chatBtn = document.getElementById("ai-chat-btn");
+        
+        if (chatWindow.style.display === "none") {
+            chatWindow.style.display = "block";
+            chatBtn.innerHTML = "✖"; // 打開時按鈕變成叉叉
+            chatBtn.style.transform = "scale(0.9)";
+        } else {
+            chatWindow.style.display = "none";
+            chatBtn.innerHTML = "🤖"; // 關閉時按鈕變回機器人
+            chatBtn.style.transform = "scale(1)";
+        }
+    }
+</script>
 </body>
 </html>
   
