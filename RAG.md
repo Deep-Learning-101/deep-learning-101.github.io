@@ -22,28 +22,53 @@ schema_type: article
 > 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧。
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
-**相關文章 I**：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
-**相關文章 II**：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)
+**日期**：2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
+**相關文章 I**：2024-07-07：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
+**相關文章 II**：2025-07-16：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)  
+**相關文章 III**：2026-04-21：[Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)
 
 ---
 
-## 文章概述
+<h2 id="toc">目錄</h2>
+
+- [文章概述](#overview)
+- [為何 RAG？](#why-rag)
+- [一：基礎環境部署](#env-setup)
+  - [選擇本地端推理框架](#local-inference)
+- [二：RAG 優化核心流程](#rag-pipeline)
+  - [資料準備與嵌入 (Data Preparation & Embedding)](#data-prep)
+    - [2.1 Chunking 觀念建立：垃圾進，垃圾出](#chunking)
+    - [2.2 高品質數據提取與處理工具](#data-tools)
+    - [2.3 選擇合適的嵌入模型 (Embedding)](#embedding)
+  - [資料檢索 (Data Retrieval)](#retrieval)
+    - [2.4 檢索策略：為何需要混合檢索 (Hybrid Search)？](#hybrid-search)
+  - [檢索後處理 (Post-Retrieval Processing)](#post-retrieval)
+    - [2.5 Rerank：從「找得全」到「選得準」的關鍵一步](#rerank)
+  - [前沿架構突破 (Advanced Paradigm)](#advanced-paradigm)
+    - [2.6 無向量 RAG：PageIndex 樹狀推理](#pageindex)
+    - [2.7 突破表格與排版限制：無向量視覺檢索 (Vectorless Visual RAG)](#visual-rag)
+  - [LLM 生成優化 (LLM Generation)](#llm-gen)
+  - [迭代優化與評估 (Iterative Optimization & Evaluation)](#evaluation)
+- [總結](#summary)
+
+---
+
+<h2 id="overview">文章概述</h2>
 
 分享在實作 RAG（Retrieval-Augmented Generation）過程中遇到的挑戰與優化技巧，並強調 RAG 並非萬靈丹，需根據實際需求進行適當的設計與調整。
 
 ---
 
-## 為何 RAG？
+<h2 id="why-rag">為何 RAG？</h2>
 
 - **聚焦私有資料**：RAG 能專注於私有資料的檢索與生成，提升回應的相關性。
 - **結合檢索與生成**：透過檢索相關資料並結合生成模型，提供更精確的答案。
 
 RAG 提供了一種結合檢索與生成的強大方法，但並非適用於所有情境。實作時需根據實際需求選擇合適的工具與策略，並注意資料處理與模型部署的細節，才能發揮其最大效益。
 
-## 一：基礎環境部署
+<h2 id="env-setup">一：基礎環境部署</h2>
 
-### 選擇本地端推理框架
+<h3 id="local-inference">選擇本地端推理框架</h3>
 
 想在自己的本地端跑大模型，首先需要部署一套推理框架。常見的選擇有 [`Ollama`](https://ollama.com/) 、[VLLM](https://github.com/vllm-project/vllm)和 [`xinference`](https://github.com/xorbitsai/inference)。
 `Ollama` 的安裝和執行非常簡單，而 `xinference` 依個人體驗在管理多模型和多卡並行上提供了更大的彈性與便利性，對於進階使用者來說可能是更方便的選擇。
@@ -63,41 +88,70 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 
 ---
 
-## 二：RAG 優化核心流程
+<h2 id="rag-pipeline">二：RAG 優化核心流程</h2>
 
-### 資料準備與嵌入 (Data Preparation & Embedding)
+<h3 id="data-prep">資料準備與嵌入 (Data Preparation & Embedding)</h3>
 
-#### 2.1 Chunking  觀念建立：垃圾進，垃圾出
+<h4 id="chunking">2.1 Chunking 觀念建立：垃圾進，垃圾出</h4>
 
 > 在建立知識庫時，最忌諱的就是直接將原始文件一股腦地丟進系統；**請千萬不要無腦的塞入文檔讓它自動切割！**
+> 因為 RAG 系統的基礎是高質量的知識區塊 (Chunk)。如果分塊不佳、內容雜亂或包含大量無關資訊，後續的檢索模型再強大，也無法從一堆「垃圾」中準確找出黃金。
 
-**為什麼？** 因為 RAG 系統的基礎是高質量的知識區塊 (Chunk)。如果分塊不佳、內容雜亂或包含大量無關資訊（如頁眉、頁腳），那麼後續的檢索模型再強大，也無法從一堆「垃圾」中準確找出黃金，最終只會導致模型產生不準確或無關的答案。
+**💬 業界實戰痛點：文件切割時，如何規避語意被切斷的問題？**
 
+**語意截斷核心問題：**
+當文件內容被機械切割成固定大小的 chunk（塊）時，一個完整語意的單元可能被拆成兩半。例如：
+*「企業用戶享有優先客服通道，響應時間不超過 2 小時，並可申請專屬技術顧問服務。」*
+若切割邊界落在「2 小時，」處，前半句和後半句各自成為獨立的 chunk，單獨向量化後語意殘缺，檢索時因相關性不足均未被召回，導致關鍵資訊「消失」。
 
-* **考量要素**：將長文件切割成小塊的過程，是 RAG 系統效能優劣的關鍵。其目標是在「保留上下文」與「適應模型處理能力」之間取得平衡。
-  * 塊的大小：建議在 100 到 500 個 tokens 之間，過大或過小都會影響檢索與生成效果。
-  * 上下文保留：切塊時必須避免破壞句子或段落意義，確保模型能正確理解。
-  * 多模態處理：文件可能包含文本、表格、圖片等，需要針對不同內容類型設計切塊策略。
-* **切塊策略**
-    * **基礎結構化**切塊：
-      * 固定大小：最簡單，按固定詞數切割。優點：實現快。缺點：易破壞語義。
-      * 句子/段落切塊：按自然語言邊界（句子、段落）切割。優點：語義完整。缺點：塊大小不一，可能超出模型限制。
-    * **上下文保留型**切塊：
-      * 滑動窗口：讓相鄰的塊有部分重疊。優點：確保上下文連貫。缺點：處理量大，有內容重複。
-      * 語義切塊：基於句子語義相似度合併。優點：上下文保留最好。缺點：實現複雜，需依賴語言模型。
-    * **結構/內容感知型**切塊：
-      * 層級切塊：按章節、段落等文檔結構層次切割。優點：完美保留結構。適用：論文、合同。
-      * 內容感知切塊：根據標題、引言、結論等內容特徵動態切換策略。優點：靈活。適用：技術文檔、電子書。
-    * **特定內容型**切塊：
-      * 表格感知：將表格作為獨立單位處理，保留結構。適用：財務、技術報告。
-      * 實體感知：基於命名實體識別結果切塊。適用：簡歷、法律文件。
-      * 主題切塊：使用主題模型將同一主題句子聚合。適用：新聞、多主題論文。
-    * **適應模型與混合型**切塊：
-      * Token級切塊：嚴格按模型可處理的 token 數量切割，確保不超限。適用： GPT 等 Transformer 模型。
-      * 混合切塊：結合多種策略。優點：強大且靈活。缺點：實現最複雜。適用：極複雜的文件。
+基礎的 **重疊切割（Overlap）** 方案僅能保證跨邊界的文字不丟失，但無法解決「完整語意被拆散後每一半都不夠強」的問題；而單純增大 chunk size 則會引入雜訊，降低檢索精度。
 
+**📋 實戰六大方案完整匯整：**
 
-#### 2.2 高品質數據提取與處理工具
+  * **✅ 方案一：重疊切割（Overlap）——基礎兜底**
+      * **核心原理**：相鄰 chunk 保留一段重疊內容（推薦 chunk_size 的 10%～20%），確保跨邊界的連續文字至少完整出現在一個 chunk 中。
+      * **優點**：實作簡單、成本可控（儲存增加約 20%）、適用所有文件類型。
+      * **⚠️ 局限**：僅為概率性保護，無法識別真正語意邊界，長句仍可能被截斷，需搭配其他策略。
+  * **✅ 方案二：按語意邊界切割（Semantic Boundary Chunking）**
+      * **核心原理**：以自然語意單位（句子、段落）為邊界切割，避免在句子中間截斷。
+      * **實作方式**：使用 NLP 工具（如 spaCy, NLTK）識別句子邊界，並以句子為單位填充 chunk 直至達到大小上限。進階做法可針對論文等內容優先按段落切割。
+      * **優點**：chunk 語意完整、向量化更準確、檢索質量顯著提升。
+      * **⚠️ 局限**：chunk 大小不均勻，需設上限兜底；複雜句式可能識別錯誤。
+  * **✅ 方案三：句子視窗檢索（Sentence Window Retrieval）**
+      * **核心邏輯**：將「切割」與「檢索回傳」分離——存儲時按單句切割並獨立向量化，檢索命中後回傳該句的「前後 N 句」形成上下文視窗給 LLM。
+      * **優點**：檢索粒度細（精度高、噪聲少），生成時上下文完整。
+      * **⚠️ 局限**：存儲量巨大（記錄數≈文檔句子總數）、向量計算成本增加。
+  * **✅ 方案四：父子切割（Parent-Child Chunking）**
+      * **核心邏輯**：同份內容存兩份——子 chunk（小粒度，如 200 token）用於精準檢索，父 chunk（大粒度，如 1000 token）用於生成，兩者通過 ID 關聯。
+      * **優點**：檢索精準，且生成時具備大塊上下文，靈活性高。
+      * **⚠️ 局限**：存儲翻倍、索引結構較複雜。
+  * **✅ 方案五：命題化切割（Propositions-based Chunking）**
+      * **核心原理**：用 LLM 將文件分解為獨立「命題」（Proposition）——每個命題是一個自包含的陳述句，含完整主賓語、無上下文依賴。
+      * **優點**：語意密度最高、檢索精度極佳、向量化效果最好。
+      * **⚠️ 局限**：需額外呼叫 LLM，成本高昂且速度慢，適合醫療/金融等高質量要求場景。
+  * **✅ 方案六：上下文檢索 Contextual Retrieval（Anthropic 2024）**
+      * **核心問題解決**：孤立 chunk 向量化時丟失全局語境（如「此條款自 2024 年生效」不知是哪個條款）。
+      * **操作步驟**：用 LLM 讀取完整文檔，為每個 chunk 生成 1–2 句背景說明，然後將 Context + chunk 整體做 Embedding/BM25 索引。
+      * **優點**：結合 BM25 混合檢索，Top-20 檢索失敗率降低約 49%。利用 Prompt Caching 機制可大幅降低成本。
+      * **⚠️ 局限**：仍需消耗一定的 LLM Token 成本。
+
+**🎯 工程實戰：方案選型策略**
+
+| 方案 | 核心思路 | 適用場景 | 代價 |
+| :--- | :--- | :--- | :--- |
+| **重疊切割** | 相鄰 chunk 內容重疊 | 所有場景（基礎兜底） | 存儲輕微增加 |
+| **語意邊界切割** | 按句子/段落邊界切 | 段落清晰的文件（論文、技術文檔） | 需 NLP 工具 |
+| **句子視窗檢索** | 細粒度檢索 + 動態擴展上下文 | 追求高召回精度 | 存儲量大 |
+| **父子切割** | 小塊檢索、大塊生成 | 通用場景（效果均衡） | 存儲翻倍、索引複雜 |
+| **命題化切割** | LLM 分解為獨立命題 | 高質量知識庫（醫療/金融） | LLM 成本高 |
+| **Contextual Retrieval** | 向量化前補全 chunk 背景 | 語境強、chunk 孤立問題嚴重 | LLM 成本（緩存可降） |
+
+> **💡 工程組合建議**：
+> 預設方案：重疊切割（兜底）+ 語意邊界切割（保質量）。
+> 高質量需求：疊加父子切割或 Contextual Retrieval。
+> 極致精度：命題化切割（用成本換取最高質量）。
+
+<h4 id="data-tools">2.2 高品質數據提取與處理工具</h4>
 
 為了確保輸入資料的品質，我們需要使用專業工具進行精細的文本提取與處理。
 
@@ -117,7 +171,7 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 > **補充觀點：工具的目標**
 > 使用這些工具的最終目標是實現**最佳化分塊 (Optimal Chunking)** 和**預處理關鍵資訊**。這意味著我們要將文件切分成有意義、上下文連貫的段落，並清理掉無關的噪聲，確保每個文本片段在被單獨檢索時仍能表達清晰的含義。
 
-#### 2.3 選擇合適的嵌入模型 (Embedding)
+<h4 id="embedding">2.3 選擇合適的嵌入模型 (Embedding)</h4>
 
 在大型語言模型（LLM）應用中，當涉及檢索增強生成（Retrieval-Augmented Generation, RAG）時，其核心目標是為 LLM 提供精準且具備上下文的資訊，從而生成高品質、具事實根據的回應。傳統的關鍵字搜尋方法已不足以應對複雜的語義理解需求。為此，RAG 系統引入了嵌入（Embedding）模型和重排序（Reranking）模型，共同構成了高效能資訊檢索的基石；它們直接影響到 RAG 系統檢索資訊的相關性與準確性。
 
@@ -174,9 +228,9 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 
 *(註：MTEB/C-MTEB 分數是浮動的，數據基於 [2025 年 Q3 的 CSV 檔案](https://huggingface.co/spaces/mteb/leaderboard)。N/A 表示無適用的公開分數。)*
 
-### 資料檢索 (Data Retrieval)
+<h3 id="retrieval">資料檢索 (Data Retrieval)</h3>
 
-#### 2.4 檢索策略：從單一到混合
+<h4 id="hybrid-search">2.4 檢索策略：為何需要混合檢索 (Hybrid Search)？</h4>
 
 檢索是從向量資料庫中找出與使用者問題相關資訊的過程。常見的策略包括：
 
@@ -195,9 +249,9 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 > **補充觀點：為何需要混合檢索 (Hybrid Search)？**
 > 單一的檢索方式存在盲點：向量檢索可能忽略關鍵字，而全文檢索無法理解語義。**混合檢索**將兩者結合，它既能透過全文檢索確保**精確匹配**不遺漏，又能透過向量檢索找到**語義相關**的內容，從而**大幅提升覆蓋率 (Recall)**，是目前最主流且效果最好的檢索策略。
 
-### 檢索後處理 (Post-Retrieval Processing)
+<h3 id="post-retrieval">檢索後處理 (Post-Retrieval Processing)</h3>
 
-#### 2.5 Rerank：從「找得全」到「選得準」的關鍵一步；[更多 Embedding和Rerank模型說明在這](#Appendix-Embedding-Reranking-RAG)
+<h4 id="rerank">2.5 Rerank：從「找得全」到「選得準」的關鍵一步</h4>；[更多 Embedding和Rerank模型說明在這](#Appendix-Embedding-Reranking-RAG)
 
 初步檢索（尤其是`混合檢索`）的目標是「找得全」，但這也意味著結果中可能混雜著一些相關性不高的內容。這時就需要 Rerank 來進行「二次精選」。
 
@@ -242,14 +296,147 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 然而，引入重排序模型會增加延遲和系統複雜性。儘管開箱即用的重排序模型在某些推理任務上可能表現不佳，但透過微調可以實現最先進的性能。這也顯示了重排序模型在真實世界應用中，需要在模型大小、排名準確性以及延遲/吞吐量等系統要求之間取得平衡。
 
+<h3 id="advanced-paradigm">前沿架構突破 (Advanced Paradigm)</h3>
 
-### LLM 生成優化 (LLM Generation)
+<h4 id="pageindex">2.6 無向量 RAG：PageIndex 樹狀推理</h4>
+
+這篇文章詳細記錄了如何將傳統 RAG 系統在複雜長文檔（如金融 10-K 年報）上的準確率從 ~61% 飆升至 94%，核心在於採用了名為 **PageIndex** 的「無向量 RAG」新架構。
+
+**📌 傳統向量 RAG 處理長文檔的三大缺陷：**
+
+1.  **語意相似 ≠ 相關**：敘述性文字與具體數據的語意可能極度接近，但用途完全不同（例如 CEO 致辭 vs. 真實資產負債表），導致關鍵數據被忽略。
+2.  **分塊破壞結構**：諸如「如表3.2所示」的文字與實際表格經常被強制拆分至不同區塊，導致引用完全失效。
+3.  **意圖與表述不對齊**：用戶問題（如「總負債」）與文檔內部寫法（如「流動負債」「長期債務」）的措辭不一致，導致餘弦相似度無法匹配。
+
+**🔄 新思路：PageIndex 仿生學設計**
+PageIndex 不將文檔硬切碎轉為向量，而是**模擬人類分析師閱讀長文檔的行為**：`先看目錄 → 判斷章節 → 翻至對應頁面 → 若錯誤則回溯`。它將文檔構建為**樹狀結構**，讓 LLM 直接在樹上進行推理導航。
+
+**⚙️ 運作機制與關鍵工程細節**
+
+1.  **建構目錄樹**：LLM 解析文檔標題與章節，生成層級樹。每個節點包含標題、頁碼、摘要與關鍵主題。系統具備三路徑自動降級機制（最優路徑直接解析、次優路徑掃描正文、兜底路徑「發明目錄」），確保無結構文檔也能運行。
+2.  **推理式搜尋（迭代循環）**：
+      - LLM 根據 Query 判斷可能章節（例如：長期負債 → 財務報表 → 附註）。
+      - 展開節點提取原始文字。
+      - LLM 自行評估資訊是否足夠：✅ 足夠 → 產出答案（附頁碼）；❌ 不足 → 返回目錄樹選擇下一個節點繼續找。
+3.  **動態容錯**：遇到目錄頁碼與實體 PDF 頁碼不符時，系統會計算偏移量並全域校正；建樹後也會併發驗證，避免 LLM 幻覺。
+
+**📊 傳統 RAG vs. PageIndex 對比**
+
+| 維度 | 傳統向量 RAG | PageIndex (無向量) |
+| :--- | :--- | :--- |
+| **檢索方式** | 向量相似度搜尋 | LLM 推理式樹搜尋 |
+| **索引方式** | Embedding + 向量資料庫 | 層級樹結構（JSON） |
+| **分塊策略** | 固定大小/語意分塊 | 保留文檔自然邊界與結構 |
+| **準確率** (FinanceBench) | ~50% | **98.7%** |
+| **可解釋性** | 低（僅提供相似度分數） | **高**（完整推理鏈 + 頁碼引用） |
+| **延遲** | 低（單次快速查詢） | 較高（需多次 LLM 推理呼叫） |
+| **適用場景** | 大規模文檔集合快速找尋 | **單篇複雜長文檔精確問答** |
+
+> **🏗️ 最佳實踐：混合架構推薦**
+> 由於 PageIndex 需要多次 LLM 推理，延遲較高，實戰中建議採取混合架構：
+>
+>   * **粗篩（向量檢索）**：用傳統 Embedding 搜尋從大量文檔中快速鎖定目標文檔。
+>   * **精查（PageIndex）**：針對鎖定的目標文檔啟動樹推理，精確提取答案與頁碼出處。非常適合金融報告、法律合同、學術論文等需嚴格追蹤引用的場景。
+
+**💻 簡化實作步驟參考 (以 Gemini API 為例)**
+
+<details>
+<summary>👉 點擊展開：Python 實作概念碼</summary>
+
+```python
+import fitz
+import json
+from google import genai
+
+# 1. 解析文檔 (PyMuPDF)
+def parse_pdf(pdf_path):
+    doc = fitz.open(pdf_path)
+    pages = []
+    for i, page in enumerate(doc):
+        text = page.get_text().strip()
+        if text:
+            pages.append({"page_num": i+1, "text": text})
+    return pages
+
+# 2. 按章節分組 (保留自然邊界)
+def group_pages_into_sections(pages, per_section=3):
+    sections = []
+    for i in range(0, len(pages), per_section):
+        batch = pages[i:i+per_section]
+        section_id = f"S{str(i//per_section+1).zfill(3)}"
+        combined_text = "nn".join(p["text"] for p in batch)
+        sections.append({
+            "section_id": section_id,
+            "start_page": batch[0]["page_num"],
+            "end_page": batch[-1]["page_num"],
+            "text": combined_text
+        })
+    return sections
+
+# 3. 建樹索引 (LLM 生成摘要)
+def index_section(section, client):
+    preview = section["text"][:1500]
+    prompt = f"""Read this section... Respond with ONLY valid JSON: {{"title":"...","summary":"...","key_topics":[...]}}"""
+    response = client.models.generate_content(model="gemini-2.0-flash", contents=prompt)
+    parsed = json.loads(response.text.strip())
+    return {
+        "node_id": section["section_id"],
+        "title": parsed["title"],
+        "pages": f"{section['start_page']}-{section['end_page']}",
+        "summary": parsed["summary"],
+        "key_topics": parsed["key_topics"]
+    }
+
+# 4. 樹搜尋 (LLM 推理選節點)
+def retrieve_sections(tree, query, client):
+    prompt = f"""You are a document retrieval expert... Respond with ONLY valid JSON: {{"reasoning":"...","selected_ids":[...],"confidence":"..."}}"""
+    response = client.models.generate_content(model="gemini-2.0-flash", contents=prompt)
+    return json.loads(response.text.strip())
+
+# 5. 生成答案
+def generate_answer(query, context, client):
+    prompt = f"""Answer using only context. Be specific. Cite page numbers.nCONTEXT:{context}nQUESTION:{query}nANSWER:"""
+    response = client.models.generate_content(model="gemini-2.0-flash", contents=prompt)
+    return response.text.strip()
+```
+
+</details>
+
+<br>
+
+<h4 id="visual-rag">2.7 突破表格與排版限制：無向量視覺檢索 (Vectorless Visual RAG)</h4>
+
+在企業級知識庫（如財務報表、資安法規、醫療 SOP）中，充滿了大量的**表格、流程圖與複雜排版**。傳統 RAG 系統在「文字提取」階段，往往會將 2D 的表格壓扁成 1D 的純文字，導致欄位錯位、語意斷裂，進而引發嚴重的 LLM 幻覺。
+
+即便使用了前面提到的 PageIndex 樹狀推理，如果最終餵給 LLM 的依然是「轉換後的純文字」，在解讀複雜圖表時依然會遇到瓶頸。為此，結合多模態大模型（如 Gemini 1.5/2.0 Pro、GPT-4o）的 **「無向量視覺檢索 (Visual RAG)」** 成為了終極解決方案。
+
+**🚀 核心架構：結構化目錄 + 原始影像直讀**
+
+此架構完全捨棄了「文字切塊 (Chunking)」與「向量化 (Embedding)」，轉而模擬人類「查閱參考書」的真實行為：
+
+1. **結構解析與座標映射 (無 LLM 延遲)**：
+   放棄傳統的 PDF 轉文字，改用底層物理結構解析工具（如 `OpenDataLoader` 搭配 `PyMuPDF`）。系統會快速掃描 PDF，辨識出標題 (Heading)、表格 (Table) 與圖片 (Picture) 的精準座標 (Bounding Box) 與絕對頁碼，藉此建立一棵極輕量級的 JSON 樹狀目錄。這個過程無需呼叫 LLM，建檔速度極快。
+2. **總圖書館長定位 (目錄檢索)**：
+   當收到使用者查詢時，系統不搜尋全文，而是將使用者的問題與「JSON 目錄樹」送給 LLM（擔任總圖書館長的角色）。LLM 透過目錄層級，精準推導出答案位於「哪一份文獻的第 X 頁」。
+3. **多模態視覺直讀 (Vision RAG)**：
+   鎖定頁碼後，系統**不提取文字**，而是直接從資料夾中調用該頁面的**高畫質原始截圖 (JPEG/PNG)**，將圖片連同使用者的問題直接送給多模態 LLM。
+
+**📊 Visual RAG 的決定性優勢**
+
+* **0% 排版遺失**：無論是跨頁表格、密集的財報數據、或是帶有箭頭指示的 IT 系統架構圖，AI 都是「看著原圖」作答，徹底消滅了文字轉換過程中的結構破壞。
+* **解決「文字/圖像」混合難題**：傳統 RAG 面對「請參考圖 3-1 並結合表 2 的數據」這類問題會直接當機，而 Visual RAG 能像人類一樣同時綜整圖文資訊。
+* **極低的 Token 浪費**：搜尋階段只需閱讀輕量的 JSON 目錄，生成階段只需傳入單張圖片，大幅降低了將整份長文本塞入 Context Window 的成本。
+
+> **💡 工程實戰建議**：
+> 要實作此架構，強烈建議使用 `PyMuPDF` 在建檔期預先將 PDF 所有頁面渲染為高畫質圖片存檔。當檢索命中時，直接利用文件 ID 與頁碼拼接出圖片路徑，即可達成毫秒級的影像調用，完美銜接多模態 LLM 的輸入 API。
+
+<h3 id="llm-gen">LLM 生成優化 (LLM Generation)</h3>
 
 在 `xinference` 或 `Ollama` 中，不僅檢索與重排模型重要，最終用於生成答案的模型也應根據需求選擇。
 
 如果你的 RAG 流程（從數據處理到 Rerank）已經做得非常好，檢索到的上下文品質極高，那麼有時並不需要動用最強大的生成模型（如 GPT-4 等級）。`Llama-3.1-70B-Instruct`就足以生成優質、準確的答案。這同樣是在**準確性和計算成本**之間做出明智的權衡。
 
-### 迭代優化與評估 (Iterative Optimization & Evaluation)
+<h3 id="evaluation">迭代優化與評估 (Iterative Optimization & Evaluation)</h3>
 
 建立 RAG 系統並非一勞永逸，它是一個需要持續優化和迭代的過程。當系統上線後，我們需要一套機制來衡量其表現。
 
@@ -261,7 +448,7 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 ---
 
-## 總結
+<h2 id="summary">總結</h2>
 
 通過將實戰操作融入清晰的理論框架，您建立的 RAG 指南將會：
 
@@ -286,35 +473,34 @@ Reranker 模型的核心是其 cross-encoder 架構。與 embedding 模型（bi-
 
 ---
 
-> 📖 如需進一步了解，請參閱原文：  
-> [https://blog.twman.org/2024/07/RAG.html](https://blog.twman.org/2024/07/RAG.html)
-
 <script type="application/ld+json">
 {
-"@context": "https://schema.org",
-"@type": "TechArticle",
-"mainEntityOfPage": {
-"@type": "WebPage",
-"@id": "https://deep-learning-101.github.io/RAG"
-},
-"headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
-"description": "2026 最新 RAG 技術實戰指南，涵蓋環境部署、數據處理、混合檢索與 Rerank 優化技巧。深度解析 Qwen3, Gemini 等最新 Embedding 與重排序模型。",
-"image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-"author": {
-"@type": "Person",
-"name": "TonTon Huang Ph.D.",
-"url": "https://twman.org/"
-},
-"publisher": {
-"@type": "Organization",
-"name": "Deep Learning 101, Taiwan",
-"logo": {
-"@type": "ImageObject",
-"url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
-}
-},
-"datePublished": "2024-07-07",
-"dateModified": "2026-03-29",
-"keywords": "RAG, Retrieval-Augmented Generation, LLM, 檢索增強生成, Embedding, Rerank, Qwen3, Gemini, 混合檢索"
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/RAG"
+  },
+  "inLanguage": "zh-Hant",
+  "headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
+  "description": "2026 最新 RAG 技術實戰指南，涵蓋環境部署、數據處理、混合檢索、Rerank 優化技巧，以及最前沿的 PageIndex 樹狀推理與無向量視覺檢索 (Visual RAG) 架構深度解析。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png"
+    }
+  },
+  "datePublished": "2024-07-07",
+  "dateModified": "2026-04-21",
+  "articleSection": ["Generative AI", "Information Retrieval", "Machine Learning"],
+  "keywords": "RAG, Retrieval-Augmented Generation, LLM, 檢索增強生成, Embedding, Rerank, Qwen3, Gemini, 混合檢索, PageIndex, Visual RAG, 無向量視覺檢索, OpenDataLoader"
 }
 </script>
