@@ -25,7 +25,22 @@ schema_type: article
 **日期**：2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
 **相關文章 I**：2024-07-07：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
 **相關文章 II**：2025-07-16：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)  
-**相關文章 III**：2026-04-21：[Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)
+**相關文章 III**：2026-04-21：[Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)  
+**🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵** <audio controls style="width:200px; height:20px;"><source src="./notebooklm-mp3/RAG.mp3" type="audio/mpeg"></audio>
+
+---
+
+<div style="display: flex; justify-content: center;">
+  <div style="position: relative; width: 100%; max-width: 460px; aspect-ratio: 16 / 9;">
+    <iframe
+      src="https://www.youtube.com/embed/eqcbGYjpxlA"
+      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
+      frameborder="0"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen>
+    </iframe>
+  </div>
+</div>
 
 ---
 
@@ -444,7 +459,7 @@ def generate_answer(query, context, client):
 4. **目錄樹的真實性 (Truthfulness)**：
    * **傳統解析**：目錄樹是 LLM 根據文字內容「幻想/總結」出來的，容易產生幻覺。
    * **物理版面解析**：目錄樹 100% 基於原生檔案的字體大小、粗細與縮排所建立，是客觀存在的「物理目錄」，不具備任何幻覺空間，所見即所得。
-   
+
 <h3 id="llm-gen">LLM 生成優化 (LLM Generation)</h3>
 
 在 `xinference` 或 `Ollama` 中，不僅檢索與重排模型重要，最終用於生成答案的模型也應根據需求選擇。
