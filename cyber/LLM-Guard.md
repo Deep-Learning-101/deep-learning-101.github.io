@@ -307,14 +307,20 @@ messages = [
 
 *防禦工具部署後，必須透過攻擊工具來驗證其有效性。*
 
-  * **[[GuardVal (HKUST)]](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
-      * **核心優勢**：**首創「狀態感知」的動態越獄評估協議**。不同於傳統固定題庫，GuardVal 透過 Translator、Generator 與 Evaluator 三方協作，能根據防禦端 LLM 的即時回應，動態優化攻擊提示（Prompt）。
-      * **解決痛點 / 推薦場景**：解決了靜態安全基準（Benchmarks）容易被模型「背題」繞過、無法偵測深層漏洞的痛點。其內建的 **Optimizer 防停滯機制** 能持續挖掘模型在極端壓力下的安全邊界，是企業進行自動化紅隊滲透與安全性基準測試的前沿方案。
-      * **資源**：[📝 深度技術解讀](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A) | [📄 論文原文](https://www.google.com/search?q=https://arxiv.org/abs/GuardVal-Dynamic-Jailbreak) *(預計路徑)*
+* **[[AgentAuditor: 記憶增強的 Agent 安全評估框架]](https://github.com/Astarojth/AgentAuditor-ASSEBench)** `[2025-06]` 🔥
+  * **核心優勢**：**首創「記憶增強推理 (Memory-Augmented Reasoning)」的 Agent 專屬安全評測框架**。透過 RAG 技術將歷史多輪互動記錄轉化為「結構化特徵 + 思維鏈 (CoT)」的經驗記憶庫。讓 LLM 在評估未知風險時，能像人類專家一樣調用歷史經驗，性能全面超越專門微調的 ShieldAgent 與 Llama-Guard-3。
+  * **解決痛點 / 推薦場景**：解決了現有 LLM 評估器「評分標準不一致」與「難以應對隱晦、多步動態風險」的致命痛點。是企業建構 **Agent 動態安全稽核 (Security Audit)** 與 **自動化紅隊測試 (Red Teaming)** 的頂級開源方案。內建 ASSEBench 高品質資料集。
+  * **資源**：[🐙 GitHub & ASSEBench 資料集](https://github.com/Astarojth/AgentAuditor-ASSEBench) | [📄 論文](https://arxiv.org/abs/2506.00641)
+  `[NeurIPS 2025]` `[Agent安全稽核]` `[RAG記憶增強]` `[超越人類水準]`
 
-  * **[NVIDIA Garak](https://github.com/NVIDIA/garak)**
-      * **核心優勢**：**自動化漏洞掃描器**。這是一個強大的命令列 (CLI) 掃描工具，使用「探針 (probes)」發送惡意提示，並用「偵測器 (detectors)」判斷模型是否上鉤。
-      * **解決痛點 / 推薦場景**：模型部署前的全面安全評估與基準測試，能有效掃描 OpenAI API 或本地 Hugging Face 模型的潛在漏洞。<br>`[紅隊測試]` `[自動化掃描]`
+* **[[GuardVal (HKUST)]](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
+    * **核心優勢**：**首創「狀態感知」的動態越獄評估協議**。不同於傳統固定題庫，GuardVal 透過 Translator、Generator 與 Evaluator 三方協作，能根據防禦端 LLM 的即時回應，動態優化攻擊提示（Prompt）。
+    * **解決痛點 / 推薦場景**：解決了靜態安全基準（Benchmarks）容易被模型「背題」繞過、無法偵測深層漏洞的痛點。其內建的 **Optimizer 防停滯機制** 能持續挖掘模型在極端壓力下的安全邊界，是企業進行自動化紅隊滲透與安全性基準測試的前沿方案。
+    * **資源**：[📝 深度技術解讀](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A) | [📄 論文原文](https://www.google.com/search?q=https://arxiv.org/abs/GuardVal-Dynamic-Jailbreak) *(預計路徑)*
+
+* **[NVIDIA Garak](https://github.com/NVIDIA/garak)**
+    * **核心優勢**：**自動化漏洞掃描器**。這是一個強大的命令列 (CLI) 掃描工具，使用「探針 (probes)」發送惡意提示，並用「偵測器 (detectors)」判斷模型是否上鉤。
+    * **解決痛點 / 推薦場景**：模型部署前的全面安全評估與基準測試，能有效掃描 OpenAI API 或本地 Hugging Face 模型的潛在漏洞。<br>`[紅隊測試]` `[自動化掃描]`
 
 **基本使用流程 (CLI)：**
 
@@ -343,9 +349,15 @@ garak --list_probes
 
 <h2 id="datasets">🧪 安全資料集 (Safety Datasets)</h2>
 
-  * **[JailBreakV-28k](https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k)**
-      * **核心優勢**：**專注越獄防禦的巨量資料庫**。提供大量用於測試和研究 LLM 越獄漏洞的「提示詞-圖片-模型-回應」數據，包含 28,000+ 筆紀錄。
-      * **解決痛點 / 推薦場景**：解決了研究人員缺乏高質量越獄樣本的痛點，是訓練自訂攻擊檢測模型與多模態研究的必備資源。<br>`[越獄樣本]` `[安全訓練]`
+* **[[MSB: MCP Security Bench]](https://github.com/dongsenzhang/MSB)** `[2026-04]` 🔥
+    * **核心優勢**：**全球首個針對 MCP 協定的端到端安全評估基準**。系統性歸納了 12 種新型攻擊（如越權參數、使用者冒充、虛假錯誤），並提出 **NRP (淨彈性性能)** 指標，量化模型在對抗環境下的「安全與效能平衡點」。
+    * **解決痛點 / 推薦場景**：揭露了「能力越強的模型（如 DeepSeek-V3.1, GPT-5）在 MCP 場景下越脆弱」的逆縮放規律。適合用於**評測企業級 MCP 工具伺服器的防禦韌性**，防止代人被惡意工具誘導執行敏感操作。
+    * **資源**：[🐙 GitHub](https://github.com/dongsenzhang/MSB) | [📄 論文原文](https://github.com/dongsenzhang/MSB)
+    `[ICLR 2026]` `[MCP安全]` `[NRP指標]` `[Agent防禦]`
+
+* **[JailBreakV-28k](https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k)**
+    * **核心優勢**：**專注越獄防禦的巨量資料庫**。提供大量用於測試和研究 LLM 越獄漏洞的「提示詞-圖片-模型-回應」數據，包含 28,000+ 筆紀錄。
+    * **解決痛點 / 推薦場景**：解決了研究人員缺乏高質量越獄樣本的痛點，是訓練自訂攻擊檢測模型與多模態研究的必備資源。<br>`[越獄樣本]` `[安全訓練]`
 
 -----
 

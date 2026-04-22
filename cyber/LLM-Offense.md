@@ -46,6 +46,7 @@ schema_type: article
 | **[llm-guard](https://github.com/protectai/llm-guard)** | `protectai` | **防禦性函式庫/防火牆**。作為應用層安全層，透過可插拔掃描器即時淨化進出數據。 | 執行期即時防護、個資去識別化<br>`[應用層防禦]` `[資料過濾]` |
 | **[ShieldGemma 2](https://deepmind.google/models/gemma/shieldgemma-2/)** | **Google DeepMind** | **專家級安全分類模型**。經微調專門判斷文字是否違反安全策略，深度語意理解。 | 內容安全審核、精準語意過濾<br>`[分類器]` `[LLM-as-a-Judge]` |
 | **[JailBreakV-28k](https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k)** | **Hugging Face** | **專屬越獄資料集**。提供 28,000+ 筆用於研究 LLM 越獄的「提示詞-圖片-模型-回應」數據。 | 學術研究、自訓練安全防禦模型<br>`[安全資料集]` `[多模態越獄]` |
+| **[MSB (MCP Security Bench)](https://github.com/dongsenzhang/MSB)** `[2026-04]` | BUPT / UCSB | **[針對 MCP 標準的精準打擊]**。鎖定模型上下文協定，利用惡意工具描述進行提示注入，成功率峰值達 75.83%。解決了傳統函數呼叫測試無法覆蓋「工具鏈式轉移」與「檢索注入」的缺口。 | [Agent 紅隊滲透測試]、[MCP 協定漏洞挖掘]<br>`[12種攻擊向量]` `[越權參數攻擊]` |
 
 * **攻擊方 (矛)**：`garak` 和 `agentic_security` 是主動的攻擊工具，用來在部署前後找出系統的弱點。`garak` 更像一個全面、系統化的掃描器，而 `agentic_security` 則像一個靈活的模糊測試工具。
 * **防守方 (盾)**：`llm-guard` 和 `ShieldGemma` 是被動的防禦工具，用來在應用程式運行時即時阻擋攻擊和過濾內容。`llm-guard` 是一個高度客製化的「工具箱」，而 `ShieldGemma` 則是一個專注於語意理解的「專家」。
@@ -348,9 +349,15 @@ Meta 的思路是從根本上訓練一個「天生安全」的模型，其核心
       * **解決痛點 / 推薦場景**：克服了傳統紅隊測試工具依賴靜態題庫、容易被模型加固後失效的問題。其「防停滯優化」機制能確保攻擊持續進化，穿透淺層防禦，是進行深度安全評估與挖掘隱蔽漏洞的強大武器。
       * **資源**：[📝 深度技術解讀](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A) | [📄 論文原文](https://www.google.com/search?q=https://arxiv.org/abs/GuardVal)
 
+* **[[SEED: 逐步推理破壞攻擊 (CoT Disruption)]](https://github.com/Applied-Machine-Learning-Lab/SEED-Attack)** `[2025-04]` 🔥
+  * **核心優勢**：**首創針對 LLM 「逐步推理 (Step-by-step Reasoning)」的隱蔽注入攻擊**。不依賴傳統的越獄詞彙，而是透過輔助模型在目標問題的初始推理步驟中注入極微小的邏輯錯誤（SEED-S/SEED-P），引發蝴蝶效應導致最終輸出完全崩潰，連 GPT-4o 作為裁判都難以察覺其惡意。
+  * **解決痛點 / 推薦場景**：揭露了目前主流大模型（如 Llama3, Qwen2.5, GPT-4o）過度信任上下文連貫性的致命漏洞。對於**部署 API 服務的平台方**，或是需要進行金融計算、醫療診斷等**長邏輯推理場景的企業**，這是進行深度安全評估與紅隊滲透測試的最新前沿指標。
+  * **資源**：[🐙 GitHub](https://github.com/Applied-Machine-Learning-Lab/SEED-Attack) | [📄 論文](https://aclanthology.org/2025.acl-long.251.pdf) | [📝 團隊深度解讀](https://www.zhihu.com/people/aml_cityu)
+  `[ACL 2025]` `[CoT攻擊]` `[紅隊滲透]` `[隱蔽注入]`
+
+
 
   * **[[PyRIT (Python Risk Identification Toolkit)]](https://github.com/Azure/PyRIT)**
-
       * **核心優勢**：**微軟開源的生成式 AI 紅隊引擎**。利用「生成式 AI」來「自動產生對抗性測試樣本」，實現 AI 測評 AI。
       * **解決痛點 / 推薦場景**：將手動安全測試轉為自動化流程，可精準模擬典型攻擊鏈（如數據外洩），是企業實施 AI 開發生命週期 (AI SDL) 的必備工具。<br>`[微軟開源]` `[自動化測評]`
 
