@@ -344,10 +344,10 @@ Meta 的思路是從根本上訓練一個「天生安全」的模型，其核心
 
 建立了防禦後，如何驗證其有效性？這就需要「AI 紅隊測試」。自動化框架應運而生，解決手動測試效率低下的問題：
 
-  * **[[GuardVal (HKUST)]](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
-      * **核心優勢**：**基於目標狀態的「自適應越獄」自動化框架**。利用攻擊端 LLM 進行角色分工（翻譯、生成、評估、優化），透過閉環迭代機制，根據防禦端的即時反應不斷調整攻擊 Payload。
-      * **解決痛點 / 推薦場景**：克服了傳統紅隊測試工具依賴靜態題庫、容易被模型加固後失效的問題。其「防停滯優化」機制能確保攻擊持續進化，穿透淺層防禦，是進行深度安全評估與挖掘隱蔽漏洞的強大武器。
-      * **資源**：[📝 深度技術解讀](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A) | [📄 論文原文](https://www.google.com/search?q=https://arxiv.org/abs/GuardVal)
+* **[[GuardVal (HKUST)]](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
+  * **核心優勢**：**基於目標狀態的「自適應越獄」自動化框架**。利用攻擊端 LLM 進行角色分工（翻譯、生成、評估、優化），透過閉環迭代機制，根據防禦端的即時反應不斷調整攻擊 Payload。
+  * **解決痛點 / 推薦場景**：克服了傳統紅隊測試工具依賴靜態題庫、容易被模型加固後失效的問題。其「防停滯優化」機制能確保攻擊持續進化，穿透淺層防禦，是進行深度安全評估與挖掘隱蔽漏洞的強大武器。
+  * **資源**：[📝 深度技術解讀](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A) | [📄 論文原文](https://www.google.com/search?q=https://arxiv.org/abs/GuardVal)
 
 * **[[SEED: 逐步推理破壞攻擊 (CoT Disruption)]](https://github.com/Applied-Machine-Learning-Lab/SEED-Attack)** `[2025-04]` 🔥
   * **核心優勢**：**首創針對 LLM 「逐步推理 (Step-by-step Reasoning)」的隱蔽注入攻擊**。不依賴傳統的越獄詞彙，而是透過輔助模型在目標問題的初始推理步驟中注入極微小的邏輯錯誤（SEED-S/SEED-P），引發蝴蝶效應導致最終輸出完全崩潰，連 GPT-4o 作為裁判都難以察覺其惡意。
@@ -355,16 +355,19 @@ Meta 的思路是從根本上訓練一個「天生安全」的模型，其核心
   * **資源**：[🐙 GitHub](https://github.com/Applied-Machine-Learning-Lab/SEED-Attack) | [📄 論文](https://aclanthology.org/2025.acl-long.251.pdf) | [📝 團隊深度解讀](https://www.zhihu.com/people/aml_cityu)
   `[ACL 2025]` `[CoT攻擊]` `[紅隊滲透]` `[隱蔽注入]`
 
+* **[[FuzzyAI]](https://github.com/cyberark/FuzzyAI)** `[持續更新]` 🔥
+  * **核心優勢**：**全方位 LLM API 動態模糊測試神器，內建十大前沿越獄攻擊武庫！** CyberArk 開源的自動化紅隊測試框架，系統化探測大模型在提示詞注入、機密外洩與繞過護欄等面向的脆弱點。其最大亮點是內建了 PAIR (即時自動迭代細化)、ASCII Art 視覺繞過、多輪漸強攻擊 (Crescendo) 與幻覺誘導等最新學術級黑盒攻擊手法。
+  * **解決痛點 / 推薦場景**：**完美解決了企業在部署 LLM 服務時「缺乏系統性壓力測試」與「難以防禦新型越獄手法」的致命痛點。** 具備極高的擴展性，能一鍵對接 OpenAI、Gemini、AWS Bedrock 等主流雲端服務，以及本地端 Ollama。是企業資安團隊進行 **AI 紅隊演練 (Red Teaming)**、**LLM API 黑箱滲透測試** 與 **動態防禦機制驗證** 的工業級首選武庫。
+  * **資源**：[🐙 GitHub](https://github.com/cyberark/FuzzyAI)
+    <br>`[自動化模糊測試]` `[API滲透]` `[紅隊演練]` `[前沿越獄武庫]`
 
+* **[[PyRIT (Python Risk Identification Toolkit)]](https://github.com/Azure/PyRIT)**
+    * **核心優勢**：**微軟開源的生成式 AI 紅隊引擎**。利用「生成式 AI」來「自動產生對抗性測試樣本」，實現 AI 測評 AI。
+    * **解決痛點 / 推薦場景**：將手動安全測試轉為自動化流程，可精準模擬典型攻擊鏈（如數據外洩），是企業實施 AI 開發生命週期 (AI SDL) 的必備工具。<br>`[微軟開源]` `[自動化測評]`
 
-  * **[[PyRIT (Python Risk Identification Toolkit)]](https://github.com/Azure/PyRIT)**
-      * **核心優勢**：**微軟開源的生成式 AI 紅隊引擎**。利用「生成式 AI」來「自動產生對抗性測試樣本」，實現 AI 測評 AI。
-      * **解決痛點 / 推薦場景**：將手動安全測試轉為自動化流程，可精準模擬典型攻擊鏈（如數據外洩），是企業實施 AI 開發生命週期 (AI SDL) 的必備工具。<br>`[微軟開源]` `[自動化測評]`
-
-  * **[[DeepTeam]](https://github.com/confident-ai/deepeval)**
-
-      * **核心優勢**：**建構於 DeepEval 之上的專精紅隊框架**。自動化攻擊生成和評測，支援 50 多種漏洞類型和 10 多項攻擊增強功能。
-      * **解決痛點 / 推薦場景**：大幅簡化大規模紅隊測試流程，適合需要進行深度安全掃描與合規驗證的 AI 產品線。<br>`[漏洞掃描]` `[攻擊增強]`
+* **[[DeepTeam]](https://github.com/confident-ai/deepeval)**
+    * **核心優勢**：**建構於 DeepEval 之上的專精紅隊框架**。自動化攻擊生成和評測，支援 50 多種漏洞類型和 10 多項攻擊增強功能。
+    * **解決痛點 / 推薦場景**：大幅簡化大規模紅隊測試流程，適合需要進行深度安全掃描與合規驗證的 AI 產品線。<br>`[漏洞掃描]` `[攻擊增強]`
 
 -----
 
