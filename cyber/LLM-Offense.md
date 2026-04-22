@@ -145,7 +145,7 @@ LLM 的漏洞可被歸納為五大核心風險：
   * **[[BitBypass (EACL 2026)]](https://mp.weixin.qq.com/s/CBH3vHsOjE5T1qY5xPc2tw)** `[2026-03]` 🔥
       * **核心優勢**：**首創「比特層降維打擊」的黑盒越獄新範式**。徹底放棄傳統的語義誘導，將敏感詞彙（如 bomb）編碼為 8-bit ASCII 二進制序列，並於系統提示詞（System Prompt）中植入 Python 偽代碼，誘導 LLM 進入「程式化執行模式」自行解碼並執行惡意指令。
       * **解決痛點 / 推薦場景**：完美繞過了現有極度依賴「明文語義檢測」的安全護欄（如 OpenAI Moderation 等分類器）。由於輸入端在護欄看來只是無害的數據處理請求，攻擊成功率極高。這為**紅隊演練 (Red Teaming)** 與 **AI 滲透測試** 提供了全新的底層攻擊向量，也提醒資安人員必須將「解碼異常行為」納入防禦監控範圍。
-      * **資源**：[📝 微信公眾號深度解讀](https://mp.weixin.qq.com/s/CBH3vHsOjE5T1qY5xPc2tw) | [📄 論文 (EACL 2026 Findings)]
+      * **資源**： [📄 論文 (EACL 2026 Findings)](https://2026.eacl.org/program/findings-accepted/#:~:text=BitBypass%3A%20A%20New%20Direction%20in%20Jailbreaking%20Aligned%20Large%20Language%20Models%20with%20Bitstream%20Camouflage)
         <br>`[二進制偽裝]` `[底層繞過]` `[紅隊演練]`
 
   * **[[Jailbreak-Tuning (EMNLP 2025)]](https://mp.weixin.qq.com/s/KwPKFXcNHJkG13AMWzhhUQ)** `[2025]` 🔥
