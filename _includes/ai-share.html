@@ -118,28 +118,30 @@
   </details>
 </div>
 
-<div id="tonton-sticky-widget" style="position: fixed; bottom: 30px; right: 30px; z-index: 10000;">
-  <button id="sticky-btn" style="background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: bold; font-size: 16px;">
-    🚀 2026 AI 懶人包傳送門
-  </button>
-
-  <div id="sticky-panel" style="display: none; position: absolute; bottom: 65px; right: 0; width: 320px; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 1px solid #ddd; overflow: hidden;">
+<div id="tonton-sticky-widget" style="position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10000; display: flex; flex-direction: column; align-items: center;">
+  
+  <div id="sticky-panel" style="display: none; position: absolute; bottom: 60px; width: 320px; background: white; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 1px solid #ddd; overflow: hidden;">
     <div style="background: #f8f9fa; padding: 12px 15px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
       <span>🔥 快速存取熱門資源</span>
       <button id="sticky-close" style="background: none; border: none; cursor: pointer; color: #999;">✖</button>
     </div>
     <div style="padding: 10px; display: flex; flex-direction: column; gap: 8px;">
       <a href="/Large-Language-Model" style="display: block; padding: 12px; text-decoration: none; color: #333; background: #fdfdfd; border: 1px solid #eee; border-radius: 8px; font-size: 14px; transition: 0.2s;" onmouseover="this.style.background='#eef5ff';this.style.borderColor='#007bff'" onmouseout="this.style.background='#fdfdfd';this.style.borderColor='#eee'">
-        🤖 LLM 與 Agent 資源大全 
+        🤖 LLM 與 Agent 資源大全
       </a>
       <a href="/Computer-Vision" style="display: block; padding: 12px; text-decoration: none; color: #333; background: #fdfdfd; border: 1px solid #eee; border-radius: 8px; font-size: 14px; transition: 0.2s;" onmouseover="this.style.background='#eef5ff';this.style.borderColor='#007bff'" onmouseout="this.style.background='#fdfdfd';this.style.borderColor='#eee'">
-        👁️ 電腦視覺 (YOLOv11/OCR) 選型清單
+        👁️ 電腦視覺選型清單
       </a>
       <a href="/Speech-Processing" style="display: block; padding: 12px; text-decoration: none; color: #333; background: #fdfdfd; border: 1px solid #eee; border-radius: 8px; font-size: 14px; transition: 0.2s;" onmouseover="this.style.background='#eef5ff';this.style.borderColor='#007bff'" onmouseout="this.style.background='#fdfdfd';this.style.borderColor='#eee'">
-        🎤 語音處理 (ASR/TTS) 實戰懶人包
+        🎤 語音處理實戰懶人包
       </a>
     </div>
   </div>
+
+  <button id="sticky-btn" style="background: #007bff; color: white; border: none; padding: 12px 24px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: bold; font-size: 16px; white-space: nowrap;">
+    🚀 2026 AI 懶人包傳送門
+  </button>
+
 </div>
 
 <script>
