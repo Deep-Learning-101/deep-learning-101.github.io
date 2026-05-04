@@ -1,10 +1,10 @@
 ---
 layout: default
-title: "《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》"
-description: "免開公網 IP！教你使用 Cloudflare Tunnel 實作 Zero Trust 架構，安全穿透 SSH、HTTP 與 RDP 遠端桌面，並加碼附上「無對外 IP」的 SSH 反向隧道自動重連解法。"
+title: "2026 內網穿透神器：Cloudflare Tunnel 免公網 IP 架設教學 (SSH/HTTP/RDP)"
+description: "沒有固定 IP 怎麼辦？完整教學帶你用 Cloudflare Tunnel 實作 Zero Trust 零信任架構，3 分鐘安全架設 SSH、HTTP 與遠端桌面 (RDP) 穿透，告別防火牆設定煩惱。"
 permalink: /Blog/Cloudflared-Tunnel
 lang: zh-Hant
-keywords: ["Cloudflare Tunnel", "Zero Trust", "SSH Tunnel", "RDP", "內網穿透", "Reverse SSH", "無固定IP"]
+keywords: ["Cloudflare Tunnel", "內網穿透", "免公網 IP", "Zero Trust", "SSH Tunnel", "RDP", "反向隧道"]
 ---
 
 
@@ -440,26 +440,17 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
   "@type": "TechArticle",
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/Cloudflared-Tunnel"
+    "@id": "https://deep-learning-101.github.io/Blog/Cloudflared-Tunnel"
   },
-  "headline": "Cloudflare Tunnel 教學：免公網 IP 架設內網穿透 (SSH/HTTP/RDP)",
-  "description": "這篇技術教學探討如何使用 Cloudflared Tunnel 實踐 Zero Trust 零信任架構，在不開放公網 IP 的情況下安全實現 SSH、HTTP 與 RDP 遠端連線。內文加碼收錄針對無對外 IP 舊系統的 SSH 反向隧道 (Reverse SSH) 自動重連與多埠口轉發解決方案。",
+  "headline": "2026 內網穿透神器：Cloudflare Tunnel 免公網 IP 架設教學",
+  "description": "深入解析如何利用 Cloudflare Tunnel 實現 Zero Trust 零信任架構。解決無對外 IP 痛點，安全且快速地架設 HTTP、SSH 與 RDP 內網穿透，內含反向隧道自動重連實務技巧。",
   "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
-    "@type": "Person",
-    "name": "TonTon Huang Ph.D.",
-    "url": "https://twman.org/"
-  },
-  "publisher": {
     "@type": "Organization",
     "name": "Deep Learning 101, Taiwan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
-    }
+    "url": "https://deep-learning-101.github.io/"
   },
-  "datePublished": "2025-06-23",
-  "dateModified": "2026-03-19",
-  "keywords": "Cloudflared, Zero Trust, Tunnel, SSH, RDP, HTTP, Cloudflare, 零信任, 網路安全, 遠端連線, 內網穿透, Reverse SSH, 反向隧道"
+  "datePublished": "2026-03-19",
+  "dateModified": "2026-03-19"
 }
 </script>
