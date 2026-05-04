@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 09：卷積神經網路 (CNN) 原理 | 視覺辨識與里程碑"
+description: "計算機視覺的靈魂！解析卷積層、池化層與經典架構 LeNet-5、AlexNet，掌握 AOI 等視覺辨識基礎。"
+permalink: /GeminiAbstract/PDF9
+lang: zh-Hant
+keywords: ["卷積神經網路", "CNN", "AlexNet", "計算機視覺", "Computer Vision", "特徵提取"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF9"},"headline":"《深度學習》導讀 09：卷積神經網路 (CNN) 原理","description":"解析卷積層、池化層與經典架構，掌握視覺辨識底層基礎。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

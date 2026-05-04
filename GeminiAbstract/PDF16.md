@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 16：結構化機率模型 | 圖模型與 RBM 玻爾茲曼機"
+description: "如何描述變數間的複雜依賴？解析有向圖、無向圖與受限玻爾茲曼機 (RBM)，深度學習與機率統計的高階指南。"
+permalink: /GeminiAbstract/PDF16
+lang: zh-Hant
+keywords: ["結構化機率模型", "圖模型", "RBM", "受限玻爾茲曼機", "貝氏網路"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF16"},"headline":"《深度學習》導讀 16：結構化機率模型","description":"解析有向圖、無向圖與受限玻爾茲曼機，深度學習與機率統計的高階指南。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

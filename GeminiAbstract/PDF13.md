@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 13：線性因子模型 | PCA、ICA 與流形學習基礎"
+description: "解析主成分分析 (PCA)、獨立成分分析 (ICA) 與稀疏編碼，為流形學習與高維數據降維打下數學基礎。"
+permalink: /GeminiAbstract/PDF13
+lang: zh-Hant
+keywords: ["線性因子模型", "PCA", "ICA", "降維", "稀疏編碼", "流形學習"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF13"},"headline":"《深度學習》導讀 13：線性因子模型","description":"解析 PCA、ICA 與稀疏編碼，理解潛在變量模型與高維數據降維。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 12：AI 應用落地 | 計算機視覺、NLP 與知識圖譜"
+description: "深度學習如何解決真實商業問題？全面涵蓋計算機視覺、語音識別、NLP 與知識圖譜嵌入的應用場景。"
+permalink: /GeminiAbstract/PDF12
+lang: zh-Hant
+keywords: ["深度學習應用", "NLP", "知識圖譜", "語音識別", "AI 落地"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF12"},"headline":"《深度學習》導讀 12：AI 應用落地","description":"全面涵蓋計算機視覺、語音識別、NLP 與知識圖譜嵌入的應用場景。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

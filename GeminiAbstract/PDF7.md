@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 07：正則化 (Regularization) 實戰 | 防過擬合必備技巧"
+description: "詳解 L1/L2 正則化、Dropout 與數據增強。掌握深度學習防過擬合 (Overfitting) 的關鍵技術與實作原理。"
+permalink: /GeminiAbstract/PDF7
+lang: zh-Hant
+keywords: ["正則化", "Regularization", "Dropout", "過擬合", "Overfitting", "L1 L2"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF7"},"headline":"《深度學習》導讀 07：正則化 (Regularization) 實戰","description":"詳解 L1/L2 正則化、Dropout 與數據增強，掌握防過擬合關鍵技術。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

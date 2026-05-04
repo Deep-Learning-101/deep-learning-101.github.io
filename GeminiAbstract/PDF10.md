@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 10：循環神經網路 (RNN) 與序列建模 | 詳解 LSTM 與 GRU"
+description: "從 LSTM 到 GRU！詳解長短期記憶機制，探索語音辨識、NLP 翻譯與外部記憶 (NTM) 的技術核心。"
+permalink: /GeminiAbstract/PDF10
+lang: zh-Hant
+keywords: ["循環神經網路", "RNN", "LSTM", "GRU", "序列建模", "NLP"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF10"},"headline":"《深度學習》導讀 10：循環神經網路 (RNN) 與序列建模","description":"詳解 LSTM 與 GRU，探索語音辨識與 NLP 的技術核心。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

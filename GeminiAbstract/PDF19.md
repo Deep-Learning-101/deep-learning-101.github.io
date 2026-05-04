@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 19：近似推斷 (Approximate Inference) | 變分推斷詳解"
+description: "解析變分推斷 (Variational Inference)、EM 算法與醒眠算法 (Wake-Sleep)。為學習複雜生成模型奠定關鍵理論基礎。"
+permalink: /GeminiAbstract/PDF19
+lang: zh-Hant
+keywords: ["近似推斷", "變分推斷", "Variational Inference", "EM 算法", "醒眠算法"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF19"},"headline":"《深度學習》導讀 19：近似推斷 (Approximate Inference)","description":"解析變分推斷、EM 算法與醒眠算法，為生成模型奠定理論基礎。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

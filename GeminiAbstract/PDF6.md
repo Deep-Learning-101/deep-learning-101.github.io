@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 06：深度前饋網路 (MLP) 全解析 | 反向傳播與架構基礎"
+description: "深度學習最核心的基礎！深入解析前饋神經網路 (Feedforward Network) 原理、代價函數選擇與反向傳播算法 (Backpropagation)。"
+permalink: /GeminiAbstract/PDF6
+lang: zh-Hant
+keywords: ["深度前饋網路", "MLP", "反向傳播", "神經網路", "Deep Learning", "Feedforward"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF6"},"headline":"《深度學習》導讀 06：深度前饋網路 (MLP) 全解析","description":"深入解析前饋神經網路原理、代價函數選擇與反向傳播算法。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

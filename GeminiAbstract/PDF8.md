@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 08：優化演算法詳解 | 從 SGD 到 Adam 核心機制"
+description: "深度分析動量法 (Momentum)、RMSProp 與 Adam 優化器，提升模型收斂速度與穩定性的必備技巧。"
+permalink: /GeminiAbstract/PDF8
+lang: zh-Hant
+keywords: ["優化演算法", "SGD", "Adam", "RMSProp", "梯度下降", "深度學習優化"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF8"},"headline":"《深度學習》導讀 08：優化演算法詳解","description":"深度分析動量法、RMSProp 與 Adam 優化器，提升模型收斂速度。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 20：深度生成模型 | GAN、VAE 與 Diffusion 理論源頭"
+description: "生成式 AI 的理論源頭！剖析深度玻爾茲曼機 (DBM)、VAE 與評估準則，理解現代 GAN 與擴散模型 (Diffusion) 的底層架構。"
+permalink: /GeminiAbstract/PDF20
+lang: zh-Hant
+keywords: ["深度生成模型", "生成式 AI", "GAN", "VAE", "玻爾茲曼機"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF20"},"headline":"《深度學習》導讀 20：深度生成模型","description":"剖析 DBM、VAE 與生成模型評估準則，理解 GAN 與 Diffusion 底層架構。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

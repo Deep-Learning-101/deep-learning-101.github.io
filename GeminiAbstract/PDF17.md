@@ -1,7 +1,16 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 17：蒙特卡羅方法 (Monte Carlo) | MCMC 與 Gibbs 採樣"
+description: "詳解重要性採樣、MCMC (馬爾可夫鏈蒙特卡羅) 與 Gibbs 採樣。解決高維積分與機率分佈推斷的混合挑戰。"
+permalink: /GeminiAbstract/PDF17
+lang: zh-Hant
+keywords: ["蒙特卡羅方法", "Monte Carlo", "MCMC", "Gibbs Sampling", "馬爾可夫鏈"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF17"},"headline":"《深度學習》導讀 17：蒙特卡羅方法 (Monte Carlo)","description":"詳解重要性採樣、MCMC 與 Gibbs 採樣，解決高維積分與機率推斷痛點。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
+
 
 {% include header.html %}
 

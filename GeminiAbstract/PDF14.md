@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 14：自編碼器 (Autoencoder) | 表徵學習與降維神器"
+description: "深入理解自編碼器架構！探討正則化自編碼器、去噪自編碼器 (DAE) 與語義哈希，掌握特徵提取精髓。"
+permalink: /GeminiAbstract/PDF14
+lang: zh-Hant
+keywords: ["自編碼器", "Autoencoder", "表示學習", "降維", "特徵提取", "去噪自編碼器"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF14"},"headline":"《深度學習》導讀 14：自編碼器 (Autoencoder)","description":"探討正則化自編碼器與語義哈希，掌握特徵提取與無監督表示學習。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

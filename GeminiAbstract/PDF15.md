@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 15：表示學習 (Representation Learning) | 遷移學習核心"
+description: "什麼是好的數據表示？解析平滑性、稀疏性假設，探討多任務學習、遷移學習與領域自適應的底層邏輯。"
+permalink: /GeminiAbstract/PDF15
+lang: zh-Hant
+keywords: ["表示學習", "Representation Learning", "遷移學習", "Transfer Learning", "多任務學習"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF15"},"headline":"《深度學習》導讀 15：表示學習 (Representation Learning)","description":"探討多任務學習、遷移學習與領域自適應的底層邏輯。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 

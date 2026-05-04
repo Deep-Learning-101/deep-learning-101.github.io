@@ -1,7 +1,15 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "《深度學習》導讀 11：實踐方法論 | 超參數調校與 SVHN 模型優化"
+description: "機器學習專案實戰指南！教你挑選超參數、優化模型容量，並透過 SVHN 數字轉錄案例掌握 debug 流程。"
+permalink: /GeminiAbstract/PDF11
+lang: zh-Hant
+keywords: ["實踐方法論", "超參數調整", "Hyperparameter tuning", "模型優化", "SVHN"]
 ---
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TechArticle","mainEntityOfPage":{"@type":"WebPage","@id":"https://deep-learning-101.github.io/GeminiAbstract/PDF11"},"headline":"《深度學習》導讀 11：實踐方法論","description":"教你挑選超參數、優化模型容量，掌握系統性 debug 與模型迭代實戰。","image":"https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg","author":{"@type":"Organization","name":"Deep Learning 101, Taiwan"},"datePublished":"2026-05-04","dateModified":"2026-05-04"}
+</script>
 
 {% include header.html %}
 
