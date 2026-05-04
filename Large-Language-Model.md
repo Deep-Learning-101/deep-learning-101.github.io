@@ -75,7 +75,12 @@ NVIDIA 開發的 Nemotron 系列模型，以其極高的推理效率與完整的
 ### 1. 核心模型發佈與解析 (Core Models)
 了解 Nemotron 系列的核心架構與性能指標，選擇適合您的硬體與應用場景的模型尺寸。
 
-* **[Nemotron 3 Super (最新主力)](https://blogs.nvidia.com.tw/blog/nemotron-3-super-agentic-ai/)** (2026-03)
+* **[[Nemotron 3 Nano Omni]](#)** `[2026]` 🔥 `[全模態推理]` `[端側 MoE]` `[單次感知]`
+  * **核心優勢**：**終結多模型串接的延遲惡夢，NVIDIA 開源首款「單次感知」的全模態 MoE 巨獸！** 採用 30B-A3B 混合專家架構，將視覺、語音與語言編碼器完美融合在單一底層系統中。徹底拋棄傳統「先辨識、後理解」的碎片化流程，在維持頂級互動效能下，實現高達 **9 倍的驚人吞吐量提升**，並原生支援 1920x1080 高畫質螢幕解析度的視覺推理。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 AI 代理 (Agent) 在處理複雜影音或螢幕操作時，因跨模型傳遞導致「上下文流失」與「推論成本過高」的致命痛點。** 極度輕量化的架構讓它能無縫部署於 NVIDIA Jetson 邊緣運算設備或 DGX Spark 本地伺服器。是打造 **電腦操作智能體 (Computer Use Agent)**、**企業級多媒體文件解析 (Document Intelligence)**，以及要求超低延遲的 **即時影音客服伴侶** 的工業級端側首選。
+  * **資源**：[🌐 NVIDIA 官方模型資源](https://huggingface.co/nvidia) | [📝 深度技術解讀](#) *(註：官方權重與論文連結依據 NVIDIA 最新發布頁面為準)*
+
+* **[Nemotron 3 Super](https://blogs.nvidia.com.tw/blog/nemotron-3-super-agentic-ai/)** (2026-03)
   * **特點**：專為 Agentic AI 設計的旗艦模型，強大的邏輯規劃能力。[👉 HuggingFace 權重下載](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Super-120B-A12B-FP8)。
 * **[Nemotron 3 Nano (端側輕量化)](https://huggingface.co/nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-Base-BF16)** (2025-12)
   * **特點**：適合資源受限的邊緣設備 (Edge) 或本地端推論。[👉 OpenRouter 免費測試](https://openrouter.ai/nvidia/nemotron-3-nano-30b-a3b:free)。
@@ -116,19 +121,33 @@ NVIDIA 開發的 Nemotron 系列模型，以其極高的推理效率與完整的
 ### 1. 課前必讀：硬體門檻與顯存估算 (VRAM)
 微調模型最常遇到的痛點就是「Out of Memory (OOM)」。在開始訓練前，精準估算所需的顯示卡記憶體是成功的第一步。
 * **[大模型所需 GPU 記憶體筆記](https://mp.weixin.qq.com/s/M_hdtR7mVq14MnaaL0MAUw)**：快速了解參數規模 (7B, 72B) 對應的硬體需求。
+
 * **[不同微調方法下所需的顯存總結](https://www.datalearner.com/blog/1051703254378255)**：比較全參數微調 (Full-tuning) 與 LoRA 等不同策略對顯存的實際消耗差異。
 
 ### 2. 理論心法：選擇正確的微調策略
 了解底層邏輯，才能選對訓練工具。
+
 * **[主流微調技術全解](https://zhuanlan.zhihu.com/p/643941480)**：適合初學者的概念掃盲，涵蓋 SFT (監督微調)、LoRA、P-tuning v2 與 Freeze 等主流方法。
+
 * **[LoRA vs 完全微調差異解析](https://www.jiqizhixin.com/articles/2024-11-11-5)**：進階閱讀。透過 MIT 論文深入探討為何 LoRA 能在大幅降低算力成本的同時，保持極高的模型效能。
+
 * **[大模型微調全生命週期解析](https://www.53ai.com/news/finetuning/2025022604125.html)**：從資料準備到模型評估的宏觀指南。
 
+* **[[ProSafePrune]](https://github.com/hfutml/PROSAFEPRUNE)** `[2026]` 🔥 `[解決過度拒絕]` `[參數層修剪]` `[零推論延遲]`
+  * **核心優勢**：**根治大模型「過度拒絕」的 ICLR 2026 頂會神作，消除對齊稅且零推論延遲！** 研究揭露模型變得「過度謹慎」的病灶在於中間層的過度有害編碼。透過創新的 SVD 奇異值分解與重疊算子，ProSafePrune 能精準分離並「修剪 (Prune)」掉這些冗餘的低秩有害特徵。因為是直接修改模型權重，完全不需要在推論階段外掛任何干預向量，達成**推論開銷為零**，且通用任務效能（如 MMLU、GSM8K）不降反升。
+  * **解決痛點 / 推薦場景**：**完美解決了安全對齊（Alignment）後常見的「對齊稅」痛點——模型看到無害的敏感詞就無腦拒絕回答，嚴重影響使用者體驗。** 實測在 LLaMA-2-7B 上，將偽有害指令的合規率從極低的 11.0% 暴增至 73.0%，同時仍能精準防禦真正的惡意攻擊。極度適合用於**企業級大模型安全對齊**、**AI 客服機器人去閹割化**，以及對推論速度要求極高的**邊緣運算端側模型 (SLM) 最佳化**。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/hfutml/PROSAFEPRUNE) | [📄 ICLR 論文 (OpenReview)](https://openreview.net/forum?id=QkHKaPfRAB)
+
 ### 3. 實戰路徑：DeepSeek-R1 與零程式碼微調教學
+
 想把 DeepSeek-R1 訓練成專屬的領域專家，卻不會寫複雜的訓練代碼？以下是為開發者量身打造的「從零到一」 LLaMA Factory 實戰路徑：
+
 1. **資料集準備**：[如何建立高品質的微調資料集？](https://zhuanlan.zhihu.com/p/1916489160333714285) (垃圾進，垃圾出，這是最重要的一步)
+
 2. **參數設定與優化**：[微調參數設置與顯存最佳化技巧](https://mp.weixin.qq.com/s/AbyWaTaPOp9sr5mz5SOVwg)
+
 3. **訓練觀測與部署**：[如何觀測微調過程？模型如何合併與匯出部署？](https://mp.weixin.qq.com/s/6sNGvqLktPk6AP7kPs9JyA)
+
 4. **領域專家實戰**：[完整案例：如何把 DeepSeek-R1 微調為領域專家](https://zhuanlan.zhihu.com/p/25054526736) | [從0到1微調安全大模型](https://mp.weixin.qq.com/s/hzdcutEL9yH1j8svMcXPGg)
 
 ### 4. 必備微調與蒸餾開源框架 (Frameworks)
@@ -503,6 +522,11 @@ Google 的 NotebookLM 改變了我們與長篇文獻互動的方式，但「資�
 
 如果說傳統 LLM 是「文字接龍」，那世界模型 (World Models) 就是讓 AI 具備「物理法則與常識預測能力」。透過預測環境的下一步變化，這是通往通用人工智慧 (AGI) 與具身智能 (Embodied AI) 的關鍵拼圖。
 
+* **[WorldScape 0.2]** `[2026-03]` 🔥 `[具身世界模型]` `[MoE 架構]` `[物理可信]`
+  * **核心優勢**：**打破物理與視覺的次元壁，參數僅競品 10% 卻稱霸全球的世界模型霸主！** 由 Manifold AI (流形空間) 研發，採用突破性的多專家協同 (MoE) 架構。它將幾何拓撲、語意理解與物理規律在統一的隱式元空間中完美對齊，不僅在 3D/4D 視覺生成上保持極高的一致性，更在 WorldArena 與 WorldScore 兩大權威具身智能 (Embodied AI) 基準評測中，強勢擊敗國際巨頭穩居雙榜全球第一。
+  * **解決痛點 / 推薦場景**：**徹底終結傳統影片生成模型常見的「空間扭曲」、「穿模」與「無視重力」等不符物理常識的致命缺陷。** 憑藉極高的空間智能密度與極速的即時推理能力，它是打造**具身智能機器人**動作規劃器 (Action Planning)、**自動駕駛虛擬模擬環境**，以及需要將高階物理 AI 落地至**邊緣運算設備 (Edge AI)** 的頂級世界大腦。
+  * **資源**：[📊 WorldArena 基準榜單](https://huggingface.co/spaces/WorldArena/WorldArena) | [📄 WorldArena 論文](https://arxiv.org/abs/2602.08971) | [📊 WorldScore 基準榜單](https://huggingface.co/spaces/Howieeeee/WorldScore_Leaderboard)
+
 * **[Code World Model (Meta Yann LeCun 團隊)](https://zread.ai/facebookresearch/cwm/1-overview)** `[2025-09-25]`
   * **核心優勢**：AI 教父 Yann LeCun 領軍發布的 320 億參數開源世界模型。有別於生成式 AI，它採用 JEPA (聯合嵌入預測架構)，專注於理解系統的內部邏輯與預測代碼執行的結果，是 AI Agent 進行複雜規劃 (Planning) 的終極大腦。[📝 新浪深度報導](https://t.cj.sina.com.cn/articles/view/1746173800/68147f6801901e2wa)
 
@@ -521,10 +545,18 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 | **Hunyuan-Large** | 🇨🇳 **Tencent (騰訊)** | **騰訊開源的最大 MoE**。專注於中文語境與超長上下文，並強化了企業級資料檢索能力。 | 總參數 389B / 激活 52B<br>`[企業級]` `[長文本]` |
 
 #### 📂 核心模型下載與架構解析
+
 * **[DeepSeek-V3 (震撼全球的開源 MoE)](https://github.com/deepseek-ai/DeepSeek-V3)** `[2024-12-26 更新補充]` 🔥
   * **必讀原因**：徹底改寫開源模型格局的巨獸！總參數高達 671B，但每次推論僅需激活 37B 參數。首創的多頭潛在注意力機制 (MLA) 與負載均衡策略，讓它在程式碼生成與數學邏輯上穩居開源第一。[📝 架構深度解析](https://zhuanlan.zhihu.com/p/123456789) *(註：可補上您部落格或知乎的相關文章)*
+
 * **[DeepSeek-VL2 (VLM 邁入 MoE 時代)](https://github.com/deepseek-ai/DeepSeek-VL2)** `[2024-12-13]`
   * **核心優勢**：傳統視覺大模型 (VLM) 運算極度吃力，VL2 成功將混合專家架構引入視覺領域，大幅提升了圖片與文件的解析效率。[📝 機器之心解讀](https://mp.weixin.qq.com/s/s832KUgixNuX4GUkvY7_Ag) | [📝 公眾號解析](https://mp.weixin.qq.com/s/p6r_b-k4UnSJED5cBTedZg)
+
+* **[[Hy3-preview]](https://github.com/Tencent-Hunyuan/Hy3-preview)** `[2026-04-23]` 🔥 `[快慢思考融合]` `[Agent實用霸主]` `[超長上下文256K]`
+  * **核心優勢**：**騰訊混元重建後的首款開源巨獸！總參數 295B (激活 21B) 完美融合快慢思考的 MoE 模型。** 徹底拋棄「為刷榜而生」的盲點，主打真實業務場景的「全面實用性」。在複雜邏輯推理（如清華數學博資考）與程式碼生成上表現驚人。其原生支援快思考（直接響應）與慢思考（深度推論）動態切換，首 token 延遲大幅降低 54%，整體推理效率更提升了 40%。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統大模型在執行「超長複雜工作流」時容易斷片、忘記指令的致命痛點。** 實測可穩定支援高達 495 步的 Agent 自動化腳本（如文件處理、工具鏈編排）。官方提供極其完善的 vLLM / SGLang 部署腳本與 LLaMA-Factory 微調指南，是企業打造**高併發複雜智能體 (Agentic AI)**、**超長文本檢索 (RAG)** 以及**程式碼開發副駕 (Code Copilot)** 的工業級基礎模型首選。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/Tencent-Hunyuan/Hy3-preview) | [🤖 ModelScope 模型下載](https://www.modelscope.cn/collections/Tencent-Hunyuan/Hy3-preview)
+
 * **[Hunyuan-Large (騰訊混元最大 MoE)](https://github.com/Tencent/Hunyuan-Large)** `[2024-11-06]`
   * **核心優勢**：在中文互聯網資料的理解上具備極大優勢，且針對 RAG 檢索任務進行了深度最佳化。[🤗 線上 DEMO](https://huggingface.co/spaces/tencent/Hunyuan-Large) | [🤗 模型下載](https://huggingface.co/tencent/Hunyuan-Large) | [📝 機器之心報導](https://www.jiqizhixin.com/articles/2024-11-06-6)
 
@@ -722,6 +754,11 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 
 ### 1. 頂尖多模態與視覺推理 (Vision & Complex Parsing)
 需要讓 AI 看懂工程圖紙、財報表格或進行深度邏輯推理？這些是目前的開源王者：
+
+* **[[Qwen3.5-Omni]](https://modelscope.cn/studios/Qwen/Qwen3.5-Omni-Demo)** `[2026-04]` 🔥
+  * **核心優勢**：**首款實現「視聽直覺編程」的原生全模態統一體**。採用 Hybrid Attention MoE 架構，支援 256k 超長上下文，能一次吞下 10 小時音訊或 400 秒影片。
+  * **解決痛點 / 推薦場景**：打破了傳統 Agent 「只能看文字」或「音畫不同步」的限制。模型能邊看影片邊聽需求，直接寫出對應的自動化程式碼，是開發**工業級多模態自主代理程式**的首選。
+  * **資源**：[🐙 ModelScope](https://modelscope.cn/studios/Qwen/Qwen3.5-Omni-Demo) | [📄 論文](https://arxiv.org/abs/2604.15804v1) | [📝 官方解讀](https://arxiv.org/abs/2604.15804v1)
 
 * **[InternVL (OpenGVLab)](https://github.com/OpenGVLab/InternVL)** `[2026 最新持續更新]`
   * **核心優勢**：不斷刷新開源多模態大模型效能新紀錄的霸主！在視覺辨識精準度與圖文交錯理解上，是許多企業構建自研多模態應用的底座首選。[📄 論文解析](https://www.alphaxiv.org/zh/overview/2504.10479) | [📝 知乎深度解讀](https://zhuanlan.zhihu.com/p/1897681159359551408)
