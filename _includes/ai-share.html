@@ -309,3 +309,41 @@
   .badge-warning { background-color: #fd7e14; }
 
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // 監聽整個畫面的點擊事件 (Event Delegation，最省瀏覽器效能的寫法)
+    document.addEventListener('click', function(e) {
+      
+      // 1. 確認被點擊的元素是不是連結 (<a>) 或連結內部的文字/圖示
+      let targetLink = e.target.closest('a');
+      if (!targetLink) return; // 如果點的不是連結，直接跳出
+
+      // 2. 判斷這個連結是屬於哪個區塊的
+      let location = "";
+      if (targetLink.closest('#tonton-sticky-widget')) {
+        location = "bottom_sticky"; // 來自右下角浮動視窗
+      } else if (targetLink.closest('.sidebar-container')) {
+        location = "sidebar";       // 來自左/右側邊欄
+      } else {
+        return; // 如果點擊的連結不屬於這兩個區塊，就不特別追蹤
+      }
+
+      // 3. 擷取連結的文字與網址
+      let linkText = targetLink.innerText.trim();
+      let linkUrl = targetLink.getAttribute('href');
+
+      // 4. 將數據發送給 GA4 (確保 gtag 已經載入)
+      if (typeof gtag === 'function') {
+        gtag('event', 'click_nav_link', {
+          'link_text': linkText,       // 例如："🤖 LLM 與 Agent 資源大全"
+          'link_url': linkUrl,         // 例如："/Large-Language-Model"
+          'link_location': location    // "bottom_sticky" 或 "sidebar"
+        });
+        
+        // Console log 方便你自己在本機端按 F12 測試有沒有成功觸發
+        // console.log("GA4 Event Sent:", location, linkText, linkUrl);
+      }
+    });
+  });
+</script>
