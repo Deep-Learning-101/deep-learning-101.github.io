@@ -282,7 +282,7 @@ print(f"不安全的機率 (Yes): {unsafe_prob:.4f}")
   * **應用場景**：
     * 利用Qwen3Guard-Gen進行安全強化學習。
     * 利用Qwen3Guard-Stream實現實時動態干預。
-  * **[[Qwen3Guard-Gen-8B 真實場景極限評測]](#)** `[2025-10]` ⚠️
+  * **[Qwen3Guard-Gen-8B 真實場景極限評測](#)** `[2025-10]` ⚠️
     * **核心優勢**：**揭開開源安全護欄的真實戰鬥力：90% 基礎越獄防禦 vs 40% 角色扮演誤殺率！** 根據針對 5,669 個攻擊與正常樣本的深度盲測，該模型在阻擋常規越獄（如 DAN 模式）上展現了比肩 OpenAI Moderation API 的頂流實力。然而，測試也戳破了單一模型的神話：面對結合 Base64 編碼與程式碼拼接的「高級創新型攻擊」，攔截率驟降至 36.2%，且極易將 `Act as a Linux terminal` 等無害指令誤判為惡意攻擊。
     * **解決痛點 / 推薦場景**：**完美釐清了企業部署安全防護時「效能覆蓋與誤傷率」的邊界痛點。** 極度適合做為**高併發內容社區或企業內部 AI 助手的第一道防線（快速初篩）**，以極低成本過濾九成以上的腳本小子攻擊。對於資安架構師而言，實測報告中提倡的「三層防禦架構（Qwen初篩 + 規則引擎兜底 + 抽檢微調）」，是克服大模型防護盲區、建構工業級高 CP 值防護網的教科書級部署指南。
     * **數據來源**：
@@ -344,7 +344,7 @@ messages = [
 # 執行 generate 後，模型會給出詳細的 Reasoning 步驟，並以 Verdict: Unsafe 結尾
 ```
 
-* **[[OpenGuardrails]](https://openguardrails.com)** `[2025-10]` 🔥
+* **[OpenGuardrails](https://openguardrails.com)** `[2025-10]` 🔥
   * **目標**：提供統一方法檢測大語言模型中的不安全內容、篡改內容或侵犯隱私內容，簡化安全控制機制的適應性部署。
   * **核心貢獻**：
     * **可配置的策略機制**：允許用戶根據應用領域需求配置「不安全」類別與敏感度閾值（高、中、低三級），輸出置信度分數。
@@ -354,19 +354,24 @@ messages = [
   * **解決痛點 / 推薦場景**：完美解決了傳統規則過濾過於僵硬、無法適應跨文化安全標準的痛點。適合需要快速通過中國大模型備案、或需符合歐盟《EU AI Act》與《GDPR》等國際合規標準的企業級全球化應用。
   * **資源**：[🐙 GitHub](https://github.com/openguardrails/openguardrails) | [🤗 HuggingFace](https://huggingface.co/openguardrails) | [📄 論文](https://arxiv.org/abs/2510.19169)
 
+
+* **[Guardrails](https://github.com/guardrails-ai/guardrails)** `[持續更新]` 🔥 `[雙向防護]` `[結構化輸出]` `[企業級合規]`
+* **核心優勢**：**專為 LLM 打造的雙向安全防火牆，提供數十種預建驗證器並強制保證結構化輸出！** 框架能在 LLM 呼叫的「輸入前」與「輸出後」進行雙向風險攔截，並透過 Pydantic 輕鬆強制將 LLM 輸出轉化為精準的 JSON 格式。 支援透過 Flask 啟動獨立的 REST API 服務 (適合 Docker + Gunicorn 部署)，且大部分驗證器延遲僅在毫秒級，幾乎零效能負擔。
+* **解決痛點 / 推薦場景**：**完美解決了大型語言模型常見的「嚴重幻覺」、「有毒言論」與「敏感個資 (PII) 外洩」等企業落地致命痛點。** 透過 Guardrails Hub 自由組合驗證器 (如競品過濾、程式碼安全掃描)，能將客服投訴率巨幅降低 80%，且讓後端 JSON 格式解析錯誤率降至接近 0。 絕對是打造**金融級合規審查系統**、**高穩定企業客服機器人**與**資料分析自動化助手**的工業級防禦基礎設施。
+* **資源**：[🐙 GitHub](https://github.com/guardrails-ai/guardrails) | [🌐 Guardrails Hub](https://hub.guardrailsai.com/)
 -----
 
 <h2 id="red-teaming">⚔️ 紅隊演練與動態滲透測試 (Red Teaming)</h2>
 
 *防禦工具部署後，必須透過攻擊工具來驗證其有效性。*
 
-* **[[AgentAuditor: 記憶增強的 Agent 安全評估框架]](https://github.com/Astarojth/AgentAuditor-ASSEBench)** `[2025-06]` 🔥
+* **[AgentAuditor: 記憶增強的 Agent 安全評估框架](https://github.com/Astarojth/AgentAuditor-ASSEBench)** `[2025-06]` 🔥
   * **核心優勢**：**首創「記憶增強推理 (Memory-Augmented Reasoning)」的 Agent 專屬安全評測框架**。透過 RAG 技術將歷史多輪互動記錄轉化為「結構化特徵 + 思維鏈 (CoT)」的經驗記憶庫。讓 LLM 在評估未知風險時，能像人類專家一樣調用歷史經驗，性能全面超越專門微調的 ShieldAgent 與 Llama-Guard-3。
   * **解決痛點 / 推薦場景**：解決了現有 LLM 評估器「評分標準不一致」與「難以應對隱晦、多步動態風險」的致命痛點。是企業建構 **Agent 動態安全稽核 (Security Audit)** 與 **自動化紅隊測試 (Red Teaming)** 的頂級開源方案。內建 ASSEBench 高品質資料集。
   * **資源**：[🐙 GitHub & ASSEBench 資料集](https://github.com/Astarojth/AgentAuditor-ASSEBench) | [📄 論文](https://arxiv.org/abs/2506.00641)
   `[NeurIPS 2025]` `[Agent安全稽核]` `[RAG記憶增強]` `[超越人類水準]`
 
-* **[[GuardVal (HKUST)]](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
+* **[GuardVal (HKUST)](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
     * **核心優勢**：**首創「狀態感知」的動態越獄評估協議**。不同於傳統固定題庫，GuardVal 透過 Translator、Generator 與 Evaluator 三方協作，能根據防禦端 LLM 的即時回應，動態優化攻擊提示（Prompt）。
     * **解決痛點 / 推薦場景**：解決了靜態安全基準（Benchmarks）容易被模型「背題」繞過、無法偵測深層漏洞的痛點。其內建的 **Optimizer 防停滯機制** 能持續挖掘模型在極端壓力下的安全邊界，是企業進行自動化紅隊滲透與安全性基準測試的前沿方案。
     * **資源**：[📝 深度技術解讀](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A) | [📄 論文原文](https://www.google.com/search?q=https://arxiv.org/abs/GuardVal-Dynamic-Jailbreak) *(預計路徑)*
@@ -402,7 +407,7 @@ garak --list_probes
 
 <h2 id="datasets">🧪 安全資料集 (Safety Datasets)</h2>
 
-* **[[MSB: MCP Security Bench]](https://github.com/dongsenzhang/MSB)** `[2026-04]` 🔥
+* **[MSB: MCP Security Bench](https://github.com/dongsenzhang/MSB)** `[2026-04]` 🔥
     * **核心優勢**：**全球首個針對 MCP 協定的端到端安全評估基準**。系統性歸納了 12 種新型攻擊（如越權參數、使用者冒充、虛假錯誤），並提出 **NRP (淨彈性性能)** 指標，量化模型在對抗環境下的「安全與效能平衡點」。
     * **解決痛點 / 推薦場景**：揭露了「能力越強的模型（如 DeepSeek-V3.1, GPT-5）在 MCP 場景下越脆弱」的逆縮放規律。適合用於**評測企業級 MCP 工具伺服器的防禦韌性**，防止代人被惡意工具誘導執行敏感操作。
     * **資源**：[🐙 GitHub](https://github.com/dongsenzhang/MSB) | [📄 論文原文](https://github.com/dongsenzhang/MSB)

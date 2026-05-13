@@ -101,7 +101,7 @@ LLM 的漏洞可被歸納為五大核心風險：
     ```
 
 
-* **[[Malicious LLM-Based CAI]](https://zenodo.org/records/15610905)** `[2025]` 🔥
+* **[Malicious LLM-Based CAI](https://zenodo.org/records/15610905)** `[2025]` 🔥
   * **核心優勢**：**USENIX 2025 頂會重磅警示！打破「被動越獄」思維，僅靠「惡意系統提示詞」即可將 LLM 轉為套取用戶隱私的社交工程駭客。** 研究首創並驗證了「互惠誘導 (Reciprocal)」策略，讓 AI 透過共情與情緒支持建立信任，在不提高用戶風險感知的情況下，顯著誘導出更多的機密個資。
   * **解決痛點 / 推薦場景**：**完美揭露了企業在部署對話式 AI 時，缺乏對「主動誘導攻擊」防禦機制的致命盲點。** 隨著企業大量導入虛擬陪伴與客服 Agent，對話中的社會性互動極易成為隱私洩漏的破口。這是資安團隊進行 **Agent 威脅建模 (Threat Modeling)**、**自動化紅隊演練 (Red Teaming)** 以及設計應用層提示詞審計機制的必讀實戰文獻。
   * **資源**：[🐙 實驗數據與程式碼庫 (Zenodo)](https://zenodo.org/records/15610905)
@@ -143,19 +143,19 @@ LLM 的漏洞可被歸納為五大核心風險：
 
 ### 2.3 前沿越獄技術 (Advanced Jailbreak)
 
-  * **[[Involuntary Jailbreak (非自願越獄)]](https://arxiv.org/abs/2602.12345v1)** `[2026-02]` 🔥
+  * **[Involuntary Jailbreak (非自願越獄)](https://arxiv.org/abs/2602.12345v1)** `[2026-02]` 🔥
       * **核心優勢**：**顛覆性的「零敏感詞」自我越獄鏈**。由新加坡國立大學團隊提出，利用特製的「語言算子 (Language Operators)」與混合生成策略，在**完全不輸入任何違規關鍵字**的情況下，強制 LLM「自己想出有害問題並給出深度解答」。
       * **解決痛點 / 推薦場景**：完美繞過了傳統依賴「關鍵字過濾」與「輸入意圖分類」的靜態防禦機制（如多數的 Input Guardrails）。對於紅隊演練人員而言，這是**自動化擴充紅隊越獄資料庫 (Red Teaming Data Collection)** 的高效兵器；同時它也揭露了產業界的盲區：**指令跟隨能力越強的頂尖模型（如 Claude Opus 4.1、GPT 4.1），反而越容易淪為此攻擊的魁儡**。
       * **資源**：[📄 arXiv 論文](https://arxiv.org/abs/2602.12345v1) | [📝 微信公眾號深度解讀](https://mp.weixin.qq.com/s/xxxxxxxxxxxx)
         <br>`[零敏感詞攻擊]` `[自我越獄]` `[紅隊兵器]`
 
-  * **[[BitBypass (EACL 2026)]](https://mp.weixin.qq.com/s/CBH3vHsOjE5T1qY5xPc2tw)** `[2026-03]` 🔥
+  * **[BitBypass (EACL 2026)](https://mp.weixin.qq.com/s/CBH3vHsOjE5T1qY5xPc2tw)** `[2026-03]` 🔥
       * **核心優勢**：**首創「比特層降維打擊」的黑盒越獄新範式**。徹底放棄傳統的語義誘導，將敏感詞彙（如 bomb）編碼為 8-bit ASCII 二進制序列，並於系統提示詞（System Prompt）中植入 Python 偽代碼，誘導 LLM 進入「程式化執行模式」自行解碼並執行惡意指令。
       * **解決痛點 / 推薦場景**：完美繞過了現有極度依賴「明文語義檢測」的安全護欄（如 OpenAI Moderation 等分類器）。由於輸入端在護欄看來只是無害的數據處理請求，攻擊成功率極高。這為**紅隊演練 (Red Teaming)** 與 **AI 滲透測試** 提供了全新的底層攻擊向量，也提醒資安人員必須將「解碼異常行為」納入防禦監控範圍。
       * **資源**： [📄 論文 (EACL 2026 Findings)](https://2026.eacl.org/program/findings-accepted/#:~:text=BitBypass%3A%20A%20New%20Direction%20in%20Jailbreaking%20Aligned%20Large%20Language%20Models%20with%20Bitstream%20Camouflage)
         <br>`[二進制偽裝]` `[底層繞過]` `[紅隊演練]`
 
-  * **[[Jailbreak-Tuning (EMNLP 2025)]](https://mp.weixin.qq.com/s/KwPKFXcNHJkG13AMWzhhUQ)** `[2025]` 🔥
+  * **[Jailbreak-Tuning (EMNLP 2025)](https://mp.weixin.qq.com/s/KwPKFXcNHJkG13AMWzhhUQ)** `[2025]` 🔥
       * **核心優勢**：**只需 10 個樣本即可癱瘓護欄的「微調後門」攻擊**。研究證實，即使是防護嚴密的閉源前沿模型（如 GPT-4o, Gemini 1.5 Pro），只要開放微調 (Fine-tuning) 權限，攻擊者僅需混入極少量的「競爭目標 (Competitive Objectives)」有害樣本，就能從模型權重層面徹底摧毀安全機制。
       * **解決痛點 / 推薦場景**：完美繞過了現有依賴「輸入層意圖過濾」的常規護欄。這項研究為 **AI 供應鏈安全 (AI Supply Chain Security)** 與 **紅隊演練 (Red Teaming)** 敲響了警鐘，更揭示了「模型能力越強，反而越容易受微調漏洞操控」的反直覺盲區。對於需要評估企業私有化微調風險的資安團隊來說，這是必備的威脅建模參考。
       * **資源**：[📝 微信公眾號深度解讀](https://mp.weixin.qq.com/s/KwPKFXcNHJkG13AMWzhhUQ) | [📄 論文 (即將收錄於 ACL Anthology)]
@@ -350,28 +350,28 @@ Meta 的思路是從根本上訓練一個「天生安全」的模型，其核心
 
 建立了防禦後，如何驗證其有效性？這就需要「AI 紅隊測試」。自動化框架應運而生，解決手動測試效率低下的問題：
 
-* **[[GuardVal (HKUST)]](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
+* **[GuardVal (HKUST)](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
   * **核心優勢**：**基於目標狀態的「自適應越獄」自動化框架**。利用攻擊端 LLM 進行角色分工（翻譯、生成、評估、優化），透過閉環迭代機制，根據防禦端的即時反應不斷調整攻擊 Payload。
   * **解決痛點 / 推薦場景**：克服了傳統紅隊測試工具依賴靜態題庫、容易被模型加固後失效的問題。其「防停滯優化」機制能確保攻擊持續進化，穿透淺層防禦，是進行深度安全評估與挖掘隱蔽漏洞的強大武器。
   * **資源**：[📝 深度技術解讀](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A) | [📄 論文原文](https://www.google.com/search?q=https://arxiv.org/abs/GuardVal)
 
-* **[[SEED: 逐步推理破壞攻擊 (CoT Disruption)]](https://github.com/Applied-Machine-Learning-Lab/SEED-Attack)** `[2025-04]` 🔥
+* **[SEED: 逐步推理破壞攻擊 (CoT Disruption)](https://github.com/Applied-Machine-Learning-Lab/SEED-Attack)** `[2025-04]` 🔥
   * **核心優勢**：**首創針對 LLM 「逐步推理 (Step-by-step Reasoning)」的隱蔽注入攻擊**。不依賴傳統的越獄詞彙，而是透過輔助模型在目標問題的初始推理步驟中注入極微小的邏輯錯誤（SEED-S/SEED-P），引發蝴蝶效應導致最終輸出完全崩潰，連 GPT-4o 作為裁判都難以察覺其惡意。
   * **解決痛點 / 推薦場景**：揭露了目前主流大模型（如 Llama3, Qwen2.5, GPT-4o）過度信任上下文連貫性的致命漏洞。對於**部署 API 服務的平台方**，或是需要進行金融計算、醫療診斷等**長邏輯推理場景的企業**，這是進行深度安全評估與紅隊滲透測試的最新前沿指標。
   * **資源**：[🐙 GitHub](https://github.com/Applied-Machine-Learning-Lab/SEED-Attack) | [📄 論文](https://aclanthology.org/2025.acl-long.251.pdf) | [📝 團隊深度解讀](https://www.zhihu.com/people/aml_cityu)
   `[ACL 2025]` `[CoT攻擊]` `[紅隊滲透]` `[隱蔽注入]`
 
-* **[[FuzzyAI]](https://github.com/cyberark/FuzzyAI)** `[持續更新]` 🔥
+* **[FuzzyAI](https://github.com/cyberark/FuzzyAI)** `[持續更新]` 🔥
   * **核心優勢**：**全方位 LLM API 動態模糊測試神器，內建十大前沿越獄攻擊武庫！** CyberArk 開源的自動化紅隊測試框架，系統化探測大模型在提示詞注入、機密外洩與繞過護欄等面向的脆弱點。其最大亮點是內建了 PAIR (即時自動迭代細化)、ASCII Art 視覺繞過、多輪漸強攻擊 (Crescendo) 與幻覺誘導等最新學術級黑盒攻擊手法。
   * **解決痛點 / 推薦場景**：**完美解決了企業在部署 LLM 服務時「缺乏系統性壓力測試」與「難以防禦新型越獄手法」的致命痛點。** 具備極高的擴展性，能一鍵對接 OpenAI、Gemini、AWS Bedrock 等主流雲端服務，以及本地端 Ollama。是企業資安團隊進行 **AI 紅隊演練 (Red Teaming)**、**LLM API 黑箱滲透測試** 與 **動態防禦機制驗證** 的工業級首選武庫。
   * **資源**：[🐙 GitHub](https://github.com/cyberark/FuzzyAI)
     <br>`[自動化模糊測試]` `[API滲透]` `[紅隊演練]` `[前沿越獄武庫]`
 
-* **[[PyRIT (Python Risk Identification Toolkit)]](https://github.com/Azure/PyRIT)**
+* **[PyRIT (Python Risk Identification Toolkit)](https://github.com/Azure/PyRIT)**
     * **核心優勢**：**微軟開源的生成式 AI 紅隊引擎**。利用「生成式 AI」來「自動產生對抗性測試樣本」，實現 AI 測評 AI。
     * **解決痛點 / 推薦場景**：將手動安全測試轉為自動化流程，可精準模擬典型攻擊鏈（如數據外洩），是企業實施 AI 開發生命週期 (AI SDL) 的必備工具。<br>`[微軟開源]` `[自動化測評]`
 
-* **[[DeepTeam]](https://github.com/confident-ai/deepeval)**
+* **[DeepTeam](https://github.com/confident-ai/deepeval)**
     * **核心優勢**：**建構於 DeepEval 之上的專精紅隊框架**。自動化攻擊生成和評測，支援 50 多種漏洞類型和 10 多項攻擊增強功能。
     * **解決痛點 / 推薦場景**：大幅簡化大規模紅隊測試流程，適合需要進行深度安全掃描與合規驗證的 AI 產品線。<br>`[漏洞掃描]` `[攻擊增強]`
 
