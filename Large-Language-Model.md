@@ -75,7 +75,7 @@ NVIDIA 開發的 Nemotron 系列模型，以其極高的推理效率與完整的
 ### 1. 核心模型發佈與解析 (Core Models)
 了解 Nemotron 系列的核心架構與性能指標，選擇適合您的硬體與應用場景的模型尺寸。
 
-* **[[Nemotron 3 Nano Omni]](#)** `[2026]` 🔥 `[全模態推理]` `[端側 MoE]` `[單次感知]`
+* **[Nemotron 3 Nano Omni](#)** `[2026]` 🔥 `[全模態推理]` `[端側 MoE]` `[單次感知]`
   * **核心優勢**：**終結多模型串接的延遲惡夢，NVIDIA 開源首款「單次感知」的全模態 MoE 巨獸！** 採用 30B-A3B 混合專家架構，將視覺、語音與語言編碼器完美融合在單一底層系統中。徹底拋棄傳統「先辨識、後理解」的碎片化流程，在維持頂級互動效能下，實現高達 **9 倍的驚人吞吐量提升**，並原生支援 1920x1080 高畫質螢幕解析度的視覺推理。
   * **解決痛點 / 推薦場景**：**完美解決了傳統 AI 代理 (Agent) 在處理複雜影音或螢幕操作時，因跨模型傳遞導致「上下文流失」與「推論成本過高」的致命痛點。** 極度輕量化的架構讓它能無縫部署於 NVIDIA Jetson 邊緣運算設備或 DGX Spark 本地伺服器。是打造 **電腦操作智能體 (Computer Use Agent)**、**企業級多媒體文件解析 (Document Intelligence)**，以及要求超低延遲的 **即時影音客服伴侶** 的工業級端側首選。
   * **資源**：[🌐 NVIDIA 官方模型資源](https://huggingface.co/nvidia) | [📝 深度技術解讀](#) *(註：官方權重與論文連結依據 NVIDIA 最新發布頁面為準)*
@@ -133,7 +133,7 @@ NVIDIA 開發的 Nemotron 系列模型，以其極高的推理效率與完整的
 
 * **[大模型微調全生命週期解析](https://www.53ai.com/news/finetuning/2025022604125.html)**：從資料準備到模型評估的宏觀指南。
 
-* **[[ProSafePrune]](https://github.com/hfutml/PROSAFEPRUNE)** `[2026]` 🔥 `[解決過度拒絕]` `[參數層修剪]` `[零推論延遲]`
+* **[ProSafePrune](https://github.com/hfutml/PROSAFEPRUNE)** `[2026]` 🔥 `[解決過度拒絕]` `[參數層修剪]` `[零推論延遲]`
   * **核心優勢**：**根治大模型「過度拒絕」的 ICLR 2026 頂會神作，消除對齊稅且零推論延遲！** 研究揭露模型變得「過度謹慎」的病灶在於中間層的過度有害編碼。透過創新的 SVD 奇異值分解與重疊算子，ProSafePrune 能精準分離並「修剪 (Prune)」掉這些冗餘的低秩有害特徵。因為是直接修改模型權重，完全不需要在推論階段外掛任何干預向量，達成**推論開銷為零**，且通用任務效能（如 MMLU、GSM8K）不降反升。
   * **解決痛點 / 推薦場景**：**完美解決了安全對齊（Alignment）後常見的「對齊稅」痛點——模型看到無害的敏感詞就無腦拒絕回答，嚴重影響使用者體驗。** 實測在 LLaMA-2-7B 上，將偽有害指令的合規率從極低的 11.0% 暴增至 73.0%，同時仍能精準防禦真正的惡意攻擊。極度適合用於**企業級大模型安全對齊**、**AI 客服機器人去閹割化**，以及對推論速度要求極高的**邊緣運算端側模型 (SLM) 最佳化**。
   * **資源**：[🐙 GitHub 官方開源](https://github.com/hfutml/PROSAFEPRUNE) | [📄 ICLR 論文 (OpenReview)](https://openreview.net/forum?id=QkHKaPfRAB)
@@ -261,14 +261,14 @@ AI Agent 的強大不在於單打獨鬥，而在於流程設計。以下精選�
 ---
 
 #### 4. 電腦操作與軟體工程師 (Computer Use & Coding)
-* **[[OpenHarness (港大 HKUDS)]](https://github.com/HKUDS/OpenHarness)** `[2026-04]` 🔥
+* **[OpenHarness (港大 HKUDS)](https://github.com/HKUDS/OpenHarness)** `[2026-04]` 🔥
   * **核心優勢**：**將 Agent 從「黑盒」變「白盒」的極致輕量框架**。僅用 1.1 萬行 Python 程式碼，就完美復刻了 Anthropic 官方 Claude Code（高達 51 萬行 TypeScript）的核心架構。內建引擎循環、MCP 協議支援、多代理協作與三級權限沙箱，並**完全相容 Claude 官方的 Skills 與 Plugins 生態**。
   * **解決痛點 / 推薦場景**：完美解決了商業 Agent 框架過於臃腫、開發者難以窺探底層邏輯與二次開發的痛點。無論你是想從零拆解學習 Agent 的運作機制，還是需要一個能直接在終端機 (CLI) 執行檔案讀寫、Bash 腳本、Git 操作與 PR 審查的專屬 AI 開發副駕，這都是目前最具啟發性的開源平替神作。
   * **資源**：[🐙 GitHub](https://github.com/HKUDS/OpenHarness)
   * **⚠️ 關鍵警告 (PR 156, 159 中修復)**：[CVE-2026-6819] 遠端插件管理漏洞 (CVSS: 8.8 High)、[CVE-2026-40515] 權限繞過漏洞 (CVSS: 8.7 High)、[CVE-2026-6729] 對話劫持漏洞 (CVSS: 9.x Critical)
     <br>`[ClaudeCode平替]` `[白盒框架]` `[開發者副駕]` `[極易擴展]`
 
-* **[[OpAgent]](https://github.com/codefuse-ai/OpAgent)** `[2026-02-20]` 🔥
+* **[OpAgent](https://github.com/codefuse-ai/OpAgent)** `[2026-02-20]` 🔥
   * **核心優勢**：**視覺驅動的 Web 智能體霸主，WebArena 成功率 71.6% 榮登榜首。** 由螞蟻集團研發，打破傳統對 HTML 代碼的過度依賴，改採網頁截圖直接進行空間佈局理解。結合線上強化學習（Online RL）與「規劃、執行、反思、總結」四位一體的協作架構，賦予 AI 像真人一樣在複雜網頁中試錯與導航的能力。
   * **解決痛點 / 推薦場景**：**完美解決了傳統網頁腳本因 UI 改版就失效、以及無法處理跨頁面複雜邏輯的問題。** 無需預設腳本，僅憑一條指令即可在亞馬遜（Amazon）等真實電商平台自主完成搜尋、識別與加購操作，是建構自動化電商助理與 RPA 流程的頂級引擎。
   * **資源**：[🐙 GitHub](https://github.com/codefuse-ai/OpAgent) | [🤗 HuggingFace](https://huggingface.co/codefuse-ai/OpAgent-32B) | [📄 Technical Report](https://arxiv.org/pdf/2602.13559) | [🌐 線上 Demo](https://huggingface.co/spaces/exias/OpAgent)
@@ -552,7 +552,7 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 * **[DeepSeek-VL2 (VLM 邁入 MoE 時代)](https://github.com/deepseek-ai/DeepSeek-VL2)** `[2024-12-13]`
   * **核心優勢**：傳統視覺大模型 (VLM) 運算極度吃力，VL2 成功將混合專家架構引入視覺領域，大幅提升了圖片與文件的解析效率。[📝 機器之心解讀](https://mp.weixin.qq.com/s/s832KUgixNuX4GUkvY7_Ag) | [📝 公眾號解析](https://mp.weixin.qq.com/s/p6r_b-k4UnSJED5cBTedZg)
 
-* **[[Hy3-preview]](https://github.com/Tencent-Hunyuan/Hy3-preview)** `[2026-04-23]` 🔥 `[快慢思考融合]` `[Agent實用霸主]` `[超長上下文256K]`
+* **[Hy3-preview](https://github.com/Tencent-Hunyuan/Hy3-preview)** `[2026-04-23]` 🔥 `[快慢思考融合]` `[Agent實用霸主]` `[超長上下文256K]`
   * **核心優勢**：**騰訊混元重建後的首款開源巨獸！總參數 295B (激活 21B) 完美融合快慢思考的 MoE 模型。** 徹底拋棄「為刷榜而生」的盲點，主打真實業務場景的「全面實用性」。在複雜邏輯推理（如清華數學博資考）與程式碼生成上表現驚人。其原生支援快思考（直接響應）與慢思考（深度推論）動態切換，首 token 延遲大幅降低 54%，整體推理效率更提升了 40%。
   * **解決痛點 / 推薦場景**：**完美解決了傳統大模型在執行「超長複雜工作流」時容易斷片、忘記指令的致命痛點。** 實測可穩定支援高達 495 步的 Agent 自動化腳本（如文件處理、工具鏈編排）。官方提供極其完善的 vLLM / SGLang 部署腳本與 LLaMA-Factory 微調指南，是企業打造**高併發複雜智能體 (Agentic AI)**、**超長文本檢索 (RAG)** 以及**程式碼開發副駕 (Code Copilot)** 的工業級基礎模型首選。
   * **資源**：[🐙 GitHub 官方開源](https://github.com/Tencent-Hunyuan/Hy3-preview) | [🤖 ModelScope 模型下載](https://www.modelscope.cn/collections/Tencent-Hunyuan/Hy3-preview)
@@ -577,8 +577,16 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 | **SmolLM2** | 🌐 **Hugging Face** | **為極端環境打造的極小模型**。極致壓縮體積，專門針對運算資源極度受限的環境進行最佳化。 | 穿戴式裝置、超低功耗設備<br>`[極小體積]` `[極低功耗]` |
 
 #### 📂 核心模型下載與資源
+
+* **[[ELF (Embedded Language Flows)]](https://github.com/lillian039/ELF)** `[2026-05]` 🔥 `[擴散語言模型]` `[何愷明團隊]` `[非自迴歸]`
+  * **核心優勢**：**打破 GPT 自迴歸霸權的連續擴散語言模型神作，僅 105M 參數達成驚人生成品質！** 由何愷明團隊重磅推出，徹底捨棄傳統 Next-token prediction 路線，首創將文字 Token 映射為連續 Embedding 並採用 Flow Matching 技術進行去噪。它完美融合了圖像生成領域的 CFG (Classifier-Free Guidance) 技術，在僅需 45B 訓練 Token 與 32 步極速採樣的條件下，生成困惑度壓低至 24，效能強勢輾壓傳統離散擴散模型。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統大模型「逐字生成延遲高」與「極度依賴海量訓練資料 (通常需 500B+)」的致命痛點。** 透過「連續到底、最後一步離散化」的極簡架構，大幅降低了訓練算力與推論開銷。極度適合部署於**資源受限的邊緣運算設備 (Edge AI)**，並在**機器翻譯**與**文本摘要**等條件生成 (Conditional Generation) 任務中，作為低算力、高效能的次世代微型語言模型 (SLM) 首選。
+  * **資源**：[🐙 GitHub](https://github.com/lillian039/ELF) | [📄 論文](https://arxiv.org/pdf/2605.10938)
+
 * **[Phi-4](https://huggingface.co/NyxKrage/Microsoft_Phi-4)** `[2024-12-13]`：微軟 Phi-4 正式發表，以小博大效能驚人。[📝 公眾號解析](https://mp.weixin.qq.com/s/uny1VUt7vk_ZU6hCH0EDGg)
+
 * **[SmolLM2](https://github.com/huggingface/smollm/)** `[2024-11-04]`：Hugging Face 官方推出的手機執行小型語言模型。[📝 iThome 報導](https://www.ithome.com.tw/news/165832)
+
 * **[Llama 3.2 (1B/3B)](https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/)** `[2024-09-25]`：Meta 震撼開源的端側邊緣運算 (Edge AI) 專屬模型。
 
 ---
@@ -719,7 +727,7 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 * **[PersonaPlex-7B-V1](https://github.com/NVIDIA/personaplex)** `[2026-01-15]`
   * **核心優勢**：NVIDIA 開源重塑實時語音交互的「全雙工」黑科技！具備極強的抗干擾能力與人類情緒模擬，完美解決語音 AI 常見的「搶話」問題。[👉 本站深度技術分析](https://deep-learning-101.github.io/LLM/PersonaPlex) | [🤗 HuggingFace](https://huggingface.co/nvidia/personaplex-7b-v1) | [📄 官方論文](https://research.nvidia.com/labs/adlr/files/personaplex/personaplex_preprint.pdf)
 
-* **[[Audio Flamingo Next (AF-Next)]](https://github.com/NVIDIA/audio-flamingo)** `[2026-04-13]` 🔥
+* **[Audio Flamingo Next (AF-Next)](https://github.com/NVIDIA/audio-flamingo)** `[2026-04-13]` 🔥
   * **核心優勢**：**NVIDIA 次世代全開源語音大模型，首創「時間錨定推理鏈 (Temporal Audio CoT)」。** 採用 Qwen-2.5-7B 為語言骨幹，透過百萬小時網際網路規模數據訓練。其最大創舉是捨棄傳統 RoPE，改用 **RoTE (旋轉時間嵌入)** 來直接建模音訊時間語意，將上下文一舉擴展至 128K。在長音訊理解與多模態推理指標上，強勢擊敗 Gemini-2.5-Pro 與 Phi-4-mm。
   * **解決痛點 / 推薦場景**：**徹底終結傳統模型「無法跨時間段聚合證據」與「長音訊泛化力差」的痛點。** 官方貼心釋出三大特化變體：**Instruct** (適合通用對話 QA)、**Think** (適合高難度音訊邏輯推理，能精準給出推理時間戳) 以及 **Captioner** (適合精細字幕與長摘要)。是企業建構 Podcast 深度分析系統、智慧會議大腦、與複雜音樂/聲學事件理解 Agent 的最強開源底座。
   * **資源**：[🐙 GitHub](https://github.com/NVIDIA/audio-flamingo) | [📄 論文](https://arxiv.org/abs/2604.10905) | [🌐 專案主頁](https://afnext-umd-nvidia.github.io/) | [🤗 HF 權重 (Instruct版)](https://huggingface.co/nvidia/audio-flamingo-next-hf)
@@ -755,7 +763,7 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 ### 1. 頂尖多模態與視覺推理 (Vision & Complex Parsing)
 需要讓 AI 看懂工程圖紙、財報表格或進行深度邏輯推理？這些是目前的開源王者：
 
-* **[[Qwen3.5-Omni]](https://modelscope.cn/studios/Qwen/Qwen3.5-Omni-Demo)** `[2026-04]` 🔥
+* **[Qwen3.5-Omni](https://modelscope.cn/studios/Qwen/Qwen3.5-Omni-Demo)** `[2026-04]` 🔥
   * **核心優勢**：**首款實現「視聽直覺編程」的原生全模態統一體**。採用 Hybrid Attention MoE 架構，支援 256k 超長上下文，能一次吞下 10 小時音訊或 400 秒影片。
   * **解決痛點 / 推薦場景**：打破了傳統 Agent 「只能看文字」或「音畫不同步」的限制。模型能邊看影片邊聽需求，直接寫出對應的自動化程式碼，是開發**工業級多模態自主代理程式**的首選。
   * **資源**：[🐙 ModelScope](https://modelscope.cn/studios/Qwen/Qwen3.5-Omni-Demo) | [📄 論文](https://arxiv.org/abs/2604.15804v1) | [📝 官方解讀](https://arxiv.org/abs/2604.15804v1)
