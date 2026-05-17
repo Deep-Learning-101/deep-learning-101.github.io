@@ -355,6 +355,24 @@ Meta 的思路是從根本上訓練一個「天生安全」的模型，其核心
 
 建立了防禦後，如何驗證其有效性？這就需要「AI 紅隊測試」。自動化框架應運而生，解決手動測試效率低下的問題：
 
+* **[Anthropic-Cybersecurity-Skills (資安 Agent 終極技能庫)](https://github.com/mukul975/Anthropic-Cybersecurity-Skills)** `[2026-04]` 🔥
+  * **核心優勢**：**將資安專家的「腦內手冊」轉化為 AI Agent 可直接執行的 754 個實戰技能包！** 徹底終結大模型面對資安任務時「只會講理論」的窘境。此專案基於 `agentskills.io` 開放標準，使用純文字 Markdown 將高達 26 個安全領域（涵蓋雲端安全、紅隊演練、記憶體鑑識、惡意軟體分析等）的專業工作流結構化。每個技能都內建了先決條件、實戰 CLI 指令（如 Volatility、YARA）、避坑指南，並精準映射至 MITRE ATT&CK 與 NIST CSF 2.0 等五大權威框架。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 AI 在資安場景「不懂具體工具參數」、以及「資安工程師難以記憶海量指令」的痛點。** 只要將此庫無縫接入 Claude Code、Cursor 或 GitHub Copilot，AI 就能瞬間化身實戰經驗豐富的資安老手。極度適合企業用來打造**自動化 SOC 營運大腦**、**紅隊滲透演練副駕 (Red Team Copilot)**，以及**高階威脅狩獵 (Threat Hunting) 的標準化流水線**，將個人經驗轉化為團隊可複用的數位資產。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/mukul975/Anthropic-Cybersecurity-Skills) | [🌐 Agent Skills 開放標準]()
+`[資安 Agent]` `[754項實戰技能]` `[MITRE框架對齊]` `[自動化SOC]`
+
+* **[Gemma-4-31B-CRACK (資安紅隊越獄專武)](https://huggingface.co/dealignai/Gemma-4-31B-JANG_4M-CRACK)** `[2026-04-05]` 🔥
+  * **核心優勢**：**打破底線防護的資安專武！首款針對網路安全與紅隊演練完全「無限制越獄」的 31B 級大模型。** 這款經由 dealignai 特殊「手術」的 Gemma 4 變體，採用 JANG_4M 混合精度量化技術（壓縮 MLP，保留注意力層全精度），在 HarmBench 基準的「網路犯罪/入侵」類別達成 100% 聽令率（完全不拒絕回答）。實測在連接埠掃描、反向 Shell、緩衝區溢位等 8 項極端滲透測試中，皆能全數生成可用的惡意程式碼，且通用知識 (MMLU) 幾乎無損。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統商業大模型（如 GPT-4o, Claude）遇到漏洞利用、社交工程等敏感指令時，直接觸發安全護欄「拒絕回答」的致命痛點。** 體積僅 18GB，只需一台配備 24GB 統一記憶體的 Apple Silicon Mac，配合 vMLX 推論框架即可實現純本地端流暢運行，確保機密資料絕對不外流。極度適合企業資安團隊打造**專屬紅隊演練大腦 (Red Team Copilot)**、**自動化滲透測試腳本生成器**，以及建構**零審查的威脅情報分析沙箱**。
+  * **資源**：[🤖 Hugging Face 模型權重](https://huggingface.co/dealignai/Gemma-4-31B-JANG_4M-CRACK)
+`[越獄模型]` `[紅隊演練]` `[Mac本地部署]` `[滲透測試]`
+
+* **[DeepAudit (自動化深度程式碼安全稽核大腦)](https://github.com/lintsinghua/DeepAudit)** `[持續更新]` 🔥
+  * **核心優勢**：**打破 SAST 工具海量誤報的魔咒，首創「大膽假設，沙箱求證」的 Multi-Agent 自動化漏洞挖掘與 PoC 驗證平台！** 它不僅是靜態掃描，而是由多個 AI 智能體（Recon, Analysis, Verification）接力協作。當發現疑似 SQL 注入或反序列化漏洞時，Verification Agent 會主動編寫攻擊腳本（Payload），並在隔離的 Docker 沙箱中實際執行測試，直接返回驗證成功的技術報告與修復建議。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統靜態掃描工具「誤報率極高」，以及資安專家手動審閱原始碼「耗時且昂貴」的致命痛點。** 支援一鍵匯入 GitHub 專案或 ZIP 檔，能精準抓出硬編碼密鑰、弱雜湊、命令注入與權限旁路等高危漏洞。極度適合企業打造**自動化 DevSecOps 流水線**、**AI 驅動的紅隊滲透演練 (Red Teaming)**，以及協助軟體開發團隊在交付前進行低成本、高精度的內部安全審計。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/lintsinghua/DeepAudit)
+`[Agent安全稽核]` `[自動化PoC]` `[沙箱驗證]` `[DevSecOps]`
+
 * **[GuardVal (HKUST)](https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A)** `[2026-04]` 🔥
   * **核心優勢**：**基於目標狀態的「自適應越獄」自動化框架**。利用攻擊端 LLM 進行角色分工（翻譯、生成、評估、優化），透過閉環迭代機制，根據防禦端的即時反應不斷調整攻擊 Payload。
   * **解決痛點 / 推薦場景**：克服了傳統紅隊測試工具依賴靜態題庫、容易被模型加固後失效的問題。其「防停滯優化」機制能確保攻擊持續進化，穿透淺層防禦，是進行深度安全評估與挖掘隱蔽漏洞的強大武器。
