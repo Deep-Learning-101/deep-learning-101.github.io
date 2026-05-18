@@ -65,6 +65,12 @@ schema_type: article
   * **適用情境**：開發中文專屬的 AI 應用或 RAG 知識庫。
   * **特色亮點**：這雖然不是單一的量化排行榜，卻是 GitHub 上最齊全的「中文大語言模型」開源專案、微調數據集與評測總整理。要在地化微調 (Fine-tuning) 中文模型，這是必備的尋寶圖。
 
+* **[EssenceBench (大模型評測極致壓縮框架)](https://github.com/gszfwsb/EssenceBench)** `[2025-10]` 🔥
+  * **核心優勢**：**終結海量題海戰術的評測革命，用 1/200 的題量精準還原 95% 的大模型榜單排名！** 由上海交大與阿里通義千問團隊聯合提出，創新採用「由粗到細」的三階段壓縮框架。先過濾語意與排名的雙重冗餘，再透過遺傳演算法 (GA) 從天文數字的組合中進化出最優子集，最後輔以歸因細化確保難度與題型的全面覆蓋。在 HellaSwag 與 GSM8K 等權威基準上，僅需極少題目即可達成極低的預測誤差，徹底打破傳統評測的算力瓶頸。
+  * **解決痛點 / 推薦場景**：**完美解決了企業在自研或微調大模型時，完整跑完一次 Benchmark 需要耗費數千萬 Token、上千 GPU 小時及高昂 API 成本的致命痛點。** 實測證明，即使將題量壓縮高達 200 倍，仍能維持 95% 的排名一致性。極度適合**企業級大模型快速迭代與 A/B 測試**、**邊緣運算端側模型 (SLM) 效能初篩**，以及需要頻繁進行**安全對齊與微調驗證**的 AI 研發團隊，真正引領產業界邁向「小數據精準評估」的新範式。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/gszfwsb/EssenceBench) | [📄 arXiv 論文 (2510.10457)](https://arxiv.org/abs/2510.10457) | [🤗 Hugging Face 討論區](https://huggingface.co/papers/2510.10457)
+  `[評測壓縮]` `[極致降本]` `[精準排序]` `[遺傳演算法]`
+
 ---
 
 ## NVIDIA Nemotron
@@ -167,6 +173,12 @@ NVIDIA 開發的 Nemotron 系列模型，以其極高的推理效率與完整的
   * **特色亮點**：程式碼極度乾淨、高度模組化，適合進行深度魔改與客製化訓練。[👉 Llama3.1 知識蒸餾實戰](https://pytorch.ac.cn/torchtune/stable/tutorials/llama_kd_tutorial.html)
 
 ### 資料集準備 (Datasets)
+
+- **[Universal Data Tool (開源全模態 AI 數據標註神器)](https://github.com/UniversalDataTool/universal-data-tool)** `[持續更新]` 🔥
+  - **核心優勢**：**打破商業標註平台高昂成本，一站式搞定圖、文、音、影全模態標註的開源協作神作！** 基於 MIT 協議完全免費。它內建 WebAssembly 加速的 AI 智能預標註與圖像分割引擎，不僅能讓人工標註效率暴增 5-10 倍，更針對 LLM 時代進行了深度優化，支援一鍵導出符合大語言模型微調規範的指令數據集與多模態資料集。
+  - **解決痛點 / 推薦場景**：**完美解決了企業在準備微調資料時「商業平台太貴、自研工具難以進行團隊協作與品管」的致命痛點。** 提供極其靈活的部署方式（支援 Docker 一鍵私有化本地部署與網頁端免註冊即時協作），並內建自動化 AI 質量校驗機制。極度適合**企業算法團隊**快速量產微調語料、**專業數據標註公司**進行百人級別的任務分發與進度管控，以及**學術科研單位**零成本建構跨模態 AI 知識庫。
+  - **資源**：[🐙 GitHub 官方開源](https://github.com/UniversalDataTool/universal-data-tool) | [🌐 官方網站與線上體驗](https://universaldatatool.com/)
+  `[全模態標註]` `[微調資料準備]` `[私有化部署]` `[AI智能預標註]`
 - **微調資料集實戰**
   - 資源：[📝 資料集怎麼搞？](https://zhuanlan.zhihu.com/p/29522986573) | [📝 LLaMA Factory 資料集建立](https://zhuanlan.zhihu.com/p/1916489160333714285)
 - **Easy Dataset**
@@ -249,18 +261,91 @@ AI Agent 的強大不在於單打獨鬥，而在於流程設計。以下精選�
 ---
 
 #### 3. 深度研究與開源知識庫 (Deep Research & RAG)
+
+* **[LLM Wiki (自主學習的個人知識庫)](https://github.com/nashsu/llm_wiki)** `[持續更新]` 🔥
+  * **核心優勢**：**將 Andrej Karpathy 的 AI 知識庫理念完美落地的神作！從被動 RAG 檢索進化為具備「深度研究 (Deep Research)」與「視覺化知識圖譜」的自主學習大腦。** 徹底顛覆傳統 RAG 每次查詢都要重新檢索比對的低效模式。透過獨創的「兩步鏈式思考錄入（先分析後生成）」機制，大語言模型會先完整「吃透」您的文件，再自動提煉並建構出具備交叉引用的 Wiki 頁面與動態知識圖譜。內建 SHA256 增量快取與持久化佇列，確保海量文件處理不中斷，且檔案結構完全相容於 Obsidian。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 RAG 系統「跨文件推理能力極差」、「無法察覺知識盲區」的致命痛點。** 最強大的殺手鐧在於其「知識缺口洞察」功能，能透過圖譜演算法找出孤立頁面，並自動觸發 **Deep Research (深度研究)** 機制，自主呼叫網路搜尋引擎 (如 Tavily API) 抓取資料來補全知識庫。極度適合研究人員、學術界與重度知識工作者用來打造**專屬的第二大腦 (Second Brain)**、**企業級私有化本地知識庫**，或是進行長篇文獻的深度整理與洞察。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/nashsu/llm_wiki) | [📦 軟體安裝包下載 (v0.3.13)](https://github.com/nashsu/llm_wiki/releases/tag/v0.3.13)
+  `[第二大腦]` `[Deep Research]` `[視覺化知識圖譜]` `[Obsidian相容]`
+
+* **[Academic-Search (科研智能體專屬文獻檢索技能)](https://github.com/ustc-ai4science/academic-search)** `[2026-05]` 🔥
+  * **核心優勢**：**打破大模型學術檢索的資訊孤島，專為 AI Agent 打造的跨平台文獻調研「外掛技能 (Skill)」！** 由中科大 (USTC) 認知智能全國重點實驗室開源。它將文獻檢索從粗糙的「網頁爬蟲」升級為結構化的智慧工作流，一鍵整合 arXiv、Google Scholar、Semantic Scholar 等七大主流學術平台。內建「查詢自動擴展」與貼近人類閱讀節奏的「兩遍精讀策略」，能自動過濾冗餘並優先呈現 SOTA 論文，直接輸出完美適配 LLM 閱讀的 JSON/Markdown 格式（含 BibTeX 與開源程式碼連結）。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 RAG 系統在進行學術調研時，因檢索源單一、關鍵字過窄導致「文獻漏檢」，以及「大模型難以解析非結構化網頁」的致命痛點。** 採用標準化封裝，原生支援無縫接入 AutoGPT、LangChain 等 Agentic AI 框架。極度適合學術機構與企業研發團隊打造**全自動文獻綜述大腦 (Deep Research Agent)**、**前沿技術熱點追蹤系統**，以及**論文 Baseline 自動對比與彙整副駕**。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/ustc-ai4science/academic-search)
+  `[科研 Agent]` `[DeepResearch]` `[跨平台檢索]` `[Agent Skill]`
+
+* **[DeepXiv (科研 Agent 的文獻基建)](https://github.com/DeepXiv/deepxiv_sdk)** `[2026-05]` 🔥
+  * **核心優勢**：**終結 AI 硬啃 PDF 的低效窘境，將 2 億篇科技文獻轉化為 Agent「隨插即用」的結構化數據基建！** 智源研究院 (BAAI) 領銜開源，徹底顛覆依賴 GUI 搜尋引擎與 PDF 爬蟲的傳統流程。首創「分層數據消費」機制，Agent 可透過 `--brief` (摘要速覽)、`--head` (章節概覽) 到 `--section` (章節精讀)，像人類學者一樣將運算資源 (Tokens) 集中在關鍵實驗數據上，並直接輸出原生 JSON 或 Markdown 格式。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 RAG 系統「強行塞入整份 PDF 導致上下文溢出、幻覺嚴重與算力浪費」的致命痛點。** 內建專屬搜索引擎與深度調研 Agent，更原生支援 CLI、Python SDK 與 MCP 協議。極度適合學術機構與企業研發團隊打造**全自動深度調研大腦 (Deep Research Agent)**、**Baseline 對比數據自動彙整副駕**，以及**前沿技術熱點追蹤流水線**。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/DeepXiv/deepxiv_sdk) | [📄 官方技術報告](https://arxiv.org/abs/2603.00084) | [🌐 API 開發文檔](https://data.rag.ac.cn/api/docs)
+  `[科研 Agent]` `[DeepResearch]` `[MCP支援]` `[文獻解析自動化]`
+
 * **[Tongyi DeepResearch](https://zread.ai/Alibaba-NLP/DeepResearch)** `[2025-10-28]`：阿里通義全面開源的深度研究框架，對標並試圖超越 OpenAI 閉源能力。
+
 * **[DeepAgent](https://zread.ai/RUC-NLPIR/DeepAgent)** `[2025-10-28]`：業界首個全自主的深度推理智能體。
+
 * **[SurfSense](https://zread.ai/MODSetter/SurfSense)** `[2025-05-11]`：萬星開源王炸，能完美整合並檢索 Slack、Notion、Jira 等四散的企業知識庫。
+
 * **[MiroThinker](https://github.com/MiroMindAI/MiroThinker)** `[2025-08-29]`：針對學術研究和趨勢預測進行最佳化的深度研究代理。
+
 * **開源 Perplexity 替代方案** `[2025-06-03]`：包含 [Gemini Fullstack LangGraph](https://deepwiki.com/google-gemini/gemini-fullstack-langgraph-quickstart) 與 [Perplexica](https://github.com/ItzCrazyKns/Perplexica)，適合自建 AI 搜尋引擎。
+
 * **[PandaWiki](https://github.com/chaitin/PandaWiki)** `[2025-06-06]`：新一代 AI 大模型驅動的開源知識庫系統。
+
 * **[AutoAgent](https://github.com/HKUDS/AutoAgent)** `[2025-04-03]`：港大打造的強大 Deep Research 開源框架。
+
 * **[DeepSearcher](https://zread.ai/zilliztech/deep-searcher)** `[2025-03-20]`：私有資料庫結合 DeepSeek 打造的本地研究智能體。
 
 ---
 
 #### 4. 電腦操作與軟體工程師 (Computer Use & Coding)
+
+* **[Hugging Face ml-intern](https://github.com/huggingface/ml-intern)** `[2026-04]` 🔥
+  * **核心優勢**：**重新定義「AI 幫我做研究」！能自主讀論文、找資料、寫腳本並提交 GPU 訓練的開源 ML 實習生。** 建立在 `smolagents` 框架之上，它打破了傳統 AI 只能「寫程式碼」的局限。透過內建的三階段閉環迭代（Research -> Plan & Validate -> Implement），它能自主爬取 arXiv 論文、追溯引用圖譜、篩選或合成 Hugging Face 數據集，甚至在遇到 reward collapse 時自主排查問題並重新訓練，完成真正意義上的端對端機器學習研究工作流。
+  * **解決痛點 / 推薦場景**：**完美解決了 AI 研究員在進行模型微調或 RLHF 時，需要耗費數天在環境配置、數據清洗與反覆調整參數的「煉丹」苦工。** 實測在 PostTrainBench 基準上，僅用 Qwen3-1.7B 模型就能在 10 小時內達成 32% 的驚人成績，甚至超越了 Claude Code。極度適合**AI 實驗室/研究員**進行模型後訓練探索，或**開發者**用來自動化合成邊緣案例資料集。支援 CLI 與具備視覺化進度的 Web UI 雙重部署。
+  * **資源**：[🐙 GitHub 官方源碼](https://github.com/huggingface/ml-intern) | [🌐 線上立即體驗 (Spaces)](https://huggingface.co/spaces/smolagents/ml-intern) | [📖 smolagents 底層文件](https://huggingface.co/docs/smolagents)
+  `[自主ML代理]` `[自動化微調]` `[HuggingFace生態]` `[取代煉丹師]`
+
+* **[Phi-Ground-Any-4B (微軟)](https://huggingface.co/microsoft/Phi-Ground-Any)** `[2025-07]` 🔥
+  * **核心優勢**：**專為 AI Agent 打造的「精準點擊」視覺定位神作，徹底打通電腦控制的最後一哩路！** 微軟重磅釋出的 40 億參數輕量級 GUI Grounding 模型，採 MIT 完全開源。它打破了傳統視覺模型在螢幕截圖上容易「眼花」的缺陷，首創 Text-first 輸入架構（先給指令再看圖，帶著目標掃描），能將自然語言直接轉化為精確的螢幕像素座標。在難度極高的 ScreenSpot-Pro 基準測試中強勢刷新 10B 以下模型 SOTA，其底層核心技術更已被整合進 Windows Copilot 之中。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 AI Agent 能理解工作流，卻經常因為「點不準按鈕」而導致任務全面崩潰的致命痛點。** 由於擁有極低的運算延遲與高達 1680×1008 的螢幕解析度支援，極度適合開發者用來打造**高可靠性的電腦操作智能體 (Computer Use Agent)**、**自動化 RPA 軟體測試腳本**，以及**複雜網頁導航副駕 (Web Agent)**，是讓矽基生命真正具備精確動手能力的工業級視覺感知模組。
+  `[ComputerUse]` `[GUI定位]` `[Agent視覺核心]` `[微軟開源]`
+
+* **[OpenCLI (網頁與私域數據 CLI 化神器)](https://github.com/jackwener/OpenCLI)** `[持續更新]` 🔥
+  * **核心優勢**：**終結 Agent 視覺解析的高昂成本，將全網與本地應用直接化為 AI 專屬的「命令行 API」神作！** 徹底顛覆傳統 Browser-use 依賴大模型「看截圖、猜座標」的笨重模式。OpenCLI 透過自動化適配器，將 Bilibili、小紅書等百大網站，甚至是微信 (WeChat)、Notion、Cursor 等本地 Electron 應用程式，直接封裝成標準、確定性的 CLI 指令。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 AI Agent 網頁自動化「Token 消耗極大、極易點錯」，以及「難以無縫提取私有通訊紀錄」的致命痛點。** 由於操作指令直接在本地瀏覽器或系統環境執行，達成了驚人的「零 Token 消耗」與 100% 執行確定性。極度適合開發者用來打造**極低成本的自動化 RPA 智能體**、**私域知識庫 (如微信對話/飛書) 的 RAG 語料抓取**，或是作為取代純視覺 Web Agent 的高效底層控制中樞。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/jackwener/OpenCLI)
+  `[Agent自動化]` `[零Token消耗]` `[私域數據提取]` `[Web-to-CLI]`
+
+* **[Awesome-Design-MD (AI 視覺設計說明書)](https://github.com/VoltAgent/awesome-design-md)** `[2026-03-31]` 🔥
+  * **核心優勢**：**終結 AI 生成 UI「千篇一律」的痛點，用純文字 Markdown 讓 AI 秒懂大廠級設計規範的開源神作！** 徹底拋棄繁瑣的 Figma 匯出與複雜的 JSON 設定檔。基於 Google Stitch 提出的全新標準，只要將一個 `DESIGN.md` 檔案放入專案根目錄，AI 程式設計助手（如 Cursor、Claude Code、v0 等）就能直接讀取包含色彩、字體、元件樣式與陰影深度的完整設計系統，並輸出視覺高度統一的精緻前端程式碼。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 AI 寫扣時「懂語法卻不懂美學」、反覆微調前端樣式導致開發效率低下的致命痛點。** 專案內建超過 60 款全球頂尖科技與消費品牌（如 Stripe、Linear、Vercel、Apple、Claude 等）的開箱即用設計規範。極度適合**全端工程師**、**獨立開發者 (Indie Hacker)** 與 **新創團隊**，在缺乏專業 UI/UX 設計師的場景下，利用 Agentic Workflow 零成本、極速打造具備商業級質感的現代化 Web 應用介面。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/VoltAgent/awesome-design-md) | [📝 Tenten 深度解讀與實戰](https://tenten.co/learning/awesome-designmd/)
+  `[前端生成神器]` `[DESIGN.md]` `[Agent開發副駕]` `[UI設計自動化]`
+
+* **[ai-website-cloner-template (AI 網頁逆向與生成神器)](https://github.com/JCodesMore/ai-website-cloner-template)** `[持續更新]` 🔥
+  * **核心優勢**：**徹底顛覆前端切版與逆向工程的繁瑣流程，一鍵將任何網站轉化為生產級 Next.js 程式碼！** 它不僅僅是暴力的 HTML 爬蟲，而是一個結合了 AI 代理（支援 Cursor、Claude Code、Windsurf 等十餘種工具）的全自動化前端產線。透過獨創的「五階段工作流」（偵察設計系統、初始化配置、撰寫元件規格、平行建置、組裝與視覺品檢），能精準還原目標網站的互動邏輯與響應式佈局，並輸出高品質的 TypeScript + Tailwind CSS 專案。
+  * **解決痛點 / 推薦場景**：**完美解決了開發者在看到精美網站想「致敬學習」、或是需要極速構建 MVP (最小可行性產品) 時，手刻前端介面極度耗時的痛點。** 讓 AI 代理接管繁瑣的 CSS 數值計算與元件切割，開發者只需專注於後端架構與業務邏輯。極度適合**全端工程師**、**獨立開發者 (Indie Hacker)** 進行**快速商業點子驗證 (Rapid Prototyping)**，或是企業接案團隊打造自動化建站流水線。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/JCodesMore/ai-website-cloner-template)
+  `[網頁逆向工程]` `[Next.js實戰]` `[Agent前端副駕]` `[自動化建站]`
+
+* **[Skyvern (視覺化網頁自動化 Agent)](https://github.com/Skyvern-AI/skyvern)** `[持續更新]` 🔥
+  * **核心優勢**：**顛覆傳統爬蟲與 RPA，用一句自然語言指令搞定全自動網頁操作的視覺智能體！** 徹底拋棄脆弱且易失效的 XPath、CSS 選擇器與 DOM 解析。Skyvern 結合了大語言模型與電腦視覺技術，直接「看懂」並理解網頁佈局，讓 AI 能像真人一樣進行邏輯推斷（如比對不同網站的同款商品）、填寫複雜表單、處理 2FA 雙重驗證，甚至編排多步驟的商業工作流。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統網頁自動化腳本「網站一改版，程式碼就報廢」的致命痛點。** 由於無需預先適配特定網站結構，極度適合企業與獨立開發者打造**跨平台電商價格監控系統**、**自動化求職與表單填寫機器人**，以及建構**發票批次下載與報表整理的 RPA 助手**。這款開箱即用的開源神器將大幅降低自動化系統的維護成本。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/Skyvern-AI/skyvern) | [🌐 官方網站](https://www.skyvern.com/) | [📊 WebBench 基準測試論文參考](https://arxiv.org/abs/2403.04121)
+  `[視覺Agent]` `[免寫選擇器]` `[RPA自動化]` `[網頁操作]`
+
+* **[CLI-Anything (Agent 專屬軟體 CLI 生成器)](https://github.com/HKUDS/CLI-Anything)** `[2026-05]` 🔥
+  * **核心優勢**：**徹底終結 GUI 自動化的脆弱惡夢，一鍵將「任何」開源軟體轉化為 AI Agent 可直接驅動的穩定 CLI 工具！** 港大 HKUDS 團隊的革命性專案。透過 Claude Code 插件執行一條指令，即可全自動掃描 GIMP、Blender 或 LibreOffice 等龐大軟體的原始碼庫，並生成包含 REPL 互動模式、標準 JSON 輸出與 100% 測試覆蓋率的生產級命令列介面 (CLI)。它不是模擬滑鼠點擊，而是真實呼叫軟體底層 API。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統電腦操作 Agent (如 RPA) 高度依賴截圖辨識，導致「按鈕位置一變就報廢」的致命痛點。** 賦予 Agent 像資深工程師一樣精準、穩定控制專業軟體的能力。極度適合企業用來打造**自動化影音/3D渲染流水線**、**文件批次處理 Agent**，或是將現有開源專案無痛升級為「Agent-Native (智能體原生)」的基礎設施。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/HKUDS/CLI-Anything)
+  `[電腦操作]` `[Agent基礎設施]` `[GUI轉CLI]` `[零妥協自動化]`
+
+* **[Vercel Agent Browser (AI 原生瀏覽器自動化引擎)](https://github.com/vercel-labs/agent-browser)** `[2026-05-18]` 🔥
+  * **核心優勢**：**專為 AI Agent 量身打造的革命性瀏覽器自動化工具，上下文 Token 消耗暴力銳減 93%！** 傳統 Playwright 框架強制 AI 吞下數萬行的混亂 HTML DOM 樹，一次登入即燒掉 20,000 個 Token。Vercel Labs 另闢蹊徑，透過 Rust CLI 將網頁精簡重構為 AI 專用的「無障礙樹」，自動過濾裝飾性元素，並為每個可互動元件指派穩定的 Ref 編號（如 `@e1`, `@e2`）。AI 看到的不再是天書，而是極簡清單，實現「指哪打哪」的極致效能。
+  * **解決痛點 / 推薦場景**：**徹底終結傳統自動化腳本「因前端改版、CSS 選擇器變動而集體報廢」的易碎惡夢，並斬斷高昂的 Token 呼叫成本。** 只要網頁互動結構不變，Ref 編號便具備極強的抗改版魯棒性。原生適配 Claude Code 與 Cursor 等 AI 編程代理，是打造**工業級智慧網頁爬蟲**、**自動化資料採集智能體**，以及免程式碼快速原型驗證（MVP）的 AI-First 首選基礎設施。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/vercel-labs/agent-browser) | [🌐 專案主頁](https://www.skyvern.com/) *(註：官方源碼與技術說明依據 Vercel Labs 最新發布頁面為準)*
+
 * **[OpenHarness (港大 HKUDS)](https://github.com/HKUDS/OpenHarness)** `[2026-04]` 🔥
   * **核心優勢**：**將 Agent 從「黑盒」變「白盒」的極致輕量框架**。僅用 1.1 萬行 Python 程式碼，就完美復刻了 Anthropic 官方 Claude Code（高達 51 萬行 TypeScript）的核心架構。內建引擎循環、MCP 協議支援、多代理協作與三級權限沙箱，並**完全相容 Claude 官方的 Skills 與 Plugins 生態**。
   * **解決痛點 / 推薦場景**：完美解決了商業 Agent 框架過於臃腫、開發者難以窺探底層邏輯與二次開發的痛點。無論你是想從零拆解學習 Agent 的運作機制，還是需要一個能直接在終端機 (CLI) 執行檔案讀寫、Bash 腳本、Git 操作與 PR 審查的專屬 AI 開發副駕，這都是目前最具啟發性的開源平替神作。
@@ -300,7 +385,21 @@ Manus 在 2025 年掀起了全自動代理狂潮，以下為開源社群的最�
 ---
 
 #### 6. 特定場景應用 (Domain-Specific Automation)
+
+* **[Claude for Legal (Anthropic)](https://github.com/anthropics/claude-for-legal)** `[2026]` 🔥
+  * **核心優勢**：**Anthropic 官方開源的法律業專屬 Agent 智慧體全家桶，無縫接入 20+ 專業系統的自動化法務大腦！** 採用高度模組化的設計，將法律實務精準拆解為 12 個垂直領域與 70+ 個專業 Agent（定時任務與技能）。最大亮點是內建強大的 MCP (Model Context Protocol) 連接器，能直接打通 iManage、Ironclad、DocuSign 等法務標準資料庫。開發者無需撰寫複雜程式碼，僅透過編輯 Markdown 與 JSON (`CLAUDE.md`) 即可零門檻定製團隊專屬的法務 Playbook。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統法務工作「繁瑣合約比對耗時」、「法規追蹤易漏」與「跨系統資料孤島」的三大致命痛點。** 系統能自動執行 NDA 風險分級、供應商合約紅線標註 (Redline) 以及 GDPR 隱私合規 (DSAR) 的標準回應。極度適合**大型律師事務所**、**跨國企業法務部門**建構專屬的 AI 法律工作流 (Workflow)，讓律師從重複性的審閱泥淖中徹底解放，專注於高階決策。
+  * **資源**：[🐙 GitHub 官方源碼](https://github.com/anthropics/claude-for-legal)
+  `[法務Agent]` `[MCP生態系]` `[工作流自動化]` `[Anthropic官方]`
+
+* **[HyperFrames (HeyGen 代碼驅動影片渲染框架)](https://github.com/heygen-com/hyperframes)** `[2026-05]` 🔥
+  * **核心優勢**：**顛覆「提示詞生影片」的盲盒模式，讓 AI Agent 透過編寫 HTML/CSS 來「精準剪輯」影片的工業級神作！** 由全球知名 AI 視覺公司 HeyGen 開源。它徹底拋棄了傳統的圖形化剪輯軟體，底層結合 Node.js、Puppeteer 與 FFmpeg，實現了「Write HTML, Render Video」的新範式。最驚豔的是，它原生內建了專為 Claude、Cursor 等 AI 代理設計的技能包，讓 AI 能直接理解並輸出結構化代碼，達成 100% 確定性、零誤差的影片渲染。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統生成式 AI 影片「難以精確控制轉場與排版」、「無法保證每次輸出一致」以及「難以大規模批量自動化生產」的致命痛點。** 支援 WebGL Shader 轉場特效、導入 CSV 數據自動生成動態圖表，甚至能輸入 URL 將整個網頁轉化為影片演示。極度適合**自媒體團隊打造自動化短影音流水線工廠 (RPA)**、**企業批量生產數據可視化報表影片**，以及開發者建構**端到端的全自動影片製作智能體 (Video Agent)**。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/heygen-com/hyperframes) | [📝 官方介紹與實作案例](https://github.com/heygen-com/hyperframes%3Ftab%3Dreadme-ov-file%23examples)
+  `[代碼驅動影片]` `[Agent原生支援]` `[自動化剪輯工廠]` `[HeyGen開源]`
+
 * **[Paper2Poster](https://paper2poster.github.io/)** `[2025-06-02]`：學術利器，自動為 PDF 論文產生精美的發表海報。
+
 * **[MoneyPrinterTurbo](https://github.com/harry0703/MoneyPrinterTurbo)** `[2025-02-28]`：自媒體神器，AI 自動生成高清短影音工作流。
 
 ---
@@ -318,6 +417,13 @@ Manus 在 2025 年掀起了全自動代理狂潮，以下為開源社群的最�
 * **[PageIndex](https://zread.ai/VectifyAI/PageIndex)** `[2026-03-01]` | 授權：MIT
   * **技術突破**：UCL 團隊開發的 Agentic RAG 革命性開源專案。完全拋棄「向量庫」與「文本切片 (Chunking)」，改用大模型進行推理導航。
   * **解決痛點**：在超長文檔檢索中達到 98% 的驚人準確率，徹底重塑 RAG 的底層邏輯。[🌐 線上體驗](https://chat.pageindex.ai/) | [📝 公眾號教學](https://mp.weixin.qq.com/s/iivoQtqzLhFA69N5iaOvzQ) | [📝 深度解讀](https://mp.weixin.qq.com/s/wwRJYvRl_jFaiiJkdrJdgw)
+
+* **[[DCI-Agent-Lite (Direct Corpus Interaction)]](https://github.com/DCI-Agent/DCI-Agent-Lite)** `[2026-05]` 🔥
+  * **核心優勢**：**拋棄 Embedding 與向量庫，讓 Agent 直接用 Bash 指令「裸搜」語料的 RAG 顛覆神作！** 這篇頂會級別的研究首創 DCI (Direct Corpus Interaction) 範式。它完全省去了傳統 RAG 耗時的文本切片、向量化與 Top-k 固定過濾流程，直接賦予 AI Agent 使用 `grep`、`find` 等終端機指令的能力，讓 AI 能像真人工程師一樣與原始文件進行高解析度的自由互動與多步查證。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統向量 RAG 「先壓縮再檢索」導致關鍵細節流失、無法處理精確字彙比對與複雜多跳推理 (Multi-hop Reasoning) 的致命痛點。** 實測在 BrowseComp-Plus 基準上準確率暴漲 11%，且 API 呼叫成本反降 30%。極度適合企業打造**無索引即時檢索 (Zero-index retrieval)**、**動態程式碼庫/Log 檔分析**與**高價值的 Agentic Search (代理式檢索) 深度研究大腦**。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/DCI-Agent/DCI-Agent-Lite) | [📄 arXiv 論文 (2605.05242)](https://arxiv.org/abs/2605.05242) | [🤗 Hugging Face 討論區](https://huggingface.co/papers/2605.05242)
+  `[無索引檢索]` `[終端互動]` `[RAG顛覆者]` `[高解析度介面]`
+
 * **[LinearRAG](https://github.com/DEEP-PolyU/LinearRAG)** `[2025-11-20]`
   * **技術突破**：全新的高效 RAG 框架，主打「無需進行複雜的關係抽取 (Relation Extraction)」，大幅降低構建知識庫的算力與時間成本。[📝 知乎解讀](https://zhuanlan.zhihu.com/p/1975321777342260763)
 
@@ -326,11 +432,18 @@ RAG 的成敗取決於資料輸入的品質。這些工具專精於處理複雜�
 
 * **[OpenDataLoader](https://github.com/opendataloader-project/opendataloader-pdf)** `[2026-03-20]`
   * **核心優勢**：在極度困難的「表格擷取」任務中拿下 0.93 的超高準確率。主打「不追求極限速度，但精準度無可挑剔」的穩健策略，是企業處理 PDF 財報與數據報表的神兵利器。[📝 公眾號解讀](https://mp.weixin.qq.com/s/mPjH0dTyAMLKL5Hq5KPqCw)
+
 * **[RAG-Anything](https://github.com/HKUDS/RAG-Anything)** `[2025-07-02]`
   * **核心優勢**：港大 HKUDS 團隊打造的「全能多模態 RAG 系統」。能一鍵自動解析 PDF、Word、PPT 中的文字、圖片、複雜表格與公式，並無縫映射到知識圖譜 (KG) 中。極度適合金融財報、醫療病歷或科研文獻的深度推理。[📄 論文](https://arxiv.org/pdf/2510.12323) | [📝 36Kr 解讀](https://m.36kr.com/p/3358608090400776) | [📝 Milvus 實戰解析](https://milvus.io/zh-hant/blog/multimodal-rag-made-simple-rag-anything-milvus-instead-of-20-separate-tools.md)
 
 #### 3. 圖譜增強與全局語意 (Graph-RAG)
 解決傳統 RAG「只見樹木，不見森林」的問題，強化實體之間的邏輯關聯。
+
+* **[Hyper-Extract (開源強類型全場景知識圖譜提取框架)](https://github.com/yifanfeng97/Hyper-Extract)** `[2026-05-17]` 🔥
+  * **核心優勢**：**打破「先壓縮再過濾」的黑盒限制，首創「八大強類型結構」與「知識增量演進」的 Graph-RAG 前處理終極神作！** 採用 Pydantic 與強類型驗證機制，能一鍵將雜亂的非結構化文件（如財報、法務合約、醫療病歷）轉化為可序列化、持久化的知識摘要。除了傳統的二元關係圖譜 (AutoGraph) 外，更原生支援多方複雜關係的**超圖 (AutoHypergraph)**、以及融合時間與地理空間維度的**時空圖 (AutoSpatioTemporalGraph)**，並內建 GraphRAG、LightRAG 等十餘種開源提取引擎。其最強大的設計在於「知識的增量演進」，允許持續餵入新文件並於原有圖譜上智慧擴展更新，無需每次從頭跑完訓練流程。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 Graph-RAG 在建置知識圖譜時「實體關係容易斷裂、座標漂移」以及「新文件移入必須全量重練導致算力爆表」的致命痛點。** 框架內建 80+ 款開箱即用的領域模板（涵蓋金融、法律、醫學等），提供極簡的 CLI 與 Python SDK 雙模式驅動。極度適合**企業建構私有化高價值知識管理大腦**、**算法團隊準備指令微調數據集**，以及需要細粒度證據追蹤與時空線索拼接的**深度產業研究與智慧體搜尋 (Agentic Search)** 場景。
+  * **資源**：[🐙 GitHub 官方儲存庫](https://github.com/yifanfeng97/Hyper-Extract) | [📄 arXiv 技術報告](https://arxiv.org/abs/2605.05242) | [📝 模板設計與決策樹指南](https://www.google.com/search?q=https://github.com/yifanfeng97/Hyper-Extract/blob/main/DESIGN_GUIDE.md)
+  `[Graph-RAG]` `[知識圖譜自動生成]` `[超圖與時空圖]` `[零代碼YAML驅動]`
 
 * **[LightRAG](https://github.com/HKUDS/LightRAG)** `[2024-12-19]` 
   * **核心優勢**：港大 HKUDS 團隊打造的結合圖結構 (Graph) 與雙層檢索機制，精準提取文件中的實體關聯。極度適合用於建構企業級法律合規知識庫、醫療問答系統等需要「高度準確性」與「防幻覺 (Anti-Hallucination)」的嚴苛場景。[📄 EMNLP2025 論文](https://arxiv.org/pdf/2410.05779) | [📝 技術框架解讀](https://zhuanlan.zhihu.com/p/13261291813)
@@ -685,6 +798,12 @@ MoE 架構是目前突破大模型「算力牆」的唯一解方。 它的核心
 
 ### 1. 網頁級巨量檢索與搜尋引擎架構 (Web-Scale Retrieval)
 想要打造媲美 AI 搜尋引擎的檢索準確度？直接使用目前地表最強搜尋引擎團隊的底層技術。
+
+* **[[Jina Embeddings V5 Omni]](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small)** `[2026-05]` 🔥
+  * **核心優勢**：**打破模態孤島的全模態向量化霸主，真正實現圖、文、音、影「大一統」且完全相容舊有文字索引！** 創新採用凍結文字主幹、僅訓練 0.35% 輕量跨模態投影層的黑科技。它不僅單一模型就能原生支援四種模態的混合編碼（如：一句話+一張圖生成單一向量），更做到與前代 `v5-text` 逐位一致 (bit-identical)，讓老用戶升級時**完全免重建龐大的向量資料庫**。
+  * **解決痛點 / 推薦場景**：**完美解決傳統多模態 RAG 系統必須同時維護 CLIP (處理圖片) 與 Text Embedding 兩套獨立編碼器及向量空間的致命痛點，大幅降低硬體與維運成本。** 內建 4 種任務 LoRA 適配器（檢索、分類、聚類、匹配），並支援 MRL (Matryoshka) 動態降維技術，允許開發者實作「低維粗篩 → 高維精排」的極致省流管線。是打造**企業級全模態 RAG 知識庫**、**電商跨模態搜圖/搜片系統**，以及支援高併發 **vLLM 部署**的工業級大腦。
+  * **資源**：[🐙 HuggingFace 模型權重](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small) | [📄 arXiv 官方論文]()
+  `[全模態向量化]` `[免重建索引]` `[Matryoshka降維]` `[vLLM原生支援]`
 
 * **[pplx-embed-v1 系列 (Perplexity 出品)](https://research.perplexity.ai/articles/pplx-embed-state-of-the-art-embedding-models-for-web-scale-retrieval)** `[2026-02-28]`
   * **核心優勢**：Perplexity AI 官方釋出的尖端文本嵌入模型。包含 `pplx-embed-v1` 與 `pplx-embed-context-v1`。
