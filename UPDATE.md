@@ -15,6 +15,16 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 {% include ai-share.html %}
 
 ---
+### 📅 2026-06-03 更新快訊
+- **Computer-Vision**：
+    - MeDS
+    - DINO-CLIP-SAM、Anti-Forgetting Sampling Strategy、CAFe-DINO、ConceptSeg-R1、ViCrop-Det、OneNIP、JUDO
+    - PaddleOCR-VL-1.6、Boxes2Pixels、SceneScribe-1M、FT-FSOD、Duix Avatar、FrequencyCM × C3k2、BCSI、AVA-DINO
+    - DetAny4D、FoundAD、LocateAnything-3B及SANA
+- **Speech-Processing**：
+    - Mega-ASR、OmniVoice Studio
+- **Large-Language-Model**
+    - Infinity-Doc2-5M
 
 ### 📅 2026-05-18 更新快訊
 - **[Speech-Processing](https://deep-learning-101.github.io/Speech-Processing)**：
