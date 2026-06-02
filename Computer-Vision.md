@@ -49,10 +49,21 @@ service_type: AI Consulting
 | **YOLOv8** | 🇺🇸 **Ultralytics** | **生態系最完善**。雖然不是最新，但在社群中的教學、部署套件、ONNX/TensorRT 轉換資源最為豐富。 | 工業級穩定部署、初學者專案<br>`[生態豐富]` `[極易部署]` |
 | **OV-DINO** | 🇺🇸 **國際學術界** | **開源工業開放詞彙目標檢測**。不需要預先定義好類別，直接用自然語言提示 (Prompt) 就能找出畫面中對應的物體。 | 零樣本 (Zero-shot) 偵測、通用場景<br>`[Open-Vocabulary]` `[前沿技術]` |
 
+* **[ViCrop-Det](https://arxiv.org/abs/2604.26806)** `[2026-04-29]` 🔥
+  * **核心優勢**：**打破小目標檢測的算力魔咒，首創「免訓練、即插即用」的空間注意力熵 (SAE) 智能裁剪框架。** 這款由華中科技大學提出的神作，巧妙利用 DETR 檢測器內建的交叉注意力分布作為「內生探針」，透過計算香農熵精準揪出模型「不確定且重要」的區域（即小目標藏身處）進行局部高解析度重檢測。僅需微幅增加約 20% 計算量，即可在 VisDrone 數據集上穩定提升近 3 個百分點的 mAP，以極高的推理幀率 (38.6 FPS) 徹底碾壓 SAHI 等暴力全圖切片方法。
+  * **解決痛點 / 推薦場景**：**完美解決了 Transformer 檢測器在密集場景中「注意力被空曠背景稀釋導致微小目標蒸發」，以及傳統 SAHI 切片法「計算量線性暴增」的致命痛點。** 由於無需重新訓練且不更動網路架構，極度適合企業直接掛載於現有模型上，部署於**無人機航拍 (UAV) 密集微小物件偵測**、**自駕車遠距離行人辨識**，以及**衛星遙感影像大圖分析**等計算資源受限但需極高精度的邊緣運算場景。<br>`[免訓練即插即用]` `[小目標檢測]` `[碾壓SAHI]` `[邊緣運算首選]`
+  * **資源**：[🐙 GitHub (待釋出搜尋)](https://github.com/search?q=ViCrop-Det+Hui+Wang+HUST) | [📄 論文](https://arxiv.org/abs/2604.26806) | [📝 深度解讀](https://mp.weixin.qq.com/s/UQZENPtcQ-M2AiQu41OKcg)
+
 * **[FS-DETR](https://github.com/YT3DVision/FSDETR)** `[2026-04-21]` 🔥 `[小目標偵測]` `[頻域空間融合]` `[邊緣運算]`
   * **核心優勢**：**打破極端小目標漏檢魔咒，首創「頻域-空間」雙軌融合的輕量級檢測神作！** 基於 RT-DETR 架構進行深度魔改，創新引入二維快速傅立葉變換 (FFT2D) 提取高頻紋理，並結合空間層次注意力 (SHAB) 與可變形稀疏採樣 (DA-AIFI)。在參數僅有 14.7M（比 RT-DETR-R18 瘦身 26%）的極致輕量化條件下，仍能精準捕捉僅數十像素的微小物體，小目標檢測效能 (APₛ) 強勢輾壓 D-Fine-M 與 RT-DETRv2。
   * **解決痛點 / 推薦場景**：**完美解決了傳統 YOLO/DETR 在邊緣設備上「縮小模型就嚴重漏檢、做大模型又跑不動」，以及全局注意力容易被密集背景雜訊干擾的致命痛點。** 實測在 VisDrone (高密度交通) 與 TinyPerson (極端低對比度微小行人) 等嚴苛資料集上創下 SOTA。是打造**無人機高空巡檢 (UAV)**、**衛星遙感影像分析**，以及部署於算力極限**邊緣運算盒子 (Edge AI)** 的工業級首選。
   * **資源**：[🐙 GitHub 官方開源](https://github.com/YT3DVision/FSDETR)
+
+* **[FT-FSOD (跨域小樣本目標偵測框架)](https://arxiv.org/abs/2603.28182)** `[2026-03]` 🔥
+  * **核心優勢**：**CVPR 2026 頂會神作！首創「混合集成解碼器 (HED)」打破解碼層串行瓶頸，無需昂貴的生成式數據擴增，即可榨出底座模型的跨域極限！** 透過將 Transformer 解碼層從「純串聯」改為「分層＋並行分支」形成強大的隱式集成，並結合自動感知學習停滯期的「漸進式微調 (Progressive Fine-tuning)」策略，在 RF100-VL 跨域百大數據集榜單上大幅碾壓 SAM3。
+  * **解決痛點 / 推薦場景**：**完美解決了企業在導入「冷門/邊緣場景（如：稀有工業缺陷檢測、特規醫學影像、水下探測）」時，面臨「真實標註極缺、預訓練大模型水土不服且微調極易崩潰過擬合」的致命痛點。** 無需為不同資料集痛苦手調超參數，模型在面對完全陌生的 OOD (分佈外) 雜訊樣本時展現極高克制力與穩定性，是資料受限下打造高可靠度跨域 AOI 質檢系統的工業級首選。
+  * **資源**：[🐙 GitHub](https://github.com/Intellindust-AI-Lab/FT-FSOD) | [📄 論文](https://arxiv.org/abs/2603.28182)
+  <br>`[小樣本偵測]` `[跨域泛化]` `[隱式集成解碼]` `[免數據擴增]`
 
 **B. 亞洲/中國頂尖開源 (極致效能與端側特化)**
 
@@ -97,6 +108,22 @@ service_type: AI Consulting
 ### 1. 結合 LLM 與多模態的零樣本檢測 (Zero-shot AD)
 利用大語言模型或 CLIP 龐大的常識庫，在「沒看過瑕疵樣本」的情況下，直接透過文字描述或視覺特徵揪出異常。
 
+* **[JUDO](https://github.com/woodavid31/JUDO)** `[2026-05]` 🔥
+  * **核心優勢**：**打破通用大模型產線翻車魔咒，首創「對照式定位＋領域知識內化＋GRPO 推理對齊」的工業異常多模態推理器。** 這款 ICLR 2026 頂會神作基於 Qwen2.5-VL-7B 打造，徹底拋棄外掛 RAG 容易引發幻覺與邏輯偏離的弱點。它透過輸入「正常標準件與待檢件」進行視覺並置對照 (SegJux)，將工業質檢標準深植於模型權重 (DomInj)，並利用多層獎勵函數 (GRPO) 嚴格約束空間定位與工藝邏輯。在 MMAD 基準測試中，以 81.20% 的平均準確率強勢擊敗 GPT-4o。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統視覺大模型 (VLM) 在工業現場「看得出異常，卻給不出符合工藝邏輯的解釋」的致命痛點。** 它的輸出不再只是模糊的「合格/不合格」，而是能精準定位缺陷並解釋對裝配或密封的影響，讓 AI 推理真正可被人工複核。極度適合企業用來建構**次世代 AOI 瑕疵問答系統**、**自動化品質工程追溯 (SPC) 流程**，以及**產線專家級決策輔助大腦**，打通工業質檢的最後一哩路。<br>`[產線質檢大腦]` `[GRPO推理對齊]` `[超越GPT-4o]`
+  * **資源**：[🐙 GitHub](https://github.com/woodavid31/JUDO) | [📄 論文](https://arxiv.org/abs/2605.20284) | [📝 深度解讀](https://mp.weixin.qq.com/s/7WFnkb-Vp9euyzkGLqDS2g)
+
+* **[DCS (DINO-CLIP-SAM)](https://doi.org/10.3390/app16041836)** `[2026-06]` 🔥
+  * **核心優勢**：**集結三大視覺基礎模型之大成，無需任何瑕疵樣本即可達成像素級精準分割的零樣本檢測王牌！** 這套發表於 MDPI 的創新框架，將 Grounding DINO（候選定位）、CLIP（語義感知）與 SAM（精細分割）完美串聯且完全凍結骨幹權重。透過引入細粒度文本提示 (FinePrompt)、雙路徑跨模態交互 (ADCI) 修銳異常熱力圖，以及「框＋正負點」提示組合器 (BPPC)，徹底補平了大模型間的語義斷層。在 MVTec-AD 與 VisA 基準上分別創下 94.6% 與 97.2% AUROC 的零樣本極致表現。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統工業質檢「異常樣本極度稀缺」，以及單純使用 CLIP/SAM 進行零樣本預測時「邊界模糊、語義歧義嚴重」的致命痛點。** 由於具備強大的開放詞彙 (Open-vocabulary) 泛化能力，極度適合**高頻換線的柔性製造產線 (High-Mix Low-Volume)**、**缺乏歷史瑕疵數據的新品試產期 (NPI) AOI 檢測**，以及作為**雲端/離線高精度瑕疵複判大腦**（需注意其串聯三大模型帶來的算力開銷，不建議用於極低延遲的邊緣設備）。<br>`[零樣本AOI]` `[大模型串聯]` `[像素級分割]` `[免微調骨幹]`
+  * **資源**：[🐙 GitHub (社群實作搜尋)](https://github.com/search?q=DCS+Zero-Shot+Anomaly+Detection+DINO+CLIP+SAM) | [📄 論文](https://doi.org/10.3390/app16041836) | [📝 深度解讀](https://mp.weixin.qq.com/s/OaLdkHD1s4iQnBh-qAL3yA)
+
+* **[AVA-DINO (Anomaly-Aware Vision-Language Adapters)](https://arxiv.org/abs/2605.12069)** `[2026-05-13]` 🔥
+  * **核心優勢**：**首創「雙分支動態路由」打破零樣本適配的折衷瓶頸，徹底解耦正常與異常特徵的變換路徑！** 結合凍結的 DINOv3 與 CLIP 文本語義引導，模型不再強迫兩種樣本共用單一 Adapter，而是透過文本動態計算權重，分別強化正常特徵的「一致性」與異常特徵的「偏離性」，在 MVTec-AD 基準上飆出 93.5% 的 Image-AUROC。
+  * **解決痛點 / 推薦場景**：**完美解決了真實場景中「缺陷樣本極度稀缺」且「正常/異常資料分布不對稱」的致命痛點。** 無需任何目標類別的訓練資料，即可精準應對未知瑕疵。極度推薦用於打造**高擴展性工業 AOI 質檢系統**（有效應對重疊、透明等長尾複雜缺陷）以及**跨域醫學影像檢測**（如零樣本內視鏡息肉定位）的企業級首選方案。
+  * **資源**：[🐙 GitHub](https://github.com/aqeeelmirza/AVA-DINO) | [📄 論文](https://arxiv.org/abs/2605.12069)
+  <br>`[零樣本檢測]` `[雙分支路由]` `[免標註質檢]` `[跨域泛化]`
+
 * **[LLM2CLIP](https://microsoft.github.io/LLM2CLIP/)** `[2026-01-29]` 🔥
   * **核心優勢**：微軟開源黑科技！結合大語言模型 (LLM) 強大的常識推理能力來增強 CLIP 模型的視覺表徵。
   * **解決痛點**：完美解決了傳統 CLIP 在遇到罕見工業瑕疵或長尾分佈數據時容易誤判的問題，非常適合用於高精度的零樣本瑕疵檢測。[📄 AlphaXiv 論文](https://www.alphaxiv.org/abs/2411.04997) | [📝 公眾號深度解讀](https://mp.weixin.qq.com/s/-U03e1KZmFCoXTGzdYbC0Q)
@@ -109,8 +136,30 @@ service_type: AI Consulting
 
 * **[Multi-Modal LLM for AD (VELM)](https://deepwiki.com/Sassanmtr/VELM)** `[2025-05-05]`：不僅偵測異常，還能進行分類與動作建議的工業多模態架構。
 
+* **[OneNIP](https://github.com/gaobb/OneNIP)** `[2024-10]` 🔥
+  * **核心優勢**：**終結產線「海量瑕疵數據」焦慮，單張正常圖片即插即用的全科質檢神醫！** 這款收錄於 ECCV 2024 的重磅開源神作，徹底打破傳統 AOI 必須「收集海量缺陷、專病專治」的成本高牆。透過首創的「單一正常圖像提示 (Normal Image Prompt)」與「雙向交叉注意力 (Bidirectional Cross-Attention)」機制，讓模型學會直接與「標準答案（正常件）」進行像素級對照，成功繞過自監督重建網路常見的「身份捷徑 (Identity Shortcut)」陷阱，在 MVTec 與 VisA 等權威工業基準上實現跨類別的 SOTA 表現。
+  * **解決痛點 / 推薦場景**：**完美解決了高良率產線「瑕疵樣本極難收集」與「新品上線需重新訓練模型」的致命痛點。** 只要提供一張無瑕疵的黃金樣本 (Golden Sample)，模型就能精準抓出邊緣模糊或具偽裝性的複雜瑕疵，並透過監督式精化器 (Refiner) 輸出高精度的像素級定位。極度適合用於**高頻換線的柔性製造產線 (High-Mix Low-Volume)**、**極少數目缺陷的精密電子 AOI 檢測**，以及企業建構**跨產品線的統一視覺質檢基座**。<br>`[單樣本質檢]` `[AOI神器]` `[跨類別通用]`
+  * **資源**：[🐙 GitHub](https://github.com/gaobb/OneNIP) | [📄 論文](https://csgaobb.github.io/Pub_files/ECCV2024_OneNIP_CR_Full_0725_Mobile.pdf)
+
 ### 2. 少樣本與無監督學習前沿突破 (Few-shot & Unsupervised)
 解決現場只能取得「正常良品圖」或極少量瑕疵圖的痛點。
+
+* **[FoundAD (少樣本異常檢測基礎編碼器)](https://arxiv.org/abs/2510.01934)** `[2025-10]` 🔥
+  * **核心優勢**：**打破工業質檢對提示詞與重型解碼器的依賴，僅靠輕量投影器徹底釋放視覺大模型「天生」的異常感知力！** 慕尼黑工業大學與 MVTec 聯合發布的 ICLR 2026 神作。它證明了凍結的 DINOv2/v3 特徵空間本身就隱含「自然圖像流形」，只需外掛一個僅 11.8M 參數的輕量非線性投影器，即可將偏離流形的特徵拉回並計算殘差分數。完全不需文字提示 (Prompt) 或龐大記憶庫，在 MVTec-AD 1-shot 設定下飆出 96.1% I-AUROC，且單卡推理高達 7.8 FPS，顯存佔用不到 1.4GB。
+  * **解決痛點 / 推薦場景**：**完美解決了真實工業場景中「缺陷樣本極難取得」、「CLIP 提示詞工程過於脆弱」以及「傳統重建解碼器過於龐大難以落地」的三大致命痛點。** 由於其極致的輕量化與純視覺特徵空間運算特性，極度推薦用於**資料極度稀缺的產線新品瑕疵檢測**、**高頻流水線的即時 AOI 邊緣運算 (Edge AI)**，以及不允許複雜微調的**跨場景柔性製造檢測系統**，是目前工業級落地 SOTA 的最高 CP 值選擇。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/ymxlzgy/FoundAD) | [📄 arXiv 論文](https://arxiv.org/abs/2510.01934) | [🌐 OpenReview (ICLR 2026)](https://openreview.net/forum?id=YRrlJ8oVEH)
+  <br>`[1-shot極限檢測]` `[免文字提示]` `[極低顯存]` `[工業AOI]`
+
+* **[MeDS](https://github.com/SirojbekSafarov/MeDS)** `[2026-05]` 🔥
+  * **核心優勢**：**打破工業質檢「訓練集必須絕對乾淨」的不可能假設，首創無懼 40% 髒數據污染的自清洗抗噪異常檢測框架！** 這篇 ICML 2026 的強悍之作直擊產線最痛的「標籤噪聲」現實。透過「自舉稀疏記憶庫 (Bootstrapped Memory) 粗篩」、「記憶分數蒸餾 (Score Distillation) 細化定位」與「漸進式樣本選擇 (Progressive Selection) 閉環微調」三步法，讓模型自己學會過濾異常。在 MVTecAD 基準測試中，即便訓練集混入高達 40% 的瑕疵樣本，它依然能將 I-AUROC 從崩潰邊緣的 87.38% 強勢拉回 99.16%，展現驚人的魯棒性。
+  * **解決痛點 / 推薦場景**：**完美解決了真實工廠中因「輕微缺陷漏標、加工紋理波動、多人標註口徑不一」導致模型決策邊界變寬容、上線後漏檢率飆升的致命痛點。** 它並非要取代現有的 UAD 模型 (如 Dinomaly)，而是作為一層可插拔的「抗污染保險層」掛載於現有架構上。極度適合**數據維護與清洗成本極高的傳統製造業**、**特徵變異大的機加工/鑄造/焊接產線**，以及作為**協助 QC 工程師優先篩檢可疑髒數據的自清洗前置模組**。<br>`[工業抗噪神作]` `[無懼髒數據]` `[自清洗閉環]` `[產線落地首選]`
+  * **資源**：[🐙 GitHub](https://github.com/SirojbekSafarov/MeDS) | [📄 論文](https://arxiv.org/abs/2605.26676)
+
+* **[Boxes2Pixels (框標註轉像素級分割神作)](https://arxiv.org/abs/2604.11162)** `[2026-04]` 🔥
+  * **核心優勢**：**CVPR 2026 工業視覺革命！首創「單向自糾正」機制，僅靠廉價的「框標註 (Bounding Box)」即可榨出 SOTA 級的像素級缺陷分割！** 巧妙利用 SAM 生成偽標籤，並透過「全局 DINOv2 語意 + 局部 CNN 細節」的雙分支層次化學生架構，完美過濾大模型生成的系統性雜訊與漏檢。可訓練參數暴降 80% (僅 5.6M)，推理速度飆破 161 FPS。
+  * **解決痛點 / 推薦場景**：**完美解決了工業 AOI 領域「像素級標註成本極高（耗時且需專家知識）」且「細長裂紋、低對比凹陷難以精準定位」的致命痛點。** 企業無需重新耗時塗抹缺陷邊緣，直接沿用舊有的 YOLO 框標註資料庫即可無痛升級為高精度分割模型。極度推薦用於**風機葉片微小裂紋檢測**、**高頻流水線表面污損剔除**，以及算力受限的**即時邊緣運算質檢設備 (Edge AI)**，是產線自動化升級的超高性價比方案。
+  * **資源**：[🐙 GitHub](https://github.com/CLendering/Boxes2Pixels) | [📄 論文](https://arxiv.org/abs/2604.11162)
+  <br>`[弱監督分割]` `[免像素標註]` `[極速161FPS]` `[工業AOI]`
 
 * **[DINO-AD](https://arxiv.org/abs/2602.03870)** `[2026-02]` 🔥
   * **核心優勢**：**打破模型微調成本高牆的免訓練 (Training-Free) 異常檢測黑科技！** 徹底拋棄針對特定資料集重新訓練的繁瑣流程，直接利用凍結的 DINO-V3 自監督視覺特徵，結合首創的「嵌入相似性匹配 (ESM)」與「前景感知 K-means 聚類」。完全零訓練開銷，卻在醫療影像 (Brain/Liver) 的像素級異常檢測上雙雙突破 98% AUROC，強勢輾壓 PatchCore 與 PaDiM 等經典無監督算法。
@@ -151,6 +200,23 @@ service_type: AI Consulting
 
 目標偵測不僅是畫出邊界框 (Bounding Box)，目前的趨勢是結合語言模型與強化學習，實現「開放詞彙 (Open-Vocabulary)」與「極端場景特化」。
 
+* **[LocateAnything-3B (全能視覺定位與多模態檢測)](https://github.com/NVlabs/Eagle)** `[2026-05]` 🔥
+  * **核心優勢**：**NVIDIA 顛覆視覺定位的 CVPR 2026 神作！首創「平行框解碼 (PBD)」徹底打破大模型自迴歸生成座標的龜速與誤差，單卡 H100 狂飆 12.7 BPS！** 捨棄傳統將座標拆成 Token 逐一生成的作法，LocateAnything 將邊界框視為不可分割的「幾何原子單元」一步到位預測。結合高達 7.85 億的巨量邊界框訓練標註與獨創的 Hybrid 模式（在極速並行與嚴謹自迴歸間動態切換、遇錯重解），在 UI 元素定位與 LVIS 高精度基準上強勢輾壓 Qwen3-VL 與 Rex-Omni。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統視覺大模型 (VLM) 應用於 AI Agent 與具身智能時「看得懂卻找得極慢、座標框亂跳前後矛盾」的致命痛點。** 僅 3B 參數，只需 16GB 消費級顯存（如 RTX 3090/4090）即可流暢本地部署。極度推薦開發者用於打造毫秒級反應的**電腦操作智能體 (Computer Use Agent)**、**精準點擊 UI 的 RPA 自動化導航副駕**，以及需要極低延遲的**具身機器人 (Embodied AI) 視覺抓取中樞**。
+  * **資源**：[🐙 GitHub](https://github.com/NVlabs/Eagle) | [📄 論文](https://research.nvidia.com/labs/lpr/locate-anything/LocateAnything.pdf) | [🤗 HF 權重](https://huggingface.co/nvidia/LocateAnything-3B) | [🌐 線上 Demo](https://huggingface.co/spaces/nvidia/LocateAnything)
+  <br>`[平行框解碼]` `[UI自動化導航]` `[具身智能]` `[極低延遲]`
+
+* **[DetAny4D (端到端 4D 開放集物體檢測基準)](https://arxiv.org/abs/2511.18814)** `[2026-02]` 🔥
+  * **核心優勢**：**打破串流影片 3D 檢測的「逐幀抖動」魔咒，首創端到端 (End-to-End) 的 4D 開放集全域感知黑科技！** 徹底拋棄傳統「先檢測後追蹤 (Detect-then-Track)」的複雜級聯管線。透過全新設計的「幾何感知時空解碼器 (Spatiotemporal Decoder)」，模型能一次性從 RGB 串流影片中預測出跨幀極度穩定、全域時空一致的 3D 邊界框 (Bounding Box)。團隊更同步釋出了包含 28 萬筆序列的專用巨型資料庫 DA4D 來解決 4D 訓練資料荒。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統單幀 3D 檢測在動態影片中「邊界框狂抖、同一物件身分跳變」，以及依賴複雜關聯演算法導致「誤差一路放大傳染」的致命痛點。** 實測在 DA4D 基準上將跨幀變異數 (Variance) 暴力壓低 10%~30%，且 3D 精度絲毫不減。極度推薦用於打造**自動駕駛連續環境感知系統**、**具身智能 (Embodied AI) 動態軌跡預測**，以及需要長期穩定推理的**串流影片空間計算**場景。
+  * **資源**：[🐙 GitHub (即將開源)](https://github.com/jarvishou829/DA4D/) | [📄 官方論文](https://arxiv.org/abs/2511.18814) | [🌐 DA4D 專案主頁](https://jarvishou829.github.io/DA4D/)
+  <br>`[4D物件偵測]` `[開放集 Open-set]` `[時空一致性]` `[自駕車感知]`
+
+* **[AFSS (Anti-Forgetting Sampling Strategy)](https://arxiv.org/abs/2603.17684)** `[2026-03]` 🔥
+  * **核心優勢**：**打破 YOLO 系列「每輪看全量資料」的吃算力魔咒，零侵入性讓訓練速度狂飆 1.6 倍且精度無損！** 這篇 CVPR 2026 的強悍之作，不改 Backbone、不碰 Loss、不影響推論端 (部署零成本)。它首創將「學習充分度 (min(P, R))」作為內生探針，動態把訓練圖分為難/中/易三檔，結合「抗遺忘回看 (Continuous Review)」與「短期覆蓋 (Short-Term Coverage)」機制。讓 GPU 算力精準砸在「模型還沒學好」的困難樣本上，在 COCO 上讓 YOLO11s 訓練時間從 43.9 小時暴降至 28.4 小時。
+  * **解決痛點 / 推薦場景**：**完美解決了企業在龐大自定義資料集上訓練時「GPU 算力成本極度高昂」與「中後期訓練邊際效益嚴重遞減」的致命痛點。** 由於完全不干擾原始網路架構，極度適合需要頻繁新增資料、高頻迭代模型的**自駕車感知系統**、**高頻換線的工業 AOI 瑕疵檢測**，以及所有受限於算力預算（如單卡/雙卡開發者）但渴望快速驗證迭代的企業 AI 團隊。<br>`[訓練加速神器]` `[無損提速]` `[抗遺忘採樣]` `[算力省長]`
+  * **資源**：[🐙 GitHub (社群實作搜尋)](https://github.com/search?q=Does+YOLO+Really+Need+to+See+Every+Training+Image+in+Every+Epoch) | [📄 論文](https://arxiv.org/abs/2603.17684) | [📝 深度解讀](https://mp.weixin.qq.com/s/tQAlP7UmAsWT-bZLHQDaAA)
+
 * **[EUPE: DINOv3 + SAM + CLIP 三模合一輕量檢測框架](https://github.com/little51/dinov3-samples)** `[2026]` 🔥
   * **核心優勢**：**打破大模型落地門檻的開箱即用神器，將 DINOv3、SAM 與 CLIP 的跨域超能力濃縮進極致輕量的檢測管線！** 基於 Meta 最新的 EUPE (Efficient Universal Perception Encoder) 骨幹，透過 `lightly-train` 框架高度封裝。開發者完全無需從頭煉丹，短短 10 行 Python 程式碼即可直接呼叫在 COCO 資料集上訓練完成的任務頭 (Task Head)，實現精準的開箱即用目標偵測。
   * **解決痛點 / 推薦場景**：**完美解決了傳統視覺大模型 (Vision Foundation Models) 「整合困難、需要手寫複雜下游任務頭」的致命痛點。** 官方貼心釋出從 `ConvNeXt-Tiny` 到 `ViT-Base` 等多種尺寸的預訓練權重。極度適合需要在**邊緣運算設備 (Edge AI)** 快速部署街景分析，或是缺乏算力但想享受 SOTA 級通用視覺特徵的個人開發者與中小企業。
@@ -172,6 +238,12 @@ service_type: AI Consulting
   * **解決痛點 / 推薦場景**：**完美解決了傳統視覺大模型「看得懂複雜指令，卻框不準精確位置」的致命痛點。** 它的零樣本 (Zero-shot) 檢測效能直接匹敵甚至超越 Grounding DINO 等專用模型。極度適合用於開發需要深度語言理解的**自動化 GUI 網頁操作代理 (Web Agent)**、**複雜圖表/排版的 OCR 系統**，以及支援自然語言指令的**開放詞彙 (Open-Vocabulary) 機器人視覺感知系統**。
   * **資源**：[🐙 專案首頁與程式碼](https://rex-omni.github.io/) | [📄 arXiv 論文](https://arxiv.org/abs/2510.12798)
 
+* **[YOLO26 頻域增強版 (FrequencyCM × C3k2)](https://arxiv.org/abs/2509.25164)** `[2025-09]` 🔥
+  * **核心優勢**：**首創「頻域增強」打破空間卷積天花板，YOLO26 透過端到端無 NMS 設計達成邊緣設備的極速推論！** 將 UCMNet 的頻率卷積模組 (FCM) 巧妙植入 C3k2，結合 STAL 小目標標籤分配與 MuSGD 優化器，以極低的計算開銷取得整圖級全局感受野。同時透過架構「做減法」(直接移除 DFL 與 NMS)，大幅降低 ONNX/TensorRT 的導出摩擦與延遲。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統物件偵測模型「部署後處理繁瑣」且「面對低解析、模糊與小目標時高頻細節嚴重丟失」的致命痛點。** 無需再依賴手動調參的 IoU 閾值，極度適合**硬體資源受限的邊緣運算設備 (如 Jetson Nano、無人機)**，更是打造**工業級紅外線缺陷檢測**、**低對比度醫學影像分析**與複雜場景即時目標跟蹤的工業級首選黑科技。
+  * **資源**：[📄 論文](https://arxiv.org/abs/2509.25164) 
+  <br>`[端到端無NMS]` `[頻域增強]` `[小目標檢測]` `[極低延遲部署]`
+
 * **[OV-DINO](https://github.com/wanghao9610/OV-DINO)** `[2025-07-24]`
   * **核心優勢**：開源工業開放詞彙目標檢測框架。不需要預先標註所有類別，只需輸入自然語言，模型就能自動找到對應的物體。[📝 中文解讀](https://mp.weixin.qq.com/s/gLAVYFAH_39gT4XC0zWN0A)
 
@@ -180,7 +252,6 @@ service_type: AI Consulting
 
 * **[MCL (AAAI 2025)](https://github.com/facias914/sood-mcl)** `[2025]`
   * **解決痛點**：專為無人機空拍圖與衛星遙感影像設計的半監督框架。透過多線索一致性學習，只需極少量標註，就能在超大解析度影像中精準框出微小物件。[📝 中文解讀](https://zhuanlan.zhihu.com/p/26788012528)
-
 
 * **[VisionReasoner](https://github.com/dvlab-research/VisionReasoner)** `[2025-05-23]`：用強化學習統一視覺感知與推理，對標大廠 VLM。
 
@@ -196,6 +267,16 @@ service_type: AI Consulting
 自從 Meta 推出 Segment Anything (SAM) 以來，圖像分割已經進入「提示即分割 (Promptable Segmentation)」的時代。
 
 ### 1. SAM 家族與通用分割基石
+
+* **[ConceptSeg-R1](https://github.com/NTU-AI4X/ConceptSeg-R1)** `[2026-05]` 🔥
+  * **核心優勢**：**打破 SAM/SAM 3 「只懂標籤、不懂邏輯關係」的語義瓶頸，首創由元強化學習 (Meta-GRPO) 驅動的可提示概念分割框架！** 該神作將「分割概念」分為上下文無關 (CI)、上下文依賴 (CD) 與上下文推理 (CR) 三大層次。透過內建的「捷徑路由器 (Shortcut Router)」，它能將多模態大模型 (MLLM) 複雜的深度邏輯推理狀態，翻譯為 SAM 3 能直接讀取的「隱式概念組 (Implicit Concept Groups)」，讓模型學會從視覺演示中歸納規則，實現真正的跨圖表徵與邏輯演繹。
+  * **解決痛點 / 推薦場景**：**完美解決了過往「多模態推理與像素分割間存在語義斷層」，以及傳統模型無法識別「靠環境對比與功能關係」才能定義的目標之致命痛點。** 極度適合企業用來建構**高難度醫療病灶精準定位 (如邊緣模糊的息肉或腫瘤)**、**工業級缺陷動態追蹤與對照**，以及需要強大時空推理能力的**次世代泛用型具身智能 (Embodied AI) 視覺大腦**，強勢推動視覺感知從「找物體」邁向「找概念」的典範轉移。<br>`[概念級分割]` `[超越SAM3]` `[元強化學習Meta-GRPO]` `[醫療與缺陷定位]`
+  * **資源**：[🐙 GitHub](https://github.com/NTU-AI4X/ConceptSeg-R1) | [📄 論文](https://arxiv.org/abs/2605.20385) | [🌐 專案主頁](https://ntu-ai4x.github.io/ConceptSeg-R1)
+
+* **[CAFe-DINO (DINO-Soars)](https://github.com/rfaulk/DINO_Soars)** `[2026-05]` 🔥
+  * **核心優勢**：**打破遙感分割「密集標註地獄」與「巨大域落差」，首創零遙感微調即稱霸 OVSS 的跨域遷移神作！** 這篇 CVPR 2026 Workshop 的重磅論文，巧妙繞過直接拿 DINOv3 跑遙感圖會「糊成一團」的痛點。其核心在於不重訓骨幹，而是利用「空間去噪＋跨類別推理」的成本聚合網路 (Cost Aggregation Network)，搭配凍結的特徵引導上採樣 (AnyUp)，將 DINOv3 的強大潛在表徵「無損洗淨」後遷移至遙感視角。僅用 COCO-Stuff 的 41 個遙感相關子類進行訓練，便在四個權威基準 (Potsdam, Vaihingen, OEM, LoveDA) 達成平均 56.5% 的 SOTA 表現。
+  * **解決痛點 / 推薦場景**：**完美解決了遙感影像 (RS) 領域「標註成本極高」且模型「換個城市就拉胯」的致命痛點。** 由於實現了真正的「零遙感微調」，極度適合資源受限但需處理巨量衛星影像的企業或公部門。是建構**跨城市/跨氣候的全球自動化地表覆蓋製圖**、**災區快速變遷分析**，以及**免標註開詞彙無人機 (UAV) 巡檢系統**的工業級首選。<br>`[零遙感微調]` `[OVSS開詞彙分割]` `[DINOv3魔改]` `[遙感衛星大腦]`
+  * **資源**：[🐙 GitHub](https://github.com/rfaulk/DINO_Soars) | [📄 論文](https://arxiv.org/abs/2605.03175) | [📝 深度解讀](https://mp.weixin.qq.com/s/UfkO6YAlBO-vnLhGbNtyhA)
 
 * **[LuoHuaLabel (基於 SAM 3 的智慧標註神器)](https://github.com/luohuabuxiema/LuoHuaLabel)** `[2026]` 🔥
   * **核心優勢**：**徹底解放雙手的資料標註黑科技，以 SAM 3 驅動的次世代視覺標註系統！** 完美整合 Segment Anything 3 (SAM 3) 的強大零樣本 (Zero-shot) 分割能力，捨棄傳統耗時的手繪多邊形。支援「單點極速提取輪廓」與「自然語言提示 (Prompt) 全圖自動打框」。更獨創原生 OBB 旋轉框控制手柄（具備防變形與 360° 平滑旋轉），效能與體驗全面輾壓傳統 Labelme / LabelImg。
@@ -234,6 +315,12 @@ service_type: AI Consulting
   * **核心優勢**：**終結圖像與影片分割割裂的全新範式，單一模型包辦 14 項分割任務的通用視覺大腦！** 結合 Qwen3-VL 的語意理解與 SAM2 的精準分割，X2SAM 首次在單一框架內同時支援圖像/影片雙輸入與文字/視覺（點、框）雙提示。其獨創的 **Mask 記憶模組 (Mask Memory Module)** 作為短期視覺工作記憶，在影片推理分割 (V-Rea. Seg.) 上狂飆提升 14.2 個百分點，強勢刷新 SOTA。
   * **解決痛點 / 推薦場景**：**完美解決了過往模型「只能做圖或只能做影片」的架構碎片化痛點，以及影片分割中常見的物體身份跳變與閃爍問題。** 透過 6 幀的 FIFO 記憶機制保持極高的時序一致性。極度適合用於開發**全能型具身智能 (Embodied AI) 連續環境感知系統**、**高互動性影視特效自動摳圖**，以及需要精準追蹤動態目標的**安防監控與自駕車視覺**。
   * **資源**：[🐙 GitHub](https://github.com/wanghao9610/X2SAM) | [📄 論文](https://arxiv.org/abs/2605.00891) | [🌐 專案主頁](https://wanghao9610.github.io/X2SAM)
+
+* **[BCSI (Bidirectional Channel-selective Semantic Interaction)](https://arxiv.org/abs/2601.05855)** `[2026-01]` 🔥
+  * **核心優勢**：**AAAI 2026 醫學影像分割神作！首創「雙向通道級交互」徹底打破半監督學習的誤差累積與特徵同質化瓶頸。** 捨棄臃腫的多分支架構，採用極簡單編碼器設計，並導入「語義–空間雙維度擾動」與動態通道選擇路由 (CR)。它能精準篩選出高價值的特徵通道，讓標註與未標註資料進行高純度、無雜訊的雙向信息交換，在 BraTS-2019 (腦腫瘤) 僅用 20% 標註資料，表現便超越全量標註的全監督模型！
+  * **解決痛點 / 推薦場景**：**完美解決了臨床醫學影像「像素級標註成本極高（需耗費醫師大量時間）」且「傳統半監督模型極易受偽標籤雜訊干擾而崩潰」的致命痛點。** 極度推薦用於打造**企業級 AI 醫療輔助診斷系統**、**複雜 3D 微小器官精準定位**（如難度極高的胰臟分割），是醫療 AI 演算法團隊在極少數標註資源下，榨出臨床級高精度的工業級首選黑科技。
+  * **資源**：[🐙 GitHub](https://github.com/taozh2017/BCSI) | [📄 論文](https://arxiv.org/abs/2601.05855) 
+  <br>`[半監督學習]` `[醫學影像分割]` `[雙向通道交互]` `[免大量標註]`
 
 * **[RNS (Retrieve and Segment)](https://github.com/TilemahosAravanis/Retrieve-and-Segment)** `[CVPR 2026]` 🔥 `[視覺RAG]` `[少樣本分割]` `[測試時適配]`
   * **核心優勢**：**引入「視覺 RAG」的開放詞彙分割破局者，僅需 1 張支援圖即可讓 SAM 2.1 效能暴增 22%！** 徹底拋棄昂貴的離線全局訓練，RNS 是一個檢索增強的「測試時適配器 (Test-time Adapter)」。它在推理時，會針對當前畫面即時檢索最相關的視覺特徵，並與文本特徵動態融合，為每張測試圖「即時」訓練一個專屬輕量分類器，精準彌補了純文本無法捕捉細粒度邊界的缺陷。
@@ -276,21 +363,27 @@ service_type: AI Consulting
 處理手寫字跡、模糊掃描檔與不規則表單的最佳解法。
 
 * **[Chandra OCR 2](https://github.com/datalab-to/chandra)** `[2026-04-16]` 🔥
-
     * **[Chandra OCR](https://github.com/datalab-to/chandra)** `[2025-10-21]`：標榜超越 DeepSeek-OCR 的革命性突破，支援本地部署。[📝 真實評測](https://zhuanlan.zhihu.com/p/1969019468937144099)
     * **核心優勢**：**擊敗 GPT-4o 與 DeepSeek-OCR 的開源 SOTA 黑馬！** 僅 4B 參數卻具備頂級的「版面感知 (Layout-Aware)」能力。它不僅是提取純文字，而是像人類閱讀一樣理解文檔結構，能精準識別跨頁表格、手寫表單（含核取方塊）與複雜的 LaTeX 數學公式，並直接輸出支援渲染的 Markdown 或 HTML。
-
     * **解決痛點 / 推薦場景**：**徹底解決傳統 OCR「只認字、不認排版」導致資料破碎的致命痛點。** 原生支援 vLLM 容器化高速批量推論與超過 90 種語言。非常適合用作建構企業 RAG 知識庫的前處理引擎，或是科研論文數位化、歷史手稿與法務合約的自動化解析。
-
     * **資源**：[🐙 GitHub](https://github.com/datalab-to/chandra) | [🤗 HuggingFace](https://huggingface.co/datalab-to/chandra) | [🌐 官方線上 Playground](https://www.datalab.to/playground)
+
 * **[Qianfan-OCR](https://github.com/baidubce/Qianfan-VL)** `[2026-03-25]` 🔥
   * **核心優勢**：**4B 參數達成「端對端文檔智慧」新標竿，KIE 任務表現超越 Gemini-3.1 Pro。** 百度千帆團隊推出的統一模型，不再需要傳統的偵測與識別分離流程。其核心 **Layout-as-Thought** 機制讓模型在解析文字前先進行佈局推理，大幅提升了對非結構化文檔的理解精度。
   * **解決痛點 / 推薦場景**：**完美解決了傳統 OCR 在處理複雜嵌套表格、多欄排版時「順序錯亂」與「關聯丟失」的問題。** 在 OmniDocBench 等多項權威基準測試中登頂，是目前兼顧「解析精度」與「推論效率」的工業級文檔處理首選。
   * **資源**：[🐙 GitHub](https://github.com/baidubce/Qianfan-VL) | [📄 論文](https://www.google.com/search?q=https://arxiv.org/abs/2603.XXXXX) (待正式釋出) | [📝 官方技術解析](https://www.google.com/search?q=https://cloud.baidu.com/article/qianfan-ocr-unified-model)
+
 * **[DeepSeek-OCR 2](https://github.com/deepseek-ai/DeepSeek-OCR-2/)** `[2026-01-27]` 🔥
   * **核心優勢**：專精複雜場景的高精度文字辨識。能完美應對手寫、模糊與多語系發票，是企業自動化財報系統的高性價比底座。[📝 公眾號解讀](https://mp.weixin.qq.com/s/DOm_hg6DWA_OjcsLuUQ9Hw)
+
 * **[HunyuanOCR](https://github.com/Tencent-Hunyuan/HunyuanOCR)** `[2025-11-30]`：騰訊混元釋出的 1B 級全能模型。
-* **[PaddleOCR-VL](https://huggingface.co/PaddlePaddle/PaddleOCR-VL)** `[2025-10-19]`：老牌 OCR 強者推出的視覺大模型版本。
+
+* **[PaddleOCR-VL-1.6 (生成式文件解析開源霸主)](https://github.com/PaddlePaddle/PaddleOCR)** `[2026-05-28]` 🔥
+  * **核心優勢**：**打破傳統 OCR 僅能「認字」的極限，以 0.9B 極輕量 VLM 刷新 OmniDocBench 96.3% 新 SOTA，實現全頁面結構化解析！** 捨棄傳統切割拼湊，採用「版面分析 (Layout Analysis) ＋ 視覺語言模型 (VLM)」雙階段架構。不僅能精準捕捉文字，更能完美還原複雜表格、數學公式 (LaTeX)、圖表數據與生僻古籍，並直接輸出高質量的結構化 Markdown 或 JSON，且完全相容舊版架構實現零成本替換。
+  * **解決痛點 / 推薦場景**：**完美解決了企業在建置 RAG 知識庫時，面對「掃描檔、雙欄合約、財報圖表導致語意斷裂與表格錯亂」的致命痛點。** 由於其極低的硬體門檻與強大的離線解析能力，極度推薦用於打造**企業級私有化 RAG 前處理管線**、**內網機密合約自動化審查**，以及**無網環境的高併發文檔數位化產線**，是資料不出門的最高 CP 值首選。
+  * **資源**：[🐙 官方 GitHub](https://github.com/PaddlePaddle/PaddleOCR) | [🤗 模型權重 (HF)](https://huggingface.co/PaddlePaddle/PaddleOCR-VL-1.6) | [📦 一鍵本地 WebUI 部署](https://github.com/CHEN010325/paddleocr-vl-local)
+  <br>`[RAG前處理]` `[完全離線部署]` `[版面分析]` `[開源霸主]`
+
 * **[DianJin-OCR-R1](https://github.com/aliyun/qwen-dianjin)** `[2025-08-18]`：點金 OCR，專攻模糊蓋章與跨頁表格。
 
 ### 2. PDF 解析與 RAG 資料清洗神器
@@ -353,6 +446,12 @@ service_type: AI Consulting
 ### 1. 影片生成大模型 (Video Generation)
 突破硬體極限與時長限制，帶來電影級的視覺理解。
 
+* **[SANA (NVIDIA 全端高效擴散生成生態系)](https://github.com/NVlabs/Sana)** `[2026-05]` 🔥
+  * **核心優勢**：**徹底終結擴散模型算力霸權，以「線性注意力」與「32倍極致壓縮 (DC-AE)」重塑文生圖與世界模型的開源神作！** NVIDIA 聯合 MIT 與清華團隊重磅開源的 Apache 2.0 工具鏈。其基礎版僅需 0.6B 參數即可在不到 1 秒內產出極高畫質圖像，吞吐速度強勢輾壓 12B 的 Flux 達百倍；最新的 SANA-WM (世界模型) 更突破性地支援 720p、長達 1 分鐘且具備 6-DoF 相機精準控制的影片生成。全系列模型均可在 8GB~16GB 消費級顯卡上流暢運行。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統 DiT 模型「解析度/影片長度增加導致顯存 O(N²) 暴力膨脹」，以及「強化學習對齊訓練成本過高」的致命痛點。** 提供涵蓋極速 0.1 秒推理 (SANA-Sprint)、長影片生成 (LongSANA) 到低精度強化學習後訓練 (Sol-RL) 的全棧工具。極度推薦企業用於打造**即時互動設計畫布 (Real-time Canvas)**、**具身智能 (Embodied AI) 虛擬模擬環境**，以及需要極低算力門檻的**邊緣運算 (Edge AI) 視覺生成服務**。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/NVlabs/Sana) | [🌐 官方線上 Demo](https://nv-sana.mit.edu/) | [🤗 Hugging Face 模型集](https://huggingface.co/collections/Efficient-Large-Model/sana)
+  <br>`[線性擴散模型]` `[世界模型]` `[極低顯存門檻]` `[實時影片生成]`
+
 * **[Remotion Skills (AI 代碼驅動影片框架)](https://github.com/remotion-dev/skills)** `[持續更新]` 🔥
   * **核心優勢**：**顛覆「黑盒文生影片」，用 AI 寫 React 程式碼來「精確渲染」影片的工程化革命！** 建立在知名的 React 影片框架 Remotion 之上，將影片視為「隨時間變化的 UI」。它內建專為大模型設計的動畫模式庫與 MCP 協議，讓 AI 代理能直接聽懂自然語言指令（如：做一個 30 秒科技風產品介紹），並自動輸出 100% 確定性、可編輯、支援版本控制的 TypeScript/React 影片代碼。
   * **解決痛點 / 推薦場景**：**完美解決了主流生成式 AI 影片無法精確控制排版、無法修改錯字，以及傳統圖形化剪輯軟體無法自動化批量生產的痛點。** 告別手動拖曳時間軸，極度適合企業開發者打造**自動化 RPA 影片生產工廠 (如每日新聞摘要、電商財報可視化)**、**社群媒體短影音批量生成**，是將影片製作從「手工藝」升級為「軟體工程」的開源首選。
@@ -387,6 +486,12 @@ service_type: AI Consulting
   * **解決痛點 / 推薦場景**：**完美解決了傳統視覺任務需要海量特定標註資料、模型架構臃腫，以及 3D 任務極度依賴硬體相機參數的致命痛點。** 透過極簡的「自然語言指令微調」，同一套權重即可無縫切換多種感知能力，且完全不犧牲原有的高畫質文生圖與圖像編輯性能。這是引領 AI 走向「視覺大語言模型」時代的燈塔級專案，極度適合用於構建**通用具身智能 (Embodied AI) 視覺大腦**、**零樣本自動駕駛環境感知**與**全能型多模態 Agent**。
   * **資源**：[🌐 專案主頁](https://vision-banana.github.io/) | [📄 官方論文 (arXiv:2604.20329)](https://arxiv.org/abs/2604.20329) | [📝 謝賽寧深度點評](https://x.com/sainingxie/status/2047339789926429166)
   <br>`[生成即理解]` `[零樣本 SOTA]` `[超越 SAM 3]` `[通用視覺基座]`
+
+* **[SceneScribe-1M (百萬級 3D 幾何與語意真實影片資料庫)](https://arxiv.org/abs/2604.07990)** `[2026-04]` 🔥
+  * **核心優勢**：**打破 3D 幾何感知與影片生成的資料壁壘，首創全面自帶「連續深度圖、精準相機位姿、3D 點軌跡與結構化語意描述」的百萬級真實動態影片彈藥庫！** 憑藉強大的多模態自動標註管線與「語意＋幾何」雙軸篩選機制，一舉統整了感知與生成任務的底層數據需求，規模高達 1.56 億幀。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統影片生成模型「缺乏實體幾何常識（只能文生片，無法控制運鏡與物理空間）」以及 3D 感知模型「極度缺乏真實世界動態場景數據」的致命痛點。** 極度推薦給致力於打造**世界基礎模型 (World Foundation Model)**、**可控影片生成 (相機/深度條件引導 T2V)**、以及**自動駕駛與空間計算 4D 場景重建**的頂尖 AI 研發團隊，是邁向真實物理世界模擬器的必備底層資源。
+  * **資源**：[🤗 Hugging Face 資料集](https://huggingface.co/datasets/wangyunnan/SceneScribe-1M) | [📄 論文](https://arxiv.org/abs/2604.07990)
+  <br>`[世界基礎模型]` `[可控影片生成]` `[4D場景重建]` `[超大真實數據]`
 
 * **[Nucleus-Image 17B](https://github.com/WithNucleusAI/Nucleus-Image)** `[2026-04]` 🔥
   * **核心優勢**：**全球首個將 MoE (混合專家) 架構引入文生圖領域的擴散大模型**。具備高達 170 億參數的龐大知識容量，但每次推論（Inference）僅需激活約 20 億參數。獨創「解耦路由機制」與「文本 KV 緩存加速」，不需依賴 RLHF 偏好微調，純預訓練效能即超越 Imagen 4，並在空間位置理解上輾壓 FLUX.1。
@@ -431,10 +536,16 @@ service_type: AI Consulting
 
 ### 1. 語音驅動與動態頭像生成 (Audio-Driven Avatar)
 
-* **[CyberVerse](https://github.com/dsd2077/CyberVerse)** `[2026-04-18]` 🔥 `[WebRTC即時通訊]` `[單張圖生成]` `[高度模組化]`
-  * **核心優勢**：**跨越恐怖谷的即時視訊數位人，單圖直連 P2P 的互動革命！** 徹底終結預錄影片與假笑循環。透過 WebRTC P2P 直連，實現首幀渲染僅需 1.5 秒的超低延遲，並精準還原說話時嘴唇與喉結的微小起伏。首創「樂高式」可插拔 YAML 配置架構，將大腦 (LLM)、臉 (Avatar)、聲音 (TTS) 與耳朵 (ASR) 完美解耦，支援一鍵切換豆包、GPT 或本地 Llama 模型。
-  * **解決痛點 / 推薦場景**：**解決了傳統數位人「無法即時對談」、「延遲高得嚇人」以及「系統封閉難以二次開發」的致命痛點。** 支援呼叫外部工具（如查股價、跑腳本），讓矽基生命真正具備行動力。極度適合擁有高階算力 (如 RTX 4090/5090) 的開發者，打造**次世代高沉浸感虛擬客服**、**24小時視訊陪伴 AI**，或**企業級自動化會議助理**。
-  * **資源**：[🐙 GitHub 官方開源](https://github.com/dsd2077/CyberVerse)
+* **[CyberVerse](https://github.com/dsd2077/CyberVerse)** `[2026-04-18]` 🔥 `[即時視訊對話]` `[零建模單圖生成]` `[WebRTC流式傳輸]` `[全鏈路Agent]`
+  * **核心優勢**：**真正意義上的 JARVIS 級開源即時數位人神作，單張照片即可開啟超低延遲視訊對話！** 採用極致的微服務與熱插拔插件架構，內建 WebRTC P2P 與 LiveKit SFU 雙流模式。徹底打破傳統數位人「預錄、回合制」的侷限，無縫整合 FlashHead/LiveAct 視覺驅動、Qwen Omni 語音大模型、RAG 記憶資料庫與 Agent 工具調用，實現「視覺、聽覺、執行」三位一體的全鏈路即時互動。
+  * **解決痛點 / 推薦場景**：**完美解決了以往開源數位人「對話延遲高達數秒」、「不支援語音即時打斷 (Voice Barge-in)」以及「缺乏後台任務執行力」的致命痛點。** 結合 GPU 分散式推理與首次預熱機制，成功將首幀延遲壓縮至 1.5 秒以內。是企業低成本打造**24 小時高擬真視訊客服**、**沉浸式 AI 陪伴角色**，以及**跨硬體裝置具身智能中樞**的工業級首選框架。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/dsd2077/CyberVerse) | [📄 官方中文技術文件](https://github.com/dsd2077/CyberVerse/blob/main/README.zh-CN.md)
+
+* **[LongCat-Video-Avatar 1.5](https://github.com/meituan-longcat/LongCat-Video)** `[2026-05]` 🔥
+  * **核心優勢**：**打破數字人「完美演練」的實驗室假象，真正走向商用落地的極速影片生成霸主！** 由美團團隊開源，搭載 Whisper-large 音訊解碼器，並首創將 GRPO 偏好對齊細化至逐幀層面，完美修正了手部畸變與長時序動作崩塌。最震撼的是引入 DMD (Distribution Matching Distillation) 蒸餾技術，將 50 步生成暴力壓縮至 8 步，達成 15 倍推理加速（10 秒影片僅需 1 分鐘），徹底引爆規模化商用潛能。
+  `[8步極速生成]` `[GRPO偏好對齊]` `[多人互動支援]` `[商業級擬真]`
+  * **解決痛點 / 推薦場景**：**完美解決了傳統虛擬人「講長句口型崩壞」、「多人同框時嘴部亂動」以及「生成太慢吃垮算力」的致命痛點。** 憑藉極高的身份一致性與音畫協調度，在盲測中強勢擊敗 Kling Avatar 2.0 與 HeyGen。是打造**高併發電商直播帶貨**、**千人千面的 AI 客服/講師**，以及**複雜多人互動情境**的工業級基礎模型首選。
+  * **資源**：[🐙 GitHub](https://github.com/meituan-longcat/LongCat-Video) | [📄 官方技術報告](https://github.com/meituan-longcat/LongCat-Video/blob/main/assets/LongCat-Video-Avatar-1.5-Tech-Report.pdf) | [🌐 專案主頁與線上 Demo](https://meigen-ai.github.io/LongCat-Video-Avatar-1.5-Page/)
 
 * **[InfiniteTalk](https://github.com/Meituan-AutoML/InfiniteTalk)** `[2026-04]` 🔥
   * **核心優勢**：**打破「面癱」配音魔咒，首創「全身聯動」的無限時長說話影片生成模型！** 由美團 (MeiGen-AI) 團隊重磅開源 (Apache 2.0)。採用獨創的「稀疏幀影片配音」範式與流式音訊驅動架構，支援圖生影片 (I2V) 與影片到影片 (V2V)。它全面超越 MuseTalk 等傳統僅能「修補嘴型」的方案，不僅對口型，更能讓數字人的頭部動作、面部表情與身體姿態完美契合音訊節奏。
@@ -442,25 +553,26 @@ service_type: AI Consulting
   * **資源**：[🐙 GitHub (Meituan-AutoML)](https://github.com/Meituan-AutoML/InfiniteTalk) | [📄 技術報告](https://arxiv.org/abs/2504.09459) | [🌐 專案主頁與線上 Demo](https://meituan-automl.github.io/InfiniteTalk/)
   <br>`[全身同步]` `[無限時長]` `[開源可商用]` `[ComfyUI支援]`
 
-* **[StreamAvatar](https://streamavatar.github.io)** `[2025-12]` 🔥
-  * **核心優勢**：**打破高質量、實時性與強交互的「不可能三角」，首創具備「聆聽反應」的流式擴散數字人！** 由清華、人大與騰訊混元聯合發表。透過創新的自回歸蒸餾（Auto-regressive Distillation），將傳統笨重的雙向 DiT 模型轉化為僅需 3 步去噪的因果生成器。在雙 H800 GPU 環境下，達成 1.20 秒超低延遲與 RTF < 1 的完美實時串流生成。
-  * **解決痛點 / 推薦場景**：**徹底解決傳統擴散模型「無法即時串流」、「長時生成身份漂移」以及「只會說不會聽」的三大致命傷。** 獨創 Reference Sink 機制確保長影片不變形，並導入音訊交互注意力模組，讓數字人在用戶說話時能給出點頭、微笑等極度自然的「聽覺反饋」。是打造次世代雙向視訊客服、高保真 AI 實況主與沉浸式虛擬陪伴的巔峰架構。
-  * **資源**：[🌐 官方專案主頁與 Demo](https://streamavatar.github.io) | [📄 論文](https://arxiv.org/abs/2512.22065)
+* **[Duix Avatar (全離線 AI 數位分身框架)](https://github.com/duixcom/Duix-Avatar)** `[持續更新]` 🔥
+  * **核心優勢**：**打破虛擬人必須依賴雲端 API 的隱私痛點，實現「零資料外洩」的全離線影音同步黑科技！** 深度整合 ASR、TTS 與 CV 高精度唇動捕捉技術，只需極少樣本即可精準克隆個人的外貌輪廓與聲音特質。其最大的亮點在於本地端極致流暢的「唇形對位 (Lip-sync)」與表情連動，徹底擺脫傳統套殼工具的 PPT 配音生硬感。
+  * **解決痛點 / 推薦場景**：**完美解決了企業與知識型創作者「不想頻繁真人出鏡，又擔心機密資料或臉部生物特徵上傳雲端遭濫用」的致命痛點。** 支援 8 國語言腳本生成，極度推薦給擁有獨立硬體（建議配備 RTX 4070 顯示卡、32GB 記憶體）的開發者與影音團隊，用來打造**企業內部多語培訓教材、本地閉環自動化短影音產線**，或是**無代碼/低代碼的個人專屬虛擬主播**。
+  * **資源**：[🐙 GitHub](https://github.com/duixcom/Duix-Avatar) | [🌐 官方網站](https://www.duix.com) 
+  <br>`[完全離線部署]` `[數位分身]` `[高精度唇形同步]` `[免上雲護隱私]`
 
 * **[SoulX-LiveAct](https://github.com/Soul-AILab/SoulX-LiveAct)** `[2026-03-16]` 🔥
   * **核心優勢**：**首款突破「小時級」穩定生成的實時數字人框架，低延遲且具備極致性價比。** 來自 Soul App AI Lab，首創 Neighbor Forcing 與 ConvKV Memory 技術，解決了 AR 擴散模型在流式生成中常見的身份漂移與顯存爆量問題。在 H100 達成 20 FPS、0.94s 延遲，甚至支援在 RTX 5090 等消費級顯卡上流暢運行。
   * **解決痛點 / 推薦場景**：**徹底解決長時直播中常見的「人物變形」與「顯存線性增長」瓶頸。** 提供高精準度的口型同步 (Sync-C: 9.40) 與動作/表情 JSON 精細控制。是打造 24 小時不斷線直播、實時視訊通話（FaceTime 級體驗）與企業級虛擬客服的技術天花板方案。
   * **資源**：[🐙 GitHub](https://github.com/Soul-AILab/SoulX-LiveAct)
 
+* **[StreamAvatar](https://streamavatar.github.io)** `[2025-12]` 🔥
+  * **核心優勢**：**打破高質量、實時性與強交互的「不可能三角」，首創具備「聆聽反應」的流式擴散數字人！** 由清華、人大與騰訊混元聯合發表。透過創新的自回歸蒸餾（Auto-regressive Distillation），將傳統笨重的雙向 DiT 模型轉化為僅需 3 步去噪的因果生成器。在雙 H800 GPU 環境下，達成 1.20 秒超低延遲與 RTF < 1 的完美實時串流生成。
+  * **解決痛點 / 推薦場景**：**徹底解決傳統擴散模型「無法即時串流」、「長時生成身份漂移」以及「只會說不會聽」的三大致命傷。** 獨創 Reference Sink 機制確保長影片不變形，並導入音訊交互注意力模組，讓數字人在用戶說話時能給出點頭、微笑等極度自然的「聽覺反饋」。是打造次世代雙向視訊客服、高保真 AI 實況主與沉浸式虛擬陪伴的巔峰架構。
+  * **資源**：[🌐 官方專案主頁與 Demo](https://streamavatar.github.io) | [📄 論文](https://arxiv.org/abs/2512.22065)
+
 * **[Live Avatar](https://github.com/Alibaba-Quark/LiveAvatar)** `[持續更新]` 🔥
   * **核心優勢**：**阿里巴巴 (Quark) 開源的 14B 頂規即時交互數字人模型。** 建立在強大的 `Wan2.2-S2V-14B` 基礎模型之上，支援流式生成（Streaming Generation），能透過單張照片與音訊，生成畫質極高且「無限時長」的動態說話影片。
   * **解決痛點 / 實戰避坑指南**：**主打「再也不用真人直播」，但硬體要求極為嚴苛。** 完美解決了 24 小時虛擬直播帶貨的需求，但**部署前請注意**：這是一頭在電腦裡跑的大象，強烈建議使用具備 **24GB 顯存** 的顯卡（如 RTX 3090/4090）進行推理。12GB 顯卡極易觸發 CUDA Out of Memory (OOM) 報錯。適合擁有高階算力、追求極致畫質與無斷點直播的企業級用戶。
   * **資源**：[🐙 GitHub](https://github.com/Alibaba-Quark/LiveAvatar) | [🌐 官方專案主頁](https://liveavatar.github.io/)
-
-* **[PersonaLive](https://github.com/GVCLab/PersonaLive)** `[持續更新]` 🔥
-  * **核心優勢**：**12GB 顯存即可驅動實時數字人，首創流式擴散（Streaming Diffusion）無限生成技術。** 由澳門大學與 GVC Lab 研發，透過外觀蒸餾（Appearance Distillation）與 Reference UNet 技術，在達成低延遲即時生成（支援攝影機聯動）的同時，能高度還原原始肖像的藝術風格與細節，有效避免失真。
-  * **解決痛點 / 推薦場景**：**打破了高端伺服器對「實時動畫」的壟斷，解決長時生成易導致記憶體溢位（OOM）的瓶頸。** 提供 WebUI 介面，具備亞秒級響應與無限長度影片輸出能力。是虛擬主播直播帶貨、插畫師將角色設計動態化、以及影視團隊快速進行原型動畫驗證的「最低門檻」方案。
-  * **資源**：[🐙 GitHub](https://github.com/GVCLab/PersonaLive)
 
 * **[SoulX-FlashTalk](https://github.com/Soul-AILab/SoulX-FlashTalk)** `[2025-12-24]` 🔥
   * **核心優勢**：**14B 參數數字人開源新標竿，0.87 秒極速啟動 + 32 FPS 實時流生成。** Soul AI Lab 針對實時交互場景打造的重磅模型，首創「雙向流蒸餾技術」與「多步回顧自校正機制」。不僅將訓練效率暴力提升 23 倍，更打破了傳統模型長序列生成的崩壞魔咒，實現亞秒級的超低延遲與高保真吞吐。
@@ -482,6 +594,18 @@ service_type: AI Consulting
 * **[FlowAct-R1](https://grisoon.github.io/FlowAct-R1/)**：基於流匹配技術的高效能數字人生成框架。
 
 ### 2. 完整互動系統與 3D 建模 (Interactive System & 3D)
+
+* **[OpenTalking](https://github.com/datascale-ai/opentalking)** `[2026-05]` 🔥
+  * **核心優勢**：**打通從 Demo 到生產部署的最後一哩路，工業級「全鏈路」實時數字人編排框架！** 它不重複造底層模型的輪子，而是專注於產線編排，將 LLM 流式對話、句級 TTS、口型同步渲染與 WebRTC 低延遲傳輸完美串接。首創「樂高式」可插拔設計，無縫相容輕量級 Wav2Lip 到高質量 FlashTalk，更原生支援華為昇騰 910B 等企業級 NPU 私有化部署。
+  `[工業級編排]` `[實時互動]` `[WebRTC低延遲]` `[全鏈路串接]`
+  * **解決痛點 / 推薦場景**：**完美解決了傳統數字人開源專案「只能做短片 Demo」、「缺乏實時打斷控制」與「模組碎片化難以整合」的致命痛點。** 透過 100-300ms 的極低 WebRTC 傳輸延遲與精細的事件流控制，提供從「5 分鐘免顯卡 API 快速體驗」到「本地端高畫質渲染」的四階段落地路徑。是企業打造**高併發電商虛擬直播帶貨**、**24 小時無斷點視訊客服**、以及**高沉浸感 AI 陪伴角色**的底層中樞首選。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/datascale-ai/opentalking) | [🌐 官方架構解析](https://github.com/datascale-ai/opentalking/blob/main/docs/architecture.md) | [📦 OmniRT 模型服務庫](https://github.com/datascale-ai/omnirt)
+
+* **[PersonaLive](https://github.com/GVCLab/PersonaLive)** `[CVPR 2026]` 🔥
+  * **核心優勢**：**打破硬體高牆的無限時長虛擬主播，12GB 顯存即刻開播！** 澳門大學與大灣區大學 GVC Lab 研發的即時肖像動畫框架。首創流式生成策略（Streaming Generation），將影片分塊處理，徹底解決傳統擴散模型生成長影片時「顯存隨時間線性暴增」導致 OOM 的致命瓶頸。單張靜態照片即可透過攝像頭即時驅動，支援 TensorRT 加速與 WebUI 互動。
+  `[流式生成]` `[無限時長]` `[低硬體門檻]` `[ComfyUI支援]`
+  * **解決痛點 / 推薦場景**：**完美解決了傳統數位人系統需要昂貴動捕設備或頂規顯卡才能長時段直播的痛點。** 極度適合缺乏高階算力的個人創作者與中小企業，用於打造**高擬真虛擬實況主 (VTuber)**、**線上教育虛擬講師**與**隱私保護視訊會議**。專案生態成熟，已原生支援 ComfyUI 工作流與 Apache-2.0 商業授權。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/GVCLab/PersonaLive) | [📄 arXiv 論文](https://arxiv.org/abs/2512.11253) | [📦 ComfyUI 擴展節點](https://github.com/okdalto/ComfyUI-PersonaLive)
 
 * **[Linly-Talker](https://github.com/Kedreamix/Linly-Talker)** `[持續更新]` 🔥
   * **核心優勢**：**開源數字人界的「多模態全家桶」，高度模組化的智能交互系統！** 在 GitHub 狂攬 3.1K+ Stars，它打破了單純「圖片轉影片」的框架，將 ASR (Whisper)、LLM 大腦 (Qwen/Gemini)、TTS 音色克隆 (GPT-SoVITS) 與面部驅動 (SadTalker/MuseTalk) 完美串接。支援流式語音與 WebRTC 即時通訊，模組可按需求自由抽換。
