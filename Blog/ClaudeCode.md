@@ -48,7 +48,11 @@ keywords: ["ClaudeCode", "Claude", "OPUS / SONNET / HAIKU"]
 <a id="1-claude-code-是什麼為什麼它感覺不同"></a>
 ## 1. Claude Code 是什麼？為什麼它「感覺不同」
 
-一句話抓住本質：**「其他 AI 工具是幫你寫代碼，Claude Code 是替你執行任務。」**  
+**一句話定調**：
+
+> **「其他 AI 工具是幫你寫代碼，Claude Code 是替你執行任務。」**  
+> Skills 不是讓它變聰明，Skills 讓它變**自律**。
+
 它是 **Anthropic 推出的終端原生 AI Agent（代理）**，能：
 
 -   讀懂「整個專案」結構（跨文件、跨層級推理）
@@ -61,10 +65,7 @@ keywords: ["ClaudeCode", "Claude", "OPUS / SONNET / HAIKU"]
 
 > 它最關鍵的差異不在「生成更準」，而在於它理解**系統**而非片段：重構時是真的在重組架構邏輯，debug 時會推理 Bug 擴散鏈，接手陌生 repo 時能跨文件連概念，而不只是孤立解釋「這個函式做什麼」。
 
-**一句話定調**：
 
-> 其他工具是「幫你寫程式」；Claude Code 是「替你完成任務」。  
-> Skills 不是讓它變聰明，Skills 讓它變**自律**。
 
 **目標受眾分析**：
 
@@ -83,7 +84,6 @@ keywords: ["ClaudeCode", "Claude", "OPUS / SONNET / HAIKU"]
 | **GitHub Copilot** | 智慧程式碼補全 | 整合在 IDE 中，**即時**提供單行或多行程式碼建議。 | ~8K tokens | **補全速度極快**，無縫融入既有的編碼流程，**幾乎沒有學習成本**。 |
 | **Cursor** | AI 增強型 IDE | 以 VS Code 為基礎深度整合 AI（聊天與 **Composer** 模式），支援多檔案編輯與對話。 | 專案感知 | 保留完整的 **VS Code 體驗**，同時提供強大的聊天、編輯與**內建代理**功能，生態系完整。 |
 | **Claude Code** | 終端原生 Agent | 在終端機裡作為**自主代理**執行，能夠讀取檔案、執行指令、規劃任務。 | 200K tokens | 具備**系統級推理**與**自主任務執行**能力。擅長複雜重構、偵錯、遷移等需要跨檔案、多階段操作的專案級任務。 |
-| **Gemini CLI** | 終端原生 Agent | 與 Claude Code 類似，是 Google 推出的終端 AI 代理，可執行指令、讀寫檔案。 | 約 100萬 tokens (Gemini 2.0) | **上下文視窗極大**，在需要分析超長程式碼庫或文件時佔有優勢。目前其生態系與工具鏈成熟度相較 Claude Code 仍在發展中。 |
 | **Google Antigravity** | **智慧型體優先 (Agent-first) IDE** | 基於 VS Code 建構的整合開發環境，可將複雜編碼任務**委託**給由 Gemini 3 Pro 等模型驅動的自主 AI 智慧型體執行。智慧型體能直接操作編輯器、終端機與瀏覽器。 | 取決於所選模型（支援 Gemini 3 Pro, Claude Sonnet 4.5, OpenAI 模型等） | **實現「智慧型體優先」的高自主性開發**。智慧型體會產生可檢驗的「工作成品」（如任務清單、實作計畫、截圖），而非僅是原始工具呼叫，旨在建立使用者信任並完成從規劃到實作的完整任務鏈。 |
 
 ---
@@ -98,7 +98,6 @@ keywords: ["ClaudeCode", "Claude", "OPUS / SONNET / HAIKU"]
 
 2.  **複雜任務委託（終端機或專屬 IDE）**：
     *   **Claude Code**：作為**主力工程智慧型體**。當有明確、複雜的開發任務時，在終端機中交給它來規劃與執行。
-    *   **Gemini CLI**：在需要分析**單一極長檔案**或進行全域搜尋時，其超大的上下文視窗是獨特優勢。
     *   **Google Antigravity**：當您希望**在一個 IDE 環境內**，以更高自主性的方式，將一個完整功能或模組的開發工作委託給 AI 智慧型體，並透過其產生的「工作成品」來追蹤與驗證執行過程時使用。
 
 **總結**：當前的 AI 輔助編程生態已形成多層次的工具矩陣，從被動補全、主動對話，到高自主性的智慧型體執行。**Antigravity 的加入**代表了「智慧型體優先」理念在 IDE 層級的正式產品化，與終端 Agent 和傳統增強型 IDE 形成了差異化競爭。開發者可根據任務的粒度、執行環境的偏好，以及對智慧型體自主性的信任程度，靈活選用最適合的工具。
@@ -140,7 +139,7 @@ claude
 
 > 額度以「5 小時窗口」滾動計算；吃完就要等窗口重置或升級。  
 
-> [Amazon Bedrock 上的 Claude Code 參考這](https://code.claude.com/docs/zh-TW/amazon-bedrock)
+> [透過 Amazon Bedrock 使用 Claude Code 參考這](https://code.claude.com/docs/zh-TW/amazon-bedrock)
 
 ---
 
@@ -219,7 +218,7 @@ Plan Mode 下 Claude **只能讀文件/搜尋/問你問題**，**不能改文件
 
 ### 5.3 實戰感覺
 
-> 你描述需求 → Claude 先問關鍵假設（「要去重嗎？用 PG 還是 Redis？實時還是批次？」）→ 出一份實施計畫（新增哪個欄位、改哪些檔、順序）→ 你確認 → 退出 Plan Mode → 執行
+> 你描述需求 → Claude 先問關鍵假設（「要去重嗎？用 Redis？實時還是批次？」）→ 出一份實施計畫（新增哪個欄位、改哪些檔、順序）→ 你確認 → 退出 Plan Mode → 執行
 
 這道「強制先思考」的閘門，能把**返工機率壓低非常多**（實務感受約 ~80% 的無謂返工消失）。
 
@@ -260,6 +259,123 @@ claude --continue  新終端續上最近 session
 ```
 
 下次 `/clear` 後重開，一句「我們做到 DB 欄位完成，現在要做前端顯示」就能快速恢復。
+
+### 6.3 上下文決策框架：Every Turn Is a Branching Point
+
+> 關鍵主張：**1M tokens 視窗再大，也只是「裝得下」，不代表「乾淨」**；差異點不在容量，而在你怎麼做 decision point。
+
+Claude Code 的上下文視窗是 **1M tokens**，但用久了會出現 **context rot（上下文腐化）**：注意力被攤薄、早先不相關內容干擾當前目標、signal-to-noise 比下降。通常在 **300k–400k tokens** 附近就會開始有感（視任務而定，不是死閾值）。
+
+#### 6.3.1 每一輪結束，你都站在一個分叉點（5 選 1）
+
+Claude 完成一輪後，你的選項不是只有「繼續聊」，而是：
+
+| 選項 | 指令/動作 | 適用 |
+|---|---|---|
+| **Continue（續聊）** | 直接送下一條訊息 | 同一任務、方向清楚、上下文仍乾淨 |
+| **/rewind（回到分叉點重走）** | `Esc+Esc` 或 `/rewind` | 你發現它走歪了，**不要「補 patch prompt」**，而是回到還沒走歪的點再下正確約束 |
+| **/clear（開新 session）** | `/clear` → 帶一則 distill 過的 brief（一句話說明現狀＋禁止事項） | 任務切換、或上下文已污染到不值得救 |
+| **/compact（有損壓縮）** | `/compact`，可加 focus：`/compact focus on auth refactor, drop test debugging` | 想保留「有效約束」，但丟掉試錯廢氣 |
+| **Subagent（乾淨隔離調查）** | 透過 `/agents` 拉 subagent | 下一段要掃很多檔案、產大量中間輸出，但你只需要結論 |
+
+> ⚠️ **最重要的一句話**：  
+> **Rewind 往往比「補一句糾正」更好。**  
+> 因為 `/rewind` 會把那個分支之後的訊息「從上下文直接拔掉」，而補 prompt 只是在壞分支上繼續堆解釋。
+
+實戰範例（你會懂的那種）：
+
+- Claude 讀了五個檔、試了方案 A 失敗
+- 直覺反應：「A 不行，換 B 試試」← 留在壞分支
+- 更好做法：`/rewind` 回到「剛讀完檔」的節點 → 直接說：
+  > 「不要用方案 A，`foo` 沒暴露那個能力，直接走 B。」
+
+你還可以用 **summarize from here** 做「來自未來的紙條」：只保留結論，把中間的試錯丟掉。
+
+#### 6.3.2 compact vs. /clear（lossy vs. 你重控邊界）
+
+| | `/compact` | `/clear`＋brief |
+|---|---|---|
+| 本質 | **有損壓縮**：讓模型總結歷史→用摘要續行 | **你重建邊界**：你寫 brief，決定帶什麼、丟什麼 |
+| 省力？ | 高（讓它幫你壓） | 低（你要寫一句現狀摘要） |
+| 可控？ | 較低（它決定什麼重要） | 較高（你決定） |
+| 地雷 | **bad compact**：它壓縮時往往模型狀態最差（上下文已長、rot 開始作用），而且它無法預測你下一步要往哪 | 無（但你懶就會寫太爛的 brief） |
+
+- compact 不是「無損繼承」；它壓完建議你**花一分鐘確認摘要保留了哪些關鍵約定**。
+- 更穩的作法：**趁你還知道下一步要哪，主動 compact**；別等到 autocompact 逼你吃 surprise。
+
+#### 6.3.3 Subagent 首先是「上下文管理工具」（不是只是平行加速）
+
+用 subagent 的判斷題：
+- 這塊工作會產**大量中間輸出**（搜尋、掃描、報告）
+- 你之後**只需要結論**，不需要那些 tool output 本身留在主線
+- 你想避免主線上下文被淹沒
+
+典型：
+- `/agents` → 建立唯讀 explore agent 掃清依賴/影響面 → 主 agent 才動手改
+- 用 subagent 跑「依 spec 驗證」、「跨 repo 讀 auth flow」、「針對 git changes 寫 doc」
+
+> 一句話：**Subagent 給你一個 fresh context window，中間垃圾不回傳，主線就不髒。**
+
+### 6.4 權限與沙箱：allow / ask / deny（讓它跑，但不讓它亂跑）
+
+Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定邊界**。  
+解法不是「關掉所有確認」（會被它摸到 `.env` 或誤 push），而是分三層：
+
+#### 6.4.1 三層定義（`.claude/settings.json` 的 permissions）
+
+| 層級 | 行為 | 適合放什麼 |
+|---|---|---|
+| **allow** | 低風險高頻：直接放行 | `git status`、`git diff`、`npm run test`、`npm run lint` |
+| **ask** | 有風險但要做：保留確認 | 裝依賴、跑 build 腳本、改專案檔案 |
+| **deny** | 絕不碰：直接擋 | `.env*`、金鑰路徑、生產發布腳本 |
+
+範例片段（JSON 寫法）：
+
+```text  
+// .claude/settings.json
+{
+    "permissions": {
+    "allow": [
+        "Bash(npm run test *)",
+        "Bash(npm run lint)",
+        "Bash(git status)",
+        "Bash(git diff *)"
+        ],
+// deny 優先級最高：就算別處 allow，命中 deny 還是擋
+    "deny": [
+        "Read(./.env)",
+        "Read(./.env.*)",
+        "Bash(git push *)",
+        "Bash(rm -rf *)"
+        ]
+    }
+}  
+```
+
+> ⚠️ 實務鐵律：**`.env`、金鑰目錄、發布指令優先寫進 `deny`，不要靠「我到時候看彈窗再判斷」。**
+
+#### 6.4.2 sandbox：讓它在邊界內連續跑
+
+`sandbox` 的用意是「設執行邊界」——專案目錄內的讀取/執行/驗證可連續跑，不每一步都來問你；但需要專案外路徑（全域工具、Docker）時要額外配。
+
+適合場景：跑 Stripe Webhook 邏輯驗證、跑測試→看 log→檢查 DB 狀態這種「一串要連貫」的流程。
+
+#### 6.4.3 security-review：涉使用者資料時的「安全視角」
+
+每次涉及：
+- **使用者資料查詢/存取**
+- **權限檢查、外部輸入校驗**
+- **支付、Webhook、檔案處理**
+
+→ 寫完就跑，別等到要上線才跑。
+
+最常見的兩個地雷：
+1. **IDOR（越權）**：查詢只寫 `WHERE id = {userId}` 卻沒加 `AND ownerId = currentUser.id`
+2. **GDPR 痕跡**：錯誤日誌把使用者 Email/IP/個資噴出來
+
+最小作法：  
+- 涉及上述場景：**寫完就跑** `/security-review`（或對應 review skill）  
+- 發現問題的成本在「剛寫完」最低，拖到三週後找回來改最貴
 
 ---
 
@@ -429,7 +545,7 @@ claude --continue  新終端續上最近 session
 
 -   **Skills (漸進式揭露的模組化能力)**
     - **⚠️ 錯誤認知：** 許多人會把 Skills 當成零散的快捷指令，或把所有工作流硬塞進 `CLAUDE.md`。
-    - **✅ 正確理解：** Skills 是一種**「漸進式揭露 (Progressive Disclosure)」**的機制。
+    - **✅ 正確理解：** Skills 是一種 **「漸進式揭露 (Progressive Disclosure)」** 的機制。
     - **整合應用思維：** 你可以設計一個「Security Audit Skill」。當你輸入 `/audit` 時，該 Skill 才被喚醒，並嚴格遵循你設定的實體邏輯（例如：檢查特定機械結構的設計是否避開了無法從背面存取的盲孔，或是確保某些工具未被錯誤歸類）。這讓 AI 的上下文保持絕對乾淨，不會在寫一般業務邏輯時被資安檢查規則干擾。
 
 當你有一系列複雜的任務（如：建立資料庫遷移、執行零日威脅掃描），將其打包成 `SKILL.md`。Claude 啟動時，**只會讀取每個 Skill 的名稱與簡介**（約 100 tokens），只有當你的任務與該技能匹配時，它才會完整載入該技能的深層邏輯與腳本。
@@ -500,14 +616,14 @@ claude --continue  新終端續上最近 session
 
 ```
 Claude Code CLI / VSCode / Bots
-        │
-        ▼
-  ┌─────────────────────┐
-  │  fcc-server (proxy) │ ← Admin UI (localhost:8082/admin)
+             │
+             ▼
+  ┌──────────────────────┐
+  │  fcc-server (proxy)  │ ← Admin UI (localhost:8082/admin)
   │  - model router      │
   │  - provider adapters │
   │  - request normalize │
-  └──────────┬──────────┘
+  └──────────┬───────────┘
              ▼
   NVIDIA NIM / OpenRouter / Gemini / DeepSeek / Mistral / Kimi
   / Groq / Cerebras / Fireworks / Z.ai / Wafer …
