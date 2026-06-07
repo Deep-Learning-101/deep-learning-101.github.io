@@ -4,7 +4,7 @@ title: "2026 Claude Code 完全整合指南：從核心機制、工程紀律、�
 description: "深度整合了多篇Claude Code核心文章與開源項目，旨在提供一套可查閱、可執行、有層次的全景知識體系，而非功能羅列。"
 permalink: /Blog/ClaudeCode
 lang: zh-Hant
-keywords: ["ClaudeCode", "Claude", "OPUS / SONNET / HAIKU"]
+keywords: ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic", "OPUS / SONNET / HAIKU"]
 ---
 
 
@@ -152,7 +152,7 @@ claude
 
 -   **拒絕百科全書：** 根目錄的 `CLAUDE.md` 應極度精簡（建議控制在 50 行以內），只放最高層級的指標與絕對禁止的陷阱。
 -   **分層載入（Additive Loading）：** 採用目錄樹結構。例如，開發包含前端與資料庫的專案時，不要在根目錄寫滿 SQL 規範。讓 AI 在進入 `/frontend` 目錄時才讀取 Next.js 的規範（例如：核心 UI 區塊通常位於 line 104），進入 `/db` 時才讀取 PostgreSQL 與 Drizzle ORM 的設定。
--   **主動降噪：** 透過 `.ignore` 或 `.claude/settings.json` 中的 `permissions.deny` 排隊生成的構建檔案（Artifacts），這能大幅節省 AI 的注意力與 Token。
+-   **主動降噪：** 透過 `.ignore` 或 `.claude/settings.json` 中的 `permissions.deny` 排除生成的構建檔案（Artifacts），這能大幅節省 AI 的注意力與 Token。
 
 ### 4.2 應該寫什麼（三層原則）
 
@@ -276,7 +276,7 @@ Claude 完成一輪後，你的選項不是只有「繼續聊」，而是：
 | **/rewind（回到分叉點重走）** | `Esc+Esc` 或 `/rewind` | 你發現它走歪了，**不要「補 patch prompt」**，而是回到還沒走歪的點再下正確約束 |
 | **/clear（開新 session）** | `/clear` → 帶一則 distill 過的 brief（一句話說明現狀＋禁止事項） | 任務切換、或上下文已污染到不值得救 |
 | **/compact（有損壓縮）** | `/compact`，可加 focus：`/compact focus on auth refactor, drop test debugging` | 想保留「有效約束」，但丟掉試錯廢氣 |
-| **Subagent（乾淨隔離調查）** | 透過 `/agents` 拉 subagent | 下一段要掃很多檔案、產大量中間輸出，但你只需要結論 |
+| **Subagent（乾淨隔離調查）** | 透過 `/dispatching-parallel-agents` 等 Skill | 下一段要掃很多檔案、產大量中間輸出，但你只需要結論 |
 
 > ⚠️ **最重要的一句話**：  
 > **Rewind 往往比「補一句糾正」更好。**  
@@ -311,7 +311,7 @@ Claude 完成一輪後，你的選項不是只有「繼續聊」，而是：
 - 你想避免主線上下文被淹沒
 
 典型：
-- `/agents` → 建立唯讀 explore agent 掃清依賴/影響面 → 主 agent 才動手改
+- 呼叫子代理 Skill（如 `/dispatching-parallel-agents`） → 建立唯讀 explore agent 掃清依賴/影響面 → 主 agent 才動手改
 - 用 subagent 跑「依 spec 驗證」、「跨 repo 讀 auth flow」、「針對 git changes 寫 doc」
 
 > 一句話：**Subagent 給你一個 fresh context window，中間垃圾不回傳，主線就不髒。**
@@ -423,7 +423,7 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 ### 8.1 為什麼需要 Skills（一句話）
 
 > Skills 本質＝**把工程規範數位化**：先想、再計畫、再執行、測試覆蓋、驗證完成、乾淨分支。  
-> Claude 本身已經很聰明；Skills 讓它變**自律**。
+> 如同前文所述，Claude 已經具備頂級的推理智力，而 Skills 的任務，是賦予它企業級開發所需的**工程紀律**。
 
 ---
 
@@ -503,7 +503,7 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 1.  **先裝 Commit Helper**（天天用、CP 最高、干擾最小）
 2.  **再加品質閘門**：Code Review ＋ Planning-with-files（解真痛點）
 3.  **再上約束**：Brainstorming / Writing Plans / Executing Plans（接受被管，換大任務可控）
-4.  **Batch 直接用**（內建，不用裝）
+4.  直接將內建的 /batch 融入日常批量任務中
 5.  **Ralph-Wiggum / MCP Builder**：等有「明確批量任務」或「要接內部系統」再碰
 
 ### 9.2 常見疑惑一次答
@@ -536,22 +536,21 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 | **Plugins** | 打包成可分發單元 | 避免好設置只活在部落；新人不需從零配 |
 | **MCP Servers** | 接外部世界 | 建議最後做：基礎穩了再接內部工具/工單系統 |
 
-外加兩個輔助：**LSP**（符號級導航，對 C/C++/多語大型 repo ROI 極高）、**Subagents**（探索與編輯分開；唯讀 subagent 先寫發現→主 agent 再編輯）。
+除了上述五大擴展點，還有兩個極高投資報酬率的輔助機制：**LSP**（符號級導航，對 C/C++/多語大型 repo ROI 極高）與 **Subagents**（子代理探索）。
 
--   **Hooks** (確定性約束與反饋迴圈)：與其在 Prompt 裡千叮嚀萬交代「請記得做語法檢查」，不如利用 Hooks 建立強制性的工程約束。
+以下針對實務上最容易誤解的三個進階機制，進行深度拆解：
+
+-   **Hooks (確定性約束與反饋迴圈)**：與其在 Prompt 裡千叮嚀萬交代「請記得做語法檢查」，不如利用 Hooks 建立強制性的工程約束。
     * **PreToolUse（事前攔截）：** 阻擋危險操作。例如，修改到特定敏感的系統配置檔前，強制觸發備份腳本。
     * **PostToolUse（事後修正）：** 修改代碼後自動觸發 Lint 或測試。如果報錯，AI 會直接讀取 stderr 並自我修正，無須人工介入。
-    * **物理與邏輯邊界：** 利用 Hooks 卡控設計規範。例如，若偵測到前端更新，自動驗證視覺設定檔中是否包含禁止的參數（確保視覺特效如高科技能量矩陣般展開，嚴禁使用爆炸效果）。
 
--   **Skills (漸進式揭露的模組化能力)**
-    - **⚠️ 錯誤認知：** 許多人會把 Skills 當成零散的快捷指令，或把所有工作流硬塞進 `CLAUDE.md`。
-    - **✅ 正確理解：** Skills 是一種 **「漸進式揭露 (Progressive Disclosure)」** 的機制。
-    - **整合應用思維：** 你可以設計一個「Security Audit Skill」。當你輸入 `/audit` 時，該 Skill 才被喚醒，並嚴格遵循你設定的實體邏輯（例如：檢查特定機械結構的設計是否避開了無法從背面存取的盲孔，或是確保某些工具未被錯誤歸類）。這讓 AI 的上下文保持絕對乾淨，不會在寫一般業務邏輯時被資安檢查規則干擾。
+-   **Skills (漸進式揭露的模組化能力)**：
+    * **⚠️ 錯誤認知：** 許多人會把 Skills 當成零散的快捷指令，或把所有工作流硬塞進 `CLAUDE.md`。
+    * **✅ 正確理解：** Skills 是一種 **「漸進式揭露 (Progressive Disclosure)」** 的機制。當你有複雜任務（如：執行安全掃描），將其打包成 `SKILL.md`。Claude 啟動時只會讀取其名稱與簡介（約 100 tokens），只有當任務匹配時，才會完整載入深層邏輯。這讓 AI 的上下文保持絕對乾淨。
 
-當你有一系列複雜的任務（如：建立資料庫遷移、執行零日威脅掃描），將其打包成 `SKILL.md`。Claude 啟動時，**只會讀取每個 Skill 的名稱與簡介**（約 100 tokens），只有當你的任務與該技能匹配時，它才會完整載入該技能的深層邏輯與腳本。
-
--   **MCP 與 Subagents (外部擴展與探索隔離)**：當基礎穩固後，才接入外部工具。
-    - **Subagents（子代理）：** 用來拆分「探索」與「編輯」。面對高複雜度架構（如具備 GraphRAG 與威脅狩獵機制的 S.H.I.E.L.D. 系統），不要讓主 Agent 直接動手。先派遣一個唯讀的 Subagent 去爬梳依賴關係與圖譜，寫出調查結論後，主 Agent 再依據該結論進行精準改檔，藉此保護主 Agent 珍貴的 Context Window。
+-   **Subagents 與 MCP (外部探索與系統接入)**：
+    * 當基礎穩固後，才透過 MCP 接入外部工具。
+    * **Subagents（子代理）的防護價值：** 用來拆分「探索」與「編輯」。面對高複雜度架構，不要讓主 Agent 直接動手。先派遣一個唯讀的 Subagent 去爬梳依賴關係與圖譜，寫出調查結論後，主 Agent 再依據該結論進行精準改檔，藉此保護主 Agent 珍貴的 Context Window 不被中間的試錯過程污染。
 
 ### 10.3 三種成功配置模式（可直接抄）
 
@@ -578,7 +577,7 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 | Claude 開始「胡說八道」 | 上下文 90%+ 還硬撐 | 70%→`/compact`；90%→`/clear` 重開 |
 | 看起來合理但邊界壞掉 | 沒給驗證（測資/截圖/腳本） | 永遠附成功標準 |
 | 同一 session 混不相關任務 | 上下文污染 | `/clear`；不相關＝新 session |
-| 同一錯法被糾正兩次還錯 | 上下文已被失敗路徑污染 | `/clear`＋更精準 prompt 重開 |
+| 同一錯法被糾正兩次還錯 | 上下文已被失敗路徑污染 | 先用 `/rewind` 回退到錯之前的節點重下指令；若污染太深再 `/clear` |
 | CLAUDE.md 太肥→Claude 忽略一半 | 把該進 Skill 的塞進去了 | 無情刪減；只留普遍且 Claude 猜不到的 |
 
 ---
@@ -588,9 +587,8 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 
 由於官方綁定 Anthropic 且具備嚴格的 Rate Limit，透過部署開源的 **Free Claude Code (FCC)**，你可以將流量代理到全球各大模型，實現模型自由與成本控制。
 
-> `cc-connect`「換模型後端」，`free-claude-code`「把 Agent **橋接到聊天平台**」（Line/飛書/釘釘/Telegram/Discord/微信個人號/QQ 等）。  
-> [https://github.com/chenhg5/cc-connect/](https://github.com/chenhg5/cc-connect/blob/main/README.zh-CN.md)  
-> [https://github.com/Alishahryar1/free-claude-code](https://github.com/Alishahryar1/free-claude-code)
+> **定位**：free-claude-code 專注於「換模型後端」，讓本地 Agent 可以擺脫官方 API 的限制。
+> **專案連結**：[https://github.com/Alishahryar1/free-claude-code](https://github.com/Alishahryar1/free-claude-code)
 
 ### 12.1 先講清楚它「不是」什麼
 
@@ -652,14 +650,16 @@ irm "https://github.com/Alishahryar1/free-claude-code/blob/main/scripts/install.
 fcc-server
 # 終端會印 Admin UI URL，預設如 http://127.0.0.1:8082/admin
 
-# 4. 讓 Claude Code 走 proxy（這兩行是核心）
-export ANTHROPIC_BASE_URL=http://127.0.0.1:8082
-export ANTHROPIC_AUTH_TOKEN=freecc
-
-fcc-claude   # 它會讀 port+token → 設環境變數 → 啟動真正的 claude
+# 4. 讓 Claude Code 走 proxy（使用官方專屬啟動器）
+fcc-claude   
+# 註：fcc-claude 會自動讀取你的 Admin UI 設定（包含 Port 與 Token），
+# 自動在背景注入環境變數，並幫你把自動壓縮視窗設為 190k tokens，接著啟動真正的 claude。
+# (完全不需要手動 export 環境變數！)
 ```
 
-在 **Admin UI** 裡：
+> **(補充：如果你是在 VS Code 或 JetBrains IDE 內建的 Claude 擴充套件中使用，才需要手動將 `ANTHROPIC_BASE_URL=http://localhost:8082` 與 `ANTHROPIC_AUTH_TOKEN=freecc` 寫入編輯器的 settings.json 中。)**
+
+在 **Admin UI** 裡:
 
 -   選一個 provider（OpenRouter / Gemini / DeepSeek / NVIDIA NIM / local…）
 -   貼 API key
@@ -690,10 +690,8 @@ fcc-claude   # 它會讀 port+token → 設環境變數 → 啟動真正的 clau
 
 當你需要離開座位，或希望讓整個團隊在通訊軟體中監控並指揮 AI Agent 時，**CC-Connect** 是最強大的橋接中樞。它能將運行在機器上的 Agent（如 Claude Code, Kimi CLI, Gemini CLI 等）對接到 12+ 種通訊平台。
 
-> `cc-connect`「換模型後端」，`free-claude-code`「把 Agent **橋接到聊天平台**」（Line/飛書/釘釘/Telegram/Discord/微信個人號/QQ 等）。  
-> [https://github.com/chenhg5/cc-connect/](https://github.com/chenhg5/cc-connect/blob/main/README.zh-CN.md)  
-> [https://github.com/Alishahryar1/free-claude-code](https://github.com/Alishahryar1/free-claude-code)  
-
+> **定位**：cc-connect 專注於「把 Agent 橋接到聊天平台」（如 Line/飛書/釘釘/Telegram/Discord/微信個人號/QQ 等），負責終端交互的延伸。
+> **專案連結**：[https://github.com/chenhg5/cc-connect/](https://github.com/chenhg5/cc-connect/blob/main/README.zh-CN.md)
 
 ### 13.1 它解決什麼
 
@@ -829,3 +827,21 @@ cc-connect
 | `fcc-server` | 啟動本地代理伺服器和 Admin UI |
 | `fcc-claude` | 啟動已配置代理的 Claude Code 客戶端 |
 | 訪問 `http://127.0.0.1:8082/admin` | 打開管理界面配置模型和服務商 |
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "2026 Claude Code 完全整合指南：從核心機制、工程紀律、大規模部署到生態擴展",
+  "description": "深度整合了多篇 Claude Code 核心文章與開源項目，提供一套可查閱、可執行、有層次的全景知識體系。",
+  "author": {
+    "@type": "Person",
+    "name": "TonTon Huang Ph.D.",
+    "url": "https://twman.org"
+  },
+  "keywords": ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic"],
+  "inLanguage": "zh-Hant",
+  "articleSection": "Software Engineering",
+  "proficiencyLevel": "Expert"
+}
+</script>
