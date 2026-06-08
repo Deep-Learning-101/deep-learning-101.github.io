@@ -29,7 +29,7 @@ keywords: ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic", "OP
 ## 目錄（點擊跳轉）
 
 - [1. Claude Code 是什麼？為什麼它「感覺不同」](#1-claude-code-是什麼為什麼它感覺不同)  
-- [2. 與 Copilot, Cursor, Gemini CLI, Antigravity的差異](#2-與-copilot--cursor--GeminiCLI--Antigravity的差異)  
+- [2. 與 Copilot, Cursor, Antigravity的差異](#2-與-copilot--cursor--Antigravity的差異)  
 - [3. 安裝與起步](#3-安裝與起步)
 - [4. 核心機制：CLAUDE.md —— 讓 AI 真正懂你的專案](#4-核心機制claudemd--讓-ai-真正懂你的專案)
 - [5. Plan Mode：先想清楚再動手](#5-plan-mode-先想清楚再動手)
@@ -74,8 +74,8 @@ keywords: ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic", "OP
 
 ---
 
-<a id="2-與-copilot--cursor--GeminiCLI--Antigravity的差異"></a>
-## 2. 與 Copilot / Cursor / Gemini CLI / Antigravity的本質差異
+<a id="2-與-copilot--cursor--Antigravity的差異"></a>
+## 2. 與 Copilot / Cursor / Antigravity的本質差異
 
 ### 六大 AI 編程工具核心差異對比（更新台灣用語版）
 
@@ -128,6 +128,7 @@ claude
 3. 信任當前工作目錄
 
 > **三個入口**：終端 CLI（最深、最專注）／桌面 App（獨立視窗）／網頁&手機（構思用）。共用同一個帳號。
+> **IDE 整合補充**：除終端 CLI 外，Claude Code 亦可作為擴充套件整合至 **VS Code** 與 **JetBrains** 系列 IDE，在編輯器側邊欄直接操作；進階場景下還可掛進 **GitHub Actions**，自動執行 PR 審查或代碼生成。三種終端以外的入口共用同一帳號與 `CLAUDE.md` 規範。
 
 ### 3.3 費用與額度（實務要知道的事）
 
@@ -377,6 +378,11 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 - 涉及上述場景：**寫完就跑** `/security-review`（或對應 review skill）  
 - 發現問題的成本在「剛寫完」最低，拖到三週後找回來改最貴
 
+### 6.5 Prompt Caching：大幅降低大上下文成本
+對於每次呼叫都需要攜帶大量重複內容（例如龐大的 System Prompt、參考文件或整個 Repo）的場景，務必善用快取機制來控制開銷。
+- **配置方式**：在需要快取的內容區塊加上 `"cache_control": {"type": "ephemeral"}`。
+- **效益與生命週期**：命中快取的 token 成本最多可降九成；快取預設保留 5 分鐘，每命中一次便會重新計時。
+
 ---
 
 <a id="7-工作流哲學-給驗證標準四階段循環怎麼跟-claude-溝通"></a>
@@ -414,6 +420,15 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 -   這個日誌系統怎麼運作的？
 -   為什麼 `ExecutionFactory` 的 API 演變成這樣（叫它看 git log）？
 -   如果我們加 OAuth2，你會怎麼切責任？
+
+### 7.5 Claude Code 團隊內部的 5 條實戰原則
+
+根據 Anthropic 內部開發團隊的工程總監分享，AI 介入後工程瓶頸已從「寫碼」轉移到「驗證與審查」，並衍生出以下五條新規範：
+- **JIT (Just-In-Time) 規劃**：砍掉「先寫漂亮設計文件才能寫碼」的儀式，改為 prototype-first；文件若需要存在，是寫完代碼後再補。
+- **自動化文化**：現在自動化成本極低，團隊奉行「重複 3 次以上就想辦法自動掉」（例如每天手動彙整客戶回饋）。
+- **Code Review (Trust but verify)**：將 style/lint、明顯 bug 交給 Claude 處理，人類專注於法律合規、風險容忍、產品品味與信任邊界。
+- **品味稀缺，打字不稀缺**：團隊角色界線模糊化，能辨識該做什麼的「創意 builder（product sense）」與深度的「系統專家」成為最需要的兩種特質。
+- **主動推動變革**：人不會主動刪除流程，必須指名道姓宣告哪些舊流程（如無效率的週會或審批）可以廢除。
 
 ---
 
@@ -477,6 +492,16 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 | **Document Skills（官方）** | Claude 在終端直接吃 PDF/Word/Excel/PPT | 非純開發者、要處理大量需求/技術文件時省事（Anthropic 官方出品） |
 | **Frontend Design** | 注入設計規範讓 UI 代碼別那麼「2015 管理後台感」 | 內部系統/工具產品夠用；差距是「從隨便堆→基本規範」，不是魔法 |
 | **Excalidraw Diagram** | 自然語言→可編輯 `.excalidraw` 圖 | 技術方案圖/架構圖/時序圖快速草圖；Excalidraw 可再編輯＋JSON 可存 git |
+
+**Document Skills 四件套說明**（Anthropic 官方出品）：
+
+| **Office 四件套 (docx/pptx/xlsx/pdf)** | 文件產出（不自己排版） | 能生成排好版的 Word、帶配色與字體的 PPT、帶公式的 Excel；PDF 支援 OCR 提取合約條款 |
+| **Schedule (定時任務)** | 週期性自動化作業 | 設定好時間/週期，Claude 自動執行並推送結果（如：每週五自動生成週報） |
+| **Context7** | 突破訓練資料截止日限制 | `/plugin install context7@claude-plugins-official`；拉取最新官方文件注入上下文，極度適合快迭代的前端框架 |
+| **Playwright MCP** | 用自然語言測試 UI | `/plugin install playwright@claude-plugins-official`；打開真實 Chrome 點擊與截圖，適合探索性測試 |
+| **Security Guidance** | 零配置的安全防線 | `/plugin install security-guidance@claude-plugins-official`；在 PreToolUse 攔截命令注入/XSS/危險 eval |
+| **Chrome DevTools MCP** | 接管瀏覽器開發者工具 | 讀取網路請求、Console 報錯與 DOM；極度適合調試線上問題與登入態 Bug |
+| **Figma MCP** | 設計稿直出前端代碼 | `/plugin install figma@claude-plugins-official`；讀取真實 frame 結構化資料而非截圖辨識 |
 
 ---
 
@@ -564,6 +589,12 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
     -   曾為舊模型寫的「補丁規則」，新模型可能已不需要甚至有害
 3.  **明確歸屬人（DRI）**
     -   沒人管就會部落化；至少需要一位 DRI 管 CLAUDE.md 規範、plugin 市場、權限策略
+
+### 10.4 企業級案例：Anthropic 開源金融 Agent 架構約束
+若要將 Agent 部署於高風險的商業環境（如華爾街金融分析），可參考 Anthropic 開源的 `anthropics/financial-services` 框架。其應對真實業務流的核心設計約束如下：
+- **寫入權限隔離**：架構分為 System Prompt、Skills 與 Connectors 三層；只有最後一級的 leaf worker（如 deck-writer）持有 Write 權限，上游若被污染也只能影響中間態。
+- **數字可追溯性**：每個數字必須能追溯到輸入源；計算儲存格只能是公式而不能有硬編碼，建置完成後必須跑 `audit-xls` 等完整性校驗。
+- **資料紀律**：Skills 中明確禁止將 Web Search 作為金融數據的一級來源；必須優先使用 MCP 接出的機構級資料源（如 CapIQ、FactSet、LSEG），不可用時才降級到 EDGAR filings。
 
 ---
 
