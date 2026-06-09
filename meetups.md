@@ -1,7 +1,16 @@
 ---
 layout: default
-title: 歷年 Meetup 歷史庫
-permalink: /archives
+title: 歷年 Meetup
+permalink: /meetups
+description: "Deep Learning 101 歷年聚會直播活動 (摘要逐字稿及語音皆由 Gemini 2.5 Pro Preview 05-06 及 NotebookLM 所生成，處理好會陸續補上)。"
+---
+
+{% include header.html %}
+
+---
+
+{% include ai-share.html %}
+
 ---
 
 <div style="display: flex; justify-content: center;">
