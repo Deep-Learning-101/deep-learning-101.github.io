@@ -1,283 +1,50 @@
 <style>
-/* ==========================================================================
-   1. 核心網格系統 (保持不變，確保四大卡片正常運作)
-   ========================================================================== */
-.tech-grid {
-  display: flex;
-  flex-wrap: wrap; 
-  justify-content: space-between; 
-  gap: 15px; 
-  margin-top: 30px;
-  margin-bottom: 50px;
-  width: 100%;
-}
-.tech-card {
-  flex: 0 0 calc(25% - 12px); 
-  background: #ffffff;
-  border: 1px solid #eaeaea;
-  border-radius: 16px;
-  padding: 24px; 
-  text-decoration: none !important; 
-  color: #333 !important;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-  min-width: 0; 
-}
-.tech-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-  border-color: #007bff;
-}
-.tech-card h3 {
-  margin-top: 0;
-  margin-bottom: 12px;
-  font-size: 1.15rem; 
-  font-weight: 700;
-  color: #1a1a1a;
-  border-bottom: none; 
-  line-height: 1.4;
-  word-wrap: break-word;
-}
-.tech-card p {
-  margin: 0;
-  font-size: 0.9rem; 
-  color: #555;
-  line-height: 1.6;
-  flex-grow: 1; 
-}
-.tech-card .tags {
-  margin-top: 16px;
-  font-size: 0.8rem;
-  color: #007bff;
-  font-weight: 600;
-}
-@media (max-width: 1024px) { .tech-card { flex: 0 0 calc(50% - 8px); } }
-@media (max-width: 600px) { .tech-card { flex: 0 0 100%; } }
+  /* 1. 核心網格系統 */
+  .tech-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 15px; margin-top: 30px; margin-bottom: 50px; width: 100%; }
+  .tech-card { flex: 0 0 calc(25% - 12px); background: #ffffff; border: 1px solid #eaeaea; border-radius: 16px; padding: 24px; text-decoration: none !important; color: #333 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; box-sizing: border-box; min-width: 0; }
+  .tech-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: #007bff; }
+  .tech-card h3 { margin-top: 0; margin-bottom: 12px; font-size: 1.15rem; font-weight: 700; color: #1a1a1a; border-bottom: none; line-height: 1.4; word-wrap: break-word; }
+  .tech-card p { margin: 0; font-size: 0.9rem; color: #555; line-height: 1.6; flex-grow: 1; }
+  .tech-card .tags { margin-top: 16px; font-size: 0.8rem; color: #007bff; font-weight: 600; }
+  @media (max-width: 1024px) { .tech-card { flex: 0 0 calc(50% - 8px); } }
+  @media (max-width: 600px) { .tech-card { flex: 0 0 100%; } }
 
-/* ==========================================================================
-   2. 精緻化 Hero Header 區塊
-   ========================================================================== */
-.hero-header-wrapper {
-  background: #ffffff;
-  padding: 60px 20px 40px;
-  border-radius: 0 0 24px 24px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 10px 30px -15px rgba(0,0,0,0.05);
-  margin-bottom: 40px;
-}
-
-/* 讓圖片重疊產生聯繫感 */
-.hero-image-cluster {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 30px;
-}
-.hero-image-cluster img {
-  width: 180px;
-  height: 180px;
-  object-fit: cover;
-  border-radius: 50%; /* 全部改成圓形，統一視覺 */
-  border: 4px solid #ffffff;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.08);
-  transition: transform 0.3s ease;
-  z-index: 2;
-}
-.hero-image-cluster img:first-child {
-  transform: translateX(10px); /* Logo 往右靠 */
-  z-index: 1;
-}
-.hero-image-cluster img:last-child {
-  transform: translateX(-10px); /* 人頭往左靠，製造交疊感 */
-}
-.hero-image-cluster:hover img:first-child { transform: translateX(5px) scale(1.05); }
-.hero-image-cluster:hover img:last-child { transform: translateX(-5px) scale(1.05); }
-
-/* 主標題排版 */
-.hero-title {
-  color: #111;
-  font-size: 1.4rem; /* 稍微縮小一點以適應完整的英文句子 */
-  font-weight: 800;
-  line-height: 1.4;
-  margin: 0 auto 25px auto;
-  max-width: 850px;
-  letter-spacing: -0.5px;
-}
-/* 簡介文字排版 */
-.hero-subtitle {
-  color: #555;
-  font-size: 1rem;
-  line-height: 1.8;
-  max-width: 800px;
-  margin: 0 auto 35px auto;
-}
-.hero-subtitle p { 
-  margin: 0 0 12px 0; 
-}
-.author-link {
-  color: #111;
-  font-weight: 700;
-  text-decoration: none;
-  border-bottom: 2px solid #e0e0e0;
-  padding-bottom: 2px;
-  transition: border-color 0.2s;
-}
-.author-link:hover { border-color: #007bff; color: #007bff; }
-
-/* 現代化 Update 按鈕 */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #111; 
-  color: #fff;
-  padding: 14px 32px;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 1.05rem;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-}
-.btn-primary:hover {
-  background-color: #007bff; 
-  color: #fff;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(0,123,255,0.3);
-}
-
-/* ==========================================================================
-   3. 洗練的導覽列 (Nav)
-   ========================================================================== */
-.modern-nav {
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 20px;
-  margin: 0 0 50px 0;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
-  border: 1px solid #f5f5f5;
-}
-.nav-section-title {
-  text-align: center;
-  font-weight: 700;
-  color: #888;
-  font-size: 0.85rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  margin-bottom: 20px;
-}
-.nav-links-grid {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-bottom: 24px;
-}
-.nav-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  background: #f8f9fa;
-  border: 1px solid #eaeaea;
-  border-radius: 50px;
-  color: #333;
-  font-size: 0.9rem;
-  font-weight: 600;
-  text-decoration: none !important;
-  transition: all 0.2s;
-}
-.nav-pill:hover {
-  background: #fff;
-  border-color: #007bff;
-  color: #007bff;
-  box-shadow: 0 4px 12px rgba(0,123,255,0.1);
-  transform: translateY(-1px);
-}
-.nav-sub-links {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 24px;
-  border-top: 1px solid #f0f0f0;
-  padding-top: 24px;
-}
-.nav-text-link {
-  font-size: 0.9rem;
-  color: #666;
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-.nav-text-link:hover { color: #111; }
-</style>
-
-<header class="hero-header-wrapper">
-<style>
-  /* 🌟 置頂毛玻璃導覽列 */
-  .top-fixed-navbar {
-    position: fixed; /* 強制固定在視窗上 */
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 9999; /* 確保它永遠在最上層，不會被其他卡片蓋住 */
-    background: rgba(255, 255, 255, 0.85); /* 85% 半透明白底 */
-    backdrop-filter: blur(12px); /* 蘋果風毛玻璃模糊特效 */
-    -webkit-backdrop-filter: blur(12px); /* 支援 Safari */
-    border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    padding: 12px 0;
-    transition: all 0.3s ease;
-  }
-
-  /* 讓裡面的按鈕乖乖置中並排 */
-  .top-fixed-navbar .nav-links-grid {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 12px;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 15px;
-  }
-</style>
+  /* 2. 精緻化 Hero Header 區塊 */
+  .hero-header-wrapper { background: #ffffff; padding: 60px 20px 40px; border-radius: 0 0 24px 24px; text-align: center; position: relative; box-shadow: 0 10px 30px -15px rgba(0,0,0,0.05); margin-bottom: 40px; }
+  .hero-image-cluster { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
+  .hero-image-cluster img { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 8px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease; z-index: 2; }
+  .hero-image-cluster img:first-child { transform: translateX(10px); z-index: 1; }
+  .hero-image-cluster img:last-child { transform: translateX(-10px); }
+  .hero-header-text { max-width: 850px; margin: 0 auto 25px auto; }
+  .hero-title { color: #111; font-size: 1.4rem; font-weight: 800; line-height: 1.4; margin: 0 auto 25px auto; letter-spacing: -0.5px; }
+  .hero-subtitle { color: #555; font-size: 1rem; line-height: 1.8; max-width: 800px; margin: 0 auto 35px auto; }
+  .author-link { color: #111; font-weight: 700; text-decoration: none; border-bottom: 2px solid #e0e0e0; padding-bottom: 2px; }
+  
+  /* 3. 🌟 置頂毛玻璃導覽列 (合併進來) */
+  .top-fixed-navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 12px 0; }
+  .top-fixed-navbar .nav-links-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+  .nav-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #f8f9fa; border: 1px solid #eaeaea; border-radius: 50px; color: #333; font-size: 0.9rem; font-weight: 600; text-decoration: none !important; transition: all 0.2s; }
+  .nav-pill:hover { background: #fff; border-color: #007bff; color: #007bff; }
+</style> <div style="height: 65px;"></div>
 
 <div class="top-fixed-navbar">
   <div class="nav-links-grid">
-    <a href="https://www.youtube.com/@DeepLearning101" target="_blank" class="nav-pill">
-      <span>📺</span> YouTube 訂閱
-    </a>
-    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank" class="nav-pill">
-      <span>👥</span> FB 社群
-    </a>
-    <a href="/" class="nav-pill" id="nav-home">
-      <span>🏠</span> 首頁
-    </a>
-    <a href="https://huggingface.co/DeepLearning101" target="_blank" class="nav-pill">
-      <span>🤗</span> HF Space
-    </a>
-    <a href="https://github.com/Deep-Learning-101" target="_blank" class="nav-pill">
-      <span>⭐</span> GitHub 點星
-    </a>
+    <a href="https://www.youtube.com/@DeepLearning101" target="_blank" class="nav-pill"><span>📺</span> YouTube 訂閱</a>
+    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank" class="nav-pill"><span>👥</span> FB 社群</a>
+    <a href="/" class="nav-pill" id="nav-home"><span>🏠</span> 首頁</a>
+    <a href="https://huggingface.co/DeepLearning101" target="_blank" class="nav-pill"><span>🤗</span> HF Space</a>
+    <a href="https://github.com/Deep-Learning-101" target="_blank" class="nav-pill"><span>⭐</span> GitHub 點星</a>
   </div>
 </div>
 
-
+<header class="hero-header-wrapper">
     <h1 class="hero-title">
     Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, <span style="white-space: nowrap;">Taipei 101</span>
   </h1>
 
   <div class="hero-image-cluster">
-    <a href="https://huggingface.co/DeepLearning101" target="_blank" title="Deep Learning 101">
-      <img src="../images/DeepLearning101-LOGO.jpg" alt="Logo" style="background: white;">
-    </a>
-    <a href="https://twman.org" target="_blank" title="TonTon Huang Ph.D.">
-      <img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon_QQ-202602.png" alt="TonTon">
-    </a>
+    <a href="https://huggingface.co/DeepLearning101" target="_blank" title="Deep Learning 101"><img src="../images/DeepLearning101-LOGO.jpg" alt="Logo" style="background: white;"></a>
+    <a href="https://twman.org" target="_blank" title="TonTon Huang Ph.D."><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon_QQ-202602.png" alt="TonTon"></a>
   </div>
 
   <div class="hero-subtitle">
@@ -287,18 +54,9 @@
     這裡不僅匯集了我們歷年的 Meetup 紀錄，更是 AI 演算法與開源資源匯整中心。
   </div>
 
-<div style="text-align: center; margin-top: 1px; margin-bottom: 1px;">
+<div style="text-align: center;">
   <a href="https://deep-learning-101.github.io/meetups" target="_blank" style="display: inline-block; background: #dc3545; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 6px rgba(220,53,69,0.2); transition: all 0.3s ease;">
     👉 查看 Deep Learning 101 歷年所有實體 Meetup 影像與逐字稿 📺
   </a>
-  </header>
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var currentPath = window.location.pathname;
-    if (currentPath === "/" || currentPath === "/index.html") {
-      document.getElementById('nav-home').style.background = '#111';
-      document.getElementById('nav-home').style.color = '#fff';
-      document.getElementById('nav-home').style.borderColor = '#111';
-    }
-  });
-</script>
+</div>
+</header>
