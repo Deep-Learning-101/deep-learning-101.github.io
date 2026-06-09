@@ -141,34 +141,45 @@ audio {
     }
 </style>
 
-<div id="ai-chat-btn-dl" onclick="toggleChatDL()">🤖</div>
+<div id="ai-chat-widget" style="position: fixed; bottom: 30px; right: 30px; z-index: 9999; display: flex; flex-direction: column; align-items: flex-end;">
 
-<div id="ai-chat-window-dl">
-    <div style="background-color: #2196F3; color: white; padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; font-weight: bold;">
-        <span style="font-size: 15px;">Deep Learning 101 小助手</span>
-        <span onclick="toggleChatDL()" style="cursor: pointer; font-size: 18px; padding: 0 5px;">✖</span>
+  <div id="chat-panel" style="display: none; width: 380px; height: 600px; background: white; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #eaeaea; overflow: hidden; margin-bottom: 15px;">
+    
+    <div style="background: #111; color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; font-weight: bold;">
+      <span style="font-size: 0.95rem;">🤖 DL101 智能小助手</span>
+      <button id="close-chat" style="background: none; border: none; color: white; cursor: pointer; font-size: 1.2rem; line-height: 1;">✖</button>
     </div>
-    <iframe
-        src="https://deeplearning101-deeplearning101.hf.space"
-        style="width: 100%; height: calc(100% - 40px); border: none; display: block; background-color: #ffffff;">
-    </iframe>
+
+    <iframe src="https://huggingface.co/spaces/DeepLearning101/DeepLearning101" frameborder="0" style="width: 100%; height: calc(100% - 45px);"></iframe>
+  </div>
+
+  <button id="chat-btn" style="width: 60px; height: 60px; border-radius: 50%; background: #111; color: white; border: none; font-size: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); cursor: pointer; transition: all 0.2s ease; display: flex; justify-content: center; align-items: center;">
+    💬
+  </button>
+
 </div>
 
 <script>
-    function toggleChatDL() {
-        var chatWindow = document.getElementById("ai-chat-window-dl");
-        var chatBtn = document.getElementById("ai-chat-btn-dl");
+  const chatBtn = document.getElementById('chat-btn');
+  const chatPanel = document.getElementById('chat-panel');
+  const closeChat = document.getElementById('close-chat');
 
-        if (chatWindow.style.display === "none") {
-            chatWindow.style.display = "block";
-            chatBtn.innerHTML = "✖";
-            chatBtn.style.transform = "scale(0.9)";
-        } else {
-            chatWindow.style.display = "none";
-            chatBtn.innerHTML = "🤖";
-            chatBtn.style.transform = "scale(1)";
-        }
-    }
+  // 點擊按鈕開啟/關閉聊天室
+  chatBtn.onclick = () => {
+    const isHidden = chatPanel.style.display === 'none';
+    chatPanel.style.display = isHidden ? 'block' : 'none';
+    
+    // 開啟時，按鈕會有縮小並變成藍色的動態反饋
+    chatBtn.style.transform = isHidden ? 'scale(0.9)' : 'scale(1)';
+    chatBtn.style.background = isHidden ? '#007bff' : '#111'; 
+  };
+
+  // 點擊叉叉關閉
+  closeChat.onclick = () => {
+    chatPanel.style.display = 'none';
+    chatBtn.style.transform = 'scale(1)';
+    chatBtn.style.background = '#111';
+  };
 </script>
 
 </body>
