@@ -198,6 +198,16 @@ claude
 
 > 讓 Claude 幫你生初稿：`幫我分析這個專案，生成 CLAUDE.md …`，再手修。提交進 git，全團隊受益。
 
+### 4.4 CLAUDE.md 進階維護心法 (活的文件)
+
+為了防止 AI 在執行任務時「走神」，維護這份專案憲法時應遵循以下原則：
+
+-   **控制長度，拒絕散文**：全文字數建議控制在 200 行以內。每個板塊 5–10 行，只寫最重要的硬性約束。不確定要不要寫的規則先不寫，等 AI 犯錯了再補。
+-   **多層局部級聯 (Cascading MD)**：專案根目錄放一份全域的憲法，子目錄還可以放局部的。例如在 `src/services/CLAUDE.md` 專門寫 API 層規範，當 AI 進入該目錄幹活時，會自動向下覆蓋並優先讀取局部規範。
+-   **漸進式維護，踩坑就加**：不用一開始就追求完美。先用 `/init` 生成基礎版，每次遇到 AI 犯錯、或發現專案有新的地雷時，立刻補上一條規則。
+-   **團隊共識，納入版本控制**：`CLAUDE.md` 就像 `.eslintrc` 或 `.editorconfig`，是團隊的開發共識。請直接將它提交到 Git 倉庫中，確保全團隊在使用 Claude Code 時其行為與規範保持絕對一致。
+-   **⚠️ 隱私安全底線**：`CLAUDE.md` 的內容會隨上下文發送給 Anthropic API。**請絕對不要把密鑰或敏感 Token 寫進檔案中**——那些東西一律放 `.env` 並透過權限拒絕（`permissions.deny`）來隔離保護。
+
 ---
 
 <a id="5-plan-mode-先想清楚再動手"></a>
@@ -414,6 +424,19 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 -   縮範圍：**「只改 X 檔的 Y 行為，不要動其他檔」**
 -   描述「症狀」而非只丟結論：`"用戶報逾時後登入失敗，檢查 src/auth/…"`
 
+#### 7.3.1 高階實戰指令 Prompt 模板（Slash Commands 啟發）
+
+如果你經常做某類工程任務，可以參考開源社群的指令設計方式，將以下 Prompt 作為你發號施令的起手式：
+
+-   **重構程式碼 (`/refactor`)**：
+    > 🎯 `@src/api/auth.js` 幫我重構這個模組。目標：降低函式複雜度、抽離共用邏輯，並確保不改變現有 API 回傳格式。完成後，請執行 `npm run test` 確保沒有把邊界條件用壞。
+-   **補齊單元測試 (`/test-expand`)**：
+    > 🎯 `@src/utils/math.js` 幫我擴充這個檔案的單元測試。請針對所有的 Edge Cases（空值、負數、極大值）撰寫測試，並確保覆蓋率達到 90% 以上。
+-   **產生 API 文件 (`/generate-api-docs`)**：
+    > 🎯 `@src/routes/user.js` 請閱讀這些路由，並自動產生一份對應的 Swagger/OpenAPI 格式文件，存到 `docs/api.md` 中。
+-   **一鍵提交 (`/commit`)**：
+    > 🎯 幫我統整 `git diff` 的變更，用 Conventional Commits 的格式（如 `feat:`, `fix:`）產生中英雙語的 Commit Message，並直接執行 Commit。
+
 ### 7.4 把 Claude 當 senior engineer 問事
 
 不是只叫它改；多問：
@@ -484,12 +507,13 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 
 ### 8.5 第四層：擴展、特殊需求、團隊資產化
 
-| 整合後名稱 | 定位 | 何時值得 |
-| :--- | :--- | :--- |
-| **Ralph-Wiggum（自主循環）** | Stop-hook 攔退出→把任務＋上下文重新餵回→形成 loop | 只適合「有清晰驗收標準的批量活」（加註釋、格式化等）；**必設 `--max-iterations`，否則危險** |
+| 整合後名稱 | 定位 / 作用 | 何時值得 / 觸發方式 |
+|---|---|---|
+| **Ralph-Wiggum** | 循環迭代 Skill：讀取 spec 自動反覆執行「做 → 評估差距 → 修 → 再評估」，直到收斂。 | 追求品質的完美主義者；適合 UI 實作、文案打磨等需要多次微調的場景。使用 `/ralph-wiggum` 觸發。 |
+| **Skill Creator** | **（元技能/官方內建）**：引導你定義觸發條件、工作流與輸出格式，自動生成符合規範的 `SKILL.md`。 | 別人寫的 Skill 不夠用、想封裝團隊內部獨特的工作流與領域知識時。使用 `/skill-creator` 觸發。 |
+| **Find-Skills** | **（官方內建技能搜尋器）**：輸入需求，自動幫你從 GitHub 或生態系中檢索、推薦並一條龍安裝。 | 新手探索期、或是不知道目前生態系有沒有現成 Skill 可用時。例如：`我想找一個能做資料庫 migration 的 Skill`。 |
 | **MCP Builder** | 從設計→測試的 MCP Server 開發流程 | 你要替團隊接內部 API/DB 成 MCP；一般使用者現成 MCP 就夠 |
-| **Skill Creator（元技能）** | 用自然語言生 `SKILL.md`＋測試 | 價值在**團隊**：把內部規範/領域知識封裝成 Skill 推給所有人；個人用「裝現成」通常就夠 |
-| **Document Skills（官方）** | Claude 在終端直接吃 PDF/Word/Excel/PPT | 非純開發者、要處理大量需求/技術文件時省事（Anthropic 官方出品） |
+| **Document Skills** | Claude 在終端直接吃 PDF/Word/Excel/PPT | 非純開發者、要處理大量需求/技術文件時省事（Anthropic 官方出品） |
 | **Frontend Design** | 注入設計規範讓 UI 代碼別那麼「2015 管理後台感」 | 內部系統/工具產品夠用；差距是「從隨便堆→基本規範」，不是魔法 |
 | **Excalidraw Diagram** | 自然語言→可編輯 `.excalidraw` 圖 | 技術方案圖/架構圖/時序圖快速草圖；Excalidraw 可再編輯＋JSON 可存 git |
 
@@ -518,24 +542,90 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
     /plugin install excalidraw-diagram@claude-plugins-official
     ```
 
+### 8.7 中文在地化與跨編輯器生態 (Power User 必備)
+隨著開源社群的推進，Skills 已經不再侷限於英文與終端機環境：
+- **專屬中文工作流 (`superpowers-zh`)**：開源社群已將頂級的工程規範中文化。強烈建議安裝此版本，它包含：
+  - `chinese-code-review`：以繁體中文輸出嚴謹的 Code Review 報告，降低團隊閱讀門檻。
+  - `chinese-commit-conventions`：分析 `git diff` 後，強制產出符合 Angular 規範的「中英雙語」Commit Message。
+  - `chinese-documentation`：自動閱讀源碼並生成符合中文語境的 `README.md` 與註解。
+- **跨編輯器支援 (Cross-Editor)**：最強大的 `superpowers` 體系，目前其底層架構已支援 `.cursor-plugin` 與 `.codex-plugin` 等設定檔。這意味著你所定義的這套「工程紀律 SOP」，不僅能在終端機執行，還能無縫掛載到 Cursor 或 Codex 等主流 AI IDE 中，實現「一處定義，全平台通用」。
+
 ---
 
 <a id="9-skills-安裝管理與優先級建議"></a>
 ## 9. Skills 安裝管理與優先級建議
 
-### 9.1 建議的「上手段階梯」
 
-1.  **先裝 Commit Helper**（天天用、CP 最高、干擾最小）
-2.  **再加品質閘門**：Code Review ＋ Planning-with-files（解真痛點）
-3.  **再上約束**：Brainstorming / Writing Plans / Executing Plans（接受被管，換大任務可控）
-4.  直接將內建的 /batch 融入日常批量任務中
-5.  **Ralph-Wiggum / MCP Builder**：等有「明確批量任務」或「要接內部系統」再碰
+裸裝 Claude Code 就像買了新電腦卻沒裝軟體[cite: 5, 8]。**Skills 就是 Claude Code 的「App Store」**：裝上後，Claude 從「通用助理」變成「專業工具」——會寫測試、會調試、會做前端、會查文件。
 
-### 9.2 常見疑惑一次答
+### 9.1 兩種標準安裝方式
 
--   **會強制改變所有行為嗎？** 不會。多數 Skill 是「有意圖觸發」才生效；你可說「跳過 brainstorming 直接執行」。
--   **跟 Hooks 差在哪？** Skill＝方法論層（工作流程）；Hook＝事件觸發層（確定性動作，例如 commit 前必 lint）。
--   **裝太多會不會衝？** Skills 按需載入，不常駐；但不同來源的 Skill 若「都想接同一類任務」要留意優先級（superpowers 內部有元 Skill 管優先序）。
+1. **`npx` 一鍵安裝（最推薦、最簡便）**
+   可以直接從 GitHub 倉庫拉取並安裝技能：
+```bash
+   npx skills add <owner/repo>
+```
+
+2. **手動放置 `SKILL.md**`
+若你想針對單一專案客製化，可將 `SKILL.md` 放入專案級目錄：
+
+```text
+   專案根目錄/.claude/skills/技能名/SKILL.md
+```
+
+如果是全域安裝（所有專案都能用），請放置於：
+
+```text
+   ~/.claude/skills/技能名/SKILL.md
+```
+
+(註：裝完後重啟 Claude Code 即生效，輸入 `/skills` 可列出已安裝技能)
+
+---
+
+### 9.2 社群最值得裝的 10 大 Skills 清單
+
+以下是開源社群中經過驗證、熱度與實用性最高的 10 個 Skills：
+
+| # | 名稱與安裝指令 | 核心定位與亮點 |
+| --- | --- | --- |
+| 1 | **Superpowers**<br><br>`npx skills add obra/superpowers` | **14 合 1 全家桶（34k+ stars）**：覆蓋從需求分析到 code review 的完整流程（TDD / 除錯 / 審查 / 子代理）。所有人都該先裝這套。 |
+| 2 | **Context7**<br><br>*(需透過 MCP 安裝)* | **突破知識截止日（12k+ stars）**：解決 Claude「知識截止」問題，自動抓取 React/Next.js 等最新版官方文件注入上下文，大幅減少幻覺。安裝指令：<br><br>`claude mcp add context7 -- npx -y @upstash/context7-mcp@latest`<br> |
+| 3 | **frontend-design**<br><br>`npx skills add obra/frontend-design` | **前端設計規範**：讓 Claude 具備間距、顏色、排版層級等設計系統思維，不再隨便「糊」介面。 |
+| 4 | **claude-skills**<br><br>`npx skills add alirezarezvani/claude-skills` | **大型技能超市（2.1k+ stars）**：內含 235+ 技能、12 大分類，適合不想要全家桶、只想按需獨立安裝特定 Skill 的人。 |
+| 5 | **shadcn/ui Skills**<br><br>*(專案手動放置)* | **shadcn/ui 專用**：讓 Claude Code 遵循 Best Practice，正確 import 元件並走 shadcn 註冊表，不自己瞎寫樣式。 |
+| 6 | **dotclaude**<br><br>`npx skills add FradSer/dotclaude` | **15 個專業 Agent 合集（1.8k+ stars）**：偏工程鏈自動化，包含規範化提交（Conventional Git）、CLAUDE.md 生成器、專利申請生成與飛書文件建立。 |
+| 7 | **ralph-wiggum**<br><br>`npx skills add obra/ralph-wiggum` | **自主循環賽迭代**：讀取一份任務說明書（spec）後，反覆執行「做 → 評估差距 → 修 → 再評估」直到達標。適合 UI 微調場景。 |
+| 8 | **skill-creator**<br><br>*(內建 / 包含於 Superpowers)* | **自己造 SKILL.md**：引導你定義觸發條件、工作流與輸出格式，自動生成符合規範的自訂 Skill。使用 `/skill-creator` 觸發。 |
+| 9 | **find-skills**<br><br>*(內建)* | **技能搜尋器**：不知道裝什麼？輸入 `/find-skills <需求>`，讓 Claude 幫你從社群生態系中檢索、推薦並一條龍安裝。 |
+| 10 | **everything-claude-code**<br><br>`npx skills add zmoke/everything-claude-code` | **全棧大合集（1.5k+ stars）**：一次給齊編碼重構、單元/整合測試、安全審查依賴檢查、Changelog 文件與 DevOps Docker 配置。
+
+---
+
+### 9.3 建議的「上手段階梯」與安裝哲學
+
+> ⚠️ **重要提醒：別一口氣全裝！**
+> 裝太多 Skills 與 MCP 會在背景佔掉龐大的 Tokens 上下文（甚至逼近 50K tokens），反而會攤薄 AI 的注意力讓它變笨。先用好 2–3 個，不夠再加。
+
+1. **第一階段（打底必裝）**：
+* 先裝 **Superpowers**：獲得 TDD、系統化除錯與 Code Review 等核心工程紀律。
+* 搭配 **Context7**：只要有用到前端快迭代框架，必裝此項以獲取最新官方 API 知識。
+
+2. **第二階段（按場景挑選）**：
+* 做前端：加上 `frontend-design` 或 `shadcn/ui`。
+* 負責全棧/維運：考慮 `everything-claude-code` 或 `dotclaude`。
+
+3. **第三階段（團隊資產化）**：
+* 發現通用 Skill 無法滿足獨特工作流時，利用 `skill-creator` 封裝自己團隊專屬的 `SKILL.md`。
+
+### 9.4 常見疑惑一次答
+
+* **會強制改變所有行為嗎？**
+不會。多數 Skill 是「有意圖觸發」才生效，你依然可以主動對它說「跳過 brainstorming 直接執行」。
+* **跟 Hooks 差在哪？**
+Skill 是方法論層（工作流程約束）；Hook 是事件觸發層（確定性自動化動作，例如 commit 前必自動 lint）。
+* **裝太多會不會衝？**
+Skills 是按需載入的。但不同來源的 Skill 若想接管同類任務，需留意觸發詞設計（Superpowers 內部有元 Skill 來管理優先序）。
 
 
 ---
@@ -608,8 +698,8 @@ Claude Code 最煩的不是「不夠強」，是**它太能幹，所以你得定
 | Claude 開始「胡說八道」 | 上下文 90%+ 還硬撐 | 70%→`/compact`；90%→`/clear` 重開 |
 | 看起來合理但邊界壞掉 | 沒給驗證（測資/截圖/腳本） | 永遠附成功標準 |
 | 同一 session 混不相關任務 | 上下文污染 | `/clear`；不相關＝新 session |
-| 同一錯法被糾正兩次還錯 | 上下文已被失敗路徑污染 | 先用 `/rewind` 回退到錯之前的節點重下指令；若污染太深再 `/clear` |
-| CLAUDE.md 太肥→Claude 忽略一半 | 把該進 Skill 的塞進去了 | 無情刪減；只留普遍且 Claude 猜不到的 |
+| 同一錯法被糾正兩次還錯 | 上下文已被失敗路徑和試錯廢氣污染，AI 產生思維定勢。 | **絕對不要留在原對話繼續補 patch prompt 糾正**！立刻使用 `Esc+Esc` 或 `/rewind` 回退到犯錯之前的乾淨節點，重下精確指令。若污染太深則直接 `/clear`。 |
+| CLAUDE.md 太肥 -> Claude 直接忽略一半指令 | 檔案超過 200 行，平鋪式資訊過載導致 AI 走神。 | 無情刪減，控制在 50-200 行內。只留普遍且 Claude 猜不到的核心硬約束，其餘特定目錄規範改用級聯式局部 `CLAUDE.md` 或封裝成獨立的 Skill。 |
 
 ---
 
@@ -858,6 +948,32 @@ cc-connect
 | `fcc-server` | 啟動本地代理伺服器和 Admin UI |
 | `fcc-claude` | 啟動已配置代理的 Claude Code 客戶端 |
 | 訪問 `http://127.0.0.1:8082/admin` | 打開管理界面配置模型和服務商 |
+
+### 14.6 進階啟動參數 (Power User CLI Flags)
+對於需要將 Claude Code 嵌入 CI/CD 流程或進行極限除錯的開發者，以下啟動參數至關重要：
+
+| 參數 (Flag) | 作用與場景 | 實戰警告 |
+| :--- | :--- | :--- |
+| `--dangerously-skip-permissions` | **最高風險**：跳過所有 `ask` 權限確認，完全自主執行。 | 僅限在隔離的 Docker 容器或一次性 CI 虛擬機中使用。 |
+| `--max-turns <數字>` | 限制 Claude 在單一 session 中自動對話的輪數上限。 | 防止 AI 陷入無限除錯迴圈（死循環）燒光 Token。 |
+| `--verbose` | 輸出極度詳細的底層執行日誌與 MCP 工具呼叫細節。 | 適合用來開發自己的 Skills 或排查網路連線問題。 |
+| `--model <模型名稱>` | 指定呼叫的模型（如切換為 Haiku 處理簡單任務）。 | 搭配 Free Claude Code 閘道器時，可實現成本最佳化調度。 |
+
+### 14.7 生態系與開源 Skills 資源總覽
+
+想要追蹤社群最新的 Claude Code 玩法與開源技能，以下是必備的社群入口與倉庫：
+
+| 資源名稱 | 說明與定位 | 連結 |
+| :--- | :--- | :--- |
+| **Superpowers** | 核心開源全家桶（obra 系），最普及的工程自律依賴 | [github.com/obra/superpowers](https://github.com/obra/superpowers) |
+| **Context7** | 即時最新文件 MCP（Upstash 出品），查框架新功能必備 | [github.com/upstash/context7](https://github.com/upstash/context7) |
+| **claude-skills** | 大型技能超市（alirezarezvani），內含 235+ 獨立技能 | [github.com/alirezarezvani/claude-skills](https://github.com/alirezarezvani/claude-skills) |
+| **dotclaude** | 專業 Agent/Skills 合集（FradSer），偏工程工具鏈自動化 | [github.com/FradSer/dotclaude](https://github.com/FradSer/dotclaude) |
+| **everything-claude-code**| 全棧配置合集，適合單兵作戰的多面手調度 | [github.com/zmoke/everything-claude-code](https://github.com/zmoke/everything-claude-code) |
+| **skills.sh** | 社群 Skill 排行榜與熱度目錄（Vercel 系生態入口） | [skills.sh](https://skills.sh/) |
+| **awesome-claude-skills** | 收錄大量自訂 Skills 的精選資源庫 (Curated List) | [github.com/Chat2AnyLLM/awesome-claude-skills](https://github.com/Chat2AnyLLM/awesome-claude-skills) |
+| **SkillHub / skillsmp** | AI Agent Skills 的大型社群導航與搜尋市場 | [skillhub.club](https://skillhub.club) / [skillsmp.com](https://skillsmp.com) |
+
 
 <script type="application/ld+json">
 {
