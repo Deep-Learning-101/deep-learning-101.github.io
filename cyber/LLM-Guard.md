@@ -165,6 +165,12 @@ print(violating_response["content"])
 
 *這些模型本身就是 LLM（LLM-as-a-Judge），它們不負責生成最終回答，而是充當「裁判」，評估對話是否安全。*
 
+* **[Nemotron 3.5 Content Safety (多模態安全護欄)](https://modelscope.ai/collections/nv-community/Nemotron-3x)** `[2026-06]` 🔥
+  * **核心優勢**：**自帶 128K 超大上下文的企業級多模態護欄！** 基於 Gemma-3-4B-it 深度微調，並無縫整合 SigLIP 視覺編碼器（支援高達 896×896 影像解析度）。它不僅提供標準的 23 類安全風險標籤，更首創「自定義策略模式 (Custom Policies)」——允許模型先生成安全推理軌跡 (Reasoning)，再執行精準分類，徹底將安全防護從「死板規則」升級為「動態策略理解」。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統純文字護欄無法防禦「排版圖像越獄攻擊 (Typographic Attacks)」以及企業難以套用「私有行業合規標準 (如金融、醫療特化規則)」的雙重痛點。** 原生相容 vLLM 部署與 OpenAI API 格式，極度適合作為**多模態 Agent 工作流的最後一道防線**、**企業級智能客服即時內容審核**與**高風險指令動態攔截防火牆**。
+  * **資源**：[📦 ModelScope 模型合集](https://modelscope.ai/collections/nv-community/Nemotron-3x) | [🌐 NVIDIA 官方研究頁](https://research.nvidia.com/labs/nemotron/Nemotron-3-Ultra/)
+  `[多模態防禦]` `[自定義策略]` `[128K上下文]` `[vLLM原生支援]`
+
 * **Meta Llama Guard 系列**
   * **核心優勢**：**從純文字到原生多模態的進化防線**。Llama Guard 3 基於 8B 模型提供 14 個風險類別；Llama Guard 4 則是 120 億參數的「早期融合 Transformer」原生多模態安全模型。
   * **解決痛點 / 推薦場景**：解決了 AI 安全從單一文字風險，到應對圖文混合內容複雜威脅的痛點。能同時評估包含多張圖片和文字的混合內容，有效防禦多模態越獄與排版圖像攻擊 (Typographic Attacks)。<br>`[多模態防禦]` `[LLM-as-a-Judge]`

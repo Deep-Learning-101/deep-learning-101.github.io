@@ -355,6 +355,12 @@ Meta 的思路是從根本上訓練一個「天生安全」的模型，其核心
 
 建立了防禦後，如何驗證其有效性？這就需要「AI 紅隊測試」。自動化框架應運而生，解決手動測試效率低下的問題：
 
+* **[SecSkills (AI Agent 自動化滲透測試技能包)](https://github.com/Arenbai/SecSkills)** `[持續更新]` 🔥
+  * **核心優勢**：**將資安專家的「大腦與工具箱」直接封裝進大模型，一鍵啟動半自動化滲透的實戰兵器！** 專為 Claude Code 等 AI Agent 打造的提示詞與技能模組 (Skills)，嚴格對齊 PTES (滲透測試執行標準)。它打破了傳統依賴人工調度掃描器與爆破器的碎片化流程，將 19 類 Web 漏洞、內網橫向移動、提權到免殺規避等海量攻擊知識，轉化為大模型可隨時呼叫的互動式指令。
+  * **解決痛點 / 推薦場景**：**完美解決了傳統滲透測試「操作門檻高、工具切換繁瑣」以及「知識難以快速產品化」的痛點。** 測試者只需輸入目標網址，Agent 便能作為指揮官自動推進偵查、驗證到利用的完整生命週期。極度適合企業資安團隊進行**授權範圍內的自動化紅隊演練 (Red Teaming)**、**Web/API 安全測試**與 **CTF 競賽**。*(⚠️ 實戰避坑指南：高度自動化帶來的代價是極易越過安全邊界。使用前請務必確保具備目標系統的書面授權，並在流程中焊死破壞性動作的攔截閘門，堅守「無授權不武器化」的資安紅線。)*
+  * **資源**：[🐙 GitHub 官方庫](https://github.com/Arenbai/SecSkills) | [📄 PTES 滲透測試執行標準](http://www.pentest-standard.org/) | [📘 OWASP Web 安全測試指南](https://owasp.org/www-project-web-security-testing-guide/)
+  `[自動化滲透]` `[紅隊演練]` `[Agent技能包]` `[PTES標準]`
+  
 * **[Anthropic-Cybersecurity-Skills (資安 Agent 終極技能庫)](https://github.com/mukul975/Anthropic-Cybersecurity-Skills)** `[2026-04]` 🔥
   * **核心優勢**：**將資安專家的「腦內手冊」轉化為 AI Agent 可直接執行的 754 個實戰技能包！** 徹底終結大模型面對資安任務時「只會講理論」的窘境。此專案基於 `agentskills.io` 開放標準，使用純文字 Markdown 將高達 26 個安全領域（涵蓋雲端安全、紅隊演練、記憶體鑑識、惡意軟體分析等）的專業工作流結構化。每個技能都內建了先決條件、實戰 CLI 指令（如 Volatility、YARA）、避坑指南，並精準映射至 MITRE ATT&CK 與 NIST CSF 2.0 等五大權威框架。
   * **解決痛點 / 推薦場景**：**完美解決了傳統 AI 在資安場景「不懂具體工具參數」、以及「資安工程師難以記憶海量指令」的痛點。** 只要將此庫無縫接入 Claude Code、Cursor 或 GitHub Copilot，AI 就能瞬間化身實戰經驗豐富的資安老手。極度適合企業用來打造**自動化 SOC 營運大腦**、**紅隊滲透演練副駕 (Red Team Copilot)**，以及**高階威脅狩獵 (Threat Hunting) 的標準化流水線**，將個人經驗轉化為團隊可複用的數位資產。

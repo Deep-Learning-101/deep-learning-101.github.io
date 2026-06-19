@@ -15,6 +15,21 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 {% include ai-share.html %}
 
 ---
+
+### 📅 2026-06-20 更新快訊
+- **[LLM-Offense](https://deep-learning-101.github.io/cyber/LLM-Offense)**：
+    - 新增 SecSkills 自動化滲透測試技能包，提升資安測試效率。
+- **LLM-Guard**：
+    - Nemotron 3.5 Content Safety (多模態安全護欄)
+- **Computer-Vision**：
+    - 新增 Uni-RCM 跨模態多類別統一異常檢測框架與 CaptionFormer 統一架構，強調其核心優勢與解決痛點，並更新 PP-OCRv6 及 PaddleOCR-VL-1.6 的詳細介紹，提升使用者體驗。
+- **Speech-Processing**：
+    - 新增 Nemotron 3.5 ASR 模型資訊，強調其低延遲與多語種支援，並更新 Voxtral Realtime 模型的核心優勢與推薦場景。
+- **Large-Language-Model**
+    - 新增多模態安全護欄與自動化滲透測試技能包，強化 AI 安全防護與紅隊演練能力。
+    - 新增 Remotion Skills 代碼驅動影片框架，強化影片生成與自動化剪輯功能。
+    - 新增 Google Colab CLI 和 OpenMontage 於 LLM 資源中，強化雲端計算與影片製作自動化功能
+
 ### 📅 2026-06-03 更新快訊
 - **Computer-Vision**：
     - MeDS
