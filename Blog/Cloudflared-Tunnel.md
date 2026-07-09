@@ -28,6 +28,10 @@ _用 Cloudflared 實作 SSH / HTTP / RDP Tunnel：不裸奔全面穿透 HTTP、S
 > 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。
 > 本教學詳細解說如何配置 **SSH**、**HTTP** 及 **Windows RDP** 的遠端連線，並結合 Zero Trust 驗證機制保護企業資產。
 
+🔒 企業級資安延伸： Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。完整架構請參考：[🛡️ AI 大模型安全護欄（LLM-Guard）綜合報告](https://deep-learning-101.github.io/cyber/LLM-Guard).
+
+🤖 負責任 AI 治理： 安全的網絡通道是企業資安的基石。在架設、開放各類內部 AI 工具的同時，如何建立完善的負責任 AI 審查機制與資料稽核治理？請參考：[🤖 企業級 AI 標竿分析與負責任 AI 治理建議報告](https://deep-learning-101.github.io/Blog/AI-Govs).
+
 ## 📑 目錄 (Table of Contents)
 * [1️⃣ 零信任為什麼重要？尤其在 AI 應用場景](#zero-trust)
 * [2️⃣ Cloudflared Tunnel 是什麼？如何協助實踐 Zero Trust](#what-is-tunnel)
