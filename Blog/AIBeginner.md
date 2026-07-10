@@ -240,8 +240,8 @@ Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何
 <h2 id="AIBeginner">企業 AI新賽局 入門策略實踐路線圖：從策略到治理，避開致命陷阱</h2>
 
 <p align="center">
-<img src="./AIBeginner/001.png" alt="AIBeginner-001" height="300">
-<img src="./AIBeginner/002.png" alt="AIBeginner-002" height="300">
+<img src="./AIBeginner/001.png" alt="AIBeginner-001" height="250">
+<img src="./AIBeginner/002.png" alt="AIBeginner-002" height="250">
 </p>
 
 第一波夯起來的時間估計是 2016年 Google DeepMind 的 Alpha Go 吧，但深度學習確實很難實際的被應用到各行各業，特別是台灣，在那幾年，做個規則式的聊天機器人，或者廣告點擊，可能就會先用新聞稿把自己吹成 AI 大神或新創了。第二波就是 Open AI 橫空出世的ChatGPT了，然後四處都能看到大家都說自己有GenAI，可惜可能連個幾張消費型的4090等級的GPU都沒有，更別說已屬上世代的V100 或者連 GCP、AWS跟Azure的GPU都沒啟用設定過吧？就目前體驗，雖然已有不少國外的新聞或資訊報導可能碰上的問題。  
@@ -315,8 +315,8 @@ AI 計畫的起點**絕對不是「我們需要 AI」**，應該是 **「我們�
 - 至少找一個 **「相對有實戰及學術經驗的人」(EX: 至少有資訊領域碩博士學歷，或已在資訊科技領域工作多年)**，不要想著便宜好辦事，或者找壓根不是資訊背景或隨便上個幾堂課的網紅 。
 
 <p align="center">
-<img src="./AIBeginner/003.png" alt="AIBeginner-003" height="300">
-<img src="./AIBeginner/004.png" alt="AIBeginner-004" height="300">
+<img src="./AIBeginner/003.png" alt="AIBeginner-003" height="250">
+<img src="./AIBeginner/004.png" alt="AIBeginner-004" height="250">
 </p>
 
 <h2 id="chapter-2-building-the-foundation">第二章：打造堅實基礎的後勤基地</h2>
@@ -363,8 +363,8 @@ AI 計畫的起點**絕對不是「我們需要 AI」**，應該是 **「我們�
 - 同上，這裡是台灣，這卻是非常可能發生的場景，與對岸所謂敵對國家的內卷相比較，台灣較常見的反倒是高層各擁山頭，誰也不讓誰，但也誰都做不出啥鬼東西。
 
 <p align="center">
-<img src="./AIBeginner/005.png" alt="AIBeginner-005" height="300">
-<img src="./AIBeginner/006.png" alt="AIBeginner-006" height="300">
+<img src="./AIBeginner/005.png" alt="AIBeginner-005" height="250">
+<img src="./AIBeginner/006.png" alt="AIBeginner-006" height="250">
 </p>
 
 <h2 id="chapter-4-genai-minefield">第四章：應對 GenAI — Navigating the New Minefield</h2>
@@ -381,8 +381,8 @@ GenAI 帶來了巨大的機遇，但也埋下了全新的、更隱蔽的地雷�
 - 遊戲發行商動視暴雪（Activision Blizzard）就因使用「AI 垃圾」取代人類創作而引發粉絲強烈反彈。GenAI 應是增強創意的工具，而非替代品。
 
 <p align="center">
-<img src="./AIBeginner/007.png" alt="AIBeginner-007" height="300">
-<img src="./AIBeginner/008.png" alt="AIBeginner-008" height="300">
+<img src="./AIBeginner/007.png" alt="AIBeginner-007" height="250">
+<img src="./AIBeginner/008.png" alt="AIBeginner-008" height="250">
 </p>
 
 <h3 id="c4-mistake-8-blind-trust">致命錯誤 8：盲目信任產出（自動化偏見與幻覺災難）</h3>
@@ -396,8 +396,8 @@ GenAI 帶來了巨大的機遇，但也埋下了全新的、更隱蔽的地雷�
 - 審核人員從「大海撈針」變成「定點排雷」，徹底釋放腦力資源去做真正有價值的風險研判，最終拍板把關的責任依然必須在人類身上。
 
 <p align="center">
-<img src="./AIBeginner/009.png" alt="AIBeginner-009" height="300">
-<img src="./AIBeginner/010.png" alt="AIBeginner-010" height="300">
+<img src="./AIBeginner/009.png" alt="AIBeginner-009" height="250">
+<img src="./AIBeginner/010.png" alt="AIBeginner-010" height="250">
 </p>
 
 <h3 id="c4-mistake-9-data-leakage">致命錯誤 9：未能保護機密資料</h3>
@@ -416,8 +416,8 @@ GenAI 帶來了巨大的機遇，但也埋下了全新的、更隱蔽的地雷�
 企業導入 AI 的成功，取決於是否能在每個階段都做出正確的決策。這份路線圖與其中的錯誤警示，就是幫助您規劃路徑、避開陷阱的地圖。謹慎、有策略且治理良好的方法，是通往可持續成功的唯一途徑。
 
 <p align="center">
-<img src="./AIBeginner/011.png" alt="AIBeginner-011" height="300">
-<img src="./AIBeginner/012.png" alt="AIBeginner-012" height="300">
+<img src="./AIBeginner/011.png" alt="AIBeginner-011" height="250">
+<img src="./AIBeginner/012.png" alt="AIBeginner-012" height="250">
 </p>
 
 <script type="application/ld+json">
