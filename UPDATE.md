@@ -15,6 +15,36 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 {% include ai-share.html %}
 
 ---
+### 📅 2026-07-15 更新快訊
+- **[MinerU-Popo (Universal Post-Processing Model for Structured Document Parsing)](https://github.com/opendatalab/MinerU-Popo)** `[2026-05-24]` 🔥 `[RAG前處理]` `[文件級OCR後處理]` `[跨頁結構重建]` `[動態分塊同步]`
+- **[ViT³ (ViT with Test-Time Training)](https://github.com/LeapLabTHU/ViTTT)** `[2025-12-16]` 🔥 `[視覺長序列建模]` `[線性複雜度]` `[極限省顯存]` `[CVPR 2026 Best Paper Finalist]`
+- **[ADSeeker (Knowledge-Grounded Reasoning Framework)](https://arxiv.org/pdf/2508.03088)** `[2026-07-11]` 🔥 `[多模態異常推理]` `[多模態 RAG]` `[零樣本 SOTA]` `[稀疏特徵定位]`
+* **[UniSpector (Spectral-Contrastive Visual Prompting)](https://geonuk-kimmm.github.io/UniSpector)** `[2026-04-23]` 🔥 `[開集缺陷識別]` `[視覺提示大模型]` `[免重訓冷啟動]` `[SOTA 霸主]`
+- **[Omni-AD: A Large-scale and Versatile Benchmark for Industrial Anomaly Detection](https://omni-ad.github.io)** `[2026-06-25]` 🔥 `[工業異常通用基準]` `[真實產線數據]` `[雙協議評測]` `[大模型質檢噩夢]`
+- **[CCL (Contextual Consistency Learning)](https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Consistency_Beyond_Contrast_Enhancing_Open-Vocabulary_Object_Detection_Robustness_via_Contextual_CVPR_2026_paper.pdf)** `[2026-03-29]` 🔥 `[開放詞彙檢測]` `[訓練側增強]` `[零推理延遲]` `[跨場景泛化]`
+- **[FastRef (Fast Prototype Refinement for Few-shot Industrial Anomaly Detection)](https://github.com/liyufei25/FastRef)** `[2026-03-29]` 🔥
+- **[AG-VAS (Anchor-Guided Zero-Shot Visual Anomaly Segmentation)](https://github.com/xiaozhen228/AG-VAS)** `[2026-03-05]` 🔥 `[零樣本二值分割]` `[語義錨點黑科技]` `[開箱即用]` `[強泛化]`
+- **[[CVPR 2026] LAVIDA (No Need For Real Anomaly: MLLM Empowered Zero-Shot Video Anomaly Detection Framework)](https://github.com/VitaminCreed/LAVIDA)** `[2026-07-11]` 🔥
+- **[GS-CLIP (Geometry-Aware Prompt and Synergistic View Representation Learning)](https://github.com/zhushengxinyue/GS-CLIP)** `[2026-03-29]` 🔥
+- **[Rethinking Transfer Learning for Industrial Inspection: DINOv3 vs. ImageNet Pretraining Across RGB and X-ray Tasks](https://arxiv.org/abs/2605.23472)** `[2026-05]` 🔥 `[工業選型指南]` `[遷移學習重新審視]` `[反直覺硬核實測]`
+- **[CoPS (Conditional Prompt Synthesis for Zero-Shot Anomaly Detection)](https://arxiv.org/abs/2508.03447)** `[2026-07]` 🔥 `[零樣本跨域]` `[條件化動態提示]` `[工業醫學雙全能]` `[SAGA空間感知]`
+- **[[ICCV 2025] TF-IDG (Training-Free Industrial Defect Generation with Diffusion Models)](https://openaccess.thecvf.com/content/ICCV2025/papers/Xu_Training-Free_Industrial_Defect_Generation_with_Diffusion_Models_ICCV_2025_paper.pdf)** `[2025-10]` 🔥 `[免訓練黑科技]` `[One-Shot資料增廣]` `[產線冷啟動]` `[台灣原生強權]`
+- **[DiCLIP (Diffusion Enhanced CLIP for Weakly Supervised Segmentation)](https://github.com/zwyang6/DiCLIP)** `[2026-06]` 🔥 `[弱監督分割 WSSS]` `[知識遷移]` `[訓練降本 90%]` `[生成式賦能]`
+- **[HR-SemNet (High-Resolution Network for Small Object Detection)](https://doi.org/10.1109/TIP.2026.3654770)** `[2026-03]` 🔥 `[小目標神作]` `[無人機巡檢]` `[計算量腰斬]` `[極致輕量]`
+- **[VGGT-S (VGGT-Segmentor)](https://github.com/buaa-colalab/VGGT-S)** `[2026-04]` 🔥 `[跨視角分割]` `[幾何增強]` `[Ego-Exo對齊]` `[免配對預訓練]`
+- **[Unlimited-OCR (無限 OCR)](https://github.com/baidu/Unlimited-OCR)** `[2026-06]` 🔥 `[長文件解析]` `[R-SWA注意力]` `[恆定顯存]` `[端到端SOTA]`
+- **[AnomalyVFM (Transforming Vision Foundation Models into Zero-Shot Anomaly Detectors)](https://maticfuc.github.io/anomaly_vfm/)** `[2026-01]` 🔥 `[零樣本冷啟動]` `[純視覺VFM]` `[虛擬產線數據]` `[極速推論]`
+* **[WinCLIP (Zero-/Few-Shot Anomaly Classification and Segmentation)](https://github.com/caoyunkang/WinClip)** `[2023-06]` 🔥 `[零樣本AOI]` `[CLIP特徵升維]` `[狀態提示詞]` `[冷啟動救星]`
+- **[Supertonic v3](https://github.com/supertone-inc/supertonic)** `[2026-09]` 🔥 `[99M極致輕量]` `[純CPU推論]` `[本地隱私]` `[ONNX/WebGPU]`
+- **[InvAD (Inversion-based Reconstruction-Free Anomaly Detection)](https://invad-project.com/)** `[2026-04]` 🔥 `[擴散模型]` `[免重建]` `[極速推論]` `[工業AOI]`
+- **[SEATrack (Simple, Efficient, and Adaptive Multimodal Tracker)](https://openaccess.thecvf.com/content/CVPR2026/papers/Su_SEATrack_Simple_Efficient_and_Adaptive_Multimodal_Tracker_CVPR_2026_paper.pdf)** `[2026-06]` 🔥 `[多模態追蹤]` `[PEFT極致輕量]` `[極端場景特化]` `[邊緣算力首選]`
+- **[Voicebox](https://github.com/jamiepine/voicebox)** `[2026-05]` 🔥 `[ElevenLabs平替]` `[全端語音工作站]` `[零樣本克隆]` `[MCP協議]` `[本地部署]`
+- **[parakeet.cpp (NVIDIA Parakeet C++ 實作)](https://github.com/mudler/parakeet.cpp)** `[2026-06]` 🔥 `[C++17重寫]` `[極速ASR]` `[邊緣運算]` `[流式識別]` `[ggml架構]`
+- **[PixelRAG](https://github.com/StarTrail-org/PixelRAG)** `[2026]` 🔥 `[視覺RAG]` `[多模態檢索]` `[幻覺剋星]` `[Qwen3-VL底座]`
+- **[Fine-VAD (Fine-Grained Video Anomaly Detection)](https://teacher.bupt.edu.cn/zhuangzirui/zh_CN/index.htm)** `[2026-06]` 🔥 `[細粒度異常檢測]` `[影片安防]` `[CLIP多級對齊]` `[漸進式學習]`
+- **[MonoSAOD (Monocular 3D Object Detection)](https://github.com/VisualAIKHU/MonoSAOD)** `[2026-04]` 🔥 `[單目3D偵測]` `[稀疏標註]` `[偽標籤治理]` `[工業級過濾]`
+
+
 
 ### 📅 2026-06-20 更新快訊
 - **[LLM-Offense](https://deep-learning-101.github.io/cyber/LLM-Offense)**：
