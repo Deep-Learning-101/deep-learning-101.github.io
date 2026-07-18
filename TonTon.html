@@ -309,7 +309,34 @@
   ]
 }
 </script>
-
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "企業導入 RAG 知識庫，如何避免機密資料外洩？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "必須採用「100% 地端部署 (On-Premise)」搭配開源模型 (如 Llama 3)。並於檢索層導入 LLM-Guard 零信任邊界防禦與 PII 去識別化技術，確保資料絕對不出內網。"
+    }
+  },{
+    "@type": "Question",
+    "name": "地端部署大型語言模型 (LLM) 該如何估算 GPU VRAM 規格？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "VRAM 需求取決於「模型參數大小」、「併發人數」與「推論框架 (如 vLLM/SGLang)」。一般 8B 模型搭配 vLLM PagedAttention，單張 24GB 顯卡即可滿足中小型企業基礎併發。"
+    }
+  },{
+    "@type": "Question",
+    "name": "生成式 AI 的幻覺 (Hallucination) 問題能解決嗎？",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "無法 100% 根除，但透過高精度的 RAG 檢索增強生成、Chunking 策略優化與 Prompt 護欄，實務上可將企業客服或智庫的 AI 幻覺率壓低至商用標準的 5% 以下。"
+    }
+  }]
+}
+</script>
 </head>
 <body>
     <div id="app" class="content-wrapper">
@@ -446,78 +473,82 @@
 </div>
 
 <div id="ai-consulting" class="bento-box motion-div">
-    <div class="flex items-center gap-3 mb-6">
+    <div class="flex items-center gap-3 mb-5">
         <i class="fas fa-layer-group text-3xl text-blue-600"></i>
         <h2 class="text-2xl md:text-3xl font-bold text-slate-800">
             企業 AI 落地顧問與解決方案 <span class="text-slate-400 font-light mx-2">|</span>
-            <span class="text-lg md:text-xl text-slate-500 font-medium">Core Competence & Services</span>
+            <span class="text-lg md:text-xl text-slate-500 font-medium">Core Competence</span>
         </h2>
     </div>
 
-    <div class="mb-8 bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-100 rounded-xl p-6 shadow-sm">
-        <h3 class="text-xl text-center font-bold text-slate-800 mb-3">
+    <div class="mb-6 bg-gradient-to-r from-blue-50 to-slate-50 border border-blue-100 rounded-xl p-5 shadow-sm">
+        <h3 class="text-lg text-center font-bold text-slate-800 mb-2">
             AI 戰略大腦 ✕ FDE 硬核實戰 ✕ 企業級資安防禦
         </h3>
-        <p class="text-slate-600 text-center leading-relaxed mb-4">
+        <p class="text-slate-600 text-sm text-center leading-relaxed mb-4">
             專為「資安機密外洩」、「模型幻覺」與「GPU 算力迷航」的企業，提供端到端落地服務。不只出具策略簡報，更作為部署工程師 (FDE) 架好系統。
         </p>
-        
-<div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
             
-            <div class="bg-white p-5 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group">
-                <div class="text-2xl mb-3 flex items-center">
-                    🧠 <h3 class="font-bold text-slate-800 text-lg ml-2 group-hover:text-blue-600 transition-colors">大語言模型與 Agent 自動化</h3>
+            <div class="bg-white p-4 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all duration-300 group">
+                <div class="flex items-center mb-2">
+                    <span class="text-xl mr-2">🧠</span>
+                    <h3 class="font-bold text-slate-800 text-base group-hover:text-blue-600 transition-colors">大語言模型與 Agent</h3>
                 </div>
-                <p class="text-sm text-slate-500 mb-3 line-clamp-2">從內部知識圖譜知識庫建置到多代理人協作，徹底解決AI幻覺與落地難題。</p>
-                <ul class="text-sm text-slate-600 space-y-1.5">
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 企業級 RAG 無向量視覺檢索知識庫概念驗證 (POC)</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 複雜業務邏輯之 AI Agent 工作流建置</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 開源模型地端微調 (Fine-tuning) 與對齊</li>
-                </ul>
+                <p class="text-xs text-slate-500 mb-3">從內部知識圖譜建置到多代理人協作，解決AI幻覺與落地難題。</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">RAG 無向量視覺檢索</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">Agent 工作流</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">地端微調對齊</span>
+                </div>
             </div>
 
-            <div class="bg-white p-5 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group">
-                <div class="text-2xl mb-3 flex items-center">
-                    👁️ <h3 class="font-bold text-slate-800 text-lg ml-2 group-hover:text-blue-600 transition-colors">工業視覺與多模態分析</h3>
+            <div class="bg-white p-4 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all duration-300 group">
+                <div class="flex items-center mb-2">
+                    <span class="text-xl mr-2">👁️</span>
+                    <h3 class="font-bold text-slate-800 text-base group-hover:text-blue-600 transition-colors">工業視覺與多模態</h3>
                 </div>
-                <p class="text-sm text-slate-500 mb-3 line-clamp-2">突破傳統 AOI 瓶頸，實現高精度瑕疵檢測與複雜文檔解析。</p>
-                <ul class="text-sm text-slate-600 space-y-1.5">
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 少樣本 (Few-shot) 產線異常與瑕疵檢測</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 多模態大模型之高精度 OCR 與表單解析</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 邊緣設備 (Edge AI) 視覺模型量化與部署</li>
-                </ul>
+                <p class="text-xs text-slate-500 mb-3">突破傳統 AOI 瓶頸，實現高精度瑕疵檢測與複雜文檔解析。</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">Few-shot 瑕疵檢測</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">高精度 OCR</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">Edge AI 量化部署</span>
+                </div>
             </div>
 
-            <div class="bg-white p-5 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group">
-                <div class="text-2xl mb-3 flex items-center">
-                    🎙️ <h3 class="font-bold text-slate-800 text-lg ml-2 group-hover:text-blue-600 transition-colors">智能語音與全雙工對話</h3>
+            <div class="bg-white p-4 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all duration-300 group">
+                <div class="flex items-center mb-2">
+                    <span class="text-xl mr-2">🎙️</span>
+                    <h3 class="font-bold text-slate-800 text-base group-hover:text-blue-600 transition-colors">智能語音與全雙工</h3>
                 </div>
-                <p class="text-sm text-slate-500 mb-3 line-clamp-2">打造如真人般的語音交互體驗，適用於客服、會議與陪伴機器人。</p>
-                <ul class="text-sm text-slate-600 space-y-1.5">
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 極低延遲 (<300ms) 全雙工語音 Agent</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 高抗噪語音辨識 (ASR) 與語者分離</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 零樣本高擬真聲音克隆 (TTS) 技術</li>
-                </ul>
+                <p class="text-xs text-slate-500 mb-3">打造如真人般的語音交互體驗，適用客服與陪伴機器人。</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium"><300ms 語音 Agent</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">高抗噪 ASR</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">零樣本 TTS 克隆</span>
+                </div>
             </div>
 
-            <div class="bg-white p-5 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-lg transition-all duration-300 group">
-                <div class="text-2xl mb-3 flex items-center">
-                    🛡️ <h3 class="font-bold text-slate-800 text-lg ml-2 group-hover:text-blue-600 transition-colors">AI 算力架構與資安防禦</h3>
+            <div class="bg-white p-4 rounded-lg border border-slate-200 hover:border-blue-400 hover:shadow-md transition-all duration-300 group">
+                <div class="flex items-center mb-2">
+                    <span class="text-xl mr-2">🛡️</span>
+                    <h3 class="font-bold text-slate-800 text-base group-hover:text-blue-600 transition-colors">AI 算力與資安防禦</h3>
                 </div>
-                <p class="text-sm text-slate-500 mb-3 line-clamp-2">底層規劃，確保 AI 落地符合內控與成本效益。</p>
-                <ul class="text-sm text-slate-600 space-y-1.5">
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 依併發需求精準估算 GPU / VRAM 規格</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> LLM-Guard 安全邊界防禦與紅隊演練</li>
-                    <li class="flex items-start"><span class="text-blue-500 mr-1.5">✓</span> 內網穿透與隔離網私有雲安全部署</li>
-                </ul>
+                <p class="text-xs text-slate-500 mb-3">底層規劃與紅隊演練，確保 AI 落地符合內控與成本效益。</p>
+                <div class="flex flex-wrap gap-1.5">
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">GPU/VRAM 估算</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">LLM-Guard 防禦</span>
+                    <span class="bg-blue-50 text-blue-600 text-[11px] px-2 py-0.5 rounded-full font-medium">私有雲隔離網</span>
+                </div>
             </div>
 
         </div>
 
-<div class="mt-6 text-center" id="calendar-booking-container" onclick="gtag('event', 'generate_lead', {'lead_type': 'b2b_consulting_calendar'});">
+        <div class="mt-6 text-center" id="calendar-booking-container" onclick="gtag('event', 'generate_lead', {'lead_type': 'b2b_consulting_calendar'});">
             <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
-             <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
-             <script>
+            <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
+            <script>
                 (function() {
                     var target = document.currentScript;
                     window.addEventListener('load', function() {
@@ -534,13 +565,33 @@
         </div>
     </div>
 
-    <details class="group/early" close>
-        <summary class="flex items-center justify-center p-3 text-sm font-medium text-slate-500 bg-slate-50 rounded-lg cursor-pointer hover:bg-slate-100 hover:text-slate-700 transition-colors border border-dashed border-slate-300">
-            <span class="group-open/early:hidden">查看完整 Case Studies、前瞻研究與實績簡報 ▼</span>
-            <span class="hidden group-open/early:inline">收起簡報 ▲</span>
+    <details class="group bg-slate-50 border border-slate-200 rounded-lg cursor-pointer mb-3">
+        <summary class="font-bold text-slate-700 px-4 py-3 hover:text-blue-600 transition-colors list-none flex justify-between items-center">
+            <span class="flex items-center gap-2"><i class="fas fa-question-circle text-blue-600"></i> 常見問題：企業 AI 導入 FAQ</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
         </summary>
+        <div class="px-5 pb-4 space-y-4 text-sm border-t border-slate-100 mt-2 pt-4">
+            <div>
+                <span class="font-bold text-slate-800">Q: 企業導入 RAG 知識庫，如何避免機密資料外洩？</span>
+                <p class="text-slate-600 mt-1">A: 必須採用「100% 地端部署」搭配開源模型。並於檢索層導入 LLM-Guard 零信任邊界防禦與 PII 去識別化技術，確保資料絕對不出內網。</p>
+            </div>
+            <div>
+                <span class="font-bold text-slate-800">Q: 地端部署大型語言模型 (LLM) 該如何估算 GPU VRAM 規格？</span>
+                <p class="text-slate-600 mt-1">A: VRAM 需求取決於模型參數大小、併發人數與推論框架。一般 8B 模型搭配 vLLM PagedAttention，單張 24GB 顯卡即可滿足中小型企業基礎併發。</p>
+            </div>
+            <div>
+                <span class="font-bold text-slate-800">Q: 生成式 AI 的幻覺 (Hallucination) 問題能解決嗎？</span>
+                <p class="text-slate-600 mt-1">A: 無法 100% 根除，但透過高精度的 RAG 檢索增強生成、Chunking 策略優化與 Prompt 護欄，可將企業 AI 幻覺率壓低至商用標準的 5% 以下。</p>
+            </div>
+        </div>
+    </details>
 
-        <div class="mt-4 space-y-4">
+    <details class="group bg-white border border-slate-200 rounded-lg cursor-pointer">
+        <summary class="font-bold text-slate-700 px-4 py-3 hover:text-blue-600 transition-colors list-none flex justify-between items-center">
+            <span class="flex items-center gap-2"><i class="fas fa-images text-blue-600"></i> 查看完整 Case Studies、前瞻研究與實績簡報</span>
+            <span class="text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <div class="p-4 border-t border-slate-100 mt-2 space-y-4">
             <img src="./img/TonTon-001.jpg" alt="TonTon Huang Ph.D." class="w-full h-auto rounded-lg shadow-sm border border-slate-200">
             <img src="./img/TonTon-002.jpg" alt="前瞻研究發表" class="w-full h-auto rounded-lg shadow-sm border border-slate-200">
             <img src="./img/TonTon-003.jpg" alt="深耕社群" class="w-full h-auto rounded-lg shadow-sm border border-slate-200">
