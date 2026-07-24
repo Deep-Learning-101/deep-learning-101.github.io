@@ -12,9 +12,8 @@ service_type: AI Consulting
 
 # 🎤 語音處理 (Speech)・必讀資源總整理
 
-> 📌 **技術速覽**
-> 現代語音 AI 正加速邁向全雙工即時對話與零樣本聲音克隆。**Deep Learning 101** 精選 LiveKit、Whisper 等開源技術，實測可將端到端語音延遲控制在 300ms 以內，解決會議逐字稿、高抗噪辨識與即時語音 Agent 的企業落地痛點。
-
+> **核心摘要：**
+> 2026年語音處理邁向「全雙工即時對話」與「零樣本聲音克隆」。本指南精選 LiveKit、Whisper 等逾30項開源語音技術，實測可將端到端語音延遲降至 300ms 以下，助企業建構高可用性的多模態語音 Agent。>
 > 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
 > 👉 [**GitHub: Speech-Processing-Paper**](https://github.com/Deep-Learning-101/Speech-Processing-Paper) (歡迎 Star ⭐)
 
@@ -720,6 +719,10 @@ service_type: AI Consulting
 | **Orpheus TTS** | 🌐 **開源社群** `[2025-03]` | **即時對話王者**。25ms 超低延遲，專為即時雙向對話設計。 | 語音 AI Agent<br>`[超低延遲]`<br>[🐙 GitHub](https://github.com/canopyai/Orpheus-TTS) |
 | **NeuTTS Air** | 🌐 **開源社群** `[2025-10]` | **主打端側運算 (On-Device)**。極小體積與超低功耗，可直接部署於 iOS/Android。 | 離線隱私保護 APP<br>`[端側部署]`<br>[🐙 GitHub](https://github.com/neuphonic/neutts-air) |
 
+* **[Nemotron-Labs-Audex (Audex-30B-A3B / Audex-2B)](https://huggingface.co/collections/nvidia/Nemotron-Labs-Audex)** `[2026-06-08]` 🔥 `[統一音訊文本模型]` `[單一解碼器]` `[文字稅零退步]` `[開源通用音效生成]`
+  * **核心優勢**：**打破多模態模型「接入音訊、文本智商必跌」的百年魔咒，首創「凍結文本嵌入 + 多階段 SFT」的零代價統一音訊大模型架構！** 這款由 NVIDIA Research 於 2026 年 6 月開源、論文《Unified Audio Intelligence Without Regressing on Text Intelligence》（arXiv: 2607.05196）發表的旗艦工作，提供 30B-A3B (MoE) 與 2B (dense) 雙版本。Audex 基於 Nemotron-Cascade-2 文本基座，採用極簡的單一 Transformer 解碼器設計，音訊輸入經 AF-Whisper 編碼並透過 2 層 MLP 投影入 LLM 嵌入空間，輸出端則透過 X-Codec2（語音）與 X-Codec（通用音訊）還原波形。在 AIME 2025 文本推理基準上僅微幅掉 1.2 分（91.2 分），IMO AnswerBench 甚至反超基座達 81.1 分；同時在 MMAU 達到開源 SOTA（75.6 分），更是開源模型中唯一原生支援通用音效生成（TTA）的統一模型。
+  * **解決痛點 / 推薦場景**：**完美解決了過往多模態語音大模型（如 Qwen3-Omni、Step-Audio）一旦接入音訊模態，文本推理能力便劇烈衰退（如掉 10~20 分）的「文本稅（text tax）」致命痛點。** 由於與標準 LLM 訓練/推理棧（Megatron-LM、vLLM、TensorRT-LLM）完全相容，極度適合研究機構與有算力支援的開發團隊，用來建構兼具**頂級文本推理**與六大音訊任務（ASR/AST/TTS/TTA/S2S/AudioQA）的次世代統一多模態 AI 研發原型。*(⚠️ 註：受限於 NVIDIA Oneway Noncommercial License 與 XCodec2 的 CC-BY-NC 4.0 授權，目前僅限研究原型與非商用 DEMO，商用量產需另行洽談 NVIDIA 商業授權)*
+
 ---
 
 ### 2. 亞洲/中國開源霸榜神作 (極致擬真 & 零樣本克隆篇)
@@ -979,40 +982,39 @@ A: 推薦基於 WebRTC 協議的架構（如 TEN Framework 或 LiveKit），端�
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "TechArticle",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://deep-learning-101.github.io/Speech-Processing"
-      },
-      "headline": "2026 語音處理 (Speech Processing) 資源與模型大全",
-      "description": "涵蓋語音識別(ASR)、語者分離、高抗噪語音增強與極速人聲克隆(TTS)等領域的最新開源工具，解決會議逐字稿與全雙工語音對話痛點。",
-      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-      "author": {
-        "@type": "Person",
-        "name": "TonTon Huang Ph.D.",
-        "url": "https://twman.org/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Deep Learning 101, Taiwan",
-        "url": "https://deep-learning-101.github.io/"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "企業如何建置極低延遲的全雙工語音對話 Agent？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "透過整合 LiveKit 或 TEN Framework 等傳輸架構，結合 Whisper 語音辨識與輕量化 TTS，實務上可將端到端語音交互延遲穩定控制在 300ms 以內。"
-          }
-        }
-      ]
+  "@type": "TechArticle",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://deep-learning-101.github.io/Speech-Processing"
+  },
+  "headline": "2026 語音處理 (Speech Processing) 資源與模型大全",
+  "description": "一份詳盡的語音處理（Speech Processing）資源清單，涵蓋語音識別(ASR)、語者識別、語音增強、語者分離與語音合成(TTS)等領域的最新研究與開源工具，解決Podcast逐字稿、邊緣運算與即時語音對話痛點。",
+  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+  "author": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "url": "https://deep-learning-101.github.io/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Deep Learning 101, Taiwan",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
     }
-  ]
+  },
+  "datePublished": "2026-03-29",
+  "dateModified": "2026-03-29",
+  "keywords": "語音處理, Speech Processing, ASR, TTS, 語音辨識, 語音合成, 語者分離, 聲音克隆, Whisper, 本地部署, 逐字稿生成, AI客服, 邊緣運算",
+  "about": {
+    "@type": "Service",
+    "serviceType": "AI Consulting",
+    "provider": {
+      "@type": "Organization",
+      "name": "Deep Learning 101, Taiwan"
+    },
+    "name": "人工智慧顧問服務 (AI Consulting)",
+    "description": "提供關於語音處理（Speech Processing）領域的專業顧問服務，包含語音識別（ASR）、語音合成（TTS）、模型開發與技術導入。"
+  }
 }
 </script>
