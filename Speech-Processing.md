@@ -43,18 +43,19 @@ service_type: AI Consulting
 ---
 
 ### **文章目錄**
-- [Speech Processing (語音處理)](#speech-processing)
-- [Speech Recognition (語音識別)](#speech-recognition)
-- [Speaker Recognition (語者識別)](#speaker-recognition)
+- [Speech Processing (語音處理與即時對話)](#speech-processing)
+- [Speech Recognition (語音辨識)](#speech-recognition)
+- [Speaker Recognition (聲紋辨識)](#speaker-recognition)
 - [Speech Enhancement (語音增強)](#speech-enhancement)
 - [Speaker Separation (語者分離)](#speaker-separation)
 - [Speech Synthesis (語音合成)](#speech-synthesis)
-- [Speech Datasets (開源語音資料)](#speech-datasets)
-- [Speech-Applications(語音處理綜合應用)](#speech-applications)
+- [Speech Datasets (開源語音資料集)](#speech-datasets)
+- [Speech Applications (語音與音頻綜合應用)](#speech-applications)
+- [FAQ (語音處理常見問題)](#faq)
 
 
 ## Speech-Processing
-**🗣️ Speech Processing (語音處理與對話式 AI)**
+**🗣️ Speech Processing (語音處理與即時對話)**
 
 > **WebRTC 與語義打斷技術是即時語音對話的底層基石。** 導入 LiveKit Agents 等全雙工對話框架，可在 500ms 重疊語音下實現 100% 召回率，並將平均響應延遲壓縮至 300ms，徹底解決傳統 VAD 頻繁搶話的痛點。語音處理是讓 AI 擁有「耳朵」與「嘴巴」的關鍵技術。隨著大型語言模型 (LLM) 的普及，現在的戰場已經從單純的語音辨識 (ASR) 與語音合成 (TTS)，轉移到強調低延遲、能處理自然打斷的「即時對話代理 (Voice Agents)」。
 
@@ -70,7 +71,7 @@ service_type: AI Consulting
 
 ---
 
-### 🚀 核心框架與即時對話技術 (Frameworks & Real-time AI)
+### 🚀 即時語音對話框架 (Voice Agent Frameworks)
 要在本地端部署極速的語音模型，或是打造像 ChatGPT Voice 一樣能自然對話的 AI，你需要以下這些前沿框架：
 
 * **[TEN Framework](https://github.com/TEN-framework)** `[2025-05-14]`
@@ -175,7 +176,7 @@ service_type: AI Consulting
 ---
 
 ## Speech-Recognition
-**中文語音識別 (Chinese Speech Recognition)**
+**中文語音辨識 (Chinese Speech Recognition)**
 
 > **免切片端到端模型大幅降低了長語音轉寫的運算成本。** 實測改進版 Faster-Whisper 模型，在不損失字錯率 (WER < 5%) 的前提下，可將 1 小時音檔的處理時間從 10 分鐘縮短至 30 秒，並節省 70% 的 VRAM 消耗。
 
@@ -501,7 +502,7 @@ service_type: AI Consulting
 ---
 
 ## Speaker-Recognition
-**🗣️ Speaker Recognition (中文語者與聲紋識別)**
+**🗣️ Speaker Recognition (聲紋辨識)**
 
 > **抗噪特徵萃取是提升語者驗證準確率的核心。** 採用 ECAPA-TDNN 等深度神經網絡架構，在訊噪比 (SNR) 低於 5dB 的極端環境下，等錯率 (EER) 仍可維持在 1.5% 以下，確保金融級聲紋辨識的安全要求。
 
@@ -873,7 +874,8 @@ service_type: AI Consulting
 
 ---
 
-## 💾 開源語音資料集 (Speech Datasets)
+## Speech-Datasets
+**💾 開源語音資料集 (Speech Datasets)**
 
 *沒有百萬小時的煉丹爐，生不出好模型！對於需要訓練在地化模型的開發者來說，高品質、標註乾淨的語料庫是無價之寶。以下收錄 2024-2025 釋出的重量級資料集。*
 
@@ -905,7 +907,7 @@ service_type: AI Consulting
 ---
 
 ## Speech-Applications
-**🎙️ 語音處理綜合應用 (All-in-One Applications)**
+**🎙️ 語音與音頻綜合應用 (Speech & Audio Applications)**
 
 > **語音技術的價值取決於與大模型 (LLM) 的無縫整合能力。** 將即時語音轉文字 (STT) 結合 RAG 架構應用於智能客服，實測可將單筆客服通話的平均處理時間 (AHT) 縮短 40%，提升 60% 的首次解決率 (FCR)。當單項技術（辨識、合成、分離）趨於成熟，2026 年的趨勢在於將多個模型串聯成解決特定生活痛點的「完整方案」。以下收錄具備高度整合性且支援本地部署的開源神作：
 
@@ -959,7 +961,8 @@ service_type: AI Consulting
   * **資源**：[🐙 CAM++ 模型與技術文件](https://modelscope.cn/models/iic/speech_campplus_speaker-diarization_common) | [📄 Whisper 論文](https://cdn.openai.com/papers/whisper.pdf) | [📝 實戰落地指南與程式碼](https://mp.weixin.qq.com/s/Kkzkcs85_kYTWMRQnpOXlA)
 
 
-## ❓ 語音處理開發常見問題解答 (FAQ)
+## FAQ
+**❓ 語音處理開發常見問題解答 (FAQ)**
 
 **Q1: 即時語音 AI 頻繁搶話怎麼解決？**
 A: 棄用傳統音量 VAD，改用內建「語義輪次檢測」的 LiveKit 框架，可精準區分真實打斷與咳嗽等噪音，解決 90% 搶話問題。

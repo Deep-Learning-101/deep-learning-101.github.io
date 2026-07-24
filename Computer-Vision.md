@@ -32,6 +32,10 @@ service_type: AI Consulting
 - [OCR (光學文字識別)](#ocr)
 - [Diffusion Model (擴散模型)](#diffusion-model)
 - [Digital Human (虛擬數字人)](#digital-human)
+- [Image Recognition (基礎圖像識別)](#image-recognition)
+- [Document AI (文檔理解)](#document-ai)
+- [DeepFake Detection (深度偽造偵測)](#deepfake-detection)
+- [❓ FAQ (電腦視覺常見問題)](#faq)
 
 ---
 
@@ -120,6 +124,28 @@ service_type: AI Consulting
 **🏭 Anomaly Detection (工業異常檢測與 AOI)**
 
 > **無監督異常檢測是突破 AOI 產線良率瓶頸的關鍵。** 導入 PatchCore 等特徵對齊架構，僅需 50 張正常樣本即可將瑕疵檢出率提升至 98% 以上。此方法有效解決工業製造中缺陷樣本稀缺的問題，降低 60% 漏檢風險。傳統 AOI (自動光學檢測) 高度依賴大量瑕疵樣本來訓練模型。但在真實工業場景中，收集數千張「特定種類」的瑕疵圖往往不切實際。近年來，異常檢測技術已轉向**少樣本 (Few-shot)** 與 **零樣本 (Zero-shot)** 學習。以下為 2025-2026 年最具代表性的開源方案：
+
+### 🏆 CVPR 2026 異常檢測精選速覽
+
+本章收錄大量 CVPR 2026 論文，以下速覽表方便快速定位各篇重點；詳細內容請見對應子節。
+
+| 論文名稱 | 子節 | 核心技術 | 推薦場景 |
+| :--- | :--- | :--- | :--- |
+| **Omni-AD** | 本節頂層 | 大規模工業通用基準，150 個品類 | 跨品類選型初篩 |
+| **Rethinking Transfer Learning (DINOv3 vs ImageNet)** | 本節頂層 | 預訓練路線實測對比 | AOI 演算法選型 |
+| **Fine-VAD** | §1 零樣本 | 漸進式跨粒度學習，mAP +47.7% | 智慧安防、工安行為預警 |
+| **CoPS** | §1 零樣本 | 條件化動態提示詞，AUROC 92.5% | 工業/醫療冷啟動場景 |
+| **GS-CLIP** | §1 零樣本 | 文本幾何翻譯＋視覺雙流，3D 異常檢測 | 精密元器件 3D 品管 |
+| **LAVIDA** | §1 零樣本 | 合成偽異常、零依賴真實數據 | 開放世界安防、產線監控 |
+| **AG-VAS** | §1 零樣本 | 可學習錨點 Token，像素級二值分割 | 工業與醫療零樣本分割 |
+| **UniSpector** | §1 零樣本 | 頻域＋角間隔對比，開集缺陷識別 | PCB/電池片/金屬表面跨工位 |
+| **ADSeeker** | §1 零樣本 | 多模態 RAG 知識庫＋Q2K 精準檢索 | 離線復判、稀缺樣本場景 |
+| **FastRef** | §2 少樣本 | 特徵遷移＋最優傳輸迭代，Plug-and-Play | 多樣少量產線冷啟動 |
+| **SubspaceAD** | §2 少樣本 | PCA 子空間＋YOLO 雙引擎，1-shot | 邊緣運算、換線 AOI |
+| **SynSur** | §2 少樣本 | 生成即標註端到端管線，LoRA 微調 | 新品早期質檢、罕見瑕疵補強 |
+| **Boxes2Pixels** | §2 少樣本 | 框標註轉像素分割，161 FPS | 風機/表面污損即時邊緣運算 |
+
+> 💡 **選型建議：** 若完全無缺陷樣本 → 優先看 §1 (CoPS / LAVIDA / GS-CLIP)；若有少量樣本 → 看 §2 (FastRef / SubspaceAD)；若需跨品類統一部署 → 看 §3 (Uni-RCM)。
 
 * **[Rethinking Transfer Learning for Industrial Inspection: DINOv3 vs. ImageNet Pretraining Across RGB and X-ray Tasks](https://arxiv.org/abs/2605.23472)** `[2026-05]` 🔥 `[工業選型指南]` `[遷移學習重新審視]` `[反直覺硬核實測]`
   * **核心優勢**：**一針見血戳破視覺基礎模型「全能萬用」的神話，為產線 AOI 演算法選型提供最清醒的硬體算力與天花板帳本！** 這篇發表於 CVPR 2026 (Findings) 的里程碑論文，不談學術站隊，直接將當前最強自監督基礎模型 DINOv3 與傳統 ImageNet 監督預訓練丟進真實工業任務（Severstal 鋼板劃傷、Rubber Rings 橡膠缺陷、GDXray 鑄件氣孔等）進行硬碰硬實測。研究給出兩大反直覺技術定性：第一，在可見光 (RGB) 表面缺陷上，DINOv3 紅利極度依賴「全參數微調」，「凍結 Backbone 躺贏」完全是偽命題；第二，在 X-ray 等非可見光強模態偏移任務中，DINOv3 明顯翻車，傳統 ImageNet 預訓練反而從頭到尾展現驚人的穩健度。
@@ -747,7 +773,8 @@ service_type: AI Consulting
 
 ---
 
-## 🖼️ Image Recognition (基礎圖像識別)
+## Image Recognition
+**🖼️ 基礎圖像識別 (Image Recognition)**
 
 在追求酷炫的生成式 AI 之前，理解圖像分類的底層架構仍然是電腦視覺的必修課。以下是從 CNN 時代走向 Transformer 時代的三大奠基之作：
 
@@ -813,7 +840,7 @@ service_type: AI Consulting
 ---
 
 ## DeepFake Detection
-**🕵️‍♂️ DeepFake Detection (深度偽造與換臉偵測)**
+**🕵️‍♂️ 深度偽造與換臉偵測 (DeepFake Detection)**
 
 隨著生成式 AI (AIGC) 的爆發，如何防範惡意的 AI 換臉與造假成為資安重頭戲。以下收錄 CVPR 2021 針對深度偽造偵測的三大經典防禦架構：
 
@@ -825,7 +852,8 @@ service_type: AI Consulting
   * **核心概念**：3D 臉部解構。將 2D 影像逆向分解為 3D 形狀、光照與紋理特徵，從物理立體空間的合理性中，找出換臉演算法的破綻。*(Xiangyu Zhu et al., CVPR 2021)*
 
 
-## ❓ 電腦視覺開發常見問題解答 (FAQ)
+## FAQ
+**❓ 電腦視覺開發常見問題解答 (FAQ)**
 
 **Q1: 工業 AOI 瑕疵樣本太少怎麼辦？**
 A: 採用基於 PatchCore 的無監督異常檢測方案，僅需約 50-100 張「正常樣本」即可建立基準，檢出率可達 98% 以上。
@@ -864,8 +892,10 @@ A: 結合最新的 3D Gaussian Splatting 與輕量化語音驅動模型，端到
         "@type": "Organization",
         "name": "Deep Learning 101, Taiwan",
         "url": "https://deep-learning-101.github.io/"
-      }
+      }        
     },
+      "datePublished": "2026-03-29",
+      "dateModified": "2026-07-25",      
     {
       "@type": "FAQPage",
       "mainEntity": [

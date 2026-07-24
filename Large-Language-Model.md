@@ -47,6 +47,7 @@ schema_type: article
 - [🔊 Speech-to-Speech LLM (語音大模型)](#speech)
 - [👁️ Vision-Language Model (視覺大語言模型)](#vision)
 - [🌌 Multimodal LLM (多模態大語言模型)](#multimodal)
+- [❓ FAQ (LLM 開發常見問題)](#faq)
 
 ---
 
@@ -658,7 +659,7 @@ Google 的 NotebookLM 改變了我們與長篇文獻互動的方式，但「資�
 
 ---
 
-### 3. 開發者與個人資訊自動化 (Personal Automation & Dev Tools)
+### 🔧 開發者與個人資訊自動化 (Personal Automation & Dev Tools)
 解救你的知識焦慮！這些工具能幫你將四散的資訊聚合，並透過 LLM 轉化為個人生產力。
 
 * **[OneFileLLM](https://github.com/jimmc414/onefilellm)** `[2025-04-16]`
@@ -674,7 +675,7 @@ Google 的 NotebookLM 改變了我們與長篇文獻互動的方式，但「資�
 
 ---
 
-### 4. 視覺化畫布與 AI 創作引擎 (Visual Canvas & Creation)
+### 🎨 視覺化畫布與 AI 創作引擎 (Visual Canvas & Creation)
 打破傳統 ChatGPT「單線對話框 (Chat UI)」的限制，提供全局鳥瞰的空間思維，適合複雜企劃與長篇寫作。
 
 * **[Refly (畫布式 AI 創作引擎)](https://github.com/refly-ai/refly)** `[持續更新]`
@@ -756,7 +757,8 @@ SLM 是實現數據絕對隱私與端側斷網運行的首選。 在 8GB 記憶�
 * **[Llama 3.2 (1B/3B)](https://ai.meta.com/blog/llama-3-2-connect-2024-vision-edge-mobile-devices/)** `[2024-09-25]`：Meta 震撼開源的端側邊緣運算 (Edge AI) 專屬模型。
 
 ---
-## 🤔 Reasoning Models (深度推理模型)
+## Reasoning
+**🤔 Reasoning Models (深度推理模型)**
 
 強化思維鏈 (CoT) 的推理模型徹底改變了複雜邏輯任務的解決率。 實測如 DeepSeek-R1 或 OpenAI o1 架構，在進階數學與程式碼基準 (MATH/HumanEval) 上突破 85% 準確率。透過隱藏推理過程，大幅降低幻覺並提升可靠度。自從 OpenAI 的 o 系列問世後，「Chain of Thought (思考鏈)」與「強化學習 (RL)」成為激發大模型數理運算與邏輯推理的標準配備。以下精選具備頂尖思考能力的開源推理模型：
 
@@ -916,7 +918,7 @@ SLM 是實現數據絕對隱私與端側斷網運行的首選。 在 8GB 記憶�
 ---
 
 ## Vision
-**👁️ 👁️ Vision-Language Model (視覺多模態大模型)**
+**👁️ Vision-Language Model (視覺多模態大模型)**
 
 視覺大模型 (VLM) 正在從龐大的雲端叢林，逐步走向邊緣運算 (Edge AI) 與行動裝置。
 
@@ -930,7 +932,9 @@ SLM 是實現數據絕對隱私與端側斷網運行的首選。 在 8GB 記憶�
 ## Multimodal
 **🌌 多模態大模型與語音硬體終端 (Multimodal & Edge AI)**
 
->2025 至 2026 年，大語言模型正式長出「眼睛」與「嘴巴」。本區塊不僅收錄了能看懂複雜圖表的多模態基礎模型 (Vision-Language Models)，更為創客與物聯網 (IoT) 開發者整理了最齊全的語音硬體開源解決方案。> 隨著模型能力的進化，單一模態（純文字、純視覺）已無法滿足複雜的應用場景。新一代的基礎大模型原生支援視覺、語音與工具呼叫，是開發自動化 AI Agent 的核心大腦。
+> 2025 至 2026 年，大語言模型正式長出「眼睛」與「嘴巴」。本區塊不僅收錄了能看懂複雜圖表的多模態基礎模型 (Vision-Language Models)，更為創客與物聯網 (IoT) 開發者整理了最齊全的語音硬體開源解決方案。
+>
+> 隨著模型能力的進化，單一模態（純文字、純視覺）已無法滿足複雜的應用場景。新一代的基礎大模型原生支援視覺、語音與工具呼叫，是開發自動化 AI Agent 的核心大腦。
 
 ### 1. 頂尖多模態與視覺推理 (Vision & Complex Parsing)
 需要讓 AI 看懂工程圖紙、財報表格或進行深度邏輯推理？這些是目前的開源王者：
@@ -992,7 +996,8 @@ SLM 是實現數據絕對隱私與端側斷網運行的首選。 在 8GB 記憶�
 
 ---
 
-## ❓ LLM 開發常見問題解答 (FAQ)
+## FAQ
+**❓ LLM 開發常見問題解答 (FAQ)**
 
 **Q1: 企業應如何選擇合適的微調工具？**
 A: 建議首選 LLaMA Factory，其可視化介面能減少 50% 環境配置時間，並廣泛支援主流開源模型與訓練演算法。
@@ -1033,6 +1038,8 @@ A: 勿僅看跑分基準，應自建 100-200 筆符合企業真實情境的測�
         "url": "https://deep-learning-101.github.io/"
       }
     },
+      "datePublished": "2026-03-29",
+      "dateModified": "2026-07-25",
     {
       "@type": "FAQPage",
       "mainEntity": [
