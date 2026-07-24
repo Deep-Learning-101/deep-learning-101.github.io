@@ -15,11 +15,32 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 {% include ai-share.html %}
 
 ---
+
+### 📅 2026-07-25 更新快訊
+- **[CADDesigner](https://github.com/NiJingzhe/SimpleCADAPI)** `[2026]` 🔥 [CAD建模] [AI智慧體] [ECIP範式] [計算機輔助設計]
+- **[text-to-cad](https://github.com/earthtojake/text-to-cad)** `[2026-07-22]` 🔥 [CAD建模] [Agent技能] [build123d] [硬體設計]
+- **[MV3DT](https://github.com/NVIDIA/DeepStream)** `[2026-07]` 🔥 [多視角3D追蹤] [去中心化架構] [自動標定] [DeepStream]
+- **[VisualAD](https://github.com/7HHHHH/VisualAD)** `[2026-03-09]` 🔥 [零樣本異常檢測] [CVPR 2026] [視覺純化] [多領域 SOTA]
+- **[Arbor](https://ruc-nlpir.github.io/Arbor/)** `[2026-06-11]` 🔥 [自主科研] [Agent框架] [Hypothesis-Tree] [Autonomous Optimization]
+- **[HyGRAG](https://github.com/Sunefei/HyGRAG)** `[2026-06-18]` 🔥 [GraphRAG] [多跳推理] [知識融合] [動態更新]
+- **[Nemotron-Labs-Audex (Audex-30B-A3B / Audex-2B)](https://huggingface.co/collections/nvidia/Nemotron-Labs-Audex)** `[2026-06-08]` 🔥 `[統一音訊文本模型]` `[單一解碼器]` `[文字稅零退步]` `[開源通用音效生成]`
+- **[Heretic](https://github.com/p-e-w/heretic)** `[2025-01-01]` 🔥 `[安全去對齊]` `[機械可解釋性]` `[自動參數優化]` `[開源平替]`
+- **[EReCu](https://github.com/JSLiam94/EReCu)** `[2026-03-12]` 🔥 [無監督偽裝目標檢測]
+- **[OpenWorker](https://github.com/andrewyng/openworker)** `[2026-07-23]` 🔥 `[開源智能體桌面應用]` `[本地優先]` `[模型隨你挑]` `[無人值守]`
+- **[MAGIC](https://github.com/SpatialAILab/MAGIC)** `[2026-03]` 🔥 **核心優勢**：**少樣本缺陷生成全新 SOTA，打通「學術優雅」與「產線現實」的擴散模型神作！
+- **[MoECLIP](https://github.com/CoCoRessa/MoECLIP)** `[2026-03-29]` 🔥 **核心優勢**：**裝上一群分工明確的專家，解鎖零樣本異常檢測（ZSAD）全新工業級霸主！**
+- **[Huobao Drama](https://github.com/chatfire-AI/huobao-drama)** `[2026-05]` 🔥 **核心優勢**：**打破傳統影視製作高牆，首款將「創意劇本➔分鏡➔音效➔成片」全流程打通的開源自動化短劇生產線！**
+- **[Remotion Skills](https://github.com/remotion-dev/skills)** `[持續更新]` 🔥 **核心優勢**：**顛覆「黑盒文生影片」，用 AI 寫 React 程式碼來「精確渲染」影片的工程化革命！**
+- **[Vidu S1](https://github.com/chatfire-AI/huobao-drama)** `[2026-07-03]` 🔥 **核心優勢**：**國內首款消費級顯卡可流暢運行的無限實時交互視頻大模型！**
+- **[Wan-Streamer](https://github.com/Wan-Video)** `[2026-05]` 🔥 **核心優勢**：**全球首款打破模塊拼接延遲、實現「看聽說做表情」五條件全滿的端到端全雙工音視訊交互大模型！**
+
+---
+
 ### 📅 2026-07-15 更新快訊
 - **[MinerU-Popo (Universal Post-Processing Model for Structured Document Parsing)](https://github.com/opendatalab/MinerU-Popo)** `[2026-05-24]` 🔥 `[RAG前處理]` `[文件級OCR後處理]` `[跨頁結構重建]` `[動態分塊同步]`
 - **[ViT³ (ViT with Test-Time Training)](https://github.com/LeapLabTHU/ViTTT)** `[2025-12-16]` 🔥 `[視覺長序列建模]` `[線性複雜度]` `[極限省顯存]` `[CVPR 2026 Best Paper Finalist]`
 - **[ADSeeker (Knowledge-Grounded Reasoning Framework)](https://arxiv.org/pdf/2508.03088)** `[2026-07-11]` 🔥 `[多模態異常推理]` `[多模態 RAG]` `[零樣本 SOTA]` `[稀疏特徵定位]`
-* **[UniSpector (Spectral-Contrastive Visual Prompting)](https://geonuk-kimmm.github.io/UniSpector)** `[2026-04-23]` 🔥 `[開集缺陷識別]` `[視覺提示大模型]` `[免重訓冷啟動]` `[SOTA 霸主]`
+- **[UniSpector (Spectral-Contrastive Visual Prompting)](https://geonuk-kimmm.github.io/UniSpector)** `[2026-04-23]` 🔥 `[開集缺陷識別]` `[視覺提示大模型]` `[免重訓冷啟動]` `[SOTA 霸主]`
 - **[Omni-AD: A Large-scale and Versatile Benchmark for Industrial Anomaly Detection](https://omni-ad.github.io)** `[2026-06-25]` 🔥 `[工業異常通用基準]` `[真實產線數據]` `[雙協議評測]` `[大模型質檢噩夢]`
 - **[CCL (Contextual Consistency Learning)](https://openaccess.thecvf.com/content/CVPR2026/papers/Li_Consistency_Beyond_Contrast_Enhancing_Open-Vocabulary_Object_Detection_Robustness_via_Contextual_CVPR_2026_paper.pdf)** `[2026-03-29]` 🔥 `[開放詞彙檢測]` `[訓練側增強]` `[零推理延遲]` `[跨場景泛化]`
 - **[FastRef (Fast Prototype Refinement for Few-shot Industrial Anomaly Detection)](https://github.com/liyufei25/FastRef)** `[2026-03-29]` 🔥
@@ -34,7 +55,7 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 - **[VGGT-S (VGGT-Segmentor)](https://github.com/buaa-colalab/VGGT-S)** `[2026-04]` 🔥 `[跨視角分割]` `[幾何增強]` `[Ego-Exo對齊]` `[免配對預訓練]`
 - **[Unlimited-OCR (無限 OCR)](https://github.com/baidu/Unlimited-OCR)** `[2026-06]` 🔥 `[長文件解析]` `[R-SWA注意力]` `[恆定顯存]` `[端到端SOTA]`
 - **[AnomalyVFM (Transforming Vision Foundation Models into Zero-Shot Anomaly Detectors)](https://maticfuc.github.io/anomaly_vfm/)** `[2026-01]` 🔥 `[零樣本冷啟動]` `[純視覺VFM]` `[虛擬產線數據]` `[極速推論]`
-* **[WinCLIP (Zero-/Few-Shot Anomaly Classification and Segmentation)](https://github.com/caoyunkang/WinClip)** `[2023-06]` 🔥 `[零樣本AOI]` `[CLIP特徵升維]` `[狀態提示詞]` `[冷啟動救星]`
+- **[WinCLIP (Zero-/Few-Shot Anomaly Classification and Segmentation)](https://github.com/caoyunkang/WinClip)** `[2023-06]` 🔥 `[零樣本AOI]` `[CLIP特徵升維]` `[狀態提示詞]` `[冷啟動救星]`
 - **[Supertonic v3](https://github.com/supertone-inc/supertonic)** `[2026-09]` 🔥 `[99M極致輕量]` `[純CPU推論]` `[本地隱私]` `[ONNX/WebGPU]`
 - **[InvAD (Inversion-based Reconstruction-Free Anomaly Detection)](https://invad-project.com/)** `[2026-04]` 🔥 `[擴散模型]` `[免重建]` `[極速推論]` `[工業AOI]`
 - **[SEATrack (Simple, Efficient, and Adaptive Multimodal Tracker)](https://openaccess.thecvf.com/content/CVPR2026/papers/Su_SEATrack_Simple_Efficient_and_Adaptive_Multimodal_Tracker_CVPR_2026_paper.pdf)** `[2026-06]` 🔥 `[多模態追蹤]` `[PEFT極致輕量]` `[極端場景特化]` `[邊緣算力首選]`
@@ -44,7 +65,7 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 - **[Fine-VAD (Fine-Grained Video Anomaly Detection)](https://teacher.bupt.edu.cn/zhuangzirui/zh_CN/index.htm)** `[2026-06]` 🔥 `[細粒度異常檢測]` `[影片安防]` `[CLIP多級對齊]` `[漸進式學習]`
 - **[MonoSAOD (Monocular 3D Object Detection)](https://github.com/VisualAIKHU/MonoSAOD)** `[2026-04]` 🔥 `[單目3D偵測]` `[稀疏標註]` `[偽標籤治理]` `[工業級過濾]`
 
-
+---
 
 ### 📅 2026-06-20 更新快訊
 - **[LLM-Offense](https://deep-learning-101.github.io/cyber/LLM-Offense)**：
@@ -55,10 +76,12 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
     - 新增 Uni-RCM 跨模態多類別統一異常檢測框架與 CaptionFormer 統一架構，強調其核心優勢與解決痛點，並更新 PP-OCRv6 及 PaddleOCR-VL-1.6 的詳細介紹，提升使用者體驗。
 - **Speech-Processing**：
     - 新增 Nemotron 3.5 ASR 模型資訊，強調其低延遲與多語種支援，並更新 Voxtral Realtime 模型的核心優勢與推薦場景。
-- **Large-Language-Model**
+- **[Large-Language-Model](https://deep-learning-101.github.io/Large-Language-Model)**：
     - 新增多模態安全護欄與自動化滲透測試技能包，強化 AI 安全防護與紅隊演練能力。
     - 新增 Remotion Skills 代碼驅動影片框架，強化影片生成與自動化剪輯功能。
     - 新增 Google Colab CLI 和 OpenMontage 於 LLM 資源中，強化雲端計算與影片製作自動化功能
+
+---
 
 ### 📅 2026-06-03 更新快訊
 - **Computer-Vision**：
@@ -68,8 +91,12 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
     - DetAny4D、FoundAD、LocateAnything-3B及SANA
 - **Speech-Processing**：
     - Mega-ASR、OmniVoice Studio
-- **Large-Language-Model**
+- **[Large-Language-Model](https://deep-learning-101.github.io/Large-Language-Model)**：
     - Infinity-Doc2-5M
+
+---
+
+---
 
 ### 📅 2026-05-18 更新快訊
 - **[Speech-Processing](https://deep-learning-101.github.io/Speech-Processing)**：
@@ -110,6 +137,8 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
     - EUPE: DINOv3 + SAM + CLIP 三模合一輕量檢測框架：打破大模型落地門檻的開箱即用神器，將 DINOv3、SAM 與 CLIP 的跨域超能力濃縮進極致輕量的檢測管線！
     - LuoHuaLabel (基於 SAM 3 的智慧標註神器)：徹底解放雙手的資料標註黑科技，以 SAM 3 驅動的次世代視覺標註系統！
     - DINO-AD：打破模型微調成本高牆的免訓練 (Training-Free) 異常檢測黑科技！
+
+---
 
 ### 📅 2026-05-13 更新快訊
 - **[Large-Language-Model](https://deep-learning-101.github.io/Large-Language-Model)**：何愷明團隊重磅推出 ELF (Embedded Language Flows)。  
