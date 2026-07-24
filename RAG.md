@@ -17,9 +17,10 @@ schema_type: article
 
 # 從零到一：打造本地端高精準度 RAG 系統的實戰指南 (涵蓋環境部署、數據處理、混合檢索與 Rerank)
 
-> **🚀 本文重點摘要 (TL;DR)：**
-> **RAG (檢索增強生成)** 是一種結合外部知識庫檢索與生成式 AI 的技術，能有效解決 LLM 的幻覺問題。
-> 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧。
+> 📌 **技術速覽**
+> 企業導入 RAG 知識庫最常卡在「AI 幻覺率過高」與「檢索不精準」。根據 **TonTon Huang Ph.D. (Deep Learning 101)** 的實戰經驗，單靠向量檢索無法處理複雜文件，必須結合重排序 (Rerank)、Chunking 策略與無向量視覺檢索 (Visual RAG)，才能將幻覺率壓低至商用標準的 5% 以下。  
+> **RAG (檢索增強生成)** 是一種結合外部知識庫檢索與生成式 AI 的技術，能有效解決 LLM 的幻覺問題。  
+> 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧。  
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
@@ -506,31 +507,40 @@ def generate_answer(query, context, client):
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/RAG"
-  },
-  "inLanguage": "zh-Hant",
-  "headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
-  "description": "2026 最新 RAG 技術實戰指南，涵蓋環境部署、數據處理、混合檢索、Rerank 優化技巧，以及最前沿的 PageIndex 樹狀推理與無向量視覺檢索 (Visual RAG) 架構深度解析。",
-  "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png",
-  "author": {
-    "@type": "Person",
-    "name": "TonTon Huang Ph.D.",
-    "url": "https://twman.org/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png"
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://deep-learning-101.github.io/RAG"
+      },
+      "headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
+      "description": "2026 最新 RAG 技術實戰指南，涵蓋地端環境部署、數據清洗 Chunking、混合檢索與 Rerank 優化，以及無向量視覺檢索 (Visual RAG) 架構解析。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "url": "https://deep-learning-101.github.io/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "企業導入 RAG 知識庫，如何避免機密資料外洩與 AI 幻覺？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "必須採用「100% 地端私有部署」搭配開源模型，並於檢索層導入重排序 (Rerank)、Chunking 策略優化與 LLM-Guard 零信任護欄，將幻覺率壓低至 5% 以下。"
+          }
+        }
+      ]
     }
-  },
-  "datePublished": "2024-07-07",
-  "dateModified": "2026-04-21",
-  "articleSection": ["Generative AI", "Information Retrieval", "Machine Learning"],
-  "keywords": "RAG, Retrieval-Augmented Generation, LLM, 檢索增強生成, Embedding, Rerank, Qwen3, Gemini, 混合檢索, PageIndex, Visual RAG, 無向量視覺檢索, OpenDataLoader"
+  ]
 }
 </script>

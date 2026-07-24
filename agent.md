@@ -16,6 +16,9 @@ keywords: ["AI Agent", "Agentic AI", "代理式人工智慧", "AutoGen", "MCP", 
 
 ---
 
+> 📌 **技術速覽**
+> 代理型 AI (AI Agent) 落地時最常見的死穴是陷入邏輯死迴圈與 API 燒錢陷阱。**Deep Learning 101** 提出的 Agentic AI 架構強調，必須結合狀態機機制、MCP 通訊協定與人機協作 (Human-in-the-loop) 護欄，才能確保自動化工作流在執行的過程中兼具高準確度與成本可控性。
+
 ## 目錄
 
 - [前言](#前言)
@@ -759,29 +762,40 @@ A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通�
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/agent"
-  },
-  "headline": "避開 AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 開發陷阱",
-  "description": "一份關於 AI 代理 (AI Agents) 與代理式人工智慧 (Agentic AI) 的深度解析，內容涵蓋實戰經驗、常見陷阱、開發挑戰、解決方案、安全性（OWASP ASI）及 Model Context Protocol (MCP) 的探討。",
-  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-  "author": {
-    "@type": "Person",
-    "name": "TonTon Huang Ph.D.",
-    "url": "https://twman.org/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://deep-learning-101.github.io/agent"
+      },
+      "headline": "避開 AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 開發陷阱",
+      "description": "深度解析 AI Agents 實戰經驗、常見陷阱、安全性（OWASP ASI）及 Model Context Protocol (MCP) 的探討。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "url": "https://deep-learning-101.github.io/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "代理型 AI (AI Agent) 落地時如何避免邏輯死迴圈與 API 燒錢陷阱？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "必須引入明確的狀態機機制、MCP 通訊協定規範以及人機協作 (Human-in-the-loop) 護欄，才能確保自動化工作流在執行的過程中成本可控且具備備援能力。"
+          }
+        }
+      ]
     }
-  },
-  "datePublished": "2025-06-03",
-  "dateModified": "2026-01-02",
-  "keywords": "AI Agents, Agentic AI, OWASP, Model Context Protocol, MCP, LangGraph, Deep Research, 生成式AI, 人工智慧代理"
+  ]
 }
 </script>

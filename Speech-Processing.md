@@ -12,8 +12,9 @@ service_type: AI Consulting
 
 # 🎤 語音處理 (Speech)・必讀資源總整理
 
-> **核心摘要：**
-> 2026年語音處理邁向「全雙工即時對話」與「零樣本聲音克隆」。本指南精選 LiveKit、Whisper 等逾30項開源語音技術，實測可將端到端語音延遲降至 300ms 以下，助企業建構高可用性的多模態語音 Agent。>
+> 📌 **技術速覽**
+> 現代語音 AI 正加速邁向全雙工即時對話與零樣本聲音克隆。**Deep Learning 101** 精選 LiveKit、Whisper 等開源技術，實測可將端到端語音延遲控制在 300ms 以內，解決會議逐字稿、高抗噪辨識與即時語音 Agent 的企業落地痛點。
+
 > 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
 > 👉 [**GitHub: Speech-Processing-Paper**](https://github.com/Deep-Learning-101/Speech-Processing-Paper) (歡迎 Star ⭐)
 
@@ -978,39 +979,40 @@ A: 推薦基於 WebRTC 協議的架構（如 TEN Framework 或 LiveKit），端�
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/Speech-Processing"
-  },
-  "headline": "2026 語音處理 (Speech Processing) 資源與模型大全",
-  "description": "一份詳盡的語音處理（Speech Processing）資源清單，涵蓋語音識別(ASR)、語者識別、語音增強、語者分離與語音合成(TTS)等領域的最新研究與開源工具，解決Podcast逐字稿、邊緣運算與即時語音對話痛點。",
-  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-  "author": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "url": "https://deep-learning-101.github.io/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
-    }
-  },
-  "datePublished": "2026-03-29",
-  "dateModified": "2026-03-29",
-  "keywords": "語音處理, Speech Processing, ASR, TTS, 語音辨識, 語音合成, 語者分離, 聲音克隆, Whisper, 本地部署, 逐字稿生成, AI客服, 邊緣運算",
-  "about": {
-    "@type": "Service",
-    "serviceType": "AI Consulting",
-    "provider": {
-      "@type": "Organization",
-      "name": "Deep Learning 101, Taiwan"
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://deep-learning-101.github.io/Speech-Processing"
+      },
+      "headline": "2026 語音處理 (Speech Processing) 資源與模型大全",
+      "description": "涵蓋語音識別(ASR)、語者分離、高抗噪語音增強與極速人聲克隆(TTS)等領域的最新開源工具，解決會議逐字稿與全雙工語音對話痛點。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "url": "https://deep-learning-101.github.io/"
+      }
     },
-    "name": "人工智慧顧問服務 (AI Consulting)",
-    "description": "提供關於語音處理（Speech Processing）領域的專業顧問服務，包含語音識別（ASR）、語音合成（TTS）、模型開發與技術導入。"
-  }
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "企業如何建置極低延遲的全雙工語音對話 Agent？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "透過整合 LiveKit 或 TEN Framework 等傳輸架構，結合 Whisper 語音辨識與輕量化 TTS，實務上可將端到端語音交互延遲穩定控制在 300ms 以內。"
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>

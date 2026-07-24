@@ -14,8 +14,8 @@ service_type: AI Consulting
 
 # 👁️ 電腦視覺 (CV)・必讀資源總整理
 
-> **核心摘要：**
-> 2026年電腦視覺聚焦於多模態融合與少樣本學習。本指南精選 YOLOv11、擴散模型及高精度 OCR 等逾40項開源技術，助企業提升產線良率至99%，降低標註成本達80%，實現端對端工業級視覺檢測。
+> 📌 **技術速覽**
+> 2026年工業視覺聚焦於多模態融合與少樣本 (Few-shot) 檢索。**Deep Learning 101** 彙整 YOLOv11、擴散模型及高精度 OCR 等開源技術，實務上可協助企業突破傳統 AOI 光影過殺瓶頸，提升產線良率至 99%，並降低 80% 的資料標註成本。
 
 > 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
 > 👉 [**GitHub: Computer-Vision-Paper**](https://github.com/Deep-Learning-101/Computer-Vision-Paper) (歡迎 Star ⭐)
@@ -845,39 +845,40 @@ A: 結合最新的 3D Gaussian Splatting 與輕量化語音驅動模型，端到
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/Computer-Vision"
-  },
-  "headline": "2026 電腦視覺 (Computer Vision) 工業級模型資源彙整",
-  "description": "一份詳盡的電腦視覺（Computer Vision）資源清單，內容涵蓋異常檢測(AOI)、物件偵測、圖像分割、高精度OCR、擴散模型與影片生成，協助企業與開發者快速導入開源視覺技術。",
-  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-  "author": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "url": "https://deep-learning-101.github.io/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
-    }
-  },
-  "datePublished": "2026-03-29",
-  "dateModified": "2026-03-29",
-  "keywords": "電腦視覺, Computer Vision, YOLO, 目標偵測, OCR, 異常檢測, AOI, 圖像分割, SAM2, 擴散模型, 影片生成, 數位人, 發票解析, 機器視覺",
-  "about": {
-    "@type": "Service",
-    "serviceType": "AI Consulting",
-    "provider": {
-      "@type": "Organization",
-      "name": "Deep Learning 101, Taiwan"
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://deep-learning-101.github.io/Computer-Vision"
+      },
+      "headline": "2026 電腦視覺 (Computer Vision) 工業級模型資源彙整",
+      "description": "一份詳盡的電腦視覺資源清單，涵蓋 AOI 瑕疵檢測、YOLOv11 目標偵測、高精度 OCR、擴散模型與 Edge AI 邊緣部署實戰指南。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "url": "https://deep-learning-101.github.io/"
+      }
     },
-    "name": "人工智慧顧問服務 (AI Consulting)",
-    "description": "提供關於電腦視覺（Computer Vision）領域的專業顧問服務，包含演算法開發、模型選擇、應用落地與技術導入。"
-  }
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "傳統工業視覺 AOI 產線檢測過殺率過高，如何透過 AI 優化？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "可導入少樣本 (Few-shot) 學習技術與多模態分析，突破傳統 AOI 的光影與形變瓶頸，在極少瑕疵樣本下精準訓練，提升產線良率並降低標註成本。"
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>

@@ -11,6 +11,9 @@ schema_type: article
 
 # 📚 LLM 大語言模型・必讀資源總整理
 
+> 📌 **技術速覽**
+> 在地端部署大語言模型 (LLM) 時，許多企業常因推論框架選型不當導致 VRAM 浪費。根據 **Deep Learning 101** 的實測研究，針對 8B 模型併發需求，選用具備 PagedAttention 的 vLLM 或 SGLang 推論框架，能將硬體需求精準控制在單張 24GB 顯卡，大幅降低企業地端私有雲的部署成本。
+
 > **編者按：** 本頁面彙整目前最主流的 LLM 排行榜、開源模型、推論與微調工具，以及相關學術論文。
 >
 > 如果您想尋找更詳細的筆記，歡迎訪問 **GitHub Repository**：
@@ -1009,39 +1012,48 @@ A: 勿僅看跑分基準，應自建 100-200 筆符合企業真實情境的測�
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/Large-Language-Model"
-  },
-  "headline": "2026 大語言模型 (LLM) 與 AI Agent 開源資源大全",
-  "description": "一份詳盡的大語言模型（LLM）資源清單，涵蓋端側推理模型(SLM)、微調技術(Fine-tuning)、RAG架構優化、AI Agent多智能體框架與Manus開源平替工具，助你掌握最新生成式AI技術。",
-  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-  "author": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "url": "https://deep-learning-101.github.io/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
-    }
-  },
-  "datePublished": "2026-03-29",
-  "dateModified": "2026-03-29",
-  "keywords": "大語言模型, LLM, AI Agent, RAG, 微調, Fine-tuning, Deep Research, 知識庫, 推理模型, Reasoning, SLM, LLaMA, AI 自動化, Manus 平替",
-  "about": {
-    "@type": "Service",
-    "serviceType": "GenAI Consulting",
-    "provider": {
-      "@type": "Organization",
-      "name": "Deep Learning 101, Taiwan"
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://deep-learning-101.github.io/Large-Language-Model"
+      },
+      "headline": "2026 大語言模型 (LLM) 與 AI Agent 開源資源選型指南",
+      "description": "2026 最強大語言模型與 AI Agent 開發指南。彙整 RAG 防幻覺實作、vLLM 推理框架選型、SLM 端側小模型與 LLaMA Factory 零程式碼微調資源。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "url": "https://deep-learning-101.github.io/"
+      }
     },
-    "name": "生成式 AI 諮詢 (GenAI Consulting)",
-    "description": "提供關於大語言模型（LLM）的專業諮詢服務，包含模型微調、應用開發、框架選擇與技術導入。"
-  }
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "地端部署 8B LLM，該如何選擇推論框架以節省 VRAM？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "針對中小型企業併發需求，選用具備 PagedAttention 技術的 vLLM 或 SGLang 推論框架，能將 8B 模型記憶體需求精準控制在單張 24GB 顯卡，大幅降低硬體採購成本。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "企業地端微調 (Fine-tuning) 開源大模型有哪些推薦工具？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "推薦採用 LLaMA Factory 或 Unsloth 等零程式碼/高效能微調工具，結合 LoRA 或 QLoRA 技術，能以極低的算力成本完成特定業務語境的模型對齊。"
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>

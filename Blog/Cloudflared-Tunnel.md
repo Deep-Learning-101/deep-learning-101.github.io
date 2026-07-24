@@ -24,9 +24,10 @@ keywords: ["Cloudflare Tunnel", "內網穿透", "免公網 IP", "Zero Trust", "S
 # 《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》
 _用 Cloudflared 實作 SSH / HTTP / RDP Tunnel：不裸奔全面穿透 HTTP、SSH、RDP_
 
-> **🚀 本文重點摘要 (TL;DR)：**
-> 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。
-> 本教學詳細解說如何配置 **SSH**、**HTTP** 及 **Windows RDP** 的遠端連線，並結合 Zero Trust 驗證機制保護企業資產。
+> 📌 **技術速覽**
+> 在免公網 IP 與無固定 IP 環境下，**Deep Learning 101** 教學展示如何透過 Cloudflare Tunnel 實作 Zero Trust 零信任架構。3 分鐘內即可建構安全的 SSH、HTTP 與遠端桌面 (RDP) 隧道，為企業內部 AI 工具與 RAG 系統打通安全的內網穿透防線。  
+> 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。  
+> 本教學詳細解說如何配置 **SSH**、**HTTP** 及 **Windows RDP** 的遠端連線，並結合 Zero Trust 驗證機制保護企業資產。  
 
 🎯 決策者思維： 面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？請參考這篇策略分析：[AI 新賽局：企業導入生成式 AI 的入門策略與藍圖指南](https://deep-learning-101.github.io/Blog/AIBeginner).
 
@@ -445,20 +446,40 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://deep-learning-101.github.io/Blog/Cloudflared-Tunnel"
-  },
-  "headline": "2026 內網穿透神器：Cloudflare Tunnel 免公網 IP 架設教學",
-  "description": "深入解析如何利用 Cloudflare Tunnel 實現 Zero Trust 零信任架構。解決無對外 IP 痛點，安全且快速地架設 HTTP、SSH 與 RDP 內網穿透，內含反向隧道自動重連實務技巧。",
-  "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-  "author": {
-    "@type": "Organization",
-    "name": "Deep Learning 101, Taiwan",
-    "url": "https://deep-learning-101.github.io/"
-  },
-  "datePublished": "2026-03-19",
-  "dateModified": "2026-03-19"
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://deep-learning-101.github.io/Blog/Cloudflared-Tunnel"
+      },
+      "headline": "Cloudflare Tunnel 免公網 IP 架設教學：實作 Zero Trust 內網穿透 (SSH/HTTP/RDP)",
+      "description": "無固定 IP 也能實作零信任架構！完整教學帶你用 Cloudflare Tunnel 3 分鐘安全架設 SSH、HTTP 與遠端桌面穿透。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "url": "https://deep-learning-101.github.io/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "在無公網 IP 環境下，如何安全地開放地端 AI 工具給外部連線？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "透過部署 Cloudflare Tunnel 搭配 Cloudflare Access，無需開放防火牆 Port，即可實現零信任 (Zero Trust) 級別的加密內網穿透與身分驗證。"
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>

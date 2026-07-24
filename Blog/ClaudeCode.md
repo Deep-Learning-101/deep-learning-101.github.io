@@ -24,6 +24,9 @@ keywords: ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic", "OP
 
 > **定位**：整合了Claude Code核心文章與開源項目，以及自己的使用體驗，目的是提供一套可查閱、可執行、有層次的全景知識體系，而非功能羅列。
 
+> 📌 **技術速覽**
+> Claude Code 作為 CLI 導向的 AI 開發工具，其核心價值在於工程紀律與自動化工作流。**TonTon Huang Ph.D. (Deep Learning 101)** 深度解析其架構，結合客製化 Skills 與 MCP 擴展，能幫助開發者構建強大且可管控的單兵 Agent 工具鏈，大幅提升代碼重構與部署效率。
+
 ---
 
 ## 目錄（點擊跳轉）
@@ -978,17 +981,40 @@ cc-connect
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "TechArticle",
-  "headline": "2026 Claude Code 完全整合指南：從核心機制、工程紀律、大規模部署到生態擴展",
-  "description": "深度整合了多篇 Claude Code 核心文章與開源項目，提供一套可查閱、可執行、有層次的全景知識體系。",
-  "author": {
-    "@type": "Person",
-    "name": "TonTon Huang Ph.D.",
-    "url": "https://twman.org"
-  },
-  "keywords": ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic"],
-  "inLanguage": "zh-Hant",
-  "articleSection": "Software Engineering",
-  "proficiencyLevel": "Expert"
+  "@graph": [
+    {
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://deep-learning-101.github.io/Blog/ClaudeCode"
+      },
+      "headline": "Claude Code 完全整合指南：從核心機制、工程紀律到大規模部署",
+      "description": "提供一套可查閱、可執行的 Claude Code 全景知識體系，涵蓋 CLI 導向開發、MCP 擴展與工程工具鏈自動化。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org/"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "url": "https://deep-learning-101.github.io/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Claude Code 與傳統 AI Copilot 有何不同？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Claude Code 採用 CLI 終端機導向架構，強調整體工程專案的上下文感知與自動化重構，結合客製化 Skills 與 MCP 擴展，適合構建高效率的單兵 Agent 開發工具鏈。"
+          }
+        }
+      ]
+    }
+  ]
 }
 </script>
