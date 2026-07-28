@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "2026 Claude Code 完全整合指南：從核心機制、工程紀律、大規模部署到生態擴展"
-description: "深度整合了多篇Claude Code核心文章與開源項目，旨在提供一套可查閱、可執行、有層次的全景知識體系，而非功能羅列。"
+title: "Claude Code 完全指南 2026：安裝設定、CLAUDE.md、Skills 教學與 MCP 整合避坑"
+description: "最完整的中文 Claude Code 教學。涵蓋 CLAUDE.md 寫法、Skills 安裝（Superpowers/Context7）、上下文管理技巧、free-claude-code 本地閘道，以及企業大型 Repo 部署策略。"
 permalink: /Blog/ClaudeCode
 lang: zh-Hant
 keywords: ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic", "OPUS / SONNET / HAIKU"]
@@ -978,43 +978,83 @@ cc-connect
 | **SkillHub / skillsmp** | AI Agent Skills 的大型社群導航與搜尋市場 | [skillhub.club](https://skillhub.club) / [skillsmp.com](https://skillsmp.com) |
 
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "TechArticle",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://deep-learning-101.github.io/Blog/ClaudeCode"
-      },
-      "headline": "Claude Code 完全整合指南：從核心機制、工程紀律到大規模部署",
-      "description": "提供一套可查閱、可執行的 Claude Code 全景知識體系，涵蓋 CLI 導向開發、MCP 擴展與工程工具鏈自動化。",
-      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-      "author": {
-        "@type": "Person",
-        "name": "TonTon Huang Ph.D.",
-        "url": "https://twman.org/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Deep Learning 101, Taiwan",
-        "url": "https://deep-learning-101.github.io/"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "Claude Code 與傳統 AI Copilot 有何不同？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Claude Code 採用 CLI 終端機導向架構，強調整體工程專案的上下文感知與自動化重構，結合客製化 Skills 與 MCP 擴展，適合構建高效率的單兵 Agent 開發工具鏈。"
-          }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://deep-learning-101.github.io/Blog/ClaudeCode"
+        },
+        "headline": "2026 Claude Code 完全整合指南：安裝教學、Skills、CLAUDE.md 設定與 MCP 擴展",
+        "description": "2026 最完整的 Claude Code 安裝教學與使用指南。從 CLAUDE.md 核心機制、Superpowers Skills 安裝、Plan  Mode 實戰、上下文管理到 MCP 擴展，一次掌握 Anthropic 官方 CLI Agent 工具鏈。",
+        "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+        "author": {
+          "@type": "Person",
+          "name": "TonTon Huang Ph.D.",
+          "url": "https://twman.org/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Deep Learning 101, Taiwan",
+          "url": "https://deep-learning-101.github.io/"
         }
-      ]
-    }
-  ]
-}
-</script>
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Claude Code 如何安裝？費用方案怎麼選？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "需先有 Claude Pro（$20/月）以上訂閱，再執行 `npm install -g @anthropic-ai/claude-code` 安裝。方案選擇：個人開發者 Pro（每 5 小時窗口約 45 條對話）即可；重度日活用 Max 5x（$100/月）；團隊級消耗選 Max 20x（$200/月）。也可透過 Amazon Bedrock 接入。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude Code 與 GitHub Copilot、Cursor 有何本質差異？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "GitHub Copilot 專注即時程式碼補全（~8K tokens 上下文）；Cursor 是 AI 增強型 IDE，保留 VS Code 體驗；Claude Code 則是終端原生 Agent，擁有 200K tokens 上下文，能自主規劃→修改多個文件→執行 shell/test/build，在 SWE-bench  真實 Issue 解決能力達 80.8%。核心差異在於「系統級推理」與「自主任務執行」。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "CLAUDE.md 是什麼？應該寫入哪些內容？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "CLAUDE.md 是放在專案根目錄、Claude Code 每次啟動自動讀取的「工作手冊」。應寫入：技術棧與目錄結構（What）、架構決策原因（Why）、開發與測試規範（How）。不要放：Claude 讀碼就知道的事、標準語言慣例、頻繁變動的內容。建議控制在 200 行以內，超出會讓 AI 走神忽略指令。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude Code 的 Skills 是什麼？如何安裝 Superpowers？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Skills 是把工程規範數位化的模組，讓 Claude 具備 TDD、系統化除錯、Code Review 等工程紀律。安裝 Superpowers 全家桶（34k+ stars，14 合 1）：執行 `/plugin install superpowers-skills@anthropics-claude-code` 再 `/reload-plugins`。也可安裝中文版：`/plugin install superpowers-zh@jnMetaCode`。注意：Skills 裝太多會佔用大量 Context（最多 50K tokens），建議先裝 2-3 個再視需求增加。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Claude Code 上下文視窗滿了該怎麼辦？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "依使用量分三種處理方式：50-70% 正常；70-90% 執行 `/compact` 有損壓縮歷史；90% 以上執行 `/clear`完全重置對話（專案檔案不受影響）。重開後帶一句精簡的現狀摘要即可快速恢復進度。若 AI 走偏，優先用 `Esc+Esc`（/rewind）回到犯錯前節點，比補 patch prompt 更有效。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "free-claude-code 和 cc-connect 分別解決什麼問題？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "free-claude-code 是本地閘道代理，讓 Claude Code 的流量轉接到 OpenRouter、Gemini、DeepSeek 或本地  Ollama 等其他模型，實現模型自由與成本控制。cc-connect 則是聊天平台橋接工具，讓你在 LINE、飛書、Telegram 等 12+ 通訊平台遠端操控本地 Claude Code，實現手機移動辦公。兩者互補可同時使用。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>

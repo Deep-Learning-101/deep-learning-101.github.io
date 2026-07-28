@@ -1,7 +1,8 @@
 ---
 layout: default
-title: "2025/02 更新 | 臺灣大型語言模型 (LLM) 性能評測報告：Llama-3-Taiwan vs TAIDE vs Breeze"
-description: "最新臺灣在地化 LLM 評測報告。深度比較 Llama-3-Taiwan, TAIDE, Breeze2 等模型在繁體中文理解、RAG 檢索上的性能表現與 VRAM 需求。"permalink: /Blog/TW-LLM-Benchmark
+title: "2026 台灣 LLM 評測報告：Llama-3-Taiwan vs TAIDE vs Qwen3 繁體中文性能比較"
+description: "最新台灣在地化大型語言模型完整評測。TMLU、TMMLU+、TW Legal Eval 全面測試，含 Qwen3-Embedding、Gemini Embedding 選型建議，以及 OpenAI gpt-oss、Claude Opus 4.1 最新動態。"
+"permalink: /Blog/TW-LLM-Benchmark
 lang: zh-Hant
 keywords: ["LLM Benchmark", "臺灣大模型", "Llama-3-Taiwan", "TAIDE", "模型評測"]
 ---
@@ -29,7 +30,7 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 > 報告涵蓋 **TMLU**、**TMMLU+** 及 **Truthful QA** 等基準測試。結果顯示，針對繁體中文語境優化的模型，在 RAG 與在地知識問答上顯著優於通用模型。
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2025年07月16日更新
+**日期**：2026年07月28日更新
 
 | 🔥 技術傳送門 (Tech Stack) | 📚 必讀心法 (Must Read) |
 | :--- | :--- |
@@ -434,43 +435,73 @@ Qwen2和Qwen2.5系列進一步提升了多語言能力，在MMLU等國際基準�
 
 [25]: https://arxiv.org/html/2501.13921v1. Breeze2 相關論文
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "TechArticle",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://deep-learning-101.github.io/TW-LLM-Benchmark"
-      },
-      "headline": "臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告",
-      "description": "針對臺灣大型語言模型 (LLM) 的深度評測報告，涵蓋 TMLU、TMMLU+ 基準測試，比較 Llama-3-Taiwan、TAIDE、Breeze2 等模型實測表現。",
-      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
-      "author": {
-        "@type": "Person",
-        "name": "TonTon Huang Ph.D.",
-        "url": "https://twman.org/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Deep Learning 101, Taiwan",
-        "url": "https://deep-learning-101.github.io/"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "臺灣企業選擇在地化繁體中文 LLM 有何優勢？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "選用 Llama-3-Taiwan、TAIDE 或 Breeze2 等在地化模型搭配專屬 Embedding 與 Reranker，能在臺灣法規、金融與醫療語境下獲得更高的理解與回答精準度。"
-          }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark"
+        },
+        "headline": "臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告", "description": "針對臺灣大型語言模型 (LLM) 的深度評測報告，涵蓋 TMLU、TMMLU+ 基準測試，比較 Llama-3-Taiwan、TAIDE、Breeze2、Qwen3 等模型實測表現與 Embedding 選型建議。",
+        "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+        "author": {
+          "@type": "Person",
+          "name": "TonTon Huang Ph.D.",
+          "url": "https://twman.org/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Deep Learning 101, Taiwan",
+          "url": "https://deep-learning-101.github.io/"
         }
-      ]
-    }
-  ]
-}
-</script>
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "臺灣企業選擇在地化繁體中文 LLM 有何優勢？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "根據實測數據，在地化模型在台灣特定場景有顯著優勢：yentinglin/Llama-3-Taiwan-8B 在 TW Legal Eval 比 Llama-3-8B 基礎模型高出 17.22 個百分點，TW Truthful QA 高出 14.28 個百分點。這代表在法律、金融、醫療等高度在地化任務中，台灣微調模型的可靠性遠超通用模型。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "TMLU 與 TMMLU+ 評測基準有何不同？哪個更可信？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "TMLU（37 科目、約 3,000 題）以「抵抗資料污染」為設計核心，題目來自 PDF/Word 文件而非網頁，並有 Chain-of-Thought 範例；TMMLU+（66 科目、22,690 題）優先追求規模與廣度，但大部分題目可追溯至單一線上題庫，污染風險較高。如需最嚴謹的評測依據選 TMLU；如需覆蓋更多台灣特有主題（原住民文化、農業實務）則選 TMMLU+。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Llama-3-Taiwan、TAIDE 和 Breeze2，台灣企業應選哪個模型？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "依場景選擇：追求最高台灣在地化性能選 yentinglin/Llama-3-Taiwan-70B-Instruct-DPO（TW Legal Eval 70.33%、TW Truthful QA 81.75% 為目前最高分）；成本效益首選 Llama-3-Taiwan-8B-Instruct；需要多模態（視覺）與函數呼叫功能選 Breeze2；需要政府信任背書且基於最新 Llama 3.1 架構可選 TAIDE。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Qwen3-Reranker 在繁體中文 RAG 系統中的性能如何？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Qwen3-Reranker-4B 在 CMTEB-R 繁體中文檢索評測中得分 75.94，Qwen3-Reranker-8B 達 77.45，均大幅超越前代 BGE-reranker-v2-m3（72.16）和 jina-reranker-v2-base-multilingual（63.37）。對於需要高精準度的台灣法律、金融、醫療 RAG 應用，Qwen3-Reranker 系列已是不二首選。"
+          },
+          {
+            "@type": "Question",
+            "name": "如何避免員工將機密資料洩漏給 ChatGPT 等公共 AI 工具？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "企業應立即制定明確的 GenAI 使用政策（含禁止輸入客戶個資、財務數據、原始碼等規定），並評估建置私有化地端部署方案。同時導入 LLM-Guard 等輸出安全檢查護欄，以及 Microsoft Presidio 等自動化 PII 去識別化工具，從技術層防堵資料外洩風險。"
+            }
+          } 
+        ]
+      } 
+    ]
+  } 
+  </script>

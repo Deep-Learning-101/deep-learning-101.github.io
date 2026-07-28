@@ -1,7 +1,7 @@
 ---
 layout: default
-title: 檢索增強生成 (RAG) 實戰指南 | 本地部署、混合檢索與 Rerank
-description: 2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 LLM 推理框架 (xinference)、數據清洗切塊 (Chunking)、混合檢索與 Qwen3/Gemini Rerank 排名優化技巧。
+title: "RAG 教學 2026：Chunking、Hybrid Search、Rerank 完整實作 + Qwen3 Embedding 評比"
+description: "從零打造本地端高精準度 RAG 系統。實測 Qwen3-Embedding-8B vs BGE-M3 vs Gemini Embedding，Reranker 選型指南，附 Visual RAG 無向量架構教學，幻覺率降到 5% 以下。"
 permalink: /RAG
 lang: zh-Hant
 schema_type: article
@@ -509,43 +509,95 @@ def generate_answer(query, context, client):
 
 ---
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "TechArticle",
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://deep-learning-101.github.io/RAG"
-      },
-      "headline": "從零到一：打造本地端高精準度 RAG 系統的實戰指南",
-      "description": "2026 最新 RAG 技術實戰指南，涵蓋地端環境部署、數據清洗 Chunking、混合檢索與 Rerank 優化，以及無向量視覺檢索 (Visual RAG) 架構解析。",
-      "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png",
-      "author": {
-        "@type": "Person",
-        "name": "TonTon Huang Ph.D.",
-        "url": "https://twman.org/"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Deep Learning 101, Taiwan",
-        "url": "https://deep-learning-101.github.io/"
-      }
-    },
-    {
-      "@type": "FAQPage",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "企業導入 RAG 知識庫，如何避免機密資料外洩與 AI 幻覺？",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "必須採用「100% 地端私有部署」搭配開源模型，並於檢索層導入重排序 (Rerank)、Chunking 策略優化與 LLM-Guard 零信任護欄，將幻覺率壓低至 5% 以下。"
-          }
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "TechArticle",
+        "mainEntityOfPage": {
+          "@type": "WebPage",
+          "@id": "https://deep-learning-101.github.io/RAG"
+        },
+        "headline": "RAG 實戰指南 2026：Chunking、Qwen3 Embedding、混合檢索與 Rerank 完整教學",
+        "description": "2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 Chunking 策略、Qwen3-Embedding vs BGE-M3 選型、Hybrid Search 混合檢索與 Qwen3-Reranker 排名優化，以及無向量 Visual RAG 架構。",
+        "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/Dee
+  pLearning101-LOGO.png",
+        "author": {
+          "@type": "Person",
+          "name": "TonTon Huang Ph.D.",
+          "url": "https://twman.org/"
+        },
+        "publisher": {
+          "@type": "Organization",
+          "name": "Deep Learning 101, Taiwan",
+          "url": "https://deep-learning-101.github.io/"
         }
-      ]
-    }
-  ]
-}
-</script>
+      },
+      {
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "企業導入 RAG 知識庫，如何避免機密資料外洩與 AI 幻覺？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "必須採用 100% 地端私有部署搭配開源模型（如 Qwen3-Embedding + Ollama/xinference），並在檢索層導入重排序（Rerank）、Chunking 策略優化與 LLM-Guard 零信任護欄。結合 Visual RAG 的無向量架構，可將幻覺率壓低至商用標準的 5% 以下，同時確保資料不出境。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RAG 的 Chunking 策略有哪些？如何避免語意被截斷？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "主要有六大策略：①重疊切割（基礎兜底，chunk_size 的 10-20% 重疊）；②語意邊界切割（按句子/段落邊界，需 NLP 工具）；③句子視窗檢索（細粒度存儲，檢索後動態擴展上下文）；④父子切割（小塊精準檢索 + 大塊生成）；⑤命題化切割（LLM 分解為獨立命題，適合醫療/金融高精度場景）；⑥Contextual Retrieval（Anthropic 2024，為每個 chunk
+  補全背景說明後再索引，可降低 49% 檢索失敗率）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Qwen3-Embedding 和 BGE-M3 哪個更適合繁體中文 RAG？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Qwen3-Embedding-8B 目前是 MTEB 全球第 2、開源第 1（得分 68.12），C-MTEB 中文評測得分 72.88，全面超越  BGE-M3（64.63 / 68.31）。若預算允許，閉源的 google/gemini-embedding-001（MTEB 68.61）是性能天花板。BGE-M3 仍適合需要多向量（密集+稀疏）混合檢索的特殊場景。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "什麼是混合檢索（Hybrid Search）？為何比單純向量檢索更好？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "混合檢索結合向量語義搜尋（捕捉語義相似性）與 BM25 全文關鍵字搜尋（確保精確詞彙匹配）。向量搜尋可能忽略關鍵字，BM25 無法理解語義，兩者互補能大幅提升覆蓋率（Recall）。Anthropic 的 Contextual Retrieval 實驗顯示，混合檢索比純向量搜尋將 Top-20 失敗率降低約 49%。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Rerank 重排序是什麼？Qwen3-Reranker 比 BGE-reranker 好在哪裡？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Rerank 使用 Cross-Encoder 架構，將查詢與候選文件成對輸入模型進行深度相關性評分，是「從找得全到選得準」的關鍵一步。Qwen3-Reranker-4B/8B 在MTEB-R、CMTEB-R、MMTEB-R 及程式碼檢索上全面超越前代 BGE-reranker-v2-m3（例如 CMTEB-R 75.94 vs 72.16），已成為繁體中文 RAG 系統的首選 Reranker。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "無向量視覺 RAG (Visual RAG) 如何解決 PDF 表格與複雜排版問題？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "ISO/IEC 42001 的三大治理支柱為：公平性（透過差異性衝擊分析量化偏誤並修正演算法權重）、透明性（導入XAI 可解釋性技術，讓每項 AI 決策都能交代判斷依據）、獨立性（設立不兼任開發的 AI 倫理委員會進行偏見稽核，確保權責分立）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "企業 AI 系統為何需要「一鍵退場（Kill Switch）」機制？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "AI 模型會隨時間與新資料發生「模型漂移（Model Drift）」，導致決策偏差。一鍵退場機制讓管理層在 AI 出現歧視偏好或超出警戒紅線時，能瞬間切換回全人工審核模式，是防止演算法失控、確保企業法規遵循的最後安全底線，也是 AI 永續治理的核心要件。"
+            }
+          }
+        ]
+      }
+    ]
+  }
+  </script>
