@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "2026 AI Agent 開發必看：5 大實戰踩坑陷阱與底層架構解決方案"
-description: "還在搞混 Agent 與 Agentic AI？本文深度解析 2025 最新 AI 代理趨勢，實測比較 AutoGen、LangGraph 等框架優缺點，並揭露開發者最常遇到的 3 個資安陷阱與 MCP 實作技巧。"
+title: "Agentic AI 是什麼？2026 AI Agent 完整指南：定義、框架比較與實戰陷阱"
+description: "深度解析 Agentic AI 與 AI Agent 的差異。2026 最新 AutoGen、LangGraph、MCP 框架實測比較，以及 5 大企業導入陷阱。附吳恩達觀點與 OWASP 安全指南。"
 permalink: /agent
 lang: zh-Hant
 keywords: ["AI Agent", "Agentic AI", "代理式人工智慧", "AutoGen", "MCP", "LangGraph", "AI資安"]

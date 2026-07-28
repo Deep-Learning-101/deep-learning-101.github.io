@@ -22,6 +22,11 @@ schema_type: article
 > **RAG (檢索增強生成)** 是一種結合外部知識庫檢索與生成式 AI 的技術，能有效解決 LLM 的幻覺問題。  
 > 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧。  
 
+## RAG 怎麼做？三步驟快速入門
+* **建立知識庫**：用 LlamaIndex 或 LangChain 把文件切塊 (Chunking) 並轉成向量
+* **混合檢索**：結合語義搜尋（向量）+ 關鍵字搜尋（BM25），提高召回率
+* **Rerank 排序**：用 Qwen3/Gemini Reranker 從候選結果中選出最相關的片段再給 LLM
+
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
 **相關文章 I**：2024-07-07：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
