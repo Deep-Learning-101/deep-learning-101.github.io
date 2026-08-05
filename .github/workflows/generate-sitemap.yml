@@ -62,9 +62,9 @@ jobs:
           gem list --local
           echo "---- Run jekyll build (trace) ----"
           if [ -f Gemfile ]; then
-            bundle exec jekyll build --incremental=false --trace 2>&1 | tee build-logs/jekyll-build.log
+            bundle exec jekyll build --trace --verbose --trace 2>&1 | tee build-logs/jekyll-build.log
           else
-            jekyll build --incremental=false --trace 2>&1 | tee build-logs/jekyll-build.log
+            jekyll build --trace --verbose --trace 2>&1 | tee build-logs/jekyll-build.log
           fi
           echo "::set-output name=exitcode::$?"
         continue-on-error: true
