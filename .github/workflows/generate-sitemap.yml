@@ -23,21 +23,32 @@ jobs:
 
       - name: Install dependencies
         run: |
+          echo "Ruby: $(ruby -v)"
+          echo "Gem: $(gem -v)"
           if [ -f Gemfile ]; then
+            echo "Gemfile found — using bundler"
             gem install bundler
             bundle config set path vendor/bundle || true
+            # cache 建議（可選）：actions/cache on git side
             bundle install --jobs 4 --retry 3
           else
+            echo "No Gemfile — installing jekyll and sitemap gem globally"
             gem install jekyll jekyll-sitemap
           fi
 
-      - name: Build site
+      - name: Build site (with trace)
         run: |
+          echo "---- Environment ----"
+          ruby -v
+          gem list --local
+          echo "---- Run Jekyll build ----"
           if [ -f Gemfile ]; then
-            bundle exec jekyll build --incremental=false
+            # 用 bundler 執行並開啟 trace，方便抓完整錯誤
+            bundle exec jekyll build --incremental=false --trace
           else
-            jekyll build --incremental=false
+            jekyll build --incremental=false --trace
           fi
+          echo "Build exit code: $?"
 
       - name: Copy sitemap to repo root (if generated)
         run: |
