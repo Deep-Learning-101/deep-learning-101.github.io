@@ -1,8 +1,8 @@
 ---
 layout: default
-title: "2026 台灣 LLM 評測報告：Llama-3-Taiwan vs TAIDE vs Qwen3 繁體中文性能比較"
-description: "最新台灣在地化大型語言模型完整評測。TMLU、TMMLU+、TW Legal Eval 全面測試，含 Qwen3-Embedding、Gemini Embedding 選型建議，以及 OpenAI gpt-oss、Claude Opus 4.1 最新動態。"
-"permalink: /Blog/TW-LLM-Benchmark
+title: 2026 台灣 LLM 評測報告：Llama-3-Taiwan vs TAIDE vs Qwen3 繁體中文性能比較
+description: 最新台灣在地化大型語言模型完整評測。TMLU、TMMLU+、TW Legal Eval 全面測試，含 Qwen3-Embedding、Gemini Embedding 選型建議，以及 OpenAI gpt-oss、Claude Opus 4.1 最新動態。
+permalink: /Blog/TW-LLM-Benchmark
 lang: zh-Hant
 keywords: ["LLM Benchmark", "臺灣大模型", "Llama-3-Taiwan", "TAIDE", "模型評測"]
 ---

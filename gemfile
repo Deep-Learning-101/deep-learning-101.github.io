@@ -1,0 +1,15 @@
+# 指定來源與 Ruby 版本（可改成你的版本）
+source "https://rubygems.org"
+ruby "3.1.0"
+
+# Jekyll 核心
+gem "jekyll", "~> 4.4"
+
+# 常用 plugin（你的 _config.yml 有用到的要放）
+gem "jekyll-sitemap", "~> 1.4"
+gem "jekyll-seo-tag", "~> 2.8"
+# 常見可選 plugin（視需要啟用）
+gem "jekyll-feed", "~> 0.16"
+
+# 若你使用 GitHub Pages（請擇一：使用 github-pages 或單獨列出 gems）
+# gem "github-pages", "~> 233", group: :jekyll_plugins
