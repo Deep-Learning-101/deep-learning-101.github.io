@@ -23,13 +23,21 @@ jobs:
 
       - name: Install dependencies
         run: |
-          gem install bundler
-          bundle config set path vendor/bundle || true
-          bundle install --jobs 4 --retry 3
+          if [ -f Gemfile ]; then
+            gem install bundler
+            bundle config set path vendor/bundle || true
+            bundle install --jobs 4 --retry 3
+          else
+            gem install jekyll jekyll-sitemap
+          fi
 
       - name: Build site
         run: |
-          bundle exec jekyll build --incremental=false
+          if [ -f Gemfile ]; then
+            bundle exec jekyll build --incremental=false
+          else
+            jekyll build --incremental=false
+          fi
 
       - name: Copy sitemap to repo root (if generated)
         run: |
