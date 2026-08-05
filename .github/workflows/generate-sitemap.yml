@@ -49,7 +49,7 @@ jobs:
             bundle install --jobs 4 --retry 3
           else
             echo "No Gemfile -> install jekyll and jekyll-sitemap globally"
-            gem install jekyll jekyll-sitemap
+            gem install jekyll jekyll-sitemap jekyll-seo-tag
           fi
 
       - name: Build site (save logs & upload on failure)
