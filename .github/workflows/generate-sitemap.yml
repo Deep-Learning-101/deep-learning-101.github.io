@@ -1,0 +1,56 @@
+name: Generate sitemap (build Jekyll & commit)
+
+on:
+  push:
+    branches: [ main ] # 若你的 default branch 不是 main，請改成正確分支
+
+permissions:
+  contents: write
+
+jobs:
+  build_and_sitemap:
+    if: github.actor != 'github-actions[bot]'   # 避免 actions 自己的 commit 再次觸發
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+
+      - name: Install dependencies
+        run: |
+          gem install bundler
+          bundle config set path vendor/bundle || true
+          bundle install --jobs 4 --retry 3
+
+      - name: Build site
+        run: |
+          bundle exec jekyll build --incremental=false
+
+      - name: Copy sitemap to repo root (if generated)
+        run: |
+          if [ -f _site/sitemap.xml ]; then
+            cp _site/sitemap.xml sitemap.xml
+            echo "Sitemap copied to sitemap.xml"
+          else
+            echo "No sitemap found in _site/, aborting copy"
+          fi
+
+      - name: Commit and push sitemap (if changed)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add sitemap.xml || true
+          # 如果沒有 staged 變更，結束 job
+          if git diff --staged --quiet; then
+            echo "No changes to sitemap.xml"
+            exit 0
+          fi
+          git commit -m "chore: update sitemap.xml [skip ci]" || echo "commit failed"
+          git push
