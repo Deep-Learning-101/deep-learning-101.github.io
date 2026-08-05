@@ -2,14 +2,14 @@ name: Generate sitemap (build Jekyll & commit)
 
 on:
   push:
-    branches: [ main ] # 若你的 default branch 不是 main，請改成正確分支
+    branches: [ main ] # 若分支不是 main 請改為你的分支名稱（如 master）
 
 permissions:
-  contents: write
+  contents: write   # 給予 Actions 寫入權限，否則 git push 會失敗
 
 jobs:
   build_and_sitemap:
-    if: github.actor != 'github-actions[bot]'   # 避免 actions 自己的 commit 再次觸發
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
 
     steps:
@@ -19,91 +19,38 @@ jobs:
       - name: Set up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.1
+          ruby-version: '3.1'
+          bundler-cache: true # 自動處理套件快取
 
-      # 新增或替換的 steps（貼到 jobs.build_and_sitemap.steps 內）
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 3.1
-
-      - name: Cache Ruby gems
-        uses: actions/cache@v4
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-gems-
-
-      - name: Install dependencies
+      - name: Build site
         run: |
-          echo "Ruby: $(ruby -v)"
-          echo "Gem: $(gem -v)"
           if [ -f Gemfile ]; then
-            echo "Using Gemfile -> use bundler"
-            gem install bundler
-            bundle config set path vendor/bundle || true
-            bundle install --jobs 4 --retry 3
+            bundle exec jekyll build
           else
-            echo "No Gemfile -> install jekyll and jekyll-sitemap globally"
             gem install jekyll jekyll-sitemap jekyll-seo-tag
+            jekyll build
           fi
 
-      - name: Build site (save logs & upload on failure)
-        id: build
-        run: |
-          set -o pipefail
-          mkdir -p build-logs
-          echo "---- ENV ----"
-          ruby -v
-          gem list --local
-          echo "---- Run jekyll build (trace) ----"
-          if [ -f Gemfile ]; then
-            bundle exec jekyll build --trace --verbose --trace 2>&1 | tee build-logs/jekyll-build.log
-          else
-            jekyll build --trace --verbose --trace 2>&1 | tee build-logs/jekyll-build.log
-          fi
-          echo "::set-output name=exitcode::$?"
-        continue-on-error: true
-
-      - name: Upload build logs (always)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: jekyll-build-logs
-          path: build-logs/
-
-      - name: Fail if build failed
-        if: steps.build.outputs.exitcode != '0'
-        run: |
-          echo "Jekyll build failed — see build logs artifact 'jekyll-build-logs'"
-          exit 1
-
-      # 後續的 Copy sitemap / Commit steps 照常放在後面（但要確保只有在 build 成功時才執行）
-
-      - name: Copy sitemap to repo root (if generated)
+      - name: Copy sitemap to repo root
         run: |
           if [ -f _site/sitemap.xml ]; then
             cp _site/sitemap.xml sitemap.xml
-            echo "Sitemap copied to sitemap.xml"
+            echo "成功複製 sitemap.xml 到根目錄！"
           else
-            echo "No sitemap found in _site/, aborting copy"
+            echo "找不到 _site/sitemap.xml"
+            exit 1
           fi
 
-      - name: Commit and push sitemap (if changed)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit and push sitemap
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add sitemap.xml || true
-          # 如果沒有 staged 變更，結束 job
+          git add sitemap.xml
+          
+          # 如果 sitemap 內容沒有變化就跳過 commit，避免無效提交
           if git diff --staged --quiet; then
-            echo "No changes to sitemap.xml"
-            exit 0
+            echo "Sitemap 沒有變更，跳過提交。"
+          else
+            git commit -m "chore: update sitemap.xml [skip ci]"
+            git push
           fi
-          git commit -m "chore: update sitemap.xml [skip ci]" || echo "commit failed"
-          git push
