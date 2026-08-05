@@ -21,34 +21,68 @@ jobs:
         with:
           ruby-version: 3.1
 
+      # 新增或替換的 steps（貼到 jobs.build_and_sitemap.steps 內）
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 3.1
+
+      - name: Cache Ruby gems
+        uses: actions/cache@v4
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
       - name: Install dependencies
         run: |
           echo "Ruby: $(ruby -v)"
           echo "Gem: $(gem -v)"
           if [ -f Gemfile ]; then
-            echo "Gemfile found — using bundler"
+            echo "Using Gemfile -> use bundler"
             gem install bundler
             bundle config set path vendor/bundle || true
-            # cache 建議（可選）：actions/cache on git side
             bundle install --jobs 4 --retry 3
           else
-            echo "No Gemfile — installing jekyll and sitemap gem globally"
+            echo "No Gemfile -> install jekyll and jekyll-sitemap globally"
             gem install jekyll jekyll-sitemap
           fi
 
-      - name: Build site (with trace)
+      - name: Build site (save logs & upload on failure)
+        id: build
         run: |
-          echo "---- Environment ----"
+          set -o pipefail
+          mkdir -p build-logs
+          echo "---- ENV ----"
           ruby -v
           gem list --local
-          echo "---- Run Jekyll build ----"
+          echo "---- Run jekyll build (trace) ----"
           if [ -f Gemfile ]; then
-            # 用 bundler 執行並開啟 trace，方便抓完整錯誤
-            bundle exec jekyll build --incremental=false --trace
+            bundle exec jekyll build --incremental=false --trace 2>&1 | tee build-logs/jekyll-build.log
           else
-            jekyll build --incremental=false --trace
+            jekyll build --incremental=false --trace 2>&1 | tee build-logs/jekyll-build.log
           fi
-          echo "Build exit code: $?"
+          echo "::set-output name=exitcode::$?"
+        continue-on-error: true
+
+      - name: Upload build logs (always)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: jekyll-build-logs
+          path: build-logs/
+
+      - name: Fail if build failed
+        if: steps.build.outputs.exitcode != '0'
+        run: |
+          echo "Jekyll build failed — see build logs artifact 'jekyll-build-logs'"
+          exit 1
+
+      # 後續的 Copy sitemap / Commit steps 照常放在後面（但要確保只有在 build 成功時才執行）
 
       - name: Copy sitemap to repo root (if generated)
         run: |
