@@ -4,7 +4,7 @@ title: "重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 
 title_seo: "DeepMind Agentic Profiles 論文深度拆解：AI Agent 四維資安與治理框架"
 description: "深度解析 Google DeepMind 發表於《Nature》的 Agentic Profiles 論文。本文從自主性(A)、效能(E)、目標複雜度(GC)與泛化能力(G)四大維度，拆解 AI Agent 的風險矩陣、相變效應與企業零信任治理對策。"
 date: 2026-08-14 08:00:00 +0800
-permalink: /Blog/Agentic-Profiles-Nature-DeepMind/
+permalink: /Blog/Agentic-Profiles
 last_modified_at: 2026-08-14 08:00:00 +0800
 author: TonTon
 categories: [AI, Cybersecurity]
