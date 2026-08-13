@@ -16,8 +16,8 @@ service_type: AI Consulting
 
 ---
 ### 📅 2026-08-14 更新快訊
-- 深度解析 Google DeepMind 發表於《Nature》的 Agentic Profiles 論文。本文從自主性(A)、效能(E)、目標複雜度(GC)與泛化能力(G)四大維度，拆解 AI Agent 的風險矩陣、相變效應與企業零信任治理對策。
-  - Kasirzadeh, A., Gabriel, I. Agentic profiles for effective AI governance. Nature 656, 320–328 (2026). https://doi.org/10.1038/s41586-026-10805-z
+- [深度解析 Google DeepMind 發表於《Nature》的 Agentic Profiles 論文](https://deep-learning-101.github.io/Blog/Agentic-Profiles)。本文從自主性(A)、效能(E)、目標複雜度(GC)與泛化能力(G)四大維度，拆解 AI Agent 的風險矩陣、相變效應與企業零信任治理對策。
+  - [Kasirzadeh, A., Gabriel, I. Agentic profiles for effective AI governance. Nature 656, 320–328 (2026).](https://doi.org/10.1038/s41586-026-10805-z)
 
 ### 📅 2026-07-25 更新快訊
 - **[CADDesigner](https://github.com/NiJingzhe/SimpleCADAPI)** `[2026]` 🔥 [CAD建模] [AI智慧體] [ECIP範式] [計算機輔助設計]
