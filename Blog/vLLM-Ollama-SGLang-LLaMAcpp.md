@@ -46,23 +46,25 @@ _深度解析四大主流熱門LLM服務框架_
 |---|---|---|---|---|
 | 核心定位 | 本地便捷與模型管理 | GPU 高吞吐 / 低延遲 | 複雜工作流 + 高性能 | 極致輕量、隨處可跑 |
 | 典型硬體 | CPU / Apple Silicon / NVIDIA | NVIDIA CUDA 多卡 / 多機 | NVIDIA / 部分 AMD GPU | CPU / CUDA / Apple Metal / WASM |
-| 權重 / 格式 | GGUF、亦可導入 HF 權重 | HF Transformers / safetensors | HF Transformers / safetensors | GGUF（主） |
+| 權重 / 格式 | GGUF、亦可導入 HF 權重 | HF Transformers / safetensors / GGUF | HF Transformers / safetensors | GGUF（主） |
 | 量化 | 4 / 5 / 8-bit（GGUF） | FP16 / BF16（外掛支援 GPTQ / AWQ / FP8） | FP16 / BF16 / INT4 / FP8 / GPTQ | 4 / 5 / 8-bit（GGUF） |
 | KV Cache 優化 | 基於 llama.cpp，支援 paged KV cache 與流式管理 | PagedAttention | RadixAttention + Reuse Cache（支援 streaming prefill） | 高效 C++ 實作 |
-| 批次 / 排程 | 基礎，單模型單隊列偏多 | 連續批次 + 動態排程 | 連續批次 + 零開銷排程 | 單隊列為主 |
+| 批次 / 排程 | 支援多併發請求與多模型同時常駐* | 連續批次 + 動態排程 | 連續批次 + 零開銷排程 | 單隊列為主 |
 | 多 GPU / 分散式 | 有限 | 強 | 強（張量並行） | 有限（以單機為主） |
-| 多模型 / 多租戶 | 易切換，併發有限 | 支援，多模型常駐 / 熱切換 | 支援，工作流級控制 | 支援多模型切換（非並行） |
+| 多模型 / 多租戶 | 支援多併發請求與多模型同時常駐* | 支援，多模型常駐 / 熱切換 | 支援，工作流級控制 | 支援多模型切換（非並行） |
 | LoRA / Adapter | 基本支援 | 多 LoRA / PEFT 請求級 | LoRA / Adapter 支援 | 具 LoRA 推理支援 |
 | 長上下文 | 取決於模型與量化，速度中等 | 高效，適合長上下文高併發 | 高效，Chunked Prefill 佳 | 可長上下文，吞吐較低 |
 | 推測解碼 | 限 | 有（逐步完善） | 有（成熟） | 有 |
 | 結構化 / 約束輸出 | 基礎 | JSON / 函式工具模式 | JSON、函式與自定義 DSL（最強） | Grammar / GBNF 成熟 |
-| 多模態 | 取決於模型包 | 支援多模態模型（視模型） | 支援文字 / 多模態管線 | 取決於模型與轉換 |
+| 多模態 | 取決於模型包 | 支援多模態模型（視模型） | 原生深度優化 VLM（支援圖片/影片 Prompt Cache 與高效多模態管線） | 原生支援（透過 mmproj 模組載入 GGUF 多模態模型） |
 | OpenAI API 兼容 | 是 | 是 | 是 | 是 |
 | 嵌入 / 向量 | 有 | 有 | 有 | 有 |
 | 監控 / 可觀測 | 基礎 | 較完善（指標 / 日誌） | 較完善（工作流視角） | 基礎 |
 | 部署複雜度 | 極低 | 中（需 GPU 與調優） | 中（需 GPU + 程式化） | 低（單一二進位） |
 | 社群成熟度 | 高 | 高 | 中高（增長快） | **極高** |
 | 代表用例 | 私有助手 / 離線 / PoC | 生產級 API 服務 | 代理 / 工具協作 / 多步任務 | 邊緣 / 離線 / 受限環境 |
+
+* 需透過 OLLAMA_NUM_PARALLEL / OLLAMA_MAX_LOADED_MODELS 配置
 
 ## 核心技術機制對比
 

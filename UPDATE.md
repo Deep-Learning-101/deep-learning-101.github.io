@@ -96,8 +96,6 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
----
-
 ### 📅 2026-05-18 更新快訊
 - **[Speech-Processing](https://deep-learning-101.github.io/Speech-Processing)**：
     - Speaker-Reasoner：(ASLP-lab) 打破多說話人重疊語音與身份漂移的魔咒，首創「智慧體多輪時序推理」的端到端語音大模型神作！
