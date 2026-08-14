@@ -16,11 +16,15 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
 
 ---
 
+**企業 AI 的下一個競爭點，不是誰能做出最多 Agent，而是誰能讓 Agent 在可量化的風險、權限、成本與稽核條件下可靠地執行。**
+
+🎯 面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？[AI 新賽局：企業導入生成式 AI 的入門策略與藍圖指南](https://deep-learning-101.github.io/Blog/AIBeginner).
+
 🎯 [重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 深度技術與治理復盤](https://deep-learning-101.github.io/Blog/Agentic-Profiles-Nature-DeepMind).
 
-🎯 決策者思維： 面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？請參考這篇策略分析：[AI 新賽局：企業導入生成式 AI 的入門策略與藍圖指南](https://deep-learning-101.github.io/Blog/AIBeginner).
+🎯 Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。[🛡️ AI 大模型安全護欄（LLM-Guard）綜合報告](https://deep-learning-101.github.io/cyber/LLM-Guard).
 
-🎯 企業級資安延伸： Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。完整架構請參考：[🛡️ AI 大模型安全護欄（LLM-Guard）綜合報告](https://deep-learning-101.github.io/cyber/LLM-Guard).
+**AI Governance 不是一份 PDF；它應該是一組可以執行的 Technical Controls。**
 
 ---
 
@@ -69,7 +73,7 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
 ## 壹、標竿分析的矛盾：「知己知彼，卻不露底牌」
 
 <p align="center">
-<img src="./AI-Govs/001.png" alt="商業競爭的囚徒困境：想看別人的底牌，卻怕洩漏自己的機密。現況為資訊孤島，目標是建立精準萃取洞察且徹底阻斷逆向還原的新機制。" height="250">
+<img src="./AI-Govs/001.png" alt="商業競爭的囚徒困境：想看別人的底牌，卻怕洩漏自己的機密。現況為資訊孤島，目標是建立精準萃取洞察且降低 re-identification / inference risk，並透過 privacy budget、minimum cohort size、query controls 等措施限制攻擊面的新機制。" height="250">
 </p>
 
 ### 一、資訊共享的囚徒困境
@@ -118,7 +122,7 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
 透過這些匿名的加密盲化基準對齊數據，企業不再需要閉門造車，且將能明確知道自己的 HR AI 是否符合業界的「健康標準」，從頭到尾，毫無後顧之憂地推展人資數位轉型，徹底免除招募機密外洩的疑慮。
 
 <p align="center">
-<img src="./AI-Govs/006.png" alt="構築數位主權：企業主權 AI 鑄造廠與免疫系統。採用 100% 地端部署 (On-Premise) 保護 HR 薪資與招募機密，內建 S.H.I.E.L.D. 認知防禦機制與智慧防火牆。" height="250">
+<img src="./AI-Govs/006.png" alt="構築數位主權：企業主權 AI 鑄造廠與免疫系統。採用 Risk-based deployment: Cloud / Private Cloud / On-Premise / Air-gapped 保護 HR 薪資與招募機密，內建 S.H.I.E.L.D. 認知防禦機制與智慧防火牆。" height="250">
 </p>
 
 然而，要讓上述高機敏的 HR AI 應用真正安全落地，企業必須在底層架構確立絕對的 **「數位主權」**。建議揚棄將機敏招募與薪資數據透過 API 拋轉至公有雲的作法，改採 **「[企業主權 AI 鑄造廠](https://deep-learning-101.github.io/SHIELD/#sovereign-ai-foundry)」** 概念，將模型與運算資源 100% 部署於企業地端，確保 **資料不出境** 的最高合規性。系統底層將內建如同 AI 免疫系統的認知防禦機制，能即時清洗惡意指令、阻斷試圖竊取薪資機密或竄改錄取標準的邏輯誘導，確保 AI 決策的純淨性，為人資數位轉型構築最堅實的安全底座。
@@ -159,7 +163,7 @@ AI 模型跟傳統軟體最根本的不同在於：它會隨著時間與新數�
 <img src="./AI-Govs/009.png" alt="防止失控的最後防線：自動預警與一鍵退場機制。包含 Executive Dashboard 實時監控，定義警戒紅線，以及緊急煞車 SOP 的一鍵退場 (Kill Switch) 開關。" height="250">
 </p>
 
-### 邁向零幻覺與全方位防禦：[S.H.I.E.L.D.](https://deep-learning-101.github.io/SHIELD/) 雙層護欄
+### 邁向 Hallucination Risk Reduction / Evidence-Grounded Generation：[S.H.I.E.L.D.](https://deep-learning-101.github.io/SHIELD/) 雙層護欄
 AI 治理的最後一哩路是抵禦惡意攻擊與技術先天缺陷。企業應導入類似 S.H.I.E.L.D. 的「內外雙層防禦」架構：
 * **外層防禦 (Outer Defense)：** 建立 24/7 監控機制，主動偵測明暗網威脅，並在系統漏洞被利用前自動生成阻斷規則，有效縮短 0-day 攻擊的空窗期。
 * **內層防禦 (Inner Defense)：** 設置專屬的邏輯防火牆，防範「提示詞注入 (Prompt Injection)」，確保模型不會因為使用者的惡意誘導而洩漏機密。
