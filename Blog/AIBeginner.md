@@ -69,7 +69,7 @@ keywords: ["企業 AI 導入", "AI 策略", "數位轉型", "GenAI 應用", "AI 
 
 🤖 安全的網絡通道是企業資安的基石。在架設、開放各類內部 AI 工具的同時，如何建立完善的負責任 AI 審查機制與資料稽核治理？[🤖 企業級 AI 標竿分析與負責任 AI 治理建議報告](https://deep-learning-101.github.io/Blog/AI-Govs).
 
-🎯 [重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 深度技術與治理復盤](https://deep-learning-101.github.io/Blog/Agentic-Profiles-Nature-DeepMind).
+🎯 [重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 深度技術與治理復盤](https://deep-learning-101.github.io/Blog/Agentic-Profiles).
 
 🎯 Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。[🛡️ AI 大模型安全護欄（LLM-Guard）綜合報告](https://deep-learning-101.github.io/cyber/LLM-Guard).
 
