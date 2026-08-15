@@ -19,15 +19,17 @@ keywords: ["Cloudflare Tunnel", "內網穿透", "免公網 IP", "Zero Trust", "S
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **Blog**：[2026年03月19日更新，用 Cloudflared 實作 SSH / HTTP / RDP Tunnel](https://blog.twman.org/2025/06/zero-trust-genai.html)
 
----
-
-# 《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》
-_用 Cloudflared 實作 SSH / HTTP / RDP Tunnel：不裸奔全面穿透 HTTP、SSH、RDP_
+> 🎯 **企業級架構延伸**：成功的內網穿透與資安邊界只是第一步。若您的團隊正準備在私有雲或地端環境架設企業內部 AI 服務與知識庫，建議同步參考 [**企業 AI 導入與 ROI 評估策略指南**](/Blog/AIBeginner) 與 [**企業級 AI 標竿分析與負責任 AI 治理建議**](/Blog/AI-Govs)。
 
 > 📌 **技術速覽**
 > 在免公網 IP 與無固定 IP 環境下，**Deep Learning 101** 教學展示如何透過 Cloudflare Tunnel 實作 Zero Trust 零信任架構。3 分鐘內即可建構安全的 SSH、HTTP 與遠端桌面 (RDP) 隧道，為企業內部 AI 工具與 RAG 系統打通安全的內網穿透防線。  
 > 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。  
 > 本教學詳細解說如何配置 **SSH**、**HTTP** 及 **Windows RDP** 的遠端連線，並結合 Zero Trust 驗證機制保護企業資產。  
+
+---
+
+# 《Cloudflare Tunnel 教學：免公網 IP，3分鐘架設內網穿透 (SSH/HTTP/RDP)》
+_用 Cloudflared 實作 SSH / HTTP / RDP Tunnel：不裸奔全面穿透 HTTP、SSH、RDP_
 
 🎯 決策者思維： 面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？請參考這篇策略分析：[AI 新賽局：企業導入生成式 AI 的入門策略與藍圖指南](https://deep-learning-101.github.io/Blog/AIBeginner).
 
@@ -79,6 +81,7 @@ ngrok http 11434 --host-header="localhost:11434"
 <a id="zero-trust"></a>
 
 ## 1️⃣ 零信任為什麼重要？尤其在 AI 應用場景
+> 🛡️ **AI 應用資安防禦**：當我們透過零信任架構將 AI 工具或 Agent 接入內部網路時，防護範圍不能只停留在網路層。更需要防範惡意提示詞注入與資料外洩，完整防禦架構可參閱 [**AI 大模型安全護欄 (LLM-Guard) 綜合報告**](/cyber/LLM-Guard)。
 
 大模型會「多問」、「亂問」、「記住」：比人更難控管；企業內部資源不應再預設信任任何網段或工具，Zero Trust 的四個核心：身份驗證、最小權限、動態評估、全程審計。
 
@@ -308,6 +311,7 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:22222
 <a id="http-tunnel"></a>
 
 ## 4️⃣ 🔧 Cloudflared Tunnel 實作教學 ▶️ HTTP 服務（網站 / API）
+> 💡 **實戰延伸**：透過 HTTP 隧道成功將網域對外暴露後，您就可以在主機上部署高效能的本地大模型推論框架（如 vLLM 或 Ollama），並進一步建構企業專屬的 [**高精準度 RAG 檢索增強生成系統**](/RAG)。
 
 *   設定 `cloudflared tunnel`
 *   設定 ingress rules
@@ -439,6 +443,7 @@ cloudflared access tcp --hostname xxx.twman.org --url localhost:13389
 
 ## 7️⃣✨ 小結與實務建議
 
+* 若您正準備在遠端伺服器上透過終端機開發 AI 應用，強烈推薦搭配使用 [**2026 Claude Code 完全整合指南與實戰避坑**](/Blog/ClaudeCode)，大幅提升遠端重構與自動化開發效率。
 *   Cloudflared 是快速實現 Zero Trust 的實用工具
 *   適合中小型企業或大型企業中的獨立專案團隊部署
 *   若未來你要開放 AI 工具存取資料，這些設計將成為關鍵防線

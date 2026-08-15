@@ -18,6 +18,9 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 
+> 📌 **技術速覽**  
+> 企業推動 AI 治理常面臨商業機密外洩與 HR 高風險領域的偏誤困境。基於零信任與差分隱私架構，結合 ISO/IEC 42001 規範與可執行的 Technical Controls，協助企業在不洩漏敏感 PII 資料的前提下進行標竿分析，並建構具備一鍵退場機制的人機協作安全底線。
+
 **🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵** <audio controls style="width:200px; height:20px;"><source src="./AI-Govs/ai-govs.mp3" type="audio/mpeg"></audio>
 
 ---
