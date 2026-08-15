@@ -60,24 +60,125 @@ keywords: ["企業 AI 導入", "AI 策略", "數位轉型", "GenAI 應用", "AI 
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 
-> 📌 **技術速覽**
-> 企業導入生成式 AI 的成敗，取決於能否避開架構迷航、幻覺與智慧財產權等 10 大致命陷阱。**TonTon Huang Ph.D.** 規劃的企業 AI 入門路線圖，強調從 POC 概念驗證階段即導入嚴格的資安護欄與數據治理，幫助決策者以最低試錯成本實現 AI 轉型。
-
 ---
 
 **企業 AI 的下一個競爭點，不是誰能做出最多 Agent，而是誰能讓 Agent 在可量化的風險、權限、成本與稽核條件下可靠地執行。**
 
-🤖 安全的網絡通道是企業資安的基石。在架設、開放各類內部 AI 工具的同時，如何建立完善的負責任 AI 審查機制與資料稽核治理？[🤖 企業級 AI 標竿分析與負責任 AI 治理建議報告](https://deep-learning-101.github.io/Blog/AI-Govs).
+🤖 [安全的網絡通道是企業資安的基石。在架設、開放各類內部 AI 工具的同時，如何建立完善的負責任 AI 審查機制與資料稽核治理？](https://deep-learning-101.github.io/Blog/AI-Govs).
 
 🎯 [重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 深度技術與治理復盤](https://deep-learning-101.github.io/Blog/Agentic-Profiles).
 
-🎯 Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。[🛡️ AI 大模型安全護欄（LLM-Guard）綜合報告](https://deep-learning-101.github.io/cyber/LLM-Guard).
+🎯 [Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。](https://deep-learning-101.github.io/cyber/LLM-Guard).
 
-**AI Governance 不是一份 PDF；它應該是一組可以執行的 Technical Controls。**
+🎯 [**Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)**](https://deep-learning-101.github.io/SHIELD/)
+
+**AI Governance 不是一份 PDF，它應該是一組可以執行的 Technical Controls。**
 
 ---
 
-* [台灣上市櫃公司 GenAI 實際落地案例總表 (2024-2025)](#genai2025)
+<h2 id="enterpriseagent">企業不是不能做 Agent，而是不能跳過給它多少資料、多少權限、多少計算資源，以及多少錯誤成本？</h2>
+
+現在市場上最容易出現的錯誤，是把「有沒有 Agent」當成企業 AI 數位轉型的 KPI。但對企業來說，真正應該問的並不是：
+
+> 「我們公司要不要導入 AI Agent？」
+
+而是：
+
+> 「這個工作流程是否值得交給 AI？如果值得，企業願意給它多少資料、多少權限、多少計算資源，以及多少錯誤成本？」
+
+這兩個問題完全不同。
+
+### 一、企業 AI 導入不是 Cloud vs On-Prem
+
+開源模型不代表不能進企業，Cloud API 也不代表一定會造成資料外洩，On-Premise 更不代表天然安全；企業真正需要管理的是：
+
+**`Model + Data + Software Supply Chain + Infrastructure + Identity + Tools + Business Process`**
+
+因此 AI 部署策略應該從「模型選擇」升級成「資料與風險分級」；這種架構的核心不是「全部地端」，而是：**Data Classification → Model Routing**，例如：
+
+```text
+Public Data
+    ↓
+Cloud LLM
+```
+```text
+Internal Business Data
+    ↓
+Enterprise AI Gateway
+    ↓
+Approved Cloud Model
+```
+```text
+Confidential Data
+    ↓
+Private Cloud / On-Prem Model
+```
+```text
+Highly Restricted Data
+    ↓
+No External LLM
+```
+
+### 二、不要先買 GPU，再找 AI 用途
+
+如果企業每天只有幾千次低延遲需求，卻先花數百萬建立 GPU Cluster，可能比使用受控的 Cloud Inference 更貴。
+
+反過來，如果企業每天產生大量高度敏感的推論流量，Cloud API 的長期 Token 成本、資料邊界與供應商依賴，也可能使 Private AI 更合理；所以企業應至少計算：
+
+```text
+Total AI Cost =
+GPU / Cloud Cost + Inference Cost + Storage + Network + Security + Monitoring + Engineering + Operations + Compliance + Human Review
+```
+
+而不是只看：
+
+```text
+LLM API Price
+```
+
+### 三、Agent 專案正式上線前，至少應該通過五個 Gate
+
+
+* Gate 1 — Business Value：**真的能降低成本** / 提高收入 / 降低風險嗎？
+* Gate 2 — Data Permission：Agent 到底**允許看到哪些資料**？
+* Gate 3 — Model Evaluation：Accuracy / Hallucination / Security / Bias 是否達標？
+* Gate 4 — Action Permission：Agent **可以**讀什麼、寫什麼、呼叫什麼 API？
+* Gate 5 — Operational Control：誰批准？怎麼監控？**出了問題怎麼停**？
+
+任何一關無法回答，都不應該直接進 Production。
+
+### 四、企業真正應該購買的不是「一個 Agent」
+
+企業真正需要的是：
+
+> **AI Control Plane (AI 控制平面)**
+
+它至少應該能管理：
+
+* 哪些 AI Model 被允許使用
+* 哪些資料可以送到哪個 Model
+* 哪些 User 可以使用哪些 Agent
+* Agent 可以呼叫哪些 Tool
+* 每次最多使用多少 Token
+* 哪些操作必須人工核准
+* 每次 AI 執行了什麼
+* 使用了哪些 Context
+* 產生什麼 Output
+* 發生錯誤時如何停止與回復
+
+所以企業導入 AI 的成熟度，不應該用：
+
+> 「我們有幾個 Agent？」
+
+衡量；而應該問：
+
+> **「我們能不能證明每一個 Agent 為什麼可以做它正在做的事情？」**
+
+這才是 Enterprise AI 的真正成熟度指標。
+
+---
+
+* [2024–2026 台灣上市櫃公司 GenAI 落地應用整合可查證公開總表](#genai2025)
 * [Gen AI 落地實戰：Google 的「從靈感到食譜」全球策略](#google101)
 * [企業 AI新賽局 入門策略實踐路線圖：從策略到治理，避開致命陷阱](#AIBeginner)
 * [Introduction (導論)](#introduction)
@@ -97,12 +198,13 @@ keywords: ["企業 AI 導入", "AI 策略", "數位轉型", "GenAI 應用", "AI 
     * [Mistake 9: Data Leakage (致命錯誤9：機密資料)](#c4-mistake-9-data-leakage)
     * [Mistake 10: IP Risk (致命錯誤10：智財權風險)](#c4-mistake-10-ip-risk)
 * [Conclusion (結論)](#conclusion)
+* [企業不是不能做 Agent，而是不能跳過 AI Investment Gate](#enterpriseagent)
 
 -----
 
-<h2 id="genai2025">台灣上市櫃公司 GenAI 實際落地案例總表 (2024-2025)</h2>
+<h2 id="genai2025">2024–2026 台灣上市櫃公司 GenAI 落地應用整合可查證公開總表</h2>
 
-*(僅基於 2024-2025 年可查證之公開新聞)*
+*(僅基於 2024-2026 年可查證之公開新聞)*
 
 > **🚀 本文重點摘要 (TL;DR)：**
 > 企業導入 AI 不僅是技術升級，更是商業模式的重構。
@@ -110,7 +212,7 @@ keywords: ["企業 AI 導入", "AI 策略", "數位轉型", "GenAI 應用", "AI 
 
 如表格所呈現，可以注意到兩大主流，應用最廣的是「對外」的客戶互動 (第1類) 和「對內」的 IT/研發 (第2類)；產業特性明顯： 金融/電信業 集中在「客服」和「法遵/IT」。 製造/半導體 則全力投入「研發」和「工廠製造 (第3類)」。模式清晰： 企業並非為了 AI 而 AI，而是將 GenAI 明確地應用於其最關鍵的成本中心（如客服、製造）或價值中心（如研發、行銷）。
 
-## 台灣上市櫃公司 GenAI 落地應用整合總表（2024–2025，可查證公開資料）
+## 2024–2026 台灣上市櫃公司 GenAI 落地應用整合可查證公開總表
 
 | 核心應用領域 | 核心應用類型 | 公司（產業代表） | 實際落地案例 / 平台名稱 | 參考鏈結 | 開發模式 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
@@ -121,6 +223,7 @@ keywords: ["企業 AI 導入", "AI 策略", "數位轉型", "GenAI 應用", "AI 
 | **2. 法遵、風控與合規** | • KYC / 法規比對<br>• 核保 / 理賠摘要<br>• 內容合規偵測 | 玉山金控（金融） | GENIE 平台：輔助 IT 程式碼、法遵文件比對、KYC 報告生成 | [GENIE](https://www.ithome.com.tw/news/162551) | In-House 主導 (串接 Azure OpenAI) |
 |  |  | 國泰金控（金融） | GAIA 2.0 升級版智能助理「阿發」 | [GAIA 2.0](https://www.cathayholdings.com/holdings/lastest_news/news_archive/newsarticle?newsID=8-0C1qzaP0aGC2qHopqJCg) | In-House 主導 |
 |  |  | 富邦金控（金融） | 導入保險核心業務：核保自動摘要體檢報告、理賠診斷書分析 | [富邦保險](https://www.wealth.com.tw/articles/523ae02c-79a9-4cf4-86cd-3d8ac41886c4) | In-House / 混合 |
+|  |  | 中信金控（金融） | AI客服、法遵、知識搜尋、程式開發 | [中信銀行](https://www.ithome.com.tw/pr/174896) | In-House / 混合 |
 | **3. 智慧製造與營運** | • 專家知識數位化<br>• 製程 / 能效優化 | 鴻海（製造） | AI 工廠：學習老師傅經驗、數位孿生與物流模擬 | [AI 工廠](https://www.cio.com.tw/91467/) | In-House / 混合 |
 |  |  | 台塑集團（傳產） | 工安、ESG 導入：輔助撰寫 ESG 報告書草稿、工安事件分析與通報 | [台塑 ESG](https://esg.businesstoday.com.tw/article/category/180689/post/202502260030) | In-House (透過台塑網) |
 | **4. 內部知識與支援** | • 內部知識庫 / AI Agent<br>• IT / 營運維護助手 | 華碩（科技） | ASUS AI Assistant：內部知識庫、IT 營運維護助手 | [ASUS AI](https://www.digitimes.com.tw/tech/dt/n/shwnws.asp?id=0000737026_71U1LXM51QRSZD7G0HKXG) | 混合 (共同開發, 與 Microsoft 合作) |
@@ -134,10 +237,10 @@ keywords: ["企業 AI 導入", "AI 策略", "數位轉型", "GenAI 應用", "AI 
 
 Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何做 (Why)」到「如何做 (How)」的全球趨勢：
 * [1,001 real-world gen AI use cases from the world's leading organizations](https://blog.google/products/google-cloud/gen-ai-business-use-cases/) - Oct 09, 2025
-    * 文章中，Google 揭示了全球企業的 GenAI 案例在 1.5 年內從 101 個激增至 1,001 個。這傳達了一個明確的訊號：**GenAI 已是主流，而非實驗**。
-    * 文中更直接亮出可證明的商業回報，例如 **Mercari** 預期 500% ROI 並減少 20% 工作量，**Virgin Voyages** 一次生成數千個廣告。這旨在向企業 C 級主管證明，GenAI 是可帶來真實利潤的商業決策。  
+    * Google 揭示了全球企業的 GenAI 案例在 1.5 年內從 101 個激增至 1,001 個。這傳達了一個明確的訊號：**GenAI 已是主流，而非實驗**。
+    * 直接亮出可證明的商業回報，例如 **Mercari** 預期 500% ROI 並減少 20% 工作量，**Virgin Voyages** 一次生成數千個廣告。這旨在向企業 C 級主管證明，GenAI 是可帶來真實利潤的商業決策。  
 * [101 gen AI use cases with technical blueprints](https://cloud.google.com/blog/u/2/products/ai-machine-learning/real-world-gen-ai-use-cases-with-technical-blueprints) - August 22, 2025
-    * 文章中，Google 接著提供了「技術藍圖」。這是在回應企業的下一個問題：「我們沒有人才，該怎麼辦？」
+    * Google 接著提供了「技術藍圖」。這是在回應企業的下一個問題：「我們沒有人才，該怎麼辦？」
     * Google 的答案是提供可複製的「架構食譜」和工具（如 Vertex AI, Gemini），讓企業**不必重新發明輪子**，大幅降低導入的技術門檻和人才依賴。
 
 ---
@@ -234,9 +337,9 @@ Google Cloud 近期發布的兩篇文章，完美地詮釋了 GenAI 從「為何
 
 這兩份來源共同展示了 Gen AI 成功的秘訣：快速（Fast）和可複製（Reproducible）。
 
-速度與規模： 10 倍的案例增長和可證明的 ROI（如 Mercari 的 500%）證明等待觀望已無優勢。
+速度與規模：10 倍的案例增長和可證明的 ROI（如 Mercari 的 500%）證明等待觀望已無優勢。
 
-降低門檻： 101 個技術藍圖提供了明確的「食譜」，讓企業能利用現有工具大幅減少人才依賴。
+降低門檻：101 個技術藍圖提供了明確的「食譜」，讓企業能利用現有工具大幅減少人才依賴。
 
 **分析結論：**
 
@@ -427,141 +530,7 @@ GenAI 帶來了巨大的機遇，但也埋下了全新的、更隱蔽的地雷�
 <img src="./AIBeginner/012.png" alt="AIBeginner-012" height="250">
 </p>
 
-<h2 id="enterpriseagent">企業不是不能做 Agent，而是不能跳過 AI Investment Gate</h2>
 
-現在市場上最容易出現的錯誤，是把「有沒有 Agent」當成企業 AI 數位轉型的 KPI。
-
-但對企業來說，真正應該問的並不是：
-
-> 「我們公司要不要導入 AI Agent？」
-
-而是：
-
-> 「這個工作流程是否值得交給 AI？如果值得，企業願意給它多少資料、多少權限、多少計算資源，以及多少錯誤成本？」
-
-這兩個問題完全不同。
-
-### 一、企業 AI 導入不是 Cloud vs On-Prem
-
-開源模型不代表不能進企業，Cloud API 也不代表一定會造成資料外洩，On-Premise 更不代表天然安全。
-
-企業真正需要管理的是：
-
-`Model + Data + Software Supply Chain + Infrastructure + Identity + Tools + Business Process`
-
-因此 AI 部署策略應該從「模型選擇」升級成「資料與風險分級」。
-
-例如：
-
-```text
-Public Data
-    ↓
-Public / Cloud LLM
-
-Internal Business Data
-    ↓
-Enterprise AI Gateway
-    ↓
-Approved Cloud Model
-
-Confidential Data
-    ↓
-Private Cloud / On-Prem Model
-
-Highly Restricted Data
-    ↓
-No External LLM
-```
-
-這種架構的核心不是「全部地端」，而是：
-
-> **Data Classification → Model Routing**
-
-### 二、不要先買 GPU，再找 AI 用途
-
-如果企業每天只有幾千次低延遲需求，卻先花數百萬建立 GPU Cluster，可能比使用受控的 Cloud Inference 更貴。
-
-反過來，如果企業每天產生大量高度敏感的推論流量，Cloud API 的長期 Token 成本、資料邊界與供應商依賴，也可能使 Private AI 更合理。
-
-所以企業應至少計算：
-
-```text
-Total AI Cost
-=
-GPU / Cloud Cost
-+ Inference Cost
-+ Storage
-+ Network
-+ Security
-+ Monitoring
-+ Engineering
-+ Operations
-+ Compliance
-+ Human Review
-```
-
-而不是只看：
-
-```text
-LLM API Price
-```
-
-### 三、Agent 專案正式上線前，至少應該通過五個 Gate
-
-```text
-Gate 1 — Business Value
-    ↓
-真的能降低成本 / 提高收入 / 降低風險嗎？
-
-Gate 2 — Data Permission
-    ↓
-Agent 到底允許看到哪些資料？
-
-Gate 3 — Model Evaluation
-    ↓
-Accuracy / Hallucination / Security / Bias 是否達標？
-
-Gate 4 — Action Permission
-    ↓
-Agent 可以讀什麼、寫什麼、呼叫什麼 API？
-
-Gate 5 — Operational Control
-    ↓
-誰批准？怎麼監控？出了問題怎麼停？
-```
-
-任何一關無法回答，都不應該直接進 Production。
-
-### 四、企業真正應該購買的不是「一個 Agent」
-
-企業真正需要的是：
-
-> **AI Control Plane**
-
-它至少應該能管理：
-
-* 哪些 AI Model 被允許使用
-* 哪些資料可以送到哪個 Model
-* 哪些 User 可以使用哪些 Agent
-* Agent 可以呼叫哪些 Tool
-* 每次最多使用多少 Token
-* 哪些操作必須人工核准
-* 每次 AI 執行了什麼
-* 使用了哪些 Context
-* 產生什麼 Output
-* 發生錯誤時如何停止與回復
-
-所以企業導入 AI 的成熟度，不應該用：
-
-> 「我們有幾個 Agent？」
-
-衡量。
-
-而應該問：
-
-> **「我們能不能證明每一個 Agent 為什麼可以做它正在做的事情？」**
-
-這才是 Enterprise AI 的真正成熟度指標。
 
   <script type="application/ld+json">
   {

@@ -52,13 +52,25 @@ keywords:
 
 **企業 AI 的下一個競爭點，不是誰能做出最多 Agent，而是誰能讓 Agent 在可量化的風險、權限、成本與稽核條件下可靠地執行。**
 
-🎯 面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？[AI 新賽局：企業導入生成式 AI 的入門策略與藍圖指南](https://deep-learning-101.github.io/Blog/AIBeginner).
+🎯 [面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？](https://deep-learning-101.github.io/Blog/AIBeginner).
 
-🤖 安全的網絡通道是企業資安的基石。在架設、開放各類內部 AI 工具的同時，如何建立完善的負責任 AI 審查機制與資料稽核治理？[🤖 企業級 AI 標竿分析與負責任 AI 治理建議報告](https://deep-learning-101.github.io/Blog/AI-Govs).
+🤖 [安全的網絡通道是企業資安的基石。在架設、開放各類內部 AI 工具的同時，如何建立完善的負責任 AI 審查機制與資料稽核治理？](https://deep-learning-101.github.io/Blog/AI-Govs).
 
-🎯 Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。[🛡️ AI 大模型安全護欄（LLM-Guard）綜合報告](https://deep-learning-101.github.io/cyber/LLM-Guard).
+🎯 [Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。](https://deep-learning-101.github.io/cyber/LLM-Guard).
+
+🎯 [**Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)**](https://deep-learning-101.github.io/SHIELD/)
 
 **AI Governance 不是一份 PDF；它應該是一組可以執行的 Technical Controls。**
+
+如果只問：
+
+> 「這是不是一個 AI Agent？」
+
+這個問題對企業治理幫助非常有限；真正應該問的是：
+
+> **這個 Agent 有多大的自主性？能影響什麼環境？能拆解多複雜的目標？能呼叫哪些工具？**
+
+因此 Agentic Profile 不應該只是研究分類，而應該直接連接到企業 Permission Model。
 
 ---
 
@@ -97,6 +109,33 @@ keywords:
 
 * **Agentic Profiles 的解法：** 將 AI Agent 定義為「能在有限外部控制下，跨越一個或多個領域，執行複雜且具影響力的目標導向行動之系統」。治理重點應轉向分析系統在四維坐標系中的具體落點 。
 
+* 企業 Agent 初步可以分成四級：
+
+  ```text
+  Tier 0
+  Observation Only
+  只能分析、摘要、搜尋
+  不可修改資料
+  ```
+  ```text
+  Tier 1
+  Assisted Action
+  可以產生草稿或建議
+  但必須人工批准
+  ```
+  ```text
+  Tier 2
+  Bounded Automation
+  可以自動執行低風險流程
+  但只能使用 Allowlisted Tools
+  ```
+  ```text
+  Tier 3
+  High-Impact Agent
+  可以跨系統執行高影響操作
+  必須採用強制 Approval / Sandbox / Kill Switch
+  ```
+
 ---
 
 <p align="center">
@@ -121,7 +160,7 @@ keywords:
 * **A.5 (完全自主性)**：所有情境下均無需人類監督或控制 。
 
 >
-> **資安與治理隱患：** 自主性越高，人類能夠介入的決策節點越少，導致複合型錯誤（Compound Errors）容易在連續行動中快速級聯擴散 。
+> **資安與治理隱患：** 自主性越高，人類能夠介入的決策節點越少，導致複合型錯誤（Compound Errors）容易在連續行動中快速級聯擴散 ；即使兩者使用的是同一個 LLM，也絕對不能採用相同的治理政策。
 > 
 
 ---
@@ -161,11 +200,63 @@ keywords:
 * **GC.4 (高複雜度)**：需動態平衡多重衝突目標，並進行長序列的階層式規劃（Hierarchical Planning）（如 Claude 3.5 Sonnet、Waymo）。
 * **GC.5 (無邊界複雜度)**：能自主無邊界地生成新的目標結構，並解讀極度模糊的抽象指令 。
 
+##### 為什麼「Tool」比「Model」更重要？
 
+假設：
+
+```text
+Model A
+```
+
+原本只能：
+
+```text
+回答問題
+```
+
+加入：
+
+```text
+Search API
+Database
+Email
+ERP
+Payment API
+```
+
+它就從：
+
+```text
+Information System
+```
+
+變成：
+
+```text
+Action System
+```
+
+因此 Agent 的治理單位不應只是：
+
+```text
+Model
+```
+
+而應該是：
+
+```text
+Model + Scaffolding + Memory + Tools + Identity + Environment
+```
+
+這也是 Agent Risk 與傳統 LLM Risk 最大的差異。
 
 > 
 > **資安與治理隱患：** 目標越複雜，系統越容易出現「規範博弈 (Specification Gaming)」，即 AI 發現了某種鑽漏洞的奇特路徑，形式上滿足指標但實質上違背設計本意 。
 >  
+
+換句話說：
+
+> **真正成熟的 Agent Governance，不是判定「這個 Agent 安不安全」，而是決定「這個 Agent 在什麼條件下可以做什麼」。**
 
 ---
 
@@ -181,8 +272,6 @@ keywords:
 * **G.2 (特定領域)**：能在結構相似的封閉領域群運作（如 Waymo 處理駕駛領域）。
 * **G.3 - G.4 (多領域/大多數領域)**：跨越語言、邏輯、程式碼等多種認知領域（如 ChatGPT-3.5, Claude 3.5 Sonnet）。
 * **G.5 (完全通用 AGI)**：能涵蓋人類所有的認知任務領域 。
-
-
 
 ---
 

@@ -16,32 +16,56 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
 
 ---
 
-**企業 AI 的下一個競爭點，不是誰能做出最多 Agent，而是誰能讓 Agent 在可量化的風險、權限、成本與稽核條件下可靠地執行。**
-
-🎯 面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？[AI 新賽局：企業導入生成式 AI 的入門策略與藍圖指南](https://deep-learning-101.github.io/Blog/AIBeginner).
-
-🎯 [重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 深度技術與治理復盤](https://deep-learning-101.github.io/Blog/Agentic-Profiles).
-
-🎯 Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。[🛡️ AI 大模型安全護欄（LLM-Guard）綜合報告](https://deep-learning-101.github.io/cyber/LLM-Guard).
-
-**AI Governance 不是一份 PDF；它應該是一組可以執行的 Technical Controls。**
-
----
-
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**Blog**：2026年03月27日  
-**相關文章**：[**Sovereign Heuristic Intelligence & Enterprise Logic Defense** (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)  
+
 **🎵 不聽可惜的 NotebookLM Podcast @ Google 🎵** <audio controls style="width:200px; height:20px;"><source src="./AI-Govs/ai-govs.mp3" type="audio/mpeg"></audio>
 
 ---
 
-> 📌 **技術速覽**
-> 企業推動 AI 治理常面臨商業機密外洩與 HR 高風險領域的偏誤困境。**TonTon Huang Ph.D.** 提出零信任與差分隱私架構，結合 ISO/IEC 42001 規範，協助企業在不洩漏敏感 PII 資料的前提下進行標竿分析，並建構具備一鍵退場機制的人機協作安全底線。
+**企業 AI 的下一個競爭點，不是誰能做出最多 Agent，而是誰能讓 Agent 在可量化的風險、權限、成本與稽核條件下可靠地執行。**
+
+🎯 [面對層出不窮的 AI 新框架，企業盲目跟風往往只會帶來高昂的試錯成本。如何跳出技術焦慮，從商業本質制定 AI 落地架構？](https://deep-learning-101.github.io/Blog/AIBeginner).
+
+🎯 [重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 深度技術與治理復盤](https://deep-learning-101.github.io/Blog/Agentic-Profiles).
+
+🎯 [Cloudflared Tunnel 解決了網絡層的邊界安全，但如果你架設的是企業內部 AI 服務，更需要解決應用層的「輸入輸出安全檢查」。](https://deep-learning-101.github.io/cyber/LLM-Guard).
+
+🎯 [**Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)**](https://deep-learning-101.github.io/SHIELD/)
 
 ---
 
-### 從通用工具轉向「主權 AI 資產化工廠」
-面對當前 AI 導入的困境，企業級 AI 的戰略必須從「採購通用 SaaS 工具」升級為「打造專屬主權 AI 資產」。如同法務部等高度敏感公部門的建置策略，企業應採用「底層資源共享、應用服務分流」的封閉式地端架構。這不僅能確保機密數據不出境，更能將每一次的模型微調與提示工程，轉化為企業專屬、可稽核的「數位員工」，徹底解決通用模型「不懂行業內規」的痛點。
+企業最常見的 AI Governance 問題，不是沒有 Policy，而是：
+
+> Policy 寫完之後，系統到底有沒有真的執行？
+
+例如：「不得將機密資料送到未經批准的模型。」這是一條政策。但是企業真正需要的是：
+
+```text
+User -> AI Gateway -> Data Classification -> DLP / PII Detection -> Model Policy Engine -> Approved Model -> Output Guard -> Audit Log
+```
+
+這才叫「政策被技術執行」。
+
+**AI Governance 不是一份 PDF；它應該是一組可以執行的 Technical Controls。**
+
+| Governance Principle | 可執行控制                                             |
+| -------------------- | ------------------------------------------------- |
+| Fairness             | Bias Dataset、Group Evaluation、Disparate Impact    |
+| Transparency         | Prompt / Context / Model / Tool Tracing           |
+| Explainability       | Evidence Retrieval、Source Citation、Decision Trace |
+| Accountability       | User Identity、Immutable Audit Log                 |
+| Human Oversight      | Approval Gate、Breakpoint                          |
+| Privacy              | DLP、PII Redaction、Encryption                      |
+| Security             | Prompt Injection Detection、Tool Allowlist         |
+| Least Privilege      | RBAC / ABAC、Scoped Tool Permission                |
+| Cost Governance      | Token Budget、Rate Limit、Model Routing             |
+| Model Risk           | Benchmark、Red Team、Release Gate                   |
+| Supply Chain         | SBOM、Model Provenance、License Review              |
+| Incident Response    | Alert、Rollback、Kill Switch                        |
+
+換句話說：
+
+> **AI Governance 的終點不是一份 Governance Policy，而是一組可驗證的 Controls。**
 
 ---
 
@@ -59,6 +83,57 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
     </iframe>
   </div>
 </div>
+
+---
+
+每一套 AI / Agent 都應該進入企業 Registry，而不是由不同部門自行採購；最少記錄：
+
+```text
+System ID、Owner、Business Purpose、Model、Model Version、Data Classification、Allowed Users、Allowed Tools、Risk Tier、Evaluation Result、Human Approval Required、Deployment Location、Vendor、License、Last Review、Kill Switch
+```
+
+如此一來，企業才能真正回答：
+
+> 公司到底用了多少 AI？
+
+> 哪些 AI 可以接觸機密資料？
+
+> 哪些 AI 可以執行交易？
+
+> 哪些 Agent 可以呼叫外部 API？
+
+> 哪一個 Model 最近換過版本？
+
+---
+
+企業不應讓：
+
+```text
+Employee → OpenAI / Gemini / Claude / Local LLM
+```
+
+成為主要架構；更成熟的做法是：
+
+```text
+Employee / Application
+          ↓
+      AI Gateway
+          ↓
+ ┌────────┼─────────┐
+ ↓        ↓         ↓
+Cloud    Private   Local
+LLM      Model     Model
+```
+
+Gateway 負責：
+
+```text
+Authentication、Authorization、DLP、Prompt Filtering、Model Routing、Token Budget、Rate Limit、Tool Authorization、Output Filtering、Audit Logging
+```
+
+如此企業未來即使更換模型供應商，也不需要重新建立整套治理架構。
+
+---
 
 ### [**🧠 企業級可信賴 AI 治理** (認知與語意的貼身保鑣： 阻擋「AI 提示詞攻擊與系統幻覺」，不讓 AI 大腦被騙或做錯決定。)](https://deep-learning-101.github.io/SHIELD/#trustworthy-ai-governance)
 
@@ -84,7 +159,42 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
 </p>
 
 ### 二、解決方案：從「信任人」轉向「信任數學」
-為了突破這個資訊孤島的矛盾與僵局，不能僅單純依賴傳統對「人」與「紙本合約」的保密協定 (NDA) 的表面的法律約束；而是透過密碼學與統計學的結合，改採國際前沿的**隱私強化技術 (PETs)**，建構 **「零信任 (Zero-Trust)」** 的數據交換框架；此框架不僅確保順利萃取出具備指標性的產業洞察，更重要的是，藉由數學底層邏輯機制，確保徹底阻斷被惡意逆向還原任何營業機密的可能；提供無可挑剔的安全保障。
+為了突破這個資訊孤島的矛盾與僵局，不能僅單純依賴傳統對「人」與「紙本合約」的保密協定 (NDA) 的表面的法律約束；而是透過密碼學與統計學的結合，改採國際前沿的**隱私強化技術 (PETs)**，建構 **「零信任 (Zero-Trust)」** 的數據交換框架；此框架不僅確保順利萃取出具備指標性的產業洞察，更重要的是，藉由數學底層邏輯機制，確保徹底阻斷被惡意逆向還原任何營業機密的可能；提供安全保障。
+
+### 三、Human-in-the-loop 不能只是「請人看看」
+
+真正的 Human Oversight 必須是技術性的：
+
+```text
+Agent Plan
+    ↓
+Risk Check
+    ↓
+Low Risk → Execute
+    │
+    └── High Risk
+             ↓
+       Human Approval
+             ↓
+          Execute
+```
+
+例如：
+
+```text
+讀取文件       → 自動
+整理資料       → 自動
+建立草稿       → 自動
+發送 Email     → 人工核准
+修改 ERP       → 人工核准
+財務付款       → 強制人工核准
+```
+
+這才是真正的 Breakpoint，而不是把一句：
+
+> 「AI 產生的結果請人工確認」
+
+放在畫面上。
 
 ---
 
@@ -146,6 +256,26 @@ keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分�
 ### 三、獨立性與當責機制
 一套安全的系統，不能既當球員又當裁判。因此，在制度面上，強烈建議並將協助企業設立跨部門的 **「AI 倫理委員會」** (涵蓋 HR、法務、資安與外部專家)。同時，在技術流程中設下硬性規定：任何 AI 模型在正式上線前，都必須交由未參與開發的獨立第三方團隊進行深度的 **「偏見稽核」**。透過這種權責分立的當責機制，確保系統上線後的每一天，都在企業的絕對掌控之中。
 
+### 四、Agent 的 Tool Permission 必須比 Model Permission 更嚴格
+
+一個模型能回答什麼，和 Agent 能做什麼，是完全不同的風險。
+
+例如：
+
+```text
+LLM -> read_email -> search_database -> create_ticket -> send_email -> execute_payment
+```
+
+最後一層的風險，不是「模型有沒有幻覺」，而是：
+
+> **如果模型判斷錯了，它到底能對現實世界造成什麼後果？**
+
+因此 Tool 應採用：
+
+```text
+Allowlist + Least Privilege + Scoped Credentials + Sandbox + Human Approval + Rate Limit
+```
+
 ---
 
 ## 伍、永續營運與持續監控：防止模型崩壞的最後防線
@@ -163,11 +293,11 @@ AI 模型跟傳統軟體最根本的不同在於：它會隨著時間與新數�
 <img src="./AI-Govs/009.png" alt="防止失控的最後防線：自動預警與一鍵退場機制。包含 Executive Dashboard 實時監控，定義警戒紅線，以及緊急煞車 SOP 的一鍵退場 (Kill Switch) 開關。" height="250">
 </p>
 
-### 邁向 Hallucination Risk Reduction / Evidence-Grounded Generation：[S.H.I.E.L.D.](https://deep-learning-101.github.io/SHIELD/) 雙層護欄
+#### 邁向 Hallucination Risk Reduction / Evidence-Grounded Generation：[S.H.I.E.L.D.](https://deep-learning-101.github.io/SHIELD/) 雙層護欄
 AI 治理的最後一哩路是抵禦惡意攻擊與技術先天缺陷。企業應導入類似 S.H.I.E.L.D. 的「內外雙層防禦」架構：
 * **外層防禦 (Outer Defense)：** 建立 24/7 監控機制，主動偵測明暗網威脅，並在系統漏洞被利用前自動生成阻斷規則，有效縮短 0-day 攻擊的空窗期。
 * **內層防禦 (Inner Defense)：** 設置專屬的邏輯防火牆，防範「提示詞注入 (Prompt Injection)」，確保模型不會因為使用者的惡意誘導而洩漏機密。
-* **無向量檢索 (Vectorless RAG)：** 針對 RAG 架構中常見的幻覺問題，放棄模糊的向量空間，改以更精確的邏輯鎖定範圍，實現低成本且零幻覺的精準回應，確保 AI 給出的每一項建議都能 100% 回溯至真實條文。
+* **無向量檢索 (Vectorless RAG)：** 針對 RAG 架構中常見的幻覺問題，放棄模糊的向量空間，改以更精確的邏輯鎖定範圍，實現低成本的精準回應，確保 AI 給出的每一項建議都能回溯至真實條文。
 
 ### 二、持續性儀表板與自動化預警
 在系統後台建置一個直觀的監控面板，實時緊盯 AI 的決策有沒有「走鐘」。只要系統偵測到 AI 的錄取偏好開始向特定群體傾斜，或是超出了我們設定的警戒紅線，就會立刻觸發警報，並第一時間通報 AI 倫理委員會介入處理，把潛在的歧視風險攔截在災難發生之前。
@@ -177,6 +307,20 @@ AI 治理的最後一哩路是抵禦惡意攻擊與技術先天缺陷。企業�
 
 ### 三、人機協作與接管機制
 在 HR 這種牽涉個人職涯的高風險領域，必須踩死一條鐵律：**「AI 只能給建議，拍板決策的永遠是人」**。AI 在這裡的角色是高效的輔助副駕，絕非取代 HR。為了應對最極端的演算法失控狀況，系統內建了標準的緊急煞車 SOP。只要情況不對，管理層隨時能啟動 **「一鍵退場」** 功能，瞬間切換回全人工審核模式，確保企業營運與法規遵循享有絕對的安全底線。
+
+### 四、治理最終應該形成一個可稽核的 Evidence Package
+
+企業 Audit 或監管單位真正需要的，不是：
+
+> 「我們有 AI Ethics Committee。」
+
+而是：
+
+```text
+Who -> Used Which Model -> Received Which Context -> Called Which Tool -> With Which Permission -> Produced Which Output -> Who Approved It -> What Happened Afterwards
+```
+
+因此每一次重要 AI execution 都應該產生：**Audit Evidence**，而不是只有 application log；這也是 AI Governance 從「顧問報告」走向「Enterprise Engineering」最重要的一步。
 
   <script type="application/ld+json">
   {

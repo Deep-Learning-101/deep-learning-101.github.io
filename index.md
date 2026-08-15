@@ -15,6 +15,19 @@ service_type: AI Consulting
 {% include ai-share.html %}
 
 ---
+
+現在市場上最容易出現的錯誤，是把「**有沒有 Agent**」當成企業 AI 數位轉型的 KPI。但對企業來說，真正應該問的並不是：
+
+> 「我們公司要不要導入 AI Agent？」
+
+而是：
+
+> 「這個工作流程是否值得交給 AI？如果值得，企業**願意給**它多少資料、多少權限、多少計算資源，以及多少錯誤成本？」
+
+這兩個問題完全不同。
+
+---
+
 ### 📅 2026-08-14 更新快訊
 - [深度解析 Google DeepMind 發表於《Nature》的 Agentic Profiles 論文](https://deep-learning-101.github.io/Blog/Agentic-Profiles)。本文從自主性(A)、效能(E)、目標複雜度(GC)與泛化能力(G)四大維度，拆解 AI Agent 的風險矩陣、相變效應與企業零信任治理對策。
   - [Kasirzadeh, A., Gabriel, I. Agentic profiles for effective AI governance. Nature 656, 320–328 (2026).](https://doi.org/10.1038/s41586-026-10805-z)
