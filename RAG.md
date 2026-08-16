@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "RAG 教學 2026：Chunking、Hybrid Search、Rerank 完整實作 + Qwen3 Embedding 評比"
-description: "從零打造本地端高精準度 RAG 系統。實測 Qwen3-Embedding-8B vs BGE-M3 vs Gemini Embedding，Reranker 選型指南，附 Visual RAG 無向量架構教學，幻覺率降到 5% 以下。"
+title: RAG 教學 2026：Chunking、Hybrid Search、Rerank 完整實作 + Qwen3 Embedding 評比
+description: RAG 系統幻覺太多怎麼解？完整實作 Chunking、Hybrid Search 與 Reranker 三層架構，實測 Qwen3-Embedding-8B vs BGE-M3 vs Gemini Embedding 選型差異，附 Visual 無向量方案——幻覺率可壓到 5% 以下。
 permalink: /RAG
 lang: zh-Hant
 schema_type: article
