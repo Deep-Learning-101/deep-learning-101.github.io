@@ -72,6 +72,16 @@ schema_type: article
 
 <h2 id="runtime-defense">🛡️ 執行期防禦與護欄框架 (Runtime Guardrails)</h2>
 
+* **[Uber ADR (Agentic AI Detection and Response)](https://github.com/uber/ADR)** `[2026-08]` 🔥 `[企業級Agent安全]` `[雙層在線檢測]` `[ADR-Bench]` `[憑證外洩攔截]` `[MLSys 2026 Oral]`
+  * **核心優勢**：**打破傳統 EDR 無法透視 Agent 提示詞與因果推理的黑盒盲區，Uber 正式開源經生產環境驗證十個月的企業級 AI 智能體安全系統！** 論文獲 MLSys 2026 Industry Track Oral 接收（arXiv:2605.17380），在 Uber 內部 7,200+ 主機、每天 1 萬+ 會話上實戰運行。系統建構「觀察（Sensor）➔ 評測（Benchmark）➔ 檢測（Detector）➔ 預防（Prevention）」完整控制迴圈：由 `Sensor/` 跨平台採集 Claude Code、Cursor、Codex 等 7+ 編碼工具遙測；首創 **ADR-Bench**（含 303 個基準任務、133 個 MCP 伺服器並覆蓋 17 種智能體攻擊技術）；在線檢測採用「第一層 gpt-4o 高召回初篩 ➔ 第二層 claude-sonnet-4-6 深度代理推理」雙層架構，在零誤報下檢出 67% 的攻擊，F1 分數達 SOTA 基線 2–4 倍，並在 AgentDojo 達成全檢出與極低誤報。
+  * **解決痛點 / 推薦場景**：**完美解決了企業在規模化導入 Cursor、Claude Code 等智能體時「缺乏全生命週期可觀測性、全面 LLM 審計成本過高」，以及「長效憑證在 26 個類別跨 MCP/模型提供商廣泛外洩」的致命資安盲點。** 其 Shift-Left 預防層在 206 個被檢出憑證上達成 97.2% 的精準度。極度適合**企業資安與 SecOps 團隊建構員工端與客服端 Agent 安全防禦大腦**、**進行 MCP 伺服器供應鏈偽裝與提示注入威脅評估**，以及**在私有化基礎設施中落地高性價比的動態 AI 遙測與威脅檢測閉環**。
+  * **資源**：[🐙 GitHub 官方開源](https://github.com/uber/ADR) | [📄 arXiv 論文 (2605.17380)](https://arxiv.org/abs/2605.17380) | [📦 PyPI 套件 (adr-sensor)](https://pypi.org/project/adr-sensor/) | [🏛️ MLSys 2026 場次頁](https://mlsys.org/virtual/2026/session/3700)
+
+* **[Vigil](https://github.com/vigil-soc/vigil)** `[2026-03-23]` 🔥 `[開源AI SOC]` `[13專職Agent小隊]` `[MCP標準生態]` `[100%本地資料駐留]` `[7200+檢測規則]`
+  * **核心優勢**：**打破商業閉源 AI SOC 黑盒壟斷，DeepTempo 於 RSA 2026 大會發表首個基於 LLM-native 架構的開源 AI 藍隊指揮中心！** 系統捨棄單一萬能模型的脆弱設計，由 13 個專門化 AI Agent 協同作戰（包含快速推理的 Triage 分析師、深度關聯溯源的 Investigator、自帶 0.90 信心度自動批准閘門的 Responder、自動標註 MITRE ATT&CK 的 Reporter、Detection Engineer、Forensics 及雲端事件調查等專職角色）。底層依托 Agent SDK 與標準 MCP（Model Context Protocol）工具插座，內建 7,200+ 條跨 Sigma、Splunk、Elastic、KQL 檢測規則與 30+ 款安全工具整合；提供 Incident Response、Full Investigation、Threat Hunt 與 Forensic Analysis 四大純文字 `SKILL.md` 工作流，實現 100% 本地運行且資料不出機器的端到端事件閉環。
+  * **解決痛點 / 推薦場景**：完美解決了企業藍隊「面對每日數千條告警產生嚴重告警疲勞、人工溯源耗時」，以及傳統商業 AI SOC「邏輯黑盒不透明、年費高達數萬至數十萬美元、機密日誌被迫上雲離境」的致命痛點。 結合 DeepTempo LogLM 可進一步獲得行為基礎異常檢測能力，有效抵禦無人值守 AI 紅隊（如 ARTEMIS）的連續自動化滲透。極度適合**企業資安團隊與 SOC 運營中心打造私有化、可審計的 AI 協同防禦中樞**、**中小團隊進行快速概念驗證 (POC) 提升調查效率**，以及**作為現有 SIEM/EDR 基礎設施的次世代智慧分析副駕**。
+  * **資源**：[🐙 GitHub 官方倉庫](https://github.com/vigil-soc/vigil) | [🌐 Vigil 官方網站](https://vigilsoc.org) | [📝 DeepTempo 官方發布技術專案](https://www.deeptempo.ai/blogs/introducing-vigil---your-ai-soc-open-source) | [📄 6 小時紅隊實驗技術分析](https://www.deeptempo.ai/blogs/the-adversary-who-never-gets-tired-what-a-6-hour-ai-red-team-engagement-means-for-your-soc)
+
 * **NVIDIA NeMo Guardrails**
   * **核心優勢**：**可編程的「對話路由」框架**。NVIDIA 的策略核心是提供一個具體、可程式化的開源工具，讓開發者能輕易地為其大型語言模型 (LLM) 應用程式加上一道道「護欄」，確保 AI 的行為符合預期、安全且在可控範圍內。它的設計初衷，就是為了抵禦各類試圖繞過安全機制的對抗性攻擊。
   * **解決痛點 / 推薦場景**：提供三道護欄防線（輸入護欄、對話護欄、輸出護欄），能有效防禦直接提示詞注入 (Direct Prompt Injection)、語義操縱 (Semantic Manipulation) 以及角色扮演攻擊 (Role-Playing Attacks) 產生的機密洩漏。<br>`[對話路由]` `[可程式化護欄]`

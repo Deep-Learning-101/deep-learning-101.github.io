@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "企業 AI 導入避坑指南：10 大致命錯誤與台灣案例 (2026)"
+title: 企業 GenAI 導入完整指南 2026：10 大陷阱 + 台灣金融製造業真實案例
 description: "打破盲目跟風與算力迷思！專為企業決策者打造的 GenAI 落地指南。盤點台灣金融與製造業真實案例，深入拆解數據外洩、算力迷航與自動化偏見等 10 大致命陷阱，助你以最低成本實現 AI 轉型。"
 permalink: /Blog/AIBeginner
 lang: zh-Hant

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: "企業 AI 合規指南 2026：HR 履歷篩選偏誤防範、ISO 42001 與 EU AI Act 實踐"
+title: 企業 AI 治理框架 2026：AI Gateway 架構、政策執行控制與 ISO 42001 實踐指南
 description: "企業如何在不洩漏機密的前提下進行 AI 標竿分析？本指南解析差分隱私、零信任架構在 HR 高風險 AI 應用的落地做法，含 ISO/IEC 42001 稽核準備要點。"
 permalink: /Blog/AI-Govs
 lang: zh-Hant
