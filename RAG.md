@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RAG 教學 2026：Chunking、Hybrid Search、Rerank 完整實作 + Qwen3 Embedding 評比
-description: RAG 系統幻覺太多怎麼解？完整實作 Chunking、Hybrid Search 與 Reranker 三層架構，實測 Qwen3-Embedding-8B vs BGE-M3 vs Gemini Embedding 選型差異，附 Visual 無向量方案——幻覺率可壓到 5% 以下。
+description: RAG 系統幻覺太多怎麼解？完整實作 Chunking、Hybrid Search 與 Reranker 三層架構，實測 Qwen3-Embedding-8B vs BGE-M3 vs Gemini Embedding 2（多模態）vs Jina V5 Omni 選型差異，附 Visual 無向量方案與 RAGAS 四大評估指標（Faithfulness、Context Recall）A/B 測試實戰——幻覺率可壓到 5% 以下。
 permalink: /RAG
 lang: zh-Hant
 schema_type: article
@@ -22,13 +22,13 @@ schema_type: article
 > **RAG (檢索增強生成)** 是一種結合外部知識庫檢索與生成式 AI 的技術，能有效解決 LLM 的幻覺問題。  
 > 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧。  
 
-## 如何做 RAG？從零開始的三步驟快速入門
+## RAG 怎麼做？三步驟快速入門
 * **建立知識庫**：用 LlamaIndex 或 LangChain 把文件切塊 (Chunking) 並轉成向量
 * **混合檢索**：結合語義搜尋（向量）+ 關鍵字搜尋（BM25），提高召回率
 * **Rerank 排序**：用 Qwen3/Gemini Reranker 從候選結果中選出最相關的片段再給 LLM
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
+**日期**：2026年08月20日 <> 2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
 **相關文章 I**：2024-07-07：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
 **相關文章 II**：2025-07-16：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)  
 **相關文章 III**：2026-04-21：[Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)  
@@ -70,6 +70,10 @@ schema_type: article
     - [2.7 突破表格與排版限制：無向量視覺檢索 (Vectorless Visual RAG)](#visual-rag)
   - [LLM 生成優化 (LLM Generation)](#llm-gen)
   - [迭代優化與評估 (Iterative Optimization & Evaluation)](#evaluation)
+    - [RAGAS：四大核心評估指標](#ragas-metrics)
+    - [黃金測試集構建](#golden-testset)
+    - [A/B 測試與 Bad Case 分析](#ab-test)
+    - [自動化評估流水線與速查清單](#eval-pipeline)
 - [總結](#summary)
 
 ---
@@ -222,6 +226,10 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 
 1.  **[Google Gemini Embedding (當前榜首)](https://ai.google.dev/gemini-api/docs/embeddings?hl=zh-tw)**:
     * **gemini-embedding-001**: Google 推出的此模型在發布後迅速登上 MTEB 排行榜首位，展現了其最先進（State-of-the-Art）的文本表徵能力。作為一個閉源商用模型，它在各項評測中（檢索、分類、聚類等）取得了極高的綜合平均分，使其成為追求極致性能、且在 Google Cloud 生態內的開發者的首選。
+    * **gemini-embedding-2** `[公開預覽]` 🔥：Google 首款**原生多模態**嵌入模型，目前透過 Gemini API 與 Vertex AI 以公開預覽形式提供。相較 `gemini-embedding-001` 以文字為主的定位，`gemini-embedding-2` 可將文字、圖片、影片、音訊與 PDF 文件映射至**同一個向量空間**，支援超過 100 種語言與圖文交錯輸入，讓開發者以單一模型處理跨模態的檢索、分類與語意比對任務。
+        * **輸入規格**：文字 8,192 tokens；每次請求最多 6 張 PNG/JPEG 圖片；最長 120 秒 MP4/MOV 影片；原生音訊（免轉文字）；最長 6 頁 PDF。
+        * **向量壓縮**：沿用 Matryoshka Representation Learning，官方建議 **3,072 / 1,536 / 768** 維度以維持語意品質。
+        * **適用場景**：企業多模態 RAG 知識庫、影音資產語意搜尋、跨媒介文件分類。Google 表示在文字、圖片與影片任務上均優於既有領先模型，並新增原生語音處理能力。
 
 2.  **[Alibaba Qwen3 Embedding (開源領頭羊)](https://qwenlm.github.io/zh/blog/qwen3-embedding/)**:
     * **Qwen3-Embedding 系列 (0.6B, 4B, 8B)**: 這是由 Qwen 團隊基於強大的 Qwen3 基礎模型訓練的新一代 Embedding 系列。根據其官方報告，**`Qwen3-Embedding-8B`** 模型在發布時曾一度登頂 MTEB 多語言榜單，目前也以微弱差距緊隨 `gemini-embedding-001` 之後，位居第二，是**開源模型中的 undisputed champion (無可爭議的冠軍)**。
@@ -235,19 +243,27 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
       * **Voyage AI & NV-Embed**: 這些同樣是性能非常強勁的（商用）模型，雖然被最新的 Gemini 和 Qwen3 超越，但依然處於排行榜的頂級梯隊中，是特定需求下的可靠選項。
       * **intfloat/multilingual-e5-large-instruct**: 這是由 Microsoft Research 推出的 E5 系列中的重要多語言模型。E5 系列是推廣**指令微調 (Instruction Tuning)** 於 Embedding 領域的先驅之一，其設計理念對後續許多模型產生了深遠影響。雖然其性能已被新一代模型超越，但它仍然是一個非常穩固的開源基準模型，廣泛應用於學術研究和業界實踐中。
 
+4.  **[Jina Embeddings V5 Omni（全模態向量化新星）](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small)** `[2026-05]` 🔥
+    * **核心優勢**：**打破模態孤島的全模態向量化霸主，真正實現圖、文、音、影「大一統」且完全相容舊有文字索引！** 創新採用凍結文字主幹、僅訓練 0.35% 輕量跨模態投影層的黑科技。它不僅單一模型就能原生支援四種模態的混合編碼（如：一句話+一張圖生成單一向量），更做到與前代 `v5-text` 逐位一致 (bit-identical)，讓老用戶升級時**完全免重建龐大的向量資料庫**。
+    * **解決痛點 / 推薦場景**：**完美解決傳統多模態 RAG 系統必須同時維護 CLIP (處理圖片) 與 Text Embedding 兩套獨立編碼器及向量空間的致命痛點，大幅降低硬體與維運成本。** 內建 4 種任務 LoRA 適配器（檢索、分類、聚類、匹配），並支援 MRL (Matryoshka) 動態降維技術，允許開發者實作「低維粗篩 → 高維精排」的極致省流管線。是打造**企業級全模態 RAG 知識庫**、**電商跨模態搜圖/搜片系統**，以及支援高併發 **vLLM 部署**的工業級大腦。
+    * **資源**：[🐙 HuggingFace 模型權重](https://huggingface.co/jinaai/jina-embeddings-v5-omni-small)
+    `[全模態向量化]` `[免重建索引]` `[Matryoshka降維]` `[vLLM原生支援]`
+
 **表 關鍵 Embedding 模型特性比較**
 
 | 模型名稱 | 主要語言 | 最大上下文長度 (Tokens) | MTEB Score (Avg) | C-MTEB Score | 關鍵優勢與表現摘要 |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | **google/gemini-embedding-001** | 多語言 | 8192 | **68.61** | 71.04 | 閉源商用，性能頂尖，生態整合。**MTEB 全球排行榜當前 \#1**。 |
+| **google/gemini-embedding-2** | 多模態 (文/圖/影/音/PDF) | 8192 | N/A（公開預覽中） | N/A | Google 首款原生多模態嵌入模型；單一向量空間涵蓋四種模態；支援 100+ 語言與圖文交錯輸入；MRL 建議維度 3072/1536/768。**公開預覽，多模態 RAG 新選擇**。 |
 | **Alibaba-NLP/Qwen3-Embedding-8B** | 多語言 (100+) | 32768 | **68.12** | 72.88 | 開源，性能頂尖，架構靈活，可調維度。**MTEB 全球排行榜 \#2，開源模型 \#1**。 |
 | **Alibaba-NLP/Qwen3-Embedding-4B** | 多語言 (100+) | 32768 | **66.86** | 71.85 | Qwen3 系列中型模型，高效能。MTEB 排名頂尖，具備成本效益。 |
 | **voyage-ai/voyage-large-2-instruct** | 多語言 | 16384 | **66.08** | 68.32 | 閉源商用，檢索性能強勁。曾為 MTEB 榜首，現仍居頂級梯隊。 |
 | **BAAI/bge-m3** | 多語言 (100+) | 8192 | 64.63 | 68.31 | 多向量檢索，長文本處理，多功能。排名已下滑，但在特定功能上仍具優勢。 |
 | **intfloat/multilingual-e5-large-instruct** | 多語言 | 512 | 62.13 | 62.91 | 開源，指令微調先驅，穩定的基準模型。經典模型，已被新模型超越。 |
 | **JinaAI/jina-embeddings-v2-base-en** | 英文為主 | 8192 | 61.15 | N/A | 曾是強力的開源選項。排名已下滑，被新模型大幅超越。 |
+| **jinaai/jina-embeddings-v5-omni-small** | 多模態 (圖/文/音/影) | 8192 | N/A | N/A | 全模態向量化，單模型支援四種模態混合編碼；與前代 v5-text bit-identical，免重建索引；內建 4 種 LoRA 任務適配器與 MRL 動態降維；vLLM 原生支援。**2026-05 最新發布，多模態 RAG 首選**。 |
 
-*(註：MTEB/C-MTEB 分數是浮動的，數據基於 [2025 年 Q3 的 CSV 檔案](https://huggingface.co/spaces/mteb/leaderboard)。N/A 表示無適用的公開分數。)*
+*(註：MTEB/C-MTEB 分數是浮動的，數據基於 [2025 年 Q3 的 CSV 檔案](https://huggingface.co/spaces/mteb/leaderboard)。N/A 表示無適用的公開分數；jina-embeddings-v5-omni-small 為多模態定位，非純文字 MTEB 評測對象。)*
 
 <h3 id="retrieval">資料檢索 (Data Retrieval)</h3>
 
@@ -474,13 +490,134 @@ def generate_answer(query, context, client):
 
 <h3 id="evaluation">迭代優化與評估 (Iterative Optimization & Evaluation)</h3>
 
-建立 RAG 系統並非一勞永逸，它是一個需要持續優化和迭代的過程。當系統上線後，我們需要一套機制來衡量其表現。
+建立 RAG 系統並非一勞永逸，它是一個需要持續優化和迭代的過程。缺乏評估體系的優化就是盲人摸象——你可能改了切分策略，感覺效果好了一點但說不上來好多少；換了 Embedding 模型，有些問題答得更好了，有些卻變差了；上線後使用者回饋「感覺不如以前了」，但你翻遍程式碼什麼都沒改。
 
-業界常見的做法包括：
+RAG 評估的本質，是給系統做一台「CT 檢查」：不是看整體「感覺好不好」，而是逐環節掃描，精確到「檢索的召回率是多少」「生成的忠實度是多少」「哪個環節拖了後腿」。有了這些數據，優化才有方向。
 
-* **自動化評估：** 使用強大的 LLM（如 GPT-4o）作為「評審」，根據相關性、忠實度、簡潔性等指標，自動評估 RAG 系統的回應品質。
-* **評估框架：** 利用 `Ragas` 等開源框架，對 RAG 管道的每個環節（檢索、生成）進行量化評分。
-* **使用者回饋：** 建立簡單直觀的回饋機制（如點讚/點踩），收集使用者最直接的體驗，這是發現問題、改進系統最寶貴的資訊來源。
+<h4 id="ragas-metrics">RAGAS：四大核心評估指標</h4>
+
+傳統 NLP 指標（BLEU、ROUGE）並不適合 RAG，因為 RAG 是「檢索 + 增強 + 生成」的複合系統，需要分別評估各環節：
+
+| 指標 | 評估環節 | 核心問題 |
+|------|----------|---------|
+| **Context Precision（上下文精確度）** | 檢索品質 | 召回的文件中有多少是真正相關的？ |
+| **Context Recall（上下文召回率）** | 檢索完整性 | 回答問題所需資訊，是否都被檢索到了？ |
+| **Faithfulness（忠實度）** | 生成可靠性 | 模型回答是否忠實於檢索結果，沒有編造？ |
+| **Answer Relevancy（回答相關性）** | 生成針對性 | 回答是否直接解決了使用者的問題？ |
+
+[RAGAS](https://docs.ragas.io/en/stable/) 是目前最主流的 RAG 評估開源框架，提供上述四個標準化指標，能幫助開發者從「憑感覺調整」邁向「系統化評估循環」。
+
+> ⚠️ **Faithfulness 是最重要的指標**。模型編造答案比找不到答案更可怕——使用者可能基於錯誤資訊做出決策。指標重要性排序：**Faithfulness > Recall > Precision > Relevancy**
+
+**運行 RAGAS 評估範例：**
+
+```python
+from ragas import evaluate
+from ragas.metrics import (
+    context_precision, context_recall,
+    faithfulness, answer_relevancy,
+)
+from datasets import Dataset
+
+eval_data = {
+    "question": ["公司年假政策是什麼？", "如何申請差旅報銷？"],
+    "contexts": [
+        ["公司年假政策：入職滿1年可享5天帶薪年假，需提前3天在OA系統提交申請..."],
+        ["差旅報銷流程：1. 填寫報銷單 2. 附上發票 3. 提交審批..."],
+    ],
+    "answer": [
+        "入職滿1年可享5天帶薪年假，需提前3天申請。",
+        "填寫報銷單並附上發票後提交審批。",
+    ],
+    "ground_truth": [
+        "入職滿1年可享5天帶薪年假，需提前3天在OA系統提交申請。",
+        "填寫差旅報銷單，附上原始發票，提交至直屬上級審批。",
+    ],
+}
+
+result = evaluate(
+    Dataset.from_dict(eval_data),
+    metrics=[context_precision, context_recall, faithfulness, answer_relevancy],
+)
+# 輸出示例：
+# {'context_precision': 0.78, 'context_recall': 0.65, 'faithfulness': 0.85, 'answer_relevancy': 0.72}
+```
+
+**結果解讀與優化方向：**
+
+| 指標低 | 說明 | 優化方向 |
+|--------|------|----------|
+| Context Precision 低 | 檢索噪音多 | 加 Rerank、調相似度閾值、優化 chunk |
+| Context Recall 低 | 檢索遺漏多 | 換 Embedding、加混合檢索、查詢改寫 |
+| Faithfulness 低 | 模型在編造 | 改提示詞、換模型、加來源標註要求 |
+| Answer Relevancy 低 | 答非所問 | 改查詢理解、提示詞加約束 |
+
+<h4 id="golden-testset">黃金測試集：評估的地基</h4>
+
+評估結果的可靠性取決於測試集的品質。**先建 50 個測試用例，跑出基線分數，然後再開始調優。**
+
+* **人工標註（最可靠）**：從真實使用者日誌中抽取 50–100 個問題，人工標註標準答案。
+* **LLM 自動生成（快速但有偏差）**：用 RAGAS 的 `TestsetGenerator` 基於文件自動生成問答對，支援 50% 簡單問題 + 30% 推理問題 + 20% 多文件問題的分布組合。
+
+<h4 id="ab-test">A/B 測試與 Bad Case 分析</h4>
+
+改了配置不能憑感覺，要 A/B 測試量化對比。以下是純向量 vs. 混合 + Rerank 的實測結果：
+
+| 指標 | 純向量檢索 | 混合 + Rerank | 提升幅度 |
+|------|-----------|--------------|---------|
+| Context Precision | 0.72 | 0.88 | **+22%** |
+| Context Recall | 0.68 | 0.82 | **+21%** |
+| Faithfulness | 0.83 | 0.86 | +4% |
+| Answer Relevancy | 0.71 | 0.79 | **+11%** |
+
+**Bad Case 分析**是 RAG 調優最有效的方法：找到低分 case → 定位哪個環節出問題 → 針對性優化 → 重新評估 → 看分數是否提升。整體平均分 80% 但有幾個 0 分的 Bad Case，可能比均分 75% 但全部及格更危險。
+
+<h4 id="eval-pipeline">自動化評估流水線與速查清單</h4>
+
+把評估集成到 CI/CD 中，每次改程式碼自動跑評估，5 分鐘就能知道改好還是改壞：
+
+```python
+import json
+from ragas import evaluate
+from ragas.metrics import context_precision, context_recall, faithfulness, answer_relevancy
+from datasets import Dataset
+
+def run_evaluation():
+    testset = json.load(open("golden_testset.json"))
+    results = run_rag_on_testset(testset)
+    scores = evaluate(
+        Dataset.from_dict(results),
+        metrics=[context_precision, context_recall, faithfulness, answer_relevancy],
+    )
+    baseline = json.load(open("baseline_scores.json"))
+    print("=== RAG 評估報告 ===")
+    for metric, score in scores.items():
+        diff = score - baseline.get(metric, 0)
+        print(f"{metric}: {score:.3f} ({'↑' if diff > 0 else '↓'} {abs(diff):.3f})")
+    if scores["faithfulness"] < 0.7:
+        print("⚠️ Faithfulness 低於 0.7，模型可能在編造答案！")
+    json.dump(dict(scores), open("baseline_scores.json", "w"))
+```
+
+**優化速查清單：**
+
+| 症狀 | 可能原因 | 優先嘗試 |
+|------|----------|---------|
+| Recall 低 | chunk 太大 / Embedding 差 / Top-K 太小 | 調小 chunk → 換 Qwen3-Embedding → 加 BM25 → 調大 K |
+| Precision 低 | 沒 Rerank / Top-K 太大 / 無過濾 | 加 Rerank → 降 K → 加元數據過濾 |
+| Faithfulness 低 | Prompt 沒約束 / 模型太弱 / 溫度高 | 加「僅基於上下文」約束 → temperature=0 → 換模型 |
+| Relevancy 低 | 查詢理解差 / 檢索到無關內容 | 查詢改寫 → 檢查切分 → 換 Prompt 模板 |
+| 改了沒效果 | 沒有評估體系 | 先建 50 個測試用例，跑基線再調 |
+
+**最佳實踐：**
+
+1. **先建測試集再優化**：沒有測試集的優化就是盲人摸象，50 個測試用例就夠起步。
+2. **先跑基線分數**：在優化之前先跑一遍評估，後面所有改動都跟基線對比。
+3. **每次只改一個變數**：同時改切分 + Embedding + Rerank，永遠不知道哪個改動有效。
+4. **關注 Bad Case 多於平均分**：有幾個 0 分的 Bad Case 可能比均分略低但全部及格更危險。
+5. **使用者回饋**：建立點讚/點踩回饋機制，這是發現問題最直接的資訊來源。
+
+> 📦 RAGAS GitHub：https://github.com/explodinggradients/ragas | 📖 官方文件：https://docs.ragas.io/en/stable/ | 📄 論文（ESANN 2024）：https://arxiv.org/abs/2309.15217 | 安裝：`pip install ragas`
 
 ---
 
@@ -519,8 +656,8 @@ def generate_answer(query, context, client):
           "@type": "WebPage",
           "@id": "https://deep-learning-101.github.io/RAG"
         },
-        "headline": "RAG 實戰指南 2026：Chunking、Qwen3 Embedding、混合檢索與 Rerank 完整教學",
-        "description": "2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 Chunking 策略、Qwen3-Embedding vs BGE-M3 選型、Hybrid Search 混合檢索與 Qwen3-Reranker 排名優化，以及無向量 Visual RAG 架構。",
+        "headline": "RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整教學",
+        "description": "2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 Chunking 策略、Qwen3-Embedding vs BGE-M3 選型、Gemini Embedding 2 與 Jina V5 Omni 多模態嵌入新選擇、Hybrid Search 混合檢索與 Qwen3-Reranker 排名優化，以及無向量 Visual RAG 架構。",
         "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/Dee
   pLearning101-LOGO.png",
         "author": {
@@ -532,7 +669,9 @@ def generate_answer(query, context, client):
           "@type": "Organization",
           "name": "Deep Learning 101, Taiwan",
           "url": "https://deep-learning-101.github.io/"
-        }
+        },
+        "datePublished": "2024-07-07T08:00:00+08:00",
+        "dateModified": "2026-08-20T08:00:00+08:00"
       },
       {
         "@type": "FAQPage",
@@ -559,7 +698,7 @@ def generate_answer(query, context, client):
             "name": "Qwen3-Embedding 和 BGE-M3 哪個更適合繁體中文 RAG？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "Qwen3-Embedding-8B 目前是 MTEB 全球第 2、開源第 1（得分 68.12），C-MTEB 中文評測得分 72.88，全面超越  BGE-M3（64.63 / 68.31）。若預算允許，閉源的 google/gemini-embedding-001（MTEB 68.61）是性能天花板。BGE-M3 仍適合需要多向量（密集+稀疏）混合檢索的特殊場景。"
+              "text": "Qwen3-Embedding-8B 目前是 MTEB 全球第 2、開源第 1（得分 68.12），C-MTEB 中文評測得分 72.88，全面超越 BGE-M3（64.63 / 68.31）。純文字檢索若預算允許，閉源的 google/gemini-embedding-001（MTEB 68.61）是性能天花板；若需同時處理圖文影音 PDF 的多模態場景，可評估 google/gemini-embedding-2（公開預覽，原生四模態同一向量空間）或 jinaai/jina-embeddings-v5-omni-small（開源，2026-05 發布，與舊索引 bit-identical 免重建）。BGE-M3 仍適合需要多向量（密集+稀疏）混合檢索的特殊場景。"
             }
           },
           {
@@ -583,9 +722,7 @@ def generate_answer(query, context, client):
             "name": "無向量視覺 RAG (Visual RAG) 如何解決 PDF 表格與複雜排版問題？",
             "acceptedAnswer": {
               "@type": "Answer",
-            "acceptedAnswer": {
-              "@type": "Answer",
-              "text": "ISO/IEC 42001 的三大治理支柱為：公平性（透過差異性衝擊分析量化偏誤並修正演算法權重）、透明性（導入XAI 可解釋性技術，讓每項 AI 決策都能交代判斷依據）、獨立性（設立不兼任開發的 AI 倫理委員會進行偏見稽核，確保權責分立）。"
+              "text": "傳統 RAG 提取 PDF 表格時會將 2D 結構壓扁為 1D 純文字，導致欄位錯位與 LLM 幻覺。Vectorless Visual RAG 完全捨棄文字切塊與向量化，改以底層物理版面解析工具（如 OpenDataLoader + PyMuPDF）建立 JSON 目錄樹，記錄表格與圖片的精準 Bounding Box 與絕對頁碼。查詢時 LLM 先閱讀輕量目錄定位頁碼，再直接調用該頁高畫質原始截圖（JPEG/PNG）送給多模態 LLM（如 Gemini 2.5 Pro、GPT-4o）看圖作答，實現 0% 排版遺失。特別適合金融報告、法律合約、醫療 SOP 等需嚴格追蹤引用來源的場景。"
             }
           },
           {

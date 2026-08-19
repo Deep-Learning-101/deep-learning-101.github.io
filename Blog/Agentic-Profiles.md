@@ -60,6 +60,8 @@ keywords:
 
 🎯 [**Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)**](https://deep-learning-101.github.io/SHIELD/)
 
+📚 [RAG 知識庫是 Agentic 系統中最常見的 Tier 0 資訊工具——其 Faithfulness 品質直接決定 Agent 決策可靠度。RAGAS 四大指標、A/B 測試與自動化評估流水線完整實戰。](https://deep-learning-101.github.io/RAG#evaluation)
+
 **AI Governance 不是一份 PDF；它應該是一組可以執行的 Technical Controls。**
 
 如果只問：
@@ -349,6 +351,9 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 #### Q4：企業在部署高自主性 AI Agent 時，最首要的資安防禦技術是什麼？
 針對高自主性（A.3 以上）的 Agent，人類即時監控已無法跟上其執行速度。企業必須導入 **「硬編碼自動化熔斷機制 (Circuit Breakers)」** 與 **「零信任動態權限閘道 (Zero-Trust Dynamic Gating)」**，在 Agent 出現異常連環錯誤或越權呼叫時，能在毫秒級自動阻斷執行並撤銷權限。
 
+#### Q5：Agentic 系統中的 RAG 知識工具如何量化評估品質？
+RAG 知識庫在 Agentic 系統中屬於 Tier 0（Observation Only）工具，但其輸出品質直接影響 Agent 後續行動的可靠性。建議使用 [RAGAS 框架](https://deep-learning-101.github.io/RAG#evaluation)的四大指標進行量化評估：**Context Precision**（檢索精確度）、**Context Recall**（檢索召回率）、**Faithfulness**（忠實度，最重要——Agent 基於幻覺內容做出的行動後果遠比單純問答嚴重）與 **Answer Relevancy**（回答相關性）。建議建立黃金測試集並將評估整合進 CI/CD，確保每次知識庫更新後 Faithfulness 不低於 0.8。
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -365,7 +370,7 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
       "proficiencyLevel": "Expert",
       "inLanguage": "zh-TW",
       "datePublished": "2026-08-14T08:00:00+08:00",
-      "dateModified": "2026-08-14T08:00:00+08:00",
+      "dateModified": "2026-08-20T08:00:00+08:00",
       "author": {
         "@type": "Person",
         "name": "TonTon",
@@ -422,6 +427,14 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "針對高自主性的 Agent，必須導入硬編碼自動化熔斷機制 (Circuit Breakers) 與零信任動態權限閘道 (Zero-Trust Dynamic Gating)，在 Agent 出現異常連環錯誤或越權呼叫時，能在毫秒級自動阻斷執行並撤銷權限。"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Agentic 系統中的 RAG 知識工具如何量化評估品質？",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "RAG 知識庫屬於 Tier 0 觀察型工具，但其 Faithfulness（忠實度）直接影響 Agent 後續行動可靠性。建議使用 RAGAS 框架評估 Context Precision、Context Recall、Faithfulness 與 Answer Relevancy 四大指標，並建立黃金測試集整合進 CI/CD，確保每次知識庫更新後 Faithfulness 維持在 0.8 以上。"
           }
         }
       ]

@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Agentic AI 完整指南 2026：AI Agent 定義、MCP 實戰與企業導入陷阱
-description: Andrew Ng 說的 Agentic AI 到底是什麼？直接比較 AI Agent vs Agentic AI 差異、MCP 架構實作、OWASP ASI 安全威脅（T1-T15），附台灣 IDC 數據：40% 企業「知AI」但只有 5% 真正落地，為什麼？
+title: "MCP 與 AI Agent 完整指南 2026：LangGraph、AutoGen 框架比較與 Agentic AI 實戰陷阱"
+description: "台灣最完整的 AI Agent 實戰解析。深度比較 MCP、LangGraph、AutoGen 架構差異，揭露 5 大企業導入陷阱，解析從 Demo 到生產的五大深淵（治理、運行時、安全、可觀測性、資料），附 Agent Harness、Model Armor、Agent Substrate 實戰指南與 OWASP ASI 安全防禦。"
 permalink: /agent
 lang: zh-Hant
 keywords: ["AI Agent", "Agentic AI", "代理式人工智慧", "AutoGen", "MCP", "LangGraph", "AI資安"]
@@ -44,9 +44,9 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
 > 本文深入探討 Agent 的核心定義、**MCP (Model Context Protocol)** 標準、**OWASP 安全性**挑戰，並比較開源框架與閉源產品的差異。
 
 **作者**：[TonTon Huang Ph.D.](https://twman.org/)  
-**日期**：2026年08月17日更新
+**日期**：2026年08月20日 <> 2025年06月03日
 
-- [**Blog版**](https://blog.twman.org/2025/03/AIAgent.html) | [**網頁版**](https://deep-learning-101.github.io/html/AI-Agents_Agentic-AI.html) | [**Skywork-PPT**](https://deep-learning-101.github.io/pdf/AI-Agents_Agentic-AI_Skywork-ppt.pdf)
+- [**Blog 版**](https://blog.twman.org/2025/03/AIAgent.html) | [**網頁 版**](https://deep-learning-101.github.io/html/AI-Agents_Agentic-AI.html) | [**Skywork-PPT**](https://deep-learning-101.github.io/pdf/AI-Agents_Agentic-AI_Skywork-ppt.pdf)
 - 參考文獻
   - [AI Search Has A Citation Problem, (Columbia Journalism Review, May 2025)](https://www.cjr.org/tow_center/we-compared-eight-ai-search-engines-theyre-all-bad-at-citing-news.php)：生成式 AI 在知識引用上的嚴重信任斷裂問題。
   - [AI Agents vs. Agentic AI, (Cornell University, May 2025)](https://www.alphaxiv.org/abs/2505.10468)：AI Agents 與 Agentic AI 概念上的差異與連結。
@@ -85,20 +85,6 @@ _那些AI 代理 (AI Agents) 與 代理式人工智慧 (Agentic AI) 實戰踩過
     </iframe>
   </div>  
 </div>
-
----
-
-### 📅  [2026-08-17 更新快訊]
-*OpenWorker (吳恩達力作)** `[2026-07-23]` 🔥  首款真正可「無人值守」的桌面 Agentic AI——四級風險防護、25+ 連接器，原生支援 MCP 生態與 Ollama
-  本地部署。[GitHub](https://github.com/andrewyng/openworker)
-- **DeerFlow 2.0 (字節跳動)** `[2026-03-26]` 🔥 Deep Research  升級為 Super Agent Harness，sub-agents、memory、sandbox
-  有機整合，是目前最完整的開源企業級多智能體框架。[GitHub](https://github.com/bytedance/deer-flow)
-- **Google ADK 正式 GA** `[2025-04-03]` Google 官方 Agent 開發套件，AgentFlow 可視化編排 + A2A 原生協議支援，深度整合 Vertex AI
-  生產環境。[GitHub](https://github.com/google/adk-python)
-- **MCP 生態全面成熟** `[2026]` OpenAI、Google、微軟、Anthropic 相繼原生支援 MCP；從 2025 年 Anthropic 開源至今，registered MCP Servers 已超過 5,000
-  個，真正達成 N+M 的整合效率。
-
-[2026 LLM 開發完整指南：RAG、Agent 框架與 Fine-tuning 選型攻略](https://deep-learning-101.github.io/Large-Language-Model#ai-agent)
 
 ---
 
@@ -464,6 +450,55 @@ OWASP ASI 文件提供了一系列結構化的緩解策略，並組織成六個�
 
 ---
 
+## 從 Demo 到生產：那道沒有人想正視的深淵
+
+> 用 ADK 輸入自然語言，幾分鐘內就能完成一個即時語音翻譯 Agent 的構建與部署，不寫一行代碼。Demo 看起來很厲害。但演示者自己說了：「接下來呢？這才是 Agent Platform 真正展現實力的地方。」
+
+市場上 90% 的 Agent 停在 Demo 階段，不是因為技術不夠，而是因為沒有人願意正視從 Demo 到生產之間那道真實的深淵。**治理、運行時、安全、可觀測性、資料——每一個都不性感，每一個都致命。** 大家選擇繼續喊口號、繼續賣 Demo，因為面對這五個問題需要真正的工程投入，而不是一段提示詞。
+
+**「Vibe Coding 是起點，不是終點。」** 當一百個超級個體各自用各自的 Agent、各自的提示詞、各自的資料源工作時，組織得到的不是一百倍的效率，而是一百種互不兼容的工作方式——知識碎片化、安全策略無法統一執行、產出無法複用。「創造力乘以零治理，結果還是零。」一個生產級 Agent 系統需要 **Build（怎麼造）、Scale（怎麼部署到生產）、Govern（敢不敢上生產）、Optimize（怎麼讓 Agent 越用越好）** 四個支柱，任何一個缺失，都會讓 Agent 止步於 Demo。
+
+### 運行時：Agent 不是一個 API 調用
+
+**「智能體 = 模型 + Harness」，Harness 的分量跟模型同等重要。** 一個合格的 Agent Harness 需要五個維度，缺一不可：
+
+1. **解決遺忘的持久記憶**：短期會話管理（記清楚這輪對話上下文）+ 長期記憶沉澱（自動提煉對話關鍵資訊並供 Agent 主動寫入）——兩層缺一不可。
+2. **防止越獄的確定性護欄**：不是「盡量避免」，而是硬邊界。
+3. **限制破壞力的工具控制**：Agent 能做什麼，比 Agent 能說什麼更危險。
+4. **應對報錯的重試邏輯**：現實環境永遠比 Demo 脆弱。
+5. **業務上仔細梳理的多步 SOP 編排**：這不是框架能幫你做的，是對業務的真實理解。
+
+**Agent Substrate** 解決了另一個在 Demo 中完全看不出來的問題：**Agent 90% 以上的時間都在等待**——等模型生成、等工具調用、等用戶回應。傳統作法要嘛讓計算資源空轉浪費，要嘛回收後狀態全丟。Agent Substrate 的核心是將邏輯會話與物理計算節點解耦，在幾十毫秒內把 Agent 運行狀態無縫遷移到叢集任意節點——**用三分之一的硬體資源承載三倍的負載**，為百萬次亞秒級工具調用密度而設計。這是繞開標準 Kubernetes 控制平面限制的新一代開源 Agent 運行時。
+
+### 治理：沒有身份的 Agent 艦隊就是一群幽靈
+
+企業 Agent 規模化後，最先爆炸的往往不是技術問題，而是「我根本不知道公司裡跑了多少 Agent」。四個必備的治理能力：
+
+- **Agent Identity（身份）**：每個部署的 Agent 擁有獨立身份憑證（如 SPIFFE ID）——「智能體艦隊的通用護照」，可追蹤、可審計。沒有身份就沒有治理的起點。
+- **Agent Registry（登記冊）**：集中登記所有 Agent、MCP Server 和模型端點。「沒有影子 Agent 的存在」不是目標，是要求。
+- **Agent Gateway（閘道）**：Ingress 和 Egress 雙向安全策略。具體意義是：可限制特定 Agent 只能存取低成本模型；可對財務資料的 MCP Server 設定唯讀策略，讓 Agent 能查帳但無法動帳——這是治理政策被技術真正執行的體現，不是寫在 PDF 裡的規定。
+- **Agent Observability（可觀測性）**：視覺化 Agent 協同的有向無環圖（Agent ↔ Agent、Agent ↔ MCP Server 完整拓撲），每一步大模型耗時、Token 消耗、工具調用與錯誤都可完整 trace back。這不是「有最好」，是生產系統的基礎設施。
+
+> **「企業 AI 的瓶頸從來不是模型的能力，而是信任、控制，和像管理關鍵基礎設施一樣去管理這些 Agent 的能力。」**
+
+### 安全：攻擊者也有 Agent，而且已經在用了
+
+除了上節 OWASP ASI 所描述的威脅框架，以下三個工具直接對應生產環境的現實需求：
+
+- **Model Armor**：在通信層攔截提示詞注入與越獄。不是事後補救，而是第一天就必須到位的硬性防線。
+- **Sensitive Data Protection**：Agent 回覆吐給用戶前自動脫敏 PII（手機號、身份證號），保護的不只是用戶，也是企業的合規底線。
+- **CodeMender（AI 驅動漏洞修復）**：在沒有完整上下文的情況下，AI 生成的漏洞修復補丁通過率不到 **3%**；當提供完整代碼上下文、依賴關係和業務邏輯後，通過率提升至 **80% 以上**。這背後的邏輯是：**防守者擁有攻擊者永遠無法獲得的東西——完整的業務上下文，這是防守方唯一的結構性優勢。**
+
+> 安全能力必須在 Agent 上線的第一天就到位，而不是出了事之後再補。
+
+### 可觀測性：你衡量不了的，就優化不了
+
+**「ROI 是可觀測性的第一性原理。如果你不能衡量 Agent 創造了多少價值，你就無法優化它。」** Agent 的可觀測性不同於傳統 IT 監控——不只看可用性和延遲，還要看推理鏈路、工具調用序列與業務結果。
+
+**Agent Simulation** 是在 Demo 階段完全看不出必要性、但在生產中救命的能力：模擬數萬個不同性格的虛擬用戶（含刁鑽用戶、砍價用戶和各種 Edge Case），讓企業在上線前就發現 Agent 的弱點。優化的最終目標是形成閉環——**部署、觀測、模擬、優化、再部署**，讓 Agent 越用越好，而不是越跑越偏。
+
+---
+
 ## 台灣AI發展策略與未來展望
 
 ### 2025年下半年關鍵技術與市場趨勢
@@ -783,9 +818,8 @@ A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通�
           "@type": "WebPage",
           "@id": "https://deep-learning-101.github.io/agent"
         },
-        "headline": "Agentic AI 完整指南 2026：AI Agent 定義、MCP 實戰與企業導入陷阱",
-        "description": "深度解析 Agentic AI 與 AI Agent 的差異。2026 最新 AutoGen、LangGraph、MCP 框架實測比較，以及 5 
-  大企業導入陷阱。附吳恩達觀點與 OWASP 安全指南。",
+        "headline": "Agentic AI 是什麼？2026 AI Agent 完整指南：從 Demo 到生產、框架比較與實戰陷阱",
+        "description": "深度解析 Agentic AI 與 AI Agent 的差異。解析 90% 企業 Agent 停在 Demo 的五大根本原因（治理、運行時、安全、可觀測性、資料），附 Agent Harness 五維度、Agent Substrate、Model Armor 實戰指南，以及 AutoGen、LangGraph、MCP 框架比較與 OWASP ASI 安全防禦。",
         "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
         "author": {
           "@type": "Person",
@@ -796,7 +830,9 @@ A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通�
           "@type": "Organization",
           "name": "Deep Learning 101, Taiwan",
           "url": "https://deep-learning-101.github.io/"
-        }
+        },
+        "datePublished": "2025-06-03T08:00:00+08:00",
+        "dateModified": "2026-08-20T08:00:00+08:00"
       },
       {
         "@type": "FAQPage",
@@ -830,7 +866,7 @@ A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通�
             "name": "企業導入 AI Agent 應選擇 LangGraph 還是 AutoGen 框架？",
             "acceptedAnswer": {
               "@type": "Answer",
-              "text": "LangGraph 適合需要複雜非線性工作流、狀態管理與條件分支的場景，是目前最廣泛採用的框架。AutoGen（Microsoft）則擅長多代理協調與事件驅動互動，適合企業級多角色協作任務。吳恩達建議：大量商業流程其實是「幾乎線性」的工作流，優先用 LangGraph 建構穩定後，再考慮引入多代理架構。"
+              "text": "LangGraph 適合需要複雜非線性工作流、狀態管理與條件分支的場景，是目前最廣泛採用的框架。AutoGen（Micros oft）則擅長多代理協調與事件驅動互動，適合企業級多角色協作任務。吳恩達建議：大量商業流程其實是「幾乎線性」的工作流，優先用 LangGraph 建構穩定後，再考慮引入多代理架構。"
             }
           },
           {
@@ -847,6 +883,14 @@ A2A 是一種開放協議，專門設計用來實現 AI agents 之間的互通�
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "根據 AIF 2025 年調查，仍有七成台灣企業無法跨過 AI 化門檻；40% 處於「知 AI」階段（了解概念但未實際應用），30% 仍在「不知 AI」階段，僅 5% 企業達到能創造商業價值的「精 AI」水準。人才短缺（85%）是最嚴峻挑戰。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "為什麼大多數企業的 AI Agent 停在 Demo 階段，無法推向生產？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "從 Demo 到生產之間隔著五個系統性工程挑戰：①治理——沒有 Agent Identity（SPIFFE ID）、Registry、Gateway 和 Observability，Agent 艦隊就是一群幽靈；②運行時——Agent 不是 API 調用，而是「模型 + Harness」的組合，需要持久記憶、確定性護欄、工具控制、重試邏輯、SOP 編排五維度；③安全——需要 Model Armor（攔截提示詞注入）、Sensitive Data Protection（自動 PII 脫敏）等第一天就到位的防線；④可觀測性——沒有 DAG 拓撲視覺化和 Agent Simulation，你根本不知道 Agent 在生產中做了什麼；⑤資料——沒有資料飛輪，Agent 無法越用越好。每一個都不性感，每一個都致命。"
             }
           }
         ]
