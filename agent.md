@@ -103,7 +103,7 @@ AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許�
 然而，台灣企業在AI應用方面呈現明顯的發展階段差異。根據人工智慧科技基金會(AIF) 2025年產業AI化大調查，仍有七成企業無法跨過AI化門檻[^54][^62]。調查顯示，40%企業處於「知AI」階段，僅了解AI概念但尚未實際應用；30%企業仍在「不知AI」階段，缺乏基本AI認知[^54][^62]。值得注意的是，僅有5%企業達到「精AI」水準，能夠熟練運用AI技術創造商業價值[^11][^54]。
 
 <p align="center">
-    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-001.png?raw=true" alt="台灣企業AI成熟度分佈顯示40%企業處於「知AI」階段，30%仍在「不知AI」階段，僅5%企業達到「精AI」水準" width="800">
+    <img src="./images/agent-001.png" alt="台灣企業AI成熟度分佈顯示40%企業處於「知AI」階段，30%仍在「不知AI」階段，僅5%企業達到「精AI」水準" width="800">
 </p>
 
 ---
@@ -213,10 +213,10 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
     *   **案例回放：[研究台北壽險業GenAI市場](https://space.coze.cn/s/Im2IDfPoE_M/)**
     *   **功能：** 支援無需程式碼的 AI 開發，提供豐富的插件系統、知識庫、工作流等功能，使用者可透過自然語言描述需求，自動生成對應的應用。
     *   **體驗**： 介面直觀，操作簡便，適合初學者快速上手。提供探索模式與規劃模式，滿足不同層次的使用需求。
-    *   **優勢**： 整合多種工具與資源，支援多平台部署，適合個人創作者與企業用戶進行 AI 應用開發。      
+    *   **優勢**： 整合多種工具與資源，支援多平台部署，適合個人創作者與企業用戶進行 AI 應用開發。
 
 <p align="center">
-    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-002.png?raw=true" alt="主要AI Agents平台與工具比較" width="800">
+    <img src="./images/agent-002.png" alt="主要AI Agents平台與工具比較" width="800">
 </p>
 
 當前AI Agents開發呈現多元化工具生態，從Suna、OpenManus等新興平台到LangChain、Skywork等成熟框架。Suna以高自由度和任務自動化見長，OpenManus提供輕量級多智能體框架，Skywork在GAIA榜單排名全球第一，LangChain則擁有最強的社群支持。企業在選擇AI Agents平台時，需要考量技術成熟度、易用性、安全性、擴展性、社群支持和企業採用率等六大維度。不同平台在各維度表現存在差異，需要根據具體應用場景和組織能力進行選擇 [[findit](https://findit.org.tw/researchPageV2.aspx?pageId=2441)]。
@@ -226,7 +226,7 @@ AI Agents 與 Agentic AI 的開發與部署仍處於快速演進期。許多開�
 台灣AI技術應用呈現多元化發展趨勢，其中智慧製造、智慧醫療和智慧零售為三大主力領域[^12][^51]。
 
 <p align="center">
-    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-004.png?raw=true" alt="台灣AI技術應用以智慧製造為主導(28%)，智慧醫療次之(22%)，智慧零售佔18%" width="800">
+    <img src="./images/agent-004.png" alt="台灣AI技術應用以智慧製造為主導(28%)，智慧醫療次之(22%)，智慧零售佔18%" width="800">
 </p>
 
 #### 製造業AI化輔導
@@ -426,7 +426,7 @@ OWASP ASI 文件提供了一系列結構化的緩解策略，並組織成六個�
 除了技術限制，台灣企業在導入AI時還面臨多重實際挑戰[^46][^54]。
 
 <p align="center">
-    <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/agent-005.png?raw=true" alt="台灣AI發展面臨的主要挑戰中，人才短缺問題最為嚴重(85%)，其次是資料基礎建設不足(75%)" width="800">
+    <img src="./images/agent-005.png" alt="台灣AI發展面臨的主要挑戰中，人才短缺問題最為嚴重(85%)，其次是資料基礎建設不足(75%)" width="800">
 </p>
 
 *   **人才短缺 (85%):** 最嚴峻的挑戰，特別是缺乏能結合產業專業知識與AI技術開發能力的複合型人才[^46][^54]。

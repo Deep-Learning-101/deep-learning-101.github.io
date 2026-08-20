@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>漏洞自動分析與修復Agent:Buttercup 如何打通檢索—分析—修補—驗證</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystem-Font, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.75rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .top-info-box table {
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+            width: auto;
+        }
+        .top-info-box th, .top-info-box td {
+            border: 1px solid #ccc;
+            padding: 0.5rem 1rem;
+            text-align: center;
+        }
+        .top-info-box th {
+            background-color: #e0e0e0;
+        }
+        .bento-box {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+        .bento-title-large {
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p { margin-bottom: 1rem; }
+        .bento-text p:last-child { margin-bottom: 0; }
+        .bento-list {
+            list-style-type: none;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3;
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem;
+            top: 0.5em;
+        }
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0e7ff; /* indigo-100 */
+            color: #3730a3; /* indigo-800 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+    <!-- header.html styles -->
+    <style>
+  .tech-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 15px; margin-top: 30px; margin-bottom: 50px; width: 100%; }
+  .tech-card { flex: 0 0 calc(25% - 12px); background: #ffffff; border: 1px solid #eaeaea; border-radius: 16px; padding: 24px; text-decoration: none !important; color: #333 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; box-sizing: border-box; min-width: 0; }
+  .tech-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: #007bff; }
+  .tech-card h3 { margin-top: 0; margin-bottom: 12px; font-size: 1.15rem; font-weight: 700; color: #1a1a1a; border-bottom: none; line-height: 1.4; word-wrap: break-word; }
+  .tech-card p { margin: 0; font-size: 0.9rem; color: #555; line-height: 1.6; flex-grow: 1; }
+  .tech-card .tags { margin-top: 16px; font-size: 0.8rem; color: #007bff; font-weight: 600; }
+  @media (max-width: 1024px) { .tech-card { flex: 0 0 calc(50% - 8px); } }
+  @media (max-width: 600px) { .tech-card { flex: 0 0 100%; } }
+  .hero-header-wrapper { background: transparent; padding: 20px 20px 40px; border-radius: 0 0 24px 24px; text-align: center; position: relative; box-shadow: 0 10px 30px -15px rgba(0,0,0,0.05); margin-bottom: 40px; }
+  .hero-image-cluster { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
+  .hero-image-cluster img { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 8px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease; z-index: 2; }
+  .hero-image-cluster img:first-child { transform: translateX(10px); z-index: 1; }
+  .hero-image-cluster img:last-child { transform: translateX(-10px); }
+  .hero-header-text { max-width: 850px; margin: 0 auto 25px auto; }
+  .hero-title { color: #111; font-size: 1.4rem; font-weight: 800; line-height: 1.4; margin: 0 auto 25px auto; letter-spacing: -0.5px; }
+  .hero-subtitle { color: #555; font-size: 1rem; line-height: 1.8; max-width: 800px; margin: 0 auto 35px auto; }
+  .author-link { color: #111; font-weight: 700; text-decoration: none; border-bottom: 2px solid #e0e0e0; padding-bottom: 2px; }
+  .top-fixed-navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 12px 0; }
+  .top-fixed-navbar .nav-links-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+  .nav-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #f8f9fa; border: 1px solid #eaeaea; border-radius: 50px; color: #333; font-size: 0.9rem; font-weight: 600; text-decoration: none !important; transition: all 0.2s; }
+  .nav-pill:hover { background: #fff; border-color: #007bff; color: #007bff; }
+  @media (prefers-color-scheme: dark) {
+  .hero-title { color: #e6edf3; }
+  .hero-subtitle { color: #8b949e; }
+  .author-link { color: #c9d1d9; border-bottom-color: #444; }
+  .top-fixed-navbar { background: rgba(13, 17, 23, 0.85); border-bottom-color: rgba(255,255,255,0.08); }
+  .nav-pill { background: #161b22; border-color: #30363d; color: #c9d1d9; }
+  .nav-pill:hover { background: #1f2937; border-color: #58a6ff; color: #58a6ff; }
+  .nav-pill.enterprise-btn { background: #111; color: #fff !important; border-color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+  .nav-pill.enterprise-btn:hover { background: #333; transform: translateY(-2px); }
+}
+    </style>
+    <!-- ai-share.html styles -->
+    <style>
+  .modern-sidebar-container { background: #ffffff; border-radius: 12px; border: 1px solid #eaeaea; max-width: 850px; margin: 0 auto 30px auto; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .modern-sidebar-header { background: #fafafa; padding: 12px 20px; border-bottom: 1px solid #eaeaea; border-radius: 12px 12px 0 0; }
+  .modern-sidebar-header h3 { margin: 0; font-size: 1rem; color: #444; font-weight: 600; }
+  .modern-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 8px; }
+  .modern-link { display: flex; align-items: center; padding: 8px 12px; text-decoration: none !important; color: #555 !important; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s ease; }
+  .modern-link:hover { background: #f4f6f8; color: #007bff !important; transform: translateX(3px); }
+  [class^="mod-badge-"] { display: inline-flex; align-items: center; justify-content: center; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 10px; white-space: nowrap; }
+  .mod-badge-strategy { background-color: #f3e8ff; color: #6b21a8; }
+  .mod-badge-report   { background-color: #dbeafe; color: #1e40af; }
+  .mod-badge-tech     { background-color: #dcfce7; color: #166534; }
+  .mod-badge-warning  { background-color: #ffedd5; color: #9a3412; }
+  .modern-details { border-bottom: 1px solid #eaeaea; }
+  .modern-details:last-child { border-bottom: none; }
+  .modern-summary { padding: 12px 20px; cursor: pointer; font-weight: 600; color: #333; font-size: 0.95rem; list-style: none; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
+  .modern-summary:hover { background: #fafafa; color: #007bff; }
+  .modern-summary::-webkit-details-marker { display: none; }
+  .modern-summary .arrow { font-size: 0.75rem; color: #aaa; transition: transform 0.3s ease; }
+  details[open].modern-details .arrow { transform: rotate(180deg); }
+  details[open].modern-details .modern-summary { border-bottom: 1px solid #eaeaea; background: #fafafa; }
+  .modern-details-content { padding: 12px 20px; }
+  @media (prefers-color-scheme: dark) {
+  .modern-sidebar-container { background: #161b22; border-color: #30363d; }
+  .modern-summary { color: #c9d1d9; }
+  .modern-summary:hover { background: #1f2937; color: #58a6ff; }
+  .modern-details { border-bottom-color: #30363d; }
+  details[open].modern-details .modern-summary { background: #1f2937; border-bottom-color: #30363d; }
+  .modern-link { color: #8b949e !important; }
+  .modern-link:hover { background: #1f2937; color: #58a6ff !important; }
+}
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://twman.org/Cyber/AIxCC-Buttercup.html"
+      },
+      "headline": "漏洞自動分析與修復Agent:Buttercup 如何打通檢索—分析—修補—驗證",
+      "description": "afc-buttercup 是 Trail of Bits 團隊為 AIxCC 總決賽提交的開源版本。該系統將 AI 增強模糊測試、靜態分析與一個創新的「多智能體補丁生成—驗證流水線」相整合，實現檢索、分析、修補到驗證的完整閉環。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+        }
+      },
+      "datePublished": "2025-10-22",
+      "keywords": "AIxCC, Buttercup, Trail of Bits, Multi-agent System, Cybersecurity, LangGraph, ReflectionAgent, SWEAgent, LLM, 自動化資安, 漏洞修復"
+    }
+    </script>
+</head>
+<body>
+<div id="include-nav-pages"></div>
+<div id="app" class="content-wrapper">
+
+        <!-- header.html inlined
+        <div style="height: 20px;"></div>
+        <div class="top-fixed-navbar">
+          <div class="nav-links-grid">
+            <a href="https://www.youtube.com/@DeepLearning101" target="_blank" class="nav-pill"><span>📺</span> YouTube 訂閱</a>
+            <a href="https://www.facebook.com/groups/525579498272187/" target="_blank" class="nav-pill"><span>👥</span> FB 社群</a>
+            <a href="/" class="nav-pill" id="nav-home"><span>🏠</span> 首頁</a>
+            <a href="https://twman.org/#ai-consulting" target="_blank" class="nav-pill enterprise-btn" onclick="gtag('event', 'click_consulting', {'button_location': 'header_top_nav', 'page_location': window.location.pathname});"><span>💼</span> 企業 AI 導入與顧問</a>
+            <a href="https://huggingface.co/DeepLearning101" target="_blank" class="nav-pill"><span>🤗</span> HF Space</a>
+            <a href="https://github.com/Deep-Learning-101" target="_blank" class="nav-pill"><span>⭐</span> GitHub 點星</a>
+          </div>
+        </div> -->
+        <header class="hero-header-wrapper">
+          <h1 class="hero-title">Deep Learning 101, Taiwan's pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</h1>
+          💼 從頂層 AI 戰略到地端 GPU 部署企業方案： 卡在開源模型效能低落？不知道如何為企業私有雲架設高併發的推論伺服器？提供 FDE (Forward Deployed Engineering) 級別的 AI 落地顧問與架構建置以及企業級的 LLM 架構健檢與地端部署服務。
+          <div class="hero-image-cluster">
+            <a href="https://huggingface.co/DeepLearning101" target="_blank" title="Deep Learning 101"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DeepLearning101-LOGO.jpg" alt="Logo" style="background: white;"></a>
+            <a href="https://twman.org" target="_blank" title="TonTon Huang Ph.D."><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon_QQ-202602.png" alt="TonTon"></a>
+          </div>
+          <div class="hero-subtitle">
+            AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+            衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+            由 <a href="https://twman.org" target="_blank" class="author-link">TonTon Huang Ph.D.</a> 發起，特別感謝時任職公司台灣雪豹科技無償贊助場地及茶水點心。<br>
+            這裡不僅匯集了我們歷年的 Meetup 紀錄，更是 AI 演算法與開源資源匯整中心。
+          </div>
+          <div style="text-align: center;">
+            <a href="https://deep-learning-101.github.io/meetups" target="_top" style="display: inline-block; background: #dc3545; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 6px rgba(220,53,69,0.2); transition: all 0.3s ease;">👉 Deep Learning 101 歷年 Meetup 📺</a>
+            <a href="https://twman.org/#ai-consulting" target="_blank" style="display: inline-block; background: #111; color: white; padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; font-size: 1.05rem;" onclick="gtag('event', 'click_consulting', {'button_location': 'header_hero_board', 'page_location': window.location.pathname});">💼 AI 社群技術/演講/授課/討論交流</a>
+          </div>
+        </header>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400">
+                <a href="https://deep-learning-101.github.io/cyber/AIxCC-Buttercup" target="_blank" rel="noopener noreferrer">漏洞自動分析與修復Agent:Buttercup 如何打通檢索—分析—修補—驗證閉環</a>
+            </h1>
+        </header>
+
+        <!-- ai-share.html inlined -->
+        <div class="modern-sidebar-container">
+          <details class="modern-details" open>
+            <summary class="modern-summary"><span>🔥 嚴選 (必讀)</span><span class="arrow">▼</span></summary>
+            <div class="modern-details-content modern-link-grid">
+              <a href="/Blog/AIBeginner" class="modern-link"><span class="mod-badge-strategy">策略</span> AI新賽局：企業的入門策略指南</a>
+              <a href="/Blog/TW-LLM-Benchmark" class="modern-link"><span class="mod-badge-report">評測</span> 臺灣 LLM 性能評測與在地化分析</a>
+              <a href="/RAG" class="modern-link"><span class="mod-badge-tech">實戰</span> 從零到一：打造高精準度 RAG 系統</a>
+              <a href="/agent" class="modern-link"><span class="mod-badge-warning">避坑</span> 避開 AI Agent 開發陷阱與解決方案</a>
+              <a href="/Blog/Cloudflared-Tunnel" class="modern-link"><span class="mod-badge-strategy">手把手</span> Cloudflared 實作內網穿透 (Tunnel)</a>
+              <a href="/Agent/OpenClaw-Moltbot-Clawdbot" class="modern-link"><span class="mod-badge-report">爆火</span> OpenClaw (MoltBot/Clawdbot)讓您焦慮嗎？</a>
+              <a href="/Blog/ClaudeCode" class="modern-link"><span class="mod-badge-tech">實戰</span> 2026 Claude Code 完全整合指南</a>
+              <a href="https://deep-learning-101.github.io/SHIELD/" class="modern-link"><span class="mod-badge-warning">實戰</span> S.H.I.E.L.D. (主權啟發式情資與企業邏輯防禦系統)</a>
+              <a href="/cyber/LLM-Guard" class="modern-link"><span class="mod-badge-warning">實戰</span>🛡️ AI 大模型安全護欄綜合報告</a>
+              <a href="/cyber/LLM-Offense" class="modern-link"><span class="mod-badge-warning">實戰</span>⚔️ LLM 安全攻防策略深度解析</a>
+            </div>
+          </details>
+          <details class="modern-details" close>
+            <summary class="modern-summary"><span>🛠️ 工具、論文、趨勢、科普、踩坑</span><span class="arrow">▼</span></summary>
+            <details class="modern-details">
+              <summary class="modern-summary"><span>🛠️ 實戰工具 &amp; Agent 框架</span><span class="arrow">▼</span></summary>
+              <div class="modern-details-content modern-link-grid">
+                <a href="/Blog/Dify-Coze-n8n-AutoGen-LangChain" class="modern-link">Dify, Coze, n8n, AutoGen 熱門框架比較</a>
+                <a href="/Blog/vLLM-Ollama-SGLang-LLaMAcpp" class="modern-link">推論加速：vLLM, Ollama, SGLang</a>
+                <a href="/gemini-fullstack-langgraph/FinGenAI" class="modern-link">Gemini + LangGraph 全端實戰</a>
+                <a href="/FinRobot/FinRobot-GOOGL" class="modern-link">基於 AutoGen 的 FinRobot 體驗</a>
+              </div>
+            </details>
+            <details class="modern-details">
+              <summary class="modern-summary"><span>📝 論文快遞</span><span class="arrow">▼</span></summary>
+              <div class="modern-details-content modern-link-grid">
+                <a href="/Agent/Gemini-3-1_WebMCP_Deep-Think" class="modern-link">Agentic AI：Gemini 3.1 WebMCP 實戰</a>
+                <a href="/LLM/PersonaPlex" class="modern-link">NVIDIA PersonaPlex 全雙工語音 AI 深度技術分析</a>
+                <a href="/Paper/Chain-of-Thought" class="modern-link">CoT (思维鏈) is not explainability</a>
+                <a href="/Paper/2506.21521_Potemkin-Understanding" class="modern-link">arXiv: Potemkin Understanding in LLMs</a>
+                <a href="/Paper/2502.04644_Oxford_Agentic-Reasoning.html" class="modern-link">arXiv: Agentic Reasoning</a>
+              </div>
+            </details>
+            <details class="modern-details">
+              <summary class="modern-summary"><span>📝 產業趨勢</span><span class="arrow">▼</span></summary>
+              <div class="modern-details-content modern-link-grid">
+                <a href="/Blog/AI-Govs" class="modern-link">🤖 企業級 AI 標竿分析與負責任 AI 治理建議</a>
+                <a href="/Blog/AIFinTech" class="modern-link">💰 GenAI 在金融產業的應用分析</a>
+                <a href="/Blog/robot" class="modern-link">🤖 2025 趨勢：AI Robot 陪伴型機器人</a>
+              </div>
+            </details>
+            <details class="modern-details">
+              <summary class="modern-summary"><span>🚧 踩坑指南 &amp; 科普入門</span><span class="arrow">▼</span></summary>
+              <div class="modern-details-content modern-link-grid">
+                <a href="/GenAI" class="modern-link">🎓 白話文科普 GenAI (硬體/數據)</a>
+                <a href="/1010LLM" class="modern-link">🛑 LLM 打完收工？硬體升級重要性</a>
+                <a href="/0204LLM" class="modern-link">📘 LLM 入門完整指南：原理與應用</a>
+                <a href="/diffusion" class="modern-link">🎨 Diffusion Model 圖像生成解析</a>
+                <a href="/GPU" class="modern-link">💻 訓練微調 VRAM 估算指南</a>
+                <a href="/asr-tts" class="modern-link">🎙️ ASR/TTS 語音開發避坑</a>
+                <a href="/nlp" class="modern-link">📝 NLP 自然語言開發避坑</a>
+                <a href="/101" class="modern-link">🐧 Ubuntu 深度學習環境安裝教學</a>
+              </div>
+            </details>
+            <details class="modern-details">
+              <summary class="modern-summary"><span>🛡️ AIxCC 競賽</span><span class="arrow">▼</span></summary>
+              <div class="modern-details-content modern-link-grid">
+                <a href="/cyber/AIxCC-Atlanta" class="modern-link">🏆 冠軍團隊：亞特蘭大 (Team-Atlanta) 解析</a>
+                <a href="/cyber/AIxCC-Buttercup" class="modern-link">🥈 亞軍團隊：Trail of Bits 解析</a>
+                <a href="/cyber/AIxCC-shellphish" class="modern-link">🐚 Shellphish：用 LLMs 解決 CTF 挑戰</a>
+              </div>
+            </details>
+          </details>
+        </div>
+
+<div id="tonton-sticky-widget" style="position: fixed; top: 30%; right: 0; transform: translateY(-50%); z-index: 10000; display: flex; align-items: flex-start;">
+
+  <button id="sticky-btn" style="background: #0ea5e9; color: white; border: none; padding: 12px 16px 12px 20px; border-radius: 50px 0 0 50px; cursor: pointer; box-shadow: -4px 4px 15px rgba(14, 165, 233, 0.3); font-weight: 600; font-size: 15px; white-space: nowrap; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.paddingRight='20px'" onmouseout="this.style.paddingRight='16px'">
+    <span style="font-size: 1.1em;">🎁</span> 探索 AI (開源) 技術與資源匯整
+  </button>
+
+  <div id="sticky-panel" style="display: none; position: absolute; right: 100%; top: 0; margin-right: 15px; width: 320px; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #f1f5f9; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    
+    <div style="background: linear-gradient(135deg, #0f172a, #1e293b); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+      <div style="color: #f8fafc; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+
+      </div>
+      <button id="sticky-close" style="background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 16px; padding: 0; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">✖</button>
+    </div>
+
+    <div style="padding: 20px 20px 10px;">
+      <a href="https://twman.org/#ai-consulting" target="_blank" style="display: block; padding: 12px; background: linear-gradient(135deg, #2563eb, #3b82f6); color: #ffffff; text-decoration: none; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 700; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); transition: all 0.2s;" onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 16px rgba(37, 99, 235, 0.35)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 12px rgba(37, 99, 235, 0.25)'">
+        AI 社群技術/演講/授課/討論交流 ➔
+      </a>
+    </div>
+
+    <div style="padding: 15px 20px 8px; font-size: 12px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">
+      🔥 開源技術與研發資源
+    </div>
+
+    <div style="padding: 0 20px 15px; display: flex; flex-direction: column; gap: 8px;">
+      <a href="https://deep-learning-101.github.io/Large-Language-Model" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.background='#eff6ff'; this.style.borderColor='#bfdbfe'; this.style.color='#1e40af'" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#e2e8f0'; this.style.color='#334155'">🤖 LLM 與 Agent 資源大全</a>
+      
+      <a href="https://deep-learning-101.github.io/Computer-Vision" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.background='#eff6ff'; this.style.borderColor='#bfdbfe'; this.style.color='#1e40af'" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#e2e8f0'; this.style.color='#334155'">👁️ 電腦視覺選型清單</a>
+      
+      <a href="https://deep-learning-101.github.io/Speech-Processing" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.background='#eff6ff'; this.style.borderColor='#bfdbfe'; this.style.color='#1e40af'" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#e2e8f0'; this.style.color='#334155'">🎤 語音處理實戰懶人包</a>
+      
+      <a href="https://deep-learning-101.github.io/cyber/LLM-Guard" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.background='#eff6ff'; this.style.borderColor='#bfdbfe'; this.style.color='#1e40af'" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#e2e8f0'; this.style.color='#334155'">🛡️ AI 大模型安全護欄</a>
+      
+
+      
+      <a href="https://deep-learning-101.github.io/UPDATE" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;" onmouseover="this.style.background='#eff6ff'; this.style.borderColor='#bfdbfe'; this.style.color='#1e40af'" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#e2e8f0'; this.style.color='#334155'">💡 網站 Changelog (更新日誌)</a>
+    </div>
+
+    <div style="padding: 15px 20px; border-top: 1px solid #f1f5f9; background: #f8fafc;">
+      <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">開源論文筆記 (GitHub)</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <a href="https://github.com/Deep-Learning-101/Large-Language-Model-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;" onmouseover="this.style.borderColor='#94a3b8'" onmouseout="this.style.borderColor='#e2e8f0'">LLM</a>
+        <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;" onmouseover="this.style.borderColor='#94a3b8'" onmouseout="this.style.borderColor='#e2e8f0'">NLP</a>
+        <a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;" onmouseover="this.style.borderColor='#94a3b8'" onmouseout="this.style.borderColor='#e2e8f0'">CV</a>
+        <a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;" onmouseover="this.style.borderColor='#94a3b8'" onmouseout="this.style.borderColor='#e2e8f0'">Speech</a>
+      </div>
+    </div>
+  </div>
+</div>
+        <script>
+          (function() {
+            const btn = document.getElementById('sticky-btn');
+            const panel = document.getElementById('sticky-panel');
+            const close = document.getElementById('sticky-close');
+            btn.onclick = (e) => { e.stopPropagation(); panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; };
+            close.onclick = (e) => { e.stopPropagation(); panel.style.display = 'none'; };
+            document.addEventListener('click', (e) => { if (!panel.contains(e.target)) panel.style.display = 'none'; });
+          })();
+          document.addEventListener("DOMContentLoaded", function() {
+            document.addEventListener('click', function(e) {
+              let targetLink = e.target.closest('a');
+              if (!targetLink) return;
+              let location = "";
+              if (targetLink.closest('#tonton-sticky-widget')) { location = "bottom_sticky"; }
+              else if (targetLink.closest('.modern-sidebar-container')) { location = "sidebar"; }
+              else { return; }
+              let linkText = targetLink.innerText.trim();
+              let linkUrl = targetLink.getAttribute('href');
+              if (typeof gtag === 'function') { gtag('event', 'click_nav_link', {'link_text': linkText, 'link_url': linkUrl, 'link_location': location}); }
+            });
+          });
+        </script>
+
+        <div class="bento-box source-links bento-text">
+            <p>
+                同步匯整自 <a href="https://zread.ai/trailofbits/afc-buttercup" target="_blank" rel="noopener noreferrer">https://zread.ai/trailofbits/afc-buttercup</a><br>
+                同步匯整自 <a href="https://github.com/trailofbits/afc-buttercup" target="_blank" rel="noopener noreferrer"><code>trailofbits/afc-buttercup</code></a>：包含 AIxCC 總決賽中提交的原始程式碼<br>
+                同步匯整自 <a href="https://mp.weixin.qq.com/s/3AB2fRQd7QGjMaWXeJABuQ" target="_blank" rel="noopener noreferrer">漏洞自動分析與修復Agent:Buttercup 如何打通檢索—分析—修補—驗證閉環</a><br>
+                同步匯整自 <a href="https://deep-learning-101.github.io/cyber/AIxCC-Buttercup" target="_blank" rel="noopener noreferrer">漏洞自動分析與修復Agent:Buttercup </a>
+            </p>
+            <p class="mt-4">`afc-buttercup` 是 Trail of Bits 團隊為 AIxCC 總決賽（AFC）提交的開源版本。該系統將 AI 增強模糊測試、靜態分析（如 tree-sitter/CodeQuery）與一個創新的「多智能體補丁生成—驗證流水線」相整合。最終，`afc-buttercup` 斬獲 AIxCC 總決賽亞軍，並在 20 類 CWE 上實現了高準確度的漏洞發現與修復表現。</p>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="1-buttercup-核心多智能體協作架構"><i class="fas fa-project-diagram icon-large mr-4 text-blue-500"></i>1. Buttercup 核心：多智能體協作架構</h2>
+            <div class="bento-text">
+                <p>Buttercup 的自動化補丁流程並非單一模型，而是由多個各司其職的專職 Agent 協同運作，形成一條高內聚、低耦合的流水線。系統將複雜的補丁任務拆分為上下文檢索、根因分析、補丁生成、測試驗證和失敗反思等獨立環節。</p>
+            </div>
+        </div>
+        
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="2-agent-職責與工作流詳解"><i class="fas fa-users-cog icon-large mr-4 text-purple-500"></i>2. Agent 職責與工作流詳解</h2>
+            <div class="bento-text">
+                <p>系統的核心由七個主要的 Agent 組成，由 <code>PatcherLeaderAgent</code> 統一編排調度。</p>
+                
+                <h3 class="bento-subtitle" id="21-patcherleaderagent-總控指揮官">2.1 PatcherLeaderAgent (總控指揮官)</h3>
+                <ul class="bento-list">
+                    <li><strong>職責：</strong> 作為補丁流水線的「總控/編排」Agent。</li>
+                    <li><strong>作法：</strong> 負責組裝和調度所有子 Agent。它透過 <code>_init_patch_team</code> 方法構建一個多節點的狀態機（StateGraph），定義完整的自動補丁工作流，並啟動和管理整個任務。</li>
+                </ul>
+
+                <h3 class="bento-subtitle" id="22-inputprocessingagent-輸入預處理">2.2 InputProcessingAgent (輸入預處理)</h3>
+                <ul class="bento-list">
+                    <li><strong>職責：</strong> 在補丁生成前，負責輸入環境和上下文的初始化與準備。</li>
+                    <li><strong>作法：</strong> 解析並應用工作目錄等配置，並初始化 <code>codequery</code> 等代碼查詢工具，確保後續分析能獲取準確的代碼結構資訊。</li>
+                </ul>
+                
+                <h3 class="bento-subtitle" id="23-contextretrieveragent-智能上下文補全器">2.3 ContextRetrieverAgent (智能上下文補全器)</h3>
+                <ul class="bento-list">
+                    <li><strong>職責：</strong> 作為流水線中的「智能上下文補全器」，動態檢索並補全上下文資訊。</li>
+                    <li><strong>作法：</strong> 當主流程 Agent 發現資訊不足或 LLM 請求更多上下文時，此 Agent 會被自動調用。
+                        <ul style="padding-left: 20px; list-style-type: circle; margin-top: 0.5rem;">
+                           <li><code>get_initial_context</code>：根據崩潰堆棧資訊，自動提取相關的關鍵代碼片段（函數名、文件名、行號）。</li>
+                           <li><code>find_tests_node</code>：透過查找腳本、從 Redis 查找指令或 <code>find_tests_agent</code> 自動探索等多種方法，為補丁驗證階段準備可用的測試指令。</li>
+                        </ul>
+                    </li>
+                </ul>
+                
+                <h3 class="bento-subtitle" id="24-rootcauseagent-漏洞根因分析">2.4 RootCauseAgent (漏洞根因分析)</h3>
+                <ul class="bento-list">
+                    <li><strong>職責：</strong> 負責漏洞根因分析，定位問題本質。</li>
+                    <li><strong>作法：</strong>
+                        <ul style="padding-left: 20px; list-style-type: circle; margin-top: 0.5rem;">
+                            <li><strong>LLM 驅動：</strong> 入口為 <code>analyze_vulnerability</code>，主要使用 <code>openai-gpt-4.1</code> 和 <code>claude-3.7-sonnet</code> 模型分析漏洞成因，並解析返回的結構化資訊（如 <code>root_cause</code>、<code>vuln_line</code> 等）。</li>
+                            <li><strong>工具注入 (MCP)：</strong> 如果 LLM 分析時需要更多上下文，可透過工具注入機制，自動調用一系列工具（如 <code>ls</code>、<code>grep</code>、<code>get_function</code>、<code>get_type</code>、<code>get_callers</code> 等）來補充資訊。</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3 class="bento-subtitle" id="25-sweagent-ai-開發工程師">2.5 SWEAgent (AI 開發工程師)</h3>
+                <ul class="bento-list">
+                    <li><strong>職責：</strong> 作為「AI 開發工程師」，專注於補丁策略制定和代碼修復生成。</li>
+                    <li><strong>作法：</strong>
+                        <ol style="padding-left: 20px; list-style-type: decimal; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.5rem;"><strong>選擇補丁策略 (select_patch_strategy)：</strong>
+                                <ul style="padding-left: 20px; list-style-type: disc; margin-top: 0.5rem;">
+                                    <li>Agent 會組裝包含根因分析、代碼片段等的 Prompt，調用 LLM 生成結構化的補丁策略（Patch Strategy）。</li>
+                                    <li>如果 LLM 輸出 <code>&lt;request_information&gt;</code>，代表需補充上下文，流程會先跳轉至 <code>ContextRetrieverAgent</code>。</li>
+                                    <li>Foucs, 提取 <code>&lt;full_description&gt;</code>（詳細設計說明）和 <code>&lt;summary&gt;</code>（核心思路概括）作為補丁策略。</li>
+                                </ul>
+                            </li>
+                            <li><strong>生成具體補丁 (create_patch_node)：</strong>
+                                <ul style="padding-left: 20px; list-style-type: disc; margin-top: 0.5rem;">
+                                    <li>組裝包含「補丁策略」和根因分析結果的 Prompt，調用 LLM 生成最終的修復補丁。</li>
+                                </ul>
+                            </li>
+                        </ol>
+                    </li>
+                </ul>
+                
+                <h3 class="bento-subtitle" id="26-qeagent-品質保障工程師">2.6 QEAgent (品質保障工程師)</h3>
+                 <ul class="bento-list">
+                    <li><strong>職責：</strong> 作為「品質保障工程師」，負責補丁生成後的自動化測試與有效性校驗。</li>
+                    <li><strong>作法：</strong>
+                         <ul style="padding-left: 20px; list-style-type: circle; margin-top: 0.5rem;">
+                            <li><code>build_patch_node</code>： 核心驗證節點。它會調用 <code>_build_with_sanitizer</code>，在乾淨環境下應用補丁並「並行」編譯項目（針對每個 sanitizer）。</li>
+                            <li><strong>流程跳轉：</strong> 如果所有 sanitizer 均構建成功，流程進入 <code>RUN_POV</code>（運行測試/驗證）階段；如果構建失敗，則進入 <code>REFLECTION</code>（反思）階段。</li>
+                         </ul>
+                    </li>
+                </ul>
+
+                <h3 class="bento-subtitle" id="27-reflectionagent-自適應反思與補救">2.7 ReflectionAgent (自適應反思與補救)</h3>
+                <ul class="bento-list">
+                    <li><strong>職責：</strong> 負責反思與補救，是實現流程閉環和魯棒性的關鍵。當主流程遇到異常或失敗（如構建失敗、測試失敗）時，此 Agent 會接管流程。</li>
+                    <li><strong>作法：</strong>
+                        <ul style="padding-left: 20px; list-style-type: circle; margin-top: 0.5rem;">
+                            <li><code>_analyze_failure</code>： 收集詳細失敗數據（如 <code>stdout/stderr</code>），調用 LLM 反思鏈（<code>self.reflection_chain</code>）分析失敗原因、歸納失敗類別。</li>
+                            <li><strong>動態調度：</strong> 根據 LLM 的反思建議，自動決定「下一個環節」，例如是退回 <code>CONTEXT_RETRIEVER</code> 補充上下文、退回 <code>ROOT_CAUSE_ANALYSIS</code> 重新分析根因，還是退回 <code>SWEAgent</code> 調整 <code>PATCH_STRATEGY</code>。</li>
+                            <li><code>reflect_on_patch</code>： 如果 LLM 明確請求更多代碼片段（<code>code_snippet_requests</code>），會自動切換到 <code>CONTEXT_RETRIEVER</code> 節點補充資訊，反思後再回到原節點繼續。</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="3-關鍵工作流程自動修復的閉環實現"><i class="fas fa-sync-alt icon-large mr-4 text-green-500"></i>3. 關鍵工作流程：自動修復的閉環實現</h2>
+            <div class="bento-text">
+                <p>Buttercup 的 Agent 協作形成了一個完整的「檢索-分析-修補-驗證-反思」閉環：</p>
+                <ol class="bento-list" style="list-style-type: decimal; padding-left: 2.5rem;">
+                    <li><strong>啟動與預處理 (InputProcessing)：</strong> 初始化環境，準備 <code>codequery</code> 工具。</li>
+                    <li><strong>上下文檢索 (ContextRetriever)：</strong> Berdasarkan <code>get_initial_context</code> 堆棧崩潰，獲取初始代碼上下文。</li>
+                    <li><strong>根因分析 (RootCause)：</strong> <code>RootCauseAgent</code> 介入，使用 LLM 和工具集分析漏洞成因。</li>
+                    <li><strong>補丁生成 (SWEAgent)：</strong> <code>SWEAgent</code> 制定 <code>patch_strategy</code>（包含 <code>&lt;full_description&gt;</code> 和 <code>&lt;summary&gt;</code>），然後 <code>create_patch_node</code> 生成補丁。</li>
+                    <li><strong>構建與驗證 (QEAgent)：</strong> <code>QEAgent</code> 嘗試並行 <code>build_patch_node</code>。</li>
+                    <li><strong>反思與閉環 (Reflection)：</strong>
+                        <ul style="padding-left: 20px; list-style-type: disc; margin-top: 0.5rem;">
+                            <li><strong>若驗證成功：</strong> 流程結束。</li>
+                            <li><strong>若驗證失敗：</strong> <code>ReflectionAgent</code> 接管。它調用 LLM 分析失敗日誌 (<code>_analyze_failure</code>)，並做出決策：是 <code>ContextRetrieverAgent</code> 補充上下文，還是 <code>RootCauseAgent</code> 重新分析，或是 <code>SWEAgent</code> 重新制定策略。</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="4-核心特性與總結"><i class="fas fa-key icon-large mr-4 text-gray-500"></i>4. 核心特性與總結</h2>
+            <div class="bento-text">
+                <p>`afc-buttercup` 是一個以多智能體和大模型為核心，兼具工程實用性與 AI 智能化的自動化安全補丁平台。</p>
+                <ul class="bento-list">
+                    <li><strong>多智能體協作架構：</strong> 將流程拆分為多個專職 Agent，實現高內聚、低耦合的流水線。</li>
+                    <li><strong>強大的 LLM 驅動與工具鏈注入：</strong> 透過 LLM（如 GPT-4、Claude）驅動決策，並支持自動調用代碼檢索、<code>grep</code>、<code>get_function</code> 等工具。</li>
+                    <li><strong>自適應反思與流程調度：</strong> <code>ReflectionAgent</code> 能自動分析失敗原因、檢測死循環，並動態調整流程，保證了系統的魯棒性和持續進步能力。</li>
+                    <li><strong>並行與容錯機制：</strong> 支持多 sanitizer 並行 build/test，主備 LLM 自動切換，以及 Agent 層面的重試保護，提升了效率與穩定性。</li>
+                    <li><strong>安全導向與結構化數據流：</strong> 所有決策均聚焦於安全修復，且補丁策略、失敗分析等均採用結構化管理，便於追蹤和優化。</li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        inView('header', () => {
+            animate('header h1', { opacity: [0, 1], y: [-20, 0] }, { duration: 0.6, ease: 'easeOut', delay: 0.2 });
+        });
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div) => {
+            inView(div, () => {
+                animate(div, 
+                    { opacity: [0, 1], y: [30, 0], scale: [0.98, 1] },
+                    { duration: 0.65, delay: 0.1, ease: "easeOut" }
+                );
+            }, { once: true, amount: 0.1 });
+        });
+    });
+    </script>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"fc0f4e2f76d3450bbcf5ca8c7c562e9b","r":1}' crossorigin="anonymous"></script><script>
+async function includeHTML(url, containerId) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const html = await res.text();
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        temp.querySelectorAll('style').forEach(s => document.head.appendChild(s.cloneNode(true)));
+        temp.querySelectorAll('style').forEach(s => s.remove());
+        container.innerHTML = temp.innerHTML;
+        container.querySelectorAll('script').forEach(oldScript => {
+            const newScript = document.createElement('script');
+            if (oldScript.src) { newScript.src = oldScript.src; newScript.type = oldScript.type || 'text/javascript'; }
+            else { newScript.textContent = oldScript.textContent; }
+            Array.from(oldScript.attributes).forEach(attr => { if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value); });
+            oldScript.replaceWith(newScript);
+        });
+    } catch(e) { console.warn('includeHTML failed:', url, e); }
+}
+includeHTML('/includes/header.html',   'include-header');
+includeHTML('/includes/nav-pages.html', 'include-nav-pages');
+includeHTML('/includes/profile-hero.html', 'include-profile-hero');
+includeHTML('/includes/ai-share.html', 'include-aishare');
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"fc0f4e2f76d3450bbcf5ca8c7c562e9b","r":1}' crossorigin="anonymous"></script>
+</body>
+</html>

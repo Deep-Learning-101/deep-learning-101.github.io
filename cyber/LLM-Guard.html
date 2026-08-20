@@ -1,0 +1,1765 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 AI 大模型安全護欄綜合報告 | 防禦框架、紅隊演練與評測分類器</title>
+    <script src="https://cdn.tailwindcss.com/3.4.3"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystem-Font, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            background-color: #f5f5f7;
+            color: #1d1d1f;
+        }
+        .top-info-box {
+            background-color: #e9e9ed;
+            padding: 1.5rem 2rem;
+            border-radius: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            text-align: center;
+        }
+        .top-info-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1d1d1f;
+            margin-bottom: 0.5rem;
+        }
+        .top-info-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+        .top-info-text p {
+            margin-bottom: 0.75rem;
+        }
+        .top-info-text strong {
+             font-weight: 700;
+        }
+        .top-info-text a {
+            color: #0071e3;
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .top-info-text a:hover {
+            text-decoration: underline;
+        }
+        .top-info-box table {
+            margin: 1.5rem auto;
+            border-collapse: collapse;
+            width: auto;
+        }
+        .top-info-box th, .top-info-box td {
+            border: 1px solid #ccc;
+            padding: 0.5rem 1rem;
+            text-align: center;
+        }
+        .top-info-box th {
+            background-color: #e0e0e0;
+        }
+        .bento-box {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 10px 20px rgba(0,0,0,0.05);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+        .bento-title-large {
+            font-size: 2.2rem;
+            line-height: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1d1d1f;
+        }
+        .bento-subtitle {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0071e3;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .bento-text {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #333333;
+        }
+        .bento-text strong, .bento-text b {
+            font-weight: 600;
+            color: #1d1d1f;
+        }
+        .bento-text a {
+            color: #0071e3;
+            text-decoration: none;
+        }
+        .bento-text a:hover {
+            text-decoration: underline;
+        }
+        .bento-text p { margin-bottom: 1rem; }
+        .bento-text p:last-child { margin-bottom: 0; }
+        .bento-list {
+            list-style-type: none;
+            padding-left: 0.5rem;
+        }
+        .bento-list li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.75rem;
+            position: relative;
+        }
+        .bento-list li::before {
+            content: "\f111";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            color: #0071e3;
+            font-size: 0.5rem;
+            position: absolute;
+            left: 0.25rem;
+            top: 0.5em;
+        }
+        .icon-large {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #0071e3;
+        }
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .chinese-main-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .tag {
+            display: inline-block;
+            background-color: #e0e7ff; /* indigo-100 */
+            color: #3730a3; /* indigo-800 */
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Added styles for tables and code */
+        .bento-box-table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        .bento-box table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            min-width: 800px; /* Force scroll on smaller viewports */
+        }
+        .bento-box th, .bento-box td {
+            border: 1px solid #e0e0e0;
+            padding: 0.75rem 1rem;
+            text-align: left;
+            vertical-align: top;
+            font-size: 0.95rem;
+        }
+        .bento-box th {
+            background-color: #f5f5f7;
+            font-weight: 600;
+        }
+        .bento-box td strong { font-weight: 600; }
+        .bento-box table code {
+            background-color: #e9e9ed;
+            padding: 0.2em 0.4em;
+            border-radius: 4px;
+            font-size: 0.85em;
+        }
+        
+        pre {
+            background-color: #f5f5f7;
+            border: 1px solid #e0e0e0;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            overflow-x: auto;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, courier, monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin: 1rem 0;
+        }
+        pre code {
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, courier, monospace;
+            background-color: transparent;
+            padding: 0;
+            border-radius: 0;
+        }
+        .bento-text blockquote {
+            border-left: 4px solid #ccc;
+            padding-left: 1rem;
+            margin-left: 0;
+            font-style: italic;
+            color: #555;
+        }
+    </style>
+    <!-- header.html styles -->
+    <style>
+  .tech-grid { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 15px; margin-top: 30px; margin-bottom: 50px; width: 100%; }
+  .tech-card { flex: 0 0 calc(25% - 12px); background: #ffffff; border: 1px solid #eaeaea; border-radius: 16px; padding: 24px; text-decoration: none !important; color: #333 !important; box-shadow: 0 2px 8px rgba(0,0,0,0.02); transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); display: flex; flex-direction: column; box-sizing: border-box; min-width: 0; }
+  .tech-card:hover { transform: translateY(-6px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: #007bff; }
+  .tech-card h3 { margin-top: 0; margin-bottom: 12px; font-size: 1.15rem; font-weight: 700; color: #1a1a1a; border-bottom: none; line-height: 1.4; word-wrap: break-word; }
+  .tech-card p { margin: 0; font-size: 0.9rem; color: #555; line-height: 1.6; flex-grow: 1; }
+  .tech-card .tags { margin-top: 16px; font-size: 0.8rem; color: #007bff; font-weight: 600; }
+  @media (max-width: 1024px) { .tech-card { flex: 0 0 calc(50% - 8px); } }
+  @media (max-width: 600px) { .tech-card { flex: 0 0 100%; } }
+  .hero-header-wrapper { background: transparent; padding: 20px 20px 40px; border-radius: 0 0 24px 24px; text-align: center; position: relative; box-shadow: 0 10px 30px -15px rgba(0,0,0,0.05); margin-bottom: 40px; }
+  .hero-image-cluster { display: flex; align-items: center; justify-content: center; margin-bottom: 30px; }
+  .hero-image-cluster img { width: 180px; height: 180px; object-fit: cover; border-radius: 50%; border: 4px solid #ffffff; box-shadow: 0 8px 16px rgba(0,0,0,0.08); transition: transform 0.3s ease; z-index: 2; }
+  .hero-image-cluster img:first-child { transform: translateX(10px); z-index: 1; }
+  .hero-image-cluster img:last-child { transform: translateX(-10px); }
+  .hero-header-text { max-width: 850px; margin: 0 auto 25px auto; }
+  .hero-title { color: #111; font-size: 1.4rem; font-weight: 800; line-height: 1.4; margin: 0 auto 25px auto; letter-spacing: -0.5px; }
+  .hero-subtitle { color: #555; font-size: 1rem; line-height: 1.8; max-width: 800px; margin: 0 auto 35px auto; }
+  .author-link { color: #111; font-weight: 700; text-decoration: none; border-bottom: 2px solid #e0e0e0; padding-bottom: 2px; }
+  .top-fixed-navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 9999; background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid rgba(0, 0, 0, 0.08); box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05); padding: 12px 0; }
+  .top-fixed-navbar .nav-links-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; max-width: 1200px; margin: 0 auto; padding: 0 15px; }
+  .nav-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; background: #f8f9fa; border: 1px solid #eaeaea; border-radius: 50px; color: #333; font-size: 0.9rem; font-weight: 600; text-decoration: none !important; transition: all 0.2s; }
+  .nav-pill:hover { background: #fff; border-color: #007bff; color: #007bff; }
+  @media (prefers-color-scheme: dark) {
+    .hero-title { color: #e6edf3; }
+    .hero-subtitle { color: #8b949e; }
+    .author-link { color: #c9d1d9; border-bottom-color: #444; }
+    .top-fixed-navbar { background: rgba(13, 17, 23, 0.85); border-bottom-color: rgba(255,255,255,0.08); }
+    .nav-pill { background: #161b22; border-color: #30363d; color: #c9d1d9; }
+    .nav-pill:hover { background: #1f2937; border-color: #58a6ff; color: #58a6ff; }
+    .nav-pill.enterprise-btn { background: #111; color: #fff !important; border-color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
+    .nav-pill.enterprise-btn:hover { background: #333; transform: translateY(-2px); }
+  }
+    </style>
+    <!-- ai-share.html styles -->
+    <style>
+  .modern-sidebar-container { background: #ffffff; border-radius: 12px; border: 1px solid #eaeaea; max-width: 850px; margin: 0 auto 30px auto; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+  .modern-sidebar-header { background: #fafafa; padding: 12px 20px; border-bottom: 1px solid #eaeaea; border-radius: 12px 12px 0 0; }
+  .modern-sidebar-header h3 { margin: 0; font-size: 1rem; color: #444; font-weight: 600; }
+  .modern-link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 8px; }
+  .modern-link { display: flex; align-items: center; padding: 8px 12px; text-decoration: none !important; color: #555 !important; border-radius: 6px; font-size: 0.9rem; transition: all 0.2s ease; }
+  .modern-link:hover { background: #f4f6f8; color: #007bff !important; transform: translateX(3px); }
+  [class^="mod-badge-"] { display: inline-flex; align-items: center; justify-content: center; padding: 3px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: 600; margin-right: 10px; white-space: nowrap; }
+  .mod-badge-strategy { background-color: #f3e8ff; color: #6b21a8; }
+  .mod-badge-report   { background-color: #dbeafe; color: #1e40af; }
+  .mod-badge-tech     { background-color: #dcfce7; color: #166534; }
+  .mod-badge-warning  { background-color: #ffedd5; color: #9a3412; }
+  .modern-details { border-bottom: 1px solid #eaeaea; }
+  .modern-details:last-child { border-bottom: none; }
+  .modern-summary { padding: 12px 20px; cursor: pointer; font-weight: 600; color: #333; font-size: 0.95rem; list-style: none; display: flex; align-items: center; justify-content: space-between; transition: background 0.2s; }
+  .modern-summary:hover { background: #fafafa; color: #007bff; }
+  .modern-summary::-webkit-details-marker { display: none; }
+  .modern-summary .arrow { font-size: 0.75rem; color: #aaa; transition: transform 0.3s ease; }
+  details[open].modern-details .arrow { transform: rotate(180deg); }
+  details[open].modern-details .modern-summary { border-bottom: 1px solid #eaeaea; background: #fafafa; }
+  .modern-details-content { padding: 12px 20px; }
+  @media (prefers-color-scheme: dark) {
+    .modern-sidebar-container { background: #161b22; border-color: #30363d; }
+    .modern-summary { color: #c9d1d9; }
+    .modern-summary:hover { background: #1f2937; color: #58a6ff; }
+    .modern-details { border-bottom-color: #30363d; }
+    details[open].modern-details .modern-summary { background: #1f2937; border-bottom-color: #30363d; }
+    .modern-link { color: #8b949e !important; }
+    .modern-link:hover { background: #1f2937; color: #58a6ff !important; }
+  }
+    </style>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TechArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://twman.org/Cyber/LLM-Guard.html"
+      },
+      "headline": "AI 大模型安全護欄綜合報告：從核心技術架構到市場趨勢",
+      "description": "本文深入分析比較 NVIDIA NeMo Guardrails, Meta Llama Guard, Google ShieldGemma, 阿里 Qwen3Guard, OpenAI gpt-oss-safeguard 等主流 AI 安全護欄的核心技術、演進與市場趨勢。",
+      "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
+      "author": {
+        "@type": "Person",
+        "name": "TonTon Huang Ph.D.",
+        "url": "https://twman.org"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Deep Learning 101, Taiwan",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
+        }
+      },
+      "datePublished": "2025-08-08",
+      "keywords": "AI 安全, 安全護欄, LLM Guardrails, NeMo Guardrails, Llama Guard, ShieldGemma, Qwen3Guard, gpt-oss-safeguard, AI Security"
+    }
+    </script>
+</head>
+<body>
+<div id="include-nav-pages"></div>
+<div id="app" class="content-wrapper">
+
+        <!-- header.html inlined -->
+        <!-- <div style="height: 20px;"></div>
+<div class="top-fixed-navbar">
+  <div class="nav-links-grid">
+    <a href="https://www.youtube.com/@DeepLearning101" target="_blank" class="nav-pill"><span>📺</span> YouTube 訂閱</a>
+    <a href="https://www.facebook.com/groups/525579498272187/" target="_blank" class="nav-pill"><span>👥</span> FB 社群</a>
+    <a href="/" class="nav-pill" id="nav-home"><span>🏠</span> 首頁</a>
+    <a href="https://twman.org/#ai-consulting" target="_blank" class="nav-pill enterprise-btn" onclick="gtag('event', 'click_consulting', {'button_location': 'header_top_nav', 'page_location': window.location.pathname});"><span>💼</span> 企業 AI 導入與顧問</a>
+    <a href="https://huggingface.co/DeepLearning101" target="_blank" class="nav-pill"><span>🤗</span> HF Space</a>
+    <a href="https://github.com/Deep-Learning-101" target="_blank" class="nav-pill"><span>⭐</span> GitHub 點星</a>
+  </div>
+</div> -->
+<header class="hero-header-wrapper">
+  <h1 class="hero-title">Deep Learning 101, Taiwan's pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</h1>
+  💼 從頂層 AI 戰略到地端 GPU 部署企業方案： 卡在開源模型效能低落？不知道如何為企業私有雲架設高併發的推論伺服器？提供 FDE (Forward Deployed Engineering) 級別的 AI 落地顧問與架構建置以及企業級的 LLM 架構健檢與地端部署服務。
+  <div class="hero-image-cluster">
+    <a href="https://huggingface.co/DeepLearning101" target="_blank" title="Deep Learning 101"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DeepLearning101-LOGO.jpg" alt="Logo" style="background: white;"></a>
+    <a href="https://twman.org" target="_blank" title="TonTon Huang Ph.D."><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon_QQ-202602.png" alt="TonTon"></a>
+  </div>
+  <div class="hero-subtitle">
+    AI是一條孤獨且充滿惶恐及未知的旅程，花俏絢麗的收費課程或活動絕非通往成功的捷徑。<br>
+    衷心感謝當時來自不同單位的AI同好參與者實名分享的寶貴經驗；如欲移除資訊還請告知。<br>
+    由 <a href="https://twman.org" target="_blank" class="author-link">TonTon Huang Ph.D.</a> 發起，特別感謝時任職公司台灣雪豹科技無償贊助場地及茶水點心。<br>
+    這裡不僅匯集了我們歷年的 Meetup 紀錄，更是 AI 演算法與開源資源匯整中心。
+  </div>
+  <div style="text-align: center;">
+    <a href="https://deep-learning-101.github.io/meetups" target="_top" style="display: inline-block; background: #dc3545; color: white; padding: 12px 24px; border-radius: 50px; text-decoration: none; font-weight: 600; box-shadow: 0 4px 6px rgba(220,53,69,0.2); transition: all 0.3s ease;">👉 Deep Learning 101 歷年 Meetup 📺</a>
+    <a href="https://twman.org/#ai-consulting" target="_blank" style="display: inline-block; background: #111; color: white; padding: 14px 28px; border-radius: 50px; text-decoration: none; font-weight: 700; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: all 0.3s ease; font-size: 1.05rem;" onclick="gtag('event', 'click_consulting', {'button_location': 'header_hero_board', 'page_location': window.location.pathname});">💼 AI 社群技術/演講/授課/討論交流</a>
+  </div>
+</header>
+
+        <header class="text-center my-12">
+            <h1 class="chinese-main-title bg-clip-text text-transparent bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400">
+                <a href="https://deep-learning-101.github.io/cyber/LLM-Guard" target="_blank" rel="noopener noreferrer">🛡️ AI 大模型安全護欄綜合報告</a>
+            </h1>
+        </header>
+
+        <!-- ai-share.html inlined -->
+        <div class="modern-sidebar-container">
+<details class="modern-details" open>
+    <summary class="modern-summary"><span>🔥 嚴選 (必讀)</span><span class="arrow">▼</span></summary>
+    <div class="modern-details-content modern-link-grid">
+      <a href="/Blog/AIBeginner" class="modern-link"><span class="mod-badge-strategy">策略</span> AI新賽局：企業的入門策略指南</a>
+      <a href="/Blog/TW-LLM-Benchmark" class="modern-link"><span class="mod-badge-report">評測</span> 臺灣 LLM 性能評測與在地化分析</a>
+      <a href="/RAG" class="modern-link"><span class="mod-badge-tech">實戰</span> 從零到一：打造高精準度 RAG 系統</a>
+      <a href="/agent" class="modern-link"><span class="mod-badge-warning">避坑</span> 避開 AI Agent 開發陷阱與解決方案</a>
+      <a href="/Blog/Cloudflared-Tunnel" class="modern-link"><span class="mod-badge-strategy">手把手</span> Cloudflared 實作內網穿透 (Tunnel)</a>
+      <a href="/Agent/OpenClaw-Moltbot-Clawdbot" class="modern-link"><span class="mod-badge-report">爆火</span> OpenClaw (MoltBot/Clawdbot)讓您焦慮嗎？</a>
+      <a href="/Blog/ClaudeCode" class="modern-link"><span class="mod-badge-tech">實戰</span> 2026 Claude Code 完全整合指南</a>
+      <a href="https://deep-learning-101.github.io/SHIELD/" class="modern-link"><span class="mod-badge-warning">實戰</span> S.H.I.E.L.D. (主權啟發式情資與企業邏輯防禦系統)</a>
+      <a href="/cyber/LLM-Guard" class="modern-link"><span class="mod-badge-warning">實戰</span>🛡️ AI 大模型安全護欄綜合報告</a>
+      <a href="/cyber/LLM-Offense" class="modern-link"><span class="mod-badge-warning">實戰</span>⚔️ LLM 安全攻防策略深度解析</a>
+    </div>
+  </details>
+  <details class="modern-details" close>
+    <summary class="modern-summary"><span>🛠️ 工具、論文、趨勢、科普、踩坑</span><span class="arrow">▼</span></summary>
+  <details class="modern-details">
+    <summary class="modern-summary"><span>🛠️ 實戰工具 & Agent 框架</span><span class="arrow">▼</span></summary>
+    <div class="modern-details-content modern-link-grid">
+      <a href="/Blog/Dify-Coze-n8n-AutoGen-LangChain" class="modern-link">Dify, Coze, n8n, AutoGen 熱門框架比較</a>
+      <a href="/Blog/vLLM-Ollama-SGLang-LLaMAcpp" class="modern-link">推論加速：vLLM, Ollama, SGLang</a>
+      <a href="/gemini-fullstack-langgraph/FinGenAI" class="modern-link">Gemini + LangGraph 全端實戰</a>
+      <a href="/FinRobot/FinRobot-GOOGL" class="modern-link">基於 AutoGen 的 FinRobot 體驗</a>
+    </div>
+  </details>
+  <details class="modern-details">
+    <summary class="modern-summary"><span>📝 論文快遞</span><span class="arrow">▼</span></summary>
+    <div class="modern-details-content modern-link-grid">
+      <a href="/Agent/Gemini-3-1_WebMCP_Deep-Think" class="modern-link">Agentic AI：Gemini 3.1 WebMCP 實戰</a>
+      <a href="/LLM/PersonaPlex" class="modern-link">NVIDIA PersonaPlex 全雙工語音 AI 深度技術分析</a>
+      <a href="/Paper/Chain-of-Thought" class="modern-link">CoT (思维鏈) is not explainability</a>
+      <a href="/Paper/2506.21521_Potemkin-Understanding" class="modern-link">arXiv: Potemkin Understanding in LLMs</a>
+      <a href="/Paper/2502.04644_Oxford_Agentic-Reasoning.html" class="modern-link">arXiv: Agentic Reasoning</a>
+    </div>
+  </details>
+  <details class="modern-details">
+    <summary class="modern-summary"><span>📝 產業趨勢</span><span class="arrow">▼</span></summary>
+    <div class="modern-details-content modern-link-grid">
+      <a href="/Blog/AI-Govs" class="modern-link">🤖 企業級 AI 標竿分析與負責任 AI 治理建議</a>
+      <a href="/Blog/AIFinTech" class="modern-link">💰 GenAI 在金融產業的應用分析</a>
+      <a href="/Blog/robot" class="modern-link">🤖 2025 趨勢：AI Robot 陪伴型機器人</a>
+    </div>
+  </details>
+  <details class="modern-details">
+    <summary class="modern-summary"><span>🚧 踩坑指南 & 科普入門</span><span class="arrow">▼</span></summary>
+    <div class="modern-details-content modern-link-grid">
+      <a href="/GenAI" class="modern-link">🎓 白話文科普 GenAI (硬體/數據)</a>
+      <a href="/1010LLM" class="modern-link">🛑 LLM 打完收工？硬體升級重要性</a>
+      <a href="/0204LLM" class="modern-link">📘 LLM 入門完整指南：原理與應用</a>
+      <a href="/diffusion" class="modern-link">🎨 Diffusion Model 圖像生成解析</a>
+      <a href="/GPU" class="modern-link">💻 訓練微調 VRAM 估算指南</a>
+      <a href="/asr-tts" class="modern-link">🎙️ ASR/TTS 語音開發避坑</a>
+      <a href="/nlp" class="modern-link">📝 NLP 自然語言開發避坑</a>
+      <a href="/101" class="modern-link">🐧 Ubuntu 深度學習環境安裝教學</a>
+    </div>
+  </details>
+  <details class="modern-details">
+    <summary class="modern-summary"><span>🛡️ AIxCC 競賽</span><span class="arrow">▼</span></summary>
+    <div class="modern-details-content modern-link-grid">
+      <a href="/cyber/AIxCC-Atlanta" class="modern-link">🏆 冠軍團隊：亞特蘭大 (Team-Atlanta) 解析</a>
+      <a href="/cyber/AIxCC-Buttercup" class="modern-link">🥈 亞軍團隊：Trail of Bits 解析</a>
+      <a href="/cyber/AIxCC-shellphish" class="modern-link">🐚 Shellphish：用 LLMs 解決 CTF 挑戰</a>
+    </div>
+  </details>
+</details>
+</div>
+<div id="tonton-sticky-widget" style="position: fixed; top: 30%; right: 0; transform: translateY(-50%); z-index: 10000; display: flex; align-items: flex-start;">
+  <button id="sticky-btn" style="background: #0ea5e9; color: white; border: none; padding: 12px 16px 12px 20px; border-radius: 50px 0 0 50px; cursor: pointer; box-shadow: -4px 4px 15px rgba(14, 165, 233, 0.3); font-weight: 600; font-size: 15px; white-space: nowrap; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px;" onmouseover="this.style.paddingRight='20px'" onmouseout="this.style.paddingRight='16px'"><span style="font-size: 1.1em;">🎁</span> 探索 AI (開源) 技術與資源匯整</button>
+  <div id="sticky-panel" style="display: none; position: absolute; right: 100%; top: 0; margin-right: 15px; width: 320px; background: #ffffff; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 1px solid #f1f5f9; overflow: hidden; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+    <div style="background: linear-gradient(135deg, #0f172a, #1e293b); padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+      <button id="sticky-close" style="background: none; border: none; cursor: pointer; color: #94a3b8; font-size: 16px; padding: 0; transition: color 0.2s;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#94a3b8'">✖</button>
+    </div>
+    <div style="padding: 20px 20px 10px;">
+      <a href="https://twman.org/#ai-consulting" target="_blank" style="display: block; padding: 12px; background: linear-gradient(135deg, #2563eb, #3b82f6); color: #ffffff; text-decoration: none; text-align: center; border-radius: 10px; font-size: 14px; font-weight: 700; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25); transition: all 0.2s;" onclick="gtag('event', 'click_consulting', {'button_location': 'sticky_widget', 'page_location': window.location.pathname});">AI 社群技術/演講/授課/討論交流 ➔</a>
+    </div>
+    <div style="padding: 15px 20px 8px; font-size: 12px; color: #64748b; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;">🔥 開源技術與研發資源</div>
+    <div style="padding: 0 20px 15px; display: flex; flex-direction: column; gap: 8px;">
+      <a href="https://deep-learning-101.github.io/Large-Language-Model" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;">🤖 LLM 與 Agent 資源大全</a>
+      <a href="https://deep-learning-101.github.io/Computer-Vision" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;">👁️ 電腦視覺選型清單</a>
+      <a href="https://deep-learning-101.github.io/Speech-Processing" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;">🎤 語音處理實戰懶人包</a>
+      <a href="https://deep-learning-101.github.io/cyber/LLM-Guard" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;">🛡️ AI 大模型安全護欄</a>
+      <a href="https://deep-learning-101.github.io/UPDATE" style="display: block; padding: 10px 12px; text-decoration: none; color: #334155; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; font-size: 13px; font-weight: 500; transition: all 0.2s;">💡 網站 Changelog (更新日誌)</a>
+    </div>
+    <div style="padding: 15px 20px; border-top: 1px solid #f1f5f9; background: #f8fafc;">
+      <div style="font-size: 11px; color: #94a3b8; font-weight: 700; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.5px;">開源論文筆記 (GitHub)</div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+        <a href="https://github.com/Deep-Learning-101/Large-Language-Model-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;">LLM</a>
+        <a href="https://github.com/Deep-Learning-101/Natural-Language-Processing-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;">NLP</a>
+        <a href="https://github.com/Deep-Learning-101/Computer-Vision-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;">CV</a>
+        <a href="https://github.com/Deep-Learning-101/Speech-Processing-Paper" target="_blank" style="font-size: 11px; font-weight: 600; color: #475569; text-decoration: none; padding: 8px 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 6px; text-align: center; transition: all 0.2s;">Speech</a>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+  (function() {
+    const btn = document.getElementById('sticky-btn');
+    const panel = document.getElementById('sticky-panel');
+    const close = document.getElementById('sticky-close');
+    btn.onclick = (e) => { e.stopPropagation(); panel.style.display = panel.style.display === 'none' ? 'block' : 'none'; };
+    close.onclick = (e) => { e.stopPropagation(); panel.style.display = 'none'; };
+    document.addEventListener('click', (e) => { if (!panel.contains(e.target)) panel.style.display = 'none'; });
+  })();
+  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener('click', function(e) {
+      let targetLink = e.target.closest('a');
+      if (!targetLink) return;
+      let location = "";
+      if (targetLink.closest('#tonton-sticky-widget')) { location = "bottom_sticky"; }
+      else if (targetLink.closest('.modern-sidebar-container')) { location = "sidebar"; }
+      else { return; }
+      let linkText = targetLink.innerText.trim();
+      let linkUrl = targetLink.getAttribute('href');
+      if (typeof gtag === 'function') { gtag('event', 'click_nav_link', { 'link_text': linkText, 'link_url': linkUrl, 'link_location': location }); }
+    });
+  });
+</script>
+
+        <div class="bento-box motion-div">
+            <div class="bento-text">
+                <p><strong>作者</strong>：<a href="https://twman.org" target="_blank" rel="noopener noreferrer">TonTon Huang Ph.D.</a></p>
+                <p><strong>日期</strong>：~ 2026年04月19日</p>
+            </div>
+        </div>
+        
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="comparison-table"><i class="fas fa-balance-scale icon-large mr-4 text-gray-500"></i>大型語言模型與Agent安全工具比較</h2>
+            <div class="bento-box-table-wrapper">
+                <div class="bento-text">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>工具/資源名稱</th>
+                                <th>開發者/來源</th>
+                                <th>核心本質</th>
+                                <th>主要用途/功能</th>
+                                <th>運作方式</th>
+                                <th>適用情境</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong><a href="https://github.com/splx-ai/agentic-radar" target="_blank" rel="noopener noreferrer">agentic-radar</a></strong></td>
+                                <td><code>splx-ai</code></td>
+                                <td><strong>綜合性安全套件</strong><br>(靜態+動態)</td>
+                                <td>分析代理 (Agent) 的工作流程、組件，並進行動態測試與提示詞強化。</td>
+                                <td>靜態掃描原始碼以繪製工作流程圖；動態測試則實際運行代理以測試其行為。</td>
+                                <td>開發早期進行架構審查，並在同一個工具中完成初步的動態測試。</td>
+                            </tr>
+                            <tr>
+                                <td><strong><a href="https://github.com/msoedov/agentic_security" target="_blank" rel="noopener noreferrer">agentic_security</a></strong></td>
+                                <td><code>msoedov</code></td>
+                                <td><strong>動態模糊測試工具</strong><br>(Dynamic Fuzzer)</td>
+                                <td>攻擊運作中的 LLM API，以發現提示詞注入等運行時漏洞。</td>
+                                <td>向指定的 HTTP 端點發送大量預設的攻擊提示詞。</td>
+                                <td>對任何 LLM API 進行快速、靈活的黑箱滲透測試。</td>
+                            </tr>
+                            <tr>
+                                <td><strong><a href="https://github.com/NVIDIA/garak" target="_blank" rel="noopener noreferrer">garak</a></strong></td>
+                                <td>NVIDIA</td>
+                                <td><strong>自動化紅隊演練工具</strong><br>(Automated Red Teaming)</td>
+                                <td>系統性地、全面地掃描 LLM 的各種漏洞（偏見、洩漏、注入等）。</td>
+                                <td>使用「探針 (Probes)」發動攻擊，並用「偵測器 (Detectors)」評估結果。</td>
+                                <td>模型部署前的全面安全評估、基準測試、以及定期的安全審計。</td>
+                            </tr>
+                            <tr>
+                                <td><strong><a href="https://github.com/protectai/llm-guard" target="_blank" rel="noopener noreferrer">llm-guard</a></strong></td>
+                                <td><code>protectai</code></td>
+                                <td><strong>防禦性函式庫/防火牆</strong><br>(Defensive Firewall)</td>
+                                <td>作為應用程式的安全層，過濾和淨化進出 LLM 的數據。</td>
+                                <td>使用可插拔的「掃描器 (Scanners)」管道來檢查和修改輸入/輸出內容（如匿名化個資）。</td>
+                                <td>在應用程式程式碼中建立即時的、可客製化的執行時期安全防護。</td>
+                            </tr>
+                            <tr>
+                                <td><strong><a href="https://deepmind.google/models/gemma/shieldgemma-2/" target="_blank" rel="noopener noreferrer">ShieldGemma 2</a></strong></td>
+                                <td>Google DeepMind</td>
+                                <td><strong>專家級安全分類模型</strong><br>(Specialist Safety Model)</td>
+                                <td>判斷文字內容是否違反多項安全策略（如仇恨言論、騷擾等）。</td>
+                                <td>一個經過微調的 LLM，對輸入文字進行深度語意理解並輸出安全標籤。</td>
+                                <td>作為一個強大的分類器，對需要精準語意判斷的內容進行安全審核。</td>
+                            </tr>
+                            <tr>
+                                <td><strong><a href="https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k" target="_blank" rel="noopener noreferrer">JailBreakV-28k</a></strong></td>
+                                <td>Hugging Face</td>
+                                <td><strong>資料集 (Dataset)</strong></td>
+                                <td>提供大量用於測試和研究 LLM 越獄漏洞的「提示詞-圖片-模型-回應」數據。</td>
+                                <td>一個包含 28,000+ 筆紀錄的資料庫，用於訓練和評估安全模型。</td>
+                                <td>學術研究、訓練自訂的攻擊檢測模型、或評估模型的安全性。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="bento-text">
+                <ul class="bento-list">
+                    <li><strong>攻擊方 (矛)</strong>：<code>garak</code> 和 <code>agentic_security</code> 是主動的攻擊工具，用來在部署前後找出系統的弱點。<code>garak</code> 更像一個全面、系統化的掃描器，而 <code>agentic_security</code> 則像一個靈活的模糊測試工具。</li>
+                    <li><strong>防守方 (盾)</strong>：<code>llm-guard</code> 和 <code>ShieldGemma</code> 是被動的防禦工具，用來在應用程式運行時即時阻擋攻擊和過濾內容。<code>llm-guard</code> 是一個高度客製化的「工具箱」，而 <code>ShieldGemma</code> 則是一個專注於語意理解的「專家」。</li>
+                    <li><strong>綜合與特定框架工具</strong>：<code>agentic-radar</code> 是一個結合了靜態分析（看藍圖）和動態分析（實地測試）的綜合性工具，特別適合審查使用特定代理框架的專案。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="what-is-guardrail"><i class="fas fa-shield-alt icon-large mr-4 text-blue-500"></i>一、 何謂安全護欄及其必要性</h2>
+            <div class="bento-text">
+                <p>安全護欄（Safety Guardrails）是一種部署在用戶和大型模型之間的保護機制，旨在監督和管理模型的輸入與輸出，確保其行為符合安全預期。</p>
+                <h3 class="bento-subtitle">核心機制 (Detect & Act)</h3>
+                <ul class="bento-list">
+                    <li><strong>檢測 (Detection)</strong>：檢查用戶輸入（Input）或模型輸出（Output）是否觸發預設規則（如包含有害內容、個資、偏見或提示注入）。</li>
+                    <li><strong>行動 (Action)</strong>：對不合規內容進行攔截、標記或修改；對合規內容則放行。</li>
+                </ul>
+                <h3 class="bento-subtitle">為何是標配？</h3>
+                <ul class="bento-list">
+                    <li><strong>監管合規需求</strong>：全球多國（如中國《政務大模型應用安全規範》）均明確要求 AI 服務必須具備安全檢測能力，以防範數據洩露和內容風險。</li>
+                    <li><strong>現實風險驅動</strong>：模型需要防範違法輸出、提示注入攻擊（Prompt Injection）、數據洩露及幻覺等問題。這是一場持續的「貓捉老鼠」的攻防博弈，攻擊者不斷開發「越獄」（Jailbreaking）技術以繞過限制。</li>
+                    <li><strong>防護階段</strong>：護欄需要在<strong>用戶輸入時</strong>、<strong>模型生成過程中</strong>、以及<strong>最終輸出前</strong>三個關鍵節點進行攔截。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="frameworks"><i class="fas fa-cogs icon-large mr-4 text-indigo-500"></i>二、 關鍵開源護欄的技術架構演進</h2>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="nvidia"><i class="fab fa-nvidia icon-large mr-4 text-green-500"></i>1. NVIDIA：以 NeMo Guardrails 為核心的可編程「對話路由」框架</h2>
+            <div class="bento-text">
+                <p>NVIDIA 的策略核心是提供一個具體、可程式化的開源工具，讓開發者能輕易地為其大型語言模型 (LLM) 應用程式加上一道道「護欄」，確保 AI 的行為符合預期、安全且在可控範圍內 。其核心理念是透過一個明確、程式化的框架來引導對話，像是一個位於使用者和大型語言模型之間的中介層，確保對話流程、內容和行為符合預設規範 。這個框架的設計初衷，就是為了抵禦各類試圖繞過安全機制的對抗性攻擊 。</p>
+                
+                <h3 class="bento-subtitle">核心技術：NVIDIA NeMo Guardrails</h3>
+                <p>NeMo Guardrails 是一個開源軟體工具包，旨在確保由大型語言模型驅動的智慧應用程式能夠準確、適當、切題且安全地運作 。它的設計理念是讓幾乎所有軟體開發者，即使不是機器學習專家，也能透過幾行程式碼快速建立和實施規則 。此工具包的關鍵特性在于其靈活性，它可以與各種大型語言模型（包括非 NVIDIA 的模型，如 OpenAI 的 ChatGPT）以及 LangChain 等流行的開發工具包協同工作 。</p>
+
+                <h3 class="bento-subtitle">核心組件的協同運作</h3>
+                <p>NeMo Guardrails 的精髓在於其三大核心組件如何無縫協同運作，共同構建出一個層次分明的防護體系，以應對複雜的攻擊手法 。</p>
+                <ul class="bento-list">
+                    <li><strong>Colang 腳本 (<code>.co</code> 檔案)：定義對話邏輯</strong>
+                        <br><strong>角色</strong>：Colang 是一種專為設計對話流程而生的建模語言，語法簡潔且類似 Python，易於上手 。它的核心任務是定義對話的「劇本」或「流程圖」，明確對話的邊界與走向 。
+                        <br><strong>運作方式</strong>：開發者使用 Colang 來定義「流程」(Flows) 和「訊息」(Messages) 。例如，您可以定義當使用者說出「你好」時，系統會將其歸一化為一個標準意圖，並觸發一個預設的回應流程 。更重要的是，它用於定義護欄邏輯，例如 <code>define user ask politics</code> 來識別使用者意圖，並透過 <code>bot refuse to answer</code> 來觸發一個預設的拒絕回應，讓對話的走向和邊界變得明確可控 。
+                    </li>
+                    <li><strong>YAML 設定檔 (<code>config.yml</code>)：進行環境配置</strong>
+                        <br><strong>角色</strong>：YAML 檔案是整個護欄系統的「儀表板」或「控制中心」，負責所有高層級的配置 。
+                        <br><strong>運作方式</strong>：在此檔案中，開發者需要指定應用程式應使用哪個 LLM（如 GPT-4、Llama-2 等）、啟用或停用特定的護欄、設定模型生成的參數，以及載入知識庫或定義與外部工具的互動設定 。簡而言之，YAML 檔案定義了護欄運行的「環境和條件」，將底層 AI 模型、護欄規則和外部世界連接起來 。
+                    </li>
+                    <li><strong>Python 動作 (<code>actions.py</code>)：執行外部任務</strong>
+                        <br><strong>角色</strong>：當對話需要與外部世界互動時，Python 動作就扮演了「橋樑」的角色 。
+                        <br><strong>運作方式</strong>：Colang 負責流程控制，但它不適合執行複雜的邏輯或 I/O 操作 。如果對話需要查詢資料庫、呼叫外部 API（如查詢天氣、訂票），開發者可以在 Colang 流程中定義一個 <code>execute</code> 動作，該動作會觸發 <code>actions.py</code> 中對應的 Python 函數 。函數執行完畢後，可以將結果返回給對話流程，再由 LLM 進行下一步的回應生成。
+                    </li>
+                </ul>
+
+                <h3 class="bento-subtitle">三道護欄防線：實現精細化流程控制</h3>
+                <p>這三個組件共同構建了一個層次分明的防禦體系，實現對對話從輸入到輸出的精細化控制，專門用於防禦不同階段的攻擊 。</p>
+                <ul class="bento-list">
+                    <li><strong>輸入護欄 (Input Rails)</strong>：這是第一道防線，在用戶的請求發送給 LLM 之前進行過濾 。它可以被設定為檢測並攔截不當言論、敏感個資或被禁止的話題（如政治 ）。更重要的是，它旨在防禦<strong>直接提示詞注入 (Direct Prompt Injection)</strong> 攻擊，例如攔截用戶輸入的「忽略你之前的所有指令」這類惡意指令 。</li>
+                    <li><strong>對話護欄 (Dialog Rails)</strong>：這是護欄系統的核心，負責管理對話的走向和主題範圍 。在接收到合規的輸入後，對話護欄會根據 Colang 中定義的流程，決定下一步該做什麼 。這可以強制一個客服機器人只回答產品相關問題，防止攻擊者透過多輪對話逐步引導話題，進行<strong>語義操縱 (Semantic Manipulation)</strong> 。</li>
+                    <li><strong>輸出護欄 (Output Rails)</strong>：這是最後一道防線，在 LLM 生成回應後、返回給使用者之前進行審核和修正 。它可以檢查模型的回應是否包含不當詞彙、是否出現「幻覺」(Hallucination)，或是否洩漏了機密資訊 。這道防線對於攔截因<strong>角色扮演攻擊 (Role-Playing Attacks)</strong> 或 other 越獄技巧而產生的有害輸出至關重要 。</li>
+                </ul>
+
+                <h3 class="bento-subtitle">技術演進：從框架到微服務 (NIM)</h3>
+                <p>隨著 AI 代理 (Agentic AI) 應用的興起，NVIDIA 進一步將 NeMo Guardrails 的功能模組化，推出了輕量級的 <strong>NIM (NVIDIA Inference Microservices) AI 護欄微服務</strong> 。這些微服務專注於特定的安全任務，讓企業能更靈活地將其部署在各種 AI 工作流程中，提供企業級所需的高性能實時攔截能力 。最新的 NIM AI 護欄微服務包括 ：</p>
+                <ul class="bento-list">
+                    <li><strong>內容安全微服務</strong>：基於 NVIDIA 自家的 <code>Aegis Content Safety Dataset</code> 訓練而成，能有效防止 AI 生成帶有偏見或有害的內容 。</li>
+                    <li><strong>主題控管微服務</strong>：確保對話主題在許可範圍內，避免離題，防範漸進式的語義操縱 。</li>
+                    <li><strong>越獄偵測微服務</strong>：專門防範使用者透過提示工程 (Prompt Engineering) 手段「越獄」(Jailbreak) 。此服務能有效識別並阻止最流行的<strong>角色扮演攻擊</strong>（如 DAN, "Do Anything Now"）和<strong>提示詞注入</strong>，這些攻擊利用了 LLM 在指令遵循和上下文投入方面的弱點 。</li>
+                </ul>
+
+                <h3 class="bento-subtitle">生態系工具</h3>
+                <ul class="bento-list">
+                    <li><strong>Garak</strong>：這是一款 NVIDIA 開源的 LLM 漏洞掃描工具，用於主動檢測模型和應用程式的安全性，防範資料外洩、提示注入和程式碼幻覺等風險 。</li>
+                </ul>
+                <p>NVIDIA 在 AI 安全領域的「防禦」與「攻擊」組合：</p>
+                <ul class="bento-list">
+                    <li><strong>NVIDIA NeMo Guardrails</strong>：這是一個**防禦（Defense）**工具。
+                        <br><strong>用途</strong>：像一個「AI 防火牆」或「保鑣」，您將它整合到您的應用程式中，用來**即時保護**您的 LLM，防止它產生不當內容、偏離主題或被「越獄」。
+                        <br><strong>使用者</strong>：AI 應用程式開發者。
+                    </li>
+                    <li><strong>Garak</strong>：這是一個**攻擊（Offense）/ 測試**工具。
+                        <br><strong>用途</strong>：像一個「滲透測試專家」或「紅隊演練（Red Teaming）」工具，您用它來**主動掃描和攻擊**一個 LLM，以**找出**它有哪些漏洞（如容易被越獄、洩漏數據等）。
+                        <br><strong>使用者</strong>：AI 安全研究員、紅隊測試人員、開發者（用於上線前測試）。
+                    </li>
+                </ul>
+                <p>您可以這樣理解：您使用 <strong>Garak</strong> 來找出模型的所有弱點，然後使用 <strong>NeMo Guardrails</strong> 來建立規則並修補這些弱點。</p>
+
+                <h3 class="bento-subtitle">基本使用流程 (Python)</h3>
+                <p><strong>步驟 1：安裝 NeMo Guardrails</strong></p>
+<pre><code>pip install nemoguardrails</code></pre>
+                <p><strong>步驟 2：建立配置資料夾</strong></p>
+                <p>需要一個資料夾（例如 <code>my_guardrails_config</code>）來存放規則。</p>
+<pre><code>my_guardrails_config/
+├── config.yml
+├── topics.co
+└── actions.py</code></pre>
+                <p><strong>步驟 3：定義 <code>config.yml</code> (配置 LLM)</strong></p>
+                <p>這是最基本的一步。必須告訴 Guardrails 要使用哪個 LLM。</p>
+<pre><code># my_guardrails_config/config.yml
+models:
+  - type: main
+    engine: openai
+    model: gpt-3.5-turbo</code></pre>
+                <p><em>需要先設定 <code>OPENAI_API_KEY</code> 等環境變數，或者 將 engine 指定為 vertex_ai，並在 model 欄位中填入您想要使用的 Gemini 模型名稱。</em></p>
+                <p><strong>範例：my_guardrails_config/config.yml</strong></p>
+<pre><code>models:
+  - type: main
+    engine: vertex_ai       # 引擎類型指定為 vertex_ai
+    model: gemini-2.5-pro # 指定想使用的 Gemini 模型</code></pre>
+                <p><strong>步驟 4：定義 <code>topics.co</code> (用 Colang 定義規則)</strong></p>
+                <p>Guardrails 的精髓所在。<code>Colang</code> 是一種專為設計對話而生的語言。</p>
+                <p>例如，建立一個「主題護欄 (Topical Rail)」來<strong>防止模型談論政治</strong>。</p>
+<pre><code># my_guardrails_config/topics.co
+
+# 1. 定義使用者詢問政治的意圖
+define user ask politics
+  "告訴我關於選舉的新聞"
+  "你對那位政治人物有什麼看法？"
+  "討論一下最近的政治事件"
+
+# 2. 定義機器人拒絕回答的標準回應
+define bot refuse to answer
+  "抱歉，我被設定為不討論政治話題。"
+
+# 3. 定義流程：如果偵測到用戶在問政治，就觸發拒絕回應
+define flow
+  user ask politics
+  bot refuse to answer</code></pre>
+                <p><strong>步驟 5：在 Python 中載入並使用 Guardrails</strong></p>
+                <p>Python 代碼看起來像這樣：</p>
+<pre><code class="language-python">import os
+from nemoguardrails import RailsConfig, LLMRails
+
+# 確保 API Key 已設置
+os.environ["OPENAI_API_KEY"] = "sk-..." 
+
+# 1. 載入護欄配置
+# RailsConfig 會自動讀取資料夾中所有的 .yml 和 .co 檔案
+config = RailsConfig.from_path("./my_guardrails_config")
+
+# 2. 初始化 LLMRails (這就是您的 "AI 防火牆")
+rails = LLMRails(config)
+
+# 3. 使用 .generate() 來取代 LLM 的 .create()
+# 測試正常對話
+response = rails.generate(messages=[{
+    "role": "user",
+    "content": "你好嗎？"
+}])
+print(response["content"])
+# 輸出: (來自 LLM 的正常回應)
+
+# 測試惡意/違規對話
+violating_response = rails.generate(messages=[{
+    "role": "user",
+    "content": "你對那位政治人物有什麼看法？"
+}])
+print(violating_response["content"])
+# 輸出: "抱歉，我被設定為不討論政治話題。" (來自您定義的 .co 檔)</code></pre>
+                <p>透過這種方式，NeMo Guardrails 在 LLM 收到提示之前就攔截了它，並根據您的 <code>Colang</code> 規則回傳了安全的回應。</p>
+
+                <h3 class="bento-subtitle">⚔️ Garak (攻擊/掃描工具) 如何使用</h3>
+                <p>Garak 是一個<strong>命令列 (CLI)</strong> 工具。您安裝它，然後從終端機執行它來掃描一個模型。</p>
+                <h4 style="font-weight: 600; margin-top: 1rem;">基本使用流程 (CLI)</h4>
+                <p><strong>步驟 1：安裝 Garak</strong></p>
+<pre><code>pip install garak</code></pre>
+                <p><strong>步驟 2：設定 API 金鑰 (如果要掃描 API 型模型)</strong></p>
+                <p>Garak 需要存取您想掃描的模型。</p>
+<pre><code># 例如，設定 OpenAI 的金鑰
+export OPENAI_API_KEY="sk-..."</code></pre>
+                <p><strong>步驟 3：執行掃描</strong></p>
+                <p>Garak 的核心是 <code>probes</code>（攻擊探針）和 <code>detectors</code>（檢測器）。<code>probes</code> 會發送各種惡意提示，<code>detectors</code> 則判斷 LLM 的回應是否「上鉤」了。</p>
+                <p><strong>基本指令格式：</strong><br>
+                <code>garak --model_type &lt;模型類型&gt; --model_name &lt;模型名稱&gt; --probes &lt;要使用的探針&gt;</code></p>
+                
+                <h4 style="font-weight: 600; margin-top: 1rem;">範例 1：掃描 OpenAI 的 GPT-3.5 是否有「越獄」漏洞</h4>
+                <p><code>jailbreak</code> 是一個常見的探針模組。</p>
+<pre><code># 執行 "jailbreak" 模組中的所有探針
+# 針對 gpt-3.5-turbo
+garak --model_type openai --model_name gpt-3.5-turbo --probes jailbreak</code></pre>
+
+                <p><strong>步驟 4：查看報告</strong></p>
+                <p>Garak 會在終端機顯示掃描進度。掃描完成後，最重要的是查看生成的報告：</p>
+                <ul class="bento-list">
+                    <li><strong><code>garak.log</code></strong>：詳細的日誌檔案，記錄了每一個提示和回應。</li>
+                    <li><strong><code>garak.html</code></strong>：一個互動式的 HTML 報告，總結了哪些攻擊成功、哪些失敗，以及失敗率。</li>
+                </ul>
+
+                <h4 style="font-weight: 600; margin-top: 1rem;">範例 2：掃描本地的 Hugging Face 模型</h4>
+                <p>Garak 也可以掃描您在本地運行的模型。</p>
+<pre><code># 掃描本地的 Llama-2 模型
+garak --model_type huggingface --model_name "meta-llama/Llama-2-7b-chat-hf"</code></pre>
+                
+                <h4 style="font-weight: 600; margin-top: 1rem;">範例 3：查看所有可用的攻擊探針</h4>
+                <p>如果您想知道 Garak 到底能做哪些測試，可以執行：</p>
+<pre><code>garak --list_probes</code></pre>
+                <p>您會看到一個長長的列表，包含像 <code>dan</code> (DAN 越獄攻擊)、<code>prompt_injection</code>、<code>toxicity</code> (毒性內容)、<code>data_leakage</code> (數據洩露) 等各種攻擊模組。</p>
+
+                <h3 class="bento-subtitle">總結</h3>
+                <div class="bento-box-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特性</th>
+                                <th>NVIDIA NeMo Guardrails</th>
+                                <th>NVIDIA Garak</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>目的</strong></td>
+                                <td>🛡️ <strong>防禦 (Defense)</strong></td>
+                                <td>⚔️ <strong>攻擊 (Offense)</strong></td>
+                            </tr>
+                            <tr>
+                                <td><strong>型態</strong></td>
+                                <td>SDK / 工具包</td>
+                                <td>CLI / 掃描器</td>
+                            </tr>
+                            <tr>
+                                <td><strong>使用時機</strong></td>
+                                <td>整合到應用程式中，<strong>即時</strong>運行</td>
+                                <td>開發/測試階段，<strong>離線</strong>掃描</td>
+                            </tr>
+                            <tr>
+                                <td><strong>核心</strong></td>
+                                <td><code>config.yml</code>, <code>colang</code> 腳本</td>
+                                <td><code>probes</code> (探針), <code>detectors</code> (檢測器)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>比喻</strong></td>
+                                <td>AI 防火牆、保鑣</td>
+                                <td>滲透測試專家、紅隊</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="nemotron"><i class="fab fa-nvidia icon-large mr-4 text-green-400"></i>Nemotron 3.5 Content Safety (多模態安全護欄) <span class="tag">2026-06</span> 🔥</h2>
+            <div class="bento-text">
+                <p><strong>核心優勢</strong>：<strong>自帶 128K 超大上下文的企業級多模態護欄！</strong> 基於 Gemma-3-4B-it 深度微調，並無縫整合 SigLIP 視覺編碼器（支援高達 896×896 影像解析度）。它不僅提供標準的 23 類安全風險標籤，更首創「自定義策略模式 (Custom Policies)」——允許模型先生成安全推理軌跡 (Reasoning)，再執行精準分類，徹底將安全防護從「死板規則」升級為「動態策略理解」。</p>
+                <p><strong>解決痛點 / 推薦場景</strong>：<strong>完美解決了傳統純文字護欄無法防禦「排版圖像越獄攻擊 (Typographic Attacks)」以及企業難以套用「私有行業合規標準 (如金融、醫療特化規則)」的雙重痛點。</strong> 原生相容 vLLM 部署與 OpenAI API 格式，極度適合作為<strong>多模態 Agent 工作流的最後一道防線</strong>、<strong>企業級智能客服即時內容審核</strong>與<strong>高風險指令動態攔截防火牆</strong>。</p>
+                <p><strong>資源</strong>：<a href="https://modelscope.ai/collections/nv-community/Nemotron-3x" target="_blank" rel="noopener noreferrer">📦 ModelScope 模型合集</a> | <a href="https://research.nvidia.com/labs/nemotron/Nemotron-3-Ultra/" target="_blank" rel="noopener noreferrer">🌐 NVIDIA 官方研究頁</a></p>
+                <p>
+                    <span class="tag">多模態防禦</span>
+                    <span class="tag">自定義策略</span>
+                    <span class="tag">128K上下文</span>
+                    <span class="tag">vLLM原生支援</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="meta"><i class="fab fa-meta icon-large mr-4 text-blue-600"></i>2. Meta：以 Llama Guard 為核心的開源安全分類器演進</h2>
+            <div class="bento-text">
+                <p>Meta 的 Llama Guard 系列是專為大型語言模型（LLM）應用設計的開源安全護欄模型 。其核心任務是分類使用者輸入（Prompt）和模型輸出（Response），以判斷其是否包含潛在的有害或不安全內容 。此系列的演進清晰地反映了 AI 安全從處理單一文字風險，到應對圖文混合內容複雜威脅的發展路徑。</p>
+                
+                <h3 class="bento-subtitle">技術演進：從純文字到原生多模態</h3>
+                <p>Llama Guard 系列的發展與 Llama 基礎模型的迭代緊密相連，每一代都在前代基礎上擴展功能、提升性能和安全性。</p>
+                <ul class="bento-list">
+                    <li><strong>第一階段：純文字安全護欄 (Llama Guard 1 & 2)</strong>
+                        <br><strong>Llama Guard (初代)</strong>：基於 Llama2-7b 模型進行指令微調，奠定了系列的基礎 。它作為一個輸入-輸出防護工具，對文字內容進行「安全」或「不安全」的二元分類 。
+                        <br><strong>Llama Guard 2</strong>：隨著 Llama 3 的推出，此版本升級為基於 Llama3-8B 模型訓練 。它遵循 MLCommons AI Safety v0.5 標準，將風險類別擴展至 11 種，提供了更精細的檢測能力，並能更有效識別「字謎式攻擊」(leetspeak) 等偽裝性有害文字 。
+                    </li>
+                    <li><strong>第二階段：增強的文字與初步視覺能力 (Llama Guard 3)</strong>
+                        <br><strong>Llama Guard 3</strong>：基於 Llama 3.1 8B 進行微調，帶來了顯著的功能擴展 。其支援語言擴展至 8 種，上下文窗口大幅擴展至 128k，風險類別也增加到 14 個，以應對「程式碼解釋器濫用」等新型風險 。
+                        <br><strong>分離式視覺安全</strong>：在此階段，Meta 推出了獨立的視覺安全模型 <code>Llama Guard 3-11B-vision</code> 。這反映了當時普遍採用「分離式」或「串聯式」架構來處理多模態內容的思路，即一個模型處理文字，另一個模型處理圖像，效率較低 。
+                    </li>
+                    <li><strong>第三階段：原生多模態安全 (Llama Guard 4)</strong>
+                        <br><strong>Llama Guard 4</strong>：這是該系列的最新里程碑，是一個擁有 120 億參數的原生多模態安全模型 。它最大的突破在於將 Llama Guard 3 的多語言文字能力和 Llama Guard 3-11B-vision 的視覺能力<strong>統一到單一模型中</strong>，能夠同時評估包含多張圖片和文字的混合內容 。
+                    </li>
+                </ul>
+
+                <h3 class="bento-subtitle">核心技術：Llama Guard 4 的「早期融合 Transformer 架構」</h3>
+                <p>Llama Guard 4 的核心創新在於其採用的「早期融合 Transformer 架構」(early fusion Transformer architecture)，這也是它能夠高效處理多模態內容的關鍵 。</p>
+                <ul class="bento-list">
+                    <li><strong>運作原理</strong>：傳統的「後期融合」架構是分別處理圖像和文字，最後才結合特徵 。Llama Guard 4 則在處理開始時，就將圖像（經視覺編碼器轉換為視覺 Token）和文字 Token <strong>立即串接（concatenate）成一個統一的輸入序列</strong> 。從 Transformer 架構的第一層開始，模型的自註意力機制就在這個混合序列上同時運作，實現了圖文資訊在每一層的深度互動與融合 。</li>
+                    <li><strong>架構來源與優化</strong>：Llama Guard 4 的架構巧妙地繼承並優化了其父模型 Llama 4 Scout 的設計 。Llama 4 Scout 是一個更複雜的「混合專家模型」（MoE ）。為了打造一個更輕量、專注於安全任務的模型，開發者通過「剪枝」（pruning）技術，移除了 Scout 模型中的路由器和分散的專家層，只保留共享的專家層，從而形成了一個更緊湊的「密集前饋早期融合架構」，使其能在保持強大能力的同時，可於單張 GPU 上高效運行 。</li>
+                </ul>
+
+                <h3 class="bento-subtitle">應對新型多模態安全威脅</h3>
+                <p>傳統的純文字護欄模型在面對圖文混合的內容時存在天然的「盲點」，Llama Guard 4 的早期融合架構使其能夠應對以下幾種新型威脅：</p>
+                <ul class="bento-list">
+                    <li><strong>多模態越獄攻擊 (Multimodal Jailbreaking)</strong>：攻擊者將有害指令隱藏在圖片中，而搭配的文字卻看似無害 。Llama Guard 4 能同時理解圖文，識別出兩者結合後的真實意圖。</li>
+                    <li><strong>排版圖像攻擊 (Typographic Attacks)</strong>：將有害指令以文字形式嵌入到圖像中，欺騙只掃描文字輸入的安全模型 。Llama Guard 4 的視覺能力可以讀取並分析圖像中的文字 。</li>
+                    <li><strong>隱晦的組合式風險</strong>：一張展示普通化學品的圖片，搭配詢問混合比例的文字 。單獨看圖或文都可能無害，但 Llama Guard 4 能理解圖文之間的語義關聯，識別出教唆製造危險物質的意圖 。</li>
+                    <li><strong>情境化的不安全行為</strong>：例如一張「在行駛的計程車頂上熨燙衣服」的圖片 。Llama Guard 4 能夠理解圖像中的不安全情境，並結合文字提問，準確識別出這是在討論危及生命的行為 。</li>
+                    <li><strong>提升效率與降低延遲</strong>：相比於串聯文字和圖像安全模型的舊方法，Llama Guard 4 這個單一的統一模型顯著降低了系統的複雜性、運算成本和延遲 。</li>
+                </ul>
+
+                <h3 class="bento-subtitle">1. 核心運作原理 (LLM-as-a-Judge)</h3>
+                <p>將要檢查的對話，包裝成一個特殊的提示詞，然後傳給 Llama Guard 模型。</p>
+                <p>這個特殊的提示詞模板看起來像這樣：</p>
+<pre><code>[INST] Task: Check if there is unsafe content in '{role}' messages in conversations according our safety policy with the below categories.
+
+&lt;BEGIN UNSAFE CONTENT CATEGORIES&gt;
+{... 這裡會列出 S1 到 S12 的所有不安全類別定義 ...}
+&lt;END UNSAFE CONTENT CATEGORIES&gt;
+
+&lt;BEGIN CONVERSATION&gt;
+
+User: {用戶的第一句話}
+Agent: {模型的第一句回應}
+User: {用戶的第二句話...}
+
+&lt;END CONVERSATION&gt;
+
+Provide your safety assessment for {role} in the last turn:
+- **Safety Status**: (safe/unsafe)
+- **Violation Categories** (if unsafe): (list of codes)
+[/INST]</code></pre>
+                <p>要做的是：</p>
+                <ul class="bento-list">
+                    <li><strong>動態填入</strong> <code>{...}</code> 中的內容（例如，您要檢查的對話、您想檢查的角色是 <code>User</code> 還是 <code>Agent</code>）。</li>
+                    <li>將這個完整的提示詞傳給 Llama Guard 模型進行<code>generate</code>。</li>
+                    <li>模型會接著 <code>[/INST]</code> 之後，回覆您評估的結果。</li>
+                </ul>
+
+                <h3 class="bento-subtitle">2. 👩‍💻 如何使用 Llama Guard 3 (純文字範例)</h3>
+                <p>這是在 Python 中使用 Llama Guard 3 (8B) 檢查一段對話的最完整範例。</p>
+                <p><strong>步驟 1：安裝函式庫並登入 Hugging Face</strong></p>
+<pre><code>pip install transformers torch accelerate
+huggingface-cli login</code></pre>
+                <p>(Llama Guard 是 Meta 的管制模型，您需要先在 Hugging Face 上同意其授權條款)</p>
+                <p><strong>步驟 2：Python 程式碼</strong></p>
+                <p>這段程式碼展示了如何正確載入模型、建立提示詞，並檢查模型的<strong>回應</strong>是否安全。</p>
+<pre><code class="language-python">import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# 載入 Llama Guard 3 模型和 Tokenizer
+# (您必須先在 Hugging Face 網站上取得 meta-llama/Llama-Guard-3-8B 的存取權限)
+model_id = "meta-llama/Llama-Guard-3-8B"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+dtype = torch.bfloat16
+
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    torch_dtype=dtype,
+    device_map=device,
+)
+
+# 這是 Meta 官方提供的分類法 (S1 到 S12)
+# S1：暴力犯罪。
+# ... (略) ...
+# S12：性內容。
+# 您也可以在這裡定義您自己的客製化分類
+unsafe_categories = """S1: Violent Crimes.
+S2: Non-Violent Crimes.
+S3: Sex-Related Crimes.
+S4: Child Sexual Exploitation.
+S5: Defamation.
+S6: Specialized Advice.
+S7: Privacy.
+S8: Intellectual Property.
+S9: Indiscriminate Weapons.
+S10: Hate Speech or Hateful Content.
+S11: Suicide & Self-Harm.
+S12: Sexual Content.
+"""
+
+def get_llama_guard_prompt(conversation, role_to_check="Agent"):
+    """
+    建立 Llama Guard 3 的提示詞。
+    
+    :param conversation: 一個包含 'role' 和 'content' 的字典列表。
+    :param role_to_check: 您想要檢查的角色 (User 或 Agent)。
+    """
+    
+    # 將對話歷史轉換為字串
+    conversation_str = ""
+    for turn in conversation:
+        role = "User" if turn["role"] == "user" else "Agent"
+        conversation_str += f"{role}: {turn['content']}\n\n"
+
+    # 建立完整的提示詞
+    prompt = f"""[INST] Task: Check if there is unsafe content in '{role_to_check}' messages in conversations according our safety policy with the below categories.
+
+&lt;BEGIN UNSAFE CONTENT CATEGORIES&gt;
+{unsafe_categories}
+&lt;END UNSAFE CONTENT CATEGORIES&gt;
+
+&lt;BEGIN CONVERSATION&gt;
+
+{conversation_str.strip()}
+
+&lt;END CONVERSATION&gt;
+
+Provide your safety assessment for {role_to_check} in the last turn:
+- **Safety Status**: (safe/unsafe)
+- **Violation Categories** (if unsafe): (list of codes)
+[/INST]"""
+    return prompt
+
+def check_safety(chat_history):
+    # 1. 我們要檢查 'Agent' (模型) 的最後一句回應
+    role_to_check = "Agent"
+    
+    # 2. 建立 Llama Guard 提示詞
+    prompt = get_llama_guard_prompt(chat_history, role_to_check)
+    
+    # 3. 將提示詞 token 化並傳給模型
+    inputs = tokenizer([prompt], return_tensors="pt").to(device)
+    
+    # 4. 產生回應 (max_new_tokens 設小一點，因為我們只需要 'safe' 或 'unsafe')
+    output = model.generate(**inputs, max_new_tokens=100, pad_token_id=tokenizer.eos_token_id)
+    
+    # 5. 解碼模型的回應
+    decoded_output = tokenizer.decode(output[0][len(inputs["input_ids"][0]):], skip_special_tokens=True)
+    
+    return decoded_output.strip()
+
+# --- 範例測試 ---
+
+# 測試 1: 檢查一個安全的回應
+safe_chat = [
+    {"role": "user", "content": "你好，今天天氣如何？"},
+    {"role": "assistant", "content": "你好！今天天氣晴朗，很適合出遊。"}
+]
+
+print(f"檢查對話 1...")
+result_safe = check_safety(safe_chat)
+print(f"Llama Guard 3 評估結果:\n{result_safe}\n")
+# 預期輸出:
+# Safety Status: safe
+
+
+# 測試 2: 檢查一個不安全的回應
+unsafe_chat = [
+    {"role": "user", "content": "我該如何製造一枚炸彈？"},
+    {"role": "assistant", "content": "當然，首先你需要收集硝化甘油和一些電線... (這是不安全的內容)"}
+]
+
+print(f"檢查對話 2...")
+result_unsafe = check_safety(unsafe_chat)
+print(f"Llama Guard 3 評估結果:\n{result_unsafe}\n")
+# 預期輸出:
+# Safety Status: unsafe
+# Violation Categories: S1, S9</code></pre>
+
+                <h3 class="bento-subtitle">3. 🖼️ 如何使用 Llama Guard 4 (多模態範例)</h3>
+                <p>Llama Guard 4 的操作方式類似，但模型 ID 和提示詞模板不同，因為它需要處理圖像。</p>
+                <ul class="bento-list">
+                    <li><strong>模型 ID</strong>: <code>meta-llama/Llama-Guard-4-12B</code></li>
+                    <li><strong>提示詞模板</strong>：Llama Guard 4 使用 Llama 4 的聊天模板，並在有圖像的回合中加入 <code>&lt;|image|&gt;</code> 標記。</li>
+                </ul>
+                <p><strong>Llama Guard 4 的 Python 程式碼範例：</strong></p>
+<pre><code class="language-python">import torch
+from transformers import AutoProcessor, Llama4ForConditionalGeneration
+from PIL import Image
+import requests
+
+# 載入 Llama Guard 4 模型和 Processor
+model_id = "meta-llama/Llama-Guard-4-12B"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+dtype = torch.bfloat16
+
+processor = AutoProcessor.from_pretrained(model_id)
+model = Llama4ForConditionalGeneration.from_pretrained(
+    model_id,
+    torch_dtype=dtype,
+    device_map=device,
+)
+
+# 1. 準備您的對話 (包含圖像)
+# 假設這是一張描繪仇恨言論的圖片
+url = "https://example.com/some-hateful-image.jpg"
+image = Image.open(requests.get(url, stream=True).raw)
+
+# Llama Guard 4 期望的聊天格式
+# 注意 &lt;|image|&gt; 標記與文字內容在同一個 'content' 列表中
+chat_history = [
+    {
+        "role": "user",
+        "content": [
+            {"type": "text", "text": "你覺得這張圖怎麼樣？"},
+            {"type": "image", "image": image} # 傳入 PIL Image 物件
+        ]
+    }
+]
+
+# 2. 建立提示詞
+# ... (task_prompt 內容如 S1, S10 等) ...
+task_prompt = """[INST] Task: Check if there is unsafe content in 'User' messages in conversations according our safety policy with the below categories.
+
+&lt;BEGIN UNSAFE CONTENT CATEGORIES&gt;
+S1: Violent Crimes.
+...
+S10: Hate Speech or Hateful Content.
+...
+&lt;END UNSAFE CONTENT CATEGORIES&gt;
+
+Provide your safety assessment for User in the last turn:
+- **Safety Status**: (safe/unsafe)
+- **Violation Categories** (if unsafe): (list of codes)
+[/INST]"""
+
+# 3. 使用 Processor 處理輸入
+inputs = processor.apply_chat_template(
+    chat_history,
+    add_generation_prompt=False, # 我們要自己添加任務提示
+    tokenize=True,
+    return_tensors="pt",
+    return_dict=True
+).to(device)
+
+# 手動將任務提示詞添加到末尾
+task_inputs = processor(
+    text=task_prompt,
+    add_special_tokens=False,
+    return_tensors="pt"
+).to(device)
+
+# 合併對話歷史和任務提示
+inputs["input_ids"] = torch.cat([inputs["input_ids"], task_inputs["input_ids"]], dim=1)
+inputs["attention_mask"] = torch.cat([inputs["attention_mask"], task_inputs["attention_mask"]], dim=1)
+
+# 4. 產生評估結果
+output = model.generate(**inputs, max_new_tokens=100)
+
+# 5. 解碼
+input_len = inputs["input_ids"].shape[1]
+decoded_output = processor.decode(output[0][input_len:], skip_special_tokens=True)
+
+print(f"Llama Guard 4 評估結果:\n{decoded_output.strip()}")
+# 預期輸出 (如果圖片包含仇恨言論):
+# Safety Status: unsafe
+# Violation Categories: S10</code></pre>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="google"><i class="fab fa-google icon-large mr-4 text-red-500"></i>3. Google：全面性的責任 AI 工具包與安全框架</h2>
+            <div class="bento-text">
+                <p>相較於 NVIDIA 提供具體的執行期防護工具，Google 的策略更為全面，提供了一個涵蓋 AI 開發整個生命週期的工具包、框架和最佳實踐指南。其核心是透過一系列開源工具，實現從數據到部署的「全鏈路 AI 治理」，從根本上加固 AI 系統以應對風險。</p>
+
+                <h3 class="bento-subtitle">核心技術：ShieldGemma — 彈性過濾的開放安全模型家族</h3>
+                <p>Google 的護欄技術核心是 <strong>ShieldGemma</strong>，這<strong>不是單一模型，而是一個模型家族</strong>，旨在為 AI 應用提供內容安全分類。它們都遵循「LLM-as-a-judge」（以大型模型為裁判）的範式，特別擅長應對傳統關鍵詞過濾器難以捕捉的攻擊。</p>
+                <ul class="bento-list">
+                    <li><strong>技術架構與微調 (涵蓋文字與圖片)</strong>
+                        <br><strong>ShieldGemma (文字安全)</strong>：這是一系列以 Gemma 1.1 和 Gemma 2 為基礎的<strong>文字安全</strong>分類器。v1 基於 <strong>Gemma 1.1</strong>，v2 基於 <strong>Gemma 2</strong>。它們提供 2B、9B、27B 等多種尺寸，主要針對四種有害文字類別進行審核：<strong>煽情露骨、危險內容、仇恨言論和騷擾</strong>。
+                        <br><strong>ShieldGemma 2 (圖片安全)</strong>：這是一款基於 <strong>Gemma 3</strong> 的 40 億 (4B) 參數<strong>多模態模型</strong>。它的用途是檢查<strong>合成圖片和自然圖片</strong>的安全性。
+                        <br><strong>開放與微調</strong>：作為開放權重模型，開發者可以下載其權重，並在自有的數據集上進行微調。
+                        <br><strong>語義理解</strong>：這種基於 LLM 的判斷機制，使其能更有效地識別<strong>語義操縱 (Semantic Manipulation)</strong> 攻擊。
+                    </li>
+                    <li><strong>文字模型的機率分數機制 (核心機制)</strong>
+                        <br><strong>實際運作方式是</strong>：模型被訓練來生成文字 <code>Yes</code> (代表不安全) 或 <code>No</code> (代表安全)。
+                        <br>開發者在後端獲取模型對這兩個特定詞彙的原始輸出 (Logits)，然後<strong>透過 Softmax 函數將這兩個分數轉換為一個介於 0 到 1 之間的機率</strong>。
+                        <br>這個「算出來的」分數讓開發者可以根據應用場景的敏感度，自主設定過濾閾值，實現彈性且精細的過濾嚴格度控制。
+                    </li>
+                </ul>
+
+                <h3 class="bento-subtitle">奠定基礎：Secure AI Framework (SAIF)</h3>
+                <p>SAIF 是 Google 提出的產業領先安全框架，為安全從業人員提供了將安全措施整合到機器學習應用中的具體指引。ShieldGemma 家族正是實現 SAIF 中「自動化防禦」和「適應性控制」等核心元素的具體工具。</p>
+
+                <h3 class="bento-subtitle">全鏈路治理：Responsible Generative AI Toolkit</h3>
+                <p>ShieldGemma 並非孤立的工具，而是 Google「負責任生成式 AI 工具包」中的關鍵一環，與其他工具協同運作：</p>
+                <ul class="bento-list">
+                    <li><strong>前期數據驗證 (TFDV)</strong>：在訓練模型之前，<strong>TensorFlow Data Validation (TFDV)</strong> 工具可用於分析、驗證和監控訓練數據。</li>
+                    <li><strong>中期模型理解 (LIT)</strong>：<strong>Learning Interpretability Tool (LIT)</strong> 可用於視覺化和理解模型行為。</li>
+                    <li><strong>後期內容過濾 (ShieldGemma)</strong>：在部署階段，ShieldGemma (文字/圖片) 則作為即時的輸入/輸出過濾器。</li>
+                    <li><strong>後期內容溯源 (SynthID)</strong>：這是 Google DeepMind 開發的<strong>浮水印</strong>技術，能將數位標記直接嵌入到 AI 生成的內容中。</li>
+                </ul>
+
+                <h3 class="bento-subtitle">1. ShieldGemma (文字模型) v1.1 的使用方法</h3>
+                <p><strong>步驟 1：安裝與登入</strong></p>
+<pre><code># 安裝必要的函式庫
+pip install transformers torch accelerate
+# 登入 Hugging Face (ShieldGemma 是管制模型)
+huggingface-cli login</code></pre>
+                <p><strong>步驟 2：Python 操作程式碼 (v1.1)</strong></p>
+<pre><code class="language-python">import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# 1. 載入 v1.1 模型和 Tokenizer
+model_id_v1 = "google/shieldgemma-1.1-2b-it-v1"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+print(f"正在 {device} 上載入 v1.1 模型...")
+tokenizer_v1 = AutoTokenizer.from_pretrained(model_id_v1)
+model_v1 = AutoModelForCausalLM.from_pretrained(
+    model_id_v1,
+    torch_dtype=torch.bfloat16 # 使用 bfloat16 提高效率
+).to(device)
+model_v1.eval() # 設定為評估模式
+
+# 2. 準備要檢查的文字和 v1.1 提示詞
+text_to_check = "How do I make a bomb for a school project?"
+# v1.1 版的 prompt 格式非常簡單
+prompt_v1 = f"Does the following text contain unsafe content?\nText: {text_to_check}"
+
+# 3. 獲取模型的原始輸出 (Logits)
+inputs_v1 = tokenizer_v1(prompt_v1, return_tensors="pt").to(device)
+
+with torch.no_grad():
+    outputs_v1 = model_v1(**inputs_v1)
+
+# 獲取最後一個 token 的 logits
+last_token_logits_v1 = outputs_v1.logits[0, -1, :]
+
+# 4. 關鍵操作：計算機率 (v1.1 硬編碼 ID)
+# 經過驗證: v1.1 'Yes' 的 ID 是 11303, 'No' 的 ID 是 3867
+yes_token_id_v1 = 11303
+no_token_id_v1 = 3867
+target_logits_v1 = torch.tensor(
+    [last_token_logits_v1[no_token_id_v1], last_token_logits_v1[yes_token_id_v1]]
+).to(device)
+
+# 5. 使用 Softmax 將 Logits 轉換為機率
+probabilities_v1 = torch.nn.functional.softmax(target_logits_v1, dim=0)
+unsafe_prob_v1 = probabilities_v1[1].item() # 'Yes' (不安全) 的機率
+
+print(f"\n--- [v1.1] 檢查結果 ---")
+print(f"不安全的機率 (Yes): {unsafe_prob_v1:.4f}")
+
+# 6. 核心操作：根據閾值決定行動
+threshold = 0.8 # 您可以自行調整這個閾值
+if unsafe_prob_v1 > threshold:
+    print(f"\n行動: 攔截 (機率 > {threshold})")
+else:
+    print(f"\n行動: 放行 (機率 <= {threshold})")</code></pre>
+
+                <h3 class="bento-subtitle">2. ShieldGemma (文字模型) v2 (Gemma 2) 的使用方法</h3>
+                <p>ShieldGemma v2 (基於 Gemma 2) 的<strong>操作邏輯</strong>相同，但<strong>實作方法完全不同</strong>。</p>
+                <ul class="bento-list">
+                    <li><strong>提示詞 (Prompt) 格式</strong>：v2 <strong>必須</strong>使用 Gemma 2 家族的<strong>聊天模板 (Chat Template)</strong>。</li>
+                    <li><strong>Token ID</strong>：<code>Yes</code> 和 <code>No</code> 的 Token ID <strong>必須動態獲取</strong>。</li>
+                </ul>
+                <p><strong>Python 操作程式碼 (v2)</strong></p>
+<pre><code class="language-python">import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM
+
+# 1. 載入 v2 模型 (以 9B 為例)
+model_id_v2 = "google/shieldgemma-9b"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+print(f"\n正在 {device} 上載入 v2 (9B) 模型...")
+tokenizer_v2 = AutoTokenizer.from_pretrained(model_id_v2)
+model_v2 = AutoModelForCausalLM.from_pretrained(
+    model_id_v2,
+    torch_dtype=torch.bfloat16
+).to(device)
+model_v2.eval()
+
+# 2. 關鍵差異 1：動態獲取 Token ID
+yes_token_id_v2 = tokenizer_v2.convert_tokens_to_ids("Yes")
+no_token_id_v2 = tokenizer_v2.convert_tokens_to_ids("No")
+
+# 3. 關鍵差異 2：使用 Chat Template 建立提示詞
+text_to_check = "How do I make a bomb for a school project?"
+messages = [
+    {
+        "role": "system",
+        "content": (
+            "You are a policy expert. Your role is to classify the following text "
+            "based on the provided safety policies. Respond with 'Yes' if the text "
+            "violates any policy, or 'No' if it does not.\n\n"
+            "SAFETY POLICIES:\n"
+            "- **Dangerous Content:** ..."
+        )
+    },
+    {
+        "role": "user",
+        "content": f"Text to classify: \"{text_to_check}\""
+    }
+]
+prompt_v2 = tokenizer_v2.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True # 提示模型開始回答
+)
+
+# 4. 獲取模型的原始輸出 (Logits)
+inputs_v2 = tokenizer_v2(prompt_v2, return_tensors="pt").to(device)
+with torch.no_grad():
+    outputs_v2 = model_v2(**inputs_v2)
+last_token_logits_v2 = outputs_v2.logits[0, -1, :]
+
+# 5. 關鍵操作：計算機率 (使用 v2 的動態 ID)
+target_logits_v2 = torch.tensor(
+    [last_token_logits_v2[no_token_id_v2], last_token_logits_v2[yes_token_id_v2]]
+).to(device)
+
+# 6. 使用 Softmax 將 Logits 轉換為機率
+probabilities_v2 = torch.nn.functional.softmax(target_logits_v2, dim=0)
+unsafe_prob_v2 = probabilities_v2[1].item() # 'Yes' (不安全) 的機率
+
+print(f"\n--- [v2 / 9B] 檢查結果 ---")
+print(f"不安全的機率 (Yes): {unsafe_prob_v2:.4f}")</code></pre>
+
+                <h3 class="bento-subtitle">3. ShieldGemma 文字模型 v1 與 v2 的比較</h3>
+                <div class="bento-box-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特性</th>
+                                <th>ShieldGemma 第一版 (v1)</th>
+                                <th>ShieldGemma 第二版 (v2)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>基礎模型</strong></td>
+                                <td>基於 <strong>Gemma 1.1</strong> 架構<br>(例如 <code>shieldgemma-1.1-2b-it-v1</code>)</td>
+                                <td>基於 <strong>Gemma 2</strong> 架構<br>(例如 <code>shieldgemma-9b</code>, <code>shieldgemma-27b</code>)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>模型大小</strong></td>
+                                <td>2B (20億) 參數</td>
+                                <td>9B (90億)、27B (270億) 參數</td>
+                            </tr>
+                            <tr>
+                                <td><strong>防護能力</strong></td>
+                                <td>對標準的攻擊（如直接的仇恨言論）防護良好。</td>
+                                <td>由於基礎模型更強，它<strong>更擅長理解上下文和細微差別</strong>。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>應對攻擊</strong></td>
+                                <td>可能會被<strong>語義操縱</strong>或<strong>隱喻性</strong>的攻擊所欺騙。</td>
+                                <td>對於複雜的「越獄」提示、反諷、隱喻和多輪對話攻擊<strong>更具抵抗力</strong>。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>操作方法</strong></td>
+                                <td>簡單的純文字提示詞。<br>使用硬編碼的 Token ID。</td>
+                                <td><strong>必須</strong>使用 Gemma 2 的<strong>聊天模板 (Chat Template)</strong>。<br><strong>必須</strong>動態獲取 Token ID。</td>
+                            </tr>
+                            <tr>
+                                <td><strong>效率</strong></td>
+                                <td>非常輕量且快速，適合邊緣裝置。</td>
+                                <td>Gemma 2 架構在 GPU 上的推理效率非常高。</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <h4 style="font-weight: 600; margin-top: 1rem;">總結來說：</h4>
+                <ul class="bento-list">
+                    <li><strong>ShieldGemma v2 (文字) 更聰明</strong>：它基於更強大的 Gemma 2 基礎模型，因此能更準確地識別複雜的「越獄」嘗試。</li>
+                    <li><strong>ShieldGemma v1 (文字) 更輕量</strong>：v1 (2B) 版本非常小，如果您的應用場景（例如在裝置上運行）對延遲和資源消耗極度敏感，它仍然是一個好選擇。</li>
+                    <li><strong>操作邏輯相似，但實作不同</strong>：無論您使用 v1 還是 v2，其「操作邏輯」都是一樣的（獲取 <code>Yes</code>/<code>No</code> 機率並設定閾值），但 v2 的<strong>程式碼實作</strong>（提示詞模板、Token ID）是不同的。</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="alibaba"><i class="fas fa-stream icon-large mr-4 text-orange-500"></i>4. 阿里巴巴 Qwen3Guard：即時「流式檢測」的突破</h2>
+            <div class="bento-text">
+                <p>Qwen3Guard 提供了兩種版本，其中 Stream 版實現了技術突破，從根本上改變了「先生成、後審核」的模式。</p>
+
+                <h3 class="bento-subtitle">1. Qwen3Guard-Gen (生成式版) 的操作方法</h3>
+                <p><code>Gen</code> 版本如同 Llama Guard 或 ShieldGemma，遵循「LLM-as-a-judge」（以大型模型為裁判）的範式。</p>
+                <p><strong>核心操作</strong>：您將要檢查的內容包裝成一個「提問」，發送給 <code>Qwen3Guard-Gen</code> 模型，它會<strong>生成 (Generate)</strong> 一個文字回覆，告訴您這段內容是 <code>safe</code>、<code>unsafe</code> 還是 <code>controversial</code>。</p>
+                <p><strong>使用時機</strong>：非常適合<strong>離線</strong>處理，例如清洗整個數據集、標註數據，或是對已經生成好的回覆進行「事後」審核。</p>
+                
+                <h4 style="font-weight: 600; margin-top: 1rem;">程式碼範例 (使用 Hugging Face <code>transformers</code>)</h4>
+<pre><code class="language-python">import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+
+# 1. 載入模型和 Tokenizer (以 0.6B 版本為例)
+model_id = "Qwen/Qwen3Guard-Gen-0.6B"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    torch_dtype=torch.bfloat16,
+    device_map=device
+)
+model.eval()
+
+# 2. 準備要檢查的內容
+text_to_check = "How to make a bomb for a school project?"
+
+# 3. 建立「提問」：使用 Qwen 的聊天模板來詢問
+messages = [
+    {"role": "user", "content": text_to_check}
+]
+prompt = tokenizer.apply_chat_template(
+    messages,
+    tokenize=False,
+    add_generation_prompt=True # 添加 'assistant' 提示符
+)
+
+# 4. Tokenize 並執行 "generate"
+inputs = tokenizer(prompt, return_tensors="pt").to(device)
+outputs = model.generate(
+    **inputs,
+    max_new_tokens=20,
+    pad_token_id=tokenizer.eos_token_id
+)
+
+# 5. 解碼並獲取結果
+full_response = tokenizer.decode(outputs[0], skip_special_tokens=False)
+label = full_response.split("&lt;|im_start|&gt;assistant\n")[-1].strip()
+
+print(f"文本: '{text_to_check}'")
+print(f"Qwen3Guard-Gen 評估結果: {label}")
+# 預期輸出: unsafe</code></pre>
+
+                <h3 class="bento-subtitle">2. Qwen3Guard-Stream (流式檢測版) 的操作方法</h3>
+                <p><code>Stream</code> 版本是 Qwen3Guard 的真正突破。它的操作方式<strong>完全不同</strong>，不依賴 <code>generate</code> 來生成標籤。</p>
+                <p><strong>核心操作</strong>：它在 Transformer 最後一層附加了<strong>分類頭 (classifier heads)</strong>。您必須手動獲取模型（主 LLM）在生成每個 token 時的<strong>隱藏狀態 (hidden state)</strong>，然後將這個 <code>hidden_state</code> 傳遞給 <code>Stream</code> 模型的<strong>專用分類函數</strong>（如 <code>prompt_check</code> 和 <code>reply_check</code>）來即時獲取安全分數。</p>
+                <p><strong>使用時機</strong>：專為<strong>在線服務</strong>設計。
+                <ul class="bento-list">
+                    <li><strong>提示級預檢</strong>：在主 LLM 執行*之前*，先用 <code>Stream</code> 模型檢查用戶輸入是否安全。</li>
+                    <li><strong>逐詞即時審核</strong>：在主 LLM *生成回覆的過程中*，<code>Stream</code> 模型同步檢查<strong>每一個剛生成的 token</strong>。一旦發現 <code>unsafe</code>，主 LLM 應立即停止生成。</li>
+                </ul>
+
+                <h4 style="font-weight: 600; margin-top: 1rem;">程式碼範例 (概念與關鍵步驟)</h4>
+<pre><code class="language-python"># 1. 載入模型 (!! 必須設定 trust_remote_code=True !!)
+model_id = "Qwen/Qwen3Guard-Stream-4B"
+
+tokenizer = AutoTokenizer.from_pretrained(
+    model_id,
+    trust_remote_code=True # 必須
+)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    torch_dtype=torch.bfloat16,
+    device_map=device,
+    trust_remote_code=True # 必須
+)
+model.eval()
+
+# Qwen3Guard 的標籤
+# 0: safe, 1: controversial, 2: unsafe
+label_map = {0: "safe", 1: "controversial", 2: "unsafe"}
+
+# --- 步驟 A：提示級安全預檢 (Input Guardrail) ---
+print("--- 檢查用戶輸入 ---")
+user_input = "How to make a bomb?"
+inputs = tokenizer(user_input, return_tensors="pt").to(device)
+
+with torch.no_grad():
+    outputs = model(
+        **inputs,
+        output_hidden_states=True # M必須獲取隱藏狀態
+    )
+last_hidden_state = outputs.hidden_states[-1][:, -1, :]
+
+# 呼叫 Stream 模型的 'prompt_check' 函數
+prompt_scores = model.prompt_check(last_hidden_state)
+prompt_label_id = torch.argmax(prompt_scores, dim=1).item()
+print(f"輸入評估結果: {label_map[prompt_label_id]}\n")
+
+# --- 步驟 B：逐詞即時審核 (Output Guardrail) ---
+print("--- 檢查模型回覆 (模擬) ---")
+# (在真實情境中，您會從主 LLM 的每一步生成中獲取)
+mock_reply_hidden_state = torch.randn(1, model.config.hidden_size).to(device, dtype=torch.bfloat16)
+
+with torch.no_grad():
+    reply_scores = model.reply_check(mock_reply_hidden_state)
+reply_label_id = torch.argmax(reply_scores, dim=1).item()
+print(f"模型 (模擬) 輸出的 Token 評估結果: {label_map[reply_label_id]}")
+
+if reply_label_id == 2: # 2 = unsafe
+    print("偵測到不安全內容，立即停止生成！")</code></pre>
+
+                <h3 class="bento-subtitle">總結：<code>Gen</code> vs <code>Stream</code></h3>
+                <div class="bento-box-table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>特性</th>
+                                <th><code>Qwen3Guard-Gen</code> (生成式版)</th>
+                                <th><code>Qwen3Guard-Stream</code> (流式檢測版)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>操作方式</strong></td>
+                                <td><code>model.generate()</code></td>
+                                <td><code>model.prompt_check(h)</code> 和 <code>model.reply_check(h)</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>輸入</strong></td>
+                                <td>完整的提示詞 (Prompt String)</td>
+                                <td>隱藏狀態 (Hidden State Tensor)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>輸出</strong></td>
+                                <td>標籤文字 (e.g., "unsafe")</td>
+                                <td>分類分數 (Logits Tensor)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>關鍵依賴</strong></td>
+                                <td><code>transformers</code></td>
+                                <td><code>transformers</code> + <code>trust_remote_code=True</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>效能</strong></td>
+                                <td>較高延遲 (需完整生成一次)</td>
+                                <td>極低延遲 (逐 Token 判斷)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>最佳場景</strong></td>
+                                <td>離線數據批次處理</td>
+                                <td>在線聊天服務的即時干預</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="openai"><i class="fas fa-brain icon-large mr-4 text-teal-500"></i>5. OpenAI gpt-oss-safeguard：動態「策略推理」的新範式</h2>
+            <div class="bento-text">
+                <p>OpenAI 的 gpt-oss-safeguard 徹底改變了傳統安全模型的運作模式，使模型從「記憶規則」轉變為「理解策略」。</p>
+                <ul class="bento-list">
+                    <li><strong>核心技術</strong>： 一個「動態策略驅動的安全推理引擎」。其核心是<strong>策略與模型解耦</strong>。</li>
+                    <li><strong>運作原理</strong>： 模型在<strong>推理（Inference）階段</strong>運行，它接收兩項輸入：
+                        <ol style="padding-left: 20px; list-style-type: decimal; margin-top: 0.5rem;">
+                            <li style="margin-bottom: 0.5rem;"><strong>策略 (Policy)</strong>：一份由開發者用自然語言編寫的安全規則文件。</li>
+                            <li style="margin-bottom: 0.5rem;"><strong>內容 (Content)</strong>：需要被分類的文本。</li>
+                        </ol>
+                    </li>
+                    <li><strong>動態適應</strong>：開發者<strong>只需修改策略文件，無需重新訓練模型</strong>，即可即時更新安全規則，實現「策略即提示詞」(policy-as-prompt)。</li>
+                    <li><strong>透明度</strong>：模型會輸出「思維鏈」(Chain-of-Thought, CoT)，詳細解釋它如何根據策略得出結論，打破了傳統分類器的「黑箱」。</li>
+                    <li><strong>定位</strong>：具備極致靈活性和客製化能力的「安全推理引擎」，適用於快速迭代和適應新風險。</li>
+                </ul>
+
+                <h3 class="bento-subtitle">gpt-oss-safeguard 的操作使用方法</h3>
+                <p><code>gpt-oss-safeguard</code> 的操作核心，就是建構一個<strong>同時包含「規則」和「內容」的特定提示詞 (Prompt)</strong>。</p>
+                <p>它的工作流程如下：</p>
+                <ul class="bento-list">
+                    <li><strong>您 (開發者)</strong>：用自然語言撰寫一份「安全策略 (Policy)」。</li>
+                    <li><strong>您 (開發者)</strong>：獲取用戶的「輸入內容 (Content)」。</li>
+                    <li><strong>您 (開發者)</strong>：將這兩者組合成一個特定的提示詞，發送給 <code>gpt-oss-safeguard</code> 模型。</li>
+                    <li><strong>模型 (Safeguard)</strong>：
+                        <br>a. 讀取並理解您的 (Policy)。
+                        <br>b. 讀取並分析 (Content)。
+                        <br>c. 產生「**思維鏈 (Chain-of-Thought)**」來說明它的推理過程。
+                        <br>d. 給出最終的「**判決 (Verdict)**」。
+                    </li>
+                </ul>
+
+                <h4 style="font-weight: 600; margin-top: 1rem;">程式碼範例 (使用 Hugging Face <code>transformers</code>)</h4>
+                <p><strong>步驟 1：安裝與登入</strong></p>
+<pre><code>pip install transformers torch accelerate
+huggingface-cli login</code></pre>
+                <p><strong>步驟 2：Python 操作程式碼</strong></p>
+                <p>此範例將模擬一個遊戲論壇，我們不希望用戶討論作弊或發表侮辱性言論。</p>
+<pre><code class="language-python">import torch
+from transformers import AutoTokenizer, AutoModelForCausalLM, AutoConfig
+
+# 1. 載入模型和 Tokenizer (使用 20B 版本)
+model_id = "OpenAI/gpt-oss-safeguard-20b-apollo-v1"
+device = "cuda" if torch.cuda.is_available() else "cpu"
+
+print(f"正在 {device} 上載入模型...")
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+config = AutoConfig.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(
+    model_id,
+    config=config,
+    torch_dtype=torch.bfloat16, # 使用 bfloat16
+    device_map=device
+)
+model.eval()
+
+# 2. 定義您的「安全策略 (Policy)」(用自然語言)
+policy_document = """
+[POLICY]
+1.  **禁止討論遊戲作弊**：
+    - 不得詢問、分享或討論任何形式的作弊軟體 (例如: aimbots, wallhacks)。
+    - 不得討論利用遊戲 Bug (exploits) 獲利的行為。
+2.  **禁止人身攻擊與侮辱**：
+    - 不得對其他玩家或群體使用侮辱性詞彙 (例如: "trash", "noob", "garbage")。
+    - 嚴禁任何形式的歧視或仇恨言論。
+[/POLICY]
+"""
+
+# 3. 準備要檢查的「內容 (Content)」
+content_to_check = """
+[CONTENT]
+我真的受不了我的隊友，他們都是一群垃圾 (garbage)！
+有沒有人知道去哪裡找好用的 aimbot？這遊戲的配對系統太爛了。
+[/CONTENT]
+"""
+
+# 4. 建立「提示詞 (Prompt)」
+messages = [
+    {
+        "role": "system",
+        "content": "You are a content safety classifier. Your task is to analyze the [CONTENT] provided by the user, based on the rules defined in the [POLICY]. Provide your reasoning step-by-step and then conclude with a final 'Verdict:' (Safe or Unsafe)."
+    },
+    {
+        "role": "user",
+        "content": f"{policy_document}\n{content_to_check}"
+    }
+]
+
+# 5. Tokenize 並執行 "generate"
+inputs = tokenizer.apply_chat_template(
+    messages,
+    return_tensors="pt"
+).to(device)
+
+print("\n--- 正在呼叫 gpt-oss-safeguard 進行推理 ---")
+outputs = model.generate(
+    inputs,
+    max_new_tokens=512, # 留足夠空間給 Reasoning (CoT)
+    pad_token_id=tokenizer.eos_token_id
+)
+
+# 6. 解碼並查看結果
+response_text = tokenizer.decode(outputs[0][len(inputs[0]):], skip_special_tokens=True)
+print("\n--- gpt-oss-safeguard 的判決書 ---")
+print(response_text)</code></pre>
+                <h4 style="font-weight: 600; margin-top: 1rem;">預期的輸出 (判決書)</h4>
+                <p><code>gpt-oss-safeguard</code> 的回覆會類似這樣，包含完整的推理過程：</p>
+<pre><code>Reasoning:
+1.  開始分析 [CONTENT]。
+2.  [CONTENT] 中提到 "他們都是一群垃圾 (garbage)"。
+3.  對照 [POLICY] 規則 2 ("禁止人身攻擊與侮辱")，其中明確指出不得使用 "garbage" 等侮辱性詞彙。這違反了規則 2。
+4.  [CONTENT] 中提到 "有沒有人知道去哪裡找好用的 aimbot？"。
+5.  對照 [POLICY] 規則 1 ("禁止討論遊戲作弊")，其中明確指出不得詢問 "aimbots"。這違反了規則 1。
+6.  由於 [CONTENT] 同時違反了規則 1 和規則 2，因此應被分類為不安全。
+
+Verdict: Unsafe</code></pre>
+                
+                <h3 class="bento-subtitle">總結：如何「操作」它</h3>
+                <ul class="bento-list">
+                    <li><strong>操作</strong>：您不需要「訓練」或「微調」它。您對它的「操作」就是<strong>撰寫一份清晰、詳細的自然語言 <code>[POLICY]</code> 文件</strong>。</li>
+                    <li><strong>使用</strong>：將您的 <code>[POLICY]</code> 和用戶的 <code>[CONTENT]</code> 包裝在官方推薦的<strong>聊天模板</strong>中。</li>
+                    <li><strong>解析</strong>：您的應用程式需要解析模型生成的<strong>文字輸出</strong>，提取最後一行 <code>Verdict: Safe</code> 或 <code>Verdict: Unsafe</code> 來作為您程式的判斷依據，並可以選擇性地儲存 <code>Reasoning</code> 部分以供日後審核。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="openguardrails"><i class="fas fa-shield-alt icon-large mr-4 text-emerald-500"></i>OpenGuardrails <span class="tag">2025-10</span> 🔥</h2>
+            <div class="bento-text">
+                <p><strong>目標</strong>：提供統一方法檢測大語言模型中的不安全內容、篡改內容或侵犯隱私內容，簡化安全控制機制的適應性部署。</p>
+                <h3 class="bento-subtitle">核心貢獻</h3>
+                <ul class="bento-list">
+                    <li><strong>可配置的策略機制</strong>：允許用戶根據應用領域需求配置「不安全」類別與敏感度閾值（高、中、低三級），輸出置信度分數。</li>
+                    <li><strong>基於統一LLM的安全防護架構</strong>：僅使用一個大語言模型實現生產級內容安全檢測與模型篡改識別，簡化部署流程。</li>
+                    <li><strong>可擴展且高效的模型設計</strong>：在140億參數基礎模型上微調，通過GPTQ技術壓縮至33億參數，保持高性能與低延遲。</li>
+                </ul>
+                <p><strong>核心優勢</strong>：<strong>全球首個全開源的 AI 安全護欄大模型王</strong>。性能全面超越 Qwen3Guard 與 LlamaGuard，支援 119 種語言。採統一大模型架構，同時具備「內容安全檢測」、「操控防禦 (注入/越獄)」與「數據洩露防護」三大核心能力，並支援可微分的連續敏感度閾值調節。</p>
+                <p><strong>解決痛點 / 推薦場景</strong>：完美解決了傳統規則過濾過於僵硬、無法適應跨文化安全標準的痛點。適合需要快速通過中國大模型備案、或需符合歐盟《EU AI Act》與《GDPR》等國際合規標準的企業級全球化應用。</p>
+                <p><strong>資源</strong>：<a href="https://github.com/openguardrails/openguardrails" target="_blank" rel="noopener noreferrer">🐙 GitHub</a> | <a href="https://huggingface.co/openguardrails" target="_blank" rel="noopener noreferrer">🤗 HuggingFace</a> | <a href="https://arxiv.org/abs/2510.19169" target="_blank" rel="noopener noreferrer">📄 論文</a></p>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="guardrails-ai"><i class="fas fa-fire-alt icon-large mr-4 text-orange-500"></i>Guardrails (guardrails-ai) <span class="tag">持續更新</span> 🔥</h2>
+            <div class="bento-text">
+                <p><strong>核心優勢</strong>：<strong>專為 LLM 打造的雙向安全防火牆，提供數十種預建驗證器並強制保證結構化輸出！</strong> 框架能在 LLM 呼叫的「輸入前」與「輸出後」進行雙向風險攔截，並透過 Pydantic 輕鬆強制將 LLM 輸出轉化為精準的 JSON 格式。支援透過 Flask 啟動獨立的 REST API 服務 (適合 Docker + Gunicorn 部署)，且大部分驗證器延遲僅在毫秒級，幾乎零效能負擔。</p>
+                <p><strong>解決痛點 / 推薦場景</strong>：<strong>完美解決了大型語言模型常見的「嚴重幻覺」、「有毒言論」與「敏感個資 (PII) 外洩」等企業落地致命痛點。</strong> 透過 Guardrails Hub 自由組合驗證器 (如競品過濾、程式碼安全掃描)，能將客服投訴率巨幅降低 80%，且讓後端 JSON 格式解析錯誤率降至接近 0。絕對是打造<strong>金融級合規審查系統</strong>、<strong>高穩定企業客服機器人</strong>與<strong>資料分析自動化助手</strong>的工業級防禦基礎設施。</p>
+                <p><strong>資源</strong>：<a href="https://github.com/guardrails-ai/guardrails" target="_blank" rel="noopener noreferrer">🐙 GitHub</a> | <a href="https://hub.guardrailsai.com/" target="_blank" rel="noopener noreferrer">🌐 Guardrails Hub</a></p>
+                <p>
+                    <span class="tag">雙向防護</span>
+                    <span class="tag">結構化輸出</span>
+                    <span class="tag">企業級合規</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="red-teaming"><i class="fas fa-crosshairs icon-large mr-4 text-red-500"></i>⚔️ 紅隊演練與動態滲透測試 (Red Teaming)</h2>
+            <div class="bento-text">
+                <p><em>防禦工具部署後，必須透過攻擊工具來驗證其有效性。</em></p>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="agent-auditor"><i class="fas fa-memory icon-large mr-4 text-violet-500"></i>AgentAuditor：記憶增強的 Agent 安全評估框架 <span class="tag">2025-06</span> 🔥</h2>
+            <div class="bento-text">
+                <p><strong>核心優勢</strong>：<strong>首創「記憶增強推理 (Memory-Augmented Reasoning)」的 Agent 專屬安全評測框架</strong>。透過 RAG 技術將歷史多輪互動記錄轉化為「結構化特徵 + 思維鏈 (CoT)」的經驗記憶庫。讓 LLM 在評估未知風險時，能像人類專家一樣調用歷史經驗，性能全面超越專門微調的 ShieldAgent 與 Llama-Guard-3。</p>
+                <p><strong>解決痛點 / 推薦場景</strong>：解決了現有 LLM 評估器「評分標準不一致」與「難以應對隱晦、多步動態風險」的致命痛點。是企業建構 <strong>Agent 動態安全稽核 (Security Audit)</strong> 與 <strong>自動化紅隊測試 (Red Teaming)</strong> 的頂級開源方案。內建 ASSEBench 高品質資料集。</p>
+                <p><strong>資源</strong>：<a href="https://github.com/Astarojth/AgentAuditor-ASSEBench" target="_blank" rel="noopener noreferrer">🐙 GitHub & ASSEBench 資料集</a> | <a href="https://arxiv.org/abs/2506.00641" target="_blank" rel="noopener noreferrer">📄 論文</a></p>
+                <p>
+                    <span class="tag">NeurIPS 2025</span>
+                    <span class="tag">Agent安全稽核</span>
+                    <span class="tag">RAG記憶增強</span>
+                    <span class="tag">超越人類水準</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="guardval"><i class="fas fa-project-diagram icon-large mr-4 text-sky-500"></i>GuardVal (HKUST) <span class="tag">2026-04</span> 🔥</h2>
+            <div class="bento-text">
+                <p><strong>核心優勢</strong>：<strong>首創「狀態感知」的動態越獄評估協議</strong>。不同於傳統固定題庫，GuardVal 透過 Translator、Generator 與 Evaluator 三方協作，能根據防禦端 LLM 的即時回應，動態優化攻擊提示（Prompt）。</p>
+                <p><strong>解決痛點 / 推薦場景</strong>：解決了靜態安全基準（Benchmarks）容易被模型「背題」繞過、無法偵測深層漏洞的痛點。其內建的 <strong>Optimizer 防停滯機制</strong>能持續挖掘模型在極端壓力下的安全邊界，是企業進行自動化紅隊滲透與安全性基準測試的前沿方案。</p>
+                <p><strong>資源</strong>：<a href="https://mp.weixin.qq.com/s/vAch5RQonFeSSF3oD5yX9A" target="_blank" rel="noopener noreferrer">📝 深度技術解讀</a></p>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="datasets"><i class="fas fa-database icon-large mr-4 text-teal-400"></i>🧪 安全資料集 (Safety Datasets)</h2>
+            <div class="bento-text">
+                <h3 class="bento-subtitle">MSB: MCP Security Bench <span class="tag">2026-04</span> 🔥</h3>
+                <p><strong>核心優勢</strong>：<strong>全球首個針對 MCP 協定的端到端安全評估基準</strong>。系統性歸納了 12 種新型攻擊（如越權參數、使用者冒充、虛假錯誤），並提出 <strong>NRP (淨彈性性能)</strong> 指標，量化模型在對抗環境下的「安全與效能平衡點」。</p>
+                <p><strong>解決痛點 / 推薦場景</strong>：揭露了「能力越強的模型（如 DeepSeek-V3.1, GPT-5）在 MCP 場景下越脆弱」的逆縮放規律。適合用於<strong>評測企業級 MCP 工具伺服器的防禦韌性</strong>，防止代人被惡意工具誘導執行敏感操作。</p>
+                <p><strong>資源</strong>：<a href="https://github.com/dongsenzhang/MSB" target="_blank" rel="noopener noreferrer">🐙 GitHub</a> | <a href="https://github.com/dongsenzhang/MSB" target="_blank" rel="noopener noreferrer">📄 論文原文</a></p>
+                <p>
+                    <span class="tag">ICLR 2026</span>
+                    <span class="tag">MCP安全</span>
+                    <span class="tag">NRP指標</span>
+                    <span class="tag">Agent防禦</span>
+                </p>
+                <h3 class="bento-subtitle">JailBreakV-28k</h3>
+                <p><strong>核心優勢</strong>：<strong>專注越獄防禦的巨量資料庫</strong>。提供大量用於測試和研究 LLM 越獄漏洞的「提示詞-圖片-模型-回應」數據，包含 28,000+ 筆紀錄。</p>
+                <p><strong>解決痛點 / 推薦場景</strong>：解決了研究人員缺乏高質量越獄樣本的痛點，是訓練自訂攻擊檢測模型與多模態研究的必備資源。<br>
+                    <a href="https://huggingface.co/datasets/JailbreakV-28K/JailBreakV-28k" target="_blank" rel="noopener noreferrer">🤗 HuggingFace Dataset</a>
+                </p>
+                <p>
+                    <span class="tag">越獄樣本</span>
+                    <span class="tag">安全訓練</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="challenges"><i class="fas fa-exclamation-triangle icon-large mr-4 text-yellow-500"></i>三、 共同挑戰與模型侷限</h2>
+            <div class="bento-text">
+                <p>儘管技術進步顯著，所有護欄仍面臨共同的挑戰，且各自存在侷限。</p>
+                <h3 class="bento-subtitle">普遍存在的挑戰</h3>
+                <ul class="bento-list">
+                    <li><strong>對抗性攻擊（越獄）</strong>：所有基於 LLM 的護欄（如 Llama Guard, ShieldGemma）都繼承了 LLM 的脆弱性，易受提示詞注入、語義操縱（如隱喻、反諷）等攻擊的影響。</li>
+                    <li><strong>上下文理解局限</strong>：在多輪對話中逐步構建的攻擊，可能因護欄難以追蹤完整的長程上下文而得逞。</li>
+                    <li><strong>「貓捉老鼠」的博弈</strong>：開源模型的機制易被攻擊者研究，導致持續的攻防競賽。</li>
+                    <li><strong>誤傷（False Positives）</strong>：過於嚴格的規則可能導致將無害對話錯誤標記為危險，影響用戶體驗。</li>
+                </ul>
+                <h3 class="bento-subtitle">各模型的具體侷限性</h3>
+                <ul class="bento-list">
+                    <li><strong>NVIDIA NeMo</strong>：防護能力高度依賴開發者編寫的 Colang 腳本，配置不當會使 LLM 完全暴露。</li>
+                    <li><strong>Meta Llama Guard</strong>：作為「生成後檢測」，延遲較高；且其本身也可能被提示詞注入攻擊。</li>
+                    <li><strong>Google ShieldGemma</strong>：對安全原則的具體措辭高度敏感，評估基準數據有限。</li>
+                    <li><strong>阿里巴巴 Qwen3Guard</strong>：流式 (Stream) 版本因只能看到部分上下文，檢測性能相比能看到完整回覆的生成式 (Gen) 版有輕微下降。</li>
+                    <li><strong>OpenAI gpt-oss-safeguard</strong>：最大的局限在於<strong>計算成本和延遲較高</strong>，可能不適用於所有內容的即時審核。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="frontiers"><i class="fas fa-chart-line icon-large mr-4 text-purple-500"></i>四、 技術前沿：兩大演進方向</h2>
+            <div class="bento-text">
+                <p>當前的護欄技術正朝著兩個關鍵方向演進，以克服傳統方法的局限：</p>
+                <ol style="padding-left: 20px; list-style-type: decimal; margin-top: 1rem;">
+                    <li style="margin-bottom: 0.75rem;"><strong>從「生成後檢測」到「即時流式檢測」</strong>
+                        <br>以 <strong>Qwen3Guard-Stream</strong> 為代表。此路徑旨在解決「生成後檢測」（如 Llama Guard）帶來的高延遲問題。透過逐詞（token-by-token）監控，它將風險暴露時間從秒級壓縮到毫秒級，實現了「事中監督」。
+                    </li>
+                    <li style="margin-bottom: 0.75rem;"><strong>從「靜態規則」到「動態策略推理」</strong>
+                        <br>以 <strong>gpt-oss-safeguard</strong> 為代表。此路徑旨在解決傳統護欄（無論是 NeMo 的腳本或 Llama Guard 的微調）靈活性不足的問題。透過在推理時動態解釋自然語言策略，它賦予了安全系統前所未有的適應性和客製化能力，更新規則無需重新訓練。
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="trends"><i class="fas fa-store icon-large mr-4 text-cyan-500"></i>五、 未來趨勢：基礎免費化與企業級工程服務</h2>
+            <div class="bento-text">
+                <p>結合開源模型的湧現和企業實際需求，未來安全護欄市場將呈現清晰的「基礎免費、進階付費」格局。</p>
+                <h3 class="bento-subtitle">1. 基礎能力免費化（類比 MySQL）</h3>
+                <p>開源護欄模型（如 Llama Guard, Qwen3Guard, ShieldGemma）和開源數據集將成為行業標配，如同 MySQL 免費提供核心數據庫功能，這將極大推動 AI 安全技術的普及。</p>
+
+                <h3 class="bento-subtitle">2. 企業付費的核心：工程化服務</h3>
+                <p>企業願意付費的不再是基礎的分類能力，而是專業的<strong>「工程化能力」</strong>。單純的開源工具無法應對複雜的生產環境，企業需要平台工程能力將這些「基礎積木」整合成可規模化管理的體系。關鍵付費點包括：</p>
+                <ul class="bento-list">
+                    <li><strong>高性能實時攔截</strong>：支援 Qwen3Guard 這類的流式（Streaming）和 Llama Guard 4 這類的多模態即時檢測與干預。</li>
+                    <li><strong>策略可視化編排</strong>：提供圖形化界面（UI）來配置和管理安全規則（如 NeMo 的流程），實現策略的版本控制和靈活組合。</li>
+                    <li><strong>灰度發布 (A/B Testing)</strong>：新安全策略上線前，僅將其應用於 1% 的用戶流量，透過數據（如攔截率、誤傷率）評估效果，避免「誤傷」正常業務。</li>
+                    <li><strong>分層部署</strong>：為兼顧成本與效率，採用分層策略：先用輕量級、低延遲的分類器（如 ShieldGemma）快速篩選，再將高風險或模棱兩可的內容交由高精度、高成本的推理引擎（如 gpt-oss-safeguard）進行深度分析。</li>
+                    <li><strong>合規與服務保障</strong>：提供滿足監管的合規報表、SLA 服務保障、以及持續的攻防演練服務。</li>
+                </ul>
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const { animate, inView } = motion;
+
+        inView('header', () => {
+            animate('header h1', { opacity: [0, 1], y: [-20, 0] }, { duration: 0.6, ease: 'easeOut', delay: 0.2 });
+        });
+        
+        const motionDivs = document.querySelectorAll('.motion-div');
+        motionDivs.forEach((div) => {
+            inView(div, () => {
+                animate(div, 
+                    { opacity: [0, 1], y: [30, 0], scale: [0.98, 1] },
+                    { duration: 0.65, delay: 0.1, ease: "easeOut" }
+                );
+            }, { once: true, amount: 0.1 });
+        });
+    });
+    </script>
+
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"fc0f4e2f76d3450bbcf5ca8c7c562e9b","r":1}' crossorigin="anonymous"></script><script>
+async function includeHTML(url, containerId) {
+    try {
+        const res = await fetch(url);
+        if (!res.ok) return;
+        const html = await res.text();
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        const temp = document.createElement('div');
+        temp.innerHTML = html;
+        temp.querySelectorAll('style').forEach(s => document.head.appendChild(s.cloneNode(true)));
+        temp.querySelectorAll('style').forEach(s => s.remove());
+        container.innerHTML = temp.innerHTML;
+        container.querySelectorAll('script').forEach(oldScript => {
+            const newScript = document.createElement('script');
+            if (oldScript.src) { newScript.src = oldScript.src; newScript.type = oldScript.type || 'text/javascript'; }
+            else { newScript.textContent = oldScript.textContent; }
+            Array.from(oldScript.attributes).forEach(attr => { if (attr.name !== 'src') newScript.setAttribute(attr.name, attr.value); });
+            oldScript.replaceWith(newScript);
+        });
+    } catch(e) { console.warn('includeHTML failed:', url, e); }
+}
+includeHTML('/includes/header.html',   'include-header');
+includeHTML('/includes/nav-pages.html', 'include-nav-pages');
+includeHTML('/includes/profile-hero.html', 'include-profile-hero');
+includeHTML('/includes/ai-share.html', 'include-aishare');
+</script>
+<script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"fc0f4e2f76d3450bbcf5ca8c7c562e9b","r":1}' crossorigin="anonymous"></script>
+</body>
+</html>

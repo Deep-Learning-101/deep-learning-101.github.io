@@ -69,7 +69,7 @@ ngrok http 11434 --host-header="localhost:11434"
 而本文將示範如何透過 Cloudflared Tunnel + Cloudflare Zero Trust，在不開放 GCP 公網固定 IP 的前提下，實現對 SSH、HTTP 與 RDP 主機的安全遠端連線；按慣例，先來個表格比對：
 
 <p align="center">
-  <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/tunnel-001.jpg?raw=true" alt="Deep Learning 101">
+  <img src="../images/tunnel-001.jpg" alt="Deep Learning 101">
 </p>
 
 整體方案具備以下基本特性：
@@ -139,7 +139,7 @@ cloudflared version 2025.6.0 (built 2025-06-11-1108 UTC)
 *   實際支援 HTTP / SSH / RDP 等服務，如下：
 
 <p align="center">
-  <img src="https://github.com/Deep-Learning-101/deep-learning-101.github.io/blob/main/img/tunnel-002.jpg?raw=true" alt="Deep Learning 101">
+  <img src="../images/tunnel-002.jpg" alt="Deep Learning 101">
 </p>
 
 接著就是要登入，然後創建相關設定檔，我是在主機端設定，也可以在網頁端設定就是；XXXXX 就是你要幫這個 Tunnel 取的名字
