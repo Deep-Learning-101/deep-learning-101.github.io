@@ -1,6 +1,6 @@
 ---
 layout: default
-title: RAG 教學 2026：Chunking、Hybrid Search、Rerank 完整實作 + Qwen3 Embedding 評比
+title: RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整實作教學
 description: RAG 系統幻覺太多怎麼解？完整實作 Chunking、Hybrid Search 與 Reranker 三層架構，實測 Qwen3-Embedding-8B vs BGE-M3 vs Gemini Embedding 2（多模態）vs Jina V5 Omni 選型差異，附 Visual 無向量方案與 RAGAS 四大評估指標（Faithfulness、Context Recall）A/B 測試實戰——幻覺率可壓到 5% 以下。
 permalink: /RAG
 lang: zh-Hant
@@ -15,12 +15,12 @@ schema_type: article
 
 ---
 
-# 從零到一：打造本地端高精準度 RAG 系統的實戰指南 (涵蓋環境部署、數據處理、混合檢索與 Rerank)
+# RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整實作教學 (涵蓋環境部署、數據處理、混合檢索與 Rerank)
 
 > 📌 **技術速覽**
-> 企業導入 RAG 知識庫最常卡在「AI 幻覺率過高」與「檢索不精準」。根據 **TonTon Huang Ph.D. (Deep Learning 101)** 的實戰經驗，單靠向量檢索無法處理複雜文件，必須結合重排序 (Rerank)、Chunking 策略與無向量視覺檢索 (Visual RAG)，才能將幻覺率壓低至商用標準的 5% 以下。  
+**如何解決 RAG 處理跨頁複雜表格與圖表時的語意截斷問題？**
 > **RAG (檢索增強生成)** 是一種結合外部知識庫檢索與生成式 AI 的技術，能有效解決 LLM 的幻覺問題。  
-> 本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧。  
+> 企業導入 RAG 知識庫最常卡在「AI 幻覺率過高」與「檢索不精準」。根據 **TonTon Huang Ph.D. (Deep Learning 101)** 的實戰經驗，單靠向量檢索無法處理複雜文件，必須結合重排序 (Rerank)、Chunking 策略與無向量視覺檢索 (Visual RAG)，才能將幻覺率壓低至商用標準的 5% 以下。
 
 ## RAG 怎麼做？三步驟快速入門
 * **建立知識庫**：用 LlamaIndex 或 LangChain 把文件切塊 (Chunking) 並轉成向量
@@ -63,6 +63,8 @@ schema_type: article
     - [2.3 選擇合適的嵌入模型 (Embedding)](#embedding)
   - [資料檢索 (Data Retrieval)](#retrieval)
     - [2.4 檢索策略：為何需要混合檢索 (Hybrid Search)？](#hybrid-search)
+      - [多路召回結果融合：RRF（Reciprocal Rank Fusion）](#hybrid-search)
+      - [查詢優化（Query Optimization）：四種方法](#hybrid-search)
   - [檢索後處理 (Post-Retrieval Processing)](#post-retrieval)
     - [2.5 Rerank：從「找得全」到「選得準」的關鍵一步](#rerank)
   - [前沿架構突破 (Advanced Paradigm)](#advanced-paradigm)
@@ -70,17 +72,20 @@ schema_type: article
     - [2.7 突破表格與排版限制：無向量視覺檢索 (Vectorless Visual RAG)](#visual-rag)
   - [LLM 生成優化 (LLM Generation)](#llm-gen)
   - [迭代優化與評估 (Iterative Optimization & Evaluation)](#evaluation)
+    - [先評估檢索層：Hit@K 與 MRR](#evaluation)
     - [RAGAS：四大核心評估指標](#ragas-metrics)
     - [黃金測試集構建](#golden-testset)
     - [A/B 測試與 Bad Case 分析](#ab-test)
     - [自動化評估流水線與速查清單](#eval-pipeline)
+    - [RAG 幻覺的系統性防控：兩個根源，四道防線](#eval-pipeline)
+    - [企業 RAG 冷啟動：沒有歷史問答對時怎麼辦](#eval-pipeline)
 - [總結](#summary)
 
 ---
 
 <h2 id="overview">文章概述</h2>
 
-分享在實作 RAG（Retrieval-Augmented Generation）過程中遇到的挑戰與優化技巧，並強調 RAG 並非萬靈丹，需根據實際需求進行適當的設計與調整。
+本文提供從零打造高精準度 RAG 系統的實戰指南，涵蓋 **環境部署**、**數據清洗**、**Chunk**、**混合檢索 (Hybrid Search)** 與 **重排序 (Rerank)** 的關鍵技巧；並且分享在實作 RAG（Retrieval-Augmented Generation）過程中遇到的挑戰與優化技巧，RAG 並非萬靈丹，需根據實際需求進行適當的設計與調整。
 
 ---
 
@@ -95,7 +100,7 @@ RAG 提供了一種結合檢索與生成的強大方法，但並非適用於所�
 
 <h3 id="local-inference">選擇本地端推理框架</h3>
 
-想在自己的本地端跑大模型，首先需要部署一套推理框架。常見的選擇有 [`Ollama`](https://ollama.com/) 、[VLLM](https://github.com/vllm-project/vllm)和 [`xinference`](https://github.com/xorbitsai/inference)。
+想在自己的本地端跑大模型，首先需要部署一套推理框架[請參考2026 本地 LLM 推論框架對決：vLLM vs Ollama vs SGLang vs LLaMA.cpp](https://deep-learning-101.github.io/Blog/vLLM-Ollama-SGLang-LLaMAcpp)。常見的選擇有[`LLaMAcpp`](https://github.com/ggml-org/llama.cpp)、[`SGLang`](https://github.com/sgl-project/sglang)、[`Ollama`](https://ollama.com/) 、[VLLM](https://github.com/vllm-project/vllm)和 [`xinference`](https://github.com/xorbitsai/inference)。
 `Ollama` 的安裝和執行非常簡單，而 `xinference` 依個人體驗在管理多模型和多卡並行上提供了更大的彈性與便利性，對於進階使用者來說可能是更方便的選擇。
 
 > **補充觀點：為何選擇本地端部署？**
@@ -149,6 +154,10 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
   * **✅ 方案四：父子切割（Parent-Child Chunking）**
       * **核心邏輯**：同份內容存兩份——子 chunk（小粒度，如 200 token）用於精準檢索，父 chunk（大粒度，如 1000 token）用於生成，兩者通過 ID 關聯。
       * **優點**：檢索精準，且生成時具備大塊上下文，靈活性高。
+      * **Atliq 2026 白皮書（100 份結構化文件實驗）**：
+        - 上下文精度（Context Precision）：0.84
+        - 答案忠實度（Answer Faithfulness）：0.91
+        - 幻覺率：12.1% → 4.2%
       * **⚠️ 局限**：存儲翻倍、索引結構較複雜。
   * **✅ 方案五：命題化切割（Propositions-based Chunking）**
       * **核心原理**：用 LLM 將文件分解為獨立「命題」（Proposition）——每個命題是一個自包含的陳述句，含完整主賓語、無上下文依賴。
@@ -215,10 +224,23 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 評估嵌入模型品質的標準基準測試是 MTEB (Massive Text Embedding Benchmark)。
 
 *   **[MTEB (Massive Text Embedding Benchmark)](https://huggingface.co/spaces/mteb/leaderboard)**: MTEB 是一個大規模、多任務、多語言的 embedding 模型評測基準，已成為業界標準。它涵蓋8種嵌入任務，包括位元組挖掘、分類、聚類、配對分類、重排序、檢索、語義文本相似度（STS）和摘要，橫跨181個數據集、多個領域、文本長度和語言。
-    *   **檢索 (Retrieval)**: 評估模型為給定查詢找到相關文件的能力，是 RAG 應用中最關鍵的指標。一個廣泛使用的指標是 **NDCG@10 (Normalized Discounted Cumulative Gain @ 10)**，它評估前10個檢索結果的品質，考慮到結果的相關性及其在列表中的位置，值介於0到1之間，1表示完美匹配。
-    *   **語義文本相似度 (Semantic Textual Similarity, STS)**: 衡量模型判斷兩個句子語義相似度的能力，使用斯皮爾曼等級相關係數（Spearman correlation）評分。
-    *   **分類 (Classification)**: 測試模型提取的特徵向量是否適用於下游的分類任務，通常使用 F1 分數作為指標。
-    *   **聚類 (Clustering)**: 評估模型將相似文件分組的能力，使用 v-measure 評分。
+    * **檢索 (Retrieval)**: 評估模型為給定查詢找到相關文件的能力，是 RAG 應用中最關鍵的指標。一個廣泛使用的指標是 **NDCG@10 (Normalized Discounted Cumulative Gain @ 10)**，它評估前10個檢索結果的品質，考慮到結果的相關性及其在列表中的位置，值介於0到1之間，1表示完美匹配。
+    * **語義文本相似度 (Semantic Textual Similarity, STS)**: 衡量模型判斷兩個句子語義相似度的能力，使用斯皮爾曼等級相關係數（Spearman correlation）評分。
+    * **分類 (Classification)**: 測試模型提取的特徵向量是否適用於下游的分類任務，通常使用 F1 分數作為指標。
+    * **聚類 (Clustering)**: 評估模型將相似文件分組的能力，使用 v-measure 評分。
+
+    * **MTEB 排行榜的邊界與業務評估**
+      * MTEB 使用通用數據集（58 個數據集、112 種語言）。
+      * 業務場景（醫療/法律/客服）的數據分佈與通用數據集不同。
+      * 排行榜第一的模型不等於在你的業務場景效果最好。
+      * 正確的模型評估方式：在自己的業務數據上跑 Hit@K。
+      * Hit@K 計算方式：
+        * 準備幾百條「問題 + 正確 chunk ID」配對
+        * 分別用候選模型做檢索
+        * 計算正確 chunk 出現在前 K 條結果中的比例
+        * 閾值參考（Hit@5）：
+          * < 0.7 → 考慮換 Embedding 模型或調整 Chunking 策略
+          * > 0.8 → 檢索層合格，若答案品質仍差，問題在生成層
 
 *   **[C-MTEB (Chinese MTEB)](https://pypi.org/project/C-MTEB/#leaderboard:~:text=(model)-,Leaderboard,-1.%20Reranker)**: 儘管 MTEB 涵蓋多種語言，但要精準評估模型在特定語言文化下的表現，仍需本地化的評測集。C-MTEB 正是為此而生，它是一個專門針對中文 embedding 模型的評測基準，包含了 35 個中文數據集，涵蓋了與 MTEB 類似的任務類型。C-MTEB 的推出及其被整合至主流排行榜，凸顯了本地化評測對於開發高水準區域語言模型的重要性。
 
@@ -285,6 +307,67 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 
 > **補充觀點：為何需要混合檢索 (Hybrid Search)？**
 > 單一的檢索方式存在盲點：向量檢索可能忽略關鍵字，而全文檢索無法理解語義。**混合檢索**將兩者結合，它既能透過全文檢索確保**精確匹配**不遺漏，又能透過向量檢索找到**語義相關**的內容，從而**大幅提升覆蓋率 (Recall)**，是目前最主流且效果最好的檢索策略。
+
+#### 多路召回結果如何融合：RRF（Reciprocal Rank Fusion）
+
+向量和 BM25 兩路各自回傳 top-K 候選後，兩路分數的量綱完全不同（餘弦相似度 0~1 vs. TF-IDF 分數），無法直接比大小。
+
+RRF（倒數排名融合）的解法：不看分數，只看排名。
+
+公式：
+  score(chunk) = Σ 1/(k + rank)
+
+對每一路結果，排名第 1 的 chunk 貢獻最高分，排名越後貢獻越低。
+同一個 chunk 在多路都排名靠前，最終綜合分就高。
+
+k 取 60（工程經驗值）：作用是加一個保底分，避免偶爾落後的候選被完全淘汰。
+
+優點：
+- 實作簡單，不需訓練，計算量接近零
+- 不受各路分數量綱影響，天然跨路融合
+- 在大多數場景下效果穩定，是多路召回的標配方案
+
+#### 查詢優化（Query Optimization）：解決「問題」端的盲點
+
+Hybrid Search 解決的是「從哪幾條路徑找」的問題。
+但即使路徑正確，如果用戶提問的方式和知識庫的表述方式有落差，
+找到的內容仍然會不精準。這是查詢端的問題，需要在進入檢索之前處理。
+
+四種方法按適用場景：
+
+**方法一：Query 改寫（消歧）**
+把口語化、有指代不清的 query，用 LLM 轉成更正式、更精準的書面表達。
+範例：「它為什麼這麼貴」→「iPhone 15 Pro Max 定價偏高的原因是什麼」
+適用：對話場景中 query 指代不明確
+
+**方法二：Multi-Query 擴展（多角度撒網）**
+用 LLM 把一個問題擴展成 3–5 個不同角度的問法，每種問法單獨去檢索，最後合併去重。
+注意：原始問題必須保留在檢索列表裡，不能只用改寫版本。
+適用：用戶提問角度和文件描述角度對不上（例如「退貨」vs「售後申請流程」）
+
+**方法三：HyDE（假設文件嵌入）**
+先讓 LLM 根據問題生成一段「假設的答案」，用假設答案的向量去檢索，而不是用原始問題的向量。
+原理：假設答案和文件都是陳述性文字，向量距離比「問題 vs 文件」更近，命中率更高。
+出處：Gao et al. 2023 ACL（arXiv:2212.10496）
+注意：如果 LLM 生成的假設答案方向錯了，反而會把檢索帶偏。適合知識庫領域比較明確的場景。
+
+**方法四：Step-back Prompting（後退提問，抽象化）**
+把具體問題往上抽象一層，生成一個更通用的背景問題去檢索背景知識，
+再結合背景知識回答具體問題。
+範例：「為什麼 transformer attention 要除以 sqrt(d_k)」→
+先查「attention 機制的數學原理」→ 再回答原問題
+出處：Zheng et al. 2023 Google DeepMind（arXiv:2310.06117）
+
+實驗數據（PaLM-2L）：
+- TimeQA（結合 RAG）：41.5% → 68.7%（+27.2%）
+- MMLU 物理：+7%、化學：+11%
+- MuSiQue 多跳推理：+7%
+
+工程選型建議：
+- 用戶提問清晰 → 只加 Multi-Query（低成本，高收益）
+- 用戶提問模糊/有指代 → 加 Query 改寫
+- 知識庫領域固定 → 可嘗試 HyDE
+- 問題很具體但知識庫只有通用背景 → Step-back Prompting
 
 <h3 id="post-retrieval">檢索後處理 (Post-Retrieval Processing)</h3>
 
@@ -494,6 +577,34 @@ def generate_answer(query, context, client):
 
 RAG 評估的本質，是給系統做一台「CT 檢查」：不是看整體「感覺好不好」，而是逐環節掃描，精確到「檢索的召回率是多少」「生成的忠實度是多少」「哪個環節拖了後腿」。有了這些數據，優化才有方向。
 
+#### 先評估檢索層，再評估生成層
+
+不管 LLM 生成什麼，先確認檢索有沒有把正確的 chunk 找回來。
+RAGAS 的 Context Recall 需要 ground truth 且是生成層視角，無法替代純檢索層的獨立評估。
+
+**Hit@K：衡量「找到沒」**
+計算：在全部評測樣本中，正確 chunk 出現在前 K 條結果的次數 ÷ 總樣本數。
+Hit@K 是二元指標，不看排名位置——正確 chunk 排第 1 和排第 5 計分相同。
+
+判讀標準：
+  Hit@5 < 0.7 → Embedding 選型或 Chunking 策略有問題
+  Hit@5 > 0.8 → 檢索層合格，問題在生成層
+
+**MRR（平均倒數排名）：衡量「排名夠不夠前」**
+計算：每個問題得分 = 1 / 正確 chunk 的排名，對所有問題求平均值。
+  排名 1 → 1.0 分
+  排名 2 → 0.5 分
+  排名 3 → 0.33 分
+  排名 5 → 0.2 分
+
+判讀標準：
+  MRR < 0.5 → Rerank 效果不足，正確 chunk 召回了但排名靠後
+
+兩者搭配使用的典型案例：
+  Hit@5 = 0.90，MRR = 0.30
+  → 90% 的問題在前 5 條能找到相關 chunk，但相關 chunk 通常排在第 4、5 位
+  → 結論：召回率 OK，需要加強 Rerank 模型讓它排到前面
+
 <h4 id="ragas-metrics">RAGAS：四大核心評估指標</h4>
 
 傳統 NLP 指標（BLEU、ROUGE）並不適合 RAG，因為 RAG 是「檢索 + 增強 + 生成」的複合系統，需要分別評估各環節：
@@ -508,6 +619,38 @@ RAG 評估的本質，是給系統做一台「CT 檢查」：不是看整體「�
 [RAGAS](https://docs.ragas.io/en/stable/) 是目前最主流的 RAG 評估開源框架，提供上述四個標準化指標，能幫助開發者從「憑感覺調整」邁向「系統化評估循環」。
 
 > ⚠️ **Faithfulness 是最重要的指標**。模型編造答案比找不到答案更可怕——使用者可能基於錯誤資訊做出決策。指標重要性排序：**Faithfulness > Recall > Precision > Relevancy**
+
+**Context Recall（上下文召回率）**
+- 計算公式：|GT ∩ C| / |GT|
+  - GT = 標準答案中的句子集合
+  - C  = 檢索到的 context 集合
+  - |GT ∩ C| = 標準答案中能在 context 中找到支撐的句子數
+  - 目標值：> 0.7
+
+- Faithfulness（忠實度）
+  - 計算公式：被上下文支持的論斷數 / 答案中的總論斷數
+  - 目標值：> 0.8
+  - 警戒值：< 0.85 為關鍵警訊，說明模型正在捏造 context 不支持的事實
+  -（注意：現有程式碼以 0.7 為告警門檻，0.7–0.85 是警戒區間，0.85 以上才算穩定）
+
+- Answer Relevancy（回答相關性）
+  - 計算公式：(1/N) × Σ cos(原始問題向量, 從答案逆向生成的第 i 個問題向量)
+  - N 預設為 3（從答案反向生成 3 個問題，計算與原始問題的餘弦相似度均值）
+  - 目標值：> 0.8
+
+- Context Precision（上下文精確度）
+  - 計算公式（加權精確度）：
+  - Σ(k=1 to K) [Precision@k × v_k] / Σ(k=1 to K) v_k
+  - K = 取回 chunk 數，v_k ∈ {0,1} 為第 k 個 chunk 是否相關的二元值
+  - 無固定閾值，配合 Context Recall 一起看：
+  - 兩者都低 → 檢索整體出問題
+  - Recall 高但 Precision 低 → 召回了但排了很多無關 chunk 在前面（加強 Rerank）
+  - Precision 高但 Recall 低 → 找到的都對，但漏了很多（擴大召回）
+
+RAGAS 的核心設計：reference-free 框架
+Context Precision、Faithfulness、Answer Relevancy 三個指標不需要 ground truth。
+只有 Context Recall 需要標準答案。
+這讓 RAGAS 可在沒有標註數據的情況下對大部分指標做自動化評估。
 
 **運行 RAGAS 評估範例：**
 
@@ -616,10 +759,200 @@ def run_evaluation():
 3. **每次只改一個變數**：同時改切分 + Embedding + Rerank，永遠不知道哪個改動有效。
 4. **關注 Bad Case 多於平均分**：有幾個 0 分的 Bad Case 可能比均分略低但全部及格更危險。
 5. **使用者回饋**：建立點讚/點踩回饋機制，這是發現問題最直接的資訊來源。
+6. 線上監控指標：離線評估的最終驗收
+  - 離線 RAGAS 分數高不代表線上用戶滿意，兩者需要交叉對照。
+  - 以下五個業務指標是線上效果的量化依據：
+  - 點踩率（thumbs_down_rate）
+    = 用戶主動點踩次數 / 總回答次數
+    最直接的負向信號
+  - 追問率（followup_rate）
+    = 用戶追問同一問題次數 / 總對話次數
+    答非所問的代理指標
+  - 轉人工率（escalation_rate）
+    = RAG 拒答觸發人工轉接次數 / 總對話次數
+    注意：因加了 Rerank 門控導致的轉人工率上升，不一定是壞事——
+    寧可轉人工也不要給用戶錯誤答案
+  - 空回答率（answer_empty_rate）
+    = 系統主動返回「不知道」次數 / 總查詢次數
+    偏高說明知識庫覆蓋不足，需要擴充文件
+  - 會話解決率（session_resolution_rate）
+    = 一次對話成功解決用戶問題的次數 / 總對話次數
+    最綜合、最貼近真實用戶體驗的指標
+
+- 常見偏差警告：
+  - 為提升 Faithfulness 過度收緊 Prompt，可能導致模型回答過於保守，
+  - 線上用戶覺得「AI 什麼都說不知道」，點踩率反而上升。
+  - 離線優化和線上體驗出現背離時，通常需要更新測試集或重新標定指標權重，
+  - 而不是繼續強化單一離線指標。
 
 > 📦 RAGAS GitHub：https://github.com/explodinggradients/ragas | 📖 官方文件：https://docs.ragas.io/en/stable/ | 📄 論文（ESANN 2024）：https://arxiv.org/abs/2309.15217 | 安裝：`pip install ragas`
 
+#### RAG 幻覺的系統性防控：兩個根源，四道防線
+
+常見誤區：「只要把檢索做好，LLM 就不會編造了。」
+實際上幻覺有兩個完全不同的根源，解法也完全不同。
+
+**根源一：檢索層失敗 → LLM 靠自身知識填充**
+
+知識庫記載退款政策為「7 天無理由」，但某次檢索未召回這個 chunk，
+LLM 用自身訓練時學到的知識給出「30 天退款」。
+使用者按此操作，退款失敗。
+
+這種幻覺，Prompt 裡加再多「請根據資料回答」都攔不住——
+如果 Prompt 裡根本沒有相關 context，約束等於零。
+
+**根源二：檢索成功 → LLM 在 context 基礎上超範圍輸出**
+
+相關 chunk 確實被召回，但 LLM 在生成答案時加入了 chunk 沒有的推斷，
+或把兩段不相關的資訊拼在一起，形成「聽起來更完整」但部分捏造的答案。
+這種幻覺更隱蔽，讀者很難分辨哪句來自文件、哪句是 LLM 自己加的。
+
+**四道防線（按成本遞增）**
+
+**防線一：Prompt 強約束（必做，成本接近零）**
+在 system prompt 中加入四條明確規則：
+  1. 只能使用【參考資料】中的資訊回答，不得引入資料之外的知識
+  2. 若參考資料沒有足夠資訊，必須回答「根據現有資料，無法回答該問題」
+  3. 回答時標註資訊來源（來自哪條參考資料）
+  4. 不推斷、不猜測、不補充資料沒有明確說明的內容
+
+效果：有效壓制根源二（生成層幻覺）。
+局限：對根源一無效——Prompt 裡沒有 context，再強的約束也無用。
+
+**防線二：Rerank 分數門控（解決根源一的關鍵）**
+Rerank 召回 top-K 候選後，取最高相關分數。
+若最高分低於閾值，說明這次檢索根本沒找到有用內容，直接拒答並返回：
+「知識庫無相關資訊，建議聯絡人工」
+
+閾值設定方式：
+  拿一批「答案在知識庫裡」和「答案不在知識庫裡」的測試問題，
+  看 Rerank 分數分佈，找兩類分開的切點。
+  工程經驗值：0.3–0.6 之間；精度要求高（金融/醫療）取偏高值，閒聊型偏低值。
+
+注意：答錯比不答更危險。「知識庫沒有這個資訊」是正確且誠實的回答。
+
+**防線三：生成後引用核查（高精度場景）**
+LLM 生成完答案後，再用另一個 LLM 呼叫逐條核查，
+答案裡的每一個關鍵聲明，在 chunk 中有沒有對應依據。
+沒有依據的聲明標註「無法核實」或刪除。
+
+代價：增加一次 LLM 呼叫，回應延遲和成本翻倍。
+適用：醫療診斷、法律諮詢、合規審核等答錯代價很大的場景。
+參考框架：RARR（Research + Revision 兩階段歸因驗證）
+
+**防線四：結構化輸出強制溯源**
+讓 LLM 輸出 JSON，每條結論必須填寫 source_ids（來自哪條參考資料編號）：
+
+  {
+    "answer": "完整回答",
+    "statements": [
+      {"claim": "具體結論1", "source_ids": [1, 2]},
+      {"claim": "具體結論2", "source_ids": [3]}
+    ],
+    "confidence": "high/medium/low"
+  }
+
+原理：LLM 在建構 JSON 時被迫思考「這條結論我從哪條資料找到的」，
+這個過程本身會減少捏造的機率。
+系統收到 JSON 後可程式化驗證 source_ids 和 claim 的相關性，不相關則自動過濾。
+
+**按場景的部署組合**
+
+  普通企業知識庫 / 客服問答  →  防線一 + 防線二
+  金融分析 / 法律文件        →  防線一 + 防線二 + 防線四
+  醫療診斷 / 合規審核        →  四道防線全上
+
+核心原則：治幻覺，先治檢索。
+檢索到正確 context 是前提，Prompt 約束是第二層，後兩道防線是高精度場景的額外保障。
+
 ---
+
+#### 企業 RAG 冷啟動：沒有歷史問答對時怎麼辦
+
+教學教程裡「準備好了一批高質量的問答對」在真實項目中幾乎不存在。
+企業冷啟動時面臨的實際狀況：只有一堆文件，可能連質量都不過關。
+
+**冷啟動的核心挑戰不是搭建，是評估**
+
+把文件切片、向量化、入庫，接上 LLM，一個能問答的 demo 兩天就能出來。
+「能問」和「能用」是兩回事。
+缺少評估基準意味著三件事同時缺席：
+- 不知道 Recall@K 的起點在哪
+- 不知道 Faithfulness 有多低
+- 改了參數不知道變好還是變壞
+
+**步驟一：用 LLM 合成問答對，建立初始評估集**
+
+把每個 Chunk 餵給 LLM，生成 2–3 個「真實用戶可能基於這段內容提出的問題」，
+同時記錄對應答案和來源 Chunk，形成（問題 + 標準答案 + 來源 Chunk）三元組。
+
+Prompt 需約束四點：
+1. 問題必須是文件中有明確答案的具體問題，不要模糊的概括性問題
+2. 問題要模擬真實用戶的表達方式（口語化、有場景）
+3. 答案必須完全來自文件，不得添加文件外的內容
+4. 若文件不適合生成有意義的問題，返回空列表
+
+工程規模參考（金融保險 5000 份合同文件）：
+- 原始候選：約 8000 條
+- 質量過濾後保留：2100 條
+- 花費時間：約 3 小時 LLM 調用，人工標註成本：0
+
+合成數據的固有偏差（必須知道）：
+LLM 只會生成文件中有明確答案的問題，缺少跨文件推理題和知識庫無答案類問題。
+這個偏差在冷啟動初期可接受，評估集是起點不是終點。
+
+**步驟二：用最樸素配置跑基線**
+
+- Chunk 大小：512 tokens
+- Embedding：預設模型
+- Top-5 召回，不做 Rerank
+- 標準 Prompt
+
+計算三個指標作為起點：
+
+| 指標 | 低分信號 | 優先行動 |
+|------|---------|---------|
+| Context Recall | < 0.7 | 先解決，檢索不到正確文件，生成再好也沒用 |
+| Faithfulness | < 0.85 | 模型在捏造事實，需改 Prompt 或加門控 |
+| Answer Correctness | < 0.75 | 端到端問題，結合前兩項定位原因 |
+
+真實冷啟動基線案例（5000 份合同）：
+  Context Recall：0.67
+  Faithfulness：0.71
+  Answer Correctness：0.58
+→ 結論：先優化檢索層，Context Recall 0.67 是首要瓶頸
+
+**步驟三：三階段迭代策略**
+
+第 1–2 週：純合成數據驅動
+  目標：系統跑通、工具鏈建立、找到 Chunking 和檢索策略的大方向
+
+第 3–4 週：3–5 位領域專家，各標註 20–30 條難 case
+  覆蓋合成數據無法覆蓋的難 case 和邊界場景
+  優先選低置信度或當前答案明顯錯誤的樣本送給專家
+  總計 100–150 條高質量標註 → 黃金測試集核心
+
+上線後（持續）：每月從真實對話篩 50–100 條加入評估集
+  逐步替換合成數據，保持評估集與真實用戶分佈對齊
+
+**步驟四：文件質量治理（最容易被忽略的環節）**
+
+四個典型問題：
+1. 掃描件 OCR 識別錯誤 → 向量化後無法被正常檢索
+2. 表格、條款編號在 PDF 解析後變成無結構文字 → Chunk 邊界切壞
+3. Chunk 邊界切在關鍵信息中間（例如等待期計算方式被拆成兩個 Chunk）
+4. 知識庫同時存在 2022 年版和 2023 年版文件 → 知識衝突型幻覺
+
+工程投入與收益（5000 份合同，3 天治理）：
+  OCR 重處理 + 結構化解析 + 去重 + 版本管理
+  結果：Context Recall 0.67 → 0.79
+  這 3 天的效益比任何檢索策略調優都高
+
+核心邏輯：
+  合成數據解決從零到有
+  專家標註覆蓋盲點
+  真實數據保證長期可靠性
+
 
 <h2 id="summary">總結</h2>
 
@@ -656,10 +989,9 @@ def run_evaluation():
           "@type": "WebPage",
           "@id": "https://deep-learning-101.github.io/RAG"
         },
-        "headline": "RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整教學",
+        "headline": "RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整實作教學",
         "description": "2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 Chunking 策略、Qwen3-Embedding vs BGE-M3 選型、Gemini Embedding 2 與 Jina V5 Omni 多模態嵌入新選擇、Hybrid Search 混合檢索與 Qwen3-Reranker 排名優化，以及無向量 Visual RAG 架構。",
-        "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/Dee
-  pLearning101-LOGO.png",
+        "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png",
         "author": {
           "@type": "Person",
           "name": "TonTon Huang Ph.D.",
@@ -671,7 +1003,12 @@ def run_evaluation():
           "url": "https://deep-learning-101.github.io/"
         },
         "datePublished": "2024-07-07T08:00:00+08:00",
-        "dateModified": "2026-08-20T08:00:00+08:00"
+        "dateModified": "2026-08-20T08:00:00+08:00",
+        "keywords": "RAG, Retrieval-Augmented Generation, Chunking, Hybrid Search, Rerank, RAGAS, Embedding, Qwen3-Embedding, BGE-M3, Faithfulness, Context Recall, HyDE, Step-back Prompting, Visual RAG, 檢索增強生成, 幻覺, 冷啟動, RRF, 向量資料庫",
+        "speakable": {
+          "@type": "SpeakableSpecification",
+          "cssSelector": ["h2", "h3", ".article-summary"]
+        }
       },
       {
         "@type": "FAQPage",
@@ -723,6 +1060,30 @@ def run_evaluation():
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "傳統 RAG 提取 PDF 表格時會將 2D 結構壓扁為 1D 純文字，導致欄位錯位與 LLM 幻覺。Vectorless Visual RAG 完全捨棄文字切塊與向量化，改以底層物理版面解析工具（如 OpenDataLoader + PyMuPDF）建立 JSON 目錄樹，記錄表格與圖片的精準 Bounding Box 與絕對頁碼。查詢時 LLM 先閱讀輕量目錄定位頁碼，再直接調用該頁高畫質原始截圖（JPEG/PNG）送給多模態 LLM（如 Gemini 2.5 Pro、GPT-4o）看圖作答，實現 0% 排版遺失。特別適合金融報告、法律合約、醫療 SOP 等需嚴格追蹤引用來源的場景。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RAG 系統沒有歷史問答對，第一天怎麼建立評估基準？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "從 Chunk 對 LLM 合成問答對建立初始評估集，無需人工標註。5000 份文件約生成 2100 條可用問答對，耗時約 3 小時 LLM 調用。第 3–4 週引入 3–5 位領域專家標註 100–150 條難 case。文件質量治理（OCR 修正、去重、版本管理）可讓 Context Recall 從 0.67 提升到 0.79。上線後每月從真實對話篩 50–100 條替換合成數據，逐步讓評估集對齊真實用戶分佈。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "RAG 幻覺有哪些根源？如何系統性防控？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "RAG 幻覺有兩個根源：一是檢索失敗，LLM 靠自身訓練知識填充（例如知識庫寫「7 天退款」但未召回，LLM 答「30 天」）；二是檢索成功但 LLM 超範圍輸出，在 context 基礎上加入了文件未有的推斷。四道防線按成本遞增：①Prompt 強制四條約束規則；②Rerank 分數低於閾值（0.3–0.6）直接拒答；③生成後 LLM 引用核查（適合醫療/法律場景，成本翻倍）；④結構化 JSON 輸出附 source_ids 強制溯源。普通企業知識庫部署防線一+二即可，醫療合規建議四線全上。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "如何評估 RAG 系統的檢索層品質？Hit@K 和 MRR 怎麼用？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Hit@K 衡量正確 chunk 是否出現在前 K 條結果中（Hit@5 < 0.7 說明 Embedding 或 Chunking 有問題；> 0.8 說明問題在生成層）。MRR（平均倒數排名）衡量正確 chunk 的排名位置，排名 1 得 1.0 分、排名 5 得 0.2 分，MRR < 0.5 說明 Rerank 效果不足。兩者需搭配使用：Hit@5 高但 MRR 低，說明找到了但排名靠後，送給 LLM 的 context 品質會下降。這兩個指標應在 RAGAS 評估之前先跑，確認檢索層合格再進入生成層診斷。"
             }
           },
           {

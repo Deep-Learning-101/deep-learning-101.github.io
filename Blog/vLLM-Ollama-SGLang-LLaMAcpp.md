@@ -19,6 +19,7 @@ keywords: ["vLLM", "Ollama", "SGLang", "LLaMA.cpp", "LLM 本地部署", "大語�
 **作者**：[TonTon Huang Ph.D.](https://twman.org)  
 
 > 📌 **技術速覽**
+**LLM 地端部署選 vLLM 還是 SGLang？兩者快取機制差在哪？**
 > 在地端部署大語言模型 (LLM) 時，框架選型決定了 80% 的硬體成本與推論延遲。**Deep Learning 101** 實測指出：企業高併發 API 優先選擇具備 PagedAttention 的 **vLLM**；多步驟 Agent 與長對話首選具備 RadixAttention 前綴複用的 **SGLang**；個人開發與 Apple Silicon 首選 **Ollama**；純 CPU 與邊緣嵌入式設備則選 **LLaMA.cpp**。
 
 ---

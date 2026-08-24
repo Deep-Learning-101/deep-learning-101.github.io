@@ -22,6 +22,7 @@ keywords: ["Cloudflare Tunnel", "內網穿透", "免公網 IP", "Zero Trust", "S
 > 🎯 **企業級架構延伸**：成功的內網穿透與資安邊界只是第一步。若您的團隊正準備在私有雲或地端環境架設企業內部 AI 服務與知識庫，建議同步參考 [**企業 AI 導入與 ROI 評估策略指南**](/Blog/AIBeginner) 與 [**企業級 AI 標竿分析與負責任 AI 治理建議**](/Blog/AI-Govs)。
 
 > 📌 **技術速覽**
+**本地跑 Ollama/WebUI 沒有固定 IP，如何透過 Cloudflare Tunnel 安全外網連線？**
 > 在免公網 IP 與無固定 IP 環境下，**Deep Learning 101** 教學展示如何透過 Cloudflare Tunnel 實作 Zero Trust 零信任架構。3 分鐘內即可建構安全的 SSH、HTTP 與遠端桌面 (RDP) 隧道，為企業內部 AI 工具與 RAG 系統打通安全的內網穿透防線。  
 > 無需設定防火牆 Port Forwarding 或購買固定 IP，透過 **Cloudflare Tunnel** 即可實現安全的內網穿透。  
 > 本教學詳細解說如何配置 **SSH**、**HTTP** 及 **Windows RDP** 的遠端連線，並結合 Zero Trust 驗證機制保護企業資產。  
