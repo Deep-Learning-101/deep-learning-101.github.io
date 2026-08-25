@@ -28,7 +28,7 @@ schema_type: article
 * **Rerank 排序**：用 Qwen3/Gemini Reranker 從候選結果中選出最相關的片段再給 LLM
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026年08月20日 <> 2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
+**日期**：2026-08-20（更新：2026-04-21、2026-01-02、2025-07-30、2024-07-07）  
 **相關文章 I**：2024-07-07：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
 **相關文章 II**：2025-07-16：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)  
 **相關文章 III**：2026-04-21：[Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)  
@@ -63,8 +63,8 @@ schema_type: article
     - [2.3 選擇合適的嵌入模型 (Embedding)](#embedding)
   - [資料檢索 (Data Retrieval)](#retrieval)
     - [2.4 檢索策略：為何需要混合檢索 (Hybrid Search)？](#hybrid-search)
-      - [多路召回結果融合：RRF（Reciprocal Rank Fusion）](#hybrid-search)
-      - [查詢優化（Query Optimization）：四種方法](#hybrid-search)
+      - 多路召回結果融合：RRF（Reciprocal Rank Fusion）
+      - 查詢優化（Query Optimization）：四種方法
   - [檢索後處理 (Post-Retrieval Processing)](#post-retrieval)
     - [2.5 Rerank：從「找得全」到「選得準」的關鍵一步](#rerank)
   - [前沿架構突破 (Advanced Paradigm)](#advanced-paradigm)
@@ -371,7 +371,7 @@ Hybrid Search 解決的是「從哪幾條路徑找」的問題。
 
 <h3 id="post-retrieval">檢索後處理 (Post-Retrieval Processing)</h3>
 
-<h4 id="rerank">2.5 Rerank：從「找得全」到「選得準」的關鍵一步</h4>；[更多 Embedding和Rerank模型說明在這](#Appendix-Embedding-Reranking-RAG)
+<h4 id="rerank">2.5 Rerank：從「找得全」到「選得準」的關鍵一步</h4>
 
 初步檢索（尤其是`混合檢索`）的目標是「找得全」，但這也意味著結果中可能混雜著一些相關性不高的內容。這時就需要 Rerank 來進行「二次精選」。
 
