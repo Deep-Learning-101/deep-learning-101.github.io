@@ -76,22 +76,42 @@ keywords:
 
 ---
 
+**📋 本文目錄**
+
+* [重點摘要 (TL;DR)](#tldr)
+* [一、為什麼「是不是 Agent」是無效的治理提問？](#section-1)
+* [二、四維坐標系：Agentic Profiles 的技術拆解與分級矩陣](#section-2)
+    * [1. 自主性 (Autonomy, A.0–A.5)](#autonomy)
+    * [2. 效能 (Efficacy, E.0–E.5)](#efficacy)
+    * [3. 目標複雜度 (Goal Complexity, GC.0–GC.5)](#goal-complexity)
+    * [4. 泛化能力 (Generality, G.0–G.5)](#generality)
+* [三、四大代表性系統畫像與鷹架觸發的相變](#section-3)
+* [四、企業差異化資安防禦與工程對策 (Box 2 技術解析)](#section-4)
+* [五、企業資安架構落地指南](#section-5)
+* [💬 常見問題與技術 FAQ](#faq)
+
+---
+
 <p align="center">
 <img src="./Agentic-Profiles/001.png" alt="001" height="400">
 </p>
 
+<a id="tldr"></a>
+
 ### **重點摘要 (TL;DR)**
 
-2026 年 8 月，Google DeepMind 的 Atoosa Kasirzadeh 與 Iason Gabriel 於《Nature》發表了劃時代的論文〈Agentic profiles for effective AI governance〉。該研究直擊當前企業與監管機構在導入 AI Agent）時的根本困境：**現有的治理框架（如歐盟《人工智慧法案》或 NIST AI RMF）多偏向「系統整體風險」的粗粒度劃分，缺乏對 AI Agent 核心屬性的精細刻畫** 。
+2026 年 8 月，Google DeepMind 的 Atoosa Kasirzadeh 與 Iason Gabriel 於《Nature》發表了劃時代的論文〈Agentic profiles for effective AI governance〉。該研究直擊當前企業與監管機構在導入 AI Agent 時的根本困境：**現有的治理框架（如歐盟《人工智慧法案》或 NIST AI RMF）多偏向「系統整體風險」的粗粒度劃分，缺乏對 AI Agent 核心屬性的精細刻畫** 。
 
 研究團隊提出 **Agentic Profiles** 框架，主張放棄「是否為 Agent」的二元對立思維，改從 **自主性 (Autonomy)**、**效能 (Efficacy)**、**目標複雜度 (Goal Complexity)** 與 **泛化能力 (Generality)** 四大關鍵技術維度，為不同 AI 系統建立動態坐標，並推導出具備高度可操作性的工程防禦與治理機制 。
 
 * 核心痛點： 傳統 AI 治理（如歐盟 AI 法案）僅對系統做粗粒度風險分類，無法應對具備自主行動力的 AI Agent。
 * DeepMind 解決方案： 發表於《Nature》的 Agentic Profiles 框架，提出摒棄「是否為 Agent」的二元思維，轉而從 自主性 (A)、效能 (E)、目標複雜度 (GC) 與 泛化能力 (G) 四大維度進行動態評估。
-* 關鍵相變警告： 當基底大模型接入外圍工具或推理鷹架（Scaffolding，框架，腳手架）時，系統畫像會發生相變躍遷，風險等級將呈幾何級數上升。
+* 關鍵相變警告： 當基底大模型接入外圍工具或推理鷹架（Scaffolding，腳手架）時，系統畫像會發生相變躍遷，風險等級將呈幾何級數上升。
 * 企業工程對策： 告別人工監控，針對高階 Agent 部署自動化熔斷機制（Circuit Breakers）、動態權限閘道與「零信任」工具呼叫協定。
 
 ---
+
+<a id="section-1"></a>
 
 ### **一、 為什麼「是不是 Agent」是無效的治理提問？**
 
@@ -99,7 +119,7 @@ keywords:
 <img src="./Agentic-Profiles/003.png" alt="003" height="400">
 </p>
 
-「Agent」在電腦科學與 AI 領域並非全新概念，從 1995 年 Russell & Norvig 提出的「感知與行動」框架 ，到 1997 年 Franklin & Graesser 的「環境自適應與追求目標」 ，再到近年結合大語言模型（LLM）的生成式Agent ，定義層出不窮 。
+「Agent」在電腦科學與 AI 領域並非全新概念，從 1995 年 Russell & Norvig 提出的「感知與行動」框架，到 1997 年 Franklin & Graesser 的「環境自適應與追求目標」，再到近年結合大語言模型（LLM）的生成式 Agent，定義層出不窮。
 
 然而，過往定義大多僅能幫助回答「該系統是否具備 Agent 特徵」，卻無法解決監管與資安防禦的核心難題：**系統究竟具備多強的現實破壞力與自由度？** 
 
@@ -144,11 +164,15 @@ keywords:
 <img src="./Agentic-Profiles/004.png" alt="004" height="400">
 </p>
 
+<a id="section-2"></a>
+
 ### **二、 四維坐標系：Agentic Profiles 的技術拆解與分級矩陣**
 
 <p align="center">
 <img src="./Agentic-Profiles/005.png" alt="005" height="400">
 </p>
+
+<a id="autonomy"></a>
 
 #### **1. 自主性 (Autonomy, A.0 - A.5)：控制權與接管機制**
 
@@ -166,6 +190,8 @@ keywords:
 > 
 
 ---
+
+<a id="efficacy"></a>
 
 #### **2. 效能 (Efficacy, E.0 - E.5)：因果影響力與部署環境**
 
@@ -188,6 +214,8 @@ keywords:
 
 ---
 
+<a id="goal-complexity"></a>
+
 #### **3. 目標複雜度 (Goal Complexity, GC.0 - GC.5)：分層規劃與規範博弈**
 
 <p align="center">
@@ -202,7 +230,7 @@ keywords:
 * **GC.4 (高複雜度)**：需動態平衡多重衝突目標，並進行長序列的階層式規劃（Hierarchical Planning）（如 Claude 3.5 Sonnet、Waymo）。
 * **GC.5 (無邊界複雜度)**：能自主無邊界地生成新的目標結構，並解讀極度模糊的抽象指令 。
 
-##### 為什麼「Tool」比「Model」更重要？
+#### 為什麼「Tool」比「Model」更重要？
 
 假設：
 
@@ -262,6 +290,8 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 
 ---
 
+<a id="generality"></a>
+
 #### **4. 泛化能力 (Generality, G.0 - G.5)：領域跨度與系統性風險**
 
 <p align="center">
@@ -277,7 +307,9 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 
 ---
 
-### **三、 四大代表性系統畫像與「鷹架（Scaffolding，框架，腳手架）」觸發的相變**
+<a id="section-3"></a>
+
+### **三、 四大代表性系統畫像與鷹架（Scaffolding）觸發的相變**
 
 論文針對四種現有系統繪製了 Agentic Profiles 畫像 ：
 
@@ -291,11 +323,13 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 4. **Waymo (自動駕駛)**：特定領域（低泛化），但具備極高自主性與直接物理世界效能 。
 
 > 
-> **技術相變 (Phase Shift) 警告：** 當為同一個基礎大模型（Base Model）補強外圍「鷹架（Scaffolding，框架，腳手架）」（如 API 存取、外部記憶體、自動化 Reasoning 協議）時，系統畫像會發生躍遷，必須立即重新評估其資安等級 。
+> **技術相變 (Phase Shift) 警告：** 當為同一個基礎大模型（Base Model）補強外圍鷹架（如 API 存取、外部記憶體、自動化 Reasoning 協議）時，系統畫像會發生躍遷，必須立即重新評估其資安等級 。
 > 
 > 
 
 ---
+
+<a id="section-4"></a>
 
 ### **四、 企業差異化資安防禦與工程對策 (Box 2 技術解析)**
 
@@ -316,6 +350,8 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 
 ---
 
+<a id="section-5"></a>
+
 ### **五、 企業資安架構落地指南**
 
 <p align="center">
@@ -334,6 +370,8 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 
 ---
 
+<a id="faq"></a>
+
 ### 💬 常見問題與技術 FAQ (Frequently Asked Questions)
 
 #### Q1：為什麼現有的 AI 治理法規（如歐盟 AI Act）無法有效監管 AI Agent？
@@ -346,7 +384,7 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 4. **泛化能力 (Generality, G.0-G.5)：** AI 跨越不同認知領域與任務類型的遷移運算能力。
 
 #### Q3：甚麼是「鷹架(腳手架)效應 (Scaffolding Effect)」？為何會引發 AI 資安相變？
-鷹架（Scaffolding，框架，腳手架）指的是圍繞基礎大模型（Base Model）所建構的外圍系統，包含 API 呼叫、記憶庫、自動化推理流程等。當大模型加上鷹架（Scaffolding，框架，腳手架）後，雖然模型本體沒變，但其自主性與效能會發生劇烈躍遷（相變），使得原本安全的模型瞬間具備極高風險的實體破壞力。
+鷹架（Scaffolding，腳手架）指的是圍繞基礎大模型（Base Model）所建構的外圍系統，包含 API 呼叫、記憶庫、自動化推理流程等。當大模型加上鷹架後，雖然模型本體沒變，但其自主性與效能會發生劇烈躍遷（相變），使得原本安全的模型瞬間具備極高風險的實體破壞力。
 
 #### Q4：企業在部署高自主性 AI Agent 時，最首要的資安防禦技術是什麼？
 針對高自主性（A.3 以上）的 Agent，人類即時監控已無法跟上其執行速度。企業必須導入 **「硬編碼自動化熔斷機制 (Circuit Breakers)」** 與 **「零信任動態權限閘道 (Zero-Trust Dynamic Gating)」**，在 Agent 出現異常連環錯誤或越權呼叫時，能在毫秒級自動阻斷執行並撤銷權限。
@@ -362,24 +400,27 @@ RAG 知識庫在 Agentic 系統中屬於 Tier 0（Observation Only）工具，�
       "@type": "TechArticle",
       "mainEntityOfPage": {
         "@type": "WebPage",
-        "@id": "https://deep-learning-101.github.io/Blog/Agentic-Profiles-Nature-DeepMind/"
+        "@id": "https://deep-learning-101.github.io/Blog/Agentic-Profiles"
       },
+      "url": "https://deep-learning-101.github.io/Blog/Agentic-Profiles",
       "headline": "重塑 AI 治理坐標系：Google DeepMind《Nature》Agentic Profiles 深度技術與治理復盤",
       "alternativeHeadline": "DeepMind Agentic Profiles 論文深度拆解：AI Agent 四維資安與治理框架",
       "description": "深度解析 Google DeepMind 發表於《Nature》的 Agentic Profiles 論文。本文從自主性(A)、效能(E)、目標複雜度(GC)與泛化能力(G)四大維度，拆解 AI Agent 的風險矩陣、相變效應與企業零信任治理對策。",
+      "image": "https://deep-learning-101.github.io/Blog/Agentic-Profiles/Agentic-Profiles.png",
       "proficiencyLevel": "Expert",
       "inLanguage": "zh-TW",
       "datePublished": "2026-08-14T08:00:00+08:00",
       "dateModified": "2026-08-20T08:00:00+08:00",
       "author": {
         "@type": "Person",
-        "name": "TonTon",
+        "name": "TonTon Huang",
+        "url": "https://twman.org/",
         "jobTitle": "AI & Cyber Security Specialist"
       },
       "publisher": {
         "@type": "Organization",
         "name": "Deep Learning 101",
-        "url": "https://deep-learning-101.github.io/Blog/"
+        "url": "https://deep-learning-101.github.io/"
       },
       "about": [
         {
@@ -390,7 +431,7 @@ RAG 知識庫在 Agentic 系統中屬於 Tier 0（Observation Only）工具，�
             { "@type": "Person", "name": "Atoosa Kasirzadeh" },
             { "@type": "Person", "name": "Iason Gabriel" }
           ],
-          "publisher": "Nature"
+          "publisher": { "@type": "Organization", "name": "Nature" }
         }
       ]
     },
