@@ -28,7 +28,7 @@ schema_type: article
 * **Rerank 排序**：用 Qwen3/Gemini Reranker 從候選結果中選出最相關的片段再給 LLM
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026-08-20（更新：2026-04-21、2026-01-02、2025-07-30、2024-07-07）  
+**日期**：2026年08月20日 <> 2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
 **相關文章 I**：2024-07-07：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
 **相關文章 II**：2025-07-16：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)  
 **相關文章 III**：2026-04-21：[Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)  
@@ -63,8 +63,8 @@ schema_type: article
     - [2.3 選擇合適的嵌入模型 (Embedding)](#embedding)
   - [資料檢索 (Data Retrieval)](#retrieval)
     - [2.4 檢索策略：為何需要混合檢索 (Hybrid Search)？](#hybrid-search)
-      - 多路召回結果融合：RRF（Reciprocal Rank Fusion）
-      - 查詢優化（Query Optimization）：四種方法
+      - [多路召回結果融合：RRF（Reciprocal Rank Fusion）](#hybrid-search)
+      - [查詢優化（Query Optimization）：四種方法](#hybrid-search)
   - [檢索後處理 (Post-Retrieval Processing)](#post-retrieval)
     - [2.5 Rerank：從「找得全」到「選得準」的關鍵一步](#rerank)
   - [前沿架構突破 (Advanced Paradigm)](#advanced-paradigm)
@@ -79,6 +79,19 @@ schema_type: article
     - [自動化評估流水線與速查清單](#eval-pipeline)
     - [RAG 幻覺的系統性防控：兩個根源，四道防線](#eval-pipeline)
     - [企業 RAG 冷啟動：沒有歷史問答對時怎麼辦](#eval-pipeline)
+- [三：企業 RAG 生產化：Identity-Aware Retrieval 與權限控管](#rag-acl)
+  - [為什麼護欄不夠：Access Control 要在 Retrieval 層](#why-not-guardrail)
+  - [核心原則：Document-Level Security，Query-Time Enforcement](#acl-principle)
+  - [五層工程架構](#acl-architecture)
+    - [第一層：文件入庫時的 Metadata 標記](#acl-metadata)
+    - [第二層：Vector Store Metadata Filtering](#acl-filter)
+    - [第三層：Identity Provider 整合（解決換部門/離職問題）](#acl-idp)
+    - [第四層：多租戶隔離策略](#acl-multitenancy)
+    - [第五層：Context 組裝前的二次授權](#acl-context)
+  - [關於「模型記憶」的誤解：Session Memory 才是真正隱患](#acl-memory)
+  - [開源與商用工具整理](#acl-tools)
+  - [企業 RAG 權限控管 Checklist](#acl-checklist)
+  - [快速選型指南](#acl-quickstart)
 - [總結](#summary)
 
 ---
@@ -371,7 +384,7 @@ Hybrid Search 解決的是「從哪幾條路徑找」的問題。
 
 <h3 id="post-retrieval">檢索後處理 (Post-Retrieval Processing)</h3>
 
-<h4 id="rerank">2.5 Rerank：從「找得全」到「選得準」的關鍵一步</h4>
+<h4 id="rerank">2.5 Rerank：從「找得全」到「選得準」的關鍵一步</h4>；[更多 Embedding和Rerank模型說明在這](#Appendix-Embedding-Reranking-RAG)
 
 初步檢索（尤其是`混合檢索`）的目標是「找得全」，但這也意味著結果中可能混雜著一些相關性不高的內容。這時就需要 Rerank 來進行「二次精選」。
 
@@ -954,6 +967,216 @@ LLM 只會生成文件中有明確答案的問題，缺少跨文件推理題和�
   真實數據保證長期可靠性
 
 
+<h2 id="rag-acl">三：企業 RAG 生產化：Identity-Aware Retrieval 與權限控管</h2>
+
+> 📌 **核心問題**：企業 RAG 知識庫最容易被忽略的安全缺口，不是 LLM 輸出了什麼，而是哪些文件 chunk 被取出來放進了 context。
+
+<h3 id="why-not-guardrail">為什麼護欄（Guardrail）不夠</h3>
+
+Prompt-level guardrail 只做到一件事：
+
+```text
+用戶問 → LLM 輸出 → 過濾敏感詞 → 回覆
+```
+
+它擋不住更前面的問題——**敏感文件的 chunk 已經被取出來、放進 LLM context 了**。一個業務員問「公司今年薪酬預算多少？」，護欄是在輸出端把答案蓋掉，但 HR 薪酬 chunk 已進入 context。這才是根本漏洞。
+
+**Access Control 要在 retrieval 層發生，不是在 output 層。**
+
+<h3 id="acl-principle">核心原則：Document-Level Security，Query-Time Enforcement</h3>
+
+```text
+[文件入庫時] 每份文件貼上 metadata（誰能看、哪個部門、幾級機密）
+[查詢時]     根據當前用戶身份，動態過濾 metadata，才做向量相似度搜索
+```
+
+這叫 **Identity-Aware Retrieval**，是企業 RAG 的底線設計原則。Access Control 從 Identity Provider（如 Okta / Azure AD）**即時**取得，與 vector index 解耦——換部門、離職，只需更新 IdP，**不需要重建任何 embedding**。
+
+<h3 id="acl-architecture">五層工程架構</h3>
+
+<h4 id="acl-metadata">第一層：文件入庫時的 Metadata 標記</h4>
+
+每份文件在 embedding **前**，必須附加 ACL metadata：
+
+```python
+{
+  "doc_id": "fin-2024-q4-budget",
+  "vector": [...],
+  "acl": {
+    "departments": ["finance"],
+    "clearance_level": 3,       # 1=公開 2=內部 3=機密 4=最高機密
+    "owner": "cfo@company.com",
+    "expiry": "2025-12-31",     # 文件有效期，到期自動排除
+    "groups": ["finance-managers", "board"]
+  }
+}
+```
+
+> **重要**：向量化本身不帶任何存取控制。metadata 才是防線；少了這一層，後面的架構全都無效。
+
+<h4 id="acl-filter">第二層：Vector Store Metadata Filtering（Pre-filter）</h4>
+
+主流向量資料庫均支援「先過濾 metadata，再計算向量相似度」（pre-filtering）：
+
+```python
+# Qdrant 範例
+results = client.search(
+    collection_name="knowledge_base",
+    query_vector=query_embedding,
+    query_filter=Filter(
+        must=[
+            FieldCondition(
+                key="acl.departments",
+                match=MatchAny(any=user.departments)   # 動態注入用戶所屬部門
+            ),
+            FieldCondition(
+                key="acl.clearance_level",
+                range=Range(lte=user.clearance_level)  # 只能看「不超過」自己等級的文件
+            )
+        ]
+    ),
+    limit=10
+)
+```
+
+**向量相似度再高，只要 metadata filter 不過，chunk 就不會被取出。**
+
+<h4 id="acl-idp">第三層：Identity Provider 整合（解決換部門/離職問題）</h4>
+
+Access Control 規則**不能硬編在文件或程式碼裡**，必須從 IdP 即時查詢：
+
+```text
+用戶發問
+  → Gateway 向 Okta / Azure AD / LDAP 取得 user.groups、user.clearance_level
+  → 每次查詢都是即時值，非 cache
+  → 注入 Vector Store 的 metadata filter
+  → 向量搜索只在授權範圍內執行
+```
+
+| 場景 | 處理方式 | 是否需要重建 index |
+|-----|---------|:---:|
+| 員工換部門 | 更新 AD group 成員，下次查詢自動生效 | 否 |
+| 員工離職 | 帳號停用，token 失效，查詢無法發起 | 否 |
+| 文件機密等級調整 | 更新 metadata 中的 `clearance_level` | 否 |
+| 文件過期 | `expiry` 欄位到期，filter 自動排除 | 否 |
+
+<h4 id="acl-multitenancy">第四層：多租戶隔離策略</h4>
+
+不同安全域的資料，選擇不同的物理隔離程度：
+
+| 隔離層級 | 做法 | 適用場景 |
+|---------|------|---------|
+| Metadata Filter | 同一 collection，查詢時過濾 | 一般部門分層，覆蓋 80% 場景 |
+| Partition / Namespace | 同資料庫，不同分區 | 財務 vs 工程等敏感度差異較大的域 |
+| 獨立 Collection | 完全分開的向量集合 | 董事會、薪酬等最高機密 |
+| 獨立 Vector DB 實例 | 不同服務器 | 金融、醫療等有法規實體隔離要求的場景 |
+
+<h4 id="acl-context">第五層：Context 組裝前的二次授權</h4>
+
+即使 chunk 通過了 vector filter，在注入 LLM context 前再做一次確認，作為最後兜底：
+
+```python
+def build_context(chunks: list, user: User) -> list:
+    return [c for c in chunks if authz.can_read(user.id, c.doc_id)]
+    # authz 對接 OPA / OpenFGA，處理 metadata filter 邏輯的邊緣漏洞
+```
+
+---
+
+<h3 id="acl-memory">關於「模型記憶」的誤解：Session Memory 才是真正隱患</h3>
+
+常見擔憂：「文件一起向量化進去，模型是不是就記住所有內容了？」
+
+| 情境 | 實際風險 | 說明 |
+|-----|:-------:|------|
+| 跨 session 的模型記憶 | 幾乎沒有 | LLM 每次推論無狀態，API 呼叫完即清空 |
+| Prompt Cache（KV Cache） | 幾乎沒有 | 服務器端隔離，不同用戶不共享 |
+| RAG embedding 本身 | 無 | 向量只是數字空間，不是「模型記憶了什麼」 |
+| **Session Memory（對話歷史）** | **有風險** | 若多輪對話歷史沒做 ACL，前輪洩漏的內容會殘留在 context |
+
+**真正的隱患是 Session Memory 管理**：多輪對話記憶如果複用不當，用戶 A 這輪取到的敏感 chunk 可能帶進下一段對話。解法是 **session-level ACL**——每個 session 綁定用戶身份，session 結束立即清除。
+
+---
+
+<h3 id="acl-tools">開源與商用工具整理</h3>
+
+**向量資料庫（含 ACL 支援）**
+
+| 工具 | ACL 機制 | 開源/商用 |
+|-----|---------|:-------:|
+| **Qdrant** | Payload filter + multi-tenancy collection | 開源 |
+| **Weaviate** | RBAC、multi-tenancy、per-class auth | 開源（Enterprise 版完整 RBAC） |
+| **Milvus / Zilliz** | RBAC、Partition Key | 開源 / 商用 |
+| **Pinecone** | Namespace + metadata filter | 商用 |
+| **Azure AI Search** | Security trimming（整合 Azure AD 群組） | 商用 |
+| **Google Vertex AI Search** | 繼承 Google Workspace / Drive 原生 ACL | 商用 |
+| **Elasticsearch + x-pack** | Field-level & Document-level security | 商用（基礎開源） |
+
+**Fine-grained Authorization 引擎**
+
+| 工具 | 說明 | 開源/商用 |
+|-----|------|:-------:|
+| **OpenFGA** | Google Zanzibar 開源實作，關係式授權（A 可以讀 B 因為 A 是 B 的成員） | 開源 |
+| **Permify** | OpenFGA 相容，更易部署 | 開源 |
+| **OPA（Open Policy Agent）** | Rego 語言寫政策，可嵌入任何服務 | 開源 |
+| **Casbin** | Go / Python / Java 皆有，支援 RBAC / ABAC / ReBAC | 開源 |
+
+**企業 RAG 整合方案（直接內建 ACL）**
+
+| 工具 | 特色 | 開源/商用 |
+|-----|------|:-------:|
+| **Glean** | 自動同步 Google Drive / SharePoint / Confluence 的原生 ACL | 商用 |
+| **Vectara** | 文件層級 ACL，上傳時指定允許的 user / group | 商用 |
+| **Microsoft Copilot for M365** | 完全繼承 SharePoint / Teams Permission，不重建 ACL | 商用 |
+
+**推薦開源技術棧**
+
+```text
+身份認證：Keycloak（自架 OIDC/OAuth2）或 Azure AD
+授權決策：OpenFGA / OPA
+向量資料庫：Qdrant（payload filter）或 Weaviate（multi-tenancy）
+RAG 框架：LlamaIndex + identity context middleware
+審計日誌：OpenTelemetry → Elasticsearch / Loki
+```
+
+---
+
+<h3 id="acl-checklist">企業 RAG 權限控管 Checklist</h3>
+
+```text
+□ 每份文件入庫時必須帶 acl metadata（department、clearance_level、owner、expiry）
+□ Vector DB 查詢一律加 metadata pre-filter，不得裸查全庫
+□ User identity 從 IdP 即時取得，不 hardcode 在 session 或程式碼
+□ 不同安全域（財務/法務/董事會）用獨立 namespace 或 collection
+□ Session memory 綁定 user_id，session 結束立即清除
+□ 每次 retrieval 結果記錄 audit log（誰查了什麼、取到哪些 doc_id）
+□ 敏感文件設定 expiry，過期後 filter 自動排除
+□ 離職流程觸發 IdP group 清除 → 下次查詢自動生效，無需重建 index
+□ 定期（每季）審查 acl metadata 是否與實際 org structure 同步
+```
+
+<h3 id="acl-quickstart">快速選型指南</h3>
+
+| 場景 | 建議方案 | 預計工時 |
+|-----|---------|:-------:|
+| PoC / 快速驗證 | Qdrant + metadata filter + 自發 JWT | 0.5 天 |
+| 中小企業生產 | 上面 + Azure AD / Okta group 注入 | 1–2 天 |
+| 需要複雜關係授權（主管可以看下屬的文件） | + OpenFGA | 2–3 天 |
+| 最高機密物理隔離（董事會、法律） | Weaviate multi-tenancy 獨立 tenant | +1 天 |
+| 全套（身份 + 授權 + session + 審計） | 完整整合 + OpenTelemetry trace | 1 週 |
+
+> 💡 **工程化實作**：上述五層架構的完整程式碼（Qdrant metadata filter、FastAPI + JWT 整合、Azure AD group 注入、OpenFGA 細粒度授權、Weaviate multi-tenancy、Redis session ACL）可直接向 Claude / ChatGPT / Gemini 索取。建議 prompt：
+>
+> - 「用 Qdrant Python SDK 實作 Identity-Aware Retrieval，文件有 `acl_departments`、`acl_clearance_level`、`acl_expiry` 三個 metadata 欄位，查詢時動態注入 `user.departments` 與 `user.clearance_level` 做 pre-filter，給我可執行的完整範例」
+>
+> - 「用 FastAPI + python-jose 驗證 JWT，從 payload 取出 departments 與 clearance_level，傳給 Qdrant 的 metadata filter，完整實作企業 RAG 的 Identity-Aware Retrieval API」
+>
+> - 「用 OpenFGA 實作 RAG 文件的細粒度授權，定義 document / department / user 的關係模型，並在 Qdrant 取回 chunk 後做二次 can_read check，給我 Docker 啟動到 Python 呼叫的完整流程」
+
+> 延伸閱讀：企業 AI 治理如何從 Policy 落地為 Technical Controls，請見 [企業 AI 治理框架：Agent 的 Least Privilege 與 RBAC/ABAC](./Blog/AI-Govs#tool-permission)。
+
+---
+
 <h2 id="summary">總結</h2>
 
 通過將實戰操作融入清晰的理論框架，您建立的 RAG 指南將會：
@@ -990,7 +1213,7 @@ LLM 只會生成文件中有明確答案的問題，缺少跨文件推理題和�
           "@id": "https://deep-learning-101.github.io/RAG"
         },
         "headline": "RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整實作教學",
-        "description": "2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 Chunking 策略、Qwen3-Embedding vs BGE-M3 選型、Gemini Embedding 2 與 Jina V5 Omni 多模態嵌入新選擇、Hybrid Search 混合檢索與 Qwen3-Reranker 排名優化，以及無向量 Visual RAG 架構。",
+        "description": "2026 最新 RAG 技術實戰指南。從零打造高精準度本地端 RAG 系統，涵蓋 Chunking 策略、Qwen3-Embedding vs BGE-M3 選型、Gemini Embedding 2 與 Jina V5 Omni 多模態嵌入新選擇、Hybrid Search 混合檢索與 Qwen3-Reranker 排名優化、無向量 Visual RAG 架構，以及企業 RAG 的 Identity-Aware Retrieval 與 RBAC/ABAC 權限控管完整設計。",
         "image": "https://raw.githubusercontent.com/Deep-Learning-101/deep-learning-101.github.io/refs/heads/main/images/DeepLearning101-LOGO.png",
         "author": {
           "@type": "Person",
@@ -1003,8 +1226,8 @@ LLM 只會生成文件中有明確答案的問題，缺少跨文件推理題和�
           "url": "https://deep-learning-101.github.io/"
         },
         "datePublished": "2024-07-07T08:00:00+08:00",
-        "dateModified": "2026-08-20T08:00:00+08:00",
-        "keywords": "RAG, Retrieval-Augmented Generation, Chunking, Hybrid Search, Rerank, RAGAS, Embedding, Qwen3-Embedding, BGE-M3, Faithfulness, Context Recall, HyDE, Step-back Prompting, Visual RAG, 檢索增強生成, 幻覺, 冷啟動, RRF, 向量資料庫",
+        "dateModified": "2026-08-26T08:00:00+08:00",
+        "keywords": "RAG, Retrieval-Augmented Generation, Chunking, Hybrid Search, Rerank, RAGAS, Embedding, Qwen3-Embedding, BGE-M3, Faithfulness, Context Recall, HyDE, Step-back Prompting, Visual RAG, 檢索增強生成, 幻覺, 冷啟動, RRF, 向量資料庫, Identity-Aware Retrieval, RBAC, ABAC, 企業 RAG 權限控管, metadata filter, 向量資料庫 ACL, OpenFGA, OPA, Qdrant, Weaviate, 多租戶隔離, Session Memory, 離職 RAG 安全, 換部門 知識庫 權限",
         "speakable": {
           "@type": "SpeakableSpecification",
           "cssSelector": ["h2", "h3", ".article-summary"]
@@ -1092,6 +1315,30 @@ LLM 只會生成文件中有明確答案的問題，缺少跨文件推理題和�
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "AI 模型會隨時間與新資料發生「模型漂移（Model Drift）」，導致決策偏差。一鍵退場機制讓管理層在 AI 出現歧視偏好或超出警戒紅線時，能瞬間切換回全人工審核模式，是防止演算法失控、確保企業法規遵循的最後安全底線，也是 AI 永續治理的核心要件。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "企業 RAG 知識庫如何做到不同部門的資料權限隔離？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "核心是 Identity-Aware Retrieval：文件入庫時附加 ACL metadata（department、clearance_level、expiry），查詢時根據用戶身份從 Identity Provider（如 Okta / Azure AD）即時取得 user.groups 與 user.clearance_level，再注入向量資料庫的 metadata pre-filter。向量相似度再高，只要 metadata filter 不過，chunk 就不會被取出放進 LLM context。護欄（Guardrail）是在 output 端過濾，無法阻止敏感 chunk 進入 context，因此 Access Control 必須在 retrieval 層發生。依隔離程度分四層：Metadata Filter（一般部門分層）、Partition/Namespace（財務 vs 工程）、獨立 Collection（董事會機密）、獨立 Vector DB 實例（法規要求實體隔離）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "員工離職或換部門後，企業 RAG 的向量資料庫需要重建嗎？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "不需要重建 index。正確的設計是：Access Control 從 Identity Provider（如 Azure AD / Okta）即時取得，與 vector index 解耦。員工換部門只需更新 AD group 成員，下次查詢時 metadata filter 自動反映新權限；員工離職則停用帳號，token 失效後查詢就無法發起。文件設定 expiry 欄位後，過期文件也會被 filter 自動排除。唯一需要注意的真實風險是 Session Memory（多輪對話歷史）：若 session 沒有綁定 user_id 且結束後未清除，前輪取出的敏感 chunk 可能殘留在 context，需做 session-level ACL 管理。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "企業 RAG 權限控管有哪些開源工具？Qdrant、Weaviate 怎麼選？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "向量資料庫方面：Qdrant 以 payload filter + multi-tenancy collection 實作 ACL，部署簡單，適合多數企業場景；Weaviate 有原生 RBAC 與 per-class auth，Enterprise 版功能更完整，適合需要細粒度角色管理的場景；Milvus/Zilliz 支援 RBAC 與 Partition Key，適合大規模資料；商用方面 Azure AI Search 有 security trimming 直接整合 Azure AD 群組，Google Vertex AI Search 繼承 Google Workspace 原生 ACL。授權決策引擎方面：OpenFGA（Google Zanzibar 開源實作）支援關係式授權，適合複雜組織結構；OPA（Open Policy Agent）用 Rego 語言寫政策，可嵌入任何服務；Casbin 支援 RBAC/ABAC/ReBAC，Python/Go/Java 皆有。推薦開源組合：Keycloak（身份認證）+ OpenFGA（授權決策）+ Qdrant（向量搜索）+ LlamaIndex identity middleware（RAG 框架）。"
             }
           }
         ]

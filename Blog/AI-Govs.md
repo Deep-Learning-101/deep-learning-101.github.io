@@ -172,6 +172,8 @@ Authentication、Authorization、DLP、Prompt Filtering、Model Routing、Token 
 
 此外，每一個部署的 Agent 都應擁有獨立身份憑證（如 **SPIFFE ID**），成為可追蹤、可審計的「智能體護照」。搭配集中式 **Agent Registry**，企業才能真正回答：「公司到底跑了多少 Agent？哪些 Agent 可以呼叫外部 API？哪些 Agent 可以存取機密資料？」——這些問題的答案，是治理能落地的前提條件，不是錦上添花。
 
+當 Agent 透過 SPIFFE ID 向 RAG 知識庫發起查詢時，同一憑證應流入向量資料庫的 Identity-Aware Retrieval 層——每次向量搜索都攜帶 Agent 的身份與角色，讓 metadata pre-filter 按照 SPIFFE ID 對應的部門與機密等級，決定哪些 chunk 可被取出；而非由 LLM 輸出端的護欄事後攔截。→ [企業 RAG 知識庫的 Identity-Aware Retrieval 完整設計](../RAG#rag-acl)
+
 ---
 
 ### [**🧠 企業級可信賴 AI 治理** (認知與語意的貼身保鑣： 阻擋「AI 提示詞攻擊與系統幻覺」，不讓 AI 大腦被騙或做錯決定。)](https://deep-learning-101.github.io/SHIELD/#trustworthy-ai-governance)
@@ -342,6 +344,8 @@ LLM -> read_email -> search_database -> create_ticket -> send_email -> execute_p
 ```text
 Allowlist + Least Privilege + Scoped Credentials + Sandbox + Human Approval + Rate Limit
 ```
+
+**RAG 知識庫讀取是一種典型的 Scoped Tool**：Agent 呼叫知識庫時，同樣適用 Least Privilege 原則——不應給所有 Agent 全庫讀取權，而是按 Agent 的 SPIFFE ID 動態決定可取回哪些 chunk。若 Agent 身份憑證未正確傳入向量資料庫的 metadata filter 層，向量相似度再高也不應回傳未授權的文件片段。換部門、離職等人員異動只需更新 Identity Provider（如 Azure AD），無需重建任何 embedding index，ACL 即時生效。→ [企業 RAG 的 Identity-Aware Retrieval 五層架構設計](../RAG#rag-acl)
 
 ---
 
