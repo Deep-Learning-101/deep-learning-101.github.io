@@ -28,7 +28,7 @@ schema_type: article
 * **Rerank 排序**：用 Qwen3/Gemini Reranker 從候選結果中選出最相關的片段再給 LLM
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026年08月20日 <> 2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
+**日期**：2026年08月26日 <> 2026年04月21日 <> 2026年01月02日 <> 2025年07月30日 <> 2024年7月7日  
 **相關文章 I**：2024-07-07：[檢索增強生成 (Retrieval-Augmented Generation, RAG) 不是萬靈丹：檢索增強生成的挑戰與優化技巧](https://blog.twman.org/2024/07/RAG.html)  
 **相關文章 II**：2025-07-16：[臺灣大型語言模型及文字嵌入和重排序模型性能評測與在地化策略分析報告](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)  
 **相關文章 III**：2026-04-21：[Sovereign Heuristic Intelligence & Enterprise Logic Defense (主權啟發式情資與企業邏輯防禦系統)](https://deep-learning-101.github.io/SHIELD/)  
@@ -63,8 +63,8 @@ schema_type: article
     - [2.3 選擇合適的嵌入模型 (Embedding)](#embedding)
   - [資料檢索 (Data Retrieval)](#retrieval)
     - [2.4 檢索策略：為何需要混合檢索 (Hybrid Search)？](#hybrid-search)
-      - [多路召回結果融合：RRF（Reciprocal Rank Fusion）](#hybrid-search)
-      - [查詢優化（Query Optimization）：四種方法](#hybrid-search)
+      - [2.4.1 多路召回結果融合：RRF（Reciprocal Rank Fusion）](#hybrid-search1)
+      - [2.4.2 查詢優化（Query Optimization）：四種方法](#hybrid-search2)
   - [檢索後處理 (Post-Retrieval Processing)](#post-retrieval)
     - [2.5 Rerank：從「找得全」到「選得準」的關鍵一步](#rerank)
   - [前沿架構突破 (Advanced Paradigm)](#advanced-paradigm)
@@ -321,7 +321,7 @@ CUDA_VISIBLE_DEVICES=1,2,3 xinference-local -H 0.0.0.0 -p 6006
 > **補充觀點：為何需要混合檢索 (Hybrid Search)？**
 > 單一的檢索方式存在盲點：向量檢索可能忽略關鍵字，而全文檢索無法理解語義。**混合檢索**將兩者結合，它既能透過全文檢索確保**精確匹配**不遺漏，又能透過向量檢索找到**語義相關**的內容，從而**大幅提升覆蓋率 (Recall)**，是目前最主流且效果最好的檢索策略。
 
-#### 多路召回結果如何融合：RRF（Reciprocal Rank Fusion）
+<h4 id="hybrid-search1">2.4.1 多路召回結果如何融合：RRF（Reciprocal Rank Fusion）</h4>
 
 向量和 BM25 兩路各自回傳 top-K 候選後，兩路分數的量綱完全不同（餘弦相似度 0~1 vs. TF-IDF 分數），無法直接比大小。
 
@@ -340,7 +340,7 @@ k 取 60（工程經驗值）：作用是加一個保底分，避免偶爾落後
 - 不受各路分數量綱影響，天然跨路融合
 - 在大多數場景下效果穩定，是多路召回的標配方案
 
-#### 查詢優化（Query Optimization）：解決「問題」端的盲點
+<h4 id="hybrid-search">2.4.2 查詢優化（Query Optimization）：解決「問題」端的盲點</h4>
 
 Hybrid Search 解決的是「從哪幾條路徑找」的問題。
 但即使路徑正確，如果用戶提問的方式和知識庫的表述方式有落差，
@@ -384,7 +384,7 @@ Hybrid Search 解決的是「從哪幾條路徑找」的問題。
 
 <h3 id="post-retrieval">檢索後處理 (Post-Retrieval Processing)</h3>
 
-<h4 id="rerank">2.5 Rerank：從「找得全」到「選得準」的關鍵一步</h4>；[更多 Embedding和Rerank模型說明在這](#Appendix-Embedding-Reranking-RAG)
+<h4 id="rerank">2.5 Rerank：從「找得全」到「選得準」的關鍵一步</h4> [更多 Embedding和Rerank模型說明在這](#Appendix-Embedding-Reranking-RAG)
 
 初步檢索（尤其是`混合檢索`）的目標是「找得全」，但這也意味著結果中可能混雜著一些相關性不高的內容。這時就需要 Rerank 來進行「二次精選」。
 
@@ -728,7 +728,7 @@ result = evaluate(
 
 **Bad Case 分析**是 RAG 調優最有效的方法：找到低分 case → 定位哪個環節出問題 → 針對性優化 → 重新評估 → 看分數是否提升。整體平均分 80% 但有幾個 0 分的 Bad Case，可能比均分 75% 但全部及格更危險。
 
-<h4 id="eval-pipeline">自動化評估流水線與速查清單</h4>
+<h4 id="eval-pipeline1">自動化評估流水線與速查清單</h4>
 
 把評估集成到 CI/CD 中，每次改程式碼自動跑評估，5 分鐘就能知道改好還是改壞：
 
@@ -800,7 +800,9 @@ def run_evaluation():
 
 > 📦 RAGAS GitHub：https://github.com/explodinggradients/ragas | 📖 官方文件：https://docs.ragas.io/en/stable/ | 📄 論文（ESANN 2024）：https://arxiv.org/abs/2309.15217 | 安裝：`pip install ragas`
 
-#### RAG 幻覺的系統性防控：兩個根源，四道防線
+
+<h4 id="eval-pipeline2">RAG 幻覺的系統性防控：兩個根源，四道防線</h4>
+
 
 常見誤區：「只要把檢索做好，LLM 就不會編造了。」
 實際上幻覺有兩個完全不同的根源，解法也完全不同。
@@ -880,7 +882,7 @@ LLM 生成完答案後，再用另一個 LLM 呼叫逐條核查，
 
 ---
 
-#### 企業 RAG 冷啟動：沒有歷史問答對時怎麼辦
+<h4 id="eval-pipeline3">企業 RAG 冷啟動：沒有歷史問答對時怎麼辦</h4>
 
 教學教程裡「準備好了一批高質量的問答對」在真實項目中幾乎不存在。
 企業冷啟動時面臨的實際狀況：只有一堆文件，可能連質量都不過關。
@@ -1172,8 +1174,6 @@ RAG 框架：LlamaIndex + identity context middleware
 > - 「用 FastAPI + python-jose 驗證 JWT，從 payload 取出 departments 與 clearance_level，傳給 Qdrant 的 metadata filter，完整實作企業 RAG 的 Identity-Aware Retrieval API」
 >
 > - 「用 OpenFGA 實作 RAG 文件的細粒度授權，定義 document / department / user 的關係模型，並在 Qdrant 取回 chunk 後做二次 can_read check，給我 Docker 啟動到 Python 呼叫的完整流程」
-
-> 延伸閱讀：企業 AI 治理如何從 Policy 落地為 Technical Controls，請見 [企業 AI 治理框架：Agent 的 Least Privilege 與 RBAC/ABAC](./Blog/AI-Govs#tool-permission)。
 
 ---
 
