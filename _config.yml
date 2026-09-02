@@ -5,3 +5,4 @@ url: "https://deep-learning-101.github.io"
 plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
+  - jekyll-feed

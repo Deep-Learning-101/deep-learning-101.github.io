@@ -1,7 +1,7 @@
 ---
 layout: default
-title: 2026 LLM 選型指南：Reasoning 模型 vs MoE，TonTon 評測與企業落地建議
-description: RAG、Agent、Fine-tuning 到底選什麼？本文跳過行銷話術，直接比較 Qwen3、Llama 3.3、Gemini Flash 繁體中文實測，含 SLM 邊緣部署成本估算，以及針對台灣企業的 LLM 選型決策樹。不是資源彙整，是選型判斷。
+title: 2026 LLM 開發、選型完整指南：RAG、Agent 框架與 Fine-tuning 選型攻略
+description: LLM 落地不知從何開始？本指南每週更新；RAG、Agent、Fine-tuning 到底選什麼？本文跳過行銷話術，直接比較 Qwen3、Llama 3.3、Gemini Flash 繁體中文實測，含 SLM 邊緣部署成本估算，以及針對台灣企業的 LLM 選型決策樹。不是資源彙整，是選型判斷；掌握 2026大語言模型開發全貌。
 permalink: /Large-Language-Model
 lang: zh-Hant
 schema_type: article

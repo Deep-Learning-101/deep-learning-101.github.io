@@ -1,0 +1,80 @@
+{% comment %}
+  延伸閱讀：tag 匹配 → 同目錄 → 全站 fallback，最多顯示 4 張卡
+{% endcomment %}
+
+{% assign max_related = 4 %}
+{% assign candidates = site.pages
+    | where: "layout", "default"
+    | where_exp: "p", "p.url != page.url"
+    | where_exp: "p", "p.title != nil" %}
+
+{% comment %} Step 1: tag 匹配 {% endcomment %}
+{% assign tag_matched = "" | split: "" %}
+{% if page.tags.size > 0 %}
+  {% for p in candidates %}
+    {% assign common_count = 0 %}
+    {% for tag in page.tags %}
+      {% if p.tags contains tag %}
+        {% assign common_count = common_count | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+    {% if common_count > 0 %}
+      {% assign tag_matched = tag_matched | push: p %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} Step 2: 同目錄 fallback {% endcomment %}
+{% assign page_parts = page.url | split: "/" %}
+{% assign page_dir_prefix = page_parts[1] %}
+{% assign dir_matched = "" | split: "" %}
+{% if page_dir_prefix != "" %}
+  {% for p in candidates %}
+    {% assign p_parts = p.url | split: "/" %}
+    {% if p_parts[1] == page_dir_prefix %}
+      {% assign dir_matched = dir_matched | push: p %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+
+{% comment %} 選最佳結果集 {% endcomment %}
+{% if tag_matched.size >= 2 %}
+  {% assign display = tag_matched | slice: 0, max_related %}
+{% elsif dir_matched.size >= 2 %}
+  {% assign display = dir_matched | slice: 0, max_related %}
+{% else %}
+  {% assign display = candidates | slice: 0, max_related %}
+{% endif %}
+
+{% if display.size > 0 %}
+<section class="related-posts-section" style="display:none">
+  <h3 class="related-posts-title">延伸閱讀</h3>
+  <div class="related-posts-grid">
+    {% for p in display %}
+    <a href="{{ p.url | relative_url }}" class="related-post-card">
+      <div class="related-post-card-title">{{ p.title }}</div>
+      {% if p.description %}
+      <div class="related-post-card-desc">{{ p.description | truncate: 90 }}</div>
+      {% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<style>
+.related-posts-section { margin: 2rem 0 1rem; }
+.related-posts-title { font-size: 1rem; font-weight: 700; color: #555; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; border: none; }
+.related-posts-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+.related-post-card { display: block; padding: 16px; border: 1px solid #eaeaea; border-radius: 12px; text-decoration: none !important; color: inherit; transition: all 0.2s; }
+.related-post-card:hover { border-color: #007bff; box-shadow: 0 4px 12px rgba(0,123,255,0.1); transform: translateY(-2px); }
+.related-post-card-title { font-size: 0.9rem; font-weight: 600; color: #1a1a1a; line-height: 1.4; margin-bottom: 6px; }
+.related-post-card-desc { font-size: 0.8rem; color: #666; line-height: 1.5; }
+@media (prefers-color-scheme: dark) {
+  .related-posts-title { color: #8b949e; }
+  .related-post-card { border-color: #30363d; }
+  .related-post-card:hover { border-color: #58a6ff; box-shadow: 0 4px 12px rgba(88,166,255,0.15); }
+  .related-post-card-title { color: #e6edf3; }
+  .related-post-card-desc { color: #8b949e; }
+}
+</style>
+{% endif %}

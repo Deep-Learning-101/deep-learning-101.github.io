@@ -36,6 +36,12 @@
   .nav-pill.enterprise-btn { background: #111; color: #fff !important; border-color: #111; box-shadow: 0 4px 10px rgba(0,0,0,0.15); }
   .nav-pill.enterprise-btn:hover { background: #333; transform: translateY(-2px); }
 }
+.nav-pill.rss-pill { color: #e8590c; border-color: #fdd9c4; }
+.nav-pill.rss-pill:hover { background: #fff4ee; border-color: #e8590c; color: #e8590c; }
+@media (prefers-color-scheme: dark) {
+  .nav-pill.rss-pill { color: #ff7c3a; border-color: #4a2010; background: #1e0f07; }
+  .nav-pill.rss-pill:hover { background: #2a1508; border-color: #ff7c3a; }
+}
 </style> <div style="height: 20px;"></div>
 
 <div class="top-fixed-navbar">
@@ -46,6 +52,7 @@
 <a href="https://twman.org/#ai-consulting" target="_blank" class="nav-pill enterprise-btn" onclick="gtag('event', 'click_consulting', {'button_location': 'header_top_nav', 'page_location': window.location.pathname});"><span>💼</span> AI 技術討論交流 </a>
     <a href="https://huggingface.co/DeepLearning101" target="_blank" class="nav-pill"><span>🤗</span> HF Space</a>
     <a href="https://github.com/Deep-Learning-101" target="_blank" class="nav-pill"><span>⭐</span> GitHub 點星</a>
+    <a href="/feed.xml" class="nav-pill rss-pill" title="RSS 訂閱"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:-2px;margin-right:4px"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>RSS</a>
   </div>
 </div>
 
@@ -55,8 +62,8 @@
   </h1>
 
   <div class="hero-image-cluster">
-    <a href="https://huggingface.co/DeepLearning101" target="_blank" title="Deep Learning 101"><img src="/images/DeepLearning101-LOGO.jpg" alt="Logo" style="background: white;"></a>
-    <a href="https://www.twman.org/?utm_source=web&utm_medium=online" target="_blank" class="flex-shrink-0"><img src="/images/TonTon_QQ-202602_QRCODE.png" class="w-65 h-72 object-cover object-center rounded-lg shadow-lg" alt="TonTon H.-D. Huang Ph.D. - AI & Cybersecurity Expert"></a>
+    <a href="https://huggingface.co/DeepLearning101" target="_blank" title="Deep Learning 101"><img src="../images/DeepLearning101-LOGO.jpg" alt="Logo" style="background: white;"></a>
+    <a href="https://twman.org" target="_blank" title="TonTon Huang Ph.D."><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/TonTon_QQ-202602.png" alt="TonTon"></a>
   </div>
 
   <div class="hero-subtitle">
@@ -77,4 +84,4 @@
   🎙️ AI 技術討論交流
 </a>
 </div>
-</header>
+</header><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js/v3d52b47920f24c319d37e2661827c42b1787588026925" integrity="sha512-d9sL6GJLXn6fInD1+TVXhTcQOsmxeHfmHAvwGDIxp5TO+uo1fiWW7mHomMj4MLRlCsJDTqXzWLHJFFlPCEIj/A==" data-cf-beacon='{"version":"2024.11.0","token":"fc0f4e2f76d3450bbcf5ca8c7c562e9b","r":1}' crossorigin="anonymous"></script>
