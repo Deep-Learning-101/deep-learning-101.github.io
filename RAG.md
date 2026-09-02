@@ -5,6 +5,7 @@ description: RAG 系統幻覺太多怎麼解？完整實作 Chunking、Hybrid Se
 permalink: /RAG
 lang: zh-Hant
 schema_type: article
+tags: ["RAG", "LLM", "Embedding", "實戰指南"]
 ---
 
 {% include header.html %}

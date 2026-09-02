@@ -14,6 +14,7 @@ keywords:
   - KV Cache
   - Chinchilla Scaling Law
 last_modified_at: "2026-03-29"
+tags: ["GPU 硬體", "LLM", "推論框架"]
 ---
 
 {% include header.html %}

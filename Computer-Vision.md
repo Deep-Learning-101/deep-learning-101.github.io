@@ -6,6 +6,7 @@ permalink: /Computer-Vision
 lang: zh-Hant
 schema_type: service
 service_type: AI Consulting
+tags: ["電腦視覺", "YOLO", "深度學習"]
 ---
 
 {% include header.html %}

@@ -27,7 +27,7 @@ jobs:
           if [ -f Gemfile ]; then
             bundle exec jekyll build
           else
-            gem install jekyll jekyll-sitemap jekyll-seo-tag
+            gem install jekyll jekyll-sitemap jekyll-seo-tag jekyll-feed
             jekyll build
           fi
 

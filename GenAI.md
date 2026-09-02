@@ -5,6 +5,7 @@ description: 淺顯易懂地介紹生成式人工智慧（GenAI）的核心技�
 permalink: /GenAI
 lang: zh-Hant
 schema_type: article
+tags: ["GenAI", "LLM", "RAG", "入門教學"]
 ---
 
 {% include header.html %}
