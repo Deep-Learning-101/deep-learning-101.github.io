@@ -5,6 +5,7 @@ description: "打破盲目跟風與算力迷思！專為企業決策者打造的
 permalink: /Blog/AIBeginner
 lang: zh-Hant
 keywords: ["企業AI導入", "AI策略", "GenAI落地", "AI致命錯誤", "企業數位轉型", "AI ROI評估"]
+tags: ["GenAI", "企業應用", "AI Agent", "入門教學"]
 ---
 
 {% include header.html %}

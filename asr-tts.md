@@ -5,6 +5,7 @@ description: 深入探討自動語音辨識 (ASR) 與文字轉語音 (TTS) 開�
 permalink: /asr-tts
 lang: zh-Hant
 schema_type: article
+tags: ["語音處理", "ASR", "TTS", "Whisper"]
 ---
 
 {% include header.html %}

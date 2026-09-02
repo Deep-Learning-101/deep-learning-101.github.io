@@ -5,6 +5,7 @@ description: "最完整的中文 Claude Code 教學。涵蓋 CLAUDE.md 寫法、
 permalink: /Blog/ClaudeCode
 lang: zh-Hant
 keywords: ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic", "OPUS / SONNET / HAIKU"]
+tags: ["Claude Code", "MCP", "AI Agent", "開發工具"]
 ---
 
 

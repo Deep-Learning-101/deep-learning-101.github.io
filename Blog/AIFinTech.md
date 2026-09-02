@@ -5,6 +5,7 @@ description: "探討生成式 AI (GenAI) 在金融科技 (FinTech) 的應用場�
 permalink: /Blog/AIFinTech
 lang: zh-Hant
 keywords: ["FinTech", "GenAI", "金融科技", "風險管理", "演算法交易"]
+tags: ["GenAI", "企業應用", "LLM", "AI 治理"]
 ---
 
 

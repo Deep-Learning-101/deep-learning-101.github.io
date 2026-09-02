@@ -5,6 +5,7 @@ description: "探討 2026 年春節期間 AI 從「對話生成」跨入「代�
 permalink: /Agent/Gemini-3-1_WebMCP_Deep-Think
 lang: zh-Hant
 keywords: ["Gemini 3.1", "WebMCP", "Deep Think", "Agentic AI", "代理式執行", "AI 治理", "金管會 AI 指引"]
+tags: ["AI Agent", "Gemini", "MCP", "企業應用"]
 ---
 <script type="application/ld+json">
 {

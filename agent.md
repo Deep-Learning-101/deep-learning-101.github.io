@@ -5,6 +5,7 @@ description: "台灣最完整的 AI Agent 實戰解析。深度比較 MCP、Lang
 permalink: /agent
 lang: zh-Hant
 keywords: ["AI Agent", "Agentic AI", "代理式人工智慧", "AutoGen", "MCP", "LangGraph", "AI資安"]
+tags: ["AI Agent", "MCP", "LangGraph", "AutoGen"]
 ---
 
 

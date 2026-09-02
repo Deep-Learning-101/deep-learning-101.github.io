@@ -5,6 +5,7 @@ description: "企業如何在不洩漏機密的前提下進行 AI 標竿分析�
 permalink: /Blog/AI-Govs
 lang: zh-Hant
 keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分析", "ISO 42001", "EU AI Act", "主權AI", "企業風險管理"]
+tags: ["AI 治理", "AI 安全", "企業應用", "LLM"]
 ---
 
 

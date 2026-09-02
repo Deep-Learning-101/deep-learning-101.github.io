@@ -5,6 +5,7 @@ description: 最新台灣在地化大型語言模型完整評測。TMLU、TMMLU+
 permalink: /Blog/TW-LLM-Benchmark
 lang: zh-Hant
 keywords: ["LLM Benchmark", "臺灣大模型", "Llama-3-Taiwan", "TAIDE", "模型評測"]
+tags: ["LLM", "繁體中文", "評測", "Llama"]
 ---
 
 {% include header.html %}

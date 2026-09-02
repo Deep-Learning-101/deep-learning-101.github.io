@@ -5,6 +5,7 @@ description: 深入探討 AI 圖像與影片生成核心技術「擴散模型 (D
 permalink: /diffusion
 lang: zh-Hant
 schema_type: article
+tags: ["Diffusion", "GenAI", "ComfyUI", "AI 圖像生成"]
 ---
 
 {% include header.html %}

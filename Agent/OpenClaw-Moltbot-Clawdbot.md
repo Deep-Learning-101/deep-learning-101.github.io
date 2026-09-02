@@ -5,6 +5,7 @@ description: "想要專屬的開源 AI 智能體？完整教學帶你在本地�
 permalink: /Agent/OpenClaw-Moltbot-Clawdbot
 lang: zh-Hant
 keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI Agent", "本地部署", "AI 助手", "自動化"]
+tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南"]
 ---
 
 <script type="application/ld+json">

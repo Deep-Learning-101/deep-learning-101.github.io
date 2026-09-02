@@ -5,6 +5,7 @@ description: "在全球 AI 基礎模型（Foundation Models）的軍備競賽中
 permalink: /Blog/inside-chinas-ai-labs
 lang: zh-Hant
 keywords: ["AI", "中國 AI", "技術發展", "戰略定位"]
+tags: ["LLM", "AI 產業", "產業趨勢"]
 ---
 
 

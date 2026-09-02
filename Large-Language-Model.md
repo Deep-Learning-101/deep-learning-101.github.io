@@ -5,6 +5,7 @@ description: LLM 落地不知從何開始？本指南每週更新；RAG、Agent�
 permalink: /Large-Language-Model
 lang: zh-Hant
 schema_type: article
+tags: ["LLM", "AI Agent", "RAG", "Fine-tuning"]
 ---
 
 {% include header.html %}

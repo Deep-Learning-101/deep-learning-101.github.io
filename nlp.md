@@ -5,6 +5,7 @@ description: 分享在中文自然語言處理（NLP）專案中遇到的常見�
 permalink: /nlp
 lang: zh-Hant
 schema_type: article
+tags: ["NLP", "深度學習", "Fine-tuning"]
 ---
 
 {% include header.html %}

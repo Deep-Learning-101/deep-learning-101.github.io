@@ -6,6 +6,7 @@ permalink: /Natural-Language-Processing
 lang: zh-Hant
 schema_type: service
 service_type: AI Consulting
+tags: ["NLP", "深度學習", "Transformers"]
 ---
 
 {% include header.html %}

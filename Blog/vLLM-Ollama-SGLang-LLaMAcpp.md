@@ -5,6 +5,7 @@ description: "到底該選哪個 LLM 部署工具？深度評測 4 大主流開�
 permalink: /Blog/vLLM-Ollama-SGLang-LLaMAcpp
 lang: zh-Hant
 keywords: ["vLLM", "Ollama", "SGLang", "LLaMA.cpp", "LLM 本地部署", "大語言模型", "GPU 推論"]
+tags: ["推論框架", "vLLM", "LLM 部署", "實戰指南"]
 ---
 
 
