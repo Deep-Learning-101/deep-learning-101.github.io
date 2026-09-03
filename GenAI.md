@@ -5,7 +5,7 @@ description: 淺顯易懂地介紹生成式人工智慧（GenAI）的核心技�
 permalink: /GenAI
 lang: zh-Hant
 schema_type: article
-tags: ["GenAI", "LLM", "RAG", "入門教學"]
+tags: ["GenAI", "LLM", "RAG", "入門教學", "GPU", "Token", "雲端或地端部署"]
 ---
 
 {% include header.html %}
@@ -66,6 +66,22 @@ RAG (Retrieval-Augmented Generation) 是一種將「資訊檢索」與「文本�
 
 ### 8. 多模態（Multimodal）
 打破單一文字的限制，讓 AI 系統能同時處理、理解並生成「文本、圖像、音訊、影片」等多種資料類型，具備跨感官的綜合感知能力。
+
+### 9. 落地算力模式：Token API vs. GPU 自建
+當我們要把 GenAI 應用到實際業務時，通常會面臨「到底該買 Token，還是自己租/買 GPU」的抉擇：
+
+* **託管 Token API（按量計費）**：
+  * **代表平台**：Google Cloud (Vertex AI)、AWS Bedrock、OpenAI API。
+  * **計費邏輯**：按百萬 Input/Output Token 計費，原廠負責負載平衡與硬體維護。
+  * **適用場景**：PoC 概念驗證、突發流量或每天用量不穩定的應用（用多少付多少，免機器空轉）。
+  * **潛在疑慮**：當日常吞吐量暴增或使用推理模型（Reasoning Models）產生大量隱藏 Token 時，帳單容易失控；且涉及高度敏感資料時可能受限於法規無法出境。
+
+* **自建模型推論（GPU 時鐘計費）**：
+  * **代表架構**：使用 vLLM、Ollama 或 SGLang 部署開源模型（如 Llama 3、DeepSeek）。
+  * **計費邏輯**：按每張 GPU 的租賃或採購時鐘計費（無論有沒有流量，只要開機就在算錢）。
+  * **適用場景**：流量固定且高頻的 24/7 服務、高度機敏資料（如金融、醫療需要地端封閉網路）、或需要自訂特定開源模型。
+
+
 
 ---
 

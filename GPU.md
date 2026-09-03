@@ -14,7 +14,7 @@ keywords:
   - KV Cache
   - Chinchilla Scaling Law
 last_modified_at: "2026-03-29"
-tags: ["GPU 硬體", "LLM", "推論框架"]
+tags: ["GPU 硬體", "LLM", "推論框架", "GPU", "Token", "雲端或地端部署"]
 ---
 
 {% include header.html %}
@@ -35,6 +35,29 @@ tags: ["GPU 硬體", "LLM", "推論框架"]
 
 **作者**：[TonTon Huang Ph.D.](https://twman.org/)  
 **原文網址**：[https://blog.twman.org/2023/04/GPT.html](https://blog.twman.org/2023/04/GPT.html)
+
+---
+
+### 0.1 平台計費與定位分析
+
+| 平台 | 核心定位 | 計費模式特點 | 適合場景 |
+| --- | --- | --- | --- |
+| **NVIDIA Build**<br><br>[build.nvidia.com](build.nvidia.com) | 原廠 NIM 推論展示與 API 體驗 | **試用免費額度，商用轉售權**<br><br>提供註冊點數供開發者免費測試 API；商用落地則需購買 NVIDIA AI Enterprise 授權（約 $4,500/GPU/年）或部署於支援 NIM 的雲端。 | 快速原型驗證、評估開源模型微調效果、追求極致 TensorRT-LLM 效能。 |
+| **AMD Token Factory**<br><br>[developer.amd.com.cn](developer.amd.com.cn) | AMD 官方推廣 Instinct/Radeon 算力的模型市集 | **Token 計費（含每日免費額度）**<br><br>主打相容 OpenAI 格式的 API 呼叫，通常提供註冊/每日免費額度（如每日發放測試金額），推廣其 ROCm 堆疊。 | 評估 AMD GPU 推論性價比、希望規避 NVIDIA 生態鎖定、呼叫開源模型（如 DeepSeek、Llama）。 |
+| **GMI Cloud**<br><br>[gmicloud.ai](gmicloud.ai) | 專注 AI 的新興 GPU 裸機/租賃雲（Neo-Cloud） | **純硬體時租（按 GPU/hr）**<br><br>以小時計費（如 H100 約 $2.00 起/小時、GB200 約 $8.00 起/小時），亦支援長約保留執行個體與部分 Serverless API。 | 大規模模型訓練、全參數微調、長時間固定負載的吞吐量推論。 |
+| **台智雲 TWSC**<br><br>[docs.twcloud.ai](docs.twcloud.ai) | 台灣本土主權 AI 雲（台灣杉二號/AIHPC 架構） | **台幣時租（NTD/hr）、容器化算力**<br><br>按秒計費並轉換為小時計價（如各級容器 `c.super` 等），支援開發型容器、HPC 批次任務與專用模型推論。 | 台灣在地資料不出境（法規合規、金融/醫療）、需統編發票、政府或大專院校科研計畫。 |
+
+### 0.2. 與 GCP (Vertex AI) 及 AWS Bedrock 的核心差異
+
+將這類平台與三大公有雲（Hyperscalers）對比，主要差別在於**計費維度、架構層級、彈性與營運成本**：
+
+| 評估維度 | GCP / AWS Bedrock (Hyperscalers) | 專精 GPU 雲 (如 GMI Cloud、台智雲) | 原廠展示層 (如 NVIDIA Build、AMD Token) |
+| --- | --- | --- | --- |
+| **計費核心** | **Token 用量或完全託管實例**<br><br>主要是 Serverless 按 Input/Output Token 計費，或按 Managed Node 計價。 | **純 GPU 時鐘（GPU-hours）**<br><br>不管 GPU 是否跑滿，只要開機每秒都在跳錶。 | **點數試用 / Token 呼叫**<br><br>以體驗為導向，多帶有免費用量與開發限制。 |
+| **算力單價** | **極高（貴 30%～80%）**<br><br>因為內含了跨區可用性、企業級 IAM、VPC、合規及高利潤。 | **極低 / 具性價比**<br><br>去除了多餘的中間層，H100/H200 的每小時裸租成本顯著低於三大雲。 | 不適合作為底層基礎設施計價標準。 |
+| **配額取得 (Quota)** | **取得困難**<br><br>熱門 GPU（如 H100、H200）在公有雲往往需要極高的企業承諾（Commitment）或簽年約才能分配到配額。 | **專為 GPU 設計**<br><br>專門儲備大量高階加速卡，通常更容易直接租到整櫃或整機算力。 | 僅提供 API 併發（Rate Limit），不提供裸機存取。 |
+| **維運難度 (Ops)** | **零維運（Fully Managed）**<br><br>自動擴縮容（Autoscaling）、內建安全性防護（Guardrails）、整合企業內部 S3/BigQuery。 | **需自行維運（IaaS/CaaS）**<br><br>需自行配置 CUDA、驅動、vLLM/TGI 容器、負載平衡及容錯機制。 | **零維運但無私網隔離**<br><br>適合快速呼叫，但資料需走公開 API 傳輸。 |
+| **資料隱私與法規** | 全球合規（HIPAA、SOC2 等），但多數資料節點位於境外或跨國網絡。 | **在地優勢（以台智雲為例）**<br><br>伺服器位於台灣本土境內，滿足政府機關、國防或高度監管行業的資料不出境要求。 | 依各原廠規範，一般免費層 API 不適合傳輸機敏數據。 |
 
 ---
 
@@ -148,6 +171,28 @@ LoRA 凍結了預訓練模型權重，只訓練極小的 Rank 矩陣。
 > **⚠️ 注意 KV Cache (上下文)**：
 > 在 Gemini 3.0 時代，如果你要讀 100 頁 PDF 或一支 10 分鐘影片，**KV Cache 可能會瞬間吃掉 10GB 以上的 VRAM**。這就是為什麼現在顯存 **「容量 (Capacity)」** 比 **「速度 (Bandwidth)」** 更重要。
 
+### 💡 實戰選型：算力平台與雲端/地端該怎麼挑？
+
+當你算完 VRAM 發現需要 40GB 甚至 140GB 時，並不是每個人都得立刻掏錢買卡。目前算力生態已分化為四大路徑：
+
+1. **雲端巨頭託管 API (GCP Vertex AI / AWS Bedrock)**：
+   * **本質**：Serverless 託管，按 Token 計費。
+   * **優勢**：整合了 IAM、私網 VPC、監控與企業合規，不需要管理 CUDA 與驅動。
+   * **劣勢**：單價最貴，且常受限於 TPM/RPM 並發限制。
+
+2. **新興專精 GPU 雲 (Neo-Clouds，如 GMI Cloud、RunPod)**：
+   * **本質**：純硬體時租（按 GPU/hr 計費）。
+   * **優勢**：去除了雲端巨頭的中間層，H100/H200 或 GB200 的每小時裸租價格顯著便宜 30%~50%，且更容易取得高階卡配額。
+   * **劣勢**：需自行設定 Docker、驅動與推論引擎（如 vLLM），且缺乏巨頭級別的周邊 PaaS 服務。
+
+3. **主權與本土雲端 (如台智雲 TWSC)**：
+   * **本質**：本地 HPC 容器與 GPU 時租。
+   * **優勢**：機房位於台灣境內，完全符合公部門、金融與國防「資料不出境」的嚴格合規要求，且支援在地發票與報帳。
+
+4. **晶片原廠推論展示 (NVIDIA Build / AMD Token Factory)**：
+   * **本質**：原廠提供給開發者驗證開源模型效能的沙盒或 Token 平台。
+   * **用途**：適合在採購或租賃硬體前，先測試模型在特定晶片（如 Instinct MI300 或 H100 NIM）上的加速推論表現。
+
 ---
 
 <h2 id="data">5. 數據需求 (Data Scaling Laws)</h2>
@@ -195,6 +240,20 @@ LoRA 凍結了預訓練模型權重，只訓練極小的 Rank 矩陣。
 5.  **Mac 用戶 (推論專用)**：
     * **M2/M3/M4 Max/Ultra (64GB ~ 192GB)**
     * **統一記憶體 (Unified Memory)** 是 Mac 的殺手鐧。雖然訓練慢，但能跑的模型大小是同價位 PC 跑不動的 (例如 120B 模型)。
+
+### 🎯 總結：地端買卡 vs. 雲端租賃的評估決策
+
+* **什麼時候選 Token API？**
+  * 業務處於測試期，日均呼叫量小於幾十萬 Token。
+  * 不想背負維運推論伺服器（Ops）的人力成本。
+
+* **什麼時候選 雲端 GPU (時租/月租)？**
+  * 已經使用開源模型（如微調過的 Llama 或 Qwen），且有穩定的批次處理或日常流量。
+  * 需要 80GB 以上高階卡（如 H100），但不想一次投入數百萬 CapEx 採購實體機器。
+
+* **什麼時候買 地端實體卡？**
+  * **資料極端敏感**：嚴格禁止資料離開內網（Air-Gapped 環境）。
+  * **算力利用率長期高於 60%**：當你每天 24 小時都在跑微調或大併發推論，折舊攤提下來，自己買卡會比長期付雲端帳單便宜許多。
 
 ---
 
