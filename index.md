@@ -16,14 +16,14 @@ service_type: AI Consulting
 
 歡迎提交你想在 Deep Learning 101 社群交流分享的議題，或訂閱候選議題，排程確定後會自動收到通知。
 
-<iframe src="https://ai-1999-cyber.vercel.app/embed" width="100%" height="640" frameborder="0" style="border-radius:12px;border:1px solid #e5e7eb;"></iframe>
+<iframe src="https://1999.twman.org/embed" width="100%" height="640" frameborder="0" style="border-radius:12px;border:1px solid #e5e7eb;"></iframe>
 
-[➕ 提交新議題](https://ai-1999-cyber.vercel.app/submit) &nbsp;&nbsp; [📋 查看完整平台](https://ai-1999-cyber.vercel.app)
+[➕ 提交新議題](https://1999.twman.org/submit) &nbsp;&nbsp; [📋 查看完整平台](https://1999.twman.org)
 
 <script>
 // 接收 embed iframe 的互動事件，轉送到本頁 GA4
 window.addEventListener('message', function(e) {
-  if (e.origin !== 'https://ai-1999-cyber.vercel.app') return;
+  if (e.origin !== 'https://1999.twman.org') return;
   var d = e.data;
   if (!d || d.type !== 'dl101_ga') return;
   if (typeof gtag !== 'function') return;
