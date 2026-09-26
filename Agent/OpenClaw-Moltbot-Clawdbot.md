@@ -1,11 +1,11 @@
 ---
 layout: default
-title: "2026 本地端 AI Agent 實戰教學：OpenClaw (Clawdbot) 零成本自動化部署"
-description: "想要專屬的開源 AI 智能體？完整教學帶你在本地端零成本部署 OpenClaw (Moltbot/Clawdbot)，直接串接 Line、Discord、Slack 等通訊軟體，打造高隱私的個人自動化助理！"
+title: "2026 本地端 AI Agent 實戰教學：OpenClaw (Clawdbot) 零成本自動化部署及衍生專案比較"
+description: "想要專屬的開源 AI Agents？完整教學帶你在本地端零成本部署 OpenClaw (Moltbot/Clawdbot)，直接串接 Line、Discord、Slack 等通訊軟體，打造高隱私的個人自動化助理！ironclaw、nemoclaw、trustclaw、nanoclaw、picoclaw、nullclaw 等衍生專案比較表也在文末提供。"
 permalink: /Agent/OpenClaw-Moltbot-Clawdbot
 lang: zh-Hant
-keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI Agent", "本地部署", "AI 助手", "自動化"]
-tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南"]
+keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI Agent", "本地部署", "AI 助手", "自動化", "OpenClaw衍生專案比較"]
+tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南", "衍生專案比較"]
 ---
 
 <script type="application/ld+json">
@@ -16,8 +16,8 @@ tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南"]
     "@type": "WebPage",
     "@id": "https://deep-learning-101.github.io/Agent/OpenClaw-Moltbot-Clawdbot"
   },
-  "headline": "2026 本地端 AI Agent 實戰教學：OpenClaw (Clawdbot) 零成本自動化部署",
-  "description": "完整實戰教學，帶您在本地機器上安裝並設定 OpenClaw (前身為 MoltBot/Clawdbot) AI 代理平台。免除隱私疑慮，安全串接各類通訊軟體，打造專屬的 AI 自動化助理。",
+  "headline": "2026 本地端 AI Agent 實戰教學：OpenClaw (Clawdbot) 零成本自動化部署及衍生專案比較",
+  "description": "想要專屬的開源 AI Agents？完整教學帶你在本地端零成本部署 OpenClaw (Moltbot/Clawdbot)，直接串接 Line、Discord、Slack 等通訊軟體，打造高隱私的個人自動化助理！ironclaw、nemoclaw、trustclaw、nanoclaw、picoclaw、nullclaw 等衍生專案比較表也在文末提供。",
   "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
     "@type": "Organization",
@@ -25,7 +25,7 @@ tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南"]
     "url": "https://deep-learning-101.github.io/"
   },
   "datePublished": "2026-03-19",
-  "dateModified": "2026-03-19"
+  "dateModified": "2026-09-27"
 }
 </script>
 
