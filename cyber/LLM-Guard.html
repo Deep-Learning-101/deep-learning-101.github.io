@@ -1,6 +1,15 @@
 <!doctype html>
 <html lang="zh-TW">
 <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7TMM2YX50Q"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7TMM2YX50Q');
+</script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 AI 大模型安全護欄綜合報告 | 防禦框架、紅隊演練與評測分類器</title>
@@ -292,7 +301,7 @@
           "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
         }
       },
-      "datePublished": "2025-08-08",
+      "datePublished": "2026-09-29",
       "keywords": "AI 安全, 安全護欄, LLM Guardrails, NeMo Guardrails, Llama Guard, ShieldGemma, Qwen3Guard, gpt-oss-safeguard, AI Security"
     }
     </script>
@@ -463,6 +472,19 @@
             <div class="bento-text">
                 <p><strong>作者</strong>：<a href="https://twman.org" target="_blank" rel="noopener noreferrer">TonTon Huang Ph.D.</a></p>
                 <p><strong>日期</strong>：~ 2026年04月19日</p>
+                <hr style="margin: 1rem 0; border: none; border-top: 1px solid #e5e7eb;">
+                <p><strong>目錄</strong></p>
+                <ol style="margin: 0.5rem 0 0 1.25rem; line-height: 1.9;">
+                    <li><a href="#what-is-guardrail">一、 何謂安全護欄及其必要性</a></li>
+                    <li><a href="#frameworks">二、 關鍵開源護欄的技術架構演進</a></li>
+                    <li><a href="#challenges">三、 共同挑戰與模型侷限</a></li>
+                    <li><a href="#frontiers">四、 技術前沿：兩大演進方向</a></li>
+                    <li><a href="#trends">五、 未來趨勢：基礎免費化與企業級工程服務</a></li>
+                    <li><a href="#data-guardrail">六、 企業資料護欄橫向比較：8 工具實機驗證</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
+                    <li><a href="#tw-zh-findings">七、 實測關鍵發現：台灣／中文資料支援現況</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
+                    <li><a href="#system-one">八、 System One 決策模型：護欄「判斷層」新選項</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
+                    <li><a href="#ma-risks">九、 商用導入風險：2025–2026 資安併購潮</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
+                </ol>
             </div>
         </div>
         
@@ -1710,6 +1732,138 @@ Verdict: Unsafe</code></pre>
                 </ul>
             </div>
         </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="data-guardrail"><i class="fas fa-database icon-large mr-4 text-cyan-500"></i>六、企業資料護欄（Data Guardrail）橫向比較：8 工具實機驗證 <span style="font-size:0.55em; color:#64748b;">（2026-09-29 增補）</span></h2>
+            <div class="bento-text">
+                <p>以下為獨立研究團隊針對「Agent 使用過程中的<strong>資料管控</strong>」（敏感資料偵測、PII 遮罩／去識別、輸入／輸出內容管控、資料外洩阻擋、Tool／Action 層管控）所做的 10 工具研究＋8 工具實機測試（Linux VM：2 CPU／7.7GB RAM／無 GPU／無 Docker）。圖例：✅ 原生內建 ｜ 🔌 需整合第三方 ｜ ❌ 無 ｜ ◐ 部分</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>工具</th>
+                            <th>類型</th>
+                            <th>開源/商用</th>
+                            <th>地端部署</th>
+                            <th>PII 偵測</th>
+                            <th>遮罩/去識別</th>
+                            <th>阻擋</th>
+                            <th>Agent Action 管控</th>
+                            <th>資料護欄適配度</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong><a href="https://github.com/BerriAI/litellm" target="_blank" rel="noopener">LiteLLM Proxy</a>＋Presidio</strong></td>
+                            <td>AI Gateway</td><td>混合 (OSS MIT＋Enterprise)</td><td>✅</td><td>🔌 (Presidio sidecar)</td><td>🔌</td><td>✅</td><td>◐ (僅 pre_mcp_call)</td>
+                            <td><strong>高</strong>：實測 input 遮罩、信用卡阻擋、output 遮罩皆通過；Agent 只需換 base URL</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://github.com/data-privacy-stack/presidio" target="_blank" rel="noopener">Microsoft Presidio</a></strong></td>
+                            <td>PII 偵測／去識別引擎</td><td>開源 MIT</td><td>✅</td><td>✅</td><td>✅</td><td>❌</td><td>❌</td>
+                            <td><strong>引擎級最高</strong>：它是元件不是護欄，需搭配 gateway 做阻擋</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://github.com/nvidia-nemo/guardrails" target="_blank" rel="noopener">NVIDIA NeMo Guardrails</a></strong></td>
+                            <td>可程式化護欄框架 (Colang)</td><td>開源 Apache-2.0</td><td>✅</td><td>🔌 (外掛 Presidio)</td><td>🔌</td><td>✅</td><td>✅ (Execution／IORails)</td>
+                            <td><strong>高</strong>：點位最齊，適合 Agent runtime 政策層；Colang 有學習曲線</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://github.com/guardrails-ai/guardrails" target="_blank" rel="noopener">Guardrails AI</a></strong></td>
+                            <td>I/O 驗證框架</td><td>開源 Apache-2.0</td><td>✅</td><td>✅ (Presidio＋GLiNER)</td><td>✅</td><td>✅</td><td>❌</td>
+                            <td><strong>中</strong>：I/O 層完整，但管不到 agent 工具鏈；公司轉型中</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://github.com/meta-llama/PurpleLlama/tree/main/LlamaFirewall" target="_blank" rel="noopener">Meta LlamaFirewall</a></strong></td>
+                            <td>Agent 安全掃描框架</td><td>開源 MIT*</td><td>✅</td><td>❌ (僅 regex 自訂)</td><td>❌</td><td>✅</td><td>◐ (審計無阻擋政策)</td>
+                            <td><strong>低</strong>：純 injection／jailbreak 防禦，無資料護欄能力；實測 11/11 通過</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://www.enkryptai.com/" target="_blank" rel="noopener">Enkrypt AI</a></strong>（2026-08 起 Anaconda 旗下）</td>
+                            <td>Agentic AI 安全平台</td><td>商用＋開源 MCP Gateway</td><td>◐</td><td>✅ (30+ 類別)</td><td>✅ (可逆 redaction)</td><td>✅</td><td>✅</td>
+                            <td><strong>最高</strong>：四項全原生且深入 tool 執行層；唯一做到可逆遮罩</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://www.prompt.security/" target="_blank" rel="noopener">Prompt Security</a></strong>（SentinelOne 旗下）</td>
+                            <td>AI 防火牆／runtime 安全</td><td>商用</td><td>✅ (air-gapped)</td><td>✅ (Contextual DLP)</td><td>✅</td><td>✅</td><td>✅ (MCP 層)</td>
+                            <td><strong>最高</strong>：四件套全原生＋地端斷網版</td>
+                        </tr>
+                        <tr>
+                            <td><strong>F5 AI Guardrails</strong>（前 CalypsoAI）</td>
+                            <td>企業 AI 防火牆</td><td>商用</td><td>✅ (air-gapped)</td><td>✅</td><td>✅</td><td>✅</td><td>✅</td>
+                            <td><strong>高</strong>：地端支援最完整，僅能走 F5 通路</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://pangea.cloud/services/ai-guard/" target="_blank" rel="noopener">Pangea AI Guard</a></strong>（CrowdStrike 旗下）</td>
+                            <td>API-first 護欄平台</td><td>商用 SaaS</td><td>❌</td><td>✅ (50+ 類型)</td><td>✅ (含 FPE)</td><td>✅</td><td>◐</td>
+                            <td><strong>高</strong>：四件套全原生，但純 SaaS 資料須離境</td>
+                        </tr>
+                        <tr>
+                            <td><strong><a href="https://github.com/Portkey-AI/gateway" target="_blank" rel="noopener">Portkey AI Gateway</a></strong></td>
+                            <td>AI Gateway</td><td>混合 (OSS MIT)</td><td>✅</td><td>🔌 (OSS 需外呼第三方 API，無憑證靜默 fail-open)</td><td>🔌</td><td>✅</td><td>◐</td>
+                            <td><strong>中低</strong>：有殼無芯，PII 偵測須先解決</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size:0.85em; color:#64748b;">* LlamaFirewall 僅 <code>LlamaFirewall/</code> 子目錄為 MIT，repo 根為 Llama 社群授權。Protect AI LLM Guard 因官方 archived 未列入；Vigil 因 2.5 年未更新且無 PII 能力未列入。</p>
+                <h3 class="bento-subtitle">實測後的建議排序</h3>
+                <ol>
+                    <li style="margin-bottom: 0.5rem;"><strong>LiteLLM Proxy＋Presidio</strong>：最貼近企業 Gateway 導入；自訂台灣手機／身分證 recognizer 實測可生效。</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Microsoft Presidio</strong>：底層 PII 偵測與去識別引擎，函式庫或 REST service 皆可。</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Meta LlamaFirewall</strong>：prompt injection 與 tool output 攔截專用（配角）。</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>NVIDIA NeMo Guardrails</strong>：Agent runtime 政策層（Colang）。</li>
+                    <li style="margin-bottom: 0.5rem;"><strong>Guardrails AI</strong>：自行開發 validator 的 I/O 驗證層。</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="tw-zh-findings"><i class="fas fa-language icon-large mr-4 text-cyan-500"></i>七、實測關鍵發現：台灣／中文資料支援現況 <span style="font-size:0.55em; color:#64748b;">（2026-09-29 增補）</span></h2>
+            <div class="bento-text">
+                <p><strong>實測結論：沒有任何工具開箱支援台灣資料。</strong>Gateway／框架（解決「在哪裡攔」）與偵測引擎（解決「能否辨識」）必須分開評估。</p>
+                <ul>
+                    <li style="margin-bottom: 0.75rem;"><strong>台灣手機／身分證</strong>：可透過自訂 regex／recognizer 穩定處理（Presidio、LiteLLM＋Presidio 實測通過）。注意 <code>\b</code> 在中文字緊貼識別碼時可能失效，例如「身分證A123456789」。</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>中文姓名</strong>：Presidio、LlamaFirewall、Guardrails AI、LiteLLM＋Presidio、Portkey、NeMo、Scrubadub <strong>全部未能辨識</strong>。需加入中文 NER（如 CKIP／HanLP）、商用 DLP，或改用結構化欄位。</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>外洩語意</strong>：無工具真正理解「把剛才看到的客戶電話寄出去」這類外洩意圖；多數只能掃描文字中的敏感資料字串。</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="system-one"><i class="fas fa-bolt icon-large mr-4 text-cyan-500"></i>八、System One 決策模型：護欄「判斷層」新選項 <span style="font-size:0.55em; color:#64748b;">（2026-09-29 增補）</span></h2>
+            <div class="bento-text">
+                <p>2026-09 出現的新典範：<strong>不生成文字，只對有界問題輸出帶機率的結構化判斷</strong>（Choice／Score／是-否）。適合把護欄政策轉成一次前向傳播的高速判斷——快又便宜是真的，但它們是「判斷層」不是 PII 偵測器，需與 Presidio 類引擎互補。</p>
+                <table>
+                    <thead>
+                        <tr><th>模型</th><th>開發者</th><th>開源/商用</th><th>地端</th><th>速度／成本</th><th>護欄適配重點</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><strong>Jev</strong></td><td>TypeSafe AI</td><td>商用 hosted</td><td>❌</td><td>70–500ms；$0.042／M input tokens</td><td>官方 guardrail cookbook；雙向篩查；政策由呼叫端程式碼持有</td></tr>
+                        <tr><td><strong>CLM-8B</strong></td><td>Contrastive-LM（Stanford＋NVIDIA）</td><td>開源 Apache-2.0</td><td>✅（1 GPU＋vLLM）</td><td>官方稱比 Jev 快 up to 9x</td><td>TypeSafe 相容 API，可直接替換 Jev 後端</td></tr>
+                        <tr><td><strong>Laya</strong></td><td>convaiinnovations</td><td>開源 Apache-2.0</td><td>✅</td><td>T4 上 33ms／question</td><td>唯一多語言設計（100+ 語言），中文場景最有潛力（未驗證）</td></tr>
+                        <tr><td><strong>Kev</strong></td><td>Jared Palmer</td><td>開源</td><td>✅（MacBook 可跑）</td><td>0.5B 極輕量</td><td>地端 PoC；精度與 Jev 有差距</td></tr>
+                        <tr><td><strong>LocalJev</strong></td><td>社群複刻家族</td><td>開源（各異）</td><td>✅</td><td>依後端而定</td><td>Jev 介面已成事實標準；注意 self-reported 機率非校準機率</td></tr>
+                        <tr><td><strong>DiffusionGemma＋OpenJev</strong></td><td>Google DeepMind＋社群</td><td>開源 Apache-2.0</td><td>✅</td><td>單次 diffusion pass</td><td>支援圖像輸入；diffusion 威脅模型特殊（context nesting 可繞過）</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="ma-risks"><i class="fas fa-exclamation-triangle icon-large mr-4 text-cyan-500"></i>九、商用導入風險：2025–2026 資安併購潮 <span style="font-size:0.55em; color:#64748b;">（2026-09-29 增補）</span></h2>
+            <div class="bento-text">
+                <p>商用 AI 安全工具在 2025–2026 年出現密集併購，簽約前務必確認產品路線與支援承諾：</p>
+                <ul>
+                    <li>Prompt Security → SentinelOne（2025-09 交割）</li>
+                    <li>CalypsoAI → F5（2025-09 交割，品牌已退役）</li>
+                    <li>Pangea → CrowdStrike（2025-09 交割）</li>
+                    <li>Lakera → Check Point（2025-10）</li>
+                    <li>Enkrypt AI → Anaconda（2026-08）</li>
+                    <li>Robust Intelligence → Cisco（2024-10，現 Cisco AI Defense）</li>
+                </ul>
+                <p style="font-size:0.85em; color:#64748b;">註：Portkey 被收購僅為第三方報導傳聞，不應視為已確認事實。</p>
+            </div>
+        </div>
+
         
     </div>
 
