@@ -301,7 +301,8 @@
           "url": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg"
         }
       },
-      "datePublished": "2026-09-29",
+      "datePublished": "2025-08-08",
+      "dateModified": "2026-09-29",
       "keywords": "AI 安全, 安全護欄, LLM Guardrails, NeMo Guardrails, Llama Guard, ShieldGemma, Qwen3Guard, gpt-oss-safeguard, AI Security"
     }
     </script>
@@ -1604,6 +1605,10 @@ Verdict: Unsafe</code></pre>
                 <p><strong>核心優勢</strong>：<strong>全球首個全開源的 AI 安全護欄大模型王</strong>。性能全面超越 Qwen3Guard 與 LlamaGuard，支援 119 種語言。採統一大模型架構，同時具備「內容安全檢測」、「操控防禦 (注入/越獄)」與「數據洩露防護」三大核心能力，並支援可微分的連續敏感度閾值調節。</p>
                 <p><strong>解決痛點 / 推薦場景</strong>：完美解決了傳統規則過濾過於僵硬、無法適應跨文化安全標準的痛點。適合需要快速通過中國大模型備案、或需符合歐盟《EU AI Act》與《GDPR》等國際合規標準的企業級全球化應用。</p>
                 <p><strong>資源</strong>：<a href="https://github.com/openguardrails/openguardrails" target="_blank" rel="noopener noreferrer">🐙 GitHub</a> | <a href="https://huggingface.co/openguardrails" target="_blank" rel="noopener noreferrer">🤗 HuggingFace</a> | <a href="https://arxiv.org/abs/2510.19169" target="_blank" rel="noopener noreferrer">📄 論文</a></p>
+            
+                <div style="margin-top: 1rem; padding: 0.9rem 1.1rem; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 0.375rem;">
+                    <p style="margin: 0;"><strong>📝 現況更新（2026-09-29 查證）</strong>：上述為 2025-10 論文發表時的產品架構。GitHub 主 repo 現已轉為 vendor-neutral 的 <strong>protocol／規格</strong>（官方明言不做偵測能力），附 Higress、mitmproxy 等閘道整合外掛；論文所述的統一安全模型（14B→GPTQ 3.3B）本體在 HuggingFace（openguardrails）與官網託管平台。模型運行約需 6GB 記憶體＋GPU，一般 CPU 環境無法部署。兩者不可混為一談。</p>
+                </div>
             </div>
         </div>
 
