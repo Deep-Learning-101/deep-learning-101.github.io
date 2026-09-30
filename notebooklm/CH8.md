@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "深度學習模型訓練中的優化"
+description: "這份文件彙整了關於深度神經網路模型優化的各類資料。本章探討了深度學習中至關重要的優化問題，特別是神經網路的訓練。與傳統的純優化不同，機器學習中的優化通常是間接的，目標是提高模型在未見數據上的性能（泛化能力），而不是簡單地最小化訓練集上的損失。"
 ---
 
 {% include header.html %}

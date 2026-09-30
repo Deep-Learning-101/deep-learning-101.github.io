@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "深度學習正則化技術匯整"
+description: "定義與目標： 正則化是指對學習演算法的一系列修改，其主要目標是減少模型的泛化誤差（即在未見過的新資料上的誤差），而不是僅僅降低訓練誤差 [1-3]。它通常透過向模型引入額外的約束或懲罰，以防止模型過度擬合訓練資料 [1-3]。"
 ---
 
 {% include header.html %}

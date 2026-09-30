@@ -1,6 +1,7 @@
 ---
 layout: default
-title: Deep Learning 101, Taiwan’s pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101
+title: "卷積神經網路"
+description: "重點摘要: 卷積神經網路 (Convolutional Neural Network, CNN)，有時也叫做卷積網路 (convolutional network)，是一類專門用來處理具有類似網格結構的數據的神經網路。"
 ---
 
 {% include header.html %}
