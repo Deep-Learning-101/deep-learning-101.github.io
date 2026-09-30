@@ -1,6 +1,6 @@
 ---
 layout: default
-title: RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整實作教學
+title: 2026 RAG 實戰對決：Chunking × 混合檢索 × Reranker，三招把幻覺壓到 5% 以下
 description: RAG 幻覺太多怎麼解？實測 Qwen3-Embedding-8B、BGE-M3、Gemini Embedding 2 選型差異，Chunking＋混合檢索＋Reranker 三層架構，幻覺率壓到 5% 以下。
 permalink: /RAG
 lang: zh-Hant
@@ -16,7 +16,7 @@ tags: ["RAG", "LLM", "Embedding", "實戰指南"]
 
 ---
 
-# RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整實作教學 (涵蓋環境部署、數據處理、混合檢索與 Rerank)
+# 2026 RAG 實戰對決：Chunking × 混合檢索 × Reranker，三招把幻覺壓到 5% 以下 (涵蓋環境部署、數據處理、混合檢索與 Rerank)
 
 > 📌 **技術速覽**
 **如何解決 RAG 處理跨頁複雜表格與圖表時的語意截斷問題？**
