@@ -1,7 +1,7 @@
 ---
 layout: default
 title: RAG 實戰指南 2026：Chunking、多模態 Embedding、混合檢索與 Rerank 完整實作教學
-description: RAG 系統幻覺太多怎麼解？完整實作 Chunking、Hybrid Search 與 Reranker 三層架構，實測 Qwen3-Embedding-8B vs BGE-M3 vs Gemini Embedding 2（多模態）vs Jina V5 Omni 選型差異，附 Visual 無向量方案與 RAGAS 四大評估指標（Faithfulness、Context Recall）A/B 測試實戰——幻覺率可壓到 5% 以下。
+description: RAG 幻覺太多怎麼解？實測 Qwen3-Embedding-8B、BGE-M3、Gemini Embedding 2 選型差異，Chunking＋混合檢索＋Reranker 三層架構，幻覺率壓到 5% 以下。
 permalink: /RAG
 lang: zh-Hant
 schema_type: article

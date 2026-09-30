@@ -4,7 +4,7 @@ title: Deep Learning 101 | 台灣首個深度學習社群 | LLM, CV, NLP & Speec
 description: 台灣最早的深度學習社群 (Since 2016)。提供最新 AI 技術資源，包含 LLM 大語言模型、電腦視覺 (CV)、自然語言處理 (NLP) 與語音處理 (Speech) 的論文筆記與實作教學。
 permalink: /
 lang: zh-Hant
-schema_type: service
+schema_type: Organization+Research+WebSite+service
 service_type: AI Consulting
 ---
 
