@@ -2,7 +2,6 @@
 <html lang="{{ page.lang | default: site.lang }}">
   <head>
   <meta charset="UTF-8">
-  <title>{{ page.title }}</title>
 
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4046615879480582"
      crossorigin="anonymous"></script>
@@ -96,7 +95,6 @@ audio {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- seo -%}
-  <link rel="canonical" href="{{ page.url | absolute_url }}">
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | default: 'Deep Learning 101' }} RSS Feed" href="{{ '/feed.xml' | absolute_url }}">
   {%- if page.hreflang -%}
     <link rel="alternate" hreflang="{{ page.hreflang }}" href="{{ page.url | absolute_url }}">
