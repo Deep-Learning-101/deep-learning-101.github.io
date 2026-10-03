@@ -24,6 +24,7 @@ tags: ["Dream-RSI", "RSI", "Jev", "AI Agent", "論文解析"]
 
 **匯整**：[TonTon Huang Ph.D.](https://www.twman.org/)  
 **日期**：2026年10月03日更新
+**本文藉由 [Muse](https://blog.twman.org/2026/09/muse.html)，整理了 Dream-RSI 論文的技術脈絡與工程實作，並提供了開源系譜與搜尋蒸餾飛輪的完整解析。**
 
 > 📌 **技術速覽**
 **AI 會自己變強嗎？2026 年 9 月，Google、Google DeepMind、馬里蘭大學與維吉尼亞大學合作發表的 Dream-RSI 論文，給出了一個低成本答案：不直接在昂貴的真實環境裡試錯，而是把歷史探索軌跡封存成可離線回放的「夢境」，在夢裡平行演化出更強的探索策略。**  
@@ -264,16 +265,12 @@ curl http://127.0.0.1:8017/v1/systemone -H 'Content-Type: application/json' -d '
 
 注意回傳裡的 `"output_tokens": 0`：模型一個字都沒「寫」，直接給出每個選項的機率。這就是判別式決策。**「模型直接輸出受限類別上的機率分佈（或確定性 Top-1 選項），無需經過 Token 解碼」**
 
-**玩法三：互動 POC 直接嵌在頁面裡**
+**玩法三：互動 POC**
 
-把下面這段貼到文章裡、把 `YOUR-SPACE` 換成你的 Space 名稱，讀者不用離開頁面就能玩：
+<iframe src="https://deeplearning101-rsi.hf.space" width="100%" height="640" frameborder="0" style="border-radius:12px;border:1px solid #e5e7eb;"></iframe>
 
-```html
-<iframe src="https://YOUR-SPACE.hf.space" width="100%" height="900"
-        frameborder="0" title="Jev-style 判別式決策互動 POC"></iframe>
-```
 
-POC 本體是本文附帶的 Gradio App（`poc/` 目錄：中文介面、是非／多選題、範例一鍵填入、機率長條圖＋延遲顯示）。部署到 Hugging Face Spaces 的 CPU Basic 免費方案即可（全程免費，首次啟動自動下載模型並快取，之後秒開），完整步驟見 `poc/README.md`。
+[⚡ Jev-style 判別式決策 POC](https://huggingface.co/spaces/DeepLearning101/RSI)
 
 ---
 
