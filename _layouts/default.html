@@ -94,7 +94,9 @@ audio {
 
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {%- seo -%}
+  {%- seo title=false -%}
+  <title>{% if page.title_seo %}{{ page.title_seo | escape }}{% else %}{{ page.title | escape }}{% endif %}</title>
+
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | default: 'Deep Learning 101' }} RSS Feed" href="{{ '/feed.xml' | absolute_url }}">
   {%- if page.hreflang -%}
     <link rel="alternate" hreflang="{{ page.hreflang }}" href="{{ page.url | absolute_url }}">

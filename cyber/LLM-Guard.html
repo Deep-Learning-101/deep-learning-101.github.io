@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="zh-TW">
 <head>
+    <link rel="canonical" href="https://www.twman.org/Cyber/LLM-Guard">
     <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-7TMM2YX50Q"></script>
 <script>
@@ -13,6 +14,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2026 AI 大模型安全護欄綜合報告 | 防禦框架、紅隊演練與評測分類器</title>
+    <meta name="description" content="2026 AI 大模型安全護欄綜合報告：Presidio、NeMo、Guardrails AI、LLM Guard 等防禦框架實測比較，提示詞注入紅隊手法與評測分類器選型指南。">
     <script src="https://cdn.tailwindcss.com/3.4.3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -324,7 +326,7 @@
   </div>
 </div> -->
 <header class="hero-header-wrapper">
-  <h1 class="hero-title">Deep Learning 101, Taiwan's pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</h1>
+  <p class="hero-title">Deep Learning 101, Taiwan's pioneering and highest deep learning meetup, launched on 2016/11/11 @ 83F, Taipei 101</p>
   💼 從頂層 AI 戰略到地端 GPU 部署企業方案： 卡在開源模型效能低落？不知道如何為企業私有雲架設高併發的推論伺服器？提供 FDE (Forward Deployed Engineering) 級別的 AI 落地顧問與架構建置以及企業級的 LLM 架構健檢與地端部署服務。
   <div class="hero-image-cluster">
     <a href="https://huggingface.co/DeepLearning101" target="_blank" title="Deep Learning 101"><img src="https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DeepLearning101-LOGO.jpg" alt="Logo" style="background: white;"></a>
@@ -488,7 +490,7 @@
                 </ol>
             </div>
         </div>
-        
+
         <div class="bento-box motion-div">
             <h2 class="bento-title-large" id="comparison-table"><i class="fas fa-balance-scale icon-large mr-4 text-gray-500"></i>大型語言模型與Agent安全工具比較</h2>
             <div class="bento-box-table-wrapper">
@@ -1605,7 +1607,7 @@ Verdict: Unsafe</code></pre>
                 <p><strong>核心優勢</strong>：<strong>全球首個全開源的 AI 安全護欄大模型王</strong>。性能全面超越 Qwen3Guard 與 LlamaGuard，支援 119 種語言。採統一大模型架構，同時具備「內容安全檢測」、「操控防禦 (注入/越獄)」與「數據洩露防護」三大核心能力，並支援可微分的連續敏感度閾值調節。</p>
                 <p><strong>解決痛點 / 推薦場景</strong>：完美解決了傳統規則過濾過於僵硬、無法適應跨文化安全標準的痛點。適合需要快速通過中國大模型備案、或需符合歐盟《EU AI Act》與《GDPR》等國際合規標準的企業級全球化應用。</p>
                 <p><strong>資源</strong>：<a href="https://github.com/openguardrails/openguardrails" target="_blank" rel="noopener noreferrer">🐙 GitHub</a> | <a href="https://huggingface.co/openguardrails" target="_blank" rel="noopener noreferrer">🤗 HuggingFace</a> | <a href="https://arxiv.org/abs/2510.19169" target="_blank" rel="noopener noreferrer">📄 論文</a></p>
-            
+
                 <div style="margin-top: 1rem; padding: 0.9rem 1.1rem; background: #fffbeb; border-left: 4px solid #f59e0b; border-radius: 0.375rem;">
                     <p style="margin: 0;"><strong>📝 現況更新（2026-09-29 查證）</strong>：上述為 2025-10 論文發表時的產品架構。GitHub 主 repo 現已轉為 vendor-neutral 的 <strong>protocol／規格</strong>（官方明言不做偵測能力），附 Higress、mitmproxy 等閘道整合外掛；論文所述的統一安全模型（14B→GPTQ 3.3B）本體在 HuggingFace（openguardrails）與官網託管平台。模型運行約需 6GB 記憶體＋GPU，一般 CPU 環境無法部署。兩者不可混為一談。</p>
                 </div>
@@ -1869,6 +1871,19 @@ Verdict: Unsafe</code></pre>
             </div>
         </div>
 
+        <div class="bento-box motion-div">
+                        <h2 class="bento-title-large" id="ma-risks"><i class="fas fa-exclamation-triangle icon-large mr-4 text-cyan-500"></i>常見問題 <span style="font-size:0.55em; color:#64748b;">（2026-10-04 增補）</span></h2>
+
+            <h3>地端 LLM 要怎麼做 PII 去識別？</h3>
+            <p>實測 8 套工具後，我的答案是 Presidio 加自訂 regex：台灣手機、身分證字號用自訂規則補，這部分穩定可用。但中文姓名目前無一工具開箱支援，這塊要自建，不能指望現成方案。</p>
+        </br>
+            <h3>為什麼中文姓名偵測全滅？</h3>
+            <p>主流護欄工具的 NER 模型都是英文語料訓練的，中文姓名沒有大小寫、沒有固定格式，開箱即用幾乎全滅。這不是調參能解決的，是訓練資料的問題，地端場景請預留自建標注的預算。</p>
+</br>
+            <h3>PII 偵測器跟 Jev 這類判斷層要二選一嗎？</h3>
+            <p>不用，它們是互補的。Presidio 這類是「偵測層」，負責把個資找出來；Jev、Laya 這類分類器是「判斷層」，負責語義安全判斷。要注意 Jev 是 hosted-only，資料要出外網，地端合規場景不能用。</p>
+</br>
+        </div>
         
     </div>
 
