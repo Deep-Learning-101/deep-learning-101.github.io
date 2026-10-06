@@ -39,7 +39,7 @@ _從武俠隱喻出發，講透 Recursive Self-Improvement 的過去、現在與
 > **🚀 本文重點摘要 (TL;DR)：**
 > * **RSI（遞迴自我改進）** 是讓 AI 改進自己的探索策略與代碼的迴圈，概念可追溯到 1965 年 I.J. Good 的「智慧爆炸」。
 > * **Dream-RSI**（2026.9，Google／DeepMind／UMD／UVA）是最新突破：用歷史探索軌跡構建離線回放模擬器，在「夢境」裡低成本演化探索策略。
-> * **Jev** 把 AI 決策從生成還原為判別：只輸出型別定義好的機率分佈，24–35 毫秒，格式幻覺在解碼機制上被消除。
+> * **Jev** 把 AI 決策從生成還原為判別：只輸出型別定義好的機率分佈，毫秒級延遲（官方數據 70–500ms），格式幻覺在解碼機制上被消除。
 > * **開源系譜**（Laya、CLM-8B、Kev、NanoJev、RSI-Jev、jev-skill 等）已沉澱出同一套研究方法：判別式輸出 → 對比校準 → 自我改進迴圈 → 客觀驗收。
 > * **搜尋蒸餾飛輪**：System 1 毫秒剪枝 → System 2 離線深搜 → 蒸餾沉澱為本能：平時憑本能過招，遇高手開大招。
 
@@ -74,13 +74,13 @@ _從武俠隱喻出發，講透 Recursive Self-Improvement 的過去、現在與
 **伏虎（Agent）** 是智慧代理。它負責環境感知、工具調用與具體執行控制，是落地的手臂。想深入理解現代 Agent 的能力邊界與治理框架，可參考 DeepMind《Nature》論文的解析：[Agentic Profiles：AI Agent 四維資安與治理框架](https://deep-learning-101.github.io/Blog/Agentic-Profiles)。光有內力不會打架，要有招式把內力打出去，Agent 就是那套招式。
 主流 Agent 開發框架的橫向比較，可參考：[Dify、Coze、n8n、AutoGen、LangChain 熱門 Agent 框架比較](https://deep-learning-101.github.io/Blog/Dify-Coze-n8n-AutoGen-LangChain)。
 
-**迴夢心法（World Model Replay Simulator）** 是世界模型回放模擬器。關鍵洞察：不直接在昂貴的真實環境裡試錯，而是把過去的探索軌跡（Discovery Tree）封存起來，變成可以離線回放的「模擬夢境」。
+**迴夢心法（Replay Simulator）** 是回放模擬器。關鍵洞察：不直接在昂貴的真實環境裡試錯，而是把過去的探索軌跡（Discovery Tree）封存起來，變成可以離線回放的「模擬夢境」。注意：這不是去學一個世界模型（那又貴又不準），歷史本身就是精確的模擬器。
 
-**睡夢羅漢拳（RSI，Recursive Self-Improvement）** 是遞迴自我改進。AI 進入離線夢境，在歷史回放中平行模擬數萬次，低成本演化出更強的探索策略（Meta-Exploration Policy）。睡一覺起來，拳法大成。
+**睡夢羅漢拳（RSI，Recursive Self-Improvement）** 是遞迴自我改進。AI 進入離線夢境，在歷史回放中平行模擬數千次，低成本演化出更強的探索策略（Meta-Exploration Policy）。睡一覺起來，拳法大成。
 
 記住這四個詞，後面全篇通用。
 
-![Dream-RSI 概念圖：左側 LLM 探索樹、中央世界模型回放模擬器與 RSI 迭代閉環、右側 Agent 控制器矩陣](Dream-RSI/rsi-d1-hero.png)
+![Dream-RSI 概念圖：左側 LLM 探索樹、中央回放模擬器與 RSI 迭代閉環、右側 Agent 控制器矩陣](Dream-RSI/rsi-d1-hero.png)
 
 ---
 
@@ -111,7 +111,7 @@ AlphaZero 是 RSI 精神上最成功的祖先，但它的成功建立在四個�
 | 比較維度 | AlphaZero（封閉棋類自弈） | 現代 RSI（開放世界） |
 |---|---|---|
 | **環境邊界** | 嚴格封閉：19×19 圍棋棋盤 | 開放世界：真實代碼庫、雲端 API、動態系統 |
-| **模擬器來源** | 人類預先寫死、零成本的完美規則程式碼 | 環境昂貴未知，需自主構建離線世界模型 |
+| **模擬器來源** | 人類預先寫死、零成本的完美規則程式碼 | 沒有現成模擬器：但已付費的歷史軌跡本身就是回放模擬器 |
 | **驗證反饋** | 單一絕對勝負（Win／Loss） | 多維驗證：單元測試通過率、執行效能、安全邊界 |
 | **改進對象** | 僅神經網路權重（演算法與搜尋規則寫死） | 自身的探索策略（Meta-Policy）與執行代碼 |
 
@@ -137,7 +137,7 @@ AlphaZero 是 RSI 精神上最成功的祖先，但它的成功建立在四個�
 <a id="sec-5"></a>
 ## 五、Dream-RSI：迴夢心法 (2026 年 9 月論文解析)
 
-論文 *Dream-RSI: Recursive Self-Improvement through Evolving Worlds*（Tong Zheng 等；Google、Google DeepMind、馬里蘭大學、維吉尼亞大學；2026 年 9 月 preprint，開源 repo：[zhengkid/Dream-RSI](https://github.com/zhengkid/Dream-RSI)）的核心洞察只有一句話：**已經完成的發現過程，本身就是一座結構化的搜尋空間**。
+論文 *Dream-RSI: Recursive Self-Improvement through Evolving Worlds*（Tong Zheng 等；Google、Google DeepMind、馬里蘭大學、維吉尼亞大學；2026 年 9 月 preprint，公開 repo：[zhengkid/Dream-RSI](https://github.com/zhengkid/Dream-RSI)（程式碼準備中））的核心洞察只有一句話：**已經完成的發現過程，本身就是一座結構化的搜尋空間**。
 
 傳統做法的困境是：評估一個探索策略好不好，必須觀察它如何形塑一整個發現過程：回饋又慢又貴。Dream-RSI 的解法是把歷史探索軌跡封存成可回放的模擬器（replay simulator），在離線「夢境」裡平行測試、演化探索策略。歷史軌跡隨線上探索持續累積，夢境不斷長大：這就是 "Evolving Worlds"。
 
@@ -159,9 +159,9 @@ AlphaZero 是 RSI 精神上最成功的祖先，但它的成功建立在四個�
 
 傳統 LLM Agent 是純粹的 System 2（慢思考）：每一步都是「生成長文字 → 解析 JSON → 條件判斷」，單步 1~3 秒，還可能因為 JSON 寫壞整段重來。在需要高頻決策的場景（客服分流、內容審核、Agent 每一步的路由），這又慢又脆。關於推論延遲優化的實戰，可參考本站熱門文章：[2026 本地 LLM 推論框架對決：vLLM vs Ollama vs SGLang vs LLaMA.cpp](https://deep-learning-101.github.io/Blog/vLLM-Ollama-SGLang-LLaMAcpp)。
 
-Jev（TypeSafe AI 的判別式決策 API）的顛覆性在於**把決策收斂成判別式的型別契約（Contract）**：不讓模型吐廢話，只輸出符合嚴格型別定義的機率分佈：Choice（選哪個）、Score（打幾分）、Mask（遮哪個）、Noul（棄權）。工程哲學只有一句：**決策是分類問題，不是生成問題**。延遲從秒級壓到 24–35 毫秒，格式幻覺在工程架構與解碼機制上被徹底消除：因為根本不經自由文字解碼，而是直接在受限型別空間計算機率分佈。
+Jev（TypeSafe AI 的判別式決策 API）的顛覆性在於**把決策收斂成判別式的型別契約（Contract）**：不讓模型吐廢話，只輸出符合嚴格型別定義的機率分佈：Choice（選哪個）、Score（打幾分）、Noul（是否為真）。工程哲學只有一句：**決策是分類問題，不是生成問題**。延遲從秒級壓到毫秒級（官方數據 70–500ms），格式幻覺在工程架構與解碼機制上被徹底消除：因為根本不經自由文字解碼，而是直接在受限型別空間計算機率分佈。
 
-![Jev 判別引擎對比：左側 System 2 生成式慢思考（單步 1–3 秒、有格式幻覺風險），右側 System 1 判別式快思考（24–35 毫秒、零語法幻覺）](Dream-RSI/rsi-d6-jev.png)
+![Jev 判別引擎對比：左側 System 2 生成式慢思考（單步 1–3 秒、有格式幻覺風險），右側 System 1 判別式快思考（毫秒級、零語法幻覺）](Dream-RSI/rsi-d6-jev.png)
 
 Jev 證明路線可行之後，商用閉源陣營也開始跟進。OpenAI 在 2026 年 9 月 29 日的 DevDay 發表了 Decisions API：底層是專為決策調校的 GPT-6 Luna，開發者給定封閉的候選答案清單，模型直接回傳選項與信心分數，不生成自由文字，約 150 毫秒，對比標準 Luna 呼叫的 1.6 秒，目前為有限預覽。媒體直接稱之為「OpenAI 版的 Jev」。判別式決策已經從一家新創的點子，變成巨頭的標配。
 
@@ -180,7 +180,7 @@ TypeSafe 的 Jev 是閉源商用 API。但它發佈後，開源社群沿著「�
 * **NanoJev**（★2.5k）：0.6B 奈米複刻，states＋questions 進、完整機率分佈出，零輸出 token 解碼；ViZDoom／Maze／Snake 實機驗證（[TianyuCodings/NanoJev](https://github.com/TianyuCodings/NanoJev)）
 * **jevos**（★1.2k）：筆電 CPU 上 25–110ms 的 yes/no 決策，並公開對打基準（jevos-v2 短請求 26ms 對 Jev 344ms、Laya 104ms）（[feder-cr/jev](https://github.com/feder-cr/jev)）
 * **AnyJev**（★1k）：把任意 LLM 轉成 Jev-style 判別模型，無需微調；100–500 個標籤把校準誤差從 0.240 壓到 0.095（[nokia-applied-research/AnyJev](https://github.com/nokia-applied-research/AnyJev)）
-* **RSI-Jev**（[Shanghua-Gao/RSI-Jev](https://github.com/Shanghua-Gao/RSI-Jev)）：AI Agent 迴圈訓練判別模型：`contract.py` 定型別契約、`rl2.py` 自我校準、`serve/` 毫秒推論；歷經 312 次實驗，champion 指標從 0.622 爬升至 0.756，並將失敗實驗與成因完整公開；實體驗證包含 Atari 即時控制與工業視覺瑕疵檢測（[Computer Vision 知識中樞](https://deep-learning-101.github.io/Computer-Vision)）。
+* **RSI-Jev**（[Shanghua-Gao/RSI-Jev](https://github.com/Shanghua-Gao/RSI-Jev)）：AI Agent 迴圈訓練判別模型：`contract.py` 定型別契約、`rl2.py` 自我校準、`serve/` 毫秒推論；歷經 471 次實驗，champion 指標從 0.622 爬升至 0.756，並將失敗實驗與成因完整公開；實體驗證包含 Atari 即時控制與工業視覺瑕疵檢測（[Computer Vision 知識中樞](https://deep-learning-101.github.io/Computer-Vision)）。
 
 ![RSI-Jev 三層架構：型別契約層、RL 自我校準層、毫秒推論服務層，以及 Atari 與工業視覺實體驗證](Dream-RSI/rsi-d7-rsijev.png)
 * **jev-skill**（[wuyoscar/jev-skill](https://github.com/wuyoscar/jev-skill)）："Awesome Jev Skills"：Context Pilot（指令衝突、資訊不全時主動拒絕）、Public PR Pilot（Flask、Requests 真實 PR，單元測試當裁判）、十維 Model Panel、5 個隨插即用 skills
@@ -207,7 +207,7 @@ TypeSafe 的 Jev 是閉源商用 API。但它發佈後，開源社群沿著「�
 
 **第一步，Jev（System 1）做毫秒級剛性剪枝。** 在搜尋樹的邊界高速過濾，把沒希望的分支砍掉。Jev 不是消滅搜尋，而是讓深層搜尋在成本上變得可行。
 
-**第二步，Dream-RSI（System 2）在低成本的歷史回放世界裡深思熟慮。** 離線夢境平行模擬數萬次，發掘最優解法。慢思考，但因為在夢裡，所以便宜。
+**第二步，Dream-RSI（System 2）在低成本的歷史回放世界裡深思熟慮。** 離線夢境平行模擬數千次，發掘最優解法。慢思考，但因為在夢裡，所以便宜。
 
 **第三步，搜尋蒸餾（Search Distillation）。** 把耗費大量推論才得出的最優路徑，反向更新回基底模型參數（SFT／RL）。這與外掛知識的 [RAG](https://deep-learning-101.github.io/RAG) 不同：RAG 是把知識放在外面查，蒸餾是把能力寫進權重裡。
 
