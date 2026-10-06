@@ -80,8 +80,6 @@ _從武俠隱喻出發，講透 Recursive Self-Improvement 的過去、現在與
 
 記住這四個詞，後面全篇通用。
 
-![Dream-RSI 概念圖：左側 LLM 探索樹、中央回放模擬器與 RSI 迭代閉環、右側 Agent 控制器矩陣](Dream-RSI/rsi-d1-hero.png)
-
 ---
 
 <a id="sec-2"></a>
@@ -116,8 +114,6 @@ AlphaZero 是 RSI 精神上最成功的祖先，但它的成功建立在四個�
 | **改進對象** | 僅神經網路權重（演算法與搜尋規則寫死） | 自身的探索策略（Meta-Policy）與執行代碼 |
 
 一句話總結：AlphaZero 證明了「自我對弈＋搜尋」走得通；Dream-RSI 們在回答的是：**走出棋盤之後，路費誰來付**。
-
-![AlphaZero 與現代開放世界 RSI 的四維度對比：環境邊界、模擬器來源、驗證反饋、改進對象](Dream-RSI/rsi-d3-alphazero.png)
 
 ---
 
@@ -160,8 +156,6 @@ AlphaZero 是 RSI 精神上最成功的祖先，但它的成功建立在四個�
 傳統 LLM Agent 是純粹的 System 2（慢思考）：每一步都是「生成長文字 → 解析 JSON → 條件判斷」，單步 1~3 秒，還可能因為 JSON 寫壞整段重來。在需要高頻決策的場景（客服分流、內容審核、Agent 每一步的路由），這又慢又脆。關於推論延遲優化的實戰，可參考本站熱門文章：[2026 本地 LLM 推論框架對決：vLLM vs Ollama vs SGLang vs LLaMA.cpp](https://deep-learning-101.github.io/Blog/vLLM-Ollama-SGLang-LLaMAcpp)。
 
 Jev（TypeSafe AI 的判別式決策 API）的顛覆性在於**把決策收斂成判別式的型別契約（Contract）**：不讓模型吐廢話，只輸出符合嚴格型別定義的機率分佈：Choice（選哪個）、Score（打幾分）、Noul（是否為真）。工程哲學只有一句：**決策是分類問題，不是生成問題**。延遲從秒級壓到毫秒級（官方數據 70–500ms），格式幻覺在工程架構與解碼機制上被徹底消除：因為根本不經自由文字解碼，而是直接在受限型別空間計算機率分佈。
-
-![Jev 判別引擎對比：左側 System 2 生成式慢思考（單步 1–3 秒、有格式幻覺風險），右側 System 1 判別式快思考（毫秒級、零語法幻覺）](Dream-RSI/rsi-d6-jev.png)
 
 Jev 證明路線可行之後，商用閉源陣營也開始跟進。OpenAI 在 2026 年 9 月 29 日的 DevDay 發表了 Decisions API：底層是專為決策調校的 GPT-6 Luna，開發者給定封閉的候選答案清單，模型直接回傳選項與信心分數，不生成自由文字，約 150 毫秒，對比標準 Luna 呼叫的 1.6 秒，目前為有限預覽。媒體直接稱之為「OpenAI 版的 Jev」。判別式決策已經從一家新創的點子，變成巨頭的標配。
 
