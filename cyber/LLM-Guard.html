@@ -816,6 +816,28 @@ garak --model_type huggingface --model_name "meta-llama/Llama-2-7b-chat-hf"</cod
         </div>
 
         <div class="bento-box motion-div">
+<!-- 插入位置：LLM-Guard.html → ## 二、關鍵開源護欄的技術架構演進 → 接在「Nemotron 3.5 Content Safety (多模態安全護欄)」區塊之後、「2. Meta」之前（與 NVIDIA 既有條目放一起，不另立編號） -->
+<!-- 來源查證：2026-09-28 NVIDIA 官方發布（多家媒體交叉確認）；OpenShell Apache 2.0、GitHub NVIDIA/OpenShell、v0.1.x（官方文件）；Sentry 為 BlueField-4 DPU 參考設計（NVIDIA 官方）。深層架構細節見文末附註。 -->
+<h2 class="bento-title-large" id="nvidia-open-agent-safety"><i class="fab fa-nvidia icon-large mr-4 text-green-500"></i>NVIDIA Open Agent Safety Platform <span class="tag">2026-09</span> 🔥</h2>
+<div class="bento-text">
+    <p><strong><a href="https://github.com/NVIDIA/OpenShell" target="_blank" rel="noopener noreferrer">NVIDIA Open Agent Safety Platform</a></strong> <span class="tag">2026-09-28</span> 🔥 <span class="tag">AI Agent 安全</span> <span class="tag">執行期強制</span> <span class="tag">沙箱隔離</span> <span class="tag">帶外監控</span> <span class="tag">零信任架構</span></p>
+    <p><strong>核心優勢</strong>：<strong>安全邊界從「模型該做什麼」下沉到「Agent 實際能做什麼」：NVIDIA 把強制點搬到 Agent 夠不著的地方。</strong>平台由兩件產品組成：<strong>OpenShell</strong>（開源 Agent 安全運行時，Apache 2.0，GitHub NVIDIA/OpenShell，v0.1.x）與 <strong>Sentry</strong>（BlueField-4 DPU 上的帶外矽內看門狗，參考設計）。OpenShell 以 Gateway／Supervisor／Sandbox 三件式架構，在作業系統內核層強制執行策略：每個 Agent 跑在隔離沙箱中，內核限定其檔案存取與系統呼叫，所有出網連線離開沙箱前必須經過策略裁決；策略變更先經形式化驗證器（prover）檢查會放開哪些新權限，命中風險項即阻斷自動批准轉人工審查。憑據零暴露：Agent 永遠看不到真實憑據，OpenShell 只把憑據注入發往已批准端點的請求。Sentry 則位於宿主机之外的獨立信任域，持續監控 Agent 行為，越界即毫秒級隔離。官方口徑：100+ 組織參與，Anthropic、CrowdStrike、Palo Alto Networks、Salesforce、SAP 等在列。</p>
+
+    <h3 class="bento-subtitle">解決痛點 / 推薦場景</h3>
+    <p><strong>舊方法只管「想做的事安全嗎」，新方案管「實際做得到嗎」。</strong>傳統 Guardrail 與 AI 安全網關控制的是意圖與內容層；MCP／工具網關只看得到合法工具調用，Agent 若繞過 MCP 直接走 socket 連資料庫，網關根本看不見。OpenShell 從內核與網路層兜底這種繞過，Sentry 再從硬體層兜底軟體層失守，形成縱深防禦。甜點區：長程自主運行、能調工具／執行程式碼／存取資料的企業級 Agent 部署，以及金融、能源、機器人等需要合規審計與行為可證明的場景。注意定位：OpenShell 提供的是運行時身份與可信通訊機制，完整的企業 Agent IAM（Owner、委派關係、生命週期治理）仍需上層身份治理體系補足。</p>
+
+    <h3 class="bento-subtitle">資源</h3>
+    <ul class="bento-list">
+        <li>🐙 <a href="https://github.com/NVIDIA/OpenShell" target="_blank" rel="noopener noreferrer">GitHub 官方倉庫（Apache 2.0）</a></li>
+        <li>📄 <a href="https://developer.nvidia.com/blog/nvidia-open-agent-safety-platform-a-reference-for-continuous-in-silicon-agent-monitoring/" target="_blank" rel="noopener noreferrer">NVIDIA 開發者部落格：平台技術解析</a></li>
+        <li>🌐 <a href="https://www.nvidia.com/en-us/solutions/ai/agent-safety/" target="_blank" rel="noopener noreferrer">NVIDIA 官方產品頁</a></li>
+    </ul>
+    <p style="font-size: 0.85rem; color: #6b7280;"><strong>附註（未獨立查證）</strong>：深層架構細節（Sandbox Protocol 通道、prover 實作、Landlock／seccomp user notification、OCSF 審計鏈、DOCA 身份治理）來自原文整理，未逐項對官方文件核對，實作前請以官方文件為準；「毫秒級隔離」為廠商宣稱；「本可阻止 7 月 OpenAI／Hugging Face 事件」為 NVIDIA 副總裁 Justin Boitano 向 Reuters 的說法，未經獨立驗證；採用方名單為廠商口徑。</p>
+</div>
+</div>
+
+
+        <div class="bento-box motion-div">
             <h2 class="bento-title-large" id="meta"><i class="fab fa-meta icon-large mr-4 text-blue-600"></i>2. Meta：以 Llama Guard 為核心的開源安全分類器演進</h2>
             <div class="bento-text">
                 <p>Meta 的 Llama Guard 系列是專為大型語言模型（LLM）應用設計的開源安全護欄模型 。其核心任務是分類使用者輸入（Prompt）和模型輸出（Response），以判斷其是否包含潛在的有害或不安全內容 。此系列的演進清晰地反映了 AI 安全從處理單一文字風險，到應對圖文混合內容複雜威脅的發展路徑。</p>
