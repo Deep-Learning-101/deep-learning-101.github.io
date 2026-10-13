@@ -1,10 +1,10 @@
 ---
 layout: default
 title: "2026 本地端 AI Agent 實戰教學：OpenClaw (Clawdbot) 零成本自動化部署及衍生專案比較"
-description: "想要專屬的開源 AI Agents？完整教學帶你在本地端零成本部署 OpenClaw (Moltbot/Clawdbot)，直接串接 Line、Discord、Slack 等通訊軟體，打造高隱私的個人自動化助理！ironclaw、nemoclaw、trustclaw、nanoclaw、picoclaw、nullclaw 等衍生專案比較表也在文末提供。"
+description: "想要專屬的開源 AI Agents？完整教學帶你在本地端零成本部署 OpenClaw (Moltbot/Clawdbot)，直接串接 Line、Discord、Slack 等通訊軟體，打造高隱私的個人自動化助理！ironclaw、nemoclaw、trustclaw、nanoclaw、picoclaw、nullclaw 等衍生專案比較表也在文末提供。2026年10月更新：nanoMuse、OpenMuse 等新一代個人 Agent 對照。"
 permalink: /Agent/OpenClaw-Moltbot-Clawdbot
 lang: zh-Hant
-keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI Agent", "本地部署", "AI 助手", "自動化", "OpenClaw衍生專案比較"]
+keywords: ["OpenClaw", "MoltBot", "Clawdbot", "AI Agent", "本地部署", "AI 助手", "自動化", "OpenClaw衍生專案比較", "nanoMuse", "OpenMuse"]
 tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南", "衍生專案比較"]
 ---
 
@@ -17,7 +17,7 @@ tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南", "衍生專�
     "@id": "https://deep-learning-101.github.io/Agent/OpenClaw-Moltbot-Clawdbot"
   },
   "headline": "2026 本地端 AI Agent 實戰教學：OpenClaw (Clawdbot) 零成本自動化部署及衍生專案比較",
-  "description": "想要專屬的開源 AI Agents？完整教學帶你在本地端零成本部署 OpenClaw (Moltbot/Clawdbot)，直接串接 Line、Discord、Slack 等通訊軟體，打造高隱私的個人自動化助理！ironclaw、nemoclaw、trustclaw、nanoclaw、picoclaw、nullclaw 等衍生專案比較表也在文末提供。",
+  "description": "想要專屬的開源 AI Agents？完整教學帶你在本地端零成本部署 OpenClaw (Moltbot/Clawdbot)，直接串接 Line、Discord、Slack 等通訊軟體，打造高隱私的個人自動化助理！ironclaw、nemoclaw、trustclaw、nanoclaw、picoclaw、nullclaw 等衍生專案比較表也在文末提供。2026年10月更新：nanoMuse、OpenMuse 等新一代個人 Agent 對照。",
   "image": "https://raw.githubusercontent.com/Deep-Learning-101/TonTon/refs/heads/main/_includes/DL101-Logo.jpg",
   "author": {
     "@type": "Organization",
@@ -25,7 +25,7 @@ tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南", "衍生專�
     "url": "https://deep-learning-101.github.io/"
   },
   "datePublished": "2026-03-19",
-  "dateModified": "2026-09-27"
+  "dateModified": "2026-10-14"
 }
 </script>
 
@@ -43,7 +43,7 @@ tags: ["AI Agent", "本地端 LLM", "開發工具", "實戰指南", "衍生專�
 
 <p align="center">
 <a href="https://twman.org">TonTon Huang Ph.D.</a>
-2026年02月01日初版，2026年09月27日更新衍生專案比較表
+2026年02月01日初版，2026年09月27日更新衍生專案比較表，2026年10月14日新增新一代個人 Agent 章節
 </p>
 
   - 一個跑在你自己電腦上的 AI 助手，可以直接在 Line、WhatsApp、Telegram、Discord、Slack、Teams 等通訊軟體中使用。
@@ -109,6 +109,8 @@ _多數安裝需設定、自訂整合開發、反覆測試改良與維護，想�
 * [**總結 (Conclusion)**](#總結)
 * [**一些可能的操作常見問題 (Common Operational Issues & Troubleshooting)**](#一些可能的操作常見問題)
 * [**衍生專案比較表**](#衍生專案比較表)
+* [**2026-10 更新：新一代個人 Agent（nanoMuse、OpenMuse）**](#2026-10-更新新一代個人-agentnanomuseopenmuse)
+
 
 ---
 
@@ -1119,3 +1121,24 @@ docker compose run --rm openclaw-cli doctor
 - 六個專案都有某種二次開發入口（ironclaw 的 WASM plugin、nemoclaw 的 agent plugin / adapter、nanoclaw 的 skills、picoclaw 的 skills + MCP、nullclaw 的 pluggable 介面）；trustclaw 的 README 未提 plugin / extension 機制。
 - 抓取當下（2026-09-27），五個專案的最後 push 都在 2026-09-24 至 2026-09-26 之間；trustclaw 的最後 push 是 2026-07-10，相隔約兩個半月。
 - stars 落差明顯：nanoclaw（30,846）與 picoclaw（30,012）在三萬上下，nemoclaw（22,545）、ironclaw（12,630）、nullclaw（8,106）居中，trustclaw（901）最少。
+
+
+## 2026-10 更新：新一代個人 Agent（nanoMuse、OpenMuse）
+
+OpenClaw 之後，個人 Agent 出現了兩條新路線：一個往「多設備」走，一個往「手機 App」走。以下對照表以本頁主角 OpenClaw 為基準。
+
+|  | OpenClaw | nanoMuse | OpenMuse |
+|---|---|---|---|
+| 一句話 | 跑在你電腦上的 AI 助手，通訊軟體遙控 | 手機一句話，電腦接著做：多設備個人智能體 | 手機 App 形態的個人 Agent |
+| 開源授權 | 開源 | GPL-3.0-or-later | MIT（Intelligence 服務除外） |
+| Agent 跑在哪 | 你安裝的那台電腦（Docker） | 你的手機、電腦、自托管伺服器 | 手機 App＋後端 |
+| 怎麼下指令 | Line／Telegram／WhatsApp／Discord 等 | 自己的 App；`@Mac` 跨設備委託 | iOS、Android、Web App |
+| 模型 | 自帶 API Key（Gemini／OpenAI／Anthropic） | 中繼免費額度（¥10）或自帶 20 家 Key | 自帶 Key |
+| 長期任務 | 任務排程 | Goals＋Routines＋每日 Feed | 持久化任務，可暫停恢復 |
+| 沒 API 的 App | 直接操作那台電腦 | Hands 操作螢幕（iOS 除外） | 瀏覽器會話可接管 |
+| 上手門檻 | Docker＋API Key＋通訊軟體設定 | 下載 App 登入即用 | 五條命令，不需模型 Key |
+| 適合誰 | 想自己架、愛折騰的人 | 手機指揮電腦、自托管派 | 想先玩玩看個人 Agent 的人 |
+
+**nanoMuse**（[🐙 GitHub](https://github.com/nano-muse/nanoMuse)｜[📄 論文](https://arxiv.org/abs/2610.08699)｜[🌐 官網](https://nanomuse.cn)）：浙大三位作者發起的獨立社群專案（與 Meta 無關，別被「浙大版 Muse」誤導）。每台設備各跑一個 Agent，經中繼互相委託；18 天破千星。⚠️ 注意：社區中繼 0.9 起新帳號預設開啟「幫助改進 AI 模型」（保留部分聊天文字做訓練），可在設定裡關閉。
+
+**OpenMuse**（[🐙 GitHub](https://github.com/CopilotKit/OpenMuse)）：CopilotKit 出品的個人版 Agent，iOS、Android、Web 同一套代碼，單一 owner，關掉 App 任務還在跑。它的企業版兄弟叫 OpenBot（[🐙 GitHub](https://github.com/CopilotKit/OpenBot)）：每個 Agent 一台獨立電腦、所有動作走唯一網關先裁定後記錄，是給公司安全評審看的；個人用看 OpenMuse 就好。

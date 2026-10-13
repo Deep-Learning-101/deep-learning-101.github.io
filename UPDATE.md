@@ -16,7 +16,13 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
-- **[Xiaomi-CocktailASR-1](https://github.com/xiaomi-research/xiaomi-cocktailasr-1)** `[2026-09]` 🔥 `[目標說話人ASR]` `[雞尾酒會效應]` `[端到端]` `[CoT推理]`
+- **[OpenMuse](https://github.com/CopilotKit/OpenMuse)** `[2026-09-22]` 🔥 [Meta Muse開源平替] [自託管個人助理] [常開瀏覽器會話] [背景非同步任務] [寫操作人機確認] [MIT協議]
+- **[OpenBot (CopilotKit)](https://github.com/CopilotKit/OpenBot)** `[2026-08]` 🔥 [企業AI同事] [Agent治理] [審計] [AG-UI] [自建部署]`
+- **[VISTA: 給多模態 Agent 裝上可回看的無損視覺記憶](https://arxiv.org/abs/2610.02200)** `[2026-10]` 🔥 [AI Agent] [視覺推理] [ARC-AGI-3] [無損視覺記憶] [多模態]`
+- **[OpenMuse](https://github.com/CopilotKit/OpenMuse)** `[2026-09-22]` 🔥 [Meta Muse開源平替] [自託管個人助理] [常開瀏覽器會話] [背景非同步任務] [寫操作人機確認] [MIT協議]
+- **[Xiaomi-CocktailASR-1](https://github.com/xiaomi-research/xiaomi-cocktailasr-1)** `[2026-09]` 🔥 [目標說話人ASR] [雞尾酒會效應] [端到端] [CoT推理]`
+- **[SAM-V](https://github.com/gong208/SAM-V)** `[2026-09]` 🔥多視圖實例分割、SAM+VGG'T幾何感知提示、跨視角一致性、機器人感知
+- **[VISTA: 給多模態 Agent 裝上可回看的無損視覺記憶](https://arxiv.org/abs/2610.02200)** `[2026-10]` 🔥 [AI Agent] [視覺推理] [ARC-AGI-3] [無損視覺記憶] [多模態]`
 
 ---
 
