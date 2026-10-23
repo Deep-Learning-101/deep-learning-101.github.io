@@ -495,6 +495,7 @@ Qwen2和Qwen2.5系列進一步提升了多語言能力，在MMLU等國際基準�
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "Qwen3-Reranker-4B 在 CMTEB-R 繁體中文檢索評測中得分 75.94，Qwen3-Reranker-8B 達 77.45，均大幅超越前代 BGE-reranker-v2-m3（72.16）和 jina-reranker-v2-base-multilingual（63.37）。對於需要高精準度的台灣法律、金融、醫療 RAG 應用，Qwen3-Reranker 系列已是不二首選。"
+            }
           },
           {
             "@type": "Question",
