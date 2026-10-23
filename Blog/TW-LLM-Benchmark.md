@@ -1,7 +1,7 @@
 ---
 layout: default
-title: 2026 台灣 LLM 評測報告：Llama-3-Taiwan vs TAIDE vs Qwen3 繁體中文性能比較
-description: 最新台灣在地化大型語言模型完整評測。TMLU、TMMLU+、TW Legal Eval 全面測試，含 Qwen3-Embedding、Gemini Embedding 選型建議，以及 OpenAI gpt-oss、Claude Opus 4.1 最新動態。
+title: 台灣 LLM 實測對決：Llama-3-Taiwan vs TAIDE vs Qwen3，繁體中文誰最強？（TMLU 完整數據）
+description: 台灣做的 LLM 到底行不行？用 TMLU、TMMLU+、TW Legal Eval 實測 Llama-3-Taiwan、TAIDE、Breeze2 與 Qwen3 的繁體中文表現，附 Embedding 選型建議與開發者選型結論。
 permalink: /Blog/TW-LLM-Benchmark
 lang: zh-Hant
 keywords: ["LLM Benchmark", "臺灣大模型", "Llama-3-Taiwan", "TAIDE", "模型評測"]
@@ -349,7 +349,7 @@ Qwen2和Qwen2.5系列進一步提升了多語言能力，在MMLU等國際基準�
 ### A. 開發者選型建議
 選擇合適的大型語言模型是成功開發 AI 應用的第一步。以下是針對不同應用需求的具體建議：
 
-_如果還在猶豫 Qwen3、Llama、Gemini 該選哪一家，可以參考我們的LLM 選型實測對決：Qwen3 vs Llama 3.3 vs Gemini Flash，2026 台灣企業版。
+如果還在猶豫 Qwen3、Llama、Gemini 該選哪一家，可以參考我們的[LLM 選型實測對決：Qwen3 vs Llama 3.3 vs Gemini Flash，2026 台灣企業版](/Large-Language-Model)。
 
 * **追求極致臺灣在地化性能**：
     * **推薦模型**：yentinglin/Llama-3-Taiwan-70B-Instruct-DPO
