@@ -16,13 +16,21 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[H-JEPA (LeCun AMI 世界模型)](https://github.com/kevinghst/H-JEPA)** `[2026-10]` 🔥 `[世界模型]` `[JEPA]` `[分層規劃]` `[視覺規劃]` `[具身智能]`
+- **[Whistle (Cactus Compute)](https://cactuscompute.com/blog/whistle)** `[2026-10]` 🔥 `[端側ASR]` `[超輕量]` `[CPU推理]` `[語音工具調用]` `[量化]`
+- **[S1-mini (Superwhisper)](https://huggingface.co/superwhisper/s1-mini)** `[2026-10]` 🔥 `[ASR後處理]` `[文本歸一化]` `[ITN]` `[端側部署]` `[Qwen3微調]`
+- **[AnyEdit (免分離語音／歌聲局部編輯)](https://arxiv.org/abs/2610.15665)** `[2026-10]` 🔥 `[語音編輯]` `[歌聲編輯]` `[免聲源分離]` `[Flow Matching]` `[DPO]`
+- **[VibeVoice-ASR-Streaming (Microsoft)](https://arxiv.org/abs/2609.02812)** `[2026-09]` 🔥 `[流式ASR]` `[說話人歸屬]` `[端到端]` `[Speech-LLM]` `[即時轉寫]`
+- **[MOSS-TTS-Nano (OpenMOSS)](https://github.com/OpenMOSS/MOSS-TTS-Nano)** `[2026-04]` 🔥 `[0.1B極輕量]` `[單核CPU]` `[ONNX推理]` `[48kHz雙聲道]` `[零樣本克隆]`
+- **[X2Streaming-TTS (X Square Robot)](https://arxiv.org/abs/2608.18661)** `[2026-08]` 🔥 `[真流式TTS]` `[逐token合成]` `[嚴格因果]` `[低延遲對話]` `[Qwen3-TTS]`
+- **[MECT / AntSpeaker (螞蟻集團)](https://arxiv.org/abs/2609.24061)** `[2026-09]` 🔥 `[聲紋識別]` `[MoE架構]` `[流式推理]` `[身份核驗]` `[輕量模型]`
+- **[TagSpeech (多人 ASR＋日誌聯合建模)](https://arxiv.org/abs/2601.06896)** `[2026-01]` 🔥 `[說話人日誌]` `[聯合建模]` `[時間戳對齊]` `[端到端]` `[參數高效訓練]`
+- **[MAI-Transcribe-2 (Microsoft MAI)](https://microsoft.ai/)** `[2026-09]` 🔥 `[商業ASR API]` `[多語轉寫]` `[說話人分離]` `[批次轉寫]` `[性價比]`
 - **[OpenMuse](https://github.com/CopilotKit/OpenMuse)** `[2026-09-22]` 🔥 [Meta Muse開源平替] [自託管個人助理] [常開瀏覽器會話] [背景非同步任務] [寫操作人機確認] [MIT協議]
 - **[OpenBot (CopilotKit)](https://github.com/CopilotKit/OpenBot)** `[2026-08]` 🔥 [企業AI同事] [Agent治理] [審計] [AG-UI] [自建部署]`
 - **[VISTA: 給多模態 Agent 裝上可回看的無損視覺記憶](https://arxiv.org/abs/2610.02200)** `[2026-10]` 🔥 [AI Agent] [視覺推理] [ARC-AGI-3] [無損視覺記憶] [多模態]`
-- **[OpenMuse](https://github.com/CopilotKit/OpenMuse)** `[2026-09-22]` 🔥 [Meta Muse開源平替] [自託管個人助理] [常開瀏覽器會話] [背景非同步任務] [寫操作人機確認] [MIT協議]
 - **[Xiaomi-CocktailASR-1](https://github.com/xiaomi-research/xiaomi-cocktailasr-1)** `[2026-09]` 🔥 [目標說話人ASR] [雞尾酒會效應] [端到端] [CoT推理]`
 - **[SAM-V](https://github.com/gong208/SAM-V)** `[2026-09]` 🔥多視圖實例分割、SAM+VGG'T幾何感知提示、跨視角一致性、機器人感知
-- **[VISTA: 給多模態 Agent 裝上可回看的無損視覺記憶](https://arxiv.org/abs/2610.02200)** `[2026-10]` 🔥 [AI Agent] [視覺推理] [ARC-AGI-3] [無損視覺記憶] [多模態]`
 
 ---
 
