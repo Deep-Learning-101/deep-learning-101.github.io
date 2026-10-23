@@ -25,10 +25,10 @@ tags: ["LLM", "AI Agent", "RAG", "Fine-tuning"]
 
 > ### 📅 [更新快訊](https://deep-learning-101.github.io/UPDATE)
 
+>- **[H-JEPA (LeCun AMI 世界模型)](https://github.com/kevinghst/H-JEPA)** `[2026-10]` 🔥 `[世界模型]` `[JEPA]` `[分層規劃]` `[視覺規劃]` `[具身智能]`
 >- **[OpenMuse](https://github.com/CopilotKit/OpenMuse)** `[2026-09-22]` 🔥 [Meta Muse開源平替] [自託管個人助理] [常開瀏覽器會話] [背景非同步任務] [寫操作人機確認] [MIT協議]
 >- **[OpenBot (CopilotKit)](https://github.com/CopilotKit/OpenBot)** `[2026-08]` 🔥 [企業AI同事] [Agent治理] [審計] [AG-UI] [自建部署]`
 >- **[VISTA: 給多模態 Agent 裝上可回看的無損視覺記憶](https://arxiv.org/abs/2610.02200)** `[2026-10]` 🔥 [AI Agent] [視覺推理] [ARC-AGI-3] [無損視覺記憶] [多模態]`
->- **[OpenMuse](https://github.com/CopilotKit/OpenMuse)** `[2026-09-22]` 🔥 [Meta Muse開源平替] [自託管個人助理] [常開瀏覽器會話] [背景非同步任務] [寫操作人機確認] [MIT協議]
 >- **[DeepTutor](https://github.com/HKUDS/DeepTutor)** `[2026-04]` 🔥 [Agent原生工作區] [終身個性化學習] [三層可審計記憶] [多引擎RAG]
 >- **[DeepCode](https://github.com/HKUDS/DeepCode)** `[2026-08]` 🔥 [Paper2Code] [Agentic Coding] [V2中央廚房] [Text2Web/Text2Backend]
 >- **[deepagents](https://github.com/langchain-ai/deepagents)** `[2026-04]` 🔥 [ClaudeCode開源版] [AgentHarness] [LangGraph上層封裝] [免模型綁定]
@@ -836,6 +836,11 @@ Google 的 NotebookLM 改變了我們與長篇文獻互動的方式，但「資�
 **🌍 World Models (世界模型)**
 
 世界模型透過物理法則學習，大幅提升空間與時序預測能力。 整合 SORA 等空間預測架構，機器人與自駕決策的模擬誤差率可降低 60% 以上，數據採集成本減少十倍。這是從純文本邁向通用具身智能 (Embodied AI) 的關鍵路徑。如果說傳統 LLM 是「文字接龍」，那世界模型 (World Models) 就是讓 AI 具備「物理法則與常識預測能力」。透過預測環境的下一步變化，這是通往通用人工智慧 (AGI) 與具身智能 (Embodied AI) 的關鍵拼圖。
+
+* **[H-JEPA (LeCun AMI 世界模型)](https://github.com/kevinghst/H-JEPA)** `[2026-10]` 🔥 `[世界模型]` `[JEPA]` `[分層規劃]` `[視覺規劃]` `[具身智能]`
+  * **核心優勢**：**LeCun 2022 年畫的分層 JEPA 藍圖，第一次端到端跑通了。** AMI 聯合 NYU、INRIA Paris、Brown：多個動作條件 JEPA 逐層堆疊，每層在自己的表徵空間預測更遠的未來（高層一步對應低層兩步）。規劃由上而下：高層先定粗略路線，預測的中間狀態變成低層的子目標，低層接力細化成原始動作。每層三件套（狀態編碼器、動作編碼器、預測器）端到端共同訓練，用 LeJEPA 的 SIGReg 防表徵坍塌。Visual AntMaze 三層成功率 73%，單層只有 18%，而且規劃算量更少。
+  * **解決痛點 / 推薦場景**：**單一表徵空間伺候不了兩種活：低層控制要細節，長程規劃要抽象。** 四足機器人腿姿不同、位置對了，平坦模型會誤判「離目標還很遠」；H-JEPA 的高層自動丟掉腿部姿態這類快變細節、只保留位置與迷宮佈局，目標比對回到對的抽象層級。代碼（MIT）與 84 個預訓練 checkpoint 全開源。極度適合**長程視覺規劃**、**機器人操作**、**世界模型研究**。⚠️ 分層不是越多越好：Push-T 兩層最佳，三四層因短軌跡餓死高層訓練數據反而下降；目前全是仿真加 DROID 離線評測，無真機閉環成績。
+  * **資源**：[🐙 GitHub](https://github.com/kevinghst/H-JEPA) | [📄 論文](https://arxiv.org/abs/2610.06805) | [🌐 專案頁](https://h-jepa.com)
 
 * **[WorldScape 0.2]** `[2026-03]` 🔥 `[具身世界模型]` `[MoE 架構]` `[物理可信]`
   * **核心優勢**：**打破物理與視覺的次元壁，參數僅競品 10% 卻稱霸全球的世界模型霸主！** 由 Manifold AI (流形空間) 研發，採用突破性的多專家協同 (MoE) 架構。它將幾何拓撲、語意理解與物理規律在統一的隱式元空間中完美對齊，不僅在 3D/4D 視覺生成上保持極高的一致性，更在 WorldArena 與 WorldScore 兩大權威具身智能 (Embodied AI) 基準評測中，強勢擊敗國際巨頭穩居雙榜全球第一。
