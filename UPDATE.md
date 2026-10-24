@@ -16,6 +16,16 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[Kimi K3.1 Pro (Moonshot：2.8T／104B MoE 開源權重旗艦，1M 上下文)](https://www.kimi.ai/blog/kimi-k3-1-pro)** `[2026-10-23]` 🔥 `[開源權重]` `[MoE]` `[1M上下文]` `[Agentic Coding]` `[Terminal-Bench]` `[網路安全降級]`
+- **[Carbon-X (Hugging Face 開放 DNA 對話模型：14.8B／DNA＋文字單一解碼器)](https://huggingface.co/HuggingFaceBio/Carbon-X)** `[2026-10-22]` 🔥 `[DNA]` `[基因變異效應]` `[BioAI]` `[Apache 2.0]` `[6-mer tokenizer]`
+- **[Kanana-2-Vision Encoder (Kakao 自研 VLM 專用視覺編碼器：426M／98M)](https://huggingface.co/collections/kakaocorp/kanana-2-vision-encoder)** `[2026-10-21]` 🔥 `[視覺編碼器]` `[VLM]` `[Native Resolution]` `[韓文 OCR]` `[Kanana Open License]`
+- **[DeepInfer (DeepSeek 自家生產線開源推論框架：V4.1-Flash serving stack)](https://github.com/deepseek-ai/DeepInfer)** `[2026-10-20]` 🔥 `[推論框架]` `[Speculative Decoding]` `[Apache 2.0]` `[V4.1-Flash]` `[Ascend 950]`
+- **[HybridAgent (Stanford＋Together AI)](https://arxiv.org/abs/2610.18861)** `[2026-10-18]` 🔥 `[Agent 推理]` `[潛在推理]` `[HybridLink]` `[工具調用]` `[開源權重]` `[MIT]`
+- **[DeepSeek-V4.1-Flash-1017 (DeepSeek)](https://huggingface.co/deepseek-ai/DeepSeek-V4.1-Flash-1017)** `[2026-10-17]` 🔥 `[開源權重]` `[MoE]` `[KV Cache 壓縮]` `[Coding Agent]` `[MIT]` `[1M上下文]`
+- **[Beam 1.0 (Reflection)](https://huggingface.co/reflection/Beam-1.0-501B-A23B)** `[2026-10-16]` 🔥 `[開源權重]` `[MoE]` `[Coding Agent]` `[Apache 2.0]` `[1M上下文]`
+- **[MOSS-Image (OpenMOSS 開源文生圖：5B DiT 專攻文字渲染與版面控制)](https://github.com/OpenMOSS/MOSS-Image)** `[2026-10-16]` 🔥 `[文字渲染]` `[版面控制]` `[Apache 2.0]` `[ComfyUI]`
+- **[Muse Spark Open (Meta Superintelligence Labs)](https://huggingface.co/meta-models/Muse-Spark-Open-816B-A42B)** `[2026-10-15]` 🔥 `[開源權重]` `[MoE]` `[原生多模態]` `[Coding Agent]` `[1M上下文]`
+- **[Scientific Agent Skills (K-Dense)](https://github.com/K-Dense-AI/scientific-agent-skills)** `[2026-10-14]` 🔥
 - **[H-JEPA (LeCun AMI 世界模型)](https://github.com/kevinghst/H-JEPA)** `[2026-10]` 🔥 `[世界模型]` `[JEPA]` `[分層規劃]` `[視覺規劃]` `[具身智能]`
 - **[Whistle (Cactus Compute)](https://cactuscompute.com/blog/whistle)** `[2026-10]` 🔥 `[端側ASR]` `[超輕量]` `[CPU推理]` `[語音工具調用]` `[量化]`
 - **[S1-mini (Superwhisper)](https://huggingface.co/superwhisper/s1-mini)** `[2026-10]` 🔥 `[ASR後處理]` `[文本歸一化]` `[ITN]` `[端側部署]` `[Qwen3微調]`
