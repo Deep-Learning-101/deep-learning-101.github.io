@@ -16,6 +16,10 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[Harness² (Google Research)](https://github.com/google-research/harness2)** `[2026-10]` 🔥 `[Agent自我優化]` `[Harness工程]` `[遞歸自我改進]` `[無需Grader]` `[Apache 2.0]`
+- **[Qwen-Audio-Jev (Alibaba Token Foundry)](https://arxiv.org/abs/2610.21614)** `[2026-10]` 🔥 `[音訊決策]` `[Jev決策頭]` `[選擇判斷評分]` `[概率校準]` `[高吞吐]` `[未開源]`
+- **[Xiaomi-Lens-0 (SeerRay-Lab)](https://github.com/SeerRay-Lab/Xiaomi-Lens-0)** `[2026-10]` 🔥 `[指代實例分割]` `[Qwen3.5-4B底座]` `[Mask Token]` `[視覺Latent推理]` `[Apache 2.0]`
+- **[WeVisOne-VL (Tencent 微信視覺)](https://github.com/Tencent/WeVisOne-VL)** `[2026-10]` 🔥 `[視覺大一統]` `[物體級像素級通吃]` `[Qwen3-VL底座]` `[座標Token]` `[免SAM]` `[Apache 2.0]`
 - **[Mistral Large 4 (Le Chonk：1T MoE 開源權重旗艦，預覽後三週強化版，編碼與資安雙主攻)](https://huggingface.co/blog/mistral-large4)** `[2026-10-29]` 🔥 `[1T MoE]` `[開源權重]` `[1M上下文]` `[Agentic Coding]` `[資安防禦]` `[MLA+DSA稀疏注意力]`
 - **[Gemini 4 Carbon(Google DeepMind：資安＋長程工程最強前沿模型，首批只給資安防禦者)](https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/)** `[2026-10-29]` 🔥 `[閉源前沿]` `[資安防禦]` `[長程Agent]` `[Intelligence Index 59]` `[Fairwind限定]` `[對齊強化]`
 - **[Kanana-2-Embedding(Kakao：韓語檢索專用雙模型，3B＋蒸餾 1.3B，MRL 可調維度)](https://biz.heraldcorp.com/article/10919060)** `[2026-10-29]` 🔥 `[韓語檢索]` `[Embedding]` `[開源權重]` `[MRL可調維度]` `[知識蒸餾]` `[個人化Agent檢索]`
