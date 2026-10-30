@@ -16,6 +16,22 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[Mistral Large 4 (Le Chonk：1T MoE 開源權重旗艦，預覽後三週強化版，編碼與資安雙主攻)](https://huggingface.co/blog/mistral-large4)** `[2026-10-29]` 🔥 `[1T MoE]` `[開源權重]` `[1M上下文]` `[Agentic Coding]` `[資安防禦]` `[MLA+DSA稀疏注意力]`
+- **[Gemini 4 Carbon(Google DeepMind：資安＋長程工程最強前沿模型，首批只給資安防禦者)](https://deepmind.google/blog/gemini-4-carbon-our-next-frontier-model/)** `[2026-10-29]` 🔥 `[閉源前沿]` `[資安防禦]` `[長程Agent]` `[Intelligence Index 59]` `[Fairwind限定]` `[對齊強化]`
+- **[Kanana-2-Embedding(Kakao：韓語檢索專用雙模型，3B＋蒸餾 1.3B，MRL 可調維度)](https://biz.heraldcorp.com/article/10919060)** `[2026-10-29]` 🔥 `[韓語檢索]` `[Embedding]` `[開源權重]` `[MRL可調維度]` `[知識蒸餾]` `[個人化Agent檢索]`
+- **[LFM3（Liquid AI：六模型 2B 級端側家族，一個骨幹分出文字／視覺／聲音／全模態／決策）](https://www.liquid.ai/blog/lfm3)** `[2026-10-28]` 🔥 `[三混合架構]` `[端側Agent]` `[256K上下文]` `[開源權重]` `[多模態家族]` `[單GPU微調]`
+- **[Genie 4（Google DeepMind：原生音訊＋即時轉向的世界模型，Gemini 在迴圈內導引）](https://deepmind.google/blog/genie-4-a-new-generation-of-world-simulation/)** `[2026-10-28]` 🔥 `[世界模型]` `[原生音訊]` `[即時轉向]` `[Gemini導引]` `[研究預覽]` `[SynthID]`
+- **[Nemotron 3.5 Transcribe（NVIDIA：40 語轉錄＋說話人標註＋翻譯＋錄音問答，單一檢查點）](https://huggingface.co/blog/nvidia/nemotron-transcribe-granary)** `[2026-10-28]` 🔥 `[多語ASR]` `[說話人標註]` `[錄音問答]` `[MoE]` `[Granary-v2]` `[OpenMDW]`
+- **[Unlimited OCR 2 (無限 OCR 2：百頁文件一次解析)](https://github.com/baidu/Unlimited-OCR)** `[2026-10-27]` 🔥 `[長文件解析]` `[SR-SWA注意力]` `[恆定顯存]` `[百頁文件]` `[MIT開源]` `[VLM文件解析]`
+- **[GPT-6.1 Terra (OpenAI)](https://openai.com)** `[2026-10-26]` 🔥 `[電腦操作]` `[視覺推理]` `[閉源API]` `[成本效率]` `[ChatGPT Work]` `[Codex]`
+- **[TimeH2O-v1 (H2O.ai)](https://huggingface.co/h2oai/timeh2o-v1)** `[2026-10-26]` 🔥 `[時間序列預測]` `[零樣本]` `[基礎模型]` `[非商業授權]` `[fev-bench]` `[機率預測]`
+- **[AI21 LIFT-Bench／LIFT-Train（章節錨定指令遵循評測＋防獎勵駭客訓練集）](https://github.com/AI21Labs/lift-bench)** `[2026-10-25]` 🔥 `[指令遵循]` `[RL獎勵]` `[評測基準]` `[Apache-2.0]` `[文件起草]` `[LLM評判]`
+- **[Microsoft Agensh（無中央編排、1,024 個 coding agent 自組織框架）](https://github.com/microsoft/Agensh)** `[2026-10-24]` 🔥 `[多智能體]` `[無編排]` `[Coding Agent]` `[MIT]` `[ProgramBench]` `[自組織]`
+- **[Nanbeige4.3-33B（BOSS 直聘實驗室、33B 密集 agentic coding 教師模型、512K 上下文）](https://huggingface.co/Nanbeige/Nanbeige4.3-33B)** `[2026-10-24]` 🔥 `[開源權重]` `[Agentic Coding]` `[Apache-2.0]` `[512K上下文]` `[密集模型]` `[教師模型]`
+- **[Hi3D V1.0 (前身 Sparc3D：參考圖＋粗網格→高解析幾何細化)](https://github.com/hi3d-official/Hi3Dv1.0)** `[2026-10-23]` 🔥 `[3D幾何細化]` `[Image-to-3D]` `[Sparse VAE]` `[1536³]` `[Hi3D Open License]` `[推論限定]`
+- **[NVIDIA Nemotron 3.5 Bolt E4B 4GB（Gemma 4 E4B 後訓練、4GB 顯存本地語音助手與機器人模型）](https://huggingface.co/nvidia/NVIDIA-Nemotron-3.5-Bolt-E4B-4GB)** `[2026-10-23]` 🔥 `[開源權重]` `[SLM]` `[端側 Agent]` `[工具呼叫]` `[Jetson]` `[OpenMDW-1.1]`
+- **[LFM2.5-24B-A2B (Liquid AI)](https://huggingface.co/LiquidAI/LFM2.5-24B-A2B)** `[2026-10-13]` 🔥 `[端側Agent]` `[MoE]` `[純推理模型]` `[工具調用]`
+- **[context-mode](https://github.com/mksglu/context-mode)** `[2026-10-12]` 🔥 `[ContextWindow優化]` `[MCP伺服器]` `[CodingAgent]` `[會話記憶]`
 - **[Kimi K3.1 Pro (Moonshot：2.8T／104B MoE 開源權重旗艦，1M 上下文)](https://www.kimi.ai/blog/kimi-k3-1-pro)** `[2026-10-23]` 🔥 `[開源權重]` `[MoE]` `[1M上下文]` `[Agentic Coding]` `[Terminal-Bench]` `[網路安全降級]`
 - **[Carbon-X (Hugging Face 開放 DNA 對話模型：14.8B／DNA＋文字單一解碼器)](https://huggingface.co/HuggingFaceBio/Carbon-X)** `[2026-10-22]` 🔥 `[DNA]` `[基因變異效應]` `[BioAI]` `[Apache 2.0]` `[6-mer tokenizer]`
 - **[Kanana-2-Vision Encoder (Kakao 自研 VLM 專用視覺編碼器：426M／98M)](https://huggingface.co/collections/kakaocorp/kanana-2-vision-encoder)** `[2026-10-21]` 🔥 `[視覺編碼器]` `[VLM]` `[Native Resolution]` `[韓文 OCR]` `[Kanana Open License]`
