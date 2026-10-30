@@ -1203,6 +1203,60 @@ RAG 框架：LlamaIndex + identity context middleware
 
 ---
 
+## 常見問題 FAQ
+
+### Q：企業導入 RAG 知識庫，如何避免機密資料外洩與 AI 幻覺？
+
+必須採用 100% 地端私有部署搭配開源模型 (如 Qwen3-Embedding + Ollama/xinference)，並在檢索層導入重排序 (Rerank)、Chunking 策略優化與 LLM-Guard 零信任護欄。結合 Visual RAG 的無向量架構，可將幻覺率壓低至商用標準的 5% 以下，同時確保資料不出境。
+
+### Q：RAG 的 Chunking 策略有哪些？如何避免語意被截斷？
+
+主要有六大策略：①重疊切割 (基礎兜底，chunk_size 的 10-20% 重疊)；②語意邊界切割 (按句子/段落邊界，需 NLP 工具)；③句子視窗檢索 (細粒度存儲，檢索後動態擴展上下文)；④父子切割 (小塊精準檢索 + 大塊生成)；⑤命題化切割 (LLM 分解為獨立命題，適合醫療/金融高精度場景)；⑥Contextual Retrieval (Anthropic 2024，為每個 chunk 補全背景說明後再索引，可降低 49% 檢索失敗率)。
+
+### Q：Qwen3-Embedding 和 BGE-M3 哪個更適合繁體中文 RAG？
+
+Qwen3-Embedding-8B 目前是 MTEB 全球第 2、開源第 1 (得分 68.12)，C-MTEB 中文評測得分 72.88，全面超越 BGE-M3 (64.63 / 68.31)。純文字檢索若預算允許，閉源的 google/gemini-embedding-001 (MTEB 68.61)是性能天花板；若需同時處理圖文影音 PDF 的多模態場景，可評估 google/gemini-embedding-2 (公開預覽，原生四模態同一向量空間)或 jinaai/jina-embeddings-v5-omni-small (開源，2026-05 發布，與舊索引 bit-identical 免重建)。BGE-M3 仍適合需要多向量 (密集+稀疏)混合檢索的特殊場景。
+
+### Q：什麼是混合檢索 (Hybrid Search)？為何比單純向量檢索更好？
+
+混合檢索結合向量語義搜尋 (捕捉語義相似性)與 BM25 全文關鍵字搜尋 (確保精確詞彙匹配)。向量搜尋可能忽略關鍵字，BM25 無法理解語義，兩者互補能大幅提升覆蓋率 (Recall)。Anthropic 的 Contextual Retrieval 實驗顯示，混合檢索比純向量搜尋將 Top-20 失敗率降低約 49%。
+
+### Q：Rerank 重排序是什麼？Qwen3-Reranker 比 BGE-reranker 好在哪裡？
+
+Rerank 使用 Cross-Encoder 架構，將查詢與候選文件成對輸入模型進行深度相關性評分，是「從找得全到選得準」的關鍵一步。Qwen3-Reranker-4B/8B 在MTEB-R、CMTEB-R、MMTEB-R 及程式碼檢索上全面超越前代 BGE-reranker-v2-m3 (例如 CMTEB-R 75.94 vs 72.16)，已成為繁體中文 RAG 系統的首選 Reranker。
+
+### Q：無向量視覺 RAG (Visual RAG) 如何解決 PDF 表格與複雜排版問題？
+
+傳統 RAG 提取 PDF 表格時會將 2D 結構壓扁為 1D 純文字，導致欄位錯位與 LLM 幻覺。Vectorless Visual RAG 完全捨棄文字切塊與向量化，改以底層物理版面解析工具 (如 OpenDataLoader + PyMuPDF)建立 JSON 目錄樹，記錄表格與圖片的精準 Bounding Box 與絕對頁碼。查詢時 LLM 先閱讀輕量目錄定位頁碼，再直接調用該頁高畫質原始截圖 (JPEG/PNG)送給多模態 LLM (如 Gemini 2.5 Pro、GPT-4o)看圖作答，實現 0% 排版遺失。特別適合金融報告、法律合約、醫療 SOP 等需嚴格追蹤引用來源的場景。
+
+### Q：RAG 系統沒有歷史問答對，第一天怎麼建立評估基準？
+
+從 Chunk 對 LLM 合成問答對建立初始評估集，無需人工標註。5000 份文件約生成 2100 條可用問答對，耗時約 3 小時 LLM 調用。第 3–4 週引入 3–5 位領域專家標註 100–150 條難 case。文件質量治理 (OCR 修正、去重、版本管理)可讓 Context Recall 從 0.67 提升到 0.79。上線後每月從真實對話篩 50–100 條替換合成數據，逐步讓評估集對齊真實用戶分佈。
+
+### Q：RAG 幻覺有哪些根源？如何系統性防控？
+
+RAG 幻覺有兩個根源：一是檢索失敗，LLM 靠自身訓練知識填充 (例如知識庫寫「7 天退款」但未召回，LLM 答「30 天」)；二是檢索成功但 LLM 超範圍輸出，在 context 基礎上加入了文件未有的推斷。四道防線按成本遞增：①Prompt 強制四條約束規則；②Rerank 分數低於閾值 (0.3–0.6)直接拒答；③生成後 LLM 引用核查 (適合醫療/法律場景，成本翻倍)；④結構化 JSON 輸出附 source_ids 強制溯源。普通企業知識庫部署防線一+二即可，醫療合規建議四線全上。
+
+### Q：如何評估 RAG 系統的檢索層品質？Hit@K 和 MRR 怎麼用？
+
+Hit@K 衡量正確 chunk 是否出現在前 K 條結果中 (Hit@5 < 0.7 說明 Embedding 或 Chunking 有問題；> 0.8 說明問題在生成層)。MRR (平均倒數排名)衡量正確 chunk 的排名位置，排名 1 得 1.0 分、排名 5 得 0.2 分，MRR < 0.5 說明 Rerank 效果不足。兩者需搭配使用：Hit@5 高但 MRR 低，說明找到了但排名靠後，送給 LLM 的 context 品質會下降。這兩個指標應在 RAGAS 評估之前先跑，確認檢索層合格再進入生成層診斷。
+
+### Q：企業 AI 系統為何需要「一鍵退場 (Kill Switch)」機制？
+
+AI 模型會隨時間與新資料發生「模型漂移 (Model Drift)」，導致決策偏差。一鍵退場機制讓管理層在 AI 出現歧視偏好或超出警戒紅線時，能瞬間切換回全人工審核模式，是防止演算法失控、確保企業法規遵循的最後安全底線，也是 AI 永續治理的核心要件。
+
+### Q：企業 RAG 知識庫如何做到不同部門的資料權限隔離？
+
+核心是 Identity-Aware Retrieval：文件入庫時附加 ACL metadata (department、clearance_level、expiry)，查詢時根據用戶身份從 Identity Provider (如 Okta / Azure AD)即時取得 user.groups 與 user.clearance_level，再注入向量資料庫的 metadata pre-filter。向量相似度再高，只要 metadata filter 不過，chunk 就不會被取出放進 LLM context。護欄 (Guardrail)是在 output 端過濾，無法阻止敏感 chunk 進入 context，因此 Access Control 必須在 retrieval 層發生。依隔離程度分四層：Metadata Filter (一般部門分層)、Partition/Namespace (財務 vs 工程)、獨立 Collection (董事會機密)、獨立 Vector DB 實例 (法規要求實體隔離)。
+
+### Q：員工離職或換部門後，企業 RAG 的向量資料庫需要重建嗎？
+
+不需要重建 index。正確的設計是：Access Control 從 Identity Provider (如 Azure AD / Okta)即時取得，與 vector index 解耦。員工換部門只需更新 AD group 成員，下次查詢時 metadata filter 自動反映新權限；員工離職則停用帳號，token 失效後查詢就無法發起。文件設定 expiry 欄位後，過期文件也會被 filter 自動排除。唯一需要注意的真實風險是 Session Memory (多輪對話歷史)：若 session 沒有綁定 user_id 且結束後未清除，前輪取出的敏感 chunk 可能殘留在 context，需做 session-level ACL 管理。
+
+### Q：企業 RAG 權限控管有哪些開源工具？Qdrant、Weaviate 怎麼選？
+
+向量資料庫方面：Qdrant 以 payload filter + multi-tenancy collection 實作 ACL，部署簡單，適合多數企業場景；Weaviate 有原生 RBAC 與 per-class auth，Enterprise 版功能更完整，適合需要細粒度角色管理的場景；Milvus/Zilliz 支援 RBAC 與 Partition Key，適合大規模資料；商用方面 Azure AI Search 有 security trimming 直接整合 Azure AD 群組，Google Vertex AI Search 繼承 Google Workspace 原生 ACL。授權決策引擎方面：OpenFGA (Google Zanzibar 開源實作)支援關係式授權，適合複雜組織結構；OPA (Open Policy Agent)用 Rego 語言寫政策，可嵌入任何服務；Casbin 支援 RBAC/ABAC/ReBAC，Python/Go/Java 皆有。推薦開源組合：Keycloak (身份認證)+ OpenFGA (授權決策)+ Qdrant (向量搜索)+ LlamaIndex identity middleware (RAG 框架)。
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
