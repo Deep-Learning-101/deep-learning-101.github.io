@@ -16,6 +16,14 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[Ripple-65B Preview (Ricursive Intelligence：65B 密集模型，Terminal-Bench 2.1 美國開源權重第一、3,200 萬美元研發成本)](https://huggingface.co/ricursiveAI/Ripple-65B-Preview)** `[2026-11-05]` 🔥 `[開源權重]` `[密集架構]` `[Agentic Coding]` `[Apache-2.0]` `[65B]` `[1M上下文]`
+- **[Tencent Hy4 (騰訊混元：正式版加視覺與電腦操作，API 先行、權重未出)](https://hunyuan.tencent.com/research/hy4)** `[2026-11-04]` 🔥 `[閉源API]` `[視覺理解]` `[電腦操作]` `[混元]` `[辦公Agent]` `[權重待釋出]`
+- **[Kimi K3.1 Pro 權重釋出 (Moonshot：2.8T／104B 旗艦權重落地，自訂授權、MXFP4)](https://huggingface.co/moonshotai/Kimi-K3.1-Pro)** `[2026-11-04]` 🔥 `[開源權重]` `[MoE]` `[1M上下文]` `[MXFP4]` `[Agentic Coding]` `[權重釋出]`
+- **[Anthropic FlashProve (可驗證推論 Provable Inference：用密碼學證明回覆出自哪一組權重)](https://www.anthropic.com/research/provable-inference)** `[2026-11-03]` 🔥 `[可驗證推論]` `[zkSNARK]` `[LLM-Guard]`
+- **[LongCat-2.5 (美團：1.6T 原生多模態長程 Agent 模型，API 先行、權重尚未公開)](https://longcat.ai/blog/longcat-2.5)** `[2026-11-02]` 🔥 `[長程Agent]` `[原生多模態]` `[MoE]` `[閉源API]` `[1.6T]` `[W4A4]`
+- **[Vercel Labs agent-desktop（電腦操作工具：不看截圖、讀系統無障礙樹，用編號操作桌面 App）](https://github.com/vercel-labs/agent-desktop)** `[2026-10-31]` 🔥 `[電腦操作]` `[Agent基礎設施]` `[Apache-2.0]` `[無障礙樹]` `[跨平台]` `[低Token]`
+- **[DeepSeek dsh-superagent-prototype（主動式程式碼代理原型：監聽一個 GitHub 倉庫，授權請求各自開工單平行處理、以 PR 回覆）](https://github.com/deepseek-ai/dsh-superagent-prototype)** `[2026-10-31]` 🔥 `[程式碼代理]` `[多工單平行]` `[開源原型]` `[MIT]` `[GitHub自動化]` `[授權治理]`
+- **[Auto Ontology (NVIDIA)](https://github.com/NVIDIA/auto-ontology)** `[2026-10]` 🔥 `[企業語義層]` `[Ontology]` `[Text-to-SQL]` `[MCP工具]` `[NVIDIA NIM]` `[Apache 2.0]`
 - **[Harness² (Google Research)](https://github.com/google-research/harness2)** `[2026-10]` 🔥 `[Agent自我優化]` `[Harness工程]` `[遞歸自我改進]` `[無需Grader]` `[Apache 2.0]`
 - **[Qwen-Audio-Jev (Alibaba Token Foundry)](https://arxiv.org/abs/2610.21614)** `[2026-10]` 🔥 `[音訊決策]` `[Jev決策頭]` `[選擇判斷評分]` `[概率校準]` `[高吞吐]` `[未開源]`
 - **[Xiaomi-Lens-0 (SeerRay-Lab)](https://github.com/SeerRay-Lab/Xiaomi-Lens-0)** `[2026-10]` 🔥 `[指代實例分割]` `[Qwen3.5-4B底座]` `[Mask Token]` `[視覺Latent推理]` `[Apache 2.0]`

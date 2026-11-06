@@ -1892,6 +1892,21 @@ Verdict: Unsafe</code></pre>
             </div>
         </div>
 
+<div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="provable-inference"><i class="fas fa-fingerprint icon-large mr-4 text-violet-500"></i>十、可驗證推論 (Provable Inference)：用密碼學證明回覆出自哪一組權重 <span style="font-size:0.55em; color:#64748b;">（2026-11-03 增補）</span></h2>
+            <div class="bento-text">
+                <p>託管推論有一個長期無法自證的缺口：使用者無法確認回覆真的出自服務商宣稱的那一組權重，路由商可能偷換成較便宜的模型、攻擊者可能竄改 token 流，單看輸出品質無法識破。Anthropic 的 <strong>FlashProve</strong> 是第一個把「可驗證推論」做到 400B 級模型的開源研究原型：服務商先公開一組權重的短指紋 (commitment)，每次回覆附上一份零知識證明 (zkSNARK)，驗證方不需權重、不用 GPU 就能核對「這組權重在這個提示下確實會產生這些 token」，權重本身不外洩。</p>
+                <ul>
+                    <li><strong>機制 (兩階段)：</strong>離線階段發表權重指紋，一次約 39 分鐘，約可供 1,600 萬次請求使用，之後需重新承諾；線上階段採事後批次證明，證明方以預填方式平行讀取已完成的文字、每批只開啟一次權重承諾。驗證方下載約 6.5 MB 的指紋後即可逐份核對。</li>
+                    <li><strong>實測數字 (皆 Anthropic 官方自報，Llama 4 Maverick 400B MoE、每 token 約啟動 17B、4 位元量化)：</strong>單張 H100 產生證明約 110 tokens／秒；每 1,024 token 請求的證明約 18.78 MB；驗證在 24 執行緒 CPU 上約 17 秒、單執行緒約 21 秒；證明耗時約為 vLLM 同批處理的 72 至 94 倍 GPU 時間 (官方稱約兩個數量級以內的開銷，遠低於先前預期)。先前同模型唯一公開紀錄 VerInf 約 0.02 tokens／秒、證明 93.6 GB，FlashProve 約快 5,500 倍。</li>
+                    <li><strong>保證與形式化驗證：</strong>完整性 (誠實證明必被接受)、可靠性 (偽造證明幾乎不可能)、零知識 (證明不洩漏權重、中間值與每層跑了哪些專家) 三項頂層性質以 Lean 證明助手形式化；程式碼、Lean 證明與文件以 Apache-2.0 釋出，含證明器、C++ 快速驗證器與 Lean 慢速驗證器及定理互動檢視器。</li>
+                    <li><strong>限制 (官方自列，研究原型、非生產部署)：</strong>只證明貪婪解碼下的整數版模型，浮點實作或採樣解碼的回覆可能在某位置偏離；只針對 MoE 架構設計，稠密模型不在本版範圍；架構本身不隱藏；旁路攻擊 (如證明耗時) 不在本版保證內；目前只證明 1,024 token 以內的上下文；證明為事後批次，非即時 inline。快速 C++ 驗證器本身不帶形式化保證，Lean 驗證器較慢但與可靠性定理對應；Anthropic 明言這是中期進展分享、非已完成的議程，現階段無部署計畫。</li>
+                    <li><strong>適用場景：</strong>第三方評測者確認受測模型即為上線模型、客戶確認路由商未偷換模型、監管者要求以證明佐證「只上線已核准模型」或「算力確實用於推論」；與硬體可信執行環境互補，而非取代。</li>
+                </ul>
+                <p style="font-size:0.85em; color:#64748b;">資源：<a href="https://www.anthropic.com/research/provable-inference">Anthropic 官方研究部落格 (2026-11-02 美國日期，台北時間 11 月 3 日窗口)</a> ｜ <a href="https://techcrunch.com/2026/11/03/anthropic-is-working-on-a-system-to-prove-ai-models-identity/">TechCrunch 報導 (2026-11-03)</a>。附註：日期務必分清，美國來源多標 11 月 2 日、英國來源標 11 月 3 日，皆指同一篇官方部落格；本卡片按台北時間窗口歸入 11 月 3 日。次級整理稱倉庫版本 0.16.0 標示為不維護的研究成品、不接受貢獻，該說法未經官方部落格逐字核實，取用前請以倉庫頁面為準。所有效能數字皆為 Anthropic 自報，尚未有獨立複現。</p>
+            </div>
+        </div>
+
         <div class="bento-box motion-div">
                         <h2 class="bento-title-large" id="ma-risks"><i class="fas fa-exclamation-triangle icon-large mr-4 text-cyan-500"></i>常見問題 <span style="font-size:0.55em; color:#64748b;">（2026-10-04 增補）</span></h2>
 
