@@ -4,7 +4,7 @@ title: 企業 AI 治理框架 2026：AI Gateway 架構、政策執行控制與 I
 description: "企業如何在不洩漏機密的前提下進行 AI 標竿分析？本指南解析差分隱私、零信任 AI Gateway 架構（含 Agent Identity、Agent Registry、Agent Observability）在 HR 高風險 AI 應用的落地做法，含 ISO/IEC 42001 稽核準備要點與 Spanner 資料層治理實踐。"
 permalink: /Blog/AI-Govs
 lang: zh-Hant
-keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分析", "ISO 42001", "EU AI Act", "主權AI", "企業風險管理"]
+keywords: ["AI治理", "差分隱私", "零信任架構", "HR AI", "AI標竿分析", "ISO 42001", "EU AI Act", "主權AI", "企業風險管理", "OWASP Agentic AI", "資料護欄", "人工智慧基本法"]
 tags: ["AI 治理", "AI 安全", "企業應用", "LLM"]
 ---
 
@@ -18,7 +18,7 @@ tags: ["AI 治理", "AI 安全", "企業應用", "LLM"]
 ---
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026年08月25日更新  
+**日期**：2026年11月10日更新  
 
 > 📌 **技術速覽**  
 > 企業推動 AI 治理常面臨商業機密外洩與 HR 高風險領域的偏誤困境。基於零信任與差分隱私架構，結合 ISO/IEC 42001 規範與可執行的 Technical Controls，協助企業在不洩漏敏感 PII 資料的前提下進行標竿分析，並建構具備一鍵退場機制的人機協作安全底線。
@@ -44,7 +44,10 @@ tags: ["AI 治理", "AI 安全", "企業應用", "LLM"]
 **📋 本文目錄**
 
 * [AI Governance：從政策到可執行控制](#govs-intro)
+* [治理先看威脅面：OWASP 的十七項 Agentic AI 威脅](#threats)
 * [企業 Agent 治理三件套：Registry、Gateway、Identity](#agent-arch)
+    * [Registry 的盲區：既有系統內建 AI 與供應商資料政策](#embedded-ai)
+    * [資料護欄的實務現實：攔截點與辨識引擎要分開看](#data-guardrail-reality)
 * [壹、標竿分析的矛盾：「知己知彼，卻不露底牌」](#benchmarking)
     * [一、資訊共享的囚徒困境](#benchmarking-1)
     * [二、解決方案：從「信任人」轉向「信任數學」](#benchmarking-2)
@@ -63,6 +66,7 @@ tags: ["AI 治理", "AI 安全", "企業應用", "LLM"]
     * [四、人機協作與接管機制](#human-takeover)
     * [五、治理最終應形成可稽核的 Evidence Package](#evidence-package)
     * [六、資料層：Agent 的記憶底座與進化燃料](#data-layer)
+* [陸、台灣法規面：人工智慧基本法與金融業 AI 指引](#tw-regulation)
 
 ---
 
@@ -100,6 +104,21 @@ User -> AI Gateway -> Data Classification -> DLP / PII Detection -> Model Policy
 換句話說：
 
 > **AI Governance 的終點不是一份 Governance Policy，而是一組可驗證的 Controls。**
+---
+
+<a id="threats"></a>
+
+## 治理先看威脅面：OWASP 的十七項 Agentic AI 威脅
+
+控制不是憑空設計的，要先知道在防什麼。OWASP《Agentic AI: Threats and Mitigations》是目前最完整的 Agent 威脅分類：v1.0 (2025 年) 列出 T1 至 T15，v1.1 (2025 年 12 月) 擴充為 T1 至 T17，OWASP《Top 10 for Agentic Applications 2026》附錄的對照矩陣亦以 17 項為準。手邊資料若只列 15 項，多半是版本落差，不是漏項。
+
+新增的兩項，正好是傳統應用安全最容易漏掉的：
+
+* **T16 Insecure Inter-Agent Protocol Abuse (代理間協定濫用)**：MCP 與 A2A 等協定的設計初衷是協作，信任假設偏強。攻擊面包括竄改代理間訊息、假冒代理身分、污染工具描述，以及利用含糊的同意流程繞過使用者同意。對應控制是代理身分綁定、訊息與工具描述的完整性驗證、接收端重新授權 (不因來自另一個 Agent 就放行)，以及同意流程不可由 Agent 代為完成。
+* **T17 Supply Chain Compromise (供應鏈入侵)**：Agent 的行為由模型、提示範本、工具與相依套件共同決定，任一元件被污染都會直接改變行為，被入侵 Agent 的輸出還可能經其他 Agent 消費而擴散。對應控制是來源驗證、版本釘選、建立 AI 元件清單 (AI-BOM)，以及元件升級比照上線變更流程。
+
+前面控制對照表中的 Tool Allowlist、SBOM、Model Provenance 與 Kill Switch，就是這些威脅的工程落點。先有威脅清單，控制才知道為何而設、缺了哪一項。
+
 
 ---
 
@@ -140,6 +159,15 @@ System ID、Owner、Business Purpose、Model、Model Version、Data Classificati
 
 > 哪一個 Model 最近換過版本？
 
+<a id="embedded-ai"></a>
+
+### Registry 的盲區：既有系統內建 AI 與供應商資料政策
+
+Registry 最大的盲區，通常不是自建的 Agent，而是**既有系統內建的 AI**。ERP、HRM、CRM 等企業系統 (如 Workday 的 Illuminate) 會隨版本更新帶入 AI 功能，部分預設啟用、部分綁在既有授權裡，沒人申報、沒人盤點，Registry 上自然不會有。補法是把供應商的版本發布說明納入變更管理檢視，逐版盤點新增的 AI 功能，再以租戶的功能清單與啟用紀錄逐項核對；評估時逐功能看 (可讀資料範圍、產出是否直接生效、有無人工覆核點)，不要逐系統整包放行。此類 AI 一律進 Registry，類型標記為「既有系統內建 AI」。
+
+第二個盲區是**供應商的資料政策**。每一套模型與工具進 Registry 時，應一併查核四件事：適用的方案別 (個人版、團隊版、企業版與 API 的政策完全不同)、資料留存期間與是否提供零留存、輸入輸出是否用於模型訓練及退出方式、子處理者清單。主要供應商的企業方案與 API 多已承諾不以客戶資料訓練模型，但條款會調整，查核結果應寫進合約並定期複核。Registry 欄位建議因此再加三項：Data Retention、Training Use、Embedded AI (是否為既有系統內建)。
+
+
 ---
 
 企業不應讓：
@@ -171,7 +199,7 @@ Authentication、Authorization、DLP、Prompt Filtering、Model Routing、Token 
 
 > **工程驗證**：當一個 Agent 試圖存取高成本旗艦模型時，Gateway 可自動降級至政策許可的輕量模型；當財務部的 MCP Server 被 Agent 呼叫時，Gateway 強制執行「唯讀策略」——Agent 能查詢數據，但無法寫入或刪除。這不是演示功能，而是生產系統中「治理政策被技術真正執行」的具體體現，是讓 Policy 從 PDF 走進架構的第一步。
 
-此外，每一個部署的 Agent 都應擁有獨立身份憑證（如 **SPIFFE ID**），成為可追蹤、可審計的「智能體護照」。搭配集中式 **Agent Registry**，企業才能真正回答：「公司到底跑了多少 Agent？哪些 Agent 可以呼叫外部 API？哪些 Agent 可以存取機密資料？」——這些問題的答案，是治理能落地的前提條件，不是錦上添花。
+此外，每一個部署的 Agent 都應擁有獨立身份憑證（如 **SPIFFE ID**），成為可追蹤、可審計的「AI Agent 護照」。搭配集中式 **Agent Registry**，企業才能真正回答：「公司到底跑了多少 Agent？哪些 Agent 可以呼叫外部 API？哪些 Agent 可以存取機密資料？」——這些問題的答案，是治理能落地的前提條件，不是錦上添花。
 
 當 Agent 透過 SPIFFE ID 向 RAG 知識庫發起查詢時，同一憑證應流入向量資料庫的 Identity-Aware Retrieval 層——每次向量搜索都攜帶 Agent 的身份與角色，讓 metadata pre-filter 按照 SPIFFE ID 對應的部門與機密等級，決定哪些 chunk 可被取出；而非由 LLM 輸出端的護欄事後攔截。→ [企業 RAG 知識庫的 Identity-Aware Retrieval 完整設計](../RAG#rag-acl)
 
@@ -348,6 +376,15 @@ Allowlist + Least Privilege + Scoped Credentials + Sandbox + Human Approval + Ra
 
 **RAG 知識庫讀取是一種典型的 Scoped Tool**：Agent 呼叫知識庫時，同樣適用 Least Privilege 原則——不應給所有 Agent 全庫讀取權，而是按 Agent 的 SPIFFE ID 動態決定可取回哪些 chunk。若 Agent 身份憑證未正確傳入向量資料庫的 metadata filter 層，向量相似度再高也不應回傳未授權的文件片段。換部門、離職等人員異動只需更新 Identity Provider（如 Azure AD），無需重建任何 embedding index，ACL 即時生效。→ [企業 RAG 的 Identity-Aware Retrieval 五層架構設計](../RAG#rag-acl)
 
+<a id="data-guardrail-reality"></a>
+
+### 資料護欄的實務現實：攔截點與辨識引擎要分開看
+
+治理架構圖裡的 DLP / PII Detection 只占一行，落地時卻是兩個獨立的問題：**攔截點** (在哪裡攔) 與**辨識引擎** (攔下來之後認不認得)。傳統 DLP 部署在端點、郵件與 Web 通道，看不到 API 呼叫與 Agent 之間的流量；Agent 場景的攔截點要移到三處：AI Gateway (模型呼叫)、API Gateway (系統呼叫)、工具執行層 (MCP Gateway)。能力面則以四件套評估：偵測、遮罩 (去識別化)、阻擋、工具與動作層管控，市面工具多半只齊備其中幾件，選型時要分開驗證。
+
+依我們 2026 年的實機測試 (10 款工具研究、8 款實測) 有三個結論值得先知道：第一，**沒有任何工具開箱支援台灣資料格式**，台灣手機與身分證字號可透過自訂辨識規則穩定處理，但這是導入時要自己完成的工作；第二，**中文姓名是全數工具的共同弱點**，主流 NER 模型以英文語料訓練，繁中場景需另以繁中 NER (如中研院 CKIP) 或結構化欄位補強；第三，工具掃描的是敏感資料字串，**不理解外洩意圖**，語意層的防護要靠判斷模型與資料最小化。完整的工具橫向比較與實測數據，見 [AI 大模型安全護欄綜合報告的企業資料護欄章節](https://www.twman.org/Cyber/LLM-Guard.html#data-guardrail)。
+
+
 ---
 
 <a id="ops"></a>
@@ -421,6 +458,18 @@ Agent 治理不只是在 Gateway 和觀測層做文章；**資料層的設計，
 - **資料飛輪**：使用越多 → 沉澱越多 → 反饋給 Agent 持續進化。這不是行銷語言，而是架構設計的選擇：有意識地把每次 Agent 交互沉澱為改善信號，才能讓系統從「部署後不變」走向「越用越好」，也讓治理投入形成可量化的長期回報。
 
 > 資料飛輪轉不起來的 Agent，遲早會被使用者拋棄。治理要有效，資料設計必須從第一天就考慮。
+---
+
+<a id="tw-regulation"></a>
+
+## 陸、台灣法規面：人工智慧基本法與金融業 AI 指引
+
+前面的框架以 EU AI Act 與 ISO/IEC 42001 為主，台灣企業還要對上本地規範，這一層在地化對接往往才是稽核時真正被問的。
+
+**人工智慧基本法**第 4 條定有七大原則：永續發展與福祉、人類自主、隱私保護與資料治理、資安與安全、透明與可解釋、公平與不歧視、問責，中央主管機關為國家科學及技術委員會。基本法是原則性立法，具體要求靠各目的事業主管機關的指引落地；本文的 Registry、Gateway 與 Evidence Package，正是把這七項原則轉成可稽核控制的工程作法。
+
+**金融業**另有金融監督管理委員會的「金融業運用人工智慧指引」，六大核心原則為：建立治理及問責機制、注重公平性及以人為本的價值觀、保護隱私及客戶權益、確保系統的穩健性與安全性、貫徹透明性與可解釋性、促進永續發展。金融機構的治理文件除了對齊國際框架，也應逐項對回這兩套本地規範，特別是高風險 AI 應用的評估與人工監督要求。
+
 
   <script type="application/ld+json">
   {
@@ -446,7 +495,7 @@ Agent 治理不只是在 Gateway 和觀測層做文章；**資料層的設計，
           "url": "https://deep-learning-101.github.io/"
         },
         "datePublished": "2026-01-01T08:00:00+08:00",
-        "dateModified": "2026-08-25T08:00:00+08:00"
+        "dateModified": "2026-11-10T08:00:00+08:00"
       },
       {
         "@type": "FAQPage",
@@ -497,6 +546,22 @@ Agent 治理不只是在 Gateway 和觀測層做文章；**資料層的設計，
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "至少需要四項治理基礎設施：①Agent Identity（SPIFFE ID 等獨立身份憑證，讓每個 Agent 可追蹤、可審計）；②Agent Registry（集中登記所有 Agent 與 MCP Server，消除影子 Agent）；③Agent Gateway（Ingress/Egress 雙向安全策略，可限制特定 Agent 存取模型類型，可對敏感資料 MCP Server 設唯讀政策）；④Agent Observability（DAG 視覺化協同拓撲 + 完整 trace，讓每步大模型耗時、Token 消耗、工具調用均可稽核）。缺少其中任何一項，Agent 在生產中就等同裸奔。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "OWASP 的 Agentic AI 威脅為什麼從 15 項變成 17 項？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "OWASP《Agentic AI: Threats and Mitigations》v1.0 (2025 年) 列出 T1 至 T15；v1.1 (2025 年 12 月) 新增 T16 代理間協定濫用 (Insecure Inter-Agent Protocol Abuse) 與 T17 供應鏈入侵 (Supply Chain Compromise)，成為 T1 至 T17，OWASP Top 10 for Agentic Applications 2026 亦以 17 項對照。只列 15 項的資料多為舊版本。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "台灣企業導入資料護欄 (Data Guardrail) 工具要注意什麼？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "依 2026 年實機測試，沒有任何主流工具開箱支援台灣資料格式：台灣手機與身分證字號需以自訂辨識規則補上，中文姓名則是全數工具的共同弱點，需繁中 NER 或結構化欄位補強。選型時應將攔截點 (Gateway 與工具執行層) 與辨識引擎分開評估，並以在地資料建立測試集驗收，不引用廠商的英文基準數字。"
             }
           }
         ]
