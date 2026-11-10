@@ -482,7 +482,7 @@
                     <li><a href="#challenges">三、 共同挑戰與模型侷限</a></li>
                     <li><a href="#frontiers">四、 技術前沿：兩大演進方向</a></li>
                     <li><a href="#trends">五、 未來趨勢：基礎免費化與企業級工程服務</a></li>
-                    <li><a href="#data-guardrail">六、 企業資料護欄橫向比較：8 工具實機驗證</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
+                    <li><a href="#data-guardrail">六、 企業資料護欄橫向比較：10 工具對照（含 8 工具實機驗證）</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
                     <li><a href="#tw-zh-findings">七、 實測關鍵發現：台灣／中文資料支援現況</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
                     <li><a href="#system-one">八、 System One 決策模型：護欄「判斷層」新選項</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
                     <li><a href="#ma-risks">九、 商用導入風險：2025–2026 資安併購潮</a> <span style="font-size:0.8em; color:#64748b;">（增補）</span></li>
@@ -1762,9 +1762,9 @@ Verdict: Unsafe</code></pre>
         </div>
 
         <div class="bento-box motion-div">
-            <h2 class="bento-title-large" id="data-guardrail"><i class="fas fa-database icon-large mr-4 text-cyan-500"></i>六、企業資料護欄（Data Guardrail）橫向比較：8 工具實機驗證 <span style="font-size:0.55em; color:#64748b;">（2026-09-29 增補）</span></h2>
+            <h2 class="bento-title-large" id="data-guardrail"><i class="fas fa-database icon-large mr-4 text-cyan-500"></i>六、企業資料護欄（Data Guardrail）橫向比較：10 工具對照（含 8 工具實機驗證） <span style="font-size:0.55em; color:#64748b;">（2026-09-29 增補）</span></h2>
             <div class="bento-text">
-                <p>以下為獨立研究團隊針對「Agent 使用過程中的<strong>資料管控</strong>」（敏感資料偵測、PII 遮罩／去識別、輸入／輸出內容管控、資料外洩阻擋、Tool／Action 層管控）所做的 10 工具研究＋8 工具實機測試（Linux VM：2 CPU／7.7GB RAM／無 GPU／無 Docker）。圖例：✅ 原生內建 ｜ 🔌 需整合第三方 ｜ ❌ 無 ｜ ◐ 部分</p>
+                <p>以下為獨立研究團隊針對「Agent 使用過程中的<strong>資料管控</strong>」（敏感資料偵測、PII 遮罩／去識別、輸入／輸出內容管控、資料外洩阻擋、Tool／Action 層管控）所做的 10 工具研究＋8 工具實機測試（Linux VM：2 CPU／7.7GB RAM／無 GPU／無 Docker）。總判：四件套（偵測、遮罩、阻擋、工具層管控）全原生者為 Enkrypt AI、Prompt Security、F5 三家；Pangea 僅工具層管控為部分支援，且為純 SaaS、資料須離境；開源以 LiteLLM＋Presidio 實測最完整。圖例：✅ 原生內建 ｜ 🔌 需整合第三方 ｜ ❌ 無 ｜ ◐ 部分</p>
                 <table>
                     <thead>
                         <tr>
@@ -1849,7 +1849,7 @@ Verdict: Unsafe</code></pre>
             <div class="bento-text">
                 <p><strong>實測結論：沒有任何工具開箱支援台灣資料。</strong>Gateway／框架（解決「在哪裡攔」）與偵測引擎（解決「能否辨識」）必須分開評估。</p>
                 <ul>
-                    <li style="margin-bottom: 0.75rem;"><strong>台灣手機／身分證</strong>：可透過自訂 regex／recognizer 穩定處理（Presidio、LiteLLM＋Presidio 實測通過）。注意 <code>\b</code> 在中文字緊貼識別碼時可能失效，例如「身分證A123456789」。</li>
+                    <li style="margin-bottom: 0.75rem;"><strong>台灣手機／身分證</strong>：可透過自訂 regex／recognizer 穩定處理，並以檢查碼驗證降低誤判（Presidio、LiteLLM＋Presidio 實測通過）。注意 <code>\b</code> 在中文字緊貼識別碼時可能失效，例如「身分證A123456789」。</li>
                     <li style="margin-bottom: 0.75rem;"><strong>中文姓名</strong>：Presidio、LlamaFirewall、Guardrails AI、LiteLLM＋Presidio、Portkey、NeMo、Scrubadub <strong>全部未能辨識</strong>。需加入中文 NER（如 CKIP／HanLP）、商用 DLP，或改用結構化欄位。</li>
                     <li style="margin-bottom: 0.75rem;"><strong>外洩語意</strong>：無工具真正理解「把剛才看到的客戶電話寄出去」這類外洩意圖；多數只能掃描文字中的敏感資料字串。</li>
                 </ul>
