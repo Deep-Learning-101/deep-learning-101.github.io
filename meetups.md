@@ -1,8 +1,11 @@
 ---
 layout: default
-title: 歷年 Meetup
+title: 那一年我們一起追的 AI (歷年 Meetup)
 permalink: /meetups
 description: "Deep Learning 101 歷年聚會直播活動 (摘要逐字稿及語音皆由 Gemini 2.5 Pro Preview 05-06 及 NotebookLM 所生成，處理好會陸續補上)。"
+lang: zh-Hant
+keywords: ["Deep Learning", "Deep Learning 101", "深度學習", "台灣人工智慧社團"]
+tags: ["Deep Learning", "Meetup"]
 ---
 
 {% include header.html %}
@@ -13,17 +16,60 @@ description: "Deep Learning 101 歷年聚會直播活動 (摘要逐字稿及語�
 
 ---
 
-<div style="display: flex; justify-content: center;">
-  <div style="position: relative; width: 100%; max-width: 560px; aspect-ratio: 16 / 9;">
-    <iframe
-      src="https://www.youtube.com/embed/Nl3IaN_zrt8"
-      style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;"
-      frameborder="0"
-      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen>
-    </iframe>
-  </div>
+**作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
+**Blog**：[Deep Learning 101 Meetup Anniversary (2017年11月11日)](https://blog.twman.org/2017/11/DeepLearning101.html)
+
+> 📌 **那些年，一起追過的 AI (深度學習 / Deep Learning)**
+
+<div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+  <figure style="width: calc(50% - 4px); margin: 0;">
+    <img src="./images/meetups-001.png" alt="Deep Learning 101 社團第一次" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">2016年11月11日第一場</figcaption>
+  </figure>
+  <figure style="width: calc(50% - 4px); margin: 0;">
+    <img src="./images/meetups-002.png" alt="Deep Learning 101 社團 場佈 台北101 83F" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">台北101 83F 場佈</figcaption>
+  </figure>
+  <figure style="width: calc(50% - 4px); margin: 0;">
+    <img src="./images/meetups-003.png" alt="Deep Learning 101 社團 再場佈" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">台北101 83F 再場佈</figcaption>
+  </figure>
+  <figure style="width: calc(50% - 4px); margin: 0;">
+    <img src="./images/meetups-004.png" alt="Deep Learning 101 社團直播設備" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">直播設備</figcaption>
+  </figure>
 </div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px;">
+  <figure style="width: calc(25% - 6px); margin: 0;">
+    <img src="./images/meetups-005.png" alt="Deep Learning 101 社團 Prof. Winston Hsu QA" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">2017年11月10日 Prof. Winston Hsu QA</figcaption>
+  </figure>
+  <figure style="width: calc(25% - 6px); margin: 0;">
+    <img src="./images/meetups-006.png" alt="Deep Learning 101 社團 Prof. Winston Hsu QA" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">2017年11月10日 Prof. Winston Hsu QA</figcaption>
+  </figure>
+  <figure style="width: calc(25% - 6px); margin: 0;">
+    <img src="./images/meetups-007.png" alt="Deep Learning 101 社團 Prof. Hung-Yi Lee" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">2018年02月02日 Prof. Hung-Yi Lee QA</figcaption>
+  </figure>
+  <figure style="width: calc(25% - 6px); margin: 0;">
+    <img src="./images/meetups-008.png" alt="Deep Learning 101 社團 Prof. Hung-Yi Lee QA" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">Prof. Hung-Yi Lee QA</figcaption>
+  </figure>
+</div>
+
+<div style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 12px;">
+  <figure style="width: calc(50% - 4px); margin: 0;">
+    <img src="./images/meetups-009.png" alt="Deep Learning 101 社團 撤出 101 後" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">2021年01月 撤出 101 後</figcaption>
+  </figure>
+  <figure style="width: calc(50% - 4px); margin: 0;">
+    <img src="./images/meetups-010.png" alt="Deep Learning 101 社團 露天版" style="width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block;">
+    <figcaption style="text-align: center; font-size: 0.85em; margin-top: 4px;">2021年01月29日 露天版 場佈</figcaption>
+  </figure>
+</div>
+
 
 ---
 
