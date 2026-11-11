@@ -13,7 +13,7 @@ keywords:
   - QLoRA
   - KV Cache
   - Chinchilla Scaling Law
-last_modified_at: "2026-03-29"
+last_modified_at: "2026-11-11"
 tags: ["GPU 硬體", "LLM", "推論框架", "GPU", "Token", "雲端或地端部署"]
 ---
 
@@ -42,10 +42,10 @@ tags: ["GPU 硬體", "LLM", "推論框架", "GPU", "Token", "雲端或地端部�
 
 | 平台 | 核心定位 | 計費模式特點 | 適合場景 |
 | --- | --- | --- | --- |
-| **NVIDIA Build**<br><br>[build.nvidia.com](build.nvidia.com) | 原廠 NIM 推論展示與 API 體驗 | **試用免費額度，商用轉售權**<br><br>提供註冊點數供開發者免費測試 API；商用落地則需購買 NVIDIA AI Enterprise 授權（約 $4,500/GPU/年）或部署於支援 NIM 的雲端。 | 快速原型驗證、評估開源模型微調效果、追求極致 TensorRT-LLM 效能。 |
-| **AMD Token Factory**<br><br>[developer.amd.com.cn](developer.amd.com.cn) | AMD 官方推廣 Instinct/Radeon 算力的模型市集 | **Token 計費（含每日免費額度）**<br><br>主打相容 OpenAI 格式的 API 呼叫，通常提供註冊/每日免費額度（如每日發放測試金額），推廣其 ROCm 堆疊。 | 評估 AMD GPU 推論性價比、希望規避 NVIDIA 生態鎖定、呼叫開源模型（如 DeepSeek、Llama）。 |
-| **GMI Cloud**<br><br>[gmicloud.ai](gmicloud.ai) | 專注 AI 的新興 GPU 裸機/租賃雲（Neo-Cloud） | **純硬體時租（按 GPU/hr）**<br><br>以小時計費（如 H100 約 $2.00 起/小時、GB200 約 $8.00 起/小時），亦支援長約保留執行個體與部分 Serverless API。 | 大規模模型訓練、全參數微調、長時間固定負載的吞吐量推論。 |
-| **台智雲 TWSC**<br><br>[docs.twcloud.ai](docs.twcloud.ai) | 台灣本土主權 AI 雲（台灣杉二號/AIHPC 架構） | **台幣時租（NTD/hr）、容器化算力**<br><br>按秒計費並轉換為小時計價（如各級容器 `c.super` 等），支援開發型容器、HPC 批次任務與專用模型推論。 | 台灣在地資料不出境（法規合規、金融/醫療）、需統編發票、政府或大專院校科研計畫。 |
+| **NVIDIA Build**<br><br>[build.nvidia.com](build.nvidia.com) | 原廠 NIM 推論展示與 API 體驗 | **試用免費額度，商用轉售權**<br><br>加入 NVIDIA 開發者計畫即可免費呼叫 NIM API 做原型驗證 (點數制已取消，改以 rate limit 管理，額度官方未公開)；商用落地則需購買 NVIDIA AI Enterprise 授權 ($4,500/GPU/年，官方牌價) 或部署於支援 NIM 的雲端。 | 快速原型驗證、評估開源模型微調效果、追求極致 TensorRT-LLM 效能。 |
+| **AMD Token Factory**<br><br>[developer.amd.com.cn](developer.amd.com.cn) | AMD 官方推廣 Instinct/Radeon 算力的模型市集 | **免費使用 (pts 計量)**<br><br>主打相容 OpenAI 格式的 API 呼叫，目前免費、不消耗積分，用量以 pts 計 (如 DeepSeek-V4-Flash 每百萬 token 輸入 0.14 pts)，每日上限依帳號而定、官方未公布統一數字，推廣其 ROCm 堆疊。 | 評估 AMD GPU 推論性價比、希望規避 NVIDIA 生態鎖定、呼叫開源模型（如 DeepSeek、Llama）。 |
+| **GMI Cloud**<br><br>[gmicloud.ai](gmicloud.ai) | 專注 AI 的新興 GPU 裸機/租賃雲（Neo-Cloud） | **純硬體時租（按 GPU/hr）**<br><br>以小時計費 (2026 年 11 月官網起價：H100 $2.60 起、H200 $3.20 起、B200 $5.00 起、GB200 $8.00 起，每 GPU 每小時)，亦支援長約保留執行個體與部分 Serverless API。 | 大規模模型訓練、全參數微調、長時間固定負載的吞吐量推論。 |
+| **台智雲 TWSC**<br><br>[docs.twcloud.ai](docs.twcloud.ai) | 台灣本土主權 AI 雲（台灣杉二號/AIHPC 架構） | **台幣時租（NTD/hr）、容器化算力**<br><br>按秒計費 (未稅)，2026 年價目表：H100 容器 (ugv.1g12c) NT$165/小時、A100 (vgah.xsuper) NT$97/小時、一般容器 c.super NT$58/小時，支援開發型容器、HPC 批次任務與專用模型推論。 | 台灣在地資料不出境（法規合規、金融/醫療）、需統編發票、政府或大專院校科研計畫。 |
 
 ### 0.2. 與 GCP (Vertex AI) 及 AWS Bedrock 的核心差異
 
