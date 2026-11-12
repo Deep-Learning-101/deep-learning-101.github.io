@@ -1,7 +1,7 @@
 ---
 layout: default
 title: 企業 GenAI 導入完整指南 2026：10 大陷阱 + 台灣金融製造業真實案例
-description: "打破盲目跟風與算力迷思！專為企業決策者打造的 GenAI 落地指南。盤點台灣金融與製造業真實案例，深入拆解數據外洩、算力迷航與自動化偏見等 10 大致命陷阱，助你以最低成本實現 AI 轉型。"
+description: "企業導入 GenAI 前先看這篇：10 大致命陷阱、台灣金融與製造業真實案例，拆解數據外洩、算力迷思、自動化偏見與 ROI 評估，給決策者的最低成本落地指南。"
 permalink: /Blog/AIBeginner
 lang: zh-Hant
 keywords: ["企業AI導入", "AI策略", "GenAI落地", "AI致命錯誤", "企業數位轉型", "AI ROI評估"]
@@ -542,6 +542,8 @@ GenAI 帶來了巨大的機遇，但也埋下了全新的、更隱蔽的地雷�
 - 內部知識庫與 RAG 落地（對應錯誤 4）→ [高精準度 RAG 系統實戰指南](https://deep-learning-101.github.io/RAG)
 - Agent 權限與治理架構（對應錯誤 1/6）→ [AI Agent 開發陷阱與解決方案](https://deep-learning-101.github.io/agent)
 - GPU 採購與算力成本精算 → [VRAM 顯存估算指南](https://deep-learning-101.github.io/GPU)
+- 模型選型與最新模型比較 → [LLM 選型與實測指南](https://deep-learning-101.github.io/Large-Language-Model)
+- 台灣在地模型實測數據 → [臺灣 LLM 性能評測與在地化分析](https://deep-learning-101.github.io/Blog/TW-LLM-Benchmark)
 
   <script type="application/ld+json">
   {

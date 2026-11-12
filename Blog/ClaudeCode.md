@@ -1,7 +1,7 @@
 ---
 layout: default
-title: "Claude Code 完全指南 2026：安裝設定、CLAUDE.md、Skills 教學與 MCP 整合避坑"
-description: "最完整的中文 Claude Code 教學。涵蓋 CLAUDE.md 寫法、Skills 安裝（Superpowers/Context7）、上下文管理技巧、free-claude-code 本地閘道，以及企業大型 Repo 部署策略。"
+title: "Claude Code 完全指南 2026：安裝、CLAUDE.md、Skills、MCP 整合一次學會 (附實戰避坑清單)"
+description: "繁體中文最完整的 Claude Code 實戰教學：安裝設定、CLAUDE.md 寫法、Skills 安裝管理、上下文管理技巧、free-claude-code 本地閘道，到企業大型 Repo 部署策略與常見踩坑解法，新手入門到團隊導入都適用。"
 permalink: /Blog/ClaudeCode
 lang: zh-Hant
 keywords: ["Claude Code", "AI Agent", "CLI", "Developer Tools", "Anthropic", "OPUS / SONNET / HAIKU"]

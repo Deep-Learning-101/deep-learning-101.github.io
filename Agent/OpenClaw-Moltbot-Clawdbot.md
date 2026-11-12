@@ -1142,3 +1142,8 @@ OpenClaw 之後，個人 Agent 出現了兩條新路線：一個往「多設備�
 **nanoMuse**（[🐙 GitHub](https://github.com/nano-muse/nanoMuse)｜[📄 論文](https://arxiv.org/abs/2610.08699)｜[🌐 官網](https://nanomuse.cn)）：浙大三位作者發起的獨立社群專案（與 Meta 無關，別被「浙大版 Muse」誤導）。每台設備各跑一個 Agent，經中繼互相委託；18 天破千星。⚠️ 注意：社區中繼 0.9 起新帳號預設開啟「幫助改進 AI 模型」（保留部分聊天文字做訓練），可在設定裡關閉。
 
 **OpenMuse**（[🐙 GitHub](https://github.com/CopilotKit/OpenMuse)）：CopilotKit 出品的個人版 Agent，iOS、Android、Web 同一套代碼，單一 owner，關掉 App 任務還在跑。它的企業版兄弟叫 OpenBot（[🐙 GitHub](https://github.com/CopilotKit/OpenBot)）：每個 Agent 一台獨立電腦、所有動作走唯一網關先裁定後記錄，是給公司安全評審看的；個人用看 OpenMuse 就好。
+
+## 延伸閱讀
+
+- [避開 AI Agent 開發陷阱與解決方案](https://deep-learning-101.github.io/agent)：OpenClaw 這類個人 Agent 做大之後會遇到的權限、安全與治理問題，先看這篇打底。
+- [Agentic Profiles 解析](https://deep-learning-101.github.io/Blog/Agentic-Profiles)：用四維坐標幫 Agent 的自主程度分級，判斷你的 Agent 該配多大的權限。

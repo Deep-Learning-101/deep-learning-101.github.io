@@ -1203,6 +1203,31 @@ RAG 框架：LlamaIndex + identity context middleware
 
 ---
 
+## 實作參數速查：Chunk Size、Overlap 與 Rerank 候選數怎麼設
+
+前面把策略與模型都講完了，這一節直接給可以上手的數字。先講明：以下是實務上常用的起點值，不是標準答案，你的文件型態與評估集才是最後裁判；調參順序建議先切分、再檢索、最後才動 Rerank。
+
+### Chunking 參數：先依文件類型選起點
+
+| 文件類型 | Chunk Size (tokens) | Overlap | 說明 |
+| :--- | :--- | :--- | :--- |
+| 法規、合約條文 | 300 至 500 | 15% 至 20% | 條文自成單位，切太長會把不同條文混進同一塊；重疊留高一點，避免跨條引用被切斷 |
+| 產品手冊、技術文件 | 500 至 800 | 10% 至 15% | 段落與步驟有連續性，太碎會讓操作步驟斷裂 |
+| 客服問答、FAQ 文件 | 100 至 300 (或一問一答一塊) | 0% 至 10% | 問答本身就是最小單位，優先用問答邊界切，不要硬湊長度 |
+| 論文、長篇報告 | 800 至 1,200 | 10% | 論證段落長，需要較大塊保留脈絡；可搭配父子切割，子塊檢索、父塊生成 |
+
+補充兩個常被問的：第一，chunk 不是越小越準，小塊的語意完整度差，向量反而容易抓錯鄰居；第二，與其糾結單一數字，不如先用評估集的檢索題跑兩三組參數對照，Hit@K 高的那組就是你的答案。
+
+### Rerank 參數：召回寧寬、精排寧準
+
+| 情境 | 第一階段召回 TopK | Rerank 後保留 TopN | 說明 |
+| :--- | :--- | :--- | :--- |
+| 一般問答 | 20 至 30 | 5 | 延遲與精度最均衡的起點，多數企業知識庫適用 |
+| 答案分散在多份文件 | 50 | 8 至 10 | 需要跨文件彙整時，召回太窄會直接漏掉來源 |
+| 即時對話 (延遲敏感) | 10 至 15 | 3 至 5 | 候選每多一批，Cross-Encoder 的計算就線性增加；延遲預算緊時先砍候選數 |
+
+Rerank 的代價是延遲：Cross-Encoder 要把查詢跟每一篇候選成對評分，候選數就是成本倍數。經驗上，GPU 部署下 50 篇候選約為數百毫秒等級，CPU 部署會慢約一個量級，這是決定要不要開 Rerank、以及候選池要開多大的現實邊界。若第一階段已用夠強的 Embedding 加混合檢索、且問題型態單純，可以先關掉 Rerank 量一次差距，再決定要不要付這個延遲。
+
 ## 常見問題 FAQ
 
 ### Q：企業導入 RAG 知識庫，如何避免機密資料外洩與 AI 幻覺？
@@ -1257,7 +1282,15 @@ AI 模型會隨時間與新資料發生「模型漂移 (Model Drift)」，導致
 
 向量資料庫方面：Qdrant 以 payload filter + multi-tenancy collection 實作 ACL，部署簡單，適合多數企業場景；Weaviate 有原生 RBAC 與 per-class auth，Enterprise 版功能更完整，適合需要細粒度角色管理的場景；Milvus/Zilliz 支援 RBAC 與 Partition Key，適合大規模資料；商用方面 Azure AI Search 有 security trimming 直接整合 Azure AD 群組，Google Vertex AI Search 繼承 Google Workspace 原生 ACL。授權決策引擎方面：OpenFGA (Google Zanzibar 開源實作)支援關係式授權，適合複雜組織結構；OPA (Open Policy Agent)用 Rego 語言寫政策，可嵌入任何服務；Casbin 支援 RBAC/ABAC/ReBAC，Python/Go/Java 皆有。推薦開源組合：Keycloak (身份認證)+ OpenFGA (授權決策)+ Qdrant (向量搜索)+ LlamaIndex identity middleware (RAG 框架)。
 
-  <script type="application/ld+json">
+### Q：Chunk size 到底要設多少？有沒有可以直接用的數字？
+
+先依文件類型選起點：法規條文 300 至 500 tokens、產品手冊 500 至 800、客服問答 100 至 300 或一問一答一塊、論文報告 800 至 1,200，overlap 抓 chunk size 的 10% 至 20%。這只是起點，最後要用自己的檢索評估題跑對照，Hit@K 高的參數組合才是正解，詳見本文「實作參數速查」一節。
+
+### Q：Reranker 要送幾篇候選？延遲太高怎麼辦？
+
+常見搭配是第一階段先召回 20 至 50 篇，Rerank 後留 5 至 10 篇給 LLM。延遲來自 Cross-Encoder 對每一篇候選成對評分，候選數就是成本倍數；延遲太高時先砍候選數 (例如 50 降到 20)，或換小一號的 Reranker (如 0.6B 級)。若問題型態單純且已用混合檢索，可以先關掉 Rerank 量一次差距，再決定要不要付這個延遲成本。
+
+<script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@graph": [
@@ -1394,6 +1427,22 @@ AI 模型會隨時間與新資料發生「模型漂移 (Model Drift)」，導致
             "acceptedAnswer": {
               "@type": "Answer",
               "text": "向量資料庫方面：Qdrant 以 payload filter + multi-tenancy collection 實作 ACL，部署簡單，適合多數企業場景；Weaviate 有原生 RBAC 與 per-class auth，Enterprise 版功能更完整，適合需要細粒度角色管理的場景；Milvus/Zilliz 支援 RBAC 與 Partition Key，適合大規模資料；商用方面 Azure AI Search 有 security trimming 直接整合 Azure AD 群組，Google Vertex AI Search 繼承 Google Workspace 原生 ACL。授權決策引擎方面：OpenFGA（Google Zanzibar 開源實作）支援關係式授權，適合複雜組織結構；OPA（Open Policy Agent）用 Rego 語言寫政策，可嵌入任何服務；Casbin 支援 RBAC/ABAC/ReBAC，Python/Go/Java 皆有。推薦開源組合：Keycloak（身份認證）+ OpenFGA（授權決策）+ Qdrant（向量搜索）+ LlamaIndex identity middleware（RAG 框架）。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Chunk size 到底要設多少？有沒有可以直接用的數字？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "先依文件類型選起點：法規條文 300 至 500 tokens、產品手冊 500 至 800、客服問答 100 至 300 或一問一答一塊、論文報告 800 至 1,200，overlap 抓 chunk size 的 10% 至 20%。這只是起點，最後要用自己的檢索評估題跑對照，Hit@K 高的參數組合才是正解。"
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Reranker 要送幾篇候選？延遲太高怎麼辦？",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "常見搭配是第一階段先召回 20 至 50 篇，Rerank 後留 5 至 10 篇給 LLM。延遲來自 Cross-Encoder 對每一篇候選成對評分，候選數就是成本倍數；延遲太高時先砍候選數，或換小一號的 Reranker (如 0.6B 級)。問題型態單純且已用混合檢索時，可先關掉 Rerank 量一次差距，再決定是否付這個延遲成本。"
             }
           }
         ]

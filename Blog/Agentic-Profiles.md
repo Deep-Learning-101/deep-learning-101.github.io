@@ -392,6 +392,11 @@ Model + Scaffolding + Memory + Tools + Identity + Environment
 #### Q5：Agentic 系統中的 RAG 知識工具如何量化評估品質？
 RAG 知識庫在 Agentic 系統中屬於 Tier 0（Observation Only）工具，但其輸出品質直接影響 Agent 後續行動的可靠性。建議使用 [RAGAS 框架](https://deep-learning-101.github.io/RAG#evaluation)的四大指標進行量化評估：**Context Precision**（檢索精確度）、**Context Recall**（檢索召回率）、**Faithfulness**（忠實度，最重要——Agent 基於幻覺內容做出的行動後果遠比單純問答嚴重）與 **Answer Relevancy**（回答相關性）。建議建立黃金測試集並將評估整合進 CI/CD，確保每次知識庫更新後 Faithfulness 不低於 0.8。
 
+### **延伸閱讀**
+
+* **[避開 AI Agent 開發陷阱與解決方案](https://deep-learning-101.github.io/agent)**：把 Agent 的自主程度拉高之前，先看實務上最常踩的開發陷阱與安全挑戰。
+* **[OpenClaw (MoltBot/Clawdbot) 個人 Agent 實作解析](https://deep-learning-101.github.io/Agent/OpenClaw-Moltbot-Clawdbot)**：高自主性個人 Agent 的真實樣貌，對照本文的分級看它落在哪一級。
+
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",

@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="AI 技術迅速發展，各種開源與商用工具層出不窮。然而，許多開發者在實戰中踩過不少坑——不論是工具穩定性、安裝複雜度，還是搜索準確率、引用錯誤等問題，都成為推動 AI 代理 (AI Agents，以下簡稱「AI Agents」) 與 代理式人工智慧 (Agentic AI，">
-    <title>AI 代理 (AI Agents) 與 Agentic AI 概論：從基礎到安全挑戰</title>
+    <meta name="description" content="Agentic AI 是什麼？和 AI Agent 差在哪？一張對照表講清定義與差異，整理實際應用、主流工具生態，以及開發 Agentic AI 最常踩的陷阱、安全挑戰與緩解策略。">
+    <title>Agentic AI 是什麼？AI Agent 與 Agentic AI 的差異、應用與開發陷阱全解析</title>
     <script src="https://cdn.tailwindcss.com/3.4.3"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.18.0/framer-motion.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -389,6 +389,26 @@
             </div>
         </div>
     </div>
+
+        <div class="grid-container single-column-focus">
+            <div class="bento-box motion-div">
+                <div class="motion-div-full-height">
+                    <i class="fas fa-bolt icon-large"></i>
+                    <h2 class="bento-title-large">先講結論：AI Agent 與 Agentic AI 差在哪 <span class="english-auxiliary-title">Quick Answer</span></h2>
+                    <div class="bento-text">
+                        <p><strong>AI Agent (AI 代理)</strong>是針對單一任務的執行體：接收指令、呼叫工具、把一件事做完，例如查資料並彙整成一份摘要。<strong>Agentic AI (代理式人工智慧)</strong>則是系統性的架構：能自己拆解目標、規劃多個步驟、跨工具協作，並依執行結果調整下一步，例如自己比價、訂票，航班變動時還會改訂並通知你。</p>
+                        <table>
+                            <tr><th align="center">比較面向</th><th align="center">AI Agent</th><th align="center">Agentic AI</th></tr>
+                            <tr><td>核心概念</td><td>單一任務的執行體</td><td>多步驟自主運作的系統架構</td></tr>
+                            <tr><td>如何運作</td><td>照指令呼叫工具，完成一件事</td><td>自己拆解目標、規劃、執行、檢查再調整</td></tr>
+                            <tr><td>自主程度</td><td>低到中，每步多半等指令</td><td>高，可長時間自行推進</td></tr>
+                            <tr><td>典型例子</td><td>客服回覆、資料查詢彙整</td><td>自動研究助理、跨系統流程自動化</td></tr>
+                        </table>
+                        <p>本文後半接著整理兩者的實際應用與工具生態，以及開發 Agentic AI 最常踩的陷阱、安全挑戰與緩解策略。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <div class="grid-container single-column-focus">
             <div class="bento-box motion-div">
