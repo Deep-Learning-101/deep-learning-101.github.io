@@ -31,7 +31,7 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 > 報告涵蓋 **TMLU**、**TMMLU+** 及 **Truthful QA** 等基準測試。結果顯示，針對繁體中文語境優化的模型，在 RAG 與在地知識問答上顯著優於通用模型。
 
 **作者**：[TonTon Huang Ph.D.](https://www.twman.org/)  
-**日期**：2026年07月28日更新
+**日期**：2026年11月14日更新 (實測數據為 2026 年 7 月版)
 
 | 🔥 技術傳送門 (Tech Stack) | 📚 必讀心法 (Must Read) |
 | :--- | :--- |
@@ -63,6 +63,13 @@ _Llama-3.1-Taiwan-8B-Instruct、Llama-3.1-Taiwan-8B、Llama-3-Taiwan-8B-Instruct
 
 
 ---
+
+> **2026 年 11 月現況更新**：本文實測數據為 2026 年 7 月版，以下是此後台灣模型版圖的變化，選型時請一併參考。
+> * **TAIDE 已換代**：最新對話模型為 2026 年 2 月釋出的 Gemma-3-TAIDE-12b-Chat-2602 (以 Gemma 3 為底、22B tokens 繁體中文資料、導入中期訓練、128K 上下文)，官方公布 TMMLU+ 平均 58.02、台灣用語子項 76.11，均高於 Gemma 3 原版；2026 年 6 月另推出法規檢索嵌入模型 Embeddinggemma-GTAIDE-300m-2605。本文第 III 節的 TAIDE 實測仍是 Llama 3.1 世代的數據，請勿直接當成現行版本的表現。
+> * **官方評測版圖出現**：數發部 AI 產品與系統評測中心 (AIEC) 於 2026 年 8 月 31 日公布主權 AI 評測結果 (共 188 個模型，以學測國文、社會科與台灣價值觀評比)，前 20 名中有 3 個台灣模型：雅婷智慧第 4 名、亞太智能機器 ACE-1-24B-2604 第 10 名、鴻海研究院 FoxBrain v2.0 第 12 名 (台灣價值觀正確率 92%)。
+> * **FoxBrain 已進 2.0**：鴻海研究院 2026 年推出 FoxBrain 2.0，強化台灣歷史、地理、文化與價值觀，並已落地政務應用 (如與雲林縣政府合作的公文系統)。
+> * **Llama-3-Taiwan (TAME) 系列**：截至 2026 年 11 月，公開管道未見新旗艦釋出，本文數據仍是該系列的現行參考。
+> * **接下來**：國科會已預告 2026 年底前公布新一代 TAIDE 模型 (含語言模型與行為模型)，屆時本文會再更新。
 
 ## 引言
 
@@ -275,7 +282,7 @@ Llama-3-Taiwan-70B-Instruct在TMLU測試中達到74.76%的成績，Taiwan Truthf
 TAIDE（Trustworthy AI Dialogue Engine）是由臺灣國家科學及技術委員會推動的計畫，其推出的模型具有官方背景，備受關注。所開發的Llama3-TAIDE-LX-8B-Chat-Alpha1模型是另一個專為臺灣本土環境優化的模型[20]。根據數據，該模型在TMLU上達到47.30%，Taiwan Truthful QA為50.79%，Legal Eval為37.80%，TMMLU+為39.03%[7]。
 
 TAIDE模型特別強化了繁體中文處理能力，並針對長文本理解進行優化，從8K擴展到131K的上下文長度[20]。但是與其它以臺灣本土相關LLM系列相比還有差距，尚需深入優化改善，期許不要又跟往常一樣只是雷聲大雨點小的計畫[7][20]。
-* **性能分析**：最新發布的 Llama-3.1-TAIDE-LX-8B-Chat 基於 Meta 最新的 Llama-3.1 模型進行開發，使其擁有比 yentinglin/Llama-3-Taiwan-8B（基於 Llama-3）更先進的架構基礎 [20][21]。然而，從 Open TW LLM Leaderboard 的數據來看，其早期 Alpha 版本 (Llama3-TAIDE-LX-8B-Chat-Alpha1) 的綜合表現落後於 yentinglin 的 8B 模型 [7]。TAIDE 團隊在其官方發布中，更側重於評估模型在辦公室常用任務（如摘要、翻譯、信件撰寫）上的表現，並在這些任務上展示了相較於 Llama-3.1-8B-Instruct 基礎模型的進步。但在更具挑戰性的長文本評測 CLongEval 上，其表現則不如基礎模型，這可能與其訓練資料和策略側重於特定任務有關 [20]。
+* **性能分析**：Llama-3.1-TAIDE-LX-8B-Chat (2025 年 2 月發布) 基於 Meta 的 Llama-3.1 模型進行開發 (TAIDE 現行版本已演進至 Gemma 3 世代，見文首現況更新)，使其擁有比 yentinglin/Llama-3-Taiwan-8B（基於 Llama-3）更先進的架構基礎 [20][21]。然而，從 Open TW LLM Leaderboard 的數據來看，其早期 Alpha 版本 (Llama3-TAIDE-LX-8B-Chat-Alpha1) 的綜合表現落後於 yentinglin 的 8B 模型 [7]。TAIDE 團隊在其官方發布中，更側重於評估模型在辦公室常用任務（如摘要、翻譯、信件撰寫）上的表現，並在這些任務上展示了相較於 Llama-3.1-8B-Instruct 基礎模型的進步。但在更具挑戰性的長文本評測 CLongEval 上，其表現則不如基礎模型，這可能與其訓練資料和策略側重於特定任務有關 [20]。
 
 #### 3. MediaTek-Research/Llama-Breeze2 系列
 由臺灣半導體巨頭聯發科（MediaTek）研究院推出的 Breeze2 系列，代表了臺灣產業界在大型語言模型領域的頂尖實力。包括Breeze-7B-Instruct-v1_0和Breexe-8x7B-Instruct-v0_1[22][23][24]。Breeze-7B-Instruct-v1_0在TMLU上達到55.57%，Taiwan Truthful QA為52.38%，Legal Eval為39.23%，TW MT-Bench為6.0，TMMLU+為41.77%[7][24]。
