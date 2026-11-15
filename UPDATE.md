@@ -16,6 +16,12 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[Gemini Decision 1 (Google：不寫一個字的決策模型，Decisions API 一次判 1,000 題)](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/)** `[2026-11-11]` 🔥 `[決策模型]` `[Jev]` `[閉源API]` `[多模態]` `[AI Agent]`
+- **[JevEmbed (哈工大深圳 HITsz-TMG：把 Embedding 模型變成決策引擎，繞過 Jev 的 255 候選上限)](https://github.com/HITsz-TMG/JevEmbed)** `[2026-10]` 🔥 `[決策模型]` `[Jev]` `[Embedding]` `[LoRA]` `[Apache-2.0]`
+- **[Chinese Decision Unified 0.8B (Qiang Yan：一份權重、兩種讀出，中文決策加實體抽取的非生成小模型)](https://huggingface.co/quincyqiang/chinese-decision-unified-0.8b)** `[2026-10]` 🔥 `[決策模型]` `[Jev]` `[NER]` `[資訊抽取]` `[Qwen3.5]` `[Apache-2.0]`
+- **[DecisionRAG (Cornell × ASAPP：不用檢索器，讓決策模型在文件樹上逐層導航選證據)](https://arxiv.org/abs/2610.35868)** `[2026-10-26]` 🔥 `[RAG]` `[Retriever-Free]` `[決策模型]` `[Jev]` `[階層檢索]`
+- **[Cangjie Skill 倉頡 (kangarooking：把書、長影片、播客蒸餾成可呼叫的 Agent Skill)](https://github.com/kangarooking/cangjie-skill)** `[2026-04-16]` 🔥 `[書籍蒸餾]` `[Agent Skill]` `[知識資產化]` `[MIT]`
+- **[WenetSpeech-Min (2026-09)](https://aslp-lab.github.io/WenetSpeech-Min-Repo/)**
 - **[llama.cpp v1.0.0 (本地 AI 推論引擎首個穩定版：公開 C API 定版、FP8 KV 快取、MoE 專家快取)](https://github.com/ggml-org/llama.cpp)** `[2026-11-13]` 🔥 `[本地推論]` `[開源框架]` `[語義化版本]` `[MIT]`
 - **[MetaEncoder v1 (Meta：28B 多模態嵌入加決策模型，Muse Glimmer 解碼器轉編碼器，14 項基準 11 項第一)](https://huggingface.co/facebook/meta-encoder-v1)** `[2026-11-12]` 🔥 `[開源權重]` `[多模態嵌入]` `[決策模型]` `[JevBench]` `[Muse Glimmer]` `[檢索]`
 - **[Gemini 4 Hydrogen (Google DeepMind：日常 Agent 執行層換代、AA 智慧指數 51 超 Argon，四檔思考加全域上線)](https://blog.google/intl/en-in/products/introducing-gemini-4-hydrogen/)** `[2026-11-12]` 🔥 `[閉源API]` `[Agent執行層]` `[Intelligence Index 51]` `[百萬上下文]` `[四檔思考]` `[Orchestrator]`
