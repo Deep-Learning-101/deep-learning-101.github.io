@@ -1905,6 +1905,18 @@ Verdict: Unsafe</code></pre>
                 </ul>
                 <p style="font-size:0.85em; color:#64748b;">資源：<a href="https://www.anthropic.com/research/provable-inference">Anthropic 官方研究部落格 (2026-11-02 美國日期，台北時間 11 月 3 日窗口)</a> ｜ <a href="https://techcrunch.com/2026/11/03/anthropic-is-working-on-a-system-to-prove-ai-models-identity/">TechCrunch 報導 (2026-11-03)</a>。附註：日期務必分清，美國來源多標 11 月 2 日、英國來源標 11 月 3 日，皆指同一篇官方部落格；本卡片按台北時間窗口歸入 11 月 3 日。次級整理稱倉庫版本 0.16.0 標示為不維護的研究成品、不接受貢獻，該說法未經官方部落格逐字核實，取用前請以倉庫頁面為準。所有效能數字皆為 Anthropic 自報，尚未有獨立複現。</p>
             </div>
+            <div class="bento-text">
+                <p>程式碼正確性長期只能靠人工審查與測試背書，形式化驗證雖是最高標準、卻貴到只有極少數關鍵系統用得起。Google DeepMind 的 <strong>AlphaProof Code</strong> 是第一個把多模型 Agent 框架做到「已部署密碼協議的編譯後機器碼」層級的公開成果：AI Agent 不只驗協議設計、而是直接證明編譯出來的機器碼確實守住安全承諾，驗證對象是保護數十億人對話的 Signal 協議實作。</p>
+                <ul>
+                    <li><strong>機制 (人機分工)：</strong>人類專家與多模型協作，把 Signal 的安全目標翻成形式化規格、每份規格皆經人類審查；再由 Gemini Carbon 驅動的 Agent 寫證明，生成超過 600 萬行 Lean 證明程式；Lean 核心自動檢查全部證明，Agent 再審計證明、只把 1% 需要人類再看的部分標出，大幅節省專家時間。</li>
+                    <li><strong>驗證標的與結果：</strong>libsignal v0.105.4 加 SPQR v1.6.0，以原廠 rustc 編成 AArch64 機器碼 (約 560KB 程式碼、約 14 萬條指令)，範圍為一對一會話的 PQXDH 握手與 Triple Ratchet；證明涵蓋訊息機密性與真實性、前向保密、入侵後安全、握手認證與握手保密，符號模型與計算模型雙軌獨立論證。全程四週、五人團隊，作者未親手寫任何證明碼；部落格稱這是第一次以任何方法 (不論有無 AI) 在此深度驗證已廣泛部署的協議實作。</li>
+                    <li><strong>對照驗證 (能分辨對錯)：</strong>把兩個真實已修復的漏洞重新植入隔離版程式碼，系統皆出具機器檢查的證明、認定該版本不安全，證明框架不只會說好話、也能抓出錯誤版本。</li>
+                    <li><strong>保證邊界與限制 (官方自列)：</strong>僅限一對一會話，不含群組聊天；密碼學原語視為假設、未驗證；計算模型證明不含 SPQR 癒合性的後量子保證 (證明假設攻擊者自選 SPQR 金鑰)；信任基礎約 1.8 萬行規格加約 8,000 行 AArch64 語義；僅驗證單一版本、單一架構，程式碼改版後證明不自動沿用。</li>
+                    <li><strong>開放產出：</strong>形式化驗證產物以 Apache-2.0 開源 (GitHub google-deepmind/code-verification)，含 Lean 規格、證明、Arm 語義與論文對照表；審查者網站可逐條瀏覽規格與證明。</li>
+                    <li><strong>適用場景：</strong>需以數學證明背書的關鍵軟體 (醫療裝置韌體、電網軟體、密碼協議實作)；資安團隊把形式化驗證納入高保證元件的驗收流程；研究者以此為範本、把 Agent 證明擴到其他已部署系統；與自動防禦 Agent (如 CodeMender) 搭配，形成證明加修補的防禦迴圈。</li>
+                </ul>
+                <p style="font-size:0.85em; color:#64748b;">資源：<a href="https://deepmind.google/blog/introducing-alphaproof-code/">Google DeepMind 官方部落格 (2026-11-10)</a> ｜ <a href="https://github.com/google-deepmind/code-verification">GitHub 倉庫 google-deepmind/code-verification (Apache-2.0)</a> ｜ <a href="https://google-deepmind.github.io/code-verification/">審查者網站：逐條瀏覽規格與證明</a> ｜ <a href="https://getaibook.com/news/alphaproof-code-signal-libsignal-machine-code-lean-proofs/">getaibook 深度解析 (2026-11-10)</a>。附註：行數口徑務必分清，部落格正文稱超過 600 萬行 Lean、文末摘要寫超過 300 萬行，兩處不一致；技術論文拆解約 650 萬行 (5.3M 與二進位相關、86 萬計算證明、35 萬符號證明)，取論文拆解為準。Claude Opus 5.5 協助規格撰寫、Gemini Carbon 為證明引擎，來自次級整理 (eesel.ai)，官方部落格僅明言 Gemini Carbon。Signal Shot 大挑戰背景 (2026 年 4 月由 Beneficial AI Foundation、Signal 與 Lean FRO 發起) 來自次級整理。所有數字皆為 DeepMind 官方或技術論文說法，尚未有獨立複現。</p>
+            </div>
         </div>
 
         <div class="bento-box motion-div">

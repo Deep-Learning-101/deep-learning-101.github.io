@@ -16,6 +16,20 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[llama.cpp v1.0.0 (本地 AI 推論引擎首個穩定版：公開 C API 定版、FP8 KV 快取、MoE 專家快取)](https://github.com/ggml-org/llama.cpp)** `[2026-11-13]` 🔥 `[本地推論]` `[開源框架]` `[語義化版本]` `[MIT]`
+- **[MetaEncoder v1 (Meta：28B 多模態嵌入加決策模型，Muse Glimmer 解碼器轉編碼器，14 項基準 11 項第一)](https://huggingface.co/facebook/meta-encoder-v1)** `[2026-11-12]` 🔥 `[開源權重]` `[多模態嵌入]` `[決策模型]` `[JevBench]` `[Muse Glimmer]` `[檢索]`
+- **[Gemini 4 Hydrogen (Google DeepMind：日常 Agent 執行層換代、AA 智慧指數 51 超 Argon，四檔思考加全域上線)](https://blog.google/intl/en-in/products/introducing-gemini-4-hydrogen/)** `[2026-11-12]` 🔥 `[閉源API]` `[Agent執行層]` `[Intelligence Index 51]` `[百萬上下文]` `[四檔思考]` `[Orchestrator]`
+- **[Perplexity Decider v1.3 (Perplexity：決策模型加 Locate 原文抽取，一次前向回機率加字元偏移，Apache-2.0 開源權重)](https://www.perplexity.ai/hub/blog/perplexity-decider)** `[2026-11-12]` 🔥 `[決策模型]` `[開源權重]` `[Apache-2.0]` `[Locate]` `[Qwen3.8]` `[零輸出token]`
+- **[MiniMax H3-Image (MiniMax：單一權重文生圖加編輯、原生 4K 十秒內、社群授權限區)](https://www.minimax.io/blog/minimax-h3-image)** `[2026-11-10]` 🔥 `[開源權重]` `[文生圖]` `[圖像編輯]` `[4K]` `[16MP]` `[6步蒸餾]` `[社群授權]`
+- **[Gemini Robotics 2.5 (Google DeepMind：最強 VLA 換代、賓士產線人形機器人分揀 96%、附開源安全基準)](https://deepmind.google/blog/gemini-robotics-2-5-accelerates-real-world-physical-intelligence/)** `[2026-11-10]` 🔥 `[閉源]` `[VLA]` `[具身智能]` `[工廠實測]` `[推理時安全引導]` `[ASIMOV-Jailbreak]` `[Gemini 4 Argon]`
+- **[AlphaProof Code (Google DeepMind：Agent 形式化驗證 Signal 協議編譯後機器碼，600 萬行 Lean、Apache-2.0 開源)](https://deepmind.google/blog/introducing-alphaproof-code/)** `[2026-11-10]` 🔥 `[形式化驗證]` `[Lean]` `[LLM-Guard]`
+- **[Meta Muse Ember (Meta：最小最便宜的 Muse 模型，Haiku 級表現、三分之一任務成本)](https://research.meta.ai/blog/muse-ember)** `[2026-11-09]` 🔥 `[閉源API]` `[成本效率]` `[Agent執行層]` `[Intelligence Index 36]` `[多模態]` `[Muse Wonder Full]`
+- **[Claude Fable 5.2 (Anthropic：最強通用模型換代、AA 智慧指數登頂，降價兩成)](https://www.anthropic.com/claude-fable-and-mythos-5-2)** `[2026-11-09]` 🔥 `[閉源API]` `[Intelligence Index 64.6]` `[長程Agent]` `[降價]` `[Fast Mode]` `[Mythos 5.2]`
+- **[LongCat-2.5 權重釋出 (美團：完整權重以 MIT 授權釋出，208 個 safetensors 分片)](https://huggingface.co/meituan-longcat/LongCat-2.5)** `[2026-11-09]` 🔥 `[開源權重]` `[MIT]` `[權重釋出]` `[長程Agent]` `[1.6T]`
+- **[NVIDIA Cosmos 3 (四款 16B 互動世界模型檢查點：自駕多鏡頭加光達、機器人雙臂模擬，OpenMDW1.1 開源權重)](https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation)** `[2026-11-06]` 🔥 `[開源權重]` `[世界模型]` `[互動模擬]` `[自駕]` `[具身智能]` `[OpenMDW1.1]`
+- **[Gemini Omni 1.2 Flash (Google：影片生成與編輯模型首度 GA，單片 15 秒、降價三成)](https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/)** `[2026-11-05]` 🔥 `[閉源API]` `[影片生成]` `[GA]` `[對話式編輯]` `[原生音訊]` `[SynthID]`
+- **[GPT-6 Cyber (OpenAI：授權漏洞挖掘與漏洞利用開發專用模型，ExploitGym 48.5%、Critical 級、Daybreak Red 管制)](https://openai.com/index/introducing-gpt-6-cyber/)** `[2026-11-05]` 🔥 `[漏洞挖掘]` `[漏洞利用開發]` `[LLM-Offense]`
+
 - **[Ripple-65B Preview (Ricursive Intelligence：65B 密集模型，Terminal-Bench 2.1 美國開源權重第一、3,200 萬美元研發成本)](https://huggingface.co/ricursiveAI/Ripple-65B-Preview)** `[2026-11-05]` 🔥 `[開源權重]` `[密集架構]` `[Agentic Coding]` `[Apache-2.0]` `[65B]` `[1M上下文]`
 - **[Tencent Hy4 (騰訊混元：正式版加視覺與電腦操作，API 先行、權重未出)](https://hunyuan.tencent.com/research/hy4)** `[2026-11-04]` 🔥 `[閉源API]` `[視覺理解]` `[電腦操作]` `[混元]` `[辦公Agent]` `[權重待釋出]`
 - **[Kimi K3.1 Pro 權重釋出 (Moonshot：2.8T／104B 旗艦權重落地，自訂授權、MXFP4)](https://huggingface.co/moonshotai/Kimi-K3.1-Pro)** `[2026-11-04]` 🔥 `[開源權重]` `[MoE]` `[1M上下文]` `[MXFP4]` `[Agentic Coding]` `[權重釋出]`
