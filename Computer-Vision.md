@@ -24,6 +24,7 @@ service_type: AI Consulting
 
 > ### 📅 [更新快訊](https://deep-learning-101.github.io/UPDATE)
 
+>- **[LongCat-Video-Avatar-1.6 (美團 LongCat：音訊驅動數位人影片、單支超過 10 分鐘、MIT 開源權重)](https://huggingface.co/meituan-longcat/LongCat-Video-Avatar-1.6)** `[2026-11-15]` 🔥 `[開源權重]` `[音訊驅動]` `[數位人]` `[長影片]` `[MIT]`
 >- **[MiniMax H3-Image (MiniMax：單一權重文生圖加編輯、原生 4K 十秒內、社群授權限區)](https://www.minimax.io/blog/minimax-h3-image)** `[2026-11-10]` 🔥 `[開源權重]` `[文生圖]` `[圖像編輯]` `[4K]` `[16MP]` `[6步蒸餾]` `[社群授權]`
 >- **[NVIDIA Cosmos 3 (四款 16B 互動世界模型檢查點：自駕多鏡頭加光達、機器人雙臂模擬，OpenMDW1.1 開源權重)](https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation)** `[2026-11-06]` 🔥 `[開源權重]` `[世界模型]` `[互動模擬]` `[自駕]` `[具身智能]` `[OpenMDW1.1]`
 >- **[Gemini Omni 1.2 Flash (Google：影片生成與編輯模型首度 GA，單片 15 秒、降價三成)](https://blog.google/innovation-and-ai/technology/developers-tools/introducing-gemini-omni-1-2-flash/)** `[2026-11-05]` 🔥 `[閉源API]` `[影片生成]` `[GA]` `[對話式編輯]` `[原生音訊]` `[SynthID]`
@@ -733,6 +734,13 @@ service_type: AI Consulting
 
 ### 1. 影片生成大模型 (Video Generation)
 突破硬體極限與時長限制，帶來電影級的視覺理解。
+
+* **[LongCat-Video-Avatar-1.6 (美團 LongCat：音訊驅動數位人影片、單支超過 10 分鐘、MIT 開源權重)](https://huggingface.co/meituan-longcat/LongCat-Video-Avatar-1.6)** `[2026-11-15]` 🔥 `[開源權重]` `[音訊驅動]` `[數位人]` `[長影片]` `[MIT]`
+  * **核心優勢**：**一張照片加一段聲音，就能生出嘴型對得上、超過 10 分鐘不走樣的說話影片，而且權重 MIT 開源、商用免費。** 相較 1.5 版：嘴部動作更自然穩定 (減少誇張嘴型、過紅唇色與嘴部時序不穩)、臉部與身體動作更協調、長影片視覺一致性更好；自迴歸續寫的誤差累積獲得抑制，單支影片可穩定超過 10 分鐘；端到端推論管線與執行皆加速。架構與 1.5 相同底座，配兩個任務專用 LoRA：DMD (loraA) 與 OPSD (loraB)，可混用 (--mix_steps／--mix_alpha，預設前 4 步用 DMD、後 4 步用 OPSD)；另附可選的權重 INT8 DiT (--use_int8) 與 FP8 選項；FlashAttention-2 預設開啟，Hopper 卡可改用 FlashAttention-3 或 xformers；支援單人與多人音訊驅動，語音轉影片、語音加圖片轉影片、影片續寫三種模式。
+  * **量化基準 (皆官方公布的人類偏好評比，尚未獨立複現)**：六系統全配對人類偏好 Arena，共 33,051 張有效票、15 組配對；Bradley–Terry Elo 1,068.1，排名第二，僅次於 OmniHuman-2.0，勝過 LongCat-Video-Avatar 1.5、HeyGen、OmniHuman-1.5 與 Kling Avatar 2.0。
+  * **解決痛點 / 推薦場景**：**解決了「開源數位人影片只能做短片段，嘴型一久就崩、想商用還得付 API 費」的痛點。** 舊方法：閉源數位人服務 (HeyGen、Kling Avatar) 按量計費、無法本地部署；開源方案多半只穩幾十秒，長片誤差累積、身份與畫質逐段走樣。甜點區：虛擬主播與口播影片、教學與行銷短片的本地批量生成、想自己架設數位人服務而不被 API 綁住的團隊。先提醒：模型卡明載未針對所有下游應用完整評估，敏感或高風險場景部署前須自行評估安全與合規；參數規模模型卡未明載。
+  * **資源**：[🤗 HF 模型卡 meituan-longcat/LongCat-Video-Avatar-1.6 (MIT)](https://huggingface.co/meituan-longcat/LongCat-Video-Avatar-1.6) | [🐙 GitHub 官方開源 LongCat-Video](https://github.com/meituan-longcat/LongCat-Video) | [📰 發布報導 (aigc.news)](http://aigc.news/events/meituan-longcat-released-longcat-video-avatar-1-6-on-hugging-face-2026-11-13-0ea35190/)
+  * **附註**：發布日錨點：aigc.news 報導發布於 2026-11-15T09:10:05Z (台北 11 月 15 日 17:10)，其網址事件標示為 11 月 13 日；HF 倉庫為新開的 1.6 專屬倉庫，技術報告見 GitHub 倉庫。Elo 與排名皆為官方公布的人類偏好評比結果，尚未獨立複現；模型卡引用欄的 arXiv 編號為空，技術報告請以 GitHub 倉庫為準。
 
 * **[NVIDIA Cosmos 3 (四款 16B 互動世界模型檢查點：自駕多鏡頭加光達、機器人雙臂模擬，OpenMDW1.1 開源權重)](https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation)** `[2026-11-06]` 🔥 `[開源權重]` `[世界模型]` `[互動模擬]` `[自駕]` `[具身智能]` `[OpenMDW1.1]`
   * **核心優勢**：**NVIDIA 第一次把「會動的世界」做成可下載的開源權重：四款 Cosmos 3 Nano 後訓練檢查點各 16B 可訓練參數，影像與幾何同步生成、還能隨動作即時演下去，自駕與機器人團隊不用再被封閉模擬器綁住。** 四款皆為 Cosmos 3 Nano 的後訓練版本，授權 OpenMDW1.1，商業與非商業使用皆在其條款下允許。Transfer-Auto 為離線雙向模型，生成最多 11 個鏡頭視角 (含魚眼) 的同步影片，支援 RGB 與光達聯合生成，以每鏡頭的世界場景地圖 (WSM) 控制場景結構與交通動態、文字提示控制外觀，可變換天氣、光線與時段。Sim-Auto 為 Transfer-Auto 的因果蒸餾串流版，數個去噪步驟即生成一小段同步影像與光達，靠生成歷史與更新後的駕駛控制支援快速串流與長程互動展開。Sim-Transfer 把物理模擬器的空間控制 (深度、分割、邊緣、模糊) 加文字提示轉成寫實 RGB 影像，物理與真實狀態留在模擬器。Sim-Bimanual 從機器人或相機動作預測下一段影像，支援 YAM 與 AgiBot 雙臂型態，可由策略或搖桿操作，控制序列共 59 個值 (訓練時補齊至 64)。架構為 Cosmos 3 的雙塔混合 Transformer (MoT)：文字處理塔與視覺生成塔以注意力連結，生成時以控制加歷史預測每段短片、去噪精煉壓縮後的影片表徵、時間因果注意力讀取歷史並遮住未來目標，每個潛在時間步代表四幀 RGB。訓練分四段：Stage 0 雙向適應、Stage 1 教師強制、Stage 2 一致性蒸餾 (學生只需四個去噪步驟)、Stage 3 自我強制 (以學生自己的生成歷史訓練，抑制誤差累積)。四款的後訓練配方皆公開，另附 agent skill 與 notebook 可直接照做；需求為 Linux、NVIDIA GPU、Docker 與 NVIDIA Container Toolkit，官方發布的 vLLM-Omni 設定在一張 GB200 上測試通過 (非最低規格)。
