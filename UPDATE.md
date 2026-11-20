@@ -16,6 +16,16 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[LongCat-Video-Avatar-1.6 (美團 LongCat：音訊驅動數位人影片、單支超過 10 分鐘、MIT 開源權重)](https://huggingface.co/meituan-longcat/LongCat-Video-Avatar-1.6)** `[2026-11-15]` 🔥 `[開源權重]` `[音訊驅動]` `[數位人]` `[長影片]` `[MIT]`
+- **[e-means (Meta FAIR：把 K-Means 的更新規則換成 EMA，25 輪的功課 1.4–2.6 輪做完，已進 Faiss)](https://github.com/facebookresearch/faiss/tree/main/contrib/e_means)** `[2026-11]` 🔥 `[K-Means]` `[向量聚類]` `[Faiss]` `[IVF]` `[開源]`
+- **[Hy Realtime (騰訊混元：即時語音模型，四階段訓練專治「口語化掉智商」，能聯網、能點歌演唱)](https://rtcube.cloud.tencent.com/component/hunyuan/index.html)** `[2026-11-13]` 🔥 `[即時語音]` `[端到端]` `[工具呼叫]` `[閉源產品模型]`
+- **[Daybreak (OpenAI：AI Agent 攻防封閉迴圈，從滲透驗證到可合併補丁)](https://www.inside.com.tw/article/42910-openai-daybreak-defense-factory-red-team-automated-patching-cyber-at-the-frontier)** `[2026-11-16]` 🔥 `[AI安全]` `[Agent攻防]` `[LLM-Guard]`
+- **[Qwen4-Max (阿里巴巴：Qwen4 世代旗艦換代、2.4T 稀疏 MoE、百萬上下文、任務成本降 62%)](https://qwen.ai/blog?id=qwen4-max)** `[2026-11-16]` 🔥 `[閉源API]` `[旗艦模型]` `[MoE]` `[百萬上下文]` `[原生視覺]` `[Work360]`
+- **[Hy4 Flash (騰訊混元：224B／12B 便宜檔旗艦、日常辦公任務成本僅 Hy4 的二十分之一)](https://news.qq.com/rain/a/20261116A08ULD00)** `[2026-11-16]` 🔥 `[閉源API]` `[便宜檔]` `[日常辦公]` `[WorkIndex]` `[Engram]` `[1M上下文]`
+- **[NVIDIA Nemotron for Science (NVIDIA：科學 Agent 開發套件、開源化學資料集 LitmusBench v0.2 加後訓練配方)](https://www.hpcwire.com/bigdatawire/this-just-in/nvidia-introduces-nemotron-for-science-to-accelerate-discoveries-with-agents/)** `[2026-11-16]` 🔥 `[科學Agent]` `[開源權重]` `[化學資料集]` `[後訓練配方]` `[LitmusBench]` `[OpenMDW-1.1]`
+- **[Microsoft Aion 1.0 Instruct (微軟：2.3B 端側小模型、32K 上下文、MIT 開源權重，將取代 Phi Silica 成為 Windows 內建 AI)](https://huggingface.co/microsoft/Aion-1.0-Instruct-2.3B)** `[2026-11-18]` `[開源權重]` `[SLM]` `[端側]` `[MIT]` `[Windows]` `[工具呼叫]`
+- **[Sage S2.1 Flash (上海 AI 實驗室 InternLM：320B 科學多模態 MoE、MIT 開源權重，分子、蛋白、光譜都能當輸入，MLE-bench Lite 90.3 居首)](https://huggingface.co/internlm/Sage-S2.1-Flash)** `[2026-11-15]` `[開源權重]` `[科學AI]` `[MoE]` `[MIT]` `[Agent]` `[多模態]`
+- **[Gemini 4 Neon (Google DeepMind：Carbon 血統的高速前沿模型、四檔思考、資安專版同步上線)](https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-gemini-4-neon/)** `[2026-11-18]` `[閉源]` `[程式碼]` `[Agent]` `[資安]` `[百萬上下文]` `[四檔思考]`
 - **[Gemini Decision 1 (Google：不寫一個字的決策模型，Decisions API 一次判 1,000 題)](https://blog.google/innovation-and-ai/technology/developers-tools/gemini-decisions-api/)** `[2026-11-11]` 🔥 `[決策模型]` `[Jev]` `[閉源API]` `[多模態]` `[AI Agent]`
 - **[JevEmbed (哈工大深圳 HITsz-TMG：把 Embedding 模型變成決策引擎，繞過 Jev 的 255 候選上限)](https://github.com/HITsz-TMG/JevEmbed)** `[2026-10]` 🔥 `[決策模型]` `[Jev]` `[Embedding]` `[LoRA]` `[Apache-2.0]`
 - **[Chinese Decision Unified 0.8B (Qiang Yan：一份權重、兩種讀出，中文決策加實體抽取的非生成小模型)](https://huggingface.co/quincyqiang/chinese-decision-unified-0.8b)** `[2026-10]` 🔥 `[決策模型]` `[Jev]` `[NER]` `[資訊抽取]` `[Qwen3.5]` `[Apache-2.0]`

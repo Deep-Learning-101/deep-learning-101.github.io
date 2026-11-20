@@ -1917,6 +1917,21 @@ Verdict: Unsafe</code></pre>
                 </ul>
                 <p style="font-size:0.85em; color:#64748b;">資源：<a href="https://deepmind.google/blog/introducing-alphaproof-code/">Google DeepMind 官方部落格 (2026-11-10)</a> ｜ <a href="https://github.com/google-deepmind/code-verification">GitHub 倉庫 google-deepmind/code-verification (Apache-2.0)</a> ｜ <a href="https://google-deepmind.github.io/code-verification/">審查者網站：逐條瀏覽規格與證明</a> ｜ <a href="https://getaibook.com/news/alphaproof-code-signal-libsignal-machine-code-lean-proofs/">getaibook 深度解析 (2026-11-10)</a>。附註：行數口徑務必分清，部落格正文稱超過 600 萬行 Lean、文末摘要寫超過 300 萬行，兩處不一致；技術論文拆解約 650 萬行 (5.3M 與二進位相關、86 萬計算證明、35 萬符號證明)，取論文拆解為準。Claude Opus 5.5 協助規格撰寫、Gemini Carbon 為證明引擎，來自次級整理 (eesel.ai)，官方部落格僅明言 Gemini Carbon。Signal Shot 大挑戰背景 (2026 年 4 月由 Beneficial AI Foundation、Signal 與 Lean FRO 發起) 來自次級整理。所有數字皆為 DeepMind 官方或技術論文說法，尚未有獨立複現。</p>
             </div>
+
+<div class="bento-box motion-div">
+            <h2 class="bento-title-large" id="daybreak"><i class="fas fa-shield-alt icon-large mr-4 text-orange-500"></i>十一、Daybreak (OpenAI)：AI Agent 攻防封閉迴圈，從滲透驗證到可合併補丁 <span style="font-size:0.55em; color:#64748b;">（2026-11-16 增補）</span></h2>
+            <div class="bento-text">
+                <p>傳統應用安全工具的產出停在「警報清單」：掃出一堆疑似漏洞，哪些真的能被利用、修好之後到底堵住沒有，都要人工逐項確認。OpenAI 於 2026-11-12 的 Cyber at the Frontier 活動上，為 Daybreak 資安平台推出兩款 Agent 產品，把這條鏈路串成封閉迴圈：<strong>Red Team</strong> 負責以攻擊者視角驗證漏洞真偽與補丁有效性，<strong>Defense Factory</strong> 負責把檢測結果追到程式碼根因並備妥修復補丁。兩者皆建構於先前的 Codex Security 之上，Agent 底層採用 GPT-6 Cyber 等資安模型 (The Register 報導)。</p>
+                <ul>
+                    <li><strong>Red Team (早期試用，須申請並通過審核)：</strong>Agent 團隊同時讀取 Web 應用程式的原始碼與執行上下文，梳理潛在攻擊路徑並實際驗證可利用性；可接收程式碼掃描、漏洞賞金與外部披露報告等多來源結果，逐項驗證真偽並提出證據，協助資安團隊排序修復優先級；工程師提交補丁後再復測一次，確認利用路徑已被阻斷。所有測試在隔離環境中進行，並受 OpenAI 稱為 Guardian 的審查層控管；操作者可設定測試範圍 (可觸及的應用與端點、可用合成測試資料或僅限唯讀檢查、執行時長與排除項)。</li>
+                    <li><strong>Defense Factory (研究預覽版)：</strong>以 ChatGPT 外掛形式提供 (網頁版與桌面版皆可)，需具 Daybreak 權限的工作區、個人 GitHub 連接與 Codex 雲端環境。雲端掃描可跑整個儲存庫或指定資料夾與檔案，支援單次掃描、排程巡檢、預設分支新提交的持續監控與 Pull Request 階段審核；桌面應用程式可掃描尚未提交的本地程式碼，並可開啟深度掃描模式。可匯入既有安全工具的檢測結果 (官方點名 Snyk、Endor Labs、Wiz) 與 Red Team 的輸出，在程式碼中追溯根因、生成附測試的初步修復方案；補丁不會自動套用，工程師在 Codex 中檢視證據、調整內容、測試通過後才合併，或開成 GitHub 草稿 PR。</li>
+                    <li><strong>計費與開放狀態：</strong>兩款產品皆未公布定價。Defense Factory 的雲端掃描按 token 用量以方案費率計費，且不計入方案內含額度 (工作區共用餘額)；Red Team 僅開放申請制早期試用，一般 ChatGPT 訂閱不會自動取得資格。OpenAI 另宣布投入 10 億美元補貼公用事業、地方政府、社區銀行、非營利組織與開源專案的 Daybreak 使用、訓練與支援 (第三方報導)。</li>
+                    <li><strong>證據狀態 (重要)：</strong>OpenAI 未公布任何產品層級的效能數字：沒有檢測準確率、假陽性率或補丁品質數據，活動上「超越人類的滲透測試」屬主講者說法、無公開數據支持。目前唯一可量化的模型層數字來自 2026-11-05 的 GPT-6 Cyber 系統卡：ExploitGym 預期利用成功率 48.45%、對照 GPT-6 Astra 的 42.43% (皆 OpenAI 自報，該模型條目見 LLM-Offense)。評估導入時應以自家儲存庫的試跑結果為準，不要以發表會說法推估攔截率。</li>
+                    <li><strong>適用場景：</strong>警報量大到人工分診跟不上的 AppSec 團隊 (先用 Red Team 驗證真偽再排修復順序)；已用 Snyk、Wiz 等工具但修復端人力不足的團隊 (用 Defense Factory 把「發現」直接接到「可審核的補丁」)；需要在 PR 階段就攔截高風險變更的研發流程。反之，無法接受程式碼進入 Codex 雲端環境、或需要完全地端掃描的場景，現階段僅桌面本地掃描一途，導入前須先確認資料邊界。</li>
+                </ul>
+                <p style="font-size:0.85em; color:#64748b;">資源：<a href="https://www.inside.com.tw/article/42910-openai-daybreak-defense-factory-red-team-automated-patching-cyber-at-the-frontier">INSIDE 報導 (2026-11-14)</a> ｜ <a href="https://news.ltn.com.tw/news/aichannel/breakingnews/5640911">自由時報報導 (2026-11-14)</a>。附註：本卡片事實以 2026-11-12 活動的多家同日報導交叉核對 (SecurityWeek、Help Net Security、The Register 經二手彙整一致)；OpenAI 官方產品頁未附效能數據，文中凡涉成效者皆已標明證據等級。底層模型 GPT-6 Cyber 的系統卡數字與門檻見 LLM-Offense.html 對應條目，本卡不重複收錄。</p>
+            </div>
+        </div>
         </div>
 
         <div class="bento-box motion-div">
