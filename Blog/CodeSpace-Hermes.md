@@ -167,6 +167,10 @@ LINE_ALLOWED_USERS=你的LINE使用者ID (U 開頭，逗號分隔)
 
 本節目錄：
 
+- [先行研究：動手前先讀](#prior-research)
+  - [A 組先行研究](#prior-a)
+  - [B 組先行研究](#prior-b)
+  - [預印本 (arXiv)](#prior-arxiv)
 - [A 組：工具回傳內容檢查](#group-a)
 - [B 組：呼叫工具前，先判斷這件工作該不該做](#group-b)
 - [怎樣判斷是真的有效 (兩組共用)](#effectiveness)
@@ -174,6 +178,59 @@ LINE_ALLOWED_USERS=你的LINE使用者ID (U 開頭，逗號分隔)
 先講清楚 Hermes 內建已經有什麼，才知道要補的是哪一段。依官方安全文件，Hermes 出廠就帶著：危險指令執行前先過核准 (預設由一個輔助模型判斷風險，不確定的升級給人決定)，太離譜的指令 (例如 rm -rf /) 直接擋下，敏感路徑 (放金鑰的資料夾、.env) 禁止寫入，輸出裡的金鑰與 token 自動遮罩，全部操作留有完整紀錄，另外還可以把工具放進 Docker 沙盒裡跑。這些管的是同一件事：助手「要做的動作」危不危險。它不管的，剛好是兩組的題目：工具回傳給助手的內容乾不乾淨 (A 組)，以及這個動作到底在不在使用者交代的任務範圍內 (B 組)。
 
 再來是這兩段是不是已經有人做過。A 組這一層有開源競品：已經有站在 Agent 與工具之間的 MCP 閘道與代理，例如 Pipelock、Enkrypt MCP Gateway、MCPKernel 與 LiteLLM；另外像 mcp-scan 的 proxy 模式、Palo Alto 的 pan-mcp-relay、Lasso 的 MCP Gateway 與微軟的 McpResponseSanitizer，已經能即時掃描工具回應的內容。所以 A 組的功課不是宣稱發明這個機制，而是把它接上 Hermes、補上繁體中文的攻擊案例，並且量出跟這些現成方案比起來差在哪裡；這些現成工具在評測裡就是現成的對照組。B 組這一層現成套件較少：找得到的工具多半在判危不危險 (核准清單、規則引擎)，判「在不在任務範圍內」的幾乎沒有，因為每個任務的工作單都長得不一樣，很難做成通用產品，這也是 B 組的題目雖然小、卻比較少人做的原因。
+
+<a id="prior-research"></a>
+
+### 先行研究：動手前先讀
+
+這兩個題目不是從零開始：過去兩三年，頂級學術會議已經出了一批直接相關的論文。下面按兩組的分工各列幾篇，每篇附出處連結與一句話說明，出處都對正式論文集查證過。最後兩篇是還沒正式發表的預印本，另外標明。
+
+<a id="prior-a"></a>
+
+#### A 組先行研究 (工具回傳與間接注入)
+
+1. InjecAgent (Findings of ACL 2024，UIUC)：第一個系統性量測「工具回傳藏指令」的基準，1,054 個案例，證明工具型 agent 普遍會照藏在回傳內容裡的指令做 (ReAct 版 GPT-4 中招率 24%)。
+連結：https://aclanthology.org/2024.findings-acl.624/
+
+2. AgentDojo (NeurIPS 2024，ETH Zürich 與 Invariant Labs)：能實際跑的評測環境，97 個真實任務 (郵件、行事曆、網路銀行、旅遊訂房) 加 629 個安全案例；防禦方法要在上面同時交兩個數字：擋住多少攻擊、任務還剩多少做得完。
+連結：https://proceedings.neurips.cc/paper_files/paper/2024/file/97091a5177d8dc64b1da8bf3e1f6fb54-Paper-Datasets_and_Benchmarks_Track.pdf
+
+3. MELON (ICML 2025，UCSB 與 Microsoft)：不用分類器的防禦。把使用者的任務遮罩掉讓 agent 重跑一次，兩次發出的工具呼叫若幾乎一樣，代表動作是回傳內容牽著走的、不是任務牽著走的，判定有注入。
+連結：https://proceedings.mlr.press/v267/zhu25z.html
+
+4. MCIP (EMNLP 2025，HKUST)：少數直接以 MCP 為題的正式論文。先盤點 MCP 缺哪些安全機制，再提出加了工具追蹤與守衛模型的安全版協定，並建了風險分類與評測基準。
+連結：https://aclanthology.org/anthology-files/pdf/emnlp/2025.emnlp-main.62.pdf
+
+<a id="prior-b"></a>
+
+#### B 組先行研究 (呼叫前把關與任務範圍)
+
+1. Task Shield (ACL 2025，Penn State)：把防禦問題改寫成「每一個動作是否服務使用者原本的目標」，逐一檢查指令與工具呼叫的任務對齊程度，偏離就攔；在 AgentDojo 上把攻擊成功率壓到 2.07%，同時保住 69.79% 的任務完成率。
+連結：https://aclanthology.org/2025.acl-long.1435/
+
+2. IsolateGPT (NDSS 2025，華盛頓大學等)：把作業系統的隔離觀念搬進 agent，每個工具在自己的隔離環境裡跑、各自有獨立的上下文，工具之間要交換資料得經過中央樞紐，而且要使用者同意。
+連結：https://www.ndss-symposium.org/ndss-paper/isolategpt-an-execution-isolation-architecture-for-llm-based-agentic-systems/
+
+3. AgentSpec (ICSE 2026，新加坡管理大學)：用一門小語言寫執行期規則，一條規則包含觸發事件、檢查條件、處置方式 (擋下、送人工檢查、讓 AI 自我檢查、換一個安全動作)，掛在工具呼叫執行之前，檢查延遲是毫秒級。
+連結：https://arxiv.org/abs/2503.18666 (arXiv 頁面載有 ICSE 2026 的錄取與正式出處紀錄)
+
+4. GuardAgent (ICML 2025，芝加哥大學與柏克萊)：第一個「用一個 agent 守另一個 agent」的框架，先把安全要求翻成檢查計畫，再把計畫轉成可以執行的程式碼去驗每個動作；在醫療與網頁兩個基準上，守規判斷準確率 98% 與 83%。
+連結：https://ICML.cc/virtual/2025/poster/46569
+
+5. ShieldAgent (ICML 2025，芝加哥大學與 UIUC)：從政策文件裡抽出可以驗證的規則，組成邏輯電路，再逐條檢查 agent 的整串動作軌跡有沒有違規，召回率 90.1%。
+連結：https://proceedings.mlr.press/v267/chen25ae.html
+
+<a id="prior-arxiv"></a>
+
+#### 預印本 (arXiv，尚未正式發表)
+
+下面兩篇跟兩組的題目都很近、值得讀，但還沒經過正式同儕審查發表，引用時要註明是預印本，不要跟上面的正式論文混為一談。
+
+- Progent (UC Berkeley)：工具層級的權限控制，讓 agent 每一步只能用當下需要的最小權限，跟 B 組的任務範圍比對很近。
+連結：https://arxiv.org/abs/2504.11703
+
+- CaMeL (Google DeepMind)：用能力 (capability) 與資料流追蹤防注入，讓不受信任的資料在結構上無法影響程式流程，跟 A 組的完整性、B 組的來源標籤流向控制都相關。
+連結：https://arxiv.org/abs/2503.18813
 
 <a id="group-a"></a>
 
