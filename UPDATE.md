@@ -16,6 +16,15 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[MemT-1.0-Pro (MemTensor × NVIDIA：554B 記憶原生模型、每 token 激活 59B、歷史不用貼回上下文、記憶狀態可存檔再載入)](https://huggingface.co/MemTensor/MemT-1.0-Pro)** `[2026-11-24]` `[開源權重]` `[記憶原生]` `[MoE]` `[OpenMDW-1.1]` `[BEAM-1M 41.80]`
+- **[SWE-2.1（Cognition：Kimi K3 純 RL 編碼模型、Terminal-Bench 4.1 翻倍至 50.0、ExploitBench 80.0、Devin 專用）](https://cognition.com/blog/swe-2-1)** `[2026-11-24]` 🔥 `[閉源]` `[編碼模型]` `[純強化學習]` `[Kimi K3]` `[Terminal-Bench 4.1 50.0]` `[Devin]`
+- **[Anglian Water × Aiimi（英國水務 AI 加速器公布早期成果：控制室每人每天省約兩小時、污染事件一件大幅緩解、一件降到零衝擊）](https://itbrief.co.uk/story/anglian-water-ai-tools-cut-handover-time-pollution)** `[2026-11-24]` 🔥 `[企業落地]` `[水務]` `[控制室]` `[已上線]` `[污染防治]`
+- **[Ling-3.2-air (InclusionAI／螞蟻集團：124B 原生多模態混合線性 MoE、每 token 只激活 5.5B、MIT 開源權重、辦公室 Agent 基準大躍進)](https://huggingface.co/inclusionAI/Ling-3.2-air)** `[2026-11-23]` `[開源權重]` `[多模態]` `[混合線性MoE]` `[企業Agent]` `[MIT]` `[AA智慧指數23]`
+- **[Xing4.1-Preview (中國電信：285B／17B 激活的 Agent 專用 MoE、Apache 2.0 開源權重、全程不用輝達晶片訓練)](https://huggingface.co/XingChen-AGI/Xing4.1-Preview)** `[2026-11-23]` `[開源權重]` `[Agent模型]` `[MoE]` `[百萬上下文]` `[Apache 2.0]` `[非輝達訓練]`
+- **[Sarvam-105B-1711 (Sarvam AI：105B MoE 新檢查點、10.3B 激活、65GB NVFP4 單張工作站顯卡可跑、Apache 2.0)](https://www.sarvam.ai/blogs/sarvam-105b-1711)** `[2026-11-22]` `[開源權重]` `[企業Agent]` `[印度語言]` `[NVFP4]` `[單卡部署]` `[Apache 2.0]`
+- **[skill-distill (sybil-solutions：把一次成功的前沿模型工作階段，蒸餾成開源權重模型能照做的技能)](https://github.com/sybil-solutions/skill-distill)** `[2026-11-21 補登]` `[Agent技能]` `[技能蒸餾]` `[開源權重]` `[Claude Code]` `[驗證迴圈]`
+- **[Nemotron-Labs-Sigma (NVIDIA：連續擴散語言模型家族、3B／8B 共 14 個檢查點、16 維連續空間去噪、少步蒸餾加自推測解碼)](https://huggingface.co/collections/nvidia/nemotron-labs-sigma)** `[2026-11-20]` `[開源權重]` `[擴散語言模型]` `[連續擴散]` `[3B]` `[8B]` `[Nemotron授權]`
+- **[WeMM-Video (騰訊 WeChat Vision：中英雙語全模態影片理解家族、35B-A3B 開源新 SOTA、音畫聯合推理、Apache 2.0)](https://arxiv.org/abs/2611.26409)** `[2026-11-19]` `[開源權重]` `[影片理解]` `[全模態]` `[音畫聯合]` `[MoE]` `[Apache-2.0]`
 - **[LongCat-Video-Avatar-1.6 (美團 LongCat：音訊驅動數位人影片、單支超過 10 分鐘、MIT 開源權重)](https://huggingface.co/meituan-longcat/LongCat-Video-Avatar-1.6)** `[2026-11-15]` 🔥 `[開源權重]` `[音訊驅動]` `[數位人]` `[長影片]` `[MIT]`
 - **[e-means (Meta FAIR：把 K-Means 的更新規則換成 EMA，25 輪的功課 1.4–2.6 輪做完，已進 Faiss)](https://github.com/facebookresearch/faiss/tree/main/contrib/e_means)** `[2026-11]` 🔥 `[K-Means]` `[向量聚類]` `[Faiss]` `[IVF]` `[開源]`
 - **[Hy Realtime (騰訊混元：即時語音模型，四階段訓練專治「口語化掉智商」，能聯網、能點歌演唱)](https://rtcube.cloud.tencent.com/component/hunyuan/index.html)** `[2026-11-13]` 🔥 `[即時語音]` `[端到端]` `[工具呼叫]` `[閉源產品模型]`
