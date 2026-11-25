@@ -24,6 +24,7 @@ service_type: AI Consulting
 
 > ### 📅 [更新快訊](https://deep-learning-101.github.io/UPDATE)
 
+>- **[WeMM-Video (騰訊 WeChat Vision：中英雙語全模態影片理解家族、35B-A3B 開源新 SOTA、音畫聯合推理、Apache 2.0)](https://arxiv.org/abs/2611.26409)** `[2026-11-19]` `[開源權重]` `[影片理解]` `[全模態]` `[音畫聯合]` `[MoE]` `[Apache-2.0]`
 >- **[LongCat-Video-Avatar-1.6 (美團 LongCat：音訊驅動數位人影片、單支超過 10 分鐘、MIT 開源權重)](https://huggingface.co/meituan-longcat/LongCat-Video-Avatar-1.6)** `[2026-11-15]` 🔥 `[開源權重]` `[音訊驅動]` `[數位人]` `[長影片]` `[MIT]`
 >- **[MiniMax H3-Image (MiniMax：單一權重文生圖加編輯、原生 4K 十秒內、社群授權限區)](https://www.minimax.io/blog/minimax-h3-image)** `[2026-11-10]` 🔥 `[開源權重]` `[文生圖]` `[圖像編輯]` `[4K]` `[16MP]` `[6步蒸餾]` `[社群授權]`
 >- **[NVIDIA Cosmos 3 (四款 16B 互動世界模型檢查點：自駕多鏡頭加光達、機器人雙臂模擬，OpenMDW1.1 開源權重)](https://huggingface.co/blog/nvidia/cosmos-interactive-world-simulation)** `[2026-11-06]` 🔥 `[開源權重]` `[世界模型]` `[互動模擬]` `[自駕]` `[具身智能]` `[OpenMDW1.1]`
@@ -851,6 +852,14 @@ service_type: AI Consulting
 
 ---
 
+## Video Understanding
+
+* **[WeMM-Video (騰訊 WeChat Vision：中英雙語全模態影片理解家族、35B-A3B 開源新 SOTA、音畫聯合推理、Apache 2.0)](https://arxiv.org/abs/2611.26409)** `[2026-11-19]` `[開源權重]` `[影片理解]` `[全模態]` `[音畫聯合]` `[MoE]` `[Apache-2.0]`
+  * **核心優勢**：**影片理解第一次能同時聽懂畫面加原聲：騰訊 WeChat Vision 與清華大學的 WeMM-Video 家族，2B、4B、9B 三個稠密模型加 35B-A3B MoE 旗艦（35B 總參數、每 token 只激活約 3B），文字、圖像、音訊、影片四種輸入一次吃進、輸出文字，中英雙語，Apache 2.0 開源權重。** 架構以視覺與音訊雙編碼器把媒體轉成 token、影片幀自帶時間戳，約 1.2 兆多模態 token 預訓練，再經多教師 OPD、抗重複 MrDPO 與專家強化學習三段後訓練；hybrid-thinking 雙模式，不思考的 instruct 模式直接回答、思考模式逐步推理。旗艦 35B-A3B 自稱開源全模態影片理解新 SOTA，大幅勝過 Qwen3.5-Omni-Flash 與 Seed2.0-Mini-0428，9B 更勝過大一號的 Qwen3-Omni-30B-A3B-Instruct。四尺寸各帶 FP8、AWQ、GGUF、NVFP4 量化版，程式碼與評測復現管線一併開源。
+  * **解決痛點 / 推薦場景**：**解決了「開源影片理解模型只看畫面、不聽聲音：會議、訪談、教學片的關鍵資訊一半在原聲裡，模型卻只能靠字幕或靜音幀硬猜」的斷鏈。** 舊方法：影片模型看幀、音訊模型聽聲，兩邊分開跑、再人工拼結論；或走閉源全模態 API，成本與資料外送兩頭燒。甜點區：會議與訪談摘要（畫面加原聲一起理解）、教學與演講片問答、影音內容檢索與標註，以及想在本地跑中英雙語全模態理解的團隊。不適合直接當通用聊天模型：視覺與音訊編碼器為理解而生，輸出只有文字、不能生成圖片或影片；部署須用官方 runtime 補丁（vLLM 0.18.0／0.31.0 或 SGLang 0.5.16／0.5.19），上游框架尚未原生支援。
+  * **量化基準 (皆論文與模型卡自報，尚未獨立複現；跨家數字宜打折看)**：規模：120 餘項基準評測，預訓練約 1.2 兆多模態 token。影片理解：旗艦 35B-A3B 在全模態影片理解評測自稱開源新 SOTA，大幅勝過 Qwen3.5-Omni-Flash 與 Seed2.0-Mini-0428，縮小與 Gemini-3.0-Flash 的差距；9B 勝過 Qwen3-Omni-30B-A3B-Instruct。音訊：35B-A3B 與 9B 在通用音訊理解自稱領先。部署：旗艦 BF16 權重 67.39 GiB，官方以張量並行 2 卡跑 vLLM／SGLang，上限 8,192 token；已驗證 H20 上 vLLM 載入與四種輸入生成、Transformers 載入與 CPU 文字生成。具體分項數字見論文圖表，條目不另行轉錄。
+  * **資源**：[📄 arXiv 論文 (WeMM-Video, 2611.26409)](https://arxiv.org/abs/2611.26409) | [🤗 HF 模型合集 (tencent/wemm-video)](https://huggingface.co/collections/tencent/wemm-video) | [🤗 HF 旗艦模型卡 (tencent/WeMM-Video-35BA3B)](https://huggingface.co/tencent/WeMM-Video-35BA3B) | [🐙 GitHub (Tencent/WeMM-Video)](https://github.com/Tencent/WeMM-Video)
+  * **附註 (未獨立查證)**：窗口依據：arXiv v1 投稿於 2026-11-19 16:58:15 UTC，換算台北時間為 11 月 20 日 00:58，落在今日窗口開啟後 58 分鐘；HF 倉庫建於 11-17（前置準備），權重量化版於 11-20 陸續上架。架構底座：4B 模型卡設定顯示 model_type 為 qwen3_5、客製 WeMMVideo 類別，屬 Qwen3.5 架構衍生，論文未明言。所有基準皆論文與模型卡自報，尚未獨立複現；「大幅勝過」「縮小差距」等相對表述皆引自摘要與模型卡原文，分項數字以論文圖表為準。
 ## Digital Human
 **🧑‍💻 Digital Human (虛擬數字人)**
 
