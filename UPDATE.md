@@ -16,6 +16,12 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[Sakana Namazu Small (Sakana AI：30B 推理模型、Nemotron 3 Nano 底座再訓練、25 項基準平均勝過 4 倍大的 Nemotron 3 Super、BrowseComp 73.5)](https://sakana.ai/namazu-small)** `[2026-11-25]` `[推理模型]` `[30B]` `[Nemotron 3 Nano]` `[長文理解]` `[BrowseComp 73.5]`
+- **[Inkling 2 Mini (Thinking Machines：循環 Transformer 首次做成開源權重模型、24 層中間 12 層每 token 跑 3 遍、26.4B／3.4B 激活、約 20GB 筆電可跑、Apache 2.0)](https://thinkingmachines.ai/news/inkling-2-mini/)** `[2026-11-21]` `[開源權重]` `[循環Transformer]` `[Agentic Coding]` `[本地部署]` `[Apache 2.0]`
+- **[Inkling 2 Small (Thinking Machines：594B MoE 旗艦、每 token 激活 17B、長程自主研究示範 4.5 小時、權重已以 Apache 2.0 釋出)](https://thinkingmachines.ai/news/inkling-2-small/)** `[2026-11-06]` 🔥 `[開源權重]` `[MoE]` `[長程Agent]` `[594B]` `[Apache 2.0]` `[Intelligence Index 31]`
+- **[Hitachi Digital × 匿名房地產企業 (Agentic AI 擴至 10 個以上產品團隊：發版從每季一次變成雙週一次、交付人力省約 41%、20 多種語言同步出貨)](https://www.hitachidigital.com/insights/client-stories/ai-governance-release-cadence-enterprise-scale/)** `[2026-11-25]` `[企業落地]` `[Agentic AI]` `[房地產]` `[已上線]` `[發版加速]`
+- **[Nemotron-Labs-Image-30B-A3B (NVIDIA：30B 自回歸生圖模型、每 token 只激活 3B、VisualCreation 的光柵引擎、權重已上 HF)](https://huggingface.co/nvidia/Nemotron-Labs-Image-30B-A3B)** `[2026-11-25]` `[開源權重]` `[圖像生成]` `[自回歸]` `[30B-A3B]` `[VisualCreation]` `[研究授權]`
+- **[Soma-1X Lite (Amini：2B 文件智慧視覺語言模型、紙本檔案轉結構化資料、olmOCR-Bench 84.7、Apache 2.0)](https://huggingface.co/AminiTech/Soma-1X-lite)** `[2026-11-25]` `[開源權重]` `[Apache 2.0]` `[文件智慧]` `[VLM]` `[2B]` `[olmOCR-Bench 84.7]`
 - **[MemT-1.0-Pro (MemTensor × NVIDIA：554B 記憶原生模型、每 token 激活 59B、歷史不用貼回上下文、記憶狀態可存檔再載入)](https://huggingface.co/MemTensor/MemT-1.0-Pro)** `[2026-11-24]` `[開源權重]` `[記憶原生]` `[MoE]` `[OpenMDW-1.1]` `[BEAM-1M 41.80]`
 - **[SWE-2.1（Cognition：Kimi K3 純 RL 編碼模型、Terminal-Bench 4.1 翻倍至 50.0、ExploitBench 80.0、Devin 專用）](https://cognition.com/blog/swe-2-1)** `[2026-11-24]` 🔥 `[閉源]` `[編碼模型]` `[純強化學習]` `[Kimi K3]` `[Terminal-Bench 4.1 50.0]` `[Devin]`
 - **[Anglian Water × Aiimi（英國水務 AI 加速器公布早期成果：控制室每人每天省約兩小時、污染事件一件大幅緩解、一件降到零衝擊）](https://itbrief.co.uk/story/anglian-water-ai-tools-cut-handover-time-pollution)** `[2026-11-24]` 🔥 `[企業落地]` `[水務]` `[控制室]` `[已上線]` `[污染防治]`
