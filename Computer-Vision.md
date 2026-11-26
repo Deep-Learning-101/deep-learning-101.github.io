@@ -24,6 +24,8 @@ service_type: AI Consulting
 
 > ### 📅 [更新快訊](https://deep-learning-101.github.io/UPDATE)
 
+>- **[Nemotron-Labs-Image-30B-A3B (NVIDIA：30B 自回歸生圖模型、每 token 只激活 3B、VisualCreation 的光柵引擎、權重已上 HF)](https://huggingface.co/nvidia/Nemotron-Labs-Image-30B-A3B)** `[2026-11-25]` `[開源權重]` `[圖像生成]` `[自回歸]` `[30B-A3B]` `[VisualCreation]` `[研究授權]`
+>- **[Soma-1X Lite (Amini：2B 文件智慧視覺語言模型、紙本檔案轉結構化資料、olmOCR-Bench 84.7、Apache 2.0)](https://huggingface.co/AminiTech/Soma-1X-lite)** `[2026-11-25]` `[開源權重]` `[Apache 2.0]` `[文件智慧]` `[VLM]` `[2B]` `[olmOCR-Bench 84.7]`
 >- **[WeMM-Video (騰訊 WeChat Vision：中英雙語全模態影片理解家族、35B-A3B 開源新 SOTA、音畫聯合推理、Apache 2.0)](https://arxiv.org/abs/2611.26409)** `[2026-11-19]` `[開源權重]` `[影片理解]` `[全模態]` `[音畫聯合]` `[MoE]` `[Apache-2.0]`
 >- **[LongCat-Video-Avatar-1.6 (美團 LongCat：音訊驅動數位人影片、單支超過 10 分鐘、MIT 開源權重)](https://huggingface.co/meituan-longcat/LongCat-Video-Avatar-1.6)** `[2026-11-15]` 🔥 `[開源權重]` `[音訊驅動]` `[數位人]` `[長影片]` `[MIT]`
 >- **[MiniMax H3-Image (MiniMax：單一權重文生圖加編輯、原生 4K 十秒內、社群授權限區)](https://www.minimax.io/blog/minimax-h3-image)** `[2026-11-10]` 🔥 `[開源權重]` `[文生圖]` `[圖像編輯]` `[4K]` `[16MP]` `[6步蒸餾]` `[社群授權]`
@@ -636,6 +638,13 @@ service_type: AI Consulting
 ### 1. 基於視覺大模型 (VLM) 的高精度 OCR
 處理手寫字跡、模糊掃描檔與不規則表單的最佳解法。
 
+* **[Soma-1X Lite (Amini：2B 文件智慧視覺語言模型、紙本檔案轉結構化資料、olmOCR-Bench 84.7、Apache 2.0)](https://huggingface.co/AminiTech/Soma-1X-lite)** `[2026-11-25]` `[開源權重]` `[Apache 2.0]` `[文件智慧]` `[VLM]` `[2B]` `[olmOCR-Bench 84.7]`
+  * **核心優勢**：**Amini 在 11 月 25 日釋出的 2B 視覺語言模型，專做一件事：把紙本檔案 (打字表格、手寫信、報表、褪色掃描件) 轉成保留版面結構的機器可讀資料，讓檔案直接進資料庫。** 以 Qwen3.5-2B 為底座，經監督微調加可驗證獎勵強化學習 (RLVR) 訓練；權重、推論指引與評估程式碼全部公開、Apache 2.0，另有 GGUF 版可跑 llama.cpp。官方稱單張 NVIDIA RTX PRO 6000 每小時可處理約 15,000 頁，GPU 運算成本約每 1,000 頁 0.22 美元。
+  * **解決痛點 / 推薦場景**：**解決了「政府與檔案館的紙本紀錄要數位化，要嘛把敏感檔案送出境給外部服務、要嘛 OCR 只吐純文字、版面與表格結構全丟掉」的痛點。** 舊方法：通用 OCR 遇到手寫註記、印章、簽名與多欄排版就失準，低資源語言更慘；雲端文件 AI 則要把檔案送出自己的管轄範圍。甜點區：檔案館、政府機關、醫療與金融機構的在地文件數位化，特別是非洲語言 (斯瓦希里語、約魯巴語、豪薩語、沃洛夫語等) 的手寫與歷史文件。十種非洲語言、435 頁的評測裡平均字元錯誤率 2.90%，為五款受評開源模型最低、十種語言裡七種最佳。
+  * **量化基準 (皆 Amini 官方公布，尚未獨立複現；跨家數字宜打折看)**：olmOCR-Bench 84.7 (官方比較圖稱勝過 Gemini 3.8 Flash、GPT-5.5、Claude Sonnet 5)；OmniParse-Bench 84.37 (單次推理)、86.53 (多輪重處理困難區域)；十種非洲語言平均字元錯誤率 2.90%。效率：單張 RTX PRO 6000 每小時約 15,000 頁、每 1,000 頁 GPU 運算成本約 0.22 美元。架構：2B 參數、Qwen3.5-2B 底座、SFT 加 RLVR。
+  * **資源**：[🤗 HF 模型卡 (AminiTech/Soma-1X-lite)](https://huggingface.co/AminiTech/Soma-1X-lite) | [📝 Amini 技術部落格 (Introducing Soma-1X Lite)](https://medium.com/@aminitech/introducing-soma-1x-lite-a-2b-model-for-document-intelligence-63dd5de9016d) | [📰 APO 新聞稿 (2026-11-25)](https://www.africa-newsroom.com/press/printview/amini-releases-soma-an-open-ai-model-to-take-nations-from-analogue-to-aiready)
+  * **附註 (未獨立查證)**：窗口依據：HF 倉庫建立於 2026-11-25T06:16:03Z (台北 11 月 25 日 14:16)，APO 新聞稿同日刊出。所有基準皆 Amini 自評，尚未獨立複現；與前沿閉源模型的比較出自 Amini 自家比較圖，非第三方評測。成本數字僅為 GPU 運算成本，不含掃描、人力與系統整合費用。
+
 * **[Unlimited OCR 2 (無限 OCR 2：百頁文件一次解析)](https://github.com/baidu/Unlimited-OCR)** `[2026-10-27]` 🔥 `[長文件解析]` `[SR-SWA注意力]` `[恆定顯存]` `[百頁文件]` `[MIT開源]` `[VLM文件解析]`
   * **核心優勢**：**把長文件 OCR 從「幾十頁」推進到「幾百頁一次解析」，關鍵是每步解碼成本不再隨頁數膨脹。** 百度在 v1 的 R-SWA 基礎上提出 SR-SWA（Sparse Reference Sliding Window Attention，稀疏參考滑動窗口注意力）：把超長序列的圖文注意力壓縮成固定大小的工作參考集（官方以 512 tokens 為例；配置為 128 tokens 局部窗口＋32 tokens 分塊取 top-16，即 16×32＝512）。多頁模式每頁 273 個圖像 tokens，100 頁即 27,300 個輸入 tokens，但每步解碼延遲與顯存佔用幾乎維持恆定，官方稱此為有限上下文窗口內的「無限視野解析」。
   * **解決痛點 / 推薦場景**：**解決了「整本書、整套財報、整卷法務檔案必須逐頁切分、跨頁表格斷裂、章節結構丟失」的痛點。** 舊方法：逐頁解析再拼接，跨頁延續的表格、重複表頭、章節層級與前後引用全部靠後處理硬湊；通用大模型則在百頁規模直接被上下文與 KV 顯存拖垮。甜點區：整本書籍、學術論文集、財務年報、法務卷宗、掃描檔案館的端到端結構化解析（文字、公式、表格、閱讀順序、標題層級一次輸出），極度適合**企業 RAG 知識庫的巨型文件清洗管線**與**高併發文件解析服務**。推論支援 Transformers（快速測試）與 SGLang（官方建議的 serving 路線，頁窗口排程每窗 10 頁）。
@@ -778,6 +787,13 @@ service_type: AI Consulting
 * **[Phantom](https://github.com/Phantom-video/Phantom)** `[2025-04-24]`：字節跳動開源。極度友善的硬體門檻，僅需 10G 顯存即可生成 1280x720 高清影片。
 
 * **[Index-AniSora](https://deepwiki.com/bilibili/Index-anisora)** `[2025-05-19]`：B 站開源的 SOTA 動畫影片生成模型，二次元風格特化。
+
+* **[Nemotron-Labs-Image-30B-A3B (NVIDIA：30B 自回歸生圖模型、每 token 只激活 3B、VisualCreation 的光柵引擎、權重已上 HF)](https://huggingface.co/nvidia/Nemotron-Labs-Image-30B-A3B)** `[2026-11-25]` `[開源權重]` `[圖像生成]` `[自回歸]` `[30B-A3B]` `[VisualCreation]` `[研究授權]`
+  * **核心優勢**：**NVIDIA 釋出的自回歸圖像生成模型：30B 總參數、每 token 只激活 3B，以 Nemotron-H 混合架構 (Mamba-2 狀態空間層加注意力) 從 Nemotron 3 Nano 初始化、經漸進式中段訓練與 GRPO 調校，是 VisualCreation (Pixel as Code) 框架的光柵成像引擎。** VisualCreation 不只生圖：同一個 agentic 框架還能產出網頁、簡報、文件、圖表與 SVG 這類可編輯的視覺成品，請求會分流到直接光柵生成、瀏覽器結構化生成或原生格式生成三條路徑。權重為 32 個 safetensors 分片、約 133GB，官方參考設定為 4 張 H100 80GB。
+  * **解決痛點 / 推薦場景**：**解決了「擴散模型生出來的圖是死像素、要改只能重抽」的痛點。** 舊方法：文生圖給你一張成品圖，改字、改排版、改圖表數字都得重來；簡報與文件類視覺成品更難一次到位。甜點區：需要「圖加可編輯成品」的 agentic 視覺工作流、以及研究自回歸生圖架構的團隊。提醒：這次只釋出光柵圖像模型與圖像 tokenizer，撐起高分的 agent 協調層與 VisionCode 模型 (30B 與 120B) 都還沒釋出，官方只說待法律 clearance，完整框架目前無法端到端重現。
+  * **量化基準 (皆 NVIDIA 官方公布，尚未獨立複現；跨家數字宜打折看)**：GenEval2：圖像模型單獨 31.71、加 Nemotron agents 52.56、加 GPT-6 agents 65.43；BizGenEval：完整 VisualCreation 系統 86.0、GPT Image 2 為 83.2 (注意：86.0 是含 agent 協調層的完整系統分數，不是已釋出權重的單獨分數，引用時不可寫成模型本身勝過 GPT Image 2)。架構：30B 總參數、3B 激活、Nemotron-H 混合架構、圖像 tokenizer 約 642M 參數。
+  * **資源**：[🤗 HF 模型卡 (nvidia/Nemotron-Labs-Image-30B-A3B)](https://huggingface.co/nvidia/Nemotron-Labs-Image-30B-A3B) | [📄 技術報告 arXiv:2611.31358 (Nemotron-Labs-VisualCreation)](https://arxiv.org/abs/2611.31358)
+  * **附註 (未獨立查證)**：窗口依據：技術報告 11 月 23 日上 arXiv；權重於 11 月 24 日晚間上架 HF (美西時間)，換算台北 11 月 25 日，WCCFTech 於 11 月 25 日 09:36 UTC 報導；r/LocalLLaMA 討論串亦為 11 月 25 日。授權注意：權重採 NVIDIA 自有授權、限非商業研究與評估用途，不是 Apache 2.0 或 MIT，商用前請先讀授權條款。HF 倉庫建立日為 2026-09-24 (佔位)，lastModified 2026-11-25T18:57:56Z 為權重上架後的後續更新，不以此計窗口。所有基準皆 NVIDIA 自評，尚未獨立複現。
 
 * **[MAI-Image-2](https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/)** `[2026-04-16]` 🔥
   * **核心優勢**：**重新定義「廣告級」影像生成，畫面內文字清晰度與光影質感超越 DALL-E 3。** Microsoft AI 專為設計師打造，精準捕捉自然膚色紋理與細膩光影。其最強大的亮點在於解決了生成式 AI 常見的「圖中文字扭曲」痛點，能直接產出可商用的排版設計。
