@@ -96,6 +96,26 @@ audio {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   {%- seo title=false -%}
+  <meta name="robots" content="max-image-preview:large">
+  {%- if page.title and page.url != "/" -%}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": {{ page.title | jsonify }},
+    {%- if page.description %}
+    "description": {{ page.description | jsonify }},
+    {%- endif %}
+    "image": {{ page.image | default: "/images/DeepLearning101-LOGO.png" | absolute_url | jsonify }},
+    "author": {"@type": "Person", "name": "TonTon Huang", "url": "https://www.twman.org/"},
+    "publisher": {"@type": "Organization", "name": "Deep Learning 101", "logo": {"@type": "ImageObject", "url": {{ "/images/DeepLearning101-LOGO.png" | absolute_url | jsonify }}}},
+    "mainEntityOfPage": {{ page.url | absolute_url | jsonify }}
+    {%- if page.date -%}
+    , "datePublished": {{ page.date | date_to_xmlschema | jsonify }}
+    {%- endif %}
+  }
+  </script>
+  {%- endif -%}
   <title>{% if page.title_seo %}{{ page.title_seo | escape }}{% else %}{{ page.title | escape }}{% endif %}</title>
 
   <link rel="alternate" type="application/rss+xml" title="{{ site.title | default: 'Deep Learning 101' }} RSS Feed" href="{{ '/feed.xml' | absolute_url }}">

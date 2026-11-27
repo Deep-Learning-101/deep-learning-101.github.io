@@ -6,3 +6,14 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
   - jekyll-feed
+
+# 作者資訊 (結構化資料用)
+author: TonTon Huang
+
+# 全站預設分享圖：各頁未自訂 image 時，jekyll-seo-tag 以此輸出 og:image
+# 圖檔為 2048x2048，符合 Google Discover 大圖預覽的尺寸門檻 (寬至少 1200px)
+defaults:
+  - scope:
+      path: ""
+    values:
+      image: /images/DeepLearning101-LOGO.png
