@@ -16,6 +16,7 @@ keywords: ["AI技術更新", "大語言模型", "電腦視覺", "語音處理", 
 
 ---
 
+- **[Ming-Image-0.2-Design (Ant Group inclusionAI：6B 設計專用文生圖、開源權重第一、複雜構圖與文字渲染、圖層拆到字元級)](https://huggingface.co/inclusionAI/Ming-Image-0.2-Design)** `[2026-11-26]` `[開源權重]` `[MIT]` `[文生圖]` `[設計]` `[6B]` `[AA-Image-T2I 1095]`
 - **[Sakana Namazu Small (Sakana AI：30B 推理模型、Nemotron 3 Nano 底座再訓練、25 項基準平均勝過 4 倍大的 Nemotron 3 Super、BrowseComp 73.5)](https://sakana.ai/namazu-small)** `[2026-11-25]` `[推理模型]` `[30B]` `[Nemotron 3 Nano]` `[長文理解]` `[BrowseComp 73.5]`
 - **[Inkling 2 Mini (Thinking Machines：循環 Transformer 首次做成開源權重模型、24 層中間 12 層每 token 跑 3 遍、26.4B／3.4B 激活、約 20GB 筆電可跑、Apache 2.0)](https://thinkingmachines.ai/news/inkling-2-mini/)** `[2026-11-21]` `[開源權重]` `[循環Transformer]` `[Agentic Coding]` `[本地部署]` `[Apache 2.0]`
 - **[Inkling 2 Small (Thinking Machines：594B MoE 旗艦、每 token 激活 17B、長程自主研究示範 4.5 小時、權重已以 Apache 2.0 釋出)](https://thinkingmachines.ai/news/inkling-2-small/)** `[2026-11-06]` 🔥 `[開源權重]` `[MoE]` `[長程Agent]` `[594B]` `[Apache 2.0]` `[Intelligence Index 31]`
