@@ -24,6 +24,7 @@ service_type: AI Consulting
 
 > ### 📅 [更新快訊](https://deep-learning-101.github.io/UPDATE)
 
+>- **[Ming-Image-0.2-Design (Ant Group inclusionAI：6B 設計專用文生圖、開源權重第一、複雜構圖與文字渲染、圖層拆到字元級)](https://huggingface.co/inclusionAI/Ming-Image-0.2-Design)** `[2026-11-26]` `[開源權重]` `[MIT]` `[文生圖]` `[設計]` `[6B]` `[AA-Image-T2I 1095]`
 >- **[Nemotron-Labs-Image-30B-A3B (NVIDIA：30B 自回歸生圖模型、每 token 只激活 3B、VisualCreation 的光柵引擎、權重已上 HF)](https://huggingface.co/nvidia/Nemotron-Labs-Image-30B-A3B)** `[2026-11-25]` `[開源權重]` `[圖像生成]` `[自回歸]` `[30B-A3B]` `[VisualCreation]` `[研究授權]`
 >- **[Soma-1X Lite (Amini：2B 文件智慧視覺語言模型、紙本檔案轉結構化資料、olmOCR-Bench 84.7、Apache 2.0)](https://huggingface.co/AminiTech/Soma-1X-lite)** `[2026-11-25]` `[開源權重]` `[Apache 2.0]` `[文件智慧]` `[VLM]` `[2B]` `[olmOCR-Bench 84.7]`
 >- **[WeMM-Video (騰訊 WeChat Vision：中英雙語全模態影片理解家族、35B-A3B 開源新 SOTA、音畫聯合推理、Apache 2.0)](https://arxiv.org/abs/2611.26409)** `[2026-11-19]` `[開源權重]` `[影片理解]` `[全模態]` `[音畫聯合]` `[MoE]` `[Apache-2.0]`
@@ -801,6 +802,13 @@ service_type: AI Consulting
   * **資源**：[🌐 Microsoft MAI Playground](https://www.google.com/search?q=https://microsoft.ai/playground) | [📄 官方發布報告](https://microsoft.ai/news/today-were-announcing-3-new-world-class-mai-models-available-in-foundry/)
 
 ### 2. 極速生成與大一統架構 (Speed & Unified Models)
+
+* **[Ming-Image-0.2-Design (Ant Group inclusionAI：6B 設計專用文生圖、開源權重第一、複雜構圖與文字渲染、圖層拆到字元級)](https://huggingface.co/inclusionAI/Ming-Image-0.2-Design)** `[2026-11-26]` `[開源權重]` `[MIT]` `[文生圖]` `[設計]` `[6B]` `[AA-Image-T2I 1095]`
+  * **核心優勢**：**螞蟻集團 InclusionAI 在 11 月 26 日開源的 6B 設計專用文生圖模型，MIT 授權，權重上架 Hugging Face 與 ModelScope：在 Artificial Analysis 的 AA-Image-T2I v2.1 榜上以 Elo 1,095 拿下開源權重第一、總榜第 24 名。** 強項是電商主圖、介面草稿與空間渲染這類設計工作：複雜構圖、光線與文字渲染都有進步；圖層拆解功能可把設計拆成獨立可編輯的透明圖層、細到單一字元，方便後續編輯與動畫；搭配自家的 Ling-3.2-flash，能把設計概念轉成可互動的網頁；另有 Design Skill 與 PPT 代理工作流，可把生成的頁面或投影片圖片還原成可編輯的 PowerPoint。
+  * **解決痛點 / 推薦場景**：**解決了「開源生圖能生圖、卻生不出能直接用的設計稿」的痛點。** 舊方法：通用文生圖模型構圖一塌糊塗、文字常寫錯，設計師拿到圖還得重畫；或只能用閉源服務，成本與授權綁在別人手上。甜點區：電商主圖、活動視覺、UI 草稿與空間渲染，需要圖層可編輯、文字正確的設計產出。提醒：官方驗證配置是一張 80GB 顯存的 GPU，不是家用電腦能跑的體量；圖層拆解的 Layer 版下週才開源。
+  * **量化基準 (皆 Artificial Analysis 榜單數據、模型卡引用)**：AA-Image-T2I v2.1：Elo 1,095 (95% 區間 1,083 至 1,107、4,936 個樣本)，開源權重第一、總榜第 24 名 (排名區間 23 至 25)，榜單日期 2026 年 11 月 25 日。預設輸出 2048×2048、12 步採樣、CFG 1.0、BF16 精度，支援 vLLM-Omni 部署。架構：6B 擴散 Transformer (DiT)。
+  * **資源**：[🤗 HF 模型卡 (inclusionAI/Ming-Image-0.2-Design)](https://huggingface.co/inclusionAI/Ming-Image-0.2-Design) | [🐙 GitHub (inclusionAI/Ming-Image)](https://github.com/inclusionAI/Ming-Image) | [📰 AI.info 報導 (2026-11-26)](https://ai.info/news/inclusionai-ming-image-02-design-open-source)
+  * **附註 (未獨立查證)**：窗口依據：Ant Ling 於 2026 年 11 月 26 日 (北京時間 19:37) 在 X 公布開源，權重同步上架；個別聚合站以 UTC 標示為 11 月 25 日，時區換算後同屬本日窗口。榜單數據為 11 月 23 日的初步評測、11 月 25 日榜單快照，開源第一的說法以 Artificial Analysis 榜單為準，未經獨立複現。Layer 版 (Ming-Image-0.2-Design-Layer) 預計下週開源，本條目只收已開源的 Design 版。
 
 * **[MiniMax H3-Image (MiniMax：單一權重文生圖加編輯、原生 4K 十秒內、社群授權限區)](https://www.minimax.io/blog/minimax-h3-image)** `[2026-11-10]` 🔥 `[開源權重]` `[文生圖]` `[圖像編輯]` `[4K]` `[16MP]` `[6步蒸餾]` `[社群授權]`
   * **核心優勢**：**MiniMax 把 H3 多模態家族的影像分支單獨釋出：同一套 33.1B 擴散 Transformer 權重同時做文生圖、參考圖生成與圖像編輯，最多吃 16 張參考圖，4K (4096×4096) 原生直出不用超分，官方稱 10 秒內完成、比主流方案快最高 5 倍。** 底座為 MiniMax H3 (7 月底發布的多模態模型、8 月初釋出權重)；後訓練在資料、強化學習、採樣步數壓縮、提示增強與部署最佳化全線改進，最終蒸餾至 6 個採樣步。輸出解析度 4096×4096 至 6272×2688，各長寬比皆約 16MP，API 上限 20MP。權重共 68.65GB (Transformer 12 個分片、文字編碼器 14 個分片、VAE)，部署支援 SGLang、vLLM-Omni、diffusers 與 ComfyUI；另可走 MiniMax API、MiniMax Code 與 Hailuo AI。官方稱標準模式比主流方案快 1.5–2 倍、高速模式快 3–4 倍，價格約為同級方案的 50%–70%；上線週 4K 以上生成另享 5 折 (至 11 月 17 日 16:00 UTC)。
